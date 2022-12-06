@@ -1,13 +1,10 @@
 import './App.css';
 import React from 'react';
-import {Button, ConfigProvider} from 'antd';
+import {ConfigProvider} from 'antd';
 import hy from "antd/locale/hy_AM";
 import {useSelector} from "react-redux";
 import "./Styles.sass"
-
-import AppLayout from "./Components/AppLayout";
-import {Route, Routes} from "react-router";
-import Login from "./Components/Auth/Login";
+import AppRoutes from "./Components/AppRoutes";
 
 
 function App() {
@@ -23,10 +20,7 @@ function App() {
             direction={!redux.globalState ? "ltr" : "rtl"}
             locale={hy}
         >
-        <Routes>
-            <Route path={'/'} element={<Login/>}></Route>
-            <Route path={'dashboard/*'} element={<AppLayout/>}></Route>
-        </Routes>
+            <AppRoutes/>
         </ConfigProvider>
     );
 }

@@ -1,10 +1,8 @@
 
-let endpoint = process.env.REACT_APP_API_ENDPOINT
+let endpoint = process.env.REACT_APP_API_ENDPOINT+ "/api/"
 let version = process.env.REACT_APP_VERSION
-
-console.log(process.env,'env')
 let api = {
-    endpoint,
+    endpoint:process.env.REACT_APP_API_ENDPOINT,
     version,
     Auth: {
         login: {
@@ -21,7 +19,6 @@ let api = {
         },
     }
 };
-
 [
     {
         url: 'team-valuations',

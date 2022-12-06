@@ -3,26 +3,30 @@ import {Button, Form, Input} from "antd";
 import axios from "axios";
 import api from "../../Api.js"
 import logo from "../../dist/Img/logo.svg";
-import {useTranslation} from "react-i18next";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router";
 
 function Login(){
-console.log(api)
-    const {t} = useTranslation()
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
     const handleLogin = (values)=>{
-        axios.get(`${api.endpoint}sanctum/csrf-cookie`).then(response => {
-            const Data = new FormData();
-            Data.append('email', values.email)
-            Data.append('password', values.password)
+
+      axios.get(`${api.endpoint}/sanctum/csrf-cookie`).then(response => {
+          values.device_name = 'React App'
             axios.request({
                 url: api.Auth.login.url,
                 method: api.Auth.login.method,
                 data: values,
+            }).then(response=>{
+                dispatch({
+                    type:'AUTH',
+                    payload:response
+                })
+                navigate('/dashboard')
             })
         })
-        console.log(values)
 
     }
-    console.log(api, "as")
     return<div style={{display:"flex"}}>
                 <div style={{border: "1px solid black", width: "67%"}}>
 
@@ -32,11 +36,6 @@ console.log(api)
 
                             <img src={logo} alt={'logo'} style={{width: 200, height: 200}} />
                             <p>Login to Your Account</p>
-
-                        <div>
-                            <Button type={"primary"}>As Doctor</Button>
-                            <Button type={"secondary"}>As Clinic</Button>
-                        </div>
                         <div>
                             <Form
                                 onFinish={handleLogin}>
