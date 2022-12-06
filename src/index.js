@@ -3,11 +3,31 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'antd/dist/reset.css';
+import './index.css';
+import {PersistGate} from "redux-persist/integration/react";
+import configureStore from './store/configureStore';
+import {Provider} from "react-redux";
+
+
+import "./i18n";
+import axios from "axios";
+import {BrowserRouter} from "react-router-dom";
+
+const {persistor, store} = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+axios.defaults.withCredentials = true;
+
 root.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+      </BrowserRouter>
   </React.StrictMode>
 );
 

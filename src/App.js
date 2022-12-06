@@ -1,25 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import {Button, ConfigProvider} from 'antd';
+import hy from "antd/locale/hy_AM";
+import {useSelector} from "react-redux";
+import "./Styles.sass"
+
+import AppLayout from "./Components/AppLayout";
+import {Route, Routes} from "react-router";
+import Login from "./Components/Auth/Login";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    let redux = useSelector((state) => state);
+    return (
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#fc0398',
+                    color: '#fcfcfc',
+                },
+            }}
+            direction={!redux.globalState ? "ltr" : "rtl"}
+            locale={hy}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <Routes>
+            <Route path={'/'} element={<Login/>}></Route>
+            <Route path={'dashboard/*'} element={<AppLayout/>}></Route>
+        </Routes>
+        </ConfigProvider>
+    );
 }
 
 export default App;
