@@ -135,7 +135,6 @@ function AppLayout(){
             <div className="header" style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <Row>
                     <Button type={'primary'}>sdsd</Button>
-
                 </Row>
 
             </div>
