@@ -6,10 +6,10 @@ import logo from "../../dist/Img/logo.svg";
 import {useTranslation} from "react-i18next";
 
 function Login(){
-
+console.log(api)
     const {t} = useTranslation()
     const handleLogin = (values)=>{
-        axios.get(`${api}/sanctum/csrf-cookie`).then(response => {
+        axios.get(`${api.endpoint}sanctum/csrf-cookie`).then(response => {
             const Data = new FormData();
             Data.append('email', values.email)
             Data.append('password', values.password)

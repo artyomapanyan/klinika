@@ -1,1 +1,73 @@
-let endpoint = process.env.REACT_API_ENDPOINT
+
+let endpoint = process.env.REACT_APP_API_ENDPOINT
+let version = process.env.REACT_APP_VERSION
+
+console.log(process.env,'env')
+let api = {
+    endpoint,
+    version,
+    Auth: {
+        login: {
+            url: `${endpoint}${version}/auth/login`,
+            method: 'POST',
+        },
+        logout: {
+            url: `${endpoint}${version}/auth/logout`,
+            method: 'POST',
+        },
+        forgot: {
+            url: `${endpoint}${version}/auth/forgot`,
+            method: 'POST',
+        },
+    }
+};
+
+[
+    {
+        url: 'team-valuations',
+        resource: 'TeamValuation',
+    }
+    ].forEach(item => {
+        if (!item.type) {
+            api[item.resource] = {
+                list: {
+                    url: `${endpoint}${version}/${item.url}`,
+                    method: 'GET',
+                },
+                create: {
+                    url: `${endpoint}${version}/${item.url}`,
+                    method: 'POST',
+                },
+                update: {
+                    url: `${endpoint}${version}/${item.url}/`,
+                    method: 'PUT',
+                },
+                single: {
+                    url: `${endpoint}${version}/${item.url}/`,
+                    method: 'GET',
+                },
+                delete: {
+                    url: `${endpoint}${version}/${item.url}/`,
+                    method: 'DELETE',
+                },
+                all: {
+                    url: `${endpoint}${version}/${item.url}/all`,
+                    method: 'GET',
+                },
+                search: {
+                    url: `${endpoint}${version}/${item.url}/search`,
+                    method: 'GET',
+                },
+                ...item.custom
+            }
+        } else if (item.type === 'resource') {
+            api[item.resource] = {
+                all: {
+                    url: `${endpoint}${version}/${item.url}/all`,
+                    method: 'GET',
+                },
+            }
+        }
+
+    })
+export default api;
