@@ -4,6 +4,8 @@ import axios from "axios";
 import api from "../../../Api";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
+import "../../../Styles.sass"
+import HeaderAccount from "./Fragment/HeaderAccount";
 
 function DashboardHeader() {
     const auth = useSelector(state => state.auth)
@@ -25,7 +27,11 @@ function DashboardHeader() {
     }
     return <Row>
         <Col lg={12}></Col>
-        <Col lg={12}><Button type={'primary'} onClick={handleLogout}>Logout</Button> </Col>
+        <Col lg={12} style={{display:"flex", justifyContent:"flex-end"}}>
+            <Button type={'primary'} onClick={handleLogout}>Logout</Button>
+            <HeaderAccount />
+
+        </Col>
     </Row>
 }
 

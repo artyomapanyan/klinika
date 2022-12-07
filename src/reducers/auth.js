@@ -3,6 +3,7 @@ export default function auth(state = {}, action) {
             return {
                 ...action.payload,
                 token:'Bearer ' +action.payload.token
+
             }
         }
     if(action.type==='LOGOUT'){

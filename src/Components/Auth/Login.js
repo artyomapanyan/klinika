@@ -1,5 +1,5 @@
-import React from 'react';
-import {Button, Form, Input} from "antd";
+import React, {useState} from 'react';
+import {Button, Form, Input, Select, Spin} from "antd";
 import axios from "axios";
 import api from "../../Api.js"
 import logo from "../../dist/Img/logo.svg";
@@ -9,20 +9,30 @@ import {useNavigate} from "react-router";
 function Login(){
     const dispatch = useDispatch()
     const navigate = useNavigate();
+
+    const [rolesState, setRolesState] = useState([]);
+    const [loading, setLoading] = useState(false);
     const handleLogin = (values)=>{
 
       axios.get(`${api.endpoint}/sanctum/csrf-cookie`).then(response => {
+          setLoading(true)
           values.device_name = 'React App'
             axios.request({
                 url: api.Auth.login.url,
                 method: api.Auth.login.method,
                 data: values,
             }).then(response=>{
-                dispatch({
-                    type:'AUTH',
-                    payload:response
-                })
-                navigate('/dashboard')
+                if(response?.user?.roles?.length>1){
+                    setRolesState(response?.user?.roles)
+
+                }else{
+                    dispatch({
+                        type:'AUTH',
+                        payload:response
+                    })
+                    navigate('/dashboard')
+                }
+                setLoading(false)
             })
         })
 
@@ -49,7 +59,23 @@ function Login(){
                                     <Input.Password/>
                                 </Form.Item>
 
-                                <Button type={'primary'} htmlType={'submit'}>Submit</Button>
+                                {rolesState.length?<Form.Item
+                                    name={'role'}>
+                                    <Select>
+                                        {rolesState.map((el) => {
+                                            return <Select.Option key={el.id} value={el.id}>{el.name}</Select.Option>
+                                        })}
+                                    </Select>
+                                </Form.Item>:null}
+                            <Form.Item>
+
+                            <a className="login-form-forgot" href="/forgot">
+                                Forgot password
+                            </a>
+                        </Form.Item>
+
+
+                                <Button loading={loading??<Spin />} type={'primary'} htmlType={'submit'}>Submit</Button>
 
                             </Form>
                         </div>
