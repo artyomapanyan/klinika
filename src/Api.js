@@ -17,6 +17,10 @@ let api = {
             url: `${endpoint}${version}/auth/forgot`,
             method: 'POST',
         },
+        reset: {
+            url: `${endpoint}${version}/auth/reset`,
+            method: 'POST',
+        },
     }
 };
 [
