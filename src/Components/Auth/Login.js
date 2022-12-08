@@ -34,7 +34,7 @@ function Login(){
                         navigate('/dashboard')
                     }
                 }
-
+            }).finally(()=>{
                 setLoading(false)
             })
         })

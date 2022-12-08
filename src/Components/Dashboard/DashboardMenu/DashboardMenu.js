@@ -30,6 +30,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             icon: <img alt={'icons'} src={dash3}/>,
         },
         {
+            label: `Inputs`,
+            icon: <img alt={'icons'} src={dash4}/>,
+            children: [
+                {
+                    key: 'countries',
+                    label: `Countries`,
+                },
+            ]
+        },
+        {
             label: `Profile`,
             icon: <img alt={'icons'} src={dash4}/>,
             children: [

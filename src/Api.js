@@ -25,8 +25,8 @@ let api = {
 };
 [
     {
-        url: 'team-valuations',
-        resource: 'TeamValuation',
+        url: 'countries',
+        resource: 'Country',
     }
     ].forEach(item => {
         if (!item.type) {
