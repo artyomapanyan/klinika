@@ -1,7 +1,24 @@
 .head_account_drop,.head_acc_bottom_div
   display: flex
   flex-direction: column
-  .ant-btn
+  .ant-btn-primary
+    pointer-events: none
+    cursor: pointer
+    height: 100%
+    display: flex
+    white-space: break-spaces
+    justify-content: space-between
+    border-radius: 12px
+    width: 100%
+    align-items: center
+    border: none
+    margin-bottom: 8px
+    padding: 12px
+    background-color: #7c4d98
+    color: #f4f5f9
+    .head_drop_icon
+      filter: brightness(0) invert(1)
+  .ant-btn-default
     height: 100%
     display: flex
     white-space: break-spaces
@@ -13,9 +30,16 @@
     margin-bottom: 8px
     padding: 12px
     background-color: #f4f5f9
+    .head_drop_icon
+      filter: none
+    &:hover
+      background-color: #7c4d98
+      color: #f4f5f9
+      .head_drop_icon
+        filter: brightness(0) invert(1)
   .ant-btn-primary
     background-color: #7c4d98
-
+    border: 1px solid #7c4d98
 .head_acc_bottom_div
   margin-top: 25px
 
@@ -25,6 +49,5 @@
 .head_account_drop_text
   display: flex
   font-weight: 700
-
 
 

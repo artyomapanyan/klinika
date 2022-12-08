@@ -1,34 +1,38 @@
 import React from 'react'
-import {Button, Col, Row} from "antd";
-import axios from "axios";
-import api from "../../../Api";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router";
+import {Col, Row, Select} from "antd";
+
 import "../../../Styles.sass"
 import HeaderAccount from "./Fragment/HeaderAccount";
+import i18n, {changeLanguage} from "i18next";
+
 
 function DashboardHeader() {
-    const auth = useSelector(state => state.auth)
-    const dispatch = useDispatch()
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        axios.get(api.Auth.logout.url, {
 
-            headers: {
-                'Authorization': auth.token,
-            }
-        }).then(() => {
-            dispatch({
-                type: 'LOGOUT'
-            })
-            navigate('/')
-        })
 
+
+    const lngs = {
+        en: {nativeName: 'En'},
+        hy: {nativeName: 'Հայ'},
     }
+    const languageChange = (value) => {
+        changeLanguage(value)
+    }
+
     return <Row>
-        <Col lg={12}></Col>
-        <Col lg={12} style={{display:"flex", justifyContent:"flex-end"}}>
-            <Button type={'primary'} onClick={handleLogout}>Logout</Button>
+        <Col lg={12}>
+        </Col>
+        <Col lg={12} style={{display:"flex", justifyContent:"flex-end", alignItems: "center"}}>
+            <Select
+                defaultValue={i18n.resolvedLanguage}
+                style={{width: 80}}
+                onChange={(value) => languageChange(value)}
+            >
+                {
+                    Object.keys(lngs).map((el) => (
+                        <Select.Option key={el}>{lngs[el].nativeName}</Select.Option>
+                    ))
+                }
+            </Select>
             <HeaderAccount />
 
         </Col>

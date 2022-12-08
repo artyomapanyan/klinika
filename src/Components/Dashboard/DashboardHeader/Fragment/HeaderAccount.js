@@ -5,9 +5,11 @@ import alert from "../../../../dist/icons/alert.svg";
 import arrowDownPurple from "../../../../dist/icons/arrow-down-purple.svg";
 import {Avatar, Button, Card, Divider, Dropdown, Space} from "antd";
 import HeaderAccountDropdown from "./Fragment/HeaderAccountDropdown";
+import {useSelector} from "react-redux";
 
 
 function HeaderAccount() {
+    let user = useSelector((state) => state?.auth?.user);
 
     return(
         <div>
@@ -26,7 +28,7 @@ function HeaderAccount() {
                     <Button type={"link"} className={'head_user_db'}  >
                         <Space>
                             <Avatar className="header_avatar"/>
-                            <div >Alexey Sushkov</div>
+                            <div >{user?.first} {user?.last}</div>
                             <img alt={'icons'} src={arrowDownPurple}/>
                         </Space>
                     </Button>

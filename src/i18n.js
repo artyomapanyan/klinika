@@ -22,12 +22,6 @@ i18n
                     dashboard:"վահանակ",
                 }
             },
-            ru: {
-                translation: {
-                    learn: "Добро пожаловать в React",
-                    dashboard:"Приборная доска",
-                }
-            }
         },
         interpolation: {
             escapeValue: false
