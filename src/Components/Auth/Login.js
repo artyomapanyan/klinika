@@ -14,7 +14,7 @@ function Login(){
     const [loading, setLoading] = useState(false);
     const handleLogin = (values)=>{
 
-      axios.get(`${api.endpoint}/sanctum/csrf-cookie`).then(response => {
+      axios.get(`${api.endpoint}/sanctum/csrf-cookie`).then(() => {
           setLoading(true)
           values.device_name = 'React App'
             axios.request({
