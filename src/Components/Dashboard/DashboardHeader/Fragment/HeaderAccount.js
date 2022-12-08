@@ -4,6 +4,7 @@ import notification from "../../../../dist/icons/notification.svg";
 import alert from "../../../../dist/icons/alert.svg";
 import arrowDownPurple from "../../../../dist/icons/arrow-down-purple.svg";
 import {Avatar, Button, Card, Divider, Dropdown, Space} from "antd";
+import HeaderAccountDropdown from "./Fragment/HeaderAccountDropdown";
 
 
 function HeaderAccount() {
@@ -21,8 +22,8 @@ function HeaderAccount() {
                     <Divider type={"vertical"} style={{height: 32, margin:16}} />
 
 
-                <Dropdown dropdownRender={()=><Card>111</Card>} placement="bottomLeft" trigger={['click']}>
-                    <Button type={"link"} className={'head_user_db'} style={{marginBottom: 20, width:40}} >
+                <Dropdown dropdownRender={()=><Card className={"head_account_dropdown"}><HeaderAccountDropdown /></Card>} placement="bottomRight" trigger={['click']}>
+                    <Button type={"link"} className={'head_user_db'}  >
                         <Space>
                             <Avatar className="header_avatar"/>
                             <div >Alexey Sushkov</div>
