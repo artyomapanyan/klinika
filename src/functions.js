@@ -1,7 +1,7 @@
 import {notification} from "antd";
 
 export function notificate(data,status) {
-    if (data.errors) {
+    if (data?.errors) {
         Object.keys(data.errors).map((type, index) => {
             data.errors[type].forEach((message) => {
                 notification.error({
@@ -20,7 +20,7 @@ export function notificate(data,status) {
             placement: "bottomRight"
         })
     }
-    if (data.message  ) {
+    if (data?.message  ) {
         if(status===200){
             notification.info({
                 message: "Notification",
@@ -36,7 +36,7 @@ export function notificate(data,status) {
         }
 
     }
-    if (data.notices) {
+    if (data?.notices) {
         data.notices.forEach((message) => {
             if (data.status <= 400) {
                 notification.info({

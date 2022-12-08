@@ -26,6 +26,7 @@ function Login(){
                     setRolesState(response?.user?.roles)
 
                 }else{
+                    console.log(response)
                     dispatch({
                         type:'AUTH',
                         payload:response

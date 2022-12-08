@@ -11,14 +11,7 @@ import {notificate} from "./functions";
 
 function App() {
     let redux = useSelector((state) => state);
-    axios.defaults.withCredentials = true;
-    axios.interceptors.response.use(response => {
-        notificate(response.data, response.status)
-        return response.data?.data
-    }, error => {
-        notificate(error.response?.data)
-        return error
-    })
+
     return (
         <ConfigProvider
             theme={{
