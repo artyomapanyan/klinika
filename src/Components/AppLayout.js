@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Input, Layout, Progress, Row, Select, Tag} from "antd";
+import {Button, Input, Layout, Select} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import i18n, {changeLanguage} from "i18next";
