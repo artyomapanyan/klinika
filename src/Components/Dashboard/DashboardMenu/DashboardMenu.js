@@ -9,8 +9,10 @@ import dash3 from "../../../dist/icons/frame3.svg";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash5 from "../../../dist/icons/frame5.svg";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router";
 function DashboardMenu({mouseCollapsed,fixCollapse}){
-    const {t} = useTranslation()
+    const {t} = useTranslation();
+    const navigate = useNavigate();
     const items = [
         {
             key: `/age-categories`,
@@ -47,6 +49,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             icon: <img alt={'icons'} src={dash5}/>,
         },
     ];
+    const handleMenuClick = (e)=>{
+        const link = e.key;
+        const event = e.domEvent
+        console.log(event,link)
+        if(event.buttons===4 && link){
+            window.open(window.location.origin+'/account/'+link,'_blank');
+        }else{
+            navigate(`/dashboard/${link}`)
+        }
+    }
 
     return (
         <div>
@@ -63,7 +75,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             </div>
             <Divider/>
             <Menu
-
                 mode="inline"
                 theme="light"
                 inlineCollapsed={false}
@@ -71,7 +82,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 subMenuCloseDelay={0}
                 items={items}
                 style={{fontSize: 16}}
-
+                onClick={handleMenuClick}
             />
         </div>
     )

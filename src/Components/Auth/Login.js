@@ -22,17 +22,19 @@ function Login(){
                 method: api.Auth.login.method,
                 data: values,
             }).then(response=>{
-                if(response?.user?.roles?.length>1){
-                    setRolesState(response?.user?.roles)
+                if(response.user.id){
+                    if(!response?.token){
+                        setRolesState(response?.user?.roles)
 
-                }else{
-                    console.log(response)
-                    dispatch({
-                        type:'AUTH',
-                        payload:response
-                    })
-                    navigate('/dashboard')
+                    }else{
+                        dispatch({
+                            type:'AUTH',
+                            payload:response
+                        })
+                        navigate('/dashboard')
+                    }
                 }
+
                 setLoading(false)
             })
         })
@@ -61,7 +63,7 @@ function Login(){
                                 </Form.Item>
 
                                 {rolesState.length?<Form.Item
-                                    name={'role'}>
+                                    name={'role_id'}>
                                     <Select>
                                         {rolesState.map((el) => {
                                             return <Select.Option key={el.id} value={el.id}>{el.name}</Select.Option>

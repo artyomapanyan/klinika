@@ -15,7 +15,6 @@ const {persistor, store} = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(response => {
     notificate(response?.data, response?.status)
