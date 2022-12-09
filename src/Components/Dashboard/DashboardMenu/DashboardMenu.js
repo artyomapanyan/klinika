@@ -25,7 +25,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             icon: <img alt={'icons'} src={dash2}/>,
         },
         {
-            key: `/age-categories`,
+            key: `/-categories`,
             label: `Offers`,
             icon: <img alt={'icons'} src={dash3}/>,
         },
@@ -87,7 +87,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             <Menu
                 mode="inline"
                 theme="light"
-                inlineCollapsed={false}
                 triggerSubMenuAction={'click'}
                 subMenuCloseDelay={0}
                 items={items}

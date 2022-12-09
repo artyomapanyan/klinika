@@ -64,6 +64,7 @@ function Countries(){
                         pagination={data.pagination}
                         onChange={handleTableChange}
                         dataSource={data?.items}
+                        rowKey={e=>e.id}
                     />
 
                 </Col>
