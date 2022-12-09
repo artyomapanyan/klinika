@@ -37,31 +37,37 @@ function AppLayout(){
         setBtnCollapsed(!btnCollapsed)
     }
 
-    return <Layout>
-        <div className="all-div">
-            <div className="nav" style={{position: "relative", width: 80, zIndex: 99}}>
-                <Sider collapsed={mouseCollapsed} style={{position: 'absolute', height: "100%"}}
+    return <Layout className={'main-container'}>
+
+            <div  style={{position: "relative", width: 80, zIndex: 99}}>
+                <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
                        onMouseEnter={toggleCollapsed1}
                        onMouseLeave={!btnCollapsed ? toggleCollapsed : toggleCollapsed1}>
                     <DashboardMenu mouseCollapsed={mouseCollapsed} fixCollapse={fixCollapse}/>
                 </Sider>
 
             </div>
-            <div className="header" style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
+            <div className={'app-content'}>
+
+
+            <div  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <DashboardHeader/>
 
             </div>
-            <Content className="content"  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
+            <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <Routes>
                     <Route path={'countries'} element={<Countries/>}/>
+                    <Route path={'countries/new'} element={<Country/>}></Route>
+                    <Route path={'countries/:id'} element={<Country/>}></Route>
                     <Route path={'valod'} element={<div>valod</div>}/>
-                    <Route path={'country/:id'} element={<Country/>}></Route>
+
                 </Routes>
             </Content>
-            <div className="footer" style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
+            <div style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
 
             </div>
-        </div>
+            </div>
+
     </Layout>
 
 }

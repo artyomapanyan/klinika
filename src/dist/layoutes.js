@@ -16,3 +16,11 @@ export const formItemLayout = {
         xxl: { span: 13 },
     },
 };
+export const formItemFull = {
+    labelCol: {
+        lg: { span: 12 },
+    },
+    wrapperCol: {
+        lg: { span: 12 },
+    },
+}

@@ -4,6 +4,8 @@ import {Button, Col, Row, Space, Table, Typography} from "antd";
 import {useGetResourceIndex} from "../../Functions/api_calls";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
+import ResourceLinks from "../../ResourceLinks";
+const resource = 'Country'
 function Countries(){
     const [params,setParams] = useState({})
     const handleTableChange = (pagination,filters,sorter)=>{
@@ -11,12 +13,12 @@ function Countries(){
             page:pagination.current
         })
     }
-    const  {loadingState,data}= useGetResourceIndex('Country',params)
+    const  {loadingState,data}= useGetResourceIndex(resource,params)
 
     let navigate = useNavigate();
 
-    const onCountryEdit = (e, v) => {
-        navigate("/dashboard/country/" + v.id)
+    const onCountryEdit = (e) => {
+        navigate(ResourceLinks[resource]+e)
 
     }
 
@@ -27,11 +29,11 @@ function Countries(){
             key:'name',
         },
         {
-            dataIndex:'name',
+            dataIndex:'id',
             title:'action',
-            key:'name',
-            render:(e, v)=><div>
-                <Button onClick={() => onCountryEdit(e, v)}><EditOutlined /></Button>
+            key:'id',
+            render:(e)=><div>
+                <Button onClick={() => onCountryEdit(e)}><EditOutlined /></Button>
                 <Button><DeleteOutlined /></Button>
             </div>
         }

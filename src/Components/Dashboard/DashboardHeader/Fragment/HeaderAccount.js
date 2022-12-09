@@ -27,7 +27,7 @@ function HeaderAccount() {
                 <Dropdown dropdownRender={()=><Card className={"head_account_dropdown"}><HeaderAccountDropdown /></Card>} placement="bottomRight" trigger={['click']}>
                     <Button type={"link"} className={'head_user_db'}  >
                         <Space>
-                            <Avatar className="header_avatar"/>
+                            <Avatar size={'large'} className="header_avatar">{user?.first}</Avatar>
                             <div >{user?.first} {user?.last}</div>
                             <img alt={'icons'} src={arrowDownPurple}/>
                         </Space>
