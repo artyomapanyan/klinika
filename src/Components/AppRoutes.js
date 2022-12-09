@@ -12,6 +12,8 @@ function AppRoutes(){
             <Route path={'/password/reset/:token'} element={<Reset/>}></Route>
             <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
             <Route path={'forgot'} element={<Forgot/>}></Route>
+
+
         </Routes>
     )
 }

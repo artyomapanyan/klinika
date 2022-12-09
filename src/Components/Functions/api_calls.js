@@ -41,3 +41,33 @@ export const useGetResourceIndex = (resource,params) => {
 
     return {loadingState,data}
 }
+export const useGetResourceSingle = (resource,id)=>{
+    const [loading, setLoading] = useState(false)
+    const [data,setData] = useState({})
+    let token = useSelector((state) => state.auth.token);
+    useEffect(()=>{
+        setLoading(true)
+        axios.request({
+            url:api[resource].single.url+id,
+            method:api[resource].single.method,
+            headers: {
+                'Authorization': token,
+            }
+        }).then(response=>{
+            if(response){
+                setData(response)
+            }
+
+
+        }).finally(()=>{
+            setLoading(false)
+        })
+    }, [resource,id])
+
+    const loadingState = {
+        loading,
+        setLoading
+    }
+
+    return {loadingState,data}
+}

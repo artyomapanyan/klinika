@@ -9,6 +9,7 @@ import DashboardMenu from "./Dashboard/DashboardMenu/DashboardMenu";
 import DashboardHeader from "./Dashboard/DashboardHeader/DashboardHeader";
 import {Route, Routes} from "react-router";
 import Countries from "./Dashboard/Countries/Countries";
+import Country from "./Dashboard/Countries/Country/Country";
 
 
 
@@ -54,6 +55,7 @@ function AppLayout(){
                 <Routes>
                     <Route path={'countries'} element={<Countries/>}/>
                     <Route path={'valod'} element={<div>valod</div>}/>
+                    <Route path={'country/:id'} element={<Country/>}></Route>
                 </Routes>
             </Content>
             <div className="footer" style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
