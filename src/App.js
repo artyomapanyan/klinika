@@ -1,16 +1,26 @@
 import './App.css';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ConfigProvider} from 'antd';
 import hy from "antd/locale/hy_AM";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import "./dist/styles/Styles.sass"
 import AppRoutes from "./Components/AppRoutes";
 import axios from "axios";
-import {notificate} from "./functions";
+import api from "./Api";
 
 
 function App() {
     let redux = useSelector((state) => state);
+    let dispatch = useDispatch()
+
+    useEffect(()=>{
+        axios.get(`${api.apiEndpoint}${api.version}/app`).then(response=>{
+            dispatch({
+                type:'APP',
+                payload:response
+            })
+        })
+    },[])
 
     return (
         <ConfigProvider

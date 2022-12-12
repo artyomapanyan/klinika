@@ -3,6 +3,7 @@ let endpoint = process.env.REACT_APP_API_ENDPOINT+ "/api/"
 let version = process.env.REACT_APP_VERSION
 let api = {
     endpoint:process.env.REACT_APP_API_ENDPOINT,
+    apiEndpoint:endpoint,
     version,
     Auth: {
         login: {
