@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import logo from "../../../dist/Img/logo.svg";
 import logoShort from "../../../dist/Img/Logo-short.svg";
 import {Button, Divider, Menu} from "antd";
@@ -23,7 +23,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         }
         return true
     }
-    const items = [
+    const items = useMemo(()=>[
         {
             key: `/`,
             label: t("dashboard"),
@@ -69,7 +69,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             label: `Reviews`,
             icon: <img alt={'icons'} src={dash5}/>,
         },
-    ].filter(handleFilterMenus);
+    ].filter(handleFilterMenus),[permissions]);
 
     const handleMenuClick = (e)=>{
         const link = e.key;
