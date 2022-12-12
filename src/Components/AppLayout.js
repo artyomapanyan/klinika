@@ -10,6 +10,7 @@ import DashboardHeader from "./Dashboard/DashboardHeader/DashboardHeader";
 import {Route, Routes} from "react-router";
 import Countries from "./Dashboard/Countries/Countries";
 import Country from "./Dashboard/Countries/Country/Country";
+import AuthCheck from "./Fragments/AuthCheck";
 
 
 
@@ -36,7 +37,15 @@ function AppLayout(){
     const fixCollapse = () => {
         setBtnCollapsed(!btnCollapsed)
     }
+    const resourceRoutes =[
+        {
+            url:'countries',
+            resource:'Country',
+            singleComp:<Country/>,
+            indexComp:<Countries/>
+        },
 
+    ]
     return <Layout className={'main-container'}>
 
             <div  style={{position: "relative", width: 80, zIndex: 99}}>
@@ -56,9 +65,11 @@ function AppLayout(){
             </div>
             <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <Routes>
-                    <Route path={'countries'} element={<Countries/>}/>
-                    <Route path={'countries/new'} element={<Country/>}></Route>
-                    <Route path={'countries/:id'} element={<Country/>}></Route>
+                    {resourceRoutes.map((item,key)=><>
+                        <Route key={key+'_i'} path={item.url} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>
+                        <Route key={key+'_n'} path={`${item.url}/new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>
+                        <Route key={key+'_u'} path={`${item.url}/:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>
+                        </>)}
                     <Route path={'valod'} element={<div>valod</div>}/>
 
                 </Routes>

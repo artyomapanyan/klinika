@@ -21,7 +21,7 @@ export const useGetResourceIndex = (resource,params) => {
                 setData({
                     items:response.items,
                     pagination:{
-                        pageSize:response.page_items,
+                        pageSize:15,
                         current:response.current_page,
                         total:response.total_items,
                     }
@@ -38,9 +38,12 @@ export const useGetResourceIndex = (resource,params) => {
         loading,
         setLoading
     }
+    const dataState = {
+        data,
+        setData
+    }
 
-
-    return {loadingState,data}
+    return {loadingState,dataState}
 }
 export const useGetResourceSingle = (resource,id)=>{
     const [loading, setLoading] = useState(false)
@@ -90,6 +93,15 @@ export const updateResource = (resource,id,values,token)=>{
                 'Authorization': token,
             }
         })
+}
+export const deleteResource = (resource,id,token)=>{
+    return  axios.request({
+        url:api[resource].delete.url+id,
+        method:api[resource].delete.method,
+        headers: {
+            'Authorization': token,
+        }
+    })
 }
 export const createResource = (resource,values,token)=>{
     return  axios.request({

@@ -10,12 +10,22 @@ import dash4 from "../../../dist/icons/frame4.svg";
 import dash5 from "../../../dist/icons/frame5.svg";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router";
+import {useSelector} from "react-redux";
 function DashboardMenu({mouseCollapsed,fixCollapse}){
     const {t} = useTranslation();
     const navigate = useNavigate();
+    const permissions = useSelector(state=>state.auth.user.permissions);
+    const handleFilterMenus = (item)=>{
+        if(item.children){
+            return item.children.filter(handleFilterMenus).length
+        }else if(item.permission){
+            return permissions.includes(item.permission+':viewAny')
+        }
+        return true
+    }
     const items = [
         {
-            key: `/age-categories`,
+            key: `/`,
             label: t("dashboard"),
             icon: <img alt={'icons'} src={dash1}/>,
         },
@@ -36,6 +46,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 {
                     key: 'countries',
                     label: `Countries`,
+                    permission:'Country'
                 },
             ]
         },
@@ -58,7 +69,8 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             label: `Reviews`,
             icon: <img alt={'icons'} src={dash5}/>,
         },
-    ];
+    ].filter(handleFilterMenus);
+
     const handleMenuClick = (e)=>{
         const link = e.key;
         const event = e.domEvent
@@ -85,6 +97,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             </div>
             <Divider/>
             <Menu
+
                 mode="inline"
                 theme="light"
                 triggerSubMenuAction={'click'}
