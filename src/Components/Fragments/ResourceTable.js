@@ -7,19 +7,37 @@ import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
+import {useSearchParams} from "react-router-dom";
 
 function ResourceTable({resource,tableColumns,title}){
     const [params,setParams] = useState({})
+    let [searchParams, setSearchParams] = useSearchParams(params);
     let token = useSelector((state) => state?.auth?.token);
     const {t} = useTranslation()
     let navigate = useNavigate();
 
+
+    const  {loadingState,dataState}= useGetResourceIndex(resource,searchParams)
     const handleTableChange = (pagination,filters,sorter)=>{
+        let params = {
+            ...filters,
+            order_by:sorter.columnKey,
+            order:sorter.order,
+            page:pagination.current
+        }
+        Object.keys(params).forEach(key=>{
+            if(!params[key]){
+                delete params[key]
+            }
+        })
+        setSearchParams(params)
         setParams({
+            ...filters,
+            order_by:sorter.columnKey,
+            order:sorter.order,
             page:pagination.current
         })
     }
-    const  {loadingState,dataState}= useGetResourceIndex(resource,params)
     const {setLoading,loading} = loadingState;
     const {setData,data} = dataState
 

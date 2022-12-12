@@ -1,5 +1,6 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
+import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 function Countries(){
     return(
        <ResourceTable resource={'Country'} tableColumns={[
@@ -7,6 +8,8 @@ function Countries(){
                dataIndex:'name',
                title:'Name',
                key:'name',
+               filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+               sorter:true
            },
            {
                dataIndex:'date',
