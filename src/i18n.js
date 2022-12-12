@@ -14,12 +14,14 @@ i18n
                 translation: {
                     learn: "Welcome to React",
                     dashboard:"dashboard",
+                    Name:"Name",
                 }
             },
-            hy: {
+            ar: {
                 translation: {
                     learn: "Բարի գալուստ React",
                     dashboard:"վահանակ",
+                    Name:"Անուն",
                 }
             },
         },

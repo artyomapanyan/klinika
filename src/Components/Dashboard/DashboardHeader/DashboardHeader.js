@@ -4,16 +4,12 @@ import {Col, Row, Select} from "antd";
 import "../../../dist/styles/Styles.sass"
 import HeaderAccount from "./Fragment/HeaderAccount";
 import i18n, {changeLanguage} from "i18next";
+import {useSelector} from "react-redux";
 
 
 function DashboardHeader() {
+    let lngs = useSelector((state) => state?.app?.supported_locales);
 
-
-
-    const lngs = {
-        en: {nativeName: 'En'},
-        hy: {nativeName: 'Հայ'},
-    }
     const languageChange = (value) => {
         changeLanguage(value)
     }

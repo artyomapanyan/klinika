@@ -5,6 +5,7 @@ import {useGetResourceIndex} from "../../Functions/api_calls";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../../ResourceLinks";
+import {useTranslation} from "react-i18next";
 const resource = 'Country'
 function Countries(){
     const [params,setParams] = useState({})
@@ -16,6 +17,7 @@ function Countries(){
     const  {loadingState,data}= useGetResourceIndex(resource,params)
 
     let navigate = useNavigate();
+    const {t} = useTranslation();
 
     const onCountryEdit = (e) => {
         navigate(ResourceLinks[resource]+e)
@@ -25,7 +27,7 @@ function Countries(){
     const columns = [
         {
             dataIndex:'name',
-            title:'Name',
+            title:t('Name'),
             key:'name',
         },
         {
@@ -33,8 +35,8 @@ function Countries(){
             title:'action',
             key:'id',
             render:(e)=><div>
-                <Button onClick={() => onCountryEdit(e)}><EditOutlined /></Button>
-                <Button><DeleteOutlined /></Button>
+                <Button size={"small"} style={{border:'none'}} onClick={() => onCountryEdit(e)}><EditOutlined /></Button>
+                <Button size={"small"} style={{border:'none'}} ><DeleteOutlined /></Button>
             </div>
         }
 
@@ -53,7 +55,7 @@ function Countries(){
                     </Space>
                 </Col>
                 <Col lg={12}>
-                    <Button type={'primary'}>Add</Button>
+                    <Button type={'primary'}>+ Add</Button>
                 </Col>
             </Row>
             <Row>
