@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Input, Layout} from "antd";
+import {Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {useDispatch, useSelector} from "react-redux";

@@ -1,5 +1,4 @@
 import {notification} from "antd";
-import {useSelector} from "react-redux";
 
 export function notificate(data,status) {
     if (data?.errors) {

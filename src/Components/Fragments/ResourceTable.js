@@ -1,4 +1,4 @@
-import React, {useState, useTransition} from 'react'
+import React, {useState} from 'react'
 import {Content} from "antd/es/layout/layout";
 import {Button, Col, Row, Space, Table, Typography} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";

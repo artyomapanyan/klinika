@@ -1,6 +1,5 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
-import {Button} from "antd";
 function Cities() {
     return(
         <div>

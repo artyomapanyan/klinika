@@ -1,14 +1,11 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {createResource, updateResource, useGetResourceIndex, useGetResourceSingle} from "../../Functions/api_calls";
+import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Input, Select, Space} from "antd";
-import React, {useEffect} from "react";
-import {GetAll} from "../../Functions/get_all";
-import axios from "axios";
-import api from "../../../Api";
+import React from "react";
 
 const resource = 'City';
 
