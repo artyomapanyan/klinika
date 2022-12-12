@@ -2,7 +2,7 @@ import React, {useState, useTransition} from 'react'
 import {Content} from "antd/es/layout/layout";
 import {Button, Col, Row, Space, Table, Typography} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
@@ -12,15 +12,18 @@ function ResourceTable({resource,tableColumns,title}){
     const [params,setParams] = useState({})
     let token = useSelector((state) => state?.auth?.token);
     const {t} = useTranslation()
+    let navigate = useNavigate();
+
     const handleTableChange = (pagination,filters,sorter)=>{
         setParams({
             page:pagination.current
         })
     }
     const  {loadingState,dataState}= useGetResourceIndex(resource,params)
-    const {setLoading,loading} = loadingState
+    const {setLoading,loading} = loadingState;
     const {setData,data} = dataState
-    let navigate = useNavigate();
+
+
 
     const onResourceEdit = (e) => {
         navigate(ResourceLinks[resource]+e)
@@ -67,7 +70,7 @@ function ResourceTable({resource,tableColumns,title}){
                     </Space>
                 </Col>
                 <Col lg={12}>
-                    <Button type={'primary'} onClick={onAddNew}>Add</Button>
+                    <Button icon={<PlusOutlined />} type={'primary'} onClick={onAddNew}>Add</Button>
                 </Col>
             </Row>
             <Row>

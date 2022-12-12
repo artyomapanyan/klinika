@@ -8,6 +8,11 @@ function Countries(){
                title:'Name',
                key:'name',
            },
+           {
+               dataIndex:'date',
+               title:'Date',
+               key:'date',
+           },
        ]} title={'Countries'}/>
     )
 }

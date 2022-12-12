@@ -27,7 +27,6 @@ function Reset(){
                 navigate('/dashboard')
             }
             setLoading(false)
-            console.log(response)
         })
     }
     return <Form onFinish={handleResetPassword} ref={formRef} initialValues={{

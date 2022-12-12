@@ -1,3 +1,5 @@
 export default {
-    Country:'/dashboard/countries/'
+    Region:'/dashboard/regions/',
+    Country:'/dashboard/countries/',
+    City:'/dashboard/cities/'
 }

@@ -1,22 +1,26 @@
-import React, {useState} from 'react';
-import {Button, Form, Input,Space} from 'antd';
-import "./Country.sass"
-import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
+
 import {useNavigate, useParams} from "react-router";
-import Preloader from "../../../Preloader";
 import {useSelector} from "react-redux";
-import resourceLinks from "../../../ResourceLinks";
+import {createResource, updateResource, useGetResourceIndex, useGetResourceSingle} from "../../Functions/api_calls";
+import resourceLinks from "../../ResourceLinks";
+import Preloader from "../../Preloader";
+import {Button, Form, Input, Select, Space} from "antd";
+import React, {useEffect} from "react";
+import {GetAll} from "../../Functions/get_all";
+import axios from "axios";
+import api from "../../../Api";
 
-const resource = 'Country';
+const resource = 'City';
 
-function Country() {
+function City() {
+
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
-    const [valuesState, setValuesState] = useState('')
+
 
     const onFinish = (values) => {
         setLoading(true)
@@ -36,13 +40,11 @@ function Country() {
                 setLoading(false)
             })
         }
-        setValuesState(values)
 
     }
-
-    return (
-        <div className={"country_content"}>
-            <h3>Editing Country - {data?.name}</h3>
+    return(
+        <div>
+            <h3>Add New City</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -53,40 +55,25 @@ function Country() {
                     <Input/>
                 </Form.Item>
                 <Form.Item
-                    label={'Alpha2 code  *'}
-                    name={'alpha2_code'}
+                    label={'Area'}
+                    name="City"
                     rules={[
                         {
                             required: true,
-                            len:2
-                        },
+                        }
+                    ]}>
+                    onPopupScroll
+                    <Select>
 
-                        ]}
-                >
-                    <Input/>
+                    </Select>
                 </Form.Item>
 
-                <Form.Item
-                    label={'Alpha3 code  *'}
-                    name={'alpha3_code'}
-                    rules={[
-                        {
-                            required: true,
-                            len:3
-                        },
-                    ]}
-
-                >
-                    <Input/>
-                </Form.Item>
                 <Space>
                     <Button type={'primary'} htmlType="submit">Save</Button>
 
                 </Space>
             </Form>}
         </div>
-
     )
 }
-
-export default Country;
+export default City;

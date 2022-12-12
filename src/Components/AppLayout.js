@@ -11,6 +11,10 @@ import {Route, Routes} from "react-router";
 import Countries from "./Dashboard/Countries/Countries";
 import Country from "./Dashboard/Countries/Country/Country";
 import AuthCheck from "./Fragments/AuthCheck";
+import Regions from "./Dashboard/Areas/Regions";
+import Region from "./Dashboard/Areas/Region";
+import Cities from "./Dashboard/Cities/Cities";
+import City from "./Dashboard/Cities/City";
 
 
 
@@ -44,6 +48,18 @@ function AppLayout(){
             singleComp:<Country/>,
             indexComp:<Countries/>
         },
+        {
+            url:'regions',
+            resource:'Region',
+            singleComp:<Region/>,
+            indexComp:<Regions/>
+        },
+        {
+            url:'cities',
+            resource:'City',
+            singleComp:<City/>,
+            indexComp:<Cities/>
+        },
 
     ]
     return <Layout className={'main-container'}>
@@ -70,6 +86,7 @@ function AppLayout(){
                         <Route key={key+'_n'} path={`${item.url}/new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>
                         <Route key={key+'_u'} path={`${item.url}/:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>
                         </>)}
+
                     <Route path={'valod'} element={<div>valod</div>}/>
 
                 </Routes>

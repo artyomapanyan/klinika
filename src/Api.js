@@ -28,7 +28,15 @@ let api = {
     {
         url: 'countries',
         resource: 'Country',
-    }
+    },
+    {
+        url: 'regions',
+        resource: 'Region',
+    },
+    {
+        url: 'cities',
+        resource: 'City',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

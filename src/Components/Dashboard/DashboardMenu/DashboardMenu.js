@@ -48,6 +48,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: `Countries`,
                     permission:'Country'
                 },
+                {
+                    key: 'regions',
+                    label: `Areas`,
+                    permission:'Region'
+                },
+                {
+                    key: 'cities',
+                    label: `Cities`,
+                    permission:'City'
+                },
             ]
         },
         {
@@ -74,7 +84,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
     const handleMenuClick = (e)=>{
         const link = e.key;
         const event = e.domEvent
-        console.log(event,link)
         if(event.buttons===4 && link){
             window.open(window.location.origin+'/account/'+link,'_blank');
         }else{
