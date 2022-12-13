@@ -9,7 +9,8 @@ function Countries(){
                title:'Name',
                key:'name',
                filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
-               sorter:true
+               translatable:true,
+               sorter:true,
            },
            {
                dataIndex:'date',

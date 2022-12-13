@@ -7,14 +7,13 @@ import {useSearchParams} from "react-router-dom";
 export const useGetResourceIndex = (resource,params) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({})
-    let [searchParams] = useSearchParams(params);
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
         setLoading(true)
         axios.request({
             url:api[resource].list.url,
             method:api[resource].list.method,
-            params:searchParams,
+            params:params,
             headers: {
                 'Authorization': token,
             }
@@ -34,7 +33,7 @@ export const useGetResourceIndex = (resource,params) => {
         }).finally(()=>{
             setLoading(false)
         })
-    }, [resource,params,searchParams,token])
+    }, [resource,params,token])
 
     const loadingState = {
         loading,

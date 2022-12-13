@@ -1,5 +1,18 @@
 import {notification} from "antd";
-
+export function paramsToObject(entries) {
+    const result = {}
+    for(const [key, value] of entries) { // each 'entry' is a [key, value] tupple
+        result[key] = value;
+    }
+    return result;
+}
+export function clearObject(obj){
+    Object.keys(obj).forEach(key => {
+        if (!obj[key]) {
+            delete obj[key]
+        }
+    })
+}
 export function notificate(data,status) {
     if (data?.errors) {
         Object.keys(data.errors).map((type, index) => {
