@@ -15,7 +15,7 @@ function TableFilterElement({filterProps}){
 
     }
     return <Card title={<TFInput value={filterProps.selectedKeys} onChangeValue={onChangeValue}/>} >
-        <Space><Button type={"primary"} onClick={onFilter}>Filter</Button> <Button type={"primary"} onClick={onReset}>Reset</Button></Space>
+        <Space><Button type={"primary"} onClick={onFilter}>Filter</Button> <Button type={"secondary"} onClick={onReset}>Reset</Button></Space>
     </Card>
 }
 export default TableFilterElement
