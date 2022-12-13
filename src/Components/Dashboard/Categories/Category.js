@@ -1,26 +1,20 @@
-import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+
+import {Button, Form, Input,Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
+import {useNavigate, useParams} from "react-router";
 import Preloader from "../../Preloader";
-import {Button, Form, Input, Select, Space} from "antd";
-import React, {useEffect, useRef} from "react";
-import axios from "axios";
-import api from "../../../Api";
-import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
+import {useSelector} from "react-redux";
+import resourceLinks from "../../ResourceLinks";
 
-const resource = 'Region';
+const resource = 'Category';
 
-function Region() {
-
+function Category() {
     const params = useParams();
     const navigate = useNavigate();
-    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
-
 
     const onFinish = (values) => {
         setLoading(true)
@@ -42,31 +36,18 @@ function Region() {
         }
 
     }
-    console.log(data,'data')
-    return(
-        <div>
-            <h3>Add New Area</h3>
+
+    return (
+        <div className={"country_content"}>
+            <h3>Add New Strings</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-                initialValues={{
-                    ...data,
-                    country_id:data?.country?.id
-                }}
+                initialValues={data}
             >
                 <Form.Item label={'Name'} name={'name'}>
                     <Input/>
-                </Form.Item>
-                <Form.Item
-                    label={'Country'}
-                    name="country_id"
-                    rules={[
-                        {
-                            required: true,
-                        }
-                    ]}>
-                    <ResourceSelectPaginated name={'country_id'} formRef={formRef} value={data?.country?.id} resource={'Country'} initialData={data?.region?[data.region]:[]}/>
                 </Form.Item>
 
                 <Space>
@@ -75,6 +56,8 @@ function Region() {
                 </Space>
             </Form>}
         </div>
+
     )
 }
-export default Region;
+
+export default Category;

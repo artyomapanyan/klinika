@@ -58,6 +58,11 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: `Cities`,
                     permission:'City'
                 },
+                {
+                    key: 'categories',
+                    label: `Categories`,
+                    permission:'Category'
+                },
             ]
         },
         {

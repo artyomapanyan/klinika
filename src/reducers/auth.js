@@ -1,5 +1,5 @@
 export default function auth(state = {}, action) {
-        if(action.type==='AUTH'){
+    if(action.type==='AUTH'){
             return {
                 ...action.payload,
                 token:'Bearer ' +action.payload.token,
@@ -9,9 +9,21 @@ export default function auth(state = {}, action) {
                 }
 
             }
-        }
+    }
     if(action.type==='LOGOUT'){
         return {
+
+        }
+    }
+    if(action.type==='ROLE_CHANGE'){
+        console.log(action.payload)
+        return {
+            ...state,
+            selected_role:action.payload,
+            user:{
+                ...state.user,
+                permissions: action.payload.permissions.map(e=>e.name)
+            }
 
         }
     }

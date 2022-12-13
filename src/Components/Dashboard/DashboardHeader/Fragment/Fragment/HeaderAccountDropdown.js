@@ -27,33 +27,56 @@ function HeaderAccountDropdown() {
         })
     }
 
+    let roles = auth?.user?.roles
+    const onRoleChange = (el) => {
+        dispatch({
+            type:'ROLE_CHANGE',
+            payload: el
+
+        })
+
+    }
+
+
+
     return (
         <div>
             <div className={"head_account_drop"}>
 
                 <h3 style={{fontWeight: 700}}>Select Role :</h3>
-                <Button  type={'primary'} >
-                    <div >
-                        <div className={"head_account_drop_text"}>Therapist</div>
-                        <div>Lakeside General Hospital</div>
-                    </div>
-                    <div><img className={"head_drop_icon"} alt={'icons'} src={frame4}/></div>
-                </Button>
-                <Button type={'default'} >
-                    <div>
-                        <div className={"head_account_drop_text"}>Reumatologist therapist</div>
-                        <div style={{display:"flex"}}>Flowerhill Clinic</div>
-                    </div>
-                    <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>
 
-                </Button>
-                <Button >
-                    <div>
-                        <div className={"head_account_drop_text"}>Sushkov Aleksey</div>
-                        <div style={{display:"flex"}}>Patient profile</div>
-                    </div>
-                    <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>
-                </Button>
+                {roles.map((el) =><Button type ={auth?.selected_role?.id===el?.id?'primary':'default'} key={el.id} onClick={()=>onRoleChange(el)} >
+                            <div >
+                                <div className={"head_account_drop_text"}>{el?.name}</div>
+                                <div>{el?.key}</div>
+                            </div>
+                            <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>
+                        </Button>)
+                }
+
+
+                {/*<Button  type={'primary'} >*/}
+                {/*    <div >*/}
+                {/*        <div className={"head_account_drop_text"}>Therapist</div>*/}
+                {/*        <div>Lakeside General Hospital</div>*/}
+                {/*    </div>*/}
+                {/*    <div><img className={"head_drop_icon"} alt={'icons'} src={frame4}/></div>*/}
+                {/*</Button>*/}
+                {/*<Button type={'default'} >*/}
+                {/*    <div>*/}
+                {/*        <div className={"head_account_drop_text"}>Reumatologist therapist</div>*/}
+                {/*        <div style={{display:"flex"}}>Flowerhill Clinic</div>*/}
+                {/*    </div>*/}
+                {/*    <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>*/}
+
+                {/*</Button>*/}
+                {/*<Button >*/}
+                {/*    <div>*/}
+                {/*        <div className={"head_account_drop_text"}>Sushkov Aleksey</div>*/}
+                {/*        <div style={{display:"flex"}}>Patient profile</div>*/}
+                {/*    </div>*/}
+                {/*    <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>*/}
+                {/*</Button>*/}
         </div>
             <div className={"head_acc_bottom_div"}>
                 <Button style={{justifyContent:"none"}}>

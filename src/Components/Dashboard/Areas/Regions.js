@@ -1,6 +1,7 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import {Button} from "antd";
+import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 function Regions() {
     return(
         <div>
@@ -12,26 +13,26 @@ function Regions() {
                     dataIndex:'id',
                     title:'ID',
                     key:'id',
-                    render:(e,record)=>{
-                        return record.id;
-                    }
+                    sorter:true,
                 },
                 {
                     dataIndex:'name',
                     title:'Area',
                     key:'area',
-
+                    sorter:true,
+                    translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
                     dataIndex:['country', 'name'],
                     title:'Country',
                     key:'country',
+                    translatable:true,
                 },
                 {
                     dataIndex:'date',
                     title:'Create date',
                     key:'date',
-
                 },
             ]} title={'Areas'}/>
         </div>

@@ -1,10 +1,11 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
-function Cities() {
+
+function Categories() {
     return(
         <div>
-            <ResourceTable resource={'City'} tableColumns={[
+            <ResourceTable resource={'Category'} tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',
@@ -13,31 +14,19 @@ function Cities() {
                 },
                 {
                     dataIndex:'name',
-                    title:'City',
+                    title:'Name',
                     key:'name',
                     sorter:true,
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
-                    dataIndex:['region','name'],
-                    title:'Area',
-                    key:'area',
-                    translatable:true,
-                },
-                {
-                    dataIndex:['region','country','name'],
-                    title:'Country',
-                    key:'country',
-                    translatable:true,
-                },
-                {
                     dataIndex:'date',
                     title:'Create date',
                     key:'date',
                 },
-            ]} title={'Cities'}/>
+            ]} title={'Categories'}/>
         </div>
     )
 }
-export default Cities;
+export default Categories;

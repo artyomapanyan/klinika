@@ -37,6 +37,10 @@ let api = {
         url: 'cities',
         resource: 'City',
     },
+    {
+        url: 'categories',
+        resource: 'Category',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

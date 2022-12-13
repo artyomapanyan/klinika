@@ -15,6 +15,8 @@ import Regions from "./Dashboard/Areas/Regions";
 import Region from "./Dashboard/Areas/Region";
 import Cities from "./Dashboard/Cities/Cities";
 import City from "./Dashboard/Cities/City";
+import Categories from "./Dashboard/Categories/Categories";
+import Category from "./Dashboard/Categories/Category";
 
 
 
@@ -59,6 +61,12 @@ function AppLayout(){
             resource:'City',
             singleComp:<City/>,
             indexComp:<Cities/>
+        },
+        {
+            url:'categories',
+            resource:'Category',
+            singleComp:<Category/>,
+            indexComp:<Categories/>
         },
 
     ]

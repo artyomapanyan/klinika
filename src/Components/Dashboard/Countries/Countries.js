@@ -5,6 +5,12 @@ function Countries(){
     return(
        <ResourceTable resource={'Country'} tableColumns={[
            {
+               dataIndex:'id',
+               title:'ID',
+               key:'id',
+               sorter:true,
+           },
+           {
                dataIndex:'name',
                title:'Name',
                key:'name',
@@ -16,6 +22,7 @@ function Countries(){
                dataIndex:'date',
                title:'Date',
                key:'date',
+
            },
        ]} title={'Countries'}/>
     )
