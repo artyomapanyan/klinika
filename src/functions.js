@@ -13,6 +13,18 @@ export function clearObject(obj){
         }
     })
 }
+export function makeUnique(data,key){
+        let uniqueKeys = [];
+        let uniqueData = [];
+        data.forEach(item => {
+            if (!uniqueKeys[item[key]]) {
+                uniqueKeys[item[key]] = 1;
+                uniqueData.push(item);
+            }
+        })
+        return uniqueData;
+
+}
 export function notificate(data,status) {
     if (data?.errors) {
         Object.keys(data.errors).map((type, index) => {

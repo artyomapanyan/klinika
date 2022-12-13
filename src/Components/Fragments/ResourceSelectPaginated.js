@@ -1,8 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {Select, Spin} from "antd";
 import {useGetResourceIndex} from "../Functions/api_calls";
+import {makeUnique} from "../../functions";
 
-function ResourceSelectPaginated({initialData = [], resource}) {
+function ResourceSelectPaginated({initialData = [], resource,value,formRef,name}) {
     const timeout = useRef(null);
     const [params, setParams] = useState({page: 1})
     const [localData, setLocalData] = useState(initialData)
@@ -16,7 +17,7 @@ function ResourceSelectPaginated({initialData = [], resource}) {
         })
     }
     useEffect(() => {
-        setLocalData([...localData, ...(data?.items ?? [])])
+        setLocalData(makeUnique([...localData, ...(data?.items ?? [])],'id'))
     }, [data])
 
     const handleScroll = (event) => {
@@ -46,7 +47,16 @@ function ResourceSelectPaginated({initialData = [], resource}) {
             })
         }, 500)
     }
+    const handleSelect = (val)=>{
+        console.log(formRef)
+        formRef.current.setFieldsValue({
+            [name]:val
+        })
+
+    }
     return <Select loading={loading} onPopupScroll={handleScroll} onSearch={handleSearch} showSearch
+                   defaultValue={value}
+                   onSelect={handleSelect}
                    optionFilterProp={'name'}>
         {handleGenerateOptions(localData ?? [])}
         {loading ?
