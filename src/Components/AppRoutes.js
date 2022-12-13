@@ -10,9 +10,8 @@ function AppRoutes(){
         <Routes>
             <Route path={'/'} element={<Login/>}></Route>
             <Route path={'/password/reset/:token'} element={<Reset/>}></Route>
-            <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
             <Route path={'forgot'} element={<Forgot/>}></Route>
-
+            <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
 
         </Routes>
     )

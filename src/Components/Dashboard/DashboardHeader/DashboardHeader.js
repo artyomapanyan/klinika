@@ -19,6 +19,7 @@ function DashboardHeader() {
             type:'LANGUAGE_STATE',
             payload:value
         })
+        window.location.reload()
     }
 
     return <Row>
