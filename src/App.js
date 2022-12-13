@@ -10,9 +10,9 @@ import api from "./Api";
 
 
 function App() {
-    let redux = useSelector((state) => state);
+    let languageState = useSelector((state) => state.languageState);
     let dispatch = useDispatch()
-
+    axios.defaults.headers.common['Accept-Language'] = languageState
     useEffect(()=>{
         axios.get(`${api.apiEndpoint}${api.version}/app`).then(response=>{
             dispatch({
@@ -30,7 +30,7 @@ function App() {
                     color: '#fcfcfc',
                 },
             }}
-            direction={!redux.globalState ? "ltr" : "rtl"}
+            direction={languageState==='ar' ? "rtl" :"ltr" }
             locale={hy}
         >
             <AppRoutes/>
