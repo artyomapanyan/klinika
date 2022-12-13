@@ -5,11 +5,11 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 function ResourceSelectPaginated({initialData = [], resource}) {
     const timeout = useRef(null);
     const [params, setParams] = useState({page:1})
-    const [localData, setLocalData] = useState([])
+    const [localData, setLocalData] = useState(initialData)
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params)
-    const {loading, setLoading} = loadingState;
-    const {data, setData} = dataState;
+    const {loading} = loadingState;
+    const {data} = dataState;
     const handleGenerateOptions = (data) => {
         return data.map(item => {
             return <Select.Option key={item.id} value={item.id} name={item.name}>{item.name}</Select.Option>
@@ -41,13 +41,12 @@ function ResourceSelectPaginated({initialData = [], resource}) {
             clearTimeout(timeout.current)
         }
         timeout.current = setTimeout(()=>{
+            setLocalData([])
             setParams({
                 page:1,
                 name:e
             })
-
         },500)
-
     }
     return <Select loading={loading} onPopupScroll={handleScroll} onSearch={handleSearch} showSearch optionFilterProp={'name'}>
         {handleGenerateOptions(localData ?? [])}
