@@ -25,6 +25,7 @@ export const useGetResourceIndex = (resource,params) => {
                         pageSize:15,
                         current:response.current_page,
                         total:response.total_items,
+                        last_page:response.last_page
                     }
                 })
             }
@@ -47,7 +48,7 @@ export const useGetResourceIndex = (resource,params) => {
     return {loadingState,dataState}
 }
 export const useGetResourceSingle = (resource,id)=>{
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [data,setData] = useState({})
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{

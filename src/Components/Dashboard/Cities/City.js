@@ -6,6 +6,7 @@ import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Input, Select, Space} from "antd";
 import React from "react";
+import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 
 const resource = 'City';
 
@@ -59,10 +60,8 @@ function City() {
                             required: true,
                         }
                     ]}>
-                    onPopupScroll
-                    <Select>
 
-                    </Select>
+                   <ResourceSelectPaginated resource={'Region'}/>
                 </Form.Item>
 
                 <Space>
