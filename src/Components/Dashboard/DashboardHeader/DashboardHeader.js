@@ -28,7 +28,7 @@ function DashboardHeader() {
             <Select
                 defaultValue={i18n.resolvedLanguage}
                 style={{width: 80}}
-                onChange={(value) => languageChange(value)}
+                onChange={languageChange}
             >
                 {
                     Object.keys(lngs).map((el) => (
