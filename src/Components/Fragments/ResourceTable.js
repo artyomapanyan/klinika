@@ -51,16 +51,22 @@ function ResourceTable({resource, tableColumns, title}) {
     }
 
     const columns = useMemo(() => {
-        if (params.order_by) {
+            let filterKeys = Object.keys(params);
             tableColumns = tableColumns.map(e => {
-                if (params.order_by.includes(e.key)) {
-                    return {
+                if (params.order_by?.includes(e.key)) {
+                    e = {
                         ...e, defaultSortOrder: params.order === 'asc' ? 'ascend' : 'descend'
+                    }
+                }
+                if(filterKeys.includes(e.key)){
+                    e = {
+                        ...e,
+                        defaultFilteredValue:params[e.key]
                     }
                 }
                 return e
             })
-        }
+
 
         return [...tableColumns, {
             dataIndex: 'id', title: 'action', key: 'id', render: (e) => <div>
