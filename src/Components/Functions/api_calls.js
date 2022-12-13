@@ -53,7 +53,6 @@ export const useGetResourceSingle = (resource,id)=>{
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
         if(id){
-            setLoading(true)
             axios.request({
                 url:api[resource].single.url+id,
                 method:api[resource].single.method,
@@ -70,6 +69,7 @@ export const useGetResourceSingle = (resource,id)=>{
                 setLoading(false)
             })
         }else{
+            setLoading(false)
             setData({})
         }
 
