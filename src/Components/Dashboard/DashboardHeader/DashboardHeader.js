@@ -4,14 +4,21 @@ import {Col, Row, Select} from "antd";
 import "../../../dist/styles/Styles.sass"
 import HeaderAccount from "./Fragment/HeaderAccount";
 import i18n, {changeLanguage} from "i18next";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 
 function DashboardHeader() {
     let lngs = useSelector((state) => state?.app?.supported_locales);
+    let dispatch = useDispatch()
 
+    const {t} = useTranslation();
     const languageChange = (value) => {
         changeLanguage(value)
+        dispatch({
+            type:'LANGUAGE_STATE',
+            payload:value
+        })
     }
 
     return <Row>

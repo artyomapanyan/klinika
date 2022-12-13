@@ -6,7 +6,7 @@ import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {clearObject, paramsToObject} from "../../functions";
 
@@ -15,6 +15,8 @@ function ResourceTable({resource, tableColumns, title}) {
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState(paramsToObject(searchParams.entries()))
     let token = useSelector((state) => state?.auth?.token);
+    let lngs = useSelector((state) => state?.languageState);
+
     const {t} = useTranslation()
     let navigate = useNavigate();
 
@@ -23,7 +25,7 @@ function ResourceTable({resource, tableColumns, title}) {
     const handleTableChange = (pagination, filters, sorter) => {
         let params = {
             ...filters,
-            order_by: sorter.order?sorter?.column?.translatable ? `${sorter.columnKey}->en` : sorter.columnKey:null,
+            order_by: sorter.order?sorter?.column?.translatable ? `${sorter.columnKey}->${lngs}` : sorter.columnKey:null,
             order: sorter.order ? sorter.order === 'ascend' ? 'asc' : 'desc' : null,
             page: pagination.current
         }

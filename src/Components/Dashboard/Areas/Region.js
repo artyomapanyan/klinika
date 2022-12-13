@@ -19,11 +19,6 @@ function Region() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
 
-    useEffect(()=>{
-        axios.get(`${api.apiEndpoint}${api.version}/regions?order_by=name->en`).then(response=>{
-            console.log(response)
-        })
-    },[])
 
     const onFinish = (values) => {
         setLoading(true)
