@@ -48,7 +48,6 @@ function ResourceSelectPaginated({initialData = [], resource,value,formRef,name}
         }, 500)
     }
     const handleSelect = (val)=>{
-        console.log(formRef)
         formRef.current.setFieldsValue({
             [name]:val
         })
