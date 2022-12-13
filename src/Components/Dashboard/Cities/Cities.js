@@ -6,14 +6,15 @@ function Cities() {
         <div>
             <ResourceTable resource={'City'} tableColumns={[
                 {
-                    dataIndex:'id',
                     title:'ID',
+                    dataIndex:'id',
                     key:'id',
                     sorter:true,
                 },
                 {
-                    dataIndex:'name',
+
                     title:'City',
+                    dataIndex:'name',
                     key:'name',
                     sorter:true,
                     translatable:true,
