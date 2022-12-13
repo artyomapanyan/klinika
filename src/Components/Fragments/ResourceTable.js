@@ -23,7 +23,7 @@ function ResourceTable({resource, tableColumns, title}) {
     const handleTableChange = (pagination, filters, sorter) => {
         let params = {
             ...filters,
-            order_by: sorter.column.translatable ? `${sorter.columnKey}->en` : sorter.columnKey,
+            order_by: sorter.order?sorter?.column?.translatable ? `${sorter.columnKey}->en` : sorter.columnKey:null,
             order: sorter.order ? sorter.order === 'ascend' ? 'asc' : 'desc' : null,
             page: pagination.current
         }

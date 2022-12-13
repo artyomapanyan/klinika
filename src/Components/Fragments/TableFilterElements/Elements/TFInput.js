@@ -1,7 +1,7 @@
 import React from 'react';
 import {Input} from "antd/lib";
-function TFInput({onChangeValue}){
+function TFInput({onChangeValue,value}){
 
-    return <Input onChange={e=>onChangeValue(e.target.value)}/>
+    return <Input value={value} onChange={e=>onChangeValue(e.target.value)}/>
 }
 export default TFInput

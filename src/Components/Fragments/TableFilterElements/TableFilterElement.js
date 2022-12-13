@@ -7,11 +7,15 @@ function TableFilterElement({filterProps}){
         filterProps.setSelectedKeys(e)
     }
     const onFilter = ()=>{
-        console.log(filterProps)
         filterProps.confirm()
     }
-    return <Card title={<TFInput onChangeValue={onChangeValue}/>} >
-        <Space><Button type={"primary"} onClick={onFilter}>Filter</Button> </Space>
+    const onReset = ()=>{
+        filterProps.setSelectedKeys(null)
+        filterProps.confirm()
+
+    }
+    return <Card title={<TFInput value={filterProps.selectedKeys} onChangeValue={onChangeValue}/>} >
+        <Space><Button type={"primary"} onClick={onFilter}>Filter</Button> <Button type={"primary"} onClick={onReset}>Reset</Button></Space>
     </Card>
 }
 export default TableFilterElement
