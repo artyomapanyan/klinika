@@ -1,5 +1,5 @@
 import {Button, Carousel, Checkbox, Form, Input, Select, Spin, Tabs} from "antd";
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
 import {useDispatch} from "react-redux";
@@ -13,11 +13,19 @@ import {Link} from "react-router-dom";
 
 
 function Login() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const carouselRef = useRef();
+    const formRef = useRef();
     const navigate = useNavigate();
 
     const [rolesState, setRolesState] = useState([]);
     const [loading, setLoading] = useState(false);
+    const handleLoginWithRole = (role)=>{
+        handleLogin({
+            ...formRef.current.getFieldsValues(),
+            role_id:role.id
+        })
+    }
     const handleLogin = (values)=>{
 
         axios.get(`${api.endpoint}/sanctum/csrf-cookie`).then(() => {
@@ -31,7 +39,7 @@ function Login() {
                 if(response.user.id){
                     if(!response?.token){
                         setRolesState(response?.user?.roles)
-
+                        carouselRef.current.next()
                     }else{
                         dispatch({
                             type:'AUTH',
@@ -47,16 +55,16 @@ function Login() {
 
     }
 
-
     return (
         <div className={'login_background'}>
                 <div className={'card_div'}>
 
-                    <Carousel autoplay dots={false}>
+                    <Carousel dots={false} ref={carouselRef}>
                                 <div className={'logo_div'}>
                                 <img src={logo} alt={'logo'} />
                                 <div className={'form_div'}>
                                     <Form
+                                        ref={formRef}
                                         onFinish={handleLogin}>
                                         <Form.Item
                                             name={'email'}
@@ -98,7 +106,10 @@ function Login() {
                                     </Form>
                                 </div>
                                 </div>
-                        <div>dsadsadsa</div>
+                                 <div className={'logo_div'}>
+                                     {rolesState.map(role=><Button key={role.id} type={'primary'} onClick={()=>handleLoginWithRole(role)} loading={loading}>{role.name}</Button>)}
+
+                                 </div>
                     </Carousel>
 
 
