@@ -84,7 +84,7 @@ function Login() {
                                     <Input.Password
                                         iconRender={() => (<Link onClick={(e) => {
                                             e.preventDefault();
-                                            e.stopPropagation()
+                                            e.stopPropagation();
                                         }}
                                                                  style={{position: 'absolute', marginLeft: -60}}
                                                                  to="/forgot">Forgot?</Link>)}
