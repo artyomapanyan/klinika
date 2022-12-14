@@ -18,7 +18,7 @@ function Regions() {
                 {
                     dataIndex:'name',
                     title:'Area',
-                    key:'area',
+                    key:'name',
                     sorter:true,
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
@@ -27,7 +27,6 @@ function Regions() {
                     dataIndex:['country', 'name'],
                     title:'Country',
                     key:'country',
-                    translatable:true,
                 },
                 {
                     dataIndex:'date',
