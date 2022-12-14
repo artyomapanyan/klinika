@@ -63,7 +63,6 @@ function Login() {
     return (
         <div className={'login_background'}>
             <div className={'card_div'}>
-
                 <Carousel dots={false} ref={carouselRef}>
                     <div className={'logo_div'}>
                         <img src={logo} alt={'logo'}/>
