@@ -6,7 +6,7 @@ import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {clearObject, paramsToObject} from "../../functions";
 
@@ -106,6 +106,7 @@ function ResourceTable({resource, tableColumns, title}) {
                     onChange={handleTableChange}
                     dataSource={data?.items}
                     rowKey={e => e.id}
+                    size={'small'}
                 />
             </Col>
         </Row>
