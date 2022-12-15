@@ -41,6 +41,10 @@ let api = {
         url: 'categories',
         resource: 'Category',
     },
+    {
+        url: 'subCategories',
+        resource: 'SubCategory',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

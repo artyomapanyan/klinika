@@ -15,7 +15,6 @@ function Region() {
 
     const params = useParams();
     const navigate = useNavigate();
-    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
@@ -42,7 +41,6 @@ function Region() {
         }
 
     }
-    console.log(data,'data')
     return(
         <div>
             <h3>Add New Area</h3>
@@ -58,17 +56,18 @@ function Region() {
                 <Form.Item label={'Name'} name={'name'}>
                     <Input/>
                 </Form.Item>
-                <Form.Item
-                    label={'Country'}
-                    name="country_id"
-                    rules={[
-                        {
-                            required: true,
-                        }
-                    ]}>
-                    <ResourceSelectPaginated name={'country_id'} formRef={formRef} value={data?.country?.id} resource={'Country'} initialData={data?.region?[data.region]:[]}/>
-                </Form.Item>
 
+                    <ResourceSelectPaginated
+                        label={'Country'}
+                        rules={[
+                            {
+                                required: true,
+                            }
+                        ]}
+                        name={'country_id'}
+                        resource={'Country'}
+                        initialData={data?.region?[data.region]:[]}
+                    />
                 <Space>
                     <Button type={'primary'} htmlType="submit">Save</Button>
 

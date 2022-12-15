@@ -1,16 +1,22 @@
-import {Button, Carousel, Checkbox, Form, Input, Space} from "antd";
+import {Button, Carousel, Checkbox, Form, Input, Select, Space} from "antd";
 import React, {useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import axios from "axios";
 import api from "../../../Api";
 import {Link} from "react-router-dom";
+import FormInput from "../../Fragments/FormInput";
+import i18n, {changeLanguage} from "i18next";
+import {useTranslation} from "react-i18next";
+import AuthHeader from "../AuthHeader";
 
 
 function Login() {
-    const dispatch = useDispatch();
+    let dispatch = useDispatch()
+
+    const {t} = useTranslation();
     const carouselRef = useRef();
     const formRef = useRef();
     const navigate = useNavigate();
@@ -57,11 +63,13 @@ function Login() {
                 setLoading({})
             })
         })
-
     }
+
+
 
     return (
         <div className={'login_background'}>
+            <AuthHeader />
             <div className={'card_div'}>
                 <Carousel dots={false} ref={carouselRef}>
                     <div className={'logo_div'}>
@@ -70,12 +78,7 @@ function Login() {
                             <Form
                                 ref={formRef}
                                 onFinish={handleLogin}>
-                                <Form.Item
-                                    name={'email'}
-                                >
-
-                                    <Input placeholder="Email"/>
-                                </Form.Item>
+                                <FormInput name={'email'} label={'Email'}/>
 
                                 <Form.Item
                                     name={'password'}

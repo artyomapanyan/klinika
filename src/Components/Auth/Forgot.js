@@ -4,6 +4,7 @@ import axios from "axios";
 import api from "../../Api";
 import logo from "../../dist/Img/logo.svg";
 import FormInput from "../Fragments/FormInput";
+import AuthHeader from "./AuthHeader";
 
 
 function Forgot() {
@@ -22,6 +23,7 @@ function Forgot() {
 
     return (
         <div className={'login_background'}>
+            <AuthHeader />
             <div className={'card_div'}>
                 <div className={'logo_div'}>
                     <img src={logo} alt={'logo'}/>
@@ -29,12 +31,7 @@ function Forgot() {
                         <div className={'login_title'}>Reset Your Password</div>
                         <Form
                             onFinish={handleForgot}>
-                            <FormInput name={'email'} label={'Email'}/>
-                            <Form.Item
-                                name={'email'}>
-                                <Input/>
-                            </Form.Item>
-
+                            <FormInput name={'email'} label={'Email'} initialValue={'test'}/>
                             <Button size={'large'} className={'forgot_submit'} loading={loading} type={'primary'} htmlType={'submit'}>Send instruction to email</Button>
 
                         </Form>

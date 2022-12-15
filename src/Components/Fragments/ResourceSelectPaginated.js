@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Select, Spin} from "antd";
+import {Select, Spin, Form} from "antd";
 import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
-function ResourceSelectPaginated({initialData = [], resource,value,formRef,name}) {
+function ResourceSelectPaginated({initialData = [], resource, name, label, rules}) {
     const timeout = useRef(null);
     const [params, setParams] = useState({page: 1})
     const [localData, setLocalData] = useState(initialData)
@@ -17,7 +17,7 @@ function ResourceSelectPaginated({initialData = [], resource,value,formRef,name}
         })
     }
     useEffect(() => {
-        setLocalData(makeUnique([...localData, ...(data?.items ?? [])],'id'))
+        setLocalData(makeUnique([...localData, ...(data?.items ?? [])], 'id'))
     }, [data])
 
     const handleScroll = (event) => {
@@ -47,22 +47,23 @@ function ResourceSelectPaginated({initialData = [], resource,value,formRef,name}
             })
         }, 500)
     }
-    const handleSelect = (val)=>{
-        formRef.current.setFieldsValue({
-            [name]:val
-        })
-
-    }
-    return <Select loading={loading} onPopupScroll={handleScroll} onSearch={handleSearch} showSearch
-                   defaultValue={value}
-                   onSelect={handleSelect}
-                   optionFilterProp={'name'}>
+    const SelectItem = <Select loading={loading}
+                               onPopupScroll={handleScroll}
+                               onSearch={handleSearch}
+                               showSearch
+                               optionFilterProp={'name'}>
         {handleGenerateOptions(localData ?? [])}
         {loading ?
-            <Select.Option value={999} style={{textAlign: 'center'}} name={params.name}><Spin/></Select.Option> : null}
+            <Select.Option value={999} style={{textAlign: 'center'}}
+                           name={params.name}><Spin/></Select.Option> : null}
 
-
-    </Select>
+    </Select>;
+    return name?<Form.Item
+        label={label}
+        name={name}
+        rules={rules}>
+        {SelectItem}
+    </Form.Item>:SelectItem
 }
 
 export default ResourceSelectPaginated
