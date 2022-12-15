@@ -1,6 +1,7 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import {t} from "i18next";
 function Countries(){
     return(
        <ResourceTable resource={'Country'} tableColumns={[
@@ -12,7 +13,7 @@ function Countries(){
            },
            {
                dataIndex:'name',
-               title:'Name',
+               title:t('Name'),
                key:'name',
                filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                translatable:true,
@@ -20,11 +21,11 @@ function Countries(){
            },
            {
                dataIndex:'date',
-               title:'Date',
+               title:t('Date'),
                key:'date',
 
            },
-       ]} title={'Countries'}/>
+       ]} title={t('Countries')}/>
     )
 }
 export default Countries

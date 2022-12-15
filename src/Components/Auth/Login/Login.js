@@ -1,4 +1,4 @@
-import {Button, Carousel, Checkbox, Form, Input, Select, Space} from "antd";
+import {Button, Carousel, Checkbox, Form, Input, Space} from "antd";
 import React, {useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
@@ -8,15 +8,15 @@ import axios from "axios";
 import api from "../../../Api";
 import {Link} from "react-router-dom";
 import FormInput from "../../Fragments/FormInput";
-import i18n, {changeLanguage} from "i18next";
-import {useTranslation} from "react-i18next";
+import {t} from "i18next";
 import AuthHeader from "../AuthHeader";
 
 
 function Login() {
+    let lngs = useSelector((state) => state?.languageState);
+
     let dispatch = useDispatch()
 
-    const {t} = useTranslation();
     const carouselRef = useRef();
     const formRef = useRef();
     const navigate = useNavigate();
@@ -65,8 +65,6 @@ function Login() {
         })
     }
 
-
-
     return (
         <div className={'login_background'}>
             <AuthHeader />
@@ -88,16 +86,16 @@ function Login() {
                                             e.preventDefault();
                                             e.stopPropagation();
                                         }}
-                                                                 style={{position: 'absolute', marginLeft: -60}}
-                                                                 to="/forgot">Forgot?</Link>)}
+                                        style={lngs !== 'en' ? {position: 'absolute', marginRight: -60} : {position: 'absolute', marginLeft: -60}}
+                                        to="/forgot">Forgot?</Link>)}
                                         placeholder="Password"
                                         style={{position: 'static'}}
                                     />
                                 </Form.Item>
                                 <div className={'log_check_div'}>
                                     <Button className={'login_btn'} loading={loading.save} type={'primary'}
-                                            htmlType={'submit'}>Login</Button>
-                                    <Checkbox>Remember me</Checkbox>
+                                            htmlType={'submit'}>{t("Login")}</Button>
+                                    <Checkbox>{t("Remember me")}</Checkbox>
                                 </div>
                             </Form>
                         </div>
@@ -107,12 +105,10 @@ function Login() {
                             {rolesState.map(role => <Button key={role.id} type={'primary'}
                                                             onClick={() => handleLoginWithRole(role)}
                                                             loading={loading[role.id]}>{role.name}</Button>)}
-                            <Button type={'secondary'} onClick={handleLogout}>Log out</Button>
+                            <Button type={'secondary'} onClick={handleLogout}>{t('Log out')}</Button>
                         </Space>
                     </div>
                 </Carousel>
-
-
             </div>
         </div>
     )

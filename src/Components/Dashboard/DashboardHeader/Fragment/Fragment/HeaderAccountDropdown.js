@@ -9,6 +9,7 @@ import axios from "axios";
 import api from "../../../../../Api";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
+import {t} from "i18next";
 function HeaderAccountDropdown() {
     const auth = useSelector(state => state.auth)
     const dispatch = useDispatch()
@@ -54,37 +55,14 @@ function HeaderAccountDropdown() {
                         </Button>)
                 }
 
-
-                {/*<Button  type={'primary'} >*/}
-                {/*    <div >*/}
-                {/*        <div className={"head_account_drop_text"}>Therapist</div>*/}
-                {/*        <div>Lakeside General Hospital</div>*/}
-                {/*    </div>*/}
-                {/*    <div><img className={"head_drop_icon"} alt={'icons'} src={frame4}/></div>*/}
-                {/*</Button>*/}
-                {/*<Button type={'default'} >*/}
-                {/*    <div>*/}
-                {/*        <div className={"head_account_drop_text"}>Reumatologist therapist</div>*/}
-                {/*        <div style={{display:"flex"}}>Flowerhill Clinic</div>*/}
-                {/*    </div>*/}
-                {/*    <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>*/}
-
-                {/*</Button>*/}
-                {/*<Button >*/}
-                {/*    <div>*/}
-                {/*        <div className={"head_account_drop_text"}>Sushkov Aleksey</div>*/}
-                {/*        <div style={{display:"flex"}}>Patient profile</div>*/}
-                {/*    </div>*/}
-                {/*    <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>*/}
-                {/*</Button>*/}
         </div>
             <div className={"head_acc_bottom_div"}>
                 <Button style={{justifyContent:"none"}}>
-                    <div><img alt={'icons'} src={settings}/>   Account setings</div>
+                    <div><img alt={'icons'} src={settings}/> {t("Account setings")}</div>
 
                 </Button>
                 <Button onClick={handleLogout} >
-                    <div><img alt={'icons'} src={logout}/>   Logout</div>
+                    <div><img alt={'icons'} src={logout}/> {t("Logout")}</div>
                 </Button>
             </div>
         </div>

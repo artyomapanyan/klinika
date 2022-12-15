@@ -1,15 +1,11 @@
-import React from 'react'
-import ResourceTable from "../../Fragments/ResourceTable";
-import {Button} from "antd";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
-function Regions() {
-    return(
+
+function Services() {
+    return (
         <div>
-            <div>
-                <Button type={"primary"}>Print</Button>
-            </div>
-            <ResourceTable resource={'Region'} tableColumns={[
+            <ResourceTable resource={'Service'} tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',
@@ -18,24 +14,25 @@ function Regions() {
                 },
                 {
                     dataIndex:'name',
-                    title: t('Area'),
+                    title:t('Name'),
                     key:'name',
                     sorter:true,
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
-                    dataIndex:['country', 'name'],
-                    title: t('Country'),
-                    key:'country',
+                    dataIndex:['sub_category','name'],
+                    title:t('Sub category'),
+                    key:'category',
+                    translatable:true,
                 },
                 {
                     dataIndex:'date',
-                    title: t('Create date'),
+                    title:t('Create date'),
                     key:'date',
                 },
-            ]} title={t('Areas')}/>
+            ]} title={t('Service')}/>
         </div>
     )
 }
-export default Regions;
+export default Services;

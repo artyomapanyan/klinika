@@ -7,6 +7,7 @@ import Preloader from "../../Preloader";
 import {Button, Form, Input, Select, Space} from "antd";
 import React, {useRef} from "react";
 import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
+import {t} from "i18next";
 
 const resource = 'City';
 
@@ -42,7 +43,7 @@ function City() {
     }
     return(
         <div>
-            <h3>Add New City</h3>
+            <h3>{t('Add New City')}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -53,11 +54,11 @@ function City() {
                     region_id:data.region?.id
             }}
             >
-                <Form.Item label={'Name'} name={'name'}>
+                <Form.Item label={t('Name')} name={'name'}>
                     <Input/>
                 </Form.Item>
                 <Form.Item
-                    label={'Area'}
+                    label={t('Area')}
                     name="region_id"
                     rules={[
                         {
@@ -69,7 +70,7 @@ function City() {
                 </Form.Item>
 
                 <Space>
-                    <Button type={'primary'} htmlType="submit">Save</Button>
+                    <Button type={'primary'} htmlType="submit">{t("Save")}</Button>
 
                 </Space>
             </Form>}

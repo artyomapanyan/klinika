@@ -15,6 +15,7 @@ i18n
                     learn: "Welcome to React",
                     dashboard:"dashboard",
                     Name:"Name",
+                    Areas: "Areas"
                 }
             },
             ar: {
@@ -22,6 +23,7 @@ i18n
                     learn: "Բարի գալուստ React",
                     dashboard:"վահանակ",
                     Name:"Անուն",
+                    Areas: "Արեաներ"
                 }
             },
         },

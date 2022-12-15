@@ -18,6 +18,9 @@ import City from "./Dashboard/Cities/City";
 import Categories from "./Dashboard/Categories/Categories";
 import Category from "./Dashboard/Categories/Category";
 import SubCategories from "./Dashboard/SubCategories/SubCategories";
+import SubCategory from "./Dashboard/SubCategories/SubCategory";
+import Services from "./Dashboard/Services/Services";
+import Service from "./Dashboard/Services/Service";
 
 
 
@@ -70,10 +73,16 @@ function AppLayout(){
             indexComp:<Categories/>
         },
         {
-            url:'categories',
-            resource:'Category',
-            //singleComp:<Category/>,
+            url:'sub-categories',
+            resource:'SubCategory',
+            singleComp:<SubCategory/>,
             indexComp:<SubCategories/>
+        },
+        {
+            url:'services',
+            resource:'Service',
+            singleComp:<Service/>,
+            indexComp:<Services/>
         },
 
     ]

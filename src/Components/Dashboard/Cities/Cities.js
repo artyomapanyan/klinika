@@ -1,6 +1,7 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import {t} from "i18next";
 function Cities() {
     return(
         <div>
@@ -13,7 +14,7 @@ function Cities() {
                 },
                 {
 
-                    title:'City',
+                    title:t('City'),
                     dataIndex:'name',
                     key:'name',
                     sorter:true,
@@ -22,22 +23,22 @@ function Cities() {
                 },
                 {
                     dataIndex:['region','name'],
-                    title:'Area',
+                    title:t('Area'),
                     key:'area',
                     translatable:true,
                 },
                 {
                     dataIndex:['region','country','name'],
-                    title:'Country',
+                    title:t('Country'),
                     key:'country',
                     translatable:true,
                 },
                 {
                     dataIndex:'date',
-                    title:'Create date',
+                    title:t('Create date'),
                     key:'date',
                 },
-            ]} title={'Cities'}/>
+            ]} title={t('Cities')}/>
         </div>
     )
 }

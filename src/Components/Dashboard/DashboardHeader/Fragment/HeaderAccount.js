@@ -6,6 +6,7 @@ import arrowDownPurple from "../../../../dist/icons/arrow-down-purple.svg";
 import {Avatar, Button, Card, Divider, Dropdown, Space} from "antd";
 import HeaderAccountDropdown from "./Fragment/HeaderAccountDropdown";
 import {useSelector} from "react-redux";
+import {t} from "i18next";
 
 
 function HeaderAccount() {
@@ -20,14 +21,14 @@ function HeaderAccount() {
                 </Dropdown>
 
 
-                    <Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>Report</Space></Button>
+                    <Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>{t("Report")}</Space></Button>
                     <Divider type={"vertical"} style={{height: 32, margin:16}} />
 
 
                 <Dropdown dropdownRender={()=><Card className={"head_account_dropdown"}><HeaderAccountDropdown /></Card>} placement="bottomRight" trigger={['click']}>
                     <Button type={"link"} className={'head_user_db'}  >
                         <Space>
-                            <Avatar size={'large'} className="header_avatar"></Avatar>
+                            <Avatar size={'large'} className="header_avatar">A</Avatar>
                             <div >{user?.first} {user?.last}</div>
                             <img alt={'icons'} src={arrowDownPurple}/>
                         </Space>

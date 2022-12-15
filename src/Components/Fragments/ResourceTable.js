@@ -36,6 +36,10 @@ function ResourceTable({resource, tableColumns, title}) {
     const {setLoading, loading} = loadingState;
     const {setData, data} = dataState
 
+    console.log(dataState)
+
+
+
 
     const onResourceEdit = (e) => {
         navigate(ResourceLinks[resource] + e)

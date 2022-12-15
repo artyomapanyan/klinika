@@ -1,15 +1,14 @@
-
-import {Button, Form, Input,Space} from 'antd';
-import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
-import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
+import {createResource, updateResource, useGetResourceIndex, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
+import Preloader from "../../Preloader";
+import {Button, Form, Input, Select, Space} from "antd";
+import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 import {t} from "i18next";
 
-const resource = 'Category';
-
-function Category() {
+const resource = 'SubCategory';
+function SubCategory() {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
@@ -35,30 +34,37 @@ function Category() {
                 setLoading(false)
             })
         }
-
     }
 
+
+
     return (
-        <div className={"country_content"}>
-            <h3>{t('Add New Strings')}</h3>
+        <div>
+            <h3>{t("Add New Strings")}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-                initialValues={data}
+                initialValues={{
+                    ...data,
+                    category_id:data?.category?.id
+                }}
             >
                 <Form.Item label={t('Name')} name={'name'}>
                     <Input/>
                 </Form.Item>
+                <ResourceSelectPaginated name={'category_id'} label={t('Category')} rules={[
+                    {
+                        required: true,
+                    }
+                ]} resource={'Category'} initialData={data?.category?[data.category]:[]}/>
 
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button type={'primary'} htmlType="submit">{t("Save")}</Button>
 
                 </Space>
             </Form>}
         </div>
-
     )
 }
-
-export default Category;
+export default SubCategory;

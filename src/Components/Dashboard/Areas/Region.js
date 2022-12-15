@@ -8,6 +8,7 @@ import React, {useEffect, useRef} from "react";
 import axios from "axios";
 import api from "../../../Api";
 import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
+import {t} from "i18next";
 
 const resource = 'Region';
 
@@ -43,7 +44,7 @@ function Region() {
     }
     return(
         <div>
-            <h3>Add New Area</h3>
+            <h3>{t('Add New Area')}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -53,12 +54,12 @@ function Region() {
                     country_id:data?.country?.id
                 }}
             >
-                <Form.Item label={'Name'} name={'name'}>
+                <Form.Item label={t('Name')} name={'name'}>
                     <Input/>
                 </Form.Item>
 
                     <ResourceSelectPaginated
-                        label={'Country'}
+                        label={t('Country')}
                         rules={[
                             {
                                 required: true,
@@ -69,7 +70,7 @@ function Region() {
                         initialData={data?.region?[data.region]:[]}
                     />
                 <Space>
-                    <Button type={'primary'} htmlType="submit">Save</Button>
+                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 
                 </Space>
             </Form>}

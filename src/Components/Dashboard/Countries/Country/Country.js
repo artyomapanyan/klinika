@@ -6,6 +6,7 @@ import {useNavigate, useParams} from "react-router";
 import Preloader from "../../../Preloader";
 import {useSelector} from "react-redux";
 import resourceLinks from "../../../ResourceLinks";
+import {t} from "i18next";
 
 const resource = 'Country';
 
@@ -42,18 +43,18 @@ function Country() {
 
     return (
         <div className={"country_content"}>
-            <h3>Editing Country - {data?.name}</h3>
+            <h3>{t(`Editing Country - ${data?.name}`)}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 initialValues={data}
             >
-                <Form.Item label={'Name'} name={'name'}>
+                <Form.Item label={t('Name')} name={'name'}>
                     <Input/>
                 </Form.Item>
                 <Form.Item
-                    label={'Alpha2 code  *'}
+                    label={t('Alpha2 code')}
                     name={'alpha2_code'}
                     rules={[
                         {
@@ -67,7 +68,7 @@ function Country() {
                 </Form.Item>
 
                 <Form.Item
-                    label={'Alpha3 code  *'}
+                    label={t('Alpha3 code')}
                     name={'alpha3_code'}
                     rules={[
                         {
@@ -80,7 +81,7 @@ function Country() {
                     <Input/>
                 </Form.Item>
                 <Space>
-                    <Button type={'primary'} htmlType="submit">Save</Button>
+                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 
                 </Space>
             </Form>}

@@ -42,8 +42,12 @@ let api = {
         resource: 'Category',
     },
     {
-        url: 'subCategories',
+        url: 'sub-categories',
         resource: 'SubCategory',
+    },
+    {
+        url: 'services',
+        resource: 'Service',
     },
     ].forEach(item => {
         if (!item.type) {

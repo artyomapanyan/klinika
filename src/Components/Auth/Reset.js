@@ -4,6 +4,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useNavigate, useParams} from "react-router";
 import {useDispatch} from "react-redux";
+import {t} from "i18next";
 function Reset(){
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -60,7 +61,7 @@ function Reset(){
         ]}>
             <Input.Password/>
         </Form.Item>
-        <Button type={'primary'} htmlType={'submit'} loading={loading}>Reset</Button>
+        <Button type={'primary'} htmlType={'submit'} loading={loading}>{t("Reset")}</Button>
     </Form>
 }
 export default Reset;

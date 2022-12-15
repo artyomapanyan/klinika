@@ -31,37 +31,47 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         },
         {
             key: `/match-event-natures`,
-            label: `Schedlue`,
+            label: t(`Schedlue`),
             icon: <img alt={'icons'} src={dash2}/>,
         },
         {
             key: `/-categories`,
-            label: `Offers`,
+            label: t(`Offers`),
             icon: <img alt={'icons'} src={dash3}/>,
         },
         {
-            label: `Inputs`,
+            label: t(`Inputs`),
             icon: <img alt={'icons'} src={dash4}/>,
             children: [
                 {
                     key: 'countries',
-                    label: `Countries`,
+                    label: t(`Countries`),
                     permission:'Country'
                 },
                 {
                     key: 'regions',
-                    label: `Areas`,
+                    label: t(`Areas`),
                     permission:'Region'
                 },
                 {
                     key: 'cities',
-                    label: `Cities`,
+                    label: t(`Cities`),
                     permission:'City'
                 },
                 {
                     key: 'categories',
-                    label: `Categories`,
+                    label: t(`Categories`),
                     permission:'Category'
+                },
+                {
+                    key: 'sub-categories',
+                    label: t(`Sub categories`),
+                    permission:'SubCategory'
+                },
+                {
+                    key: 'services',
+                    label: t(`Services`),
+                    permission:'Service'
                 },
             ]
         },
@@ -71,17 +81,17 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             children: [
                 {
                     key: 'road-expense-calculator',
-                    label: `RoadExpenseCalculator`,
+                    label: t(`RoadExpenseCalculator`),
                 },
                 {
                     key: 'documents/new',
-                    label: `NewDocuments`,
+                    label: t(`NewDocuments`),
                 },
             ]
         },
         {
             key: `/match-event-naturess`,
-            label: `Reviews`,
+            label: t(`Reviews`),
             icon: <img alt={'icons'} src={dash5}/>,
         },
     ].filter(handleFilterMenus),[permissions]);

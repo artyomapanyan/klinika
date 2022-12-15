@@ -5,6 +5,7 @@ import api from "../../Api";
 import logo from "../../dist/Img/logo.svg";
 import FormInput from "../Fragments/FormInput";
 import AuthHeader from "./AuthHeader";
+import {t} from "i18next";
 
 
 function Forgot() {
@@ -28,11 +29,11 @@ function Forgot() {
                 <div className={'logo_div'}>
                     <img src={logo} alt={'logo'}/>
                     <div className={'form_div'}>
-                        <div className={'login_title'}>Reset Your Password</div>
+                        <div className={'login_title'}>{t("Reset Your Password")}</div>
                         <Form
                             onFinish={handleForgot}>
-                            <FormInput name={'email'} label={'Email'} initialValue={'test'}/>
-                            <Button size={'large'} className={'forgot_submit'} loading={loading} type={'primary'} htmlType={'submit'}>Send instruction to email</Button>
+                            <FormInput name={'email'} label={t('Email')} initialValue={'test'}/>
+                            <Button size={'large'} className={'forgot_submit'} loading={loading} type={'primary'} htmlType={'submit'}>{t("Send instruction to email")}</Button>
 
                         </Form>
                     </div>

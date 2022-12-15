@@ -1,6 +1,7 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import {t} from "i18next";
 
 function Categories() {
     return(
@@ -14,7 +15,7 @@ function Categories() {
                 },
                 {
                     dataIndex:'name',
-                    title:'Name',
+                    title:t('Name'),
                     key:'name',
                     sorter:true,
                     translatable:true,
@@ -22,10 +23,10 @@ function Categories() {
                 },
                 {
                     dataIndex:'date',
-                    title:'Create date',
+                    title:t('Create date'),
                     key:'date',
                 },
-            ]} title={'Categories'}/>
+            ]} title={t('Categories')}/>
         </div>
     )
 }
