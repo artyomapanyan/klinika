@@ -77,28 +77,17 @@ $primaryColor: #ce4e99
     display: none
   .ant-form-item-label >label
     color: #635D6B
-.input-placeholder-ar
-  position: relative
-  .ant-form-item-label
-    position: absolute
-    right: 40px
-    transform-origin: right top
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
-    max-width: calc(100% - 24px)
-    transform: translate(14px, 10px) scale(1)
-    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
-    z-index: 1
-    //pointer-events: none
-  &.input-focused
-    .ant-form-item-label
-      transform: translate(14px, -4px) scale(0.8)
   label::after
     display: none
   .ant-form-item-label >label
     color: #635D6B
-
-
+.ar
+  min-height: 100%
+  .input-placeholder .ant-form-item-label
+    right: 40px !important
+  .ant-input-password-icon
+    position: absolute !important
+    margin-right: -60px !important
+    margin-left: initial !important
 
 

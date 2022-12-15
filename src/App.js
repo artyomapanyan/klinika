@@ -23,6 +23,7 @@ function App() {
     },[])
 
     return (
+        <span className={languageState??''}>
         <ConfigProvider
             theme={{
                 token: {
@@ -35,6 +36,7 @@ function App() {
         >
             <AppRoutes/>
         </ConfigProvider>
+        </span>
     );
 }
 

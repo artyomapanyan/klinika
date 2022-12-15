@@ -76,17 +76,17 @@ function Login() {
                             <Form
                                 ref={formRef}
                                 onFinish={handleLogin}>
-                                <FormInput name={'email'} label={'Email'}/>
+                                <FormInput className={'test'} name={'email'} label={'Email'}/>
 
                                 <Form.Item
                                     name={'password'}
                                 >
                                     <Input.Password
+
                                         iconRender={() => (<Link onClick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
                                         }}
-                                        style={lngs !== 'en' ? {position: 'absolute', marginRight: -60} : {position: 'absolute', marginLeft: -60}}
                                         to="/forgot">Forgot?</Link>)}
                                         placeholder="Password"
                                         style={{position: 'static'}}

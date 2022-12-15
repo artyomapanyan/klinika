@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {ArrowLeftOutlined} from "@ant-design/icons";
 
 function AuthHeader() {
-    let lngs = useSelector((state) => state?.app?.supported_locales);
+    let lngs = useSelector((state) => state?.app?.supported_locales??[]);
     let dispatch = useDispatch()
 
     const languageChange = (value) => {
