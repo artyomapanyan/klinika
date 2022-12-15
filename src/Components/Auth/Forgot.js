@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import axios from "axios";
 import api from "../../Api";
 import logo from "../../dist/Img/logo.svg";
+import FormInput from "../Fragments/FormInput";
 
 
 function Forgot() {
@@ -28,6 +29,7 @@ function Forgot() {
                         <div className={'login_title'}>Reset Your Password</div>
                         <Form
                             onFinish={handleForgot}>
+                            <FormInput name={'email'} label={'Email'}/>
                             <Form.Item
                                 name={'email'}>
                                 <Input/>
