@@ -2,19 +2,20 @@ import {Button, Carousel, Checkbox, Form, Input, Space} from "antd";
 import React, {useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
 import axios from "axios";
 import api from "../../../Api";
-import {Link} from "react-router-dom";
+
 import FormInput from "../../Fragments/FormInput";
 import {t} from "i18next";
 import AuthHeader from "../AuthHeader";
+import "../../../dist/styles/Styles.sass";
+import {Link} from "react-router-dom";
+
 
 
 function Login() {
-    let lngs = useSelector((state) => state?.languageState);
-
     let dispatch = useDispatch()
 
     const carouselRef = useRef();
@@ -78,20 +79,13 @@ function Login() {
                                 onFinish={handleLogin}>
                                 <FormInput className={'test'} name={'email'} label={'Email'}/>
 
-                                <Form.Item
-                                    name={'password'}
-                                >
-                                    <Input.Password
-
-                                        iconRender={() => (<Link onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                        }}
-                                        to="/forgot">Forgot?</Link>)}
-                                        placeholder="Password"
-                                        style={{position: 'static'}}
-                                    />
-                                </Form.Item>
+                                <FormInput className={'test'} inputType={'password'} inputProps={{
+                                    iconRender:() => (<Link onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }}
+                                                            to="/forgot">Forgot?</Link>)
+                                }} name={'password'} label={'Password'} />
                                 <div className={'log_check_div'}>
                                     <Button className={'login_btn'} loading={loading.save} type={'primary'}
                                             htmlType={'submit'}>{t("Login")}</Button>

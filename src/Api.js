@@ -49,6 +49,14 @@ let api = {
         url: 'services',
         resource: 'Service',
     },
+    {
+        url: 'sub-services',
+        resource: 'SubService',
+    },
+    {
+        url: 'nursing-tasks',
+        resource: 'NursingTask',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

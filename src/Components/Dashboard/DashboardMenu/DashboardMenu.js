@@ -73,6 +73,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Services`),
                     permission:'Service'
                 },
+                {
+                    key: 'sub-services',
+                    label: t(`Sub services`),
+                    permission:'SubService'
+                },
+                {
+                    key: 'nursing-tasks',
+                    label: t(`Nursing task`),
+                    permission:'NursingTask'
+                },
             ]
         },
         {

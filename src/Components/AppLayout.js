@@ -21,6 +21,9 @@ import SubCategories from "./Dashboard/SubCategories/SubCategories";
 import SubCategory from "./Dashboard/SubCategories/SubCategory";
 import Services from "./Dashboard/Services/Services";
 import Service from "./Dashboard/Services/Service";
+import SubServices from "./Dashboard/SubServices/SubServices";
+import SubService from "./Dashboard/SubServices/SubService";
+import NursingTasks from "./Dashboard/NursingTasks/NursingTasks";
 
 
 
@@ -83,6 +86,18 @@ function AppLayout(){
             resource:'Service',
             singleComp:<Service/>,
             indexComp:<Services/>
+        },
+        {
+            url:'sub-services',
+            resource:'SubService',
+            singleComp:<SubService/>,
+            indexComp:<SubServices/>
+        },
+        {
+            url:'nursing-tasks',
+            resource:'NursingTask',
+            //singleComp:<SubService/>,
+            indexComp:<NursingTasks/>
         },
 
     ]

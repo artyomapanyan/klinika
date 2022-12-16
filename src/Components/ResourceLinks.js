@@ -1,4 +1,4 @@
-import Category from "./Dashboard/Categories/Category";
+
 
 export default {
     Region:'/dashboard/regions/',
@@ -7,4 +7,5 @@ export default {
     Category:'/dashboard/categories/',
     SubCategory:'/dashboard/sub-categories/',
     Service:'/dashboard/services/',
+    SubService:'/dashboard/sub-services/',
 }

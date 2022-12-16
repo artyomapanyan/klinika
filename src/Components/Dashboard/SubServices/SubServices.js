@@ -1,11 +1,11 @@
-import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
+import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 
-function Services() {
+function SubServices() {
     return (
         <div>
-            <ResourceTable resource={'Service'} tableColumns={[
+            <ResourceTable resource={'SubService'} tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',
@@ -21,8 +21,8 @@ function Services() {
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
-                    dataIndex:['sub_category','name'],
-                    title:t('Sub category'),
+                    dataIndex:['service','name'],
+                    title:t('service'),
                     key:'category',
                     translatable:true,
                 },
@@ -31,8 +31,8 @@ function Services() {
                     title:t('Create date'),
                     key:'date',
                 },
-            ]} title={t('Services')}/>
+            ]} title={t('sub services')}/>
         </div>
     )
 }
-export default Services;
+export default SubServices;
