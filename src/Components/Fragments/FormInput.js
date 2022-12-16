@@ -1,10 +1,10 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Form, Input} from "antd";
 
-function FormInput({name,label,initialValue,inputProps={},FormProps={},inputType}){
+function FormInput({name,label,initialValue,inputProps={},FormProps={},inputType,formRef}){
     const inputRef = useRef();
 
-    const [focused,setFocused] = useState(false);
+    const [focused,setFocused] = useState(true);
     const [value,setValue] = useState(initialValue);
     const handleReturnInput = ()=>{
         switch (inputType){
@@ -17,6 +17,7 @@ function FormInput({name,label,initialValue,inputProps={},FormProps={},inputType
                 />
             default:
              return  <Input  {...inputProps} ref={inputRef} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
+
                         onInput={e => setValue(e.target.value)}/>
         }
     }
@@ -25,6 +26,7 @@ function FormInput({name,label,initialValue,inputProps={},FormProps={},inputType
            <Form.Item initialValue={initialValue}
                                            className={`input-placeholder ${focused || value?.length ? 'input-focused' : ''}`}
                                            name={name} label={label}>
+
                {handleReturnInput()}
             </Form.Item>
         </div>

@@ -77,9 +77,9 @@ function Login() {
                             <Form
                                 ref={formRef}
                                 onFinish={handleLogin}>
-                                <FormInput className={'test'} name={'email'} label={'Email'}/>
+                                <FormInput className={'test'} name={'email'} label={'Email'} formRef={formRef}/>
 
-                                <FormInput className={'test'} inputType={'password'} inputProps={{
+                                <FormInput className={'test'} inputType={'password'}  formRef={formRef} inputProps={{
                                     iconRender:() => (<Link onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();

@@ -10,13 +10,13 @@ import api from "../../../../../Api";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {t} from "i18next";
+import {postResource} from "../../../../Functions/api_calls";
 function HeaderAccountDropdown() {
     const auth = useSelector(state => state.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const handleLogout = () => {
         axios.get(api.Auth.logout.url, {
-
             headers: {
                 'Authorization': auth.token,
             }
@@ -30,12 +30,12 @@ function HeaderAccountDropdown() {
 
     let roles = auth?.user?.roles
     const onRoleChange = (el) => {
-        dispatch({
-            type:'ROLE_CHANGE',
-            payload: el
-
+        postResource('Auth','switchRole', auth.token,null,{role_id:el.id}).then((response)=>{
+            dispatch({
+                type: 'AUTH',
+                payload: response
+            })
         })
-
     }
 
 

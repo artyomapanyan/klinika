@@ -22,6 +22,10 @@ let api = {
             url: `${endpoint}${version}/auth/reset`,
             method: 'POST',
         },
+        switchRole: {
+            url: `${endpoint}${version}/auth/switch-role`,
+            method: 'POST',
+        },
     }
 };
 [

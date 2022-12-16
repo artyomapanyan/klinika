@@ -106,6 +106,16 @@ export const deleteResource = (resource,id,token)=>{
         }
     })
 }
+export const postResource = (resource,param,token,id=null,params)=>{
+    return  axios.request({
+        url:`${api[resource][param].url}${id??''}`,
+        method:api[resource][param].method,
+        data:params,
+        headers: {
+            'Authorization': token,
+        }
+    })
+}
 export const createResource = (resource,values,token)=>{
     return  axios.request({
         url:api[resource].create.url,
