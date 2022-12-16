@@ -9,6 +9,7 @@ import axios from "axios";
 import api from "../../../Api";
 import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 import {t} from "i18next";
+import Resources from "../../../store/Resources";
 
 const resource = 'NursingTask';
 
@@ -55,6 +56,11 @@ function NursingTask() {
             >
                 <Form.Item label={t('Name')} name={'name'}>
                     <Input/>
+                </Form.Item>
+                <Form.Item label={t('Status')} name={'status'}>
+                    <Select>
+                        {Resources.Status.map((status)=><Select.Option value={status.id} key={status.id}>{status.name}</Select.Option>)}
+                    </Select>
                 </Form.Item>
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
