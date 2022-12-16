@@ -1,4 +1,4 @@
-import {Button, Carousel, Checkbox, Form, Input, Space} from "antd";
+import {Button, Carousel, Checkbox, Form} from "antd";
 import React, {useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
@@ -12,7 +12,7 @@ import {t} from "i18next";
 import AuthHeader from "../AuthHeader";
 import "../../../dist/styles/Styles.sass";
 import {Link} from "react-router-dom";
-
+import checkout from "../../../dist/icons/checkout.svg";
 
 
 function Login() {
@@ -34,6 +34,7 @@ function Login() {
     const handleLogout = () => {
         formRef.current.resetFields()
         carouselRef.current.prev()
+        setRolesState([])
     }
     const handleLogin = (values) => {
         setLoading({
@@ -94,13 +95,22 @@ function Login() {
                             </Form>
                         </div>
                     </div>
-                    <div className={'logo_div'}>
-                        <Space direction={'vertical'}>
-                            {rolesState.map(role => <Button key={role.id} type={'primary'}
-                                                            onClick={() => handleLoginWithRole(role)}
-                                                            loading={loading[role.id]}>{role.name}</Button>)}
-                            <Button type={'secondary'} onClick={handleLogout}>{t('Log out')}</Button>
-                        </Space>
+                    <div style={{scrollBehavior: 'smooth'}}>
+                        <div className={"head_account_drop1"}>
+                            <h2 style={{fontWeight: 700, margin:20}}>Select Role</h2>
+                                        {rolesState.map(role => <Button className={'role_btn'} key={role.id}  onClick={() => handleLoginWithRole(role)} loading={loading[role.id]}>
+                                            <div className={'div_icon'}><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>
+                                            <div >
+                                                <div className={"head_account_drop_text"}>{role?.name}</div>
+                                                <div>{role?.key}</div>
+                                            </div>
+                                        </Button>)}
+                            <div>
+                                <Button className={'role_logouth'} type={'secondary'} onClick={handleLogout}>{t('Log out') }</Button>
+                            </div>
+
+                        </div>
+
                     </div>
                 </Carousel>
             </div>

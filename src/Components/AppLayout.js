@@ -2,8 +2,7 @@ import React, {useState} from "react";
 import {Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
-import {useDispatch, useSelector} from "react-redux";
-import {useTranslation} from "react-i18next";
+import {useSelector} from "react-redux";
 import "../dist/styles/Styles.sass"
 import DashboardMenu from "./Dashboard/DashboardMenu/DashboardMenu";
 import DashboardHeader from "./Dashboard/DashboardHeader/DashboardHeader";
@@ -30,18 +29,9 @@ import NursingTask from "./Dashboard/NursingTasks/NursingTask";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
-    let dispatch = useDispatch()
-
-    const {t} = useTranslation()
 
     const [mouseCollapsed, setMauseCollapsed] = useState(true);
     const [btnCollapsed, setBtnCollapsed] = useState(false);
-    const ltrToRtl = () => {
-        dispatch({
-            type: 'GLOBAL_STATE',
-            payload: !redux.globalState,
-        })
-    }
     const toggleCollapsed = () => {
         setMauseCollapsed(true);
     };

@@ -1,7 +1,6 @@
 import React from "react";
 import {Button} from "antd";
 import "./HeaderAccountDropdown.sass"
-import frame4 from "../../../../../dist/icons/frame4.svg";
 import checkout from "../../../../../dist/icons/checkout.svg";
 import settings from "../../../../../dist/icons/settings.svg";
 import logout from "../../../../../dist/icons/logout.svg";
@@ -46,7 +45,7 @@ function HeaderAccountDropdown() {
 
                 <h3 style={{fontWeight: 700}}>Select Role :</h3>
 
-                {roles.map((el) =><Button type ={auth?.selected_role?.id===el?.id?'primary':'default'} key={el.id} onClick={()=>onRoleChange(el)} >
+                {roles.map((el) =><Button className={'btn_roles'} type ={auth?.selected_role?.id===el?.id?'primary':'default'} key={el.id} onClick={()=>onRoleChange(el)} >
                             <div >
                                 <div className={"head_account_drop_text"}>{el?.name}</div>
                                 <div>{el?.key}</div>

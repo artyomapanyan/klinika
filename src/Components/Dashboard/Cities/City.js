@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Input, Select, Space} from "antd";
+import {Button, Form, Input, Space} from "antd";
 import React, {useRef} from "react";
 import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 import {t} from "i18next";

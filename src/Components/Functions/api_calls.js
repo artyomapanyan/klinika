@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
-import {useSearchParams} from "react-router-dom";
 
 export const useGetResourceIndex = (resource,params) => {
     const [loading, setLoading] = useState(false)

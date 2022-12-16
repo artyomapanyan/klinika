@@ -1,6 +1,5 @@
 
-
-export default {
+const ResourceLins = {
     Region:'/dashboard/regions/',
     Country:'/dashboard/countries/',
     City:'/dashboard/cities/',
@@ -10,3 +9,4 @@ export default {
     SubService:'/dashboard/sub-services/',
     NursingTask:'/dashboard/nursing-tasks/',
 }
+export default ResourceLins

@@ -1,4 +1,4 @@
-export default {
+const Resource = {
     Gender:
         [
             {
@@ -33,3 +33,5 @@ export default {
         REPORT_TOPIC:10,
     }
 }
+
+export default Resource

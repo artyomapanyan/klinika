@@ -4,10 +4,7 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Input, Select, Space} from "antd";
-import React, {useEffect, useRef} from "react";
-import axios from "axios";
-import api from "../../../Api";
-import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
+import React from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 

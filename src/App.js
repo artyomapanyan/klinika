@@ -20,7 +20,7 @@ function App() {
                 payload:response
             })
         })
-    },[])
+    },[dispatch])
 
     return (
         <span className={languageState??'en'}>

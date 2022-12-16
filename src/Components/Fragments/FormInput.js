@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, { useRef, useState} from 'react'
 import {Form, Input} from "antd";
 
 function FormInput({name,label,initialValue,inputProps={},FormProps={},inputType,formRef}){
