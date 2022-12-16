@@ -23,7 +23,7 @@ function App() {
     },[])
 
     return (
-        <span className={languageState??''}>
+        <span className={languageState??'en'}>
         <ConfigProvider
             theme={{
                 token: {

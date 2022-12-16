@@ -32,7 +32,7 @@ function DashboardHeader() {
                 onChange={languageChange}
             >
                 {
-                    Object.keys(lngs).map((el) => (
+                    Object.keys(lngs??[]).map((el) => (
                         <Select.Option key={el}>{lngs[el].nativeName}</Select.Option>
                     ))
                 }

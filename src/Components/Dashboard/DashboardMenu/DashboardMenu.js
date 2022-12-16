@@ -24,7 +24,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         return true
     }
     const items = useMemo(()=>[
-        {
+       /* {
             key: `/`,
             label: t("dashboard"),
             icon: <img alt={'icons'} src={dash1}/>,
@@ -38,7 +38,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             key: `/-categories`,
             label: t(`Offers`),
             icon: <img alt={'icons'} src={dash3}/>,
-        },
+        },*/
         {
             label: t(`Inputs`),
             icon: <img alt={'icons'} src={dash4}/>,
@@ -85,7 +85,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
             ]
         },
-        {
+        /*{
             label: `Profile`,
             icon: <img alt={'icons'} src={dash4}/>,
             children: [
@@ -103,7 +103,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             key: `/match-event-naturess`,
             label: t(`Reviews`),
             icon: <img alt={'icons'} src={dash5}/>,
-        },
+        },*/
     ].filter(handleFilterMenus),[permissions]);
 
     const handleMenuClick = (e)=>{

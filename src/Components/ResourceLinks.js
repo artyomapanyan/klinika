@@ -8,4 +8,5 @@ export default {
     SubCategory:'/dashboard/sub-categories/',
     Service:'/dashboard/services/',
     SubService:'/dashboard/sub-services/',
+    NursingTask:'/dashboard/nursing-tasks/',
 }

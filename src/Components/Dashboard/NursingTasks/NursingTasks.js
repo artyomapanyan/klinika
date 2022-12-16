@@ -1,6 +1,7 @@
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import Resources from "../../../store/Resources";
 
 function NursingTasks() {
     return (
@@ -21,10 +22,10 @@ function NursingTasks() {
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
-                    dataIndex:['service','name'],
+                    dataIndex:['status'],
                     title:t('Status'),
                     key:'category',
-                    translatable:true,
+                    render:i=>t(Resources.Status[i])
                 },
                 {
                     dataIndex:'date',

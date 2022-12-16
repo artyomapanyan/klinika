@@ -24,6 +24,7 @@ import Service from "./Dashboard/Services/Service";
 import SubServices from "./Dashboard/SubServices/SubServices";
 import SubService from "./Dashboard/SubServices/SubService";
 import NursingTasks from "./Dashboard/NursingTasks/NursingTasks";
+import NursingTask from "./Dashboard/NursingTasks/NursingTask";
 
 
 
@@ -96,7 +97,7 @@ function AppLayout(){
         {
             url:'nursing-tasks',
             resource:'NursingTask',
-            //singleComp:<SubService/>,
+            singleComp:<NursingTask/>,
             indexComp:<NursingTasks/>
         },
 
