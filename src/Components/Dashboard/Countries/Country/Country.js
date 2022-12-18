@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Button, Form, Input,Space} from 'antd';
 import "./Country.sass"
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
@@ -7,6 +7,8 @@ import Preloader from "../../../Preloader";
 import {useSelector} from "react-redux";
 import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
+import FormInput from "../../../Fragments/FormInput";
+import "../../../../dist/styles/Styles.sass";
 
 const resource = 'Country';
 
@@ -18,6 +20,7 @@ function Country() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [valuesState, setValuesState] = useState('')
+    const formRef = useRef();
 
     const onFinish = (values) => {
         setLoading(true)
@@ -41,19 +44,19 @@ function Country() {
 
     }
 
+
     return (
         <div className={"country_content"}>
-            <h3>{t(`Editing Country - ${data?.name}`)}</h3>
+            {data?.name ? <h3>{t(`Editing Country - ${data?.name}`)}</h3> : <h3>{t(`Editing Country`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 initialValues={data}
             >
-                <Form.Item label={t('Name')} name={'name'}>
-                    <Input/>
-                </Form.Item>
-                <Form.Item
+
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput
                     label={t('Alpha2 code')}
                     name={'alpha2_code'}
                     rules={[
@@ -64,10 +67,10 @@ function Country() {
 
                         ]}
                 >
-                    <Input/>
-                </Form.Item>
 
-                <Form.Item
+                </FormInput>
+
+                <FormInput
                     label={t('Alpha3 code')}
                     name={'alpha3_code'}
                     rules={[
@@ -78,8 +81,7 @@ function Country() {
                     ]}
 
                 >
-                    <Input/>
-                </Form.Item>
+                </FormInput>
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 

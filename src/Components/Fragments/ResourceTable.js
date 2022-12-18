@@ -15,7 +15,7 @@ function ResourceTable({resource, tableColumns, title}) {
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState(paramsToObject(searchParams.entries()))
     let token = useSelector((state) => state?.auth?.token);
-    let lngs = useSelector((state) => state?.languageState);
+    let lngs = useSelector((state) => state?.app?.current_locale);
 
     const {t} = useTranslation()
     let navigate = useNavigate();

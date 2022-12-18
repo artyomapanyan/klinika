@@ -10,7 +10,7 @@ import api from "./Api";
 
 
 function App() {
-    let languageState = useSelector((state) => state.languageState);
+    let languageState = useSelector((state) => state?.app?.current_locale);
     let dispatch = useDispatch()
     axios.defaults.headers.common['Accept-Language'] = languageState
     useEffect(()=>{

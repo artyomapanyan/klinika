@@ -4,6 +4,14 @@ export default function app(state = {}, action) {
             ...action.payload
         }
     }
+    if(action.type === 'LANGUAGE_STATE'){
+        return {
+            ...state,
+            current_locale: action.payload
+        }
+
+
+    }
     return state
 
 }
