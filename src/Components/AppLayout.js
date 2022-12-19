@@ -24,6 +24,7 @@ import SubServices from "./Dashboard/SubServices/SubServices";
 import SubService from "./Dashboard/SubServices/SubService";
 import NursingTasks from "./Dashboard/NursingTasks/NursingTasks";
 import NursingTask from "./Dashboard/NursingTasks/NursingTask";
+import PatientHeader from "./Dashboard/PatientHeader/PatientHeader";
 
 
 
@@ -108,6 +109,11 @@ function AppLayout(){
             <div  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <DashboardHeader/>
 
+            </div>
+            <div  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
+                <div className={'patient_content'}>
+                    <PatientHeader />
+                </div>
             </div>
             <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <Routes>

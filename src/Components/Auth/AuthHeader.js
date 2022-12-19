@@ -31,7 +31,7 @@ function AuthHeader() {
         <div style={{width:'100%', position:"absolute", top:45, display: "flex", flexDirection:"row", JustifyContent:'space-around'}}>
 
                 <Button style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
-            <div style={{marginLeft:'90%'}}>
+            <div style={{marginLeft:'90%', cursor:"pointer"}}>
                 <Dropdown
                     menu={{
                         items,
