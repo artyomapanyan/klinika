@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Divider, Layout} from "antd";
+import {Col, Divider, Layout, Row} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {useSelector} from "react-redux";
@@ -26,6 +26,7 @@ import NursingTasks from "./Dashboard/NursingTasks/NursingTasks";
 import NursingTask from "./Dashboard/NursingTasks/NursingTask";
 import PatientHeader from "./Dashboard/PatientHeader/PatientHeader";
 import PatientCollapse from "./Dashboard/PatientCollapse/PatientCollapse";
+import PatientCard from "./Dashboard/PatientCard/PatientCard";
 
 
 
@@ -116,6 +117,12 @@ function AppLayout(){
                     <PatientHeader />
                     <Divider />
                     <PatientCollapse />
+                    <Row gutter={[16,16]}>
+                        <Col lg={16}><PatientCard/></Col>
+                        <Col lg={8}></Col>
+
+                    </Row>
+
                 </div>
                 <Routes>
                     {resourceRoutes.map((item,key)=><>
