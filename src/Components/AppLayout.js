@@ -111,14 +111,12 @@ function AppLayout(){
                 <DashboardHeader/>
 
             </div>
-            <div  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
+            <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <div className={'patient_content'}>
                     <PatientHeader />
                     <Divider />
                     <PatientCollapse />
                 </div>
-            </div>
-            <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <Routes>
                     {resourceRoutes.map((item,key)=><>
                         <Route key={key+'_i'} path={item.url} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>
