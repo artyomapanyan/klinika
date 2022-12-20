@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Col, Divider, Layout, Row} from "antd";
+import {Divider, Layout, Tabs,Col,Row} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {useSelector} from "react-redux";
@@ -26,6 +26,7 @@ import NursingTasks from "./Dashboard/NursingTasks/NursingTasks";
 import NursingTask from "./Dashboard/NursingTasks/NursingTask";
 import PatientHeader from "./Dashboard/PatientHeader/PatientHeader";
 import PatientCollapse from "./Dashboard/PatientCollapse/PatientCollapse";
+import TabBars from "./Fragments/TabBars/TabBars";
 import PatientCard from "./Dashboard/PatientCard/PatientCard";
 
 
@@ -117,6 +118,26 @@ function AppLayout(){
                     <PatientHeader />
                     <Divider />
                     <PatientCollapse />
+                    <TabBars>
+                        <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
+
+                        </Tabs.TabPane>
+                        <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
+
+                        </Tabs.TabPane>
+                        <Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >
+
+                        </Tabs.TabPane>
+                        <Tabs.TabPane key={'lab-tests'} tab={'Lab Tests'} >
+
+                        </Tabs.TabPane>
+                        <Tabs.TabPane key={'medications'} tab={'Medications'} >
+
+                        </Tabs.TabPane>
+                        <Tabs.TabPane key={'log'} tab={'log'} >
+
+                        </Tabs.TabPane>
+                    </TabBars>
                     <Row gutter={[16,16]}>
                         <Col lg={16}><PatientCard/></Col>
                         <Col lg={8}></Col>
