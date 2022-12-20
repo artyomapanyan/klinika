@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
-function PatientCard() {
+function PatientCardMedications() {
 
     const [initLoading, setInitLoading] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -49,7 +49,7 @@ function PatientCard() {
             <Card
                 title="Current medications"
                 extra={<Button className={'patient_card_btn'}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>Add</span></Button>}
-                style={{width: 424, padding:20}}
+                style={{ padding:20}}
             >
                 <List
                     className="demo-loadmore-list"
@@ -78,4 +78,4 @@ function PatientCard() {
         </div>
     )
 }
-export default PatientCard;
+export default PatientCardMedications;

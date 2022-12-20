@@ -27,7 +27,11 @@ import NursingTask from "./Dashboard/NursingTasks/NursingTask";
 import PatientHeader from "./Dashboard/PatientHeader/PatientHeader";
 import PatientCollapse from "./Dashboard/PatientCollapse/PatientCollapse";
 import TabBars from "./Fragments/TabBars/TabBars";
-import PatientCard from "./Dashboard/PatientCard/PatientCard";
+import PatientCardMedications from "./Dashboard/PatientCards/PatientCardMedications";
+import PatientCardRiskFactors from "./Dashboard/PatientCards/PatientCardRiskFactors";
+import PatientCardAllergy from "./Dashboard/PatientCards/PatientCardAllergy";
+import PatientCardChronicDiseases from "./Dashboard/PatientCards/PatientCardChronicDiseases";
+import PatientCardRight from "./Dashboard/PatientCards/PatientCardRight";
 
 
 
@@ -120,7 +124,23 @@ function AppLayout(){
                     <PatientCollapse />
                     <TabBars>
                         <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
+                            <Row gutter={[16,16]}>
+                                <Col lg={16}>
+                                    <div style={{display:"flex", gap: 24, padding: 24}}>
+                                        <PatientCardMedications/>
+                                        <PatientCardRiskFactors/>
+                                    </div>
+                                    <div style={{display:"flex", gap: 24, padding: 24}}>
+                                        <PatientCardAllergy/>
+                                        <PatientCardChronicDiseases/>
+                                    </div>
 
+                                </Col>
+                                <Col lg={8}>
+                                    <PatientCardRight/>
+                                </Col>
+
+                            </Row>
                         </Tabs.TabPane>
                         <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
 
@@ -138,11 +158,7 @@ function AppLayout(){
 
                         </Tabs.TabPane>
                     </TabBars>
-                    <Row gutter={[16,16]}>
-                        <Col lg={16}><PatientCard/></Col>
-                        <Col lg={8}></Col>
 
-                    </Row>
 
                 </div>
                 <Routes>
