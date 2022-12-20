@@ -2,7 +2,7 @@ import React from "react";
 import "./HeaderAccount.sass"
 import notification from "../../../../dist/icons/notification.svg";
 import alert from "../../../../dist/icons/alert.svg";
-import arrowDownPurple from "../../../../dist/icons/arrow-down-purple.svg";
+import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
 import {Avatar, Button, Card, Divider, Dropdown, Space} from "antd";
 import HeaderAccountDropdown from "./Fragment/HeaderAccountDropdown";
 import {useSelector} from "react-redux";

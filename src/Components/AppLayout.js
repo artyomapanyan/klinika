@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Layout} from "antd";
+import {Divider, Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {useSelector} from "react-redux";
@@ -25,6 +25,7 @@ import SubService from "./Dashboard/SubServices/SubService";
 import NursingTasks from "./Dashboard/NursingTasks/NursingTasks";
 import NursingTask from "./Dashboard/NursingTasks/NursingTask";
 import PatientHeader from "./Dashboard/PatientHeader/PatientHeader";
+import PatientCollapse from "./Dashboard/PatientCollapse/PatientCollapse";
 
 
 
@@ -113,6 +114,8 @@ function AppLayout(){
             <div  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <div className={'patient_content'}>
                     <PatientHeader />
+                    <Divider />
+                    <PatientCollapse />
                 </div>
             </div>
             <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>

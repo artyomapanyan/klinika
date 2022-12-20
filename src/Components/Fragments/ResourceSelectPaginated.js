@@ -51,7 +51,8 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
                                onPopupScroll={handleScroll}
                                onSearch={handleSearch}
                                showSearch
-                               optionFilterProp={'name'}>
+                               optionFilterProp={'name'}
+                        >
         {handleGenerateOptions(localData ?? [])}
         {loading ?
             <Select.Option value={999} style={{textAlign: 'center'}}

@@ -7,6 +7,7 @@ import {Button, Form, Input, Space} from "antd";
 import React from "react";
 import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 import {t} from "i18next";
+import FormInput from "../../Fragments/FormInput";
 
 const resource = 'Region';
 
@@ -41,7 +42,7 @@ function Region() {
 
     }
     return(
-        <div>
+        <div className={'add_edit_content'}>
             <h3>{t('Add New Area')}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
@@ -52,9 +53,7 @@ function Region() {
                     country_id:data?.country?.id
                 }}
             >
-                <Form.Item label={t('Name')} name={'name'}>
-                    <Input/>
-                </Form.Item>
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
 
                     <ResourceSelectPaginated
                         label={t('Country')}
@@ -68,7 +67,7 @@ function Region() {
                         initialData={data?.region?[data.region]:[]}
                     />
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button className={'button_add'} type={'primary'} htmlType="submit">{t('Save')}</Button>
 
                 </Space>
             </Form>}

@@ -46,7 +46,7 @@ function Country() {
 
 
     return (
-        <div className={"country_content"}>
+        <div className={"add_edit_content"}>
             {data?.name ? <h3>{t(`Editing Country - ${data?.name}`)}</h3> : <h3>{t(`Editing Country`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
@@ -54,36 +54,44 @@ function Country() {
                 layout="vertical"
                 initialValues={data}
             >
-
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
-                <FormInput
-                    label={t('Alpha2 code')}
-                    name={'alpha2_code'}
-                    rules={[
-                        {
-                            required: true,
-                            len:2
-                        },
+                <div>
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                </div>
+                <div>
+                    <FormInput
+                        label={t('Alpha2 code')}
+                        name={'alpha2_code'}
+                        rules={[
+                            {
+                                required: true,
+                                len:2
+                            },
 
                         ]}
-                >
+                    >
 
-                </FormInput>
+                    </FormInput>
+                </div>
+                <div>
+                    <FormInput
+                        label={t('Alpha3 code')}
+                        name={'alpha3_code'}
+                        rules={[
+                            {
+                                required: true,
+                                len:3
+                            },
+                        ]}
 
-                <FormInput
-                    label={t('Alpha3 code')}
-                    name={'alpha3_code'}
-                    rules={[
-                        {
-                            required: true,
-                            len:3
-                        },
-                    ]}
+                    >
+                    </FormInput>
+                </div>
 
-                >
-                </FormInput>
+
+
+
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button className={'button_add'} type={'primary'} htmlType="submit">{t('Save')}</Button>
 
                 </Space>
             </Form>}
