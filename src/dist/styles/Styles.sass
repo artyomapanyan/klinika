@@ -60,12 +60,14 @@ body
     border: 1px solid $primaryColor
     background-color: white !important
     color: $primaryColor !important
-.input-placeholder
-  .ant-form-item-row,.ant-form-item-row input
-    height: 48px
-    border-radius: 12px
+
 .input-placeholder
   position: relative
+  .ant-form-item-row,.ant-form-item-row input,.ant-select,.ant-select-selector
+    min-height: 48px !important
+    border-radius: 12px !important
+    .ant-select-selection-item
+      line-height: 46px
   .ant-form-item-label
     position: absolute
     color: rgba(0, 0, 0, 0.6)

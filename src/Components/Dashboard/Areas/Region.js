@@ -53,19 +53,13 @@ function Region() {
                     country_id:data?.country?.id
                 }}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+                <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.country_id}
+                           initialData={data?.region?[data.region]:[]}
+                           resource={'Country'}/>
 
-                    <ResourceSelectPaginated
-                        label={t('Country')}
-                        rules={[
-                            {
-                                required: true,
-                            }
-                        ]}
-                        name={'country_id'}
-                        resource={'Country'}
-                        initialData={data?.region?[data.region]:[]}
-                    />
                 <Space>
                     <Button className={'button_add'} type={'primary'} htmlType="submit">{t('Save')}</Button>
 

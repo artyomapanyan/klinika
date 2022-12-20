@@ -3,7 +3,7 @@ import {Select, Spin, Form} from "antd";
 import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
-function ResourceSelectPaginated({initialData = [], resource, name, label, rules}) {
+function ResourceSelectPaginated({initialData = [], resource, name, label, rules,inputProps={},formItemClass}) {
     const timeout = useRef(null);
     const [params, setParams] = useState({page: 1})
     const [localData, setLocalData] = useState(initialData)
@@ -47,10 +47,13 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
             })
         }, 500)
     }
-    const SelectItem = <Select loading={loading}
+    const SelectItem = <Select
+                                {...inputProps}
+                               loading={loading}
                                onPopupScroll={handleScroll}
                                onSearch={handleSearch}
                                showSearch
+                               allowClear
                                optionFilterProp={'name'}
                         >
         {handleGenerateOptions(localData ?? [])}
@@ -60,9 +63,11 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
 
     </Select>;
     return name?<Form.Item
+        className={formItemClass}
         label={label}
         name={name}
-        rules={rules}>
+        rules={rules}
+    >
         {SelectItem}
     </Form.Item>:SelectItem
 }
