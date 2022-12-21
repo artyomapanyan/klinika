@@ -32,6 +32,7 @@ import PatientCardRiskFactors from "./Dashboard/PatientCards/PatientCardRiskFact
 import PatientCardAllergy from "./Dashboard/PatientCards/PatientCardAllergy";
 import PatientCardChronicDiseases from "./Dashboard/PatientCards/PatientCardChronicDiseases";
 import PatientCardRight from "./Dashboard/PatientCards/PatientCardRight";
+import PatientCardTab from "./Dashboard/PatientCards/PatientCardTab/PatientCardTab";
 
 
 
@@ -120,46 +121,6 @@ function AppLayout(){
             <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <div className={'patient_content'}>
 
-                    <PatientHeader />
-                    <Divider />
-                    <PatientCollapse />
-                    <TabBars>
-                        <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
-                            <Row gutter={[16,16]}>
-                                <Col lg={16}>
-                                    <div style={{display:"flex", gap: 24, padding: 24}}>
-                                        <PatientCardMedications/>
-                                        <PatientCardRiskFactors/>
-                                    </div>
-                                    <div style={{display:"flex", gap: 24, padding: 24}}>
-                                        <PatientCardAllergy/>
-                                        <PatientCardChronicDiseases/>
-                                    </div>
-
-                                </Col>
-                                <Col lg={8}>
-                                    <PatientCardRight/>
-                                </Col>
-
-                            </Row>
-                        </Tabs.TabPane>
-                        <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-
-                        </Tabs.TabPane>
-                        <Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >
-
-                        </Tabs.TabPane>
-                        <Tabs.TabPane key={'lab-tests'} tab={'Lab Tests'} >
-
-                        </Tabs.TabPane>
-                        <Tabs.TabPane key={'medications'} tab={'Medications'} >
-
-                        </Tabs.TabPane>
-                        <Tabs.TabPane key={'log'} tab={'log'} >
-
-                        </Tabs.TabPane>
-                    </TabBars>
-
 
                 </div>
                 <Routes>
@@ -170,7 +131,7 @@ function AppLayout(){
                         </>)}
 
                     <Route path={'valod'} element={<div>valod</div>}/>
-
+                    <Route path={'patients'} element={<PatientCardTab />}/>
                 </Routes>
             </Content>
             <div style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>

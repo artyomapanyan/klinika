@@ -8,6 +8,7 @@ import {Button, Form, Input, Space} from "antd";
 import React, {useRef} from "react";
 import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 import {t} from "i18next";
+import FormInput from "../../Fragments/FormInput";
 
 const resource = 'City';
 
@@ -39,8 +40,9 @@ function City() {
                 setLoading(false)
             })
         }
-
     }
+
+    console.log(data, 'dd')
     return(
         <div>
             <h3>{t('Add New City')}</h3>
@@ -57,6 +59,7 @@ function City() {
                 <Form.Item label={t('Name')} name={'name'}>
                     <Input/>
                 </Form.Item>
+
                 <Form.Item
                     label={t('Area')}
                     name="region_id"
@@ -68,6 +71,12 @@ function City() {
 
                    <ResourceSelectPaginated name={'region_id'} formRef={formRef} value={data.region?.id} resource={'Region'} initialData={data.region?[data.region]:[]}/>
                 </Form.Item>
+
+                <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.region_id}
+                           initialData={data?.region?[data.region]:[]}
+                           resource={'Country'}/>
 
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t("Save")}</Button>

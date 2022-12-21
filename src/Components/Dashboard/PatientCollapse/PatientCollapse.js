@@ -5,7 +5,7 @@ import arrowUpPurple from "../../../dist/icons/arrow-up-purple.svg";
 const { Panel } = Collapse;
 function PatientCollapse() {
     const onChange = (key) => {
-        console.log(key);
+
     };
     return(
         <div style={{margin:24}}>
