@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {Button, Form, Input,Space} from 'antd';
+import {Button, Form, Input, message, Space, Upload} from 'antd';
 import "./Country.sass"
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
@@ -9,6 +9,7 @@ import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import "../../../../dist/styles/Styles.sass";
+import {InboxOutlined} from "@ant-design/icons";
 
 const resource = 'Country';
 
@@ -23,6 +24,8 @@ function Country() {
     const formRef = useRef();
 
     const onFinish = (values) => {
+        console.log(values)
+        return
         setLoading(true)
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
@@ -44,20 +47,17 @@ function Country() {
 
     }
 
-
     return (
         <div className={"add_edit_content"}>
             {data?.name ? <h3>{t(`Editing Country - ${data?.name}`)}</h3> : <h3>{t(`Editing Country`)}</h3>}
             {loading ? <Preloader/> : <Form
+
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 initialValues={data}
             >
-                <div>
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
-                </div>
-                <div>
                     <FormInput
                         label={t('Alpha2 code')}
                         name={'alpha2_code'}
@@ -71,8 +71,6 @@ function Country() {
                     >
 
                     </FormInput>
-                </div>
-                <div>
                     <FormInput
                         label={t('Alpha3 code')}
                         name={'alpha3_code'}
@@ -85,10 +83,6 @@ function Country() {
 
                     >
                     </FormInput>
-                </div>
-
-
-
 
                 <Space>
                     <Button className={'button_add'} type={'primary'} htmlType="submit">{t('Save')}</Button>

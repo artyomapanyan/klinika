@@ -11,9 +11,11 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
     const {loadingState, dataState} = useGetResourceIndex(resource, params)
     const {loading} = loadingState;
     const {data} = dataState;
+    console.log(initialData)
     const handleGenerateOptions = (data) => {
         return data.map(item => {
-            return <Select.Option key={item.id} value={item.id} name={item.name}>{item.name}</Select.Option>
+            let name = item.name??item.title
+            return <Select.Option key={item.id} value={item.id} name={name}>{name}</Select.Option>
         })
     }
     useEffect(() => {

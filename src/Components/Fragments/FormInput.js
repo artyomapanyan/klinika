@@ -25,23 +25,25 @@ function FormInput({name, label, rules, initialValue, inputProps = {}, inputType
                                      onBlur={() => setFocused(false)}
                                      onChange={e => setValue(e)}/>
             case 'resourceSelect':
-                return <ResourceSelectPaginated name={name} label={label} rules={rules}
+                return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
+
                                                 formItemClass={`input-placeholder ${focused || value ? 'input-focused' : ''}`}
-                                                resource={resource} initialData={initialData} inputProps={{
+                                                resource={resource} initialData={initialData}  inputProps={{
                     onFocus: () => setFocused(true),
                     onChange: e => setValue(e),
                     onBlur: () => setFocused(false),
+                    mode:inputProps.mode
                 }}/>
             default:
                 return <Input {...inputProps} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
                               onInput={e => setValue(e.target.value)}/>
         }
     }
-    console.log(focused || value)
+    let flyPlaceholder = focused || (Array.isArray(value)?value.length:value)
     return (
         <div>
             {NoForm.includes(inputType) ? handleReturnInput() : <Form.Item initialValue={initialValue}
-                                                                           className={`input-placeholder ${focused || value ? 'input-focused' : ''} ${inputType}`}
+                                                                           className={`input-placeholder ${flyPlaceholder ? 'input-focused' : ''} ${inputType}`}
                                                                            name={name} label={label} rules={rules}>
                 {handleReturnInput()}
             </Form.Item>}

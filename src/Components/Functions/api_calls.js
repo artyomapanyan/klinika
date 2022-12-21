@@ -60,7 +60,7 @@ export const useGetResourceSingle = (resource,id)=>{
                     'Authorization': token,
                 }
             }).then(response=>{
-                if(response){
+                if(response?.id){
                     setData(response)
                 }
             }).finally(()=>{

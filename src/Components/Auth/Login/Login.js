@@ -48,7 +48,7 @@ function Login() {
                 method: api.Auth.login.method,
                 data: values,
             }).then(response => {
-                if (response.user.id) {
+                if (response.user?.id) {
                     if (!response?.token) {
                         setRolesState(response?.user?.roles)
                         setLogin(values)

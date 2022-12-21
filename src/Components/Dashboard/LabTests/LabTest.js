@@ -53,16 +53,16 @@ function LabTest() {
                 ref={formRef}
                 initialValues={{
                     ...data,
-                    Lab_test:data.Lab_test?.id
+                    categories:data.categories?.map(e=>e.id)
                 }}
             >
                 <FormInput label={t('name')} name={'name'}/>
 
-                <FormInput label={t('Area')} name={'Lab_test'} inputType={'resourceSelect'}
+                <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.region_id}
-                           initialData={data?.Lab_test?[data.Lab_test]:[]}
-                           resource={'LabTest'}/>
+                           initialValue={data?.categories?.map(e=>e.id)??[]}
+                           initialData={data?.categories??[]}
+                           resource={'Category'}/>
 
                 <Form.Item label={t('Status')} name={'status'}>
                     <Select>

@@ -60,7 +60,7 @@ function City() {
 
                 <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.region_id}
+                           initialValue={data?.region?.id}
                            initialData={data?.region?[data.region]:[]}
                            resource={'Region'}/>
 
