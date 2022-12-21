@@ -14,6 +14,7 @@ function PatientCardTab() {
             <PatientHeader />
             <Divider />
             <PatientCollapse />
+            <div style={{backgroundColor:'white', margin:24}}>
             <TabBars>
                 <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
                     <Row gutter={[16,16]}>
@@ -50,6 +51,7 @@ function PatientCardTab() {
 
                 </Tabs.TabPane>
             </TabBars>
+            </div>
         </div>
     )
 }

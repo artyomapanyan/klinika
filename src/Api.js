@@ -61,6 +61,14 @@ let api = {
         url: 'nursing-tasks',
         resource: 'NursingTask',
     },
+    {
+        url: 'lab-packages',
+        resource: 'LabPackage',
+    },
+    {
+        url: 'lab-tests',
+        resource: 'LabTest',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

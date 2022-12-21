@@ -6,6 +6,7 @@ import Preloader from "../../Preloader";
 import {Button, Form, Input, Space} from "antd";
 import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 import {t} from "i18next";
+import FormInput from "../../Fragments/FormInput";
 
 
 const resource = 'Service';
@@ -38,7 +39,7 @@ function Service() {
     }
 
     return (
-        <div>
+        <div className={'add_edit_content'}>
             <h3>{t("Add New Strings")}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
@@ -49,14 +50,14 @@ function Service() {
                     sub_category:data?.sub_category?.id
                 }}
             >
-                <Form.Item label={t('Name')} name={'name'}>
-                    <Input/>
-                </Form.Item>
-                <ResourceSelectPaginated name={'sub_category'} label={t('Sub category')} rules={[
-                    {
-                        required: true,
-                    }
-                ]} resource={'SubCategory'} initialData={data?.sub_category?[data.sub_category]:[]}/>
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+
+                <FormInput label={t('Sub category')} name={'sub_category'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.sub_category}
+                           initialData={data?.sub_category?[data.sub_category]:[]}
+                           resource={'SubCategory'}/>
+
 
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t("Save")}</Button>

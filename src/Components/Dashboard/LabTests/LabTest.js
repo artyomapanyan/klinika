@@ -1,23 +1,27 @@
 
-import resourceLinks from "../../ResourceLinks";
-import Preloader from "../../Preloader";
-import {Button, Form, Input, Space} from "antd";
-import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
-import {t} from "i18next";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
+import resourceLinks from "../../ResourceLinks";
+import Preloader from "../../Preloader";
+import {Button, Form, Select, Space} from "antd";
+import React, {useRef} from "react";
+import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
+import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
+import Resources from "../../../store/Resources";
 
+const resource = 'LabTest';
 
-const resource = 'SubService';
-function SubService() {
+function LabTest() {
     const params = useParams();
     const navigate = useNavigate();
+    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+
 
     const onFinish = (values) => {
         setLoading(true)
@@ -39,25 +43,33 @@ function SubService() {
         }
     }
 
-    return (
+    return(
         <div className={'add_edit_content'}>
-            <h3>{t("Add New Strings")}</h3>
+            <h3>{t('Add New Lab Test')}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
+                ref={formRef}
                 initialValues={{
                     ...data,
-                    service:data?.service?.id
+                    Lab_test:data.Lab_test?.id
                 }}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'}/>
 
-                <FormInput label={t('Service')} name={'service'} inputType={'resourceSelect'}
+                <FormInput label={t('Area')} name={'Lab_test'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.region_id}
-                           initialData={data?.service?[data.service]:[]}
-                           resource={'Service'}/>
+                           initialData={data?.Lab_test?[data.Lab_test]:[]}
+                           resource={'LabTest'}/>
+
+                <Form.Item label={t('Status')} name={'status'}>
+                    <Select>
+                        {Resources.Status.map((status)=><Select.Option value={status.id} key={status.id}>{status.name}</Select.Option>)}
+                    </Select>
+                </Form.Item>
+
 
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t("Save")}</Button>
@@ -67,4 +79,4 @@ function SubService() {
         </div>
     )
 }
-export default SubService;
+export default LabTest;

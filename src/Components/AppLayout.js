@@ -33,6 +33,10 @@ import PatientCardAllergy from "./Dashboard/PatientCards/PatientCardAllergy";
 import PatientCardChronicDiseases from "./Dashboard/PatientCards/PatientCardChronicDiseases";
 import PatientCardRight from "./Dashboard/PatientCards/PatientCardRight";
 import PatientCardTab from "./Dashboard/PatientCards/PatientCardTab/PatientCardTab";
+import LabPackages from "./Dashboard/LabPackages/LabPackages";
+import LabPackage from "./Dashboard/LabPackages/LabPackage";
+import LabTests from "./Dashboard/LabTests/LabTests";
+import LabTest from "./Dashboard/LabTests/LabTest";
 
 
 
@@ -98,6 +102,18 @@ function AppLayout(){
             resource:'NursingTask',
             singleComp:<NursingTask/>,
             indexComp:<NursingTasks/>
+        },
+        {
+            url:'lab-packages',
+            resource:'LabPackage',
+            singleComp:<LabPackage/>,
+            indexComp:<LabPackages/>
+        },
+        {
+            url:'lab-tests',
+            resource:'LabTest',
+            singleComp:<LabTest/>,
+            indexComp:<LabTests/>
         },
 
     ]

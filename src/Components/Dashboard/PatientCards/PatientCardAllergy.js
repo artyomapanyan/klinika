@@ -6,7 +6,7 @@ function PatientCardAllergy() {
     return(
         <div className={'current_medications_card'}>
             <Card
-                title="Risk factors"
+                title="Allergy"
                 extra={<Button className={'patient_card_btn'}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>Add</span></Button>}
                 style={{padding:20}}
             >

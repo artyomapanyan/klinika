@@ -8,5 +8,7 @@ const ResourceLins = {
     Service:'/dashboard/services/',
     SubService:'/dashboard/sub-services/',
     NursingTask:'/dashboard/nursing-tasks/',
+    LabPackage:'/dashboard/lab-packages/',
+    LabTest:'/dashboard/lab-tests/',
 }
 export default ResourceLins

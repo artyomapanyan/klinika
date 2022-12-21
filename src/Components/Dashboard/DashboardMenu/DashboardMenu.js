@@ -79,6 +79,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Nursing task`),
                     permission:'NursingTask'
                 },
+                {
+                    key: 'lab-packages',
+                    label: t(`Lab packages`),
+                    permission:'LabPackage'
+                },
+                {
+                    key: 'lab-tests',
+                    label: t(`Lab tests`),
+                    permission:'LabTest'
+                },
             ]
         },
         /*{

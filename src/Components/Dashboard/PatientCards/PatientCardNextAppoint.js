@@ -1,12 +1,12 @@
 import {Button, Card, List} from "antd";
 import plusPurple from "../../../dist/icons/plus-purple.svg";
 
-function PatientCardChronicDiseases() {
+function PatientCardNextAppoint() {
 
     return(
         <div className={'current_medications_card'}>
             <Card
-                title="Chronic diseases"
+                title="Next Appointments"
                 extra={<Button className={'patient_card_btn'}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>Add</span></Button>}
                 style={{padding:20}}
             >
@@ -29,4 +29,4 @@ function PatientCardChronicDiseases() {
         </div>
     )
 }
-export default PatientCardChronicDiseases;
+export default PatientCardNextAppoint;

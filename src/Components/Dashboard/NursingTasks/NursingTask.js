@@ -7,6 +7,7 @@ import {Button, Form, Input, Select, Space} from "antd";
 import React from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
+import FormInput from "../../Fragments/FormInput";
 
 const resource = 'NursingTask';
 
@@ -41,7 +42,7 @@ function NursingTask() {
 
     }
     return(
-        <div>
+        <div className={'add_edit_content'}>
             <h3>{t('Add New Nursuring Task')}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
@@ -51,14 +52,14 @@ function NursingTask() {
                     ...data,
                 }}
             >
-                <Form.Item label={t('Name')} name={'name'}>
-                    <Input/>
-                </Form.Item>
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+
                 <Form.Item label={t('Status')} name={'status'}>
                     <Select>
                         {Resources.Status.map((status)=><Select.Option value={status.id} key={status.id}>{status.name}</Select.Option>)}
                     </Select>
                 </Form.Item>
+
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 

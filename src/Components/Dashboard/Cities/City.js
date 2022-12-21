@@ -42,9 +42,8 @@ function City() {
         }
     }
 
-    console.log(data, 'dd')
     return(
-        <div>
+        <div className={'add_edit_content'}>
             <h3>{t('Add New City')}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
@@ -56,27 +55,14 @@ function City() {
                     region_id:data.region?.id
             }}
             >
-                <Form.Item label={t('Name')} name={'name'}>
-                    <Input/>
-                </Form.Item>
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
 
-                <Form.Item
-                    label={t('Area')}
-                    name="region_id"
-                    rules={[
-                        {
-                            required: true,
-                        }
-                    ]}>
-
-                   <ResourceSelectPaginated name={'region_id'} formRef={formRef} value={data.region?.id} resource={'Region'} initialData={data.region?[data.region]:[]}/>
-                </Form.Item>
 
                 <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.region_id}
                            initialData={data?.region?[data.region]:[]}
-                           resource={'Country'}/>
+                           resource={'Region'}/>
 
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t("Save")}</Button>

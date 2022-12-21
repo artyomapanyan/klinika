@@ -1,23 +1,21 @@
-
-import {Button, Form, Input,Space} from 'antd';
-import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import {useNavigate, useParams} from "react-router";
-import Preloader from "../../Preloader";
-import {useSelector} from "react-redux";
-import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
+import Preloader from "../../Preloader";
+import {Button, Form, Space} from "antd";
+import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
+import resourceLinks from "../../ResourceLinks";
+import {useNavigate, useParams} from "react-router";
+import {useSelector} from "react-redux";
 import FormInput from "../../Fragments/FormInput";
 
-const resource = 'Category';
+const resource = 'LabPackage';
+function LabPackage() {
 
-function Category() {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
-
     const onFinish = (values) => {
         setLoading(true)
         if (params.id) {
@@ -36,8 +34,8 @@ function Category() {
                 setLoading(false)
             })
         }
-
     }
+
 
     return (
         <div className={"add_edit_content"}>
@@ -60,4 +58,4 @@ function Category() {
     )
 }
 
-export default Category;
+export default LabPackage;
