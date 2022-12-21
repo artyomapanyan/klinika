@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Divider, Layout, Tabs,Col,Row} from "antd";
+import {Divider, Layout, Tabs, Col, Row, DatePicker} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {useSelector} from "react-redux";
@@ -119,6 +119,7 @@ function AppLayout(){
             </div>
             <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <div className={'patient_content'}>
+
                     <PatientHeader />
                     <Divider />
                     <PatientCollapse />

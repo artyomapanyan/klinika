@@ -9,6 +9,7 @@ import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import "../../../../dist/styles/Styles.sass";
+import moment from "moment";
 
 const resource = 'Country';
 
@@ -55,7 +56,7 @@ function Country() {
                 initialValues={data}
             >
                 <div>
-                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                    <FormInput label={t('Date')} name={'date'} initialValue={moment()} inputType={'date'} />
                 </div>
                 <div>
                     <FormInput

@@ -1,7 +1,8 @@
 import './App.css';
 import React, {useEffect} from 'react';
 import {ConfigProvider} from 'antd';
-import hy from "antd/locale/hy_AM";
+import en from "antd/locale/en_US";
+import ar from "antd/locale/ar_EG";
 import {useDispatch, useSelector} from "react-redux";
 import "./dist/styles/Styles.sass"
 import AppRoutes from "./Components/AppRoutes";
@@ -32,7 +33,7 @@ function App() {
                 },
             }}
             direction={languageState==='ar' ? "rtl" :"ltr" }
-            locale={hy}
+            locale={languageState==='ar'?ar:en}
         >
             <AppRoutes/>
         </ConfigProvider>
