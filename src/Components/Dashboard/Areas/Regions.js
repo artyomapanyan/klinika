@@ -4,12 +4,7 @@ import {Button} from "antd";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 function Regions() {
-    return(
-        <div>
-            <div>
-                <Button type={"primary"}>Print</Button>
-            </div>
-            <ResourceTable resource={'Region'} tableColumns={[
+    return(<ResourceTable resource={'Region'} tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',
@@ -35,7 +30,6 @@ function Regions() {
                     key:'date',
                 },
             ]} title={t('Areas')}/>
-        </div>
     )
 }
 export default Regions;
