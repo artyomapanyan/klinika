@@ -6,7 +6,6 @@ import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Select, Space} from "antd";
 import React, {useRef} from "react";
-import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";

@@ -18,7 +18,7 @@ function PatientCollapse() {
                                         <div><img alt={'icons'} src={arrowUpPurple}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :
                                         <div><img alt={'icons'} src={arrowDownPurple}/> <span className={'patient_collapse_icon'}>Expend</span></div>}</div>}
             >
-                <Panel className={'collapse_panel'} expandTextPosition={'end'} header="This is panel header 1" key="1">
+                <Panel className={'collapse_panel'} expandTextPosition={'end'} header="Appointment Details" key="1">
                     <Row>
                         <Col lg={4}>
                             <div className={'collapse_content_head'}>Scheduled Appt</div>

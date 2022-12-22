@@ -7,6 +7,7 @@ import PatientCardRight from "../PatientCardRight";
 import TabBars from "../../../Fragments/TabBars/TabBars";
 import PatientHeader from "../../PatientHeader/PatientHeader";
 import PatientCollapse from "../../PatientCollapse/PatientCollapse";
+import Appointment from "./Appointment/Appointment";
 
 function PatientCardTab() {
     return(
@@ -35,8 +36,8 @@ function PatientCardTab() {
 
                     </Row>
                 </Tabs.TabPane>
-                <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-
+                <Tabs.TabPane key={'appointment'} tab={'Appointment.js'} >
+                    <Appointment/>
                 </Tabs.TabPane>
                 <Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >
 
