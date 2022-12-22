@@ -61,7 +61,9 @@ function LabTest() {
                            rules={[{required: true}]}
                            initialValue={data?.categories?.map(e=>e.id)??[]}
                            initialData={data?.categories??[]}
-                           resource={'Category'}/>
+                           resource={'Taxonomy'}
+                           resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
+                />
 
                 <Form.Item label={t('Status')} name={'status'}>
                     <Select>

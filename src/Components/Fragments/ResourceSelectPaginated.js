@@ -3,9 +3,9 @@ import {Select, Spin, Form} from "antd";
 import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
-function ResourceSelectPaginated({initialData = [], resource, name, label, rules,inputProps={},formItemClass}) {
+function ResourceSelectPaginated({initialData = [], resource, name, label, rules,inputProps={},formItemClass,resourceParams}) {
     const timeout = useRef(null);
-    const [params, setParams] = useState({page: 1})
+    const [params, setParams] = useState({page: 1,...resourceParams})
     const [localData, setLocalData] = useState(initialData)
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params)

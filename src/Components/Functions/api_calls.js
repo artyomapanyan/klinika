@@ -86,11 +86,29 @@ export const useGetResourceSingle = (resource,id)=>{
 
     return {loadingState,dataState}
 }
-export const updateResource = (resource,id,values,token)=>{
+export const updateResource = (resource,id,values,token,withFormData=false)=>{
+    let formData = {}
+    if(withFormData){
+        formData = new FormData();
+        formData.append('_method','PUT')
+        for (const name in values) {
+            if(Array.isArray( values[name])){
+                values[name].forEach(e=>{
+                    formData.append(name+'[]', e);
+                })
+            }else{
+                formData.append(name, values[name]);
+            }
+
+        }
+    }else{
+        formData = values;
+    }
+
     return  axios.request({
             url:api[resource].update.url+id,
-            method:api[resource].update.method,
-            data:values,
+            method:withFormData?'POST':api[resource].update.method,
+            data:formData,
             headers: {
                 'Authorization': token,
             }
@@ -115,11 +133,20 @@ export const postResource = (resource,param,token,id=null,params)=>{
         }
     })
 }
-export const createResource = (resource,values,token)=>{
+export const createResource = (resource,values,token,withFormData=false)=>{
+    let formData = {}
+    if(withFormData){
+        formData = new FormData();
+        for (const name in values) {
+            formData.append(name, values[name]);
+        }
+    }else{
+        formData = values;
+    }
     return  axios.request({
         url:api[resource].create.url,
         method:api[resource].create.method,
-        data:values,
+        data:formData,
         headers: {
             'Authorization': token,
         }

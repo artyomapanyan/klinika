@@ -48,12 +48,12 @@ function SubService() {
                 layout="vertical"
                 initialValues={{
                     ...data,
-                    service:data?.service?.id
+                    service_id:data?.service?.id
                 }}
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
 
-                <FormInput label={t('Service')} name={'service'} inputType={'resourceSelect'}
+                <FormInput label={t('Service')} name={'service_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.region_id}
                            initialData={data?.service?[data.service]:[]}

@@ -69,6 +69,10 @@ let api = {
         url: 'lab-tests',
         resource: 'LabTest',
     },
+    {
+        url: 'taxonomies',
+        resource: 'Taxonomy',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {
