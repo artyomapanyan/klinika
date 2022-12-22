@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Button, Form, notification, Upload} from "antd";
 import {InboxOutlined} from "@ant-design/icons";
 
-function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type}) {
+function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type, text1, text2, uploadIcon}) {
     const [fileList, setFileList] = useState(initialFileList.filter(e => e))
     const [deletedFiles, setDeletedFiles] = useState([])
     const fileInputProps = {
@@ -49,13 +49,10 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
                 {...fileInputProps}
             >
                 <p className="ant-upload-drag-icon">
-                    <InboxOutlined/>
+                    {uploadIcon}
                 </p>
-                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-                    band files
-                </p>
+                <p className="ant-upload-text">{text1}</p>
+                <p className="ant-upload-hint">{text2}</p>
             </Upload.Dragger>:<Upload   {...fileInputProps}><Button>ADdd</Button></Upload>}
         </Form.Item>
         <Form.Item name={`${name}_deleted`} hidden={true} />

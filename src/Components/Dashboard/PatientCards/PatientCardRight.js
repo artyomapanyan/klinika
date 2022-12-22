@@ -38,7 +38,7 @@ function PatientCardRight() {
                             </div>
                             <div><Space size={'large'}><span className={'right_vector'}>Systolic</span>120 mmHg</Space></div>
                             <div><Space size={'large'}><span className={'right_vector'}>Diasstolic</span>80 mmHg</Space></div>
-                            <div><Space size={'large'}><span className={'right_vector'}>Blood type</span> <span className={'Patient_card_right_bold_text'}>A+</span></Space></div>
+                            <div><Space size={'large'}><span className={'right_vector'}>Blood type</span>A+</Space></div>
                         </div>
 
                     </Space>

@@ -9,6 +9,7 @@ import FormInput from "../../Fragments/FormInput";
 import React, {useRef} from "react";
 import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
+import {InboxOutlined} from "@ant-design/icons";
 
 const resource = 'LabPackage';
 
@@ -61,7 +62,11 @@ function LabPackage() {
                         {Resources.Status.map((status)=><Select.Option value={status.id} key={status.id}>{status.name}</Select.Option>)}
                     </Select>
                 </Form.Item>
-                <FileManager name={'cover'} initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
+                <FileManager text1={'Click or drag file to this area to upload'}
+                             text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                             name={'cover'}
+                             uploadIcon={<InboxOutlined/>}
+                             initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 
