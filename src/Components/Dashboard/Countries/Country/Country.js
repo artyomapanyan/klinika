@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react';
-import {Button, Form, Input, message, Space, Upload} from 'antd';
+import React from 'react';
+import {Button, Form, Space} from 'antd';
 import "./Country.sass"
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
@@ -9,7 +9,6 @@ import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import "../../../../dist/styles/Styles.sass";
-import {InboxOutlined} from "@ant-design/icons";
 
 const resource = 'Country';
 
@@ -20,16 +19,17 @@ function Country() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
-    const [valuesState, setValuesState] = useState('')
-    const formRef = useRef();
-
     const onFinish = (values) => {
-        console.log(values)
-        return
         setLoading(true)
+        setData({
+            ...data,
+            values
+        })
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -43,7 +43,7 @@ function Country() {
                 setLoading(false)
             })
         }
-        setValuesState(values)
+
 
     }
 

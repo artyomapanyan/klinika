@@ -1,5 +1,5 @@
 
-import {Button, Form, Input,Space} from 'antd';
+import {Button, Form, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import Preloader from "../../Preloader";

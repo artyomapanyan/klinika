@@ -20,7 +20,7 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
     }
     useEffect(() => {
         setLocalData(makeUnique([...localData, ...(data?.items ?? [])], 'id'))
-    }, [data])
+    }, [data,localData])
 
     const handleScroll = (event) => {
         let target = event.target

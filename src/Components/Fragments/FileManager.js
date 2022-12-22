@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Form, Input, notification, Upload} from "antd";
+import {Button, Form, notification, Upload} from "antd";
 import {InboxOutlined} from "@ant-design/icons";
 
 function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type}) {

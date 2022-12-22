@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Input, Select, Space} from "antd";
+import {Button, Form, Select, Space} from "antd";
 import React from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";

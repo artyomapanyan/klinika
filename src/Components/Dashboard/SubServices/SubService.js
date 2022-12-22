@@ -1,8 +1,7 @@
 
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Input, Space} from "antd";
-import ResourceSelectPaginated from "../../Fragments/ResourceSelectPaginated";
+import {Button, Form, Space} from "antd";
 import {t} from "i18next";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";

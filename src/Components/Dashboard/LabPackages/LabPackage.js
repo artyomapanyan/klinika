@@ -1,12 +1,11 @@
 import {t} from "i18next";
 import Preloader from "../../Preloader";
-import {Button, Form, message, Select, Space, Upload} from "antd";
+import {Button, Form, Select, Space} from "antd";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import FormInput from "../../Fragments/FormInput";
-import {InboxOutlined} from "@ant-design/icons";
 import React, {useRef} from "react";
 import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";

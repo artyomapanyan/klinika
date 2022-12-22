@@ -1,7 +1,6 @@
-import {Button, Card, Col, Row, Layout, Upload, Checkbox} from "antd";
+import {Button, Col, Row, Layout, Checkbox} from "antd";
 import React from 'react';
 import { Input } from 'antd';
-import {InboxOutlined} from "@ant-design/icons";
 import AppointmentUpload from "./Fragments/AppointmentUpload";
 import AppointmentFollowUpHistory from "./Fragments/AppointmentFollowUpHistory";
 const { TextArea } = Input;

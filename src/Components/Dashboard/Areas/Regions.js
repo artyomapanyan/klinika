@@ -1,6 +1,5 @@
 import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
-import {Button} from "antd";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 function Regions() {

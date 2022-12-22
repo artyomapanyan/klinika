@@ -1,5 +1,5 @@
 import React from 'react'
-import {Avatar, Col, Descriptions, List, Row, Space, Tag} from "antd";
+import {Avatar, Col, Row, Space, Tag} from "antd";
 import "../../../dist/styles/Styles.sass"
 import { UserOutlined } from '@ant-design/icons';
 import phoneWithFrame from "../../../dist/icons/phoneWithFrame.svg";
