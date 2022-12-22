@@ -1,10 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import {Button, Form, notification, Upload} from "antd";
 import {InboxOutlined} from "@ant-design/icons";
 
 function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type}) {
     const [fileList, setFileList] = useState(initialFileList.filter(e => e))
     const [deletedFiles, setDeletedFiles] = useState([])
+    useEffect(()=>{
+        formRef.current.setFieldsValue({
+            [name]:[]
+        })
+    },[])
     const fileInputProps = {
         name:name,
         multiple:limit>1?true:false,
@@ -39,13 +44,11 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
     customRequest:(e) => e.onSuccess("ok")
     }
     return <div>
-        <Form.Item name={name} getValueFromEvent={(event) =>event.fileList.map(e=>e.originFileObj).filter(e=>e)}>
+        <Form.Item name={name} initialValue={4234} getValueFromEvent={(event) =>{
+            console.log(event.fileList.map(e=>e.originFileObj))
+            return event.fileList.map(e=>e.originFileObj).filter(e=>e)
+        }}>
             {type==='drag'?<Upload.Dragger
-              /*  itemRender={(item,element,functm,test,)=>{
-                    console.log(item,element,functm,test)
-                    return<div>123123</div>
-                }}
-*/
                 {...fileInputProps}
             >
                 <p className="ant-upload-drag-icon">

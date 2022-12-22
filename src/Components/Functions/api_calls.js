@@ -92,10 +92,19 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
         formData = new FormData();
         formData.append('_method','PUT')
         for (const name in values) {
-            if(Array.isArray( values[name])){
+            if(Array.isArray(values[name])){
+                console.log(values[name])
                 values[name].map(e=>formData.append(name+'[]', e))
             }else{
-                formData.append(name, values[name]);
+                if(name.includes('_deleted')){
+                    if(values[name]){
+                        formData.append(name, values[name]);
+                    }
+
+                }else{
+                    formData.append(name, values[name]);
+                }
+
             }
 
         }
