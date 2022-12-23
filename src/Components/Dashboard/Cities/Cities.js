@@ -13,7 +13,6 @@ function Cities() {
                     sorter:true,
                 },
                 {
-
                     title:t('City'),
                     dataIndex:'name',
                     key:'name',

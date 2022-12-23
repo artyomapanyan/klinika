@@ -1,13 +1,13 @@
-import {Button, Col, Row, Layout, Checkbox, Form} from "antd";
+import {Button, Col, Row, Layout, Form} from "antd";
 import React, {useRef} from 'react';
 import { Input } from 'antd';
-import AppointmentFollowUpHistory from "./Fragments/AppointmentFollowUpHistory";
-import FileManager from "../../../../Fragments/FileManager";
-import AppointmentCheckboxes from "./Fragments/AppointmentCheckboxes";
-import addimage from "../../../../../dist/icons/addimage.svg";
+import AppointmentFollowUpHistory from "./CardAppointmentItems/AppointmentFollowUpHistory";
+import FileManager from "../../../Fragments/FileManager";
+import AppointmentCheckboxes from "./CardAppointmentItems/AppointmentCheckboxes";
+import addimage from "../../../../dist/icons/addimage.svg";
 
 const { TextArea } = Input;
-function Appointment() {
+function PatientCardAppointment() {
 
     const formRef = useRef();
 
@@ -58,11 +58,11 @@ function Appointment() {
 
                     <div>
                         <h1 className={'h1'}>Files and Images</h1>
-                        <Form>
+                        <Form ref={formRef}>
                             <FileManager text1={'Drag here or Select'}
                                          text2={'files and images'}
                                          uploadIcon={<img alt={'icons'} src={addimage}/>}
-                                         name={'cover'} initialFileList={[]} limit={1} formRef={formRef} type={'drag'}/>
+                                         name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>
                         </Form>
 
                     </div>
@@ -75,4 +75,4 @@ function Appointment() {
         </Layout.Content>
     )
 }
-export default Appointment;
+export default PatientCardAppointment;

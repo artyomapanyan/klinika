@@ -1,10 +1,10 @@
 import React from 'react'
 import {Avatar, Col, Row, Space, Tag} from "antd";
-import "../../../dist/styles/Styles.sass"
+import "../../../../../dist/styles/Styles.sass"
 import { UserOutlined } from '@ant-design/icons';
-import phoneWithFrame from "../../../dist/icons/phoneWithFrame.svg";
-import emailWithFrame from "../../../dist/icons/emailWithFrame.svg";
-import noteBlack from "../../../dist/icons/noteBlack.svg";
+import phoneWithFrame from "../../../../../dist/icons/phoneWithFrame.svg";
+import emailWithFrame from "../../../../../dist/icons/emailWithFrame.svg";
+import noteBlack from "../../../../../dist/icons/noteBlack.svg";
 
 function PatientHeader() {
     return (

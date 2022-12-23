@@ -10,5 +10,6 @@ const ResourceLins = {
     NursingTask:'/dashboard/nursing-tasks/',
     LabPackage:'/dashboard/lab-packages/',
     LabTest:'/dashboard/lab-tests/',
+    InsuranceCompanie:'/dashboard/insurance-companies/',
 }
 export default ResourceLins

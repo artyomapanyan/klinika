@@ -24,11 +24,13 @@ import SubServices from "./Dashboard/SubServices/SubServices";
 import SubService from "./Dashboard/SubServices/SubService";
 import NursingTasks from "./Dashboard/NursingTasks/NursingTasks";
 import NursingTask from "./Dashboard/NursingTasks/NursingTask";
-import PatientCardTab from "./Dashboard/PatientCards/PatientCardTab/PatientCardTab";
+import Patient from "./Dashboard/Patient/Patient";
 import LabPackages from "./Dashboard/LabPackages/LabPackages";
 import LabPackage from "./Dashboard/LabPackages/LabPackage";
 import LabTests from "./Dashboard/LabTests/LabTests";
 import LabTest from "./Dashboard/LabTests/LabTest";
+import InsuranceCompanies from "./Dashboard/InsuranceCompanies/InsuranceCompanies";
+import InsuranceCompanie from "./Dashboard/InsuranceCompanies/InsuranceCompanie";
 
 
 
@@ -107,6 +109,12 @@ function AppLayout(){
             singleComp:<LabTest/>,
             indexComp:<LabTests/>
         },
+        {
+            url:'insurance-companies',
+            resource:'InsuranceCompanie',
+            singleComp:<InsuranceCompanie/>,
+            indexComp:<InsuranceCompanies/>
+        },
 
     ]
     return <Layout className={'main-container'}>
@@ -139,7 +147,7 @@ function AppLayout(){
                         </>)}
 
                     <Route path={'valod'} element={<div>valod</div>}/>
-                    <Route path={'patients'} element={<PatientCardTab />}/>
+                    <Route path={'patients'} element={<Patient />}/>
                 </Routes>
             </Content>
             <div style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>

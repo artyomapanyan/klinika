@@ -1,5 +1,5 @@
 import {Button, Card, List} from "antd";
-import plusPurple from "../../../dist/icons/plus-purple.svg";
+import plusPurple from "../../../../../dist/icons/plus-purple.svg";
 
 function PatientCardChronicDiseases() {
 

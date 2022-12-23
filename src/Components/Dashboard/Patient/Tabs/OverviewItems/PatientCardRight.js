@@ -1,6 +1,6 @@
-import risk from "../../../dist/icons/risk.png";
-import Vector from "../../../dist/icons/Vector.png";
-import VectorHend from "../../../dist/icons/VectorHend.png";
+import risk from "../../../../../dist/icons/risk.png";
+import Vector from "../../../../../dist/icons/Vector.png";
+import VectorHend from "../../../../../dist/icons/VectorHend.png";
 import {Divider, Space} from "antd";
 import PatientCardNextAppoint from "./PatientCardNextAppoint";
 

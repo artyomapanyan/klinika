@@ -73,6 +73,10 @@ let api = {
         url: 'taxonomies',
         resource: 'Taxonomy',
     },
+    {
+        url: 'insurance-companies',
+        resource: 'InsuranceCompanie',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

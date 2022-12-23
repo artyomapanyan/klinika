@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Collapse, Row, Tag} from 'antd';
-import arrowDownPurple from "../../../dist/icons/arrowDownPurple.svg";
-import arrowUpPurple from "../../../dist/icons/arrow-up-purple.svg";
+import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
+import arrowUpPurple from "../../../../dist/icons/arrow-up-purple.svg";
 const { Panel } = Collapse;
 function PatientCollapse() {
     const onChange = (key) => {
@@ -18,7 +18,7 @@ function PatientCollapse() {
                                         <div><img alt={'icons'} src={arrowUpPurple}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :
                                         <div><img alt={'icons'} src={arrowDownPurple}/> <span className={'patient_collapse_icon'}>Expend</span></div>}</div>}
             >
-                <Panel className={'collapse_panel'} expandTextPosition={'end'} header="Appointment Details" key="1">
+                <Panel className={'collapse_panel'} expandTextPosition={'end'} header="PatientCardAppointment Details" key="1">
                     <Row>
                         <Col lg={4}>
                             <div className={'collapse_content_head'}>Scheduled Appt</div>

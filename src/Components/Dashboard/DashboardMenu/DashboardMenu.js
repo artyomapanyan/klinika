@@ -89,6 +89,11 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Lab tests`),
                     permission:'LabTest'
                 },
+                {
+                    key: 'insurance-companies',
+                    label: t(`Insurance companies`),
+                    permission:'InsuranceCompanie'
+                },
             ]
         },
         /*{

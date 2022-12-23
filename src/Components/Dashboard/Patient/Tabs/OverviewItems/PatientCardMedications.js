@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Card, List, Tag} from 'antd';
-import plusPurple from "../../../dist/icons/plus-purple.svg";
+import plusPurple from "../../../../../dist/icons/plus-purple.svg";
 import { useEffect, useState } from 'react';
 
 const count = 3;
