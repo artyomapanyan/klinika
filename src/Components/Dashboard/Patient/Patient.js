@@ -6,6 +6,7 @@ import PatientCardAppointment from "./Tabs/PatientCardAppointment";
 import PatientOverviewTab from "./Tabs/PatientOverviewTab";
 import PatientCardLabTests from "./Tabs/PatientCardLabTests";
 import PatientCardMedications from "./Tabs/PatientCardMedications";
+import PatientCardLog from "./Tabs/PatientCardLog";
 
 function Patient() {
     return(
@@ -31,7 +32,7 @@ function Patient() {
                     <PatientCardMedications/>
                 </Tabs.TabPane>
                 <Tabs.TabPane key={'log'} tab={'log'} >
-
+                    <PatientCardLog />
                 </Tabs.TabPane>
             </TabBars>
             </div>

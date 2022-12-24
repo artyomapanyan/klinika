@@ -11,5 +11,7 @@ const ResourceLins = {
     LabPackage:'/dashboard/lab-packages/',
     LabTest:'/dashboard/lab-tests/',
     InsuranceCompanie:'/dashboard/insurance-companies/',
+    Taxonomy:'/dashboard/taxonomies/',
+    PaymentMethod:'/dashboard/payment-methods/',
 }
 export default ResourceLins

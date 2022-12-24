@@ -31,6 +31,9 @@ import LabTests from "./Dashboard/LabTests/LabTests";
 import LabTest from "./Dashboard/LabTests/LabTest";
 import InsuranceCompanies from "./Dashboard/InsuranceCompanies/InsuranceCompanies";
 import InsuranceCompanie from "./Dashboard/InsuranceCompanies/InsuranceCompanie";
+import BugReportTopics from "./Dashboard/BugReportTopics/BugReportTopics";
+import BugReportTopic from "./Dashboard/BugReportTopics/BugReportTopic";
+import PaymentMethods from "./Dashboard/PaymentMethods/PaymentMethods";
 
 
 
@@ -114,6 +117,18 @@ function AppLayout(){
             resource:'InsuranceCompanie',
             singleComp:<InsuranceCompanie/>,
             indexComp:<InsuranceCompanies/>
+        },
+        {
+            url:'taxonomies',
+            resource:'Taxonomy',
+            singleComp:<BugReportTopic/>,
+            indexComp:<BugReportTopics/>
+        },
+        {
+            url:'payment-methods',
+            resource:'PaymentMethod',
+           // singleComp:<BugReportTopic/>,
+            indexComp:<PaymentMethods/>
         },
 
     ]

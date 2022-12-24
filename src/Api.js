@@ -77,6 +77,10 @@ let api = {
         url: 'insurance-companies',
         resource: 'InsuranceCompanie',
     },
+    {
+        url: 'payment-methods',
+        resource: 'PaymentMethod',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

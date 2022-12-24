@@ -1,4 +1,5 @@
 import {Button, Card, Col, Divider, Row} from "antd";
+import closeLightGray from "../../../../../dist/icons/close-lightGray.svg";
 
 function MedicationCards() {
     return(
@@ -8,7 +9,7 @@ function MedicationCards() {
                         <div>Lipanthyl 145 mg </div>
                         <div  style={{fontSize:14, fontWeight:400}}>23 July 2022 by Dr. Jerry Tompson</div>
                     </div>}
-                    extra={<Button style={{border:'none'}}>x</Button>}
+                    extra={<Button style={{border:'none'}}><img alt={'icons'} src={closeLightGray}/></Button>}
                     style={{border:"1px solid #cfceca"}}
                 >
                     <Row>
@@ -17,14 +18,14 @@ function MedicationCards() {
                             <div className={"medication_card_text2"}>3 times/day</div>
                         </Col>
                         <Col lg={1} align={'center'}>
-                            <Divider type={'vertical'} style={{border:'1px solid #cfceca'}} />
+                            <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
                         </Col>
                         <Col lg={7} align={'center'}>
                             <div className={"medication_card_text1"}>Dose</div>
                             <div className={"medication_card_text2"}>2 pcs</div>
                         </Col>
                         <Col lg={1} align={'center'}>
-                            <Divider type={'vertical'} style={{border:'1px solid #cfceca'}} />
+                            <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
                         </Col>
 
                         <Col lg={7} align={'center'}>

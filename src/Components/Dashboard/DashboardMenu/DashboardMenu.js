@@ -84,15 +84,25 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Lab packages`),
                     permission:'LabPackage'
                 },
-                {
-                    key: 'lab-tests',
-                    label: t(`Lab tests`),
-                    permission:'LabTest'
-                },
+                // {
+                //     key: 'lab-tests',
+                //     label: t(`Lab tests`),
+                //     permission:'LabTest'
+                // },
                 {
                     key: 'insurance-companies',
                     label: t(`Insurance companies`),
                     permission:'InsuranceCompanie'
+                },
+                {
+                    key: 'taxonomies',
+                    label: t(`Bug Report Topics`),
+                    permission:'Taxonomy'
+                },
+                {
+                    key: 'payment-methods',
+                    label: t(`Payment Methods`),
+                    permission:'PaymentMethod'
                 },
             ]
         },

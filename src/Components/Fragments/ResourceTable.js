@@ -10,10 +10,12 @@ import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {clearObject, paramsToObject} from "../../functions";
 
-function ResourceTable({resource, tableColumns, title}) {
+function ResourceTable({resource, tableColumns, title,tableParams={}}) {
 
     let [searchParams, setSearchParams] = useSearchParams();
-    const [params, setParams] = useState(paramsToObject(searchParams.entries()))
+    const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
+       ...tableParams
+})
     let token = useSelector((state) => state?.auth?.token);
     let lngs = useSelector((state) => state?.app?.current_locale);
 
@@ -25,6 +27,7 @@ function ResourceTable({resource, tableColumns, title}) {
     const handleTableChange = (pagination, filters, sorter) => {
         let params = {
             ...filters,
+            ...tableParams,
             order_by: sorter.order?sorter?.column?.translatable ? `${sorter.columnKey}->${lngs}` : sorter.columnKey:null,
             order: sorter.order ? sorter.order === 'ascend' ? 'asc' : 'desc' : null,
             page: pagination.current
@@ -32,14 +35,10 @@ function ResourceTable({resource, tableColumns, title}) {
         clearObject(params)
         setSearchParams(params)
         setParams(params)
+
     }
     const {setLoading, loading} = loadingState;
     const {setData, data} = dataState
-
-    console.log(dataState)
-
-
-
 
     const onResourceEdit = (e) => {
         navigate(ResourceLinks[resource] + e)
