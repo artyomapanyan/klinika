@@ -75,7 +75,7 @@ let api = {
     },
     {
         url: 'insurance-companies',
-        resource: 'InsuranceCompanie',
+        resource: 'InsuranceCompany',
     },
     {
         url: 'payment-methods',

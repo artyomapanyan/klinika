@@ -1,75 +1,71 @@
-import React, {useState} from 'react'
+import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
-import {Select} from "antd";
-import {useSelector} from "react-redux";
-import {updateResource} from "../../Functions/api_calls";
+import DateParser from "../../Fragments/DateParser";
+import TableEditable from "../../Fragments/TableEditable";
 
 function PaymentMethods() {
-    let token = useSelector((state) => state?.auth?.token);
-    const [loading,setLoading] = useState({});
+    return (<div>
+        <ResourceTable resource={'PaymentMethod'}
+                       tableParams={{type: Resources.TaxonomyTypes.REPORT_TOPIC}}
 
-    const statusChange = (record) => {
-        setLoading({
-            [record.id]:true
-        })
-        updateResource('PaymentMethod',record.id,record,token).then((resp) => {
-            setLoading({})
-        })
-    }
-    return(
-        <div>
-            <ResourceTable resource={'PaymentMethod'}
-                           tableParams={{type:Resources.TaxonomyTypes.REPORT_TOPIC}}
+                       tableColumns={[
+                           {
+                               dataIndex: 'id',
+                               title: 'ID',
+                               key: 'id',
+                               sorter: true,
+                           },
+                           {
+                               dataIndex: ['key'],
+                               title: t('Key'),
+                               key: 'key',
+                               shouldCellUpdate: (record, prevRecord) => record.key !== prevRecord.key,
+                               render: (e, record) => <TableEditable
+                                   label={'Key'}
+                                   resource={'PaymentMethod'}
+                                   initialData={Resources.PaymentMethodKeys}
+                                   updateKey={'key'}
+                                   value={e}
+                                   record={record}
+                                   inputType={'resourceSelect'}/>
+                           },
 
-                           tableColumns={[
-                               {
-                                   dataIndex:'id',
-                                   title:'ID',
-                                   key:'id',
-                                   sorter:true,
-                               },
-                               {
-                                   dataIndex:'title',
-                                   title:t('Title'),
-                                   key:'title',
-                                   translatable:true,
-                               },
-                               {
-                                   dataIndex:['status'],
-                                   title:t('Status'),
-                                   key:'category',
-                                   render:(e,record)=> <Select
-                                       defaultValue={e}
-                                       loading={loading[record.id]}
-                                       style={{width: 150, color:'red'}}
-                                       onChange={(e)=>statusChange({
-                                           ...record,
-                                           status:e
-                                       })}
-                                   >
-                                       {Resources.Status.map((el) => (
-                                           <Select.Option key={el} value={el.id}>{el.name}</Select.Option>
-                                       ))
-                                       }
-                                   </Select>
-                               },
-                               {
-                                   dataIndex:'create_date',
-                                   title:t('Create date'),
-                                   key:'create_date',
-                                   render:(e,record)=>{
-                                       return console.log(e, record, 'd')
-                                   }
-                               },
-                               {
-                                   dataIndex:'date',
-                                   title:t('Create date'),
-                                   key:'date',
-                               },
-                           ]} title={t('Report Topics')}/>
-        </div>
-    )
+                           {
+                           dataIndex: 'title',
+                               title: t('Title'),
+                               key: 'title',
+                               translatable: true,
+                               shouldCellUpdate: (record, prevRecord) => record.key !== prevRecord.key,
+                       },
+                           {
+                           dataIndex: ['status'],
+                           title: t('Status'),
+                           key: 'status',
+                           shouldCellUpdate: (record, prevRecord) => record.status !== prevRecord.status,
+                           render: (e, record) => <TableEditable
+                               label={'Status'}
+                               resource={'PaymentMethod'}
+                               initialData={Resources.Status}
+                               updateKey={'status'}
+                               value={e}
+                               record={record}
+                               inputType={'resourceSelect'}/>
+                       }, {
+                           dataIndex: 'create_date',
+                           title: t('Create date'),
+                           key: 'create_date',
+                           render: (e, record) => {
+                               return console.log(e, record, 'd')
+                           }
+                       }, {
+                           dataIndex: ['created_at', 'iso_string'],
+                           title: t('Create date'),
+                           key: 'date',
+                           render: i => <DateParser date={i}/>
+                       },]} title={t('Report Topics')}/>
+    </div>)
 }
+
 export default PaymentMethods;

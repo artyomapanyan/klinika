@@ -2,23 +2,10 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import Resources from "../../../store/Resources";
-import {Select} from "antd";
-import {updateResource} from "../../Functions/api_calls";
-import {useSelector} from "react-redux";
-import {useState} from "react";
+import DateParser from "../../Fragments/DateParser";
+import TableEditable from "../../Fragments/TableEditable";
 
 function NursingTasks() {
-    let token = useSelector((state) => state?.auth?.token);
-    const [loading,setLoading] = useState({});
-
-    const statusChange = (record) => {
-        setLoading({
-            [record.id]:true
-        })
-        updateResource('NursingTask',record.id,record,token).then((resp) => {
-            setLoading({})
-        })
-    }
     return (
         <div>
             <ResourceTable resource={'NursingTask'} tableColumns={[
@@ -40,25 +27,21 @@ function NursingTasks() {
                     dataIndex:['status'],
                     title:t('Status'),
                     key:'category',
-                    render:(e,record)=> <Select
-                            defaultValue={e}
-                            loading={loading[record.id]}
-                            style={{width: 150, color:'red'}}
-                            onChange={(e)=>statusChange({
-                                ...record,
-                            status:e
-                            })}
-                        >
-                            {Resources.Status.map((el) => (
-                                    <Select.Option key={el} value={el.id}>{el.name}</Select.Option>
-                                ))
-                            }
-                        </Select>
+                    shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                    render:(e,record)=><TableEditable
+                        label={'Status'}
+                        resource={'NursingTask'}
+                        initialData={Resources.Status}
+                        updateKey={'status'}
+                        value={e}
+                        record={record}
+                        inputType={'resourceSelect'}/>
                 },
                 {
-                    dataIndex:'date',
+                    dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
-                    key:'date',
+                     key:'date',
+                    render:i=><DateParser date={i}/>
                 },
             ]} title={t('Nursing task')}/>
         </div>

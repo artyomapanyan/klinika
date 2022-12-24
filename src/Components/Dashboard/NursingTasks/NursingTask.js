@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Select, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import React from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
@@ -54,12 +54,11 @@ function NursingTask() {
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
 
-                <Form.Item label={t('Status')} name={'status'}>
-                    <Select>
-                        {Resources.Status.map((status)=><Select.Option value={status.id} key={status.id}>{status.name}</Select.Option>)}
-                    </Select>
-                </Form.Item>
-
+                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.status}
+                           initialData={Resources.Status}
+                />
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 

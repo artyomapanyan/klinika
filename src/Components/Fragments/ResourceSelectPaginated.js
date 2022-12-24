@@ -3,7 +3,15 @@ import {Select, Spin, Form} from "antd";
 import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
-function ResourceSelectPaginated({initialData = [], resource, name, label, rules,inputProps={},formItemClass,resourceParams}) {
+function ResourceSelectPaginated({initialData = [],
+                                     resource=null,
+                                     name, label, rules,
+                                     inputProps={},
+                                     formItemClass,resourceParams,
+                                     initialValue=null,
+                                     disableClear=false,
+                                    updateLoading=false
+}) {
     const timeout = useRef(null);
     const [params, setParams] = useState({page: 1,...resourceParams})
     const [localData, setLocalData] = useState(initialData)
@@ -11,7 +19,6 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
     const {loadingState, dataState} = useGetResourceIndex(resource, params)
     const {loading} = loadingState;
     const {data} = dataState;
-    console.log(initialData)
     const handleGenerateOptions = (data) => {
         return data.map(item => {
             let name = item.name??item.title
@@ -20,7 +27,7 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
     }
     useEffect(() => {
         setLocalData(makeUnique([...localData, ...(data?.items ?? [])], 'id'))
-    }, [data,localData])
+    }, [data,initialData])
 
     const handleScroll = (event) => {
         let target = event.target
@@ -51,11 +58,12 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
     }
     const SelectItem = <Select
                                 {...inputProps}
-                               loading={loading}
+                               loading={loading || updateLoading}
                                onPopupScroll={handleScroll}
                                onSearch={handleSearch}
                                showSearch
-                               allowClear
+
+                               allowClear={!disableClear}
                                optionFilterProp={'name'}
                         >
         {handleGenerateOptions(localData ?? [])}
@@ -69,6 +77,9 @@ function ResourceSelectPaginated({initialData = [], resource, name, label, rules
         label={label}
         name={name}
         rules={rules}
+        {...(initialValue?{
+        initialValue:initialValue
+         }:{})}
     >
         {SelectItem}
     </Form.Item>:SelectItem

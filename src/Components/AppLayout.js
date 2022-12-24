@@ -30,7 +30,7 @@ import LabPackage from "./Dashboard/LabPackages/LabPackage";
 import LabTests from "./Dashboard/LabTests/LabTests";
 import LabTest from "./Dashboard/LabTests/LabTest";
 import InsuranceCompanies from "./Dashboard/InsuranceCompanies/InsuranceCompanies";
-import InsuranceCompanie from "./Dashboard/InsuranceCompanies/InsuranceCompanie";
+import InsuranceCompany from "./Dashboard/InsuranceCompanies/InsuranceCompany";
 import BugReportTopics from "./Dashboard/BugReportTopics/BugReportTopics";
 import BugReportTopic from "./Dashboard/BugReportTopics/BugReportTopic";
 import PaymentMethods from "./Dashboard/PaymentMethods/PaymentMethods";
@@ -114,8 +114,8 @@ function AppLayout(){
         },
         {
             url:'insurance-companies',
-            resource:'InsuranceCompanie',
-            singleComp:<InsuranceCompanie/>,
+            resource:'InsuranceCompany',
+            singleComp:<InsuranceCompany/>,
             indexComp:<InsuranceCompanies/>
         },
         {
@@ -134,7 +134,7 @@ function AppLayout(){
     ]
     return <Layout className={'main-container'}>
 
-            <div  style={{position: "relative", width: 80, zIndex: 99}}>
+            <div className={'side-menu'}>
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
                        onMouseEnter={toggleCollapsed1}
                        onMouseLeave={!btnCollapsed ? toggleCollapsed : toggleCollapsed1}>
@@ -155,13 +155,14 @@ function AppLayout(){
 
                 </div>
                 <Routes>
-                    {resourceRoutes.map((item,key)=><>
-                        <Route key={key+'_i'} path={item.url} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>
-                        <Route key={key+'_n'} path={`${item.url}/new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>
-                        <Route key={key+'_u'} path={`${item.url}/:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>
-                        </>)}
+                    {resourceRoutes.map((item,key)=><Route path={item.url+'/*'} key={key} element={ <Routes>
+                        <Route key={key+'_i21'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>
+                        <Route key={key+'_n312'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>
+                        <Route key={key+'_u312'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>
+                    </Routes>}/>
 
-                    <Route path={'valod'} element={<div>valod</div>}/>
+                        )}
+
                     <Route path={'patients'} element={<Patient />}/>
                 </Routes>
             </Content>

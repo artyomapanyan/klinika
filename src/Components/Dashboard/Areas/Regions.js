@@ -2,6 +2,7 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
+import DateParser from "../../Fragments/DateParser";
 function Regions() {
     return(<ResourceTable resource={'Region'} tableColumns={[
                 {
@@ -24,9 +25,10 @@ function Regions() {
                     key:'country',
                 },
                 {
-                    dataIndex:'date',
+                    dataIndex:['created_at','iso_string'],
                     title: t('Create date'),
-                    key:'date',
+                     key:'date',
+                    render:i=><DateParser date={i}/>
                 },
             ]} title={t('Areas')}/>
     )

@@ -1,4 +1,4 @@
-import {Button, Card, Col, Row} from "antd";
+import {Col, Row} from "antd";
 import MedicationCards from "./MedicationCards/MedicationCard";
 
 function PatientCardMedications() {

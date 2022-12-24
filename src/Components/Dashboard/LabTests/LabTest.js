@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Select, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
@@ -64,12 +64,12 @@ function LabTest() {
                            resource={'Taxonomy'}
                            resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
                 />
+                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.status}
+                           initialData={Resources.Status}
+                />
 
-                <Form.Item label={t('Status')} name={'status'}>
-                    <Select>
-                        {Resources.Status.map((status)=><Select.Option value={status.id} key={status.id}>{status.name}</Select.Option>)}
-                    </Select>
-                </Form.Item>
 
 
                 <Space>

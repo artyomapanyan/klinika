@@ -2,6 +2,7 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
+import DateParser from "../../Fragments/DateParser";
 function Countries(){
     return(
        <ResourceTable resource={'Country'} tableColumns={[
@@ -20,9 +21,10 @@ function Countries(){
                sorter:true,
            },
            {
-               dataIndex:'date',
+               dataIndex:['created_at','iso_string'],
                title:t('Date'),
-               key:'date',
+                key:'date',
+                    render:i=><DateParser date={i}/>
 
            },
        ]} title={t('Countries')}/>

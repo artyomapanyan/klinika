@@ -2,6 +2,7 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
+import DateParser from "../../Fragments/DateParser";
 function Cities() {
     return(
         <div>
@@ -33,9 +34,10 @@ function Cities() {
                     translatable:true,
                 },
                 {
-                    dataIndex:'date',
+                    dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
-                    key:'date',
+                     key:'date',
+                    render:i=><DateParser date={i}/>
                 },
             ]} title={t('Cities')}/>
         </div>

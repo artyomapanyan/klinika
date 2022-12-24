@@ -1,6 +1,7 @@
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
+import DateParser from "../../Fragments/DateParser";
 
 function Services() {
     return (
@@ -27,9 +28,10 @@ function Services() {
                     translatable:true,
                 },
                 {
-                    dataIndex:'date',
+                    dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
-                    key:'date',
+                     key:'date',
+                    render:i=><DateParser date={i}/>
                 },
             ]} title={t('Services')}/>
         </div>

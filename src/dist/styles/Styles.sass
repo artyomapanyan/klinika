@@ -60,6 +60,17 @@ body
     border: 1px solid $primaryColor
     background-color: white !important
     color: $primaryColor !important
+.side-menu
+  position: relative
+  width: 80px
+  z-index: 99
+  .ant-layout-sider
+    overflow: auto !important
+.ant-table-cell
+  .ant-form-item
+    margin-bottom: 0 !important
+  .ant-select
+    width: 200px
 
 .input-placeholder
   position: relative
@@ -71,6 +82,7 @@ body
     border-radius: 12px !important
     .ant-select-selection-item
       display: flex
+      margin-top: 10px
       align-items: center
   .ant-form-item-label
     position: absolute

@@ -4,7 +4,8 @@ import ResourceSelectPaginated from "./ResourceSelectPaginated";
 
 const NoForm = ['resourceSelect']
 
-function FormInput({name, label, rules, initialValue, inputProps = {}, inputType, initialData = [], resource,resourceParams={}}) {
+function FormInput({name, label, rules, initialValue, inputProps = {},
+                       inputType, initialData = [], resource,resourceParams={}}) {
 
     const [focused, setFocused] = useState(true);
     const [value, setValue] = useState(initialValue);
@@ -27,11 +28,16 @@ function FormInput({name, label, rules, initialValue, inputProps = {}, inputType
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceParams={resourceParams}
-
+                                                initialValue={initialValue}
                                                 formItemClass={`input-placeholder ${focused || value ? 'input-focused' : ''}`}
                                                 resource={resource} initialData={initialData}  inputProps={{
                     onFocus: () => setFocused(true),
-                    onChange: e => setValue(e),
+                    onChange: e =>{
+                        setValue(e)
+                        if(inputProps.onChange){
+                            inputProps.onChange(e)
+                        }
+                    },
                     onBlur: () => setFocused(false),
                     mode:inputProps.mode
                 }}/>

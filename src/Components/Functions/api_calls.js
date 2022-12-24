@@ -5,34 +5,47 @@ import {useSelector} from "react-redux";
 
 export const useGetResourceIndex = (resource,params) => {
     const [loading, setLoading] = useState(false)
-    const [data,setData] = useState({})
+    const [data,setData] = useState({
+        items:[],
+        pagination:{
+            pageSize:15,
+            current:1,
+            total:5,
+            last_page:1
+        }
+    })
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
-        setLoading(true)
-        axios.request({
-            url:api[resource].list.url,
-            method:api[resource].list.method,
-            params:params,
-            headers: {
-                'Authorization': token,
-            }
-        }).then(response=>{
-            if(response){
-                setData({
-                    items:response.items,
-                    pagination:{
-                        pageSize:15,
-                        current:response.current_page,
-                        total:response.total_items,
-                        last_page:response.last_page
-                    }
-                })
-            }
 
 
-        }).finally(()=>{
-            setLoading(false)
-        })
+        if(resource){
+            setLoading(true)
+            axios.request({
+                url:api[resource].list.url,
+                method:api[resource].list.method,
+                params:params,
+                headers: {
+                    'Authorization': token,
+                }
+            }).then(response=>{
+                if(response){
+                    setData({
+                        items:response.items,
+                        pagination:{
+                            pageSize:15,
+                            current:response.current_page,
+                            total:response.total_items,
+                            last_page:response.last_page
+                        }
+                    })
+                }
+
+
+            }).finally(()=>{
+                setLoading(false)
+            })
+        }
+
     }, [resource,params,token])
 
     const loadingState = {
@@ -93,14 +106,12 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
         formData.append('_method','PUT')
         for (const name in values) {
             if(Array.isArray(values[name])){
-                console.log(values[name])
                 values[name].map(e=>formData.append(name+'[]', e))
             }else{
                 if(name.includes('_deleted')){
                     if(values[name]){
                         formData.append(name, values[name]);
                     }
-
                 }else{
                     formData.append(name, values[name]);
                 }
@@ -111,7 +122,7 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
     }else{
         formData = values;
     }
-
+    console.log(formData)
     return  axios.request({
             url:api[resource].update.url+id,
             method:withFormData?'POST':api[resource].update.method,

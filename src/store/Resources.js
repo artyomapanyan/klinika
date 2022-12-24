@@ -20,6 +20,16 @@ const Resource = {
             name:'Inactive'
         },
     ],
+    PaymentMethodKeys:[
+        {
+            id:'cash',
+            name:'Cash'
+        },
+        {
+            id:'tap-payments',
+            name:'Tap Payments'
+        },
+    ],
     TaxonomyTypes:{
         POST_CATEGORY:1,
         POST_TAG:2,

@@ -11,7 +11,7 @@ function AuthCheck({children,permission}){
        }
 
     }
-    const cachedValue = useMemo(handleCheckAuth,[auth])
+    const cachedValue = useMemo(handleCheckAuth,[auth,permission])
 
     return cachedValue?children:<Navigate to={'/'}/>
 }

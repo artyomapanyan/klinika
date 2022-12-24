@@ -2,6 +2,7 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
+import DateParser from "../../Fragments/DateParser";
 
 function BugReportTopics() {
     return(
@@ -23,9 +24,10 @@ function BugReportTopics() {
                     translatable:true,
                 },
                 {
-                    dataIndex:'date',
+                    dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
-                    key:'date',
+                     key:'date',
+                    render:i=><DateParser date={i}/>
                 },
             ]} title={t('Report Topics')}/>
         </div>

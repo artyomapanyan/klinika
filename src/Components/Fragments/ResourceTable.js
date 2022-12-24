@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
-import {Button, Col, Row, Space, Table, Typography} from "antd";
+import {Button, Col, Form, Row, Space, Table, Typography} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
 import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
@@ -102,6 +102,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={}}) {
         </Row>
         <Row>
             <Col lg={24}>
+                <Form>
                 <Table
                     columns={columns}
                     loading={loading}
@@ -111,6 +112,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={}}) {
                     rowKey={e => e.id}
                     size={'small'}
                 />
+                </Form>
             </Col>
         </Row>
     </Content>)

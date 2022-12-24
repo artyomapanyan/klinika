@@ -47,15 +47,11 @@ function Region() {
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-                initialValues={{
-                    ...data,
-                    country_id:data?.country?.id
-                }}
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
                 <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.country_id}
+                           initialValue={data?.country?.id}
                            initialData={data?.region?[data.region]:[]}
                            resource={'Country'}/>
 

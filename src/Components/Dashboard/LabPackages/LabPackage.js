@@ -1,6 +1,6 @@
 import {t} from "i18next";
 import Preloader from "../../Preloader";
-import {Button, Form, Select, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import {useNavigate, useParams} from "react-router";
@@ -57,11 +57,11 @@ function LabPackage() {
                 initialValues={data}
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name}/>
-                <Form.Item label={t('Status')} name={'status'}>
-                    <Select>
-                        {Resources.Status.map((status)=><Select.Option value={status.id} key={status.id}>{status.name}</Select.Option>)}
-                    </Select>
-                </Form.Item>
+                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.status}
+                           initialData={Resources.Status}
+                           />
                 <FileManager text1={'Click or drag file to this area to upload'}
                              text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
                              name={'cover'}

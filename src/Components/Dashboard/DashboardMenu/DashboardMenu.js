@@ -92,7 +92,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 {
                     key: 'insurance-companies',
                     label: t(`Insurance companies`),
-                    permission:'InsuranceCompanie'
+                    permission:'InsuranceCompany'
                 },
                 {
                     key: 'taxonomies',
@@ -138,7 +138,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
     }
 
     return (
-        <div>
+        <div >
             <div style={{
                 overflow: 'hidden', display: 'flex',
                 flexWrap: 'nowrap',

@@ -8,9 +8,9 @@ import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 
-const resource = 'InsuranceCompanie';
+const resource = 'InsuranceCompany';
 
-function InsuranceCompanie() {
+function InsuranceCompany() {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
@@ -60,4 +60,4 @@ function InsuranceCompanie() {
     )
 }
 
-export default InsuranceCompanie;
+export default InsuranceCompany;
