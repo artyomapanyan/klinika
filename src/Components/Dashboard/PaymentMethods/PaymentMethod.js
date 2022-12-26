@@ -9,7 +9,6 @@ import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-import {InboxOutlined} from "@ant-design/icons";
 import FileManager from "../../Fragments/FileManager";
 
 
@@ -44,7 +43,6 @@ function PaymentMethod() {
             })
         }
     }
-    console.log(data,'k')
 
     return(
         <div className={'add_edit_content'}>

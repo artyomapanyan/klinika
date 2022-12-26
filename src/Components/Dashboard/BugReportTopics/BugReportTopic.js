@@ -40,7 +40,6 @@ function BugReportTopic() {
         }
 
     }
-    console.log(data, 'f')
 
     return (
         <div className={"add_edit_content"}>

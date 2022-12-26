@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
 
-export const useGetResourceIndex = (resource,params) => {
+export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
@@ -19,6 +19,9 @@ export const useGetResourceIndex = (resource,params) => {
 
 
         if(resource){
+            if(needsInit && !isInited){
+                return;
+            }
             setLoading(true)
             axios.request({
                 url:api[resource].list.url,
@@ -46,7 +49,7 @@ export const useGetResourceIndex = (resource,params) => {
             })
         }
 
-    }, [resource,params,token])
+    }, [resource,params,token,isInited])
 
     const loadingState = {
         loading,
@@ -122,7 +125,7 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
     }else{
         formData = values;
     }
-    console.log(formData)
+
     return  axios.request({
             url:api[resource].update.url+id,
             method:withFormData?'POST':api[resource].update.method,

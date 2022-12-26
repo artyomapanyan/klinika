@@ -16,7 +16,6 @@ export default function auth(state = {}, action) {
         }
     }
     if(action.type==='ROLE_CHANGE'){
-        console.log(action.payload)
         return {
             ...state,
             selected_role:action.payload,

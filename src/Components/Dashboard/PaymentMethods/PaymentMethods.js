@@ -45,7 +45,6 @@ function PaymentMethods() {
                            key: 'status',
                            shouldCellUpdate: (record, prevRecord) => record.status !== prevRecord.status,
                            render: (e, record) => {
-                               console.log(e, record, 'fg')
                              return <TableEditable
                                    label={'Status'}
                                    resource={'PaymentMethod'}

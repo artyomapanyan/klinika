@@ -52,7 +52,7 @@ function Region() {
                 <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.country?.id}
-                           initialData={data?.region?[data.region]:[]}
+                           initialData={data?.country?[data.country]:[]}
                            resource={'Country'}/>
 
                 <Space>

@@ -16,9 +16,12 @@ function ResourceSelectPaginated({initialData = [],
     const [params, setParams] = useState({page: 1,...resourceParams})
     const [localData, setLocalData] = useState(initialData)
 
-    const {loadingState, dataState} = useGetResourceIndex(resource, params)
+    const [isInitedState, setIsInitedState] = useState(false)
+
+    const {loadingState, dataState} = useGetResourceIndex(resource, params,isInitedState,true)
     const {loading} = loadingState;
     const {data} = dataState;
+
     const handleGenerateOptions = (data) => {
         return data.map(item => {
             let name = item.name??item.title
@@ -56,15 +59,19 @@ function ResourceSelectPaginated({initialData = [],
             })
         }, 500)
     }
+
+
+
     const SelectItem = <Select
                                 {...inputProps}
                                loading={loading || updateLoading}
                                onPopupScroll={handleScroll}
                                onSearch={handleSearch}
                                showSearch
-
                                allowClear={!disableClear}
                                optionFilterProp={'name'}
+                               onDropdownVisibleChange={(open)=>!isInitedState?setIsInitedState(true):null}
+
                         >
         {handleGenerateOptions(localData ?? [])}
         {loading ?
