@@ -5,7 +5,9 @@ import {makeUnique} from "../../functions";
 
 function ResourceSelectPaginated({initialData = [],
                                      resource=null,
-                                     name, label, rules,
+                                     name,
+                                     label,
+                                     rules,
                                      inputProps={},
                                      formItemClass,resourceParams,
                                      initialValue=null,

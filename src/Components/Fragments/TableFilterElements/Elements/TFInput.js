@@ -1,7 +1,20 @@
 import React from 'react';
 import {Input} from "antd/lib";
-function TFInput({onChangeValue,value,type='input'}){
+import ResourceSelectPaginated from "../../ResourceSelectPaginated";
+function TFInput({onChangeValue,value,type='input', resource, name}){
 
-    return <Input value={value} onChange={e=>onChangeValue(e.target.value)}/>
+    const onInputTypeChange = () => {
+        if(type === 'selectFilter') {
+            return <ResourceSelectPaginated
+                resource={resource}
+                name={name}
+            />;
+        }
+        if(type === 'input') {
+            return <Input value={value} onChange={e=>onChangeValue(e.target.value)}/>
+        }
+    }
+
+    return onInputTypeChange()
 }
 export default TFInput

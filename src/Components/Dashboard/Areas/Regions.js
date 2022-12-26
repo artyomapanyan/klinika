@@ -3,7 +3,9 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+
 function Regions() {
+
     return(<ResourceTable resource={'Region'} tableColumns={[
                 {
                     dataIndex:'id',
@@ -23,6 +25,11 @@ function Regions() {
                     dataIndex:['country', 'name'],
                     title: t('Country'),
                     key:'country',
+                    filterDropdown: (props)=><TableFilterElement
+                        resource='Country'
+                        type={'selectFilter'}
+                        name={'country_id'}
+                        filterProps={props}/>,
                 },
                 {
                     dataIndex:['created_at','iso_string'],

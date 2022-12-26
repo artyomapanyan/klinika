@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Card, Space} from "antd";
 import TFInput from "./Elements/TFInput";
 
-function TableFilterElement({filterProps}){
+function TableFilterElement({filterProps, type="input"}){
     const onChangeValue =(e)=>{
         filterProps.setSelectedKeys(e)
     }
@@ -14,7 +14,7 @@ function TableFilterElement({filterProps}){
         filterProps.confirm()
 
     }
-    return <Card title={<TFInput value={filterProps.selectedKeys} onChangeValue={onChangeValue}/>} >
+    return <Card title={<TFInput type={type} value={filterProps.selectedKeys} onChangeValue={onChangeValue}/>} >
         <Space><Button type={"primary"} onClick={onFilter}>Filter</Button> <Button type={"secondary"} onClick={onReset}>Reset</Button></Space>
     </Card>
 }
