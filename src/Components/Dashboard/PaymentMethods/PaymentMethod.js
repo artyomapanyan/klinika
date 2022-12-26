@@ -9,10 +9,13 @@ import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
+import {InboxOutlined} from "@ant-design/icons";
+import FileManager from "../../Fragments/FileManager";
 
-const resource = 'LabTest';
 
-function LabTest() {
+const resource = 'PaymentMethod';
+
+function PaymentMethod() {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -41,6 +44,7 @@ function LabTest() {
             })
         }
     }
+    console.log(data,'k')
 
     return(
         <div className={'add_edit_content'}>
@@ -51,26 +55,26 @@ function LabTest() {
                 layout="vertical"
                 ref={formRef}
                 initialValues={{
-                    ...data,
-                    categories:data.categories?.map(e=>e.id)
+                    name:data?.name
                 }}
             >
-
                 <FormInput label={t('name')} name={'name'}/>
 
-                <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
+                <FormInput label={t('Payment method Type')} name={'PaymentMethodKeys'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.categories?.map(e=>e.id)??[]}
-                           initialData={data?.categories??[]}
-                           resource={'Taxonomy'}
-                           resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
+                           initialValue={data?.status}
+                           initialData={Resources.PaymentMethodKeys}
                 />
+
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.status}
                            initialData={Resources.Status}
                 />
-
+                <FileManager text1={'Logo'}
+                             text2={''}
+                             name={'cover'}
+                             initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
 
 
 
@@ -82,4 +86,5 @@ function LabTest() {
         </div>
     )
 }
-export default LabTest;
+export default PaymentMethod;
+

@@ -44,27 +44,27 @@ function PaymentMethods() {
                            title: t('Status'),
                            key: 'status',
                            shouldCellUpdate: (record, prevRecord) => record.status !== prevRecord.status,
-                           render: (e, record) => <TableEditable
-                               label={'Status'}
-                               resource={'PaymentMethod'}
-                               initialData={Resources.Status}
-                               updateKey={'status'}
-                               value={e}
-                               record={record}
-                               inputType={'resourceSelect'}/>
+                           render: (e, record) => {
+                               console.log(e, record, 'fg')
+                             return <TableEditable
+                                   label={'Status'}
+                                   resource={'PaymentMethod'}
+                                   initialData={Resources.Status}
+                                   updateKey={'status'}
+                                   value={e}
+                                   record={record}
+                                   inputType={'resourceSelect'}/>
+                           }
                        }, {
                            dataIndex: 'create_date',
                            title: t('Create date'),
                            key: 'create_date',
-                           render: (e, record) => {
-                               return console.log(e, record, 'd')
-                           }
                        }, {
                            dataIndex: ['created_at', 'iso_string'],
                            title: t('Create date'),
                            key: 'date',
                            render: i => <DateParser date={i}/>
-                       },]} title={t('Report Topics')}/>
+                       },]} title={t('Payment methods')}/>
     </div>)
 }
 

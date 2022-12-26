@@ -34,6 +34,7 @@ import InsuranceCompany from "./Dashboard/InsuranceCompanies/InsuranceCompany";
 import BugReportTopics from "./Dashboard/BugReportTopics/BugReportTopics";
 import BugReportTopic from "./Dashboard/BugReportTopics/BugReportTopic";
 import PaymentMethods from "./Dashboard/PaymentMethods/PaymentMethods";
+import PaymentMethod from "./Dashboard/PaymentMethods/PaymentMethod";
 
 
 
@@ -127,7 +128,7 @@ function AppLayout(){
         {
             url:'payment-methods',
             resource:'PaymentMethod',
-           // singleComp:<BugReportTopic/>,
+            singleComp:<PaymentMethod/>,
             indexComp:<PaymentMethods/>
         },
 
