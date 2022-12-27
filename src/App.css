@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+.ant-layout .ant-layout-sider {
+  background: white;
+ }
+
+.ant-menu-inline .ant-menu-item {
+    height: 60px;
+}
+.ant-menu-vertical .ant-menu-item {
+    height: 60px;
+}
