@@ -37,7 +37,6 @@ function Service() {
         }
     }
 
-    console.log(data?.sub_category, 'f')
     return (
         <div className={'add_edit_content'}>
             <h3>{t("Add New Strings")}</h3>

@@ -16,8 +16,6 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
     })
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
-
-
         if(resource){
             if(needsInit && !isInited){
                 return;
@@ -49,7 +47,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
             })
         }
 
-    }, [resource,params,token,isInited])
+    }, [resource,params,token,isInited,needsInit])
 
     const loadingState = {
         loading,
@@ -110,7 +108,7 @@ export const useGetResourceSingle = (resource,id,additionals={
             })
         })
 
-    }, [resource,id,token])
+    }, [resource,id,token,additionals,filterResponse])
 
     const loadingState = {
         loading,

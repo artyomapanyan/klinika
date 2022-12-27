@@ -3,10 +3,9 @@ import {t} from "i18next";
 import Preloader from "../../../Preloader";
 import {Button, Form, Space, Tree} from "antd";
 import FormInput from "../../../Fragments/FormInput";
-import Resources from "../../../../store/Resources";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {createResource, updateResource, useGetResourceIndex, useGetResourceSingle} from "../../../Functions/api_calls";
+import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
 
 const resource = 'Role';
@@ -25,12 +24,11 @@ function Role() {
     },handleFilterResponse)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
-    const {addData, setAddData} = addDataState
+    const {addData} = addDataState
 
 
     const onFinish = (values) => {
-        values.permissions = checkKeysState.filter(el=> Number.isInteger(el) )
-        console.log(values.permissions, 'f')
+        values.permissions = checkKeysState.filter(el=>Number.isInteger(el))
         setLoading(true)
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
@@ -63,13 +61,8 @@ function Role() {
         }
     }),[addData])
 
-    const onSelect = (selectedKeys, info) => {
-       // console.log('selected', selectedKeys, info);
-    };
-    const onCheck = (checkedKeys, info) => {
-
+    const onCheck = (checkedKeys) => {
         setCheckKeysState(checkedKeys)
-
     };
 
     return(
@@ -88,7 +81,6 @@ function Role() {
                     <Tree
                         checkable
                         checkedKeys={checkKeysState}
-                        onSelect={onSelect}
                         onCheck={onCheck}
                         treeData={treeData}
                     />

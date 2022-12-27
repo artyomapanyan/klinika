@@ -57,23 +57,20 @@ function ResourceTable({resource, tableColumns, title,tableParams={}}) {
 
     const columns = useMemo(() => {
             let filterKeys = Object.keys(params);
-            tableColumns = tableColumns.map(e => {
-                if (params.order_by?.includes(e.key)) {
-                    e = {
-                        ...e, defaultSortOrder: params.order === 'asc' ? 'ascend' : 'descend'
-                    }
+        return [...tableColumns?.map(e => {
+            if (params.order_by?.includes(e.key)) {
+                e = {
+                    ...e, defaultSortOrder: params.order === 'asc' ? 'ascend' : 'descend'
                 }
-                if(filterKeys.includes(e.key)){
-                    e = {
-                        ...e,
-                        defaultFilteredValue:params[e.key]
-                    }
+            }
+            if(filterKeys.includes(e.key)){
+                e = {
+                    ...e,
+                    defaultFilteredValue:params[e.key]
                 }
-                return e
-            })
-
-
-        return [...tableColumns, {
+            }
+            return e
+        }), {
             dataIndex: 'id', title: 'action', key: 'id', render: (e) => <Space>
                 <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
                 <Popconfirm

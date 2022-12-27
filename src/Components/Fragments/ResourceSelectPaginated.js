@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useMemo, useRef, useState} from 'react'
 import {Select, Spin, Form} from "antd";
 import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
@@ -9,7 +9,8 @@ function ResourceSelectPaginated({initialData = [],
                                      label,
                                      rules,
                                      inputProps={},
-                                     formItemClass,resourceParams,
+                                     formItemClass,
+                                     resourceParams={},
                                      initialValue=null,
                                      disableClear=false,
                                     updateLoading=false
@@ -32,7 +33,7 @@ function ResourceSelectPaginated({initialData = [],
     }
     useEffect(() => {
         setLocalData(makeUnique([...localData, ...(data?.items ?? [])], 'id'))
-    }, [data,initialData])
+    }, [data])
 
     const handleScroll = (event) => {
         let target = event.target
@@ -62,7 +63,7 @@ function ResourceSelectPaginated({initialData = [],
         }, 500)
     }
 
-
+   const itemOptions  = useMemo(()=>handleGenerateOptions(localData ?? []),[localData])
 
     const SelectItem = <Select
                                 {...inputProps}
@@ -75,12 +76,13 @@ function ResourceSelectPaginated({initialData = [],
                                onDropdownVisibleChange={(open)=>!isInitedState?setIsInitedState(true):null}
 
                         >
-        {handleGenerateOptions(localData ?? [])}
+        {itemOptions}
         {loading ?
             <Select.Option value={999} style={{textAlign: 'center'}}
                            name={params.name}><Spin/></Select.Option> : null}
 
     </Select>;
+
     return name?<Form.Item
         className={formItemClass}
         label={label}

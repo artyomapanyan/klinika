@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import PatientHistoryGif from "../../../../dist/icons/PatientHistoryGif.gif";
-import {Button, Space} from "antd";
+import {Button} from "antd";
 import PatientHistoryTable from "./PatientHistory/PatientHistoryTable";
-import PatientHistoryNotes from "./PatientHistory/PatientHistoryNotes";
+
 function PatientHistory() {
     const [historiState, setHistoryState] =useState(false);
 
