@@ -81,6 +81,14 @@ let api = {
         url: 'payment-methods',
         resource: 'PaymentMethod',
     },
+    {
+        url: 'roles',
+        resource: 'Role',
+    },
+    {
+        url: 'permissions',
+        resource: 'Permission',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

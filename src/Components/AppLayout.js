@@ -35,6 +35,8 @@ import BugReportTopics from "./Dashboard/BugReportTopics/BugReportTopics";
 import BugReportTopic from "./Dashboard/BugReportTopics/BugReportTopic";
 import PaymentMethods from "./Dashboard/PaymentMethods/PaymentMethods";
 import PaymentMethod from "./Dashboard/PaymentMethods/PaymentMethod";
+import Roles from "./Dashboard/User/Roles/Roles";
+import Role from "./Dashboard/User/Roles/Role";
 
 
 
@@ -130,6 +132,12 @@ function AppLayout(){
             resource:'PaymentMethod',
             singleComp:<PaymentMethod/>,
             indexComp:<PaymentMethods/>
+        },
+        {
+            url:'roles',
+            resource:'Role',
+            singleComp:<Role/>,
+            indexComp:<Roles/>
         },
 
     ]

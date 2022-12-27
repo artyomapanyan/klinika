@@ -4,6 +4,7 @@ import logoShort from "../../../dist/Img/Logo-short.svg";
 import {Button, Divider, Menu} from "antd";
 import {MenuOutlined} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
+import dash1 from "../../../dist/icons/frame1.svg";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
@@ -37,7 +38,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         },*/
         {
             label: t(`Inputs`),
-            icon: <img alt={'icons'} src={dash4}/>,
+            icon: <img alt={'icons'} src={dash1}/>,
             children: [
                 {
                     key: 'countries',
@@ -106,21 +107,18 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
             ]
         },
-        /*{
-            label: `Profile`,
+        {
+            label: `User`,
             icon: <img alt={'icons'} src={dash4}/>,
             children: [
                 {
-                    key: 'road-expense-calculator',
-                    label: t(`RoadExpenseCalculator`),
-                },
-                {
-                    key: 'documents/new',
-                    label: t(`NewDocuments`),
+                    key: 'roles',
+                    label: t(`Roles`),
+                    permission:'Role'
                 },
             ]
         },
-        {
+        /*{
             key: `/match-event-naturess`,
             label: t(`Reviews`),
             icon: <img alt={'icons'} src={dash5}/>,

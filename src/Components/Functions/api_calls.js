@@ -62,32 +62,50 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
 
     return {loadingState,dataState}
 }
-export const useGetResourceSingle = (resource,id)=>{
+export const useGetResourceSingle = (resource,id,additionals={
+})=>{
     const [loading, setLoading] = useState(true)
     const [data,setData] = useState({})
+    const [addData,setAddData] = useState({})
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
         setLoading(true)
-        if(id){
-            axios.request({
+        let dataResources  =Object.keys(additionals);
+        Promise.all([
+            id?axios.request({
                 url:api[resource].single.url+id,
                 method:api[resource].single.method,
                 headers: {
                     'Authorization': token,
                 }
-            }).then(response=>{
-                if(response?.id){
-                    setData(response)
+            }):{},
+            ...dataResources.map(resourceKey=>axios.request({
+                url:api[resourceKey].list.url,
+                method:api[resourceKey].list.method,
+                params:additionals[resourceKey],
+                headers: {
+                    'Authorization': token,
                 }
-            }).finally(()=>{
-                setLoading(false)
-            })
-        }else{
+            }))
+        ]).then(responses=>{
+            let response = responses[0]
+            if(response?.id){
+                setData(response)
+            }else{
+                setData({})
+            }
+            if(dataResources.length){
+                let dataObj = {}
+                dataResources.forEach((e,key)=>{
+                    dataObj[e] = responses[key+1]
+                })
+                setAddData(dataObj)
+            }
+        }).finally(()=>{
             setTimeout(()=>{
                 setLoading(false)
-                setData({})
             })
-        }
+        })
 
     }, [resource,id,token])
 
@@ -99,8 +117,12 @@ export const useGetResourceSingle = (resource,id)=>{
         data,
         setData
     }
+    const addDataState = {
+        addData,
+        setAddData
+    }
 
-    return {loadingState,dataState}
+    return {loadingState,dataState,addDataState}
 }
 export const updateResource = (resource,id,values,token,withFormData=false)=>{
     let formData = {}

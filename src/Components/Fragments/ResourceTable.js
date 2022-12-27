@@ -1,8 +1,8 @@
 import React, {useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
-import {Button, Col, Form, Row, Space, Table, Typography} from "antd";
+import {Button, Col, Form, Popconfirm, Row, Space, Table, Typography} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
@@ -74,10 +74,21 @@ function ResourceTable({resource, tableColumns, title,tableParams={}}) {
 
 
         return [...tableColumns, {
-            dataIndex: 'id', title: 'action', key: 'id', render: (e) => <div>
+            dataIndex: 'id', title: 'action', key: 'id', render: (e) => <Space>
                 <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
-                <Button onClick={() => onResourceDelete(e)} size={'small'}><DeleteOutlined/></Button>
-            </div>
+                <Popconfirm
+                    title={t("Are you sure to delete this entry?")}
+                    onConfirm={() => onResourceDelete(e)}
+                    okText={t("Yes")}
+                    cancelText={t("No")}
+                    icon={<QuestionCircleOutlined
+                            style={{
+                                color: 'red',
+                            }}/>}>
+                    <Button size={'small'}><DeleteOutlined/></Button>
+                </Popconfirm>
+
+            </Space>
         }]
 
 
@@ -92,15 +103,15 @@ function ResourceTable({resource, tableColumns, title,tableParams={}}) {
             <Col lg={12}>
                 <Space>
                     <Typography.Title level={4}>{t(title)}</Typography.Title>
-                    <Button type={'secondary'}>Export to Excel</Button>
-                    <Button type={'secondary'}>Import to Database</Button>
+                    <Button type={'secondary'}>{t("Export to Excel")}</Button>
+                    <Button type={'secondary'}>{t("Import to Database")}</Button>
                 </Space>
             </Col>
             <Col lg={12}>
                 <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
             </Col>
         </Row>
-        <Row>
+        <Row style={{marginTop:30}}>
             <Col lg={24}>
                 <Form>
                 <Table

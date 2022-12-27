@@ -13,5 +13,6 @@ const ResourceLins = {
     InsuranceCompany:'/dashboard/insurance-companies/',
     Taxonomy:'/dashboard/taxonomies/',
     PaymentMethod:'/dashboard/payment-methods/',
+    Role:'/dashboard/roles/',
 }
 export default ResourceLins
