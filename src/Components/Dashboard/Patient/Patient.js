@@ -20,7 +20,7 @@ function Patient() {
                 <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
                     <PatientOverviewTab/>
                 </Tabs.TabPane>
-                <Tabs.TabPane key={'appointment'} tab={'PatientCardAppointment.js'} >
+                <Tabs.TabPane key={'appointment'} tab={'PatientCardAppointment'} >
                     <PatientCardAppointment/>
                 </Tabs.TabPane>
                 <Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >

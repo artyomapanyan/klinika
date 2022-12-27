@@ -1,17 +1,21 @@
 import {Button, Col, Row, Layout, Form} from "antd";
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import { Input } from 'antd';
 import AppointmentFollowUpHistory from "./CardAppointmentItems/AppointmentFollowUpHistory";
 import FileManager from "../../../Fragments/FileManager";
 import AppointmentCheckboxes from "./CardAppointmentItems/AppointmentCheckboxes";
 import addimage from "../../../../dist/icons/addimage.svg";
+import MedicationCards from "./MedicationCards/MedicationCard";
 
 const { TextArea } = Input;
 function PatientCardAppointment() {
+    const [showState,setShowState] = useState(false)
 
     const formRef = useRef();
 
-
+    const showCard = () => {
+        setShowState(!showState)
+    }
 
     return(
         <Layout.Content>
@@ -42,11 +46,23 @@ function PatientCardAppointment() {
                     <div >
                         <h1 className={'h1'}>Purpose</h1>
                         <TextArea placeholder="Add notes here" rows={8} />
+                        {
+                            !showState ? null : <Row style={{marginTop:20}}>
+                                <MedicationCards
+                                    cardHeadHub={'Name of medication'}
+                                    cardHeadDate={'1st month'}
+                                    Frequency={'5 dfgf'}
+                                    Dose={'10 day'}
+                                    Duration={'6 cdfdfvb'}
+                                />
+                            </Row>
+                        }
+
                         <div style={{marginTop:30}}>
                             <h1 className={'h1'}>Prescription</h1>
                             <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>
                             <p>Add the medications that the patient needs to take</p>
-                            <Button size={'large'} type={'primary'}>Add medications</Button>
+                            <Button onClick={showCard} size={'large'} type={'primary'}>Add medications</Button>
                         </div>
                     </div>
                     <div>

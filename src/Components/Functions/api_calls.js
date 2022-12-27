@@ -63,7 +63,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
     return {loadingState,dataState}
 }
 export const useGetResourceSingle = (resource,id,additionals={
-})=>{
+},filterResponse = null)=>{
     const [loading, setLoading] = useState(true)
     const [data,setData] = useState({})
     const [addData,setAddData] = useState({})
@@ -90,6 +90,9 @@ export const useGetResourceSingle = (resource,id,additionals={
         ]).then(responses=>{
             let response = responses[0]
             if(response?.id){
+                if(filterResponse){
+                    response = filterResponse(response)
+                }
                 setData(response)
             }else{
                 setData({})

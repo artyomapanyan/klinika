@@ -25,6 +25,12 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
                                      onChange={e => setValue(e)}/>
+            case 'textArea':
+                return <Input.TextArea   {...inputProps}
+                                     placeholder={' '}
+                                     onFocus={() => setFocused(true)}
+                                     onBlur={() => setFocused(false)}
+                                     onChange={e => setValue(e?.target.value)}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceParams={resourceParams}

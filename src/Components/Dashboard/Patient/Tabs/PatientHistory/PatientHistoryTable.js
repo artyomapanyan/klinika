@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import {Avatar, Checkbox, Col, Row, Space, Table, Tag} from "antd";
 import {t} from "i18next";
 import {UserOutlined} from "@ant-design/icons";
+import PatientHistoryNotes from "./PatientHistoryNotes";
 
 function PatientHistoryTable() {
+    const [historiState, setHistoryState] =useState(false);
+    const onNextPage = () => {
+        setHistoryState(true)
+    }
     const dataSource = [
         {
             key: '1',
@@ -25,7 +30,7 @@ function PatientHistoryTable() {
             dataIndex: 'name',
             key: 'name',
             render:(e,record)=>{
-                return <div className={'avatar_div'}>
+                return <div style={{cursor:"pointer"}} onClick={onNextPage} className={'avatar_div'}>
                         <Space >
                             <Avatar shape="square" size={65} icon={<UserOutlined />} />
                                 <div style={{display:"block"}}>
@@ -69,39 +74,44 @@ function PatientHistoryTable() {
     };
 
     return(
-        <Row gutter={[50,0]} style={{minHeight:800}}>
-            <Col lg={16}>
-                <Table
-                    dataSource={dataSource}
-                    columns={columns}
+        <>
+            {
+                !historiState ? <Row gutter={[50,0]} style={{minHeight:800}}>
+                    <Col lg={16}>
+                        <Table
+                            dataSource={dataSource}
+                            columns={columns}
 
-                />
-            </Col>
-            <Col lg={8} className={'spaced-checkboxes'}>
-                <h1 style={{padding:15, fontWeight:700}}>Sections</h1>
-                <Checkbox.Group
-                    style={{width: '100%'}}
-                    onChange={onChange}
 
-                >
-                    <Space direction={'vertical'}>
-                        <Checkbox value="All"><div>All</div><div>12</div></Checkbox>
-                        <Checkbox value="Eyes"><div>Eyes</div><div>6</div></Checkbox>
-                        <Checkbox value="ENT"><div>ENT</div><div>0</div></Checkbox>
-                        <Checkbox value="Cardiovascular"><div>Cardiovascular</div><div>0</div></Checkbox>
-                        <Checkbox value="Respiratory"><div>Respiratory</div><div>0</div></Checkbox>
-                        <Checkbox value="Gastrointestinal"><div>Gastrointestinal</div><div>0</div></Checkbox>
-                        <Checkbox value="Genitals"><div>Genitals</div><div>0</div></Checkbox>
-                        <Checkbox value="Kidney"><div>Kidney</div><div>0</div></Checkbox>
-                        <Checkbox value="Musculoskeletal"><div>Musculoskeletal</div><div>0</div></Checkbox>
-                        <Checkbox value="Skin"><div>Skin</div><div>0</div></Checkbox>
-                        <Checkbox value="Neurological"><div>Neurological</div><div>0</div></Checkbox>
-                        <Checkbox value="Endocrine"><div>Endocrine</div><div>0</div></Checkbox>
-                        <Checkbox value="Oral_cavity"><div>Oral Cavity</div><div>0</div></Checkbox>
-                    </Space>
-                </Checkbox.Group>
-            </Col>
-        </Row>
+                        />
+                    </Col>
+                    <Col lg={8} className={'spaced-checkboxes'}>
+                        <h1 style={{padding:15, fontWeight:700}}>Sections</h1>
+                        <Checkbox.Group
+                            style={{width: '100%'}}
+                            onChange={onChange}
+
+                        >
+                            <Space direction={'vertical'}>
+                                <Checkbox value="All"><div>All</div><div>12</div></Checkbox>
+                                <Checkbox value="Eyes"><div>Eyes</div><div>6</div></Checkbox>
+                                <Checkbox value="ENT"><div>ENT</div><div>0</div></Checkbox>
+                                <Checkbox value="Cardiovascular"><div>Cardiovascular</div><div>0</div></Checkbox>
+                                <Checkbox value="Respiratory"><div>Respiratory</div><div>0</div></Checkbox>
+                                <Checkbox value="Gastrointestinal"><div>Gastrointestinal</div><div>0</div></Checkbox>
+                                <Checkbox value="Genitals"><div>Genitals</div><div>0</div></Checkbox>
+                                <Checkbox value="Kidney"><div>Kidney</div><div>0</div></Checkbox>
+                                <Checkbox value="Musculoskeletal"><div>Musculoskeletal</div><div>0</div></Checkbox>
+                                <Checkbox value="Skin"><div>Skin</div><div>0</div></Checkbox>
+                                <Checkbox value="Neurological"><div>Neurological</div><div>0</div></Checkbox>
+                                <Checkbox value="Endocrine"><div>Endocrine</div><div>0</div></Checkbox>
+                                <Checkbox value="Oral_cavity"><div>Oral Cavity</div><div>0</div></Checkbox>
+                            </Space>
+                        </Checkbox.Group>
+                    </Col>
+                </Row> : <PatientHistoryNotes />
+            }
+        </>
     )
 }
 export default PatientHistoryTable;

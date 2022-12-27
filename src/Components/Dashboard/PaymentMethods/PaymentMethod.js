@@ -27,13 +27,13 @@ function PaymentMethod() {
     const onFinish = (values) => {
         setLoading(true)
         if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
+            updateResource(resource, params.id, values, token,true).then(response => {
                 setData(response)
             }).finally(() => {
                 setLoading(false)
             })
         } else {
-            createResource(resource, values, token).then((response) => {
+            createResource(resource, values, token,true).then((response) => {
                 if (response?.id) {
                     navigate(resourceLinks[resource] + response.id)
                 }
@@ -46,21 +46,21 @@ function PaymentMethod() {
 
     return(
         <div className={'add_edit_content'}>
-            <h3>{t('Add New Lab Test')}</h3>
+            <h3>{t('Add New Payment Method')}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={{
-                    name:data?.name
-                }}
-            >
-                <FormInput label={t('name')} name={'name'}/>
 
-                <FormInput label={t('Payment method Type')} name={'PaymentMethodKeys'} inputType={'resourceSelect'}
+            >
+                <FormInput label={t('Name')} name={'title'} initialValue={data?.title}/>
+                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                <FormInput label={t('instructions')} name={'instructions'} inputType={'textArea'} initialValue={data?.instructions}/>
+
+                <FormInput label={t('Payment method Type')} name={'key'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.status}
+                           initialValue={data?.key}
                            initialData={Resources.PaymentMethodKeys}
                 />
 
@@ -71,8 +71,8 @@ function PaymentMethod() {
                 />
                 <FileManager text1={'Logo'}
                              text2={''}
-                             name={'cover'}
-                             initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
+                             name={'logo'}
+                             initialFileList={[data.logo]} limit={1} formRef={formRef} type={'drag'}/>
 
 
 

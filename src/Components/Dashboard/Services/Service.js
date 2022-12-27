@@ -37,6 +37,7 @@ function Service() {
         }
     }
 
+    console.log(data?.sub_category, 'f')
     return (
         <div className={'add_edit_content'}>
             <h3>{t("Add New Strings")}</h3>
@@ -44,16 +45,13 @@ function Service() {
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-                initialValues={{
-                    ...data,
-                    sub_category:data?.sub_category?.id
-                }}
+
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
 
-                <FormInput label={t('Sub category')} name={'sub_category'} inputType={'resourceSelect'}
+                <FormInput label={t('Sub category')} name={'sub_category_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.sub_category}
+                           initialValue={data?.sub_category_id}
                            initialData={data?.sub_category?[data.sub_category]:[]}
                            resource={'SubCategory'}/>
 

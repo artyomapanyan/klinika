@@ -45,10 +45,7 @@ function SubCategory() {
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-                initialValues={{
-                    ...data,
-                    category_id:data?.category?.id
-                }}
+
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
 
