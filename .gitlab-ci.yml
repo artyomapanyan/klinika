@@ -4,7 +4,7 @@ stages:
 deploy:
   stage: deploy
   image: node
-  environment:
+  variables:
     SSH_DEST: 159.65.124.162
   when: manual
   only:
