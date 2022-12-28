@@ -36,7 +36,7 @@ function Service() {
             })
         }
     }
-    console.log(data)
+
 
     return (
         <div className={'add_edit_content'}>

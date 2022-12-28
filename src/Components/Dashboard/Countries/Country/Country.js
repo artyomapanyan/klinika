@@ -44,7 +44,7 @@ function Country() {
             })
         }
     }
-    console.log(data, 'llh')
+
 
     return (
         <div className={"add_edit_content"}>

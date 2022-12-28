@@ -44,7 +44,6 @@ function LabPackage() {
         }
     }
 
-console.log(data, 'jj')
     return (
         <div className={"add_edit_content"}>
             <h3>{t('Add New Strings')}</h3>
