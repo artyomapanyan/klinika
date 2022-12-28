@@ -13,7 +13,7 @@ import api from "./Api";
 function App() {
     let languageState = useSelector((state) => state?.app?.current_locale);
     let dispatch = useDispatch()
-    axios.defaults.headers.common['Accept-Language'] = languageState
+    axios.defaults.headers.common['Accept-Language'] = languageState.includes('en')?'en':'ar'
     useEffect(()=>{
         axios.get(`${api.apiEndpoint}${api.version}/app`).then(response=>{
             dispatch({
