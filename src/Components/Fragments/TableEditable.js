@@ -7,7 +7,7 @@ function TableEditable({resource,record,initialData,inputType,value,label,update
     let token = useSelector((state) => state?.auth?.token);
     const [loading,setLoading] = useState({});
 
-    const statusChange = () => {
+    const statusChange = (record) => {
         setLoading({
             [record.id]:true
         })
