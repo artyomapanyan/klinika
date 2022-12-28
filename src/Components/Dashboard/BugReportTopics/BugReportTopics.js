@@ -8,8 +8,8 @@ function BugReportTopics() {
     return(
         <div>
             <ResourceTable resource={'Taxonomy'}
+                           resourceLink={'BugReport'}
                            tableParams={{type:Resources.TaxonomyTypes.REPORT_TOPIC}}
-
                            tableColumns={[
                 {
                     dataIndex:'id',

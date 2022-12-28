@@ -41,7 +41,7 @@ function LabTest() {
             })
         }
     }
-
+console.log(data, 'lk')
     return(
         <div className={'add_edit_content'}>
             <h3>{t('Add New Lab Test')}</h3>

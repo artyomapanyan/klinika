@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {clearObject, paramsToObject} from "../../functions";
 
-function ResourceTable({resource, tableColumns, title,tableParams={}}) {
+function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null}) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
@@ -41,7 +41,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={}}) {
     const {setData, data} = dataState
 
     const onResourceEdit = (e) => {
-        navigate(ResourceLinks[resource] + e)
+        navigate(ResourceLinks[resourceLink??resource] + e)
 
     }
     const onResourceDelete = (e) => {
@@ -91,7 +91,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={}}) {
 
     }, [tableColumns, params])
     const onAddNew = () => {
-        navigate(ResourceLinks[resource] + 'new')
+        navigate(ResourceLinks[resourceLink??resource] + 'new')
     }
 
 

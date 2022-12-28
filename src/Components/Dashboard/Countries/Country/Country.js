@@ -43,9 +43,8 @@ function Country() {
                 setLoading(false)
             })
         }
-
-
     }
+    console.log(data, 'llh')
 
     return (
         <div className={"add_edit_content"}>
@@ -80,9 +79,20 @@ function Country() {
                                 len:3
                             },
                         ]}
-
                     >
                     </FormInput>
+
+                <FormInput
+                    label={t('Phone code')}
+                    name={'phone_code'}
+                    rules={[
+                        {
+                            required: true,
+                            len:3
+                        },
+                    ]}
+                >
+                </FormInput>
 
                 <Space>
                     <Button className={'button_add'} type={'primary'} htmlType="submit">{t('Save')}</Button>

@@ -44,7 +44,7 @@ function LabPackage() {
         }
     }
 
-
+console.log(data, 'jj')
     return (
         <div className={"add_edit_content"}>
             <h3>{t('Add New Strings')}</h3>
@@ -62,6 +62,24 @@ function LabPackage() {
                            initialValue={data?.status}
                            initialData={Resources.Status}
                            />
+                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+
+                <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.categories?.map(e=>e.id)??[]}
+                           initialData={data?.categories??[]}
+                           resource={'Category'}
+                           resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
+                />
+
+                <FormInput inputProps={{mode:'multiple'}} label={t('Lab tests')} name={'lab_tests'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.lab_tests?.map(e=>e.id)??[]}
+                           initialData={data?.categories??[]}
+                           resource={'LabTest'}
+                           resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
+                />
+
                 <FileManager text1={'Click or drag file to this area to upload'}
                              text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
                              name={'cover'}

@@ -47,6 +47,7 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                     onBlur: () => setFocused(false),
                     mode:inputProps.mode
                 }}/>
+
             default:
                 return <Input {...inputProps} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
                               onInput={e => setValue(e.target.value)}/>

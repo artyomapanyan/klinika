@@ -51,7 +51,7 @@ function SubCategory() {
 
                 <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.category_id}
+                           initialValue={data?.category?.id}
                            initialData={data?.category?[data.category]:[]}
                            resource={'Category'}/>
 

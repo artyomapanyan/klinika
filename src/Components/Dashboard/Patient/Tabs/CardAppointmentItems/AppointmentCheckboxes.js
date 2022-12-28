@@ -15,21 +15,21 @@ function AppointmentCheckboxes() {
                 onChange={onChange}
             >
                 <div style={{width:'100%'}}>
-                    <div style={{display:'flex', flexDirection: "row", justifyContent:"space-between", width:'100%'}}>
-                        <Checkbox value="Eyes">Eyes</Checkbox>
-                        <Checkbox value="ENT">ENT</Checkbox>
-                        <Checkbox value="Cardiovascular">Cardiovascular</Checkbox>
-                        <Checkbox value="Respiratory">Respiratory</Checkbox>
-                        <Checkbox value="Gastrointestinal">Gastrointestinal</Checkbox>
-                        <Checkbox value="Genitals">Genitals</Checkbox>
+                    <div style={{display:'flex', flexDirection: "row", justifyContent:"space-around", width:'100%'}}>
+                        {/*<Checkbox value="Eyes">Eyes</Checkbox>*/}
+                        {/*<Checkbox value="ENT">ENT</Checkbox>*/}
+                        {/*<Checkbox value="Cardiovascular">Cardiovascular</Checkbox>*/}
+                        {/*<Checkbox value="Respiratory">Respiratory</Checkbox>*/}
+                        {/*<Checkbox value="Gastrointestinal">Gastrointestinal</Checkbox>*/}
+                        {/*<Checkbox value="Genitals">Genitals</Checkbox>*/}
                     </div>
-                    <div style={{display:'flex', flexDirection: "row", justifyContent:"space-between", width:'100%'}}>
-                        <Checkbox value="Kidney">Kidney</Checkbox>
-                        <Checkbox value="Musculoskeletal">Musculoskeletal</Checkbox>
-                        <Checkbox value="Skin">Skin</Checkbox>
-                        <Checkbox value="Neurological">Neurological</Checkbox>
-                        <Checkbox value="Endocrine">Endocrine</Checkbox>
-                        <Checkbox value="Oral_cavity">Oral Cavity</Checkbox>
+                    <div style={{display:'flex', flexDirection: "row", justifyContent:"space-around", width:'100%'}}>
+                        {/*<Checkbox value="Kidney">Kidney</Checkbox>*/}
+                        {/*<Checkbox value="Musculoskeletal">Musculoskeletal</Checkbox>*/}
+                        {/*<Checkbox value="Skin">Skin</Checkbox>*/}
+                        {/*<Checkbox value="Neurological">Neurological</Checkbox>*/}
+                        {/*<Checkbox value="Endocrine">Endocrine</Checkbox>*/}
+                        {/*<Checkbox value="Oral_cavity">Oral Cavity</Checkbox>*/}
                     </div>
                 </div>
             </Checkbox.Group>

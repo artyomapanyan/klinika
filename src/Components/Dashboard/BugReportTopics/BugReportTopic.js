@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
+import Resources from "../../../store/Resources";
 const { TextArea } = Input;
 
 
@@ -22,6 +23,7 @@ function BugReportTopic() {
 
     const onFinish = (values) => {
         setLoading(true)
+        values.type = Resources.TaxonomyTypes.REPORT_TOPIC
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 setData(response)

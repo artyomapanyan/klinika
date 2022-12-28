@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
+import Resources from "../../../store/Resources";
 
 const resource = 'InsuranceCompany';
 
@@ -49,6 +50,12 @@ function InsuranceCompany() {
                 initialValues={data}
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+
+                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.status}
+                           initialData={Resources.Status}
+                />
 
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>

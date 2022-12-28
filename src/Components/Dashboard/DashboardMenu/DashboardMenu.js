@@ -96,7 +96,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     permission:'InsuranceCompany'
                 },
                 {
-                    key: 'taxonomies',
+                    key: 'bug-reports',
                     label: t(`Bug Report Topics`),
                     permission:'Taxonomy'
                 },
@@ -104,6 +104,11 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     key: 'payment-methods',
                     label: t(`Payment Methods`),
                     permission:'PaymentMethod'
+                },
+                {
+                    key: 'specialities',
+                    label: t(`Specialties`),
+                    permission:'Taxonomy'
                 },
             ]
         },

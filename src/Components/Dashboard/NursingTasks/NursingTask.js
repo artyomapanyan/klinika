@@ -59,6 +59,7 @@ function NursingTask() {
                            initialValue={data?.status}
                            initialData={Resources.Status}
                 />
+                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 

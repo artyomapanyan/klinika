@@ -41,52 +41,61 @@ function PatientCardAppointment() {
                         </Col>
                     </Row>
                 </Col>
+                <Col lg={24}>
+                    <Row gutter={[40,0]}>
+                        <Col lg={16}>
+                            <div >
+                                <h1 className={'h1'}>Purpose</h1>
+                                <TextArea placeholder="Add notes here" rows={8} />
+                                {
+                                    !showState ? null : <Row style={{marginTop:20}}>
+                                        <MedicationCards
+                                            cardHeadHub={'Name of medication'}
+                                            cardHeadDate={'1st month'}
+                                            Frequency={'5 dfgf'}
+                                            Dose={'10 day'}
+                                            Duration={'6 cdfdfvb'}
+                                        />
+                                    </Row>
+                                }
 
-                <Col lg={16}>
-                    <div >
-                        <h1 className={'h1'}>Purpose</h1>
-                        <TextArea placeholder="Add notes here" rows={8} />
-                        {
-                            !showState ? null : <Row style={{marginTop:20}}>
-                                <MedicationCards
-                                    cardHeadHub={'Name of medication'}
-                                    cardHeadDate={'1st month'}
-                                    Frequency={'5 dfgf'}
-                                    Dose={'10 day'}
-                                    Duration={'6 cdfdfvb'}
-                                />
-                            </Row>
-                        }
+                                <div style={{marginTop:30}}>
+                                    <h1 className={'h1'}>Prescription</h1>
+                                    <div>
+                                        <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>
+                                        {/*<p>Add the medications that the patient needs to take</p>*/}
+                                    </div>
 
-                        <div style={{marginTop:30}}>
-                            <h1 className={'h1'}>Prescription</h1>
-                            <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>
-                            <p>Add the medications that the patient needs to take</p>
-                            <Button onClick={showCard} size={'large'} type={'primary'}>Add medications</Button>
-                        </div>
-                    </div>
-                    <div>
-                        <AppointmentCheckboxes/>
-                    </div>
+                                    <Button onClick={showCard} size={'large'} type={'primary'}>Add medications</Button>
+                                </div>
+                            </div>
+                            <div style={{width:'90%'}}>
+                                <AppointmentCheckboxes/>
+                            </div>
+
+                        </Col>
+                        <Col lg={8}>
+
+                            <div>
+                                <h1 className={'h1'}>Files and Images</h1>
+                                <Form ref={formRef}>
+                                    <FileManager text1={'Drag here or Select'}
+                                                 text2={'files and images'}
+                                                 uploadIcon={<img alt={'icons'} src={addimage}/>}
+                                                 name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>
+                                </Form>
+
+                            </div>
+                            <div style={{marginTop:30}}>
+                                <AppointmentFollowUpHistory/>
+                            </div>
+
+                        </Col>
+                    </Row>
 
                 </Col>
-                <Col lg={8}>
 
-                    <div>
-                        <h1 className={'h1'}>Files and Images</h1>
-                        <Form ref={formRef}>
-                            <FileManager text1={'Drag here or Select'}
-                                         text2={'files and images'}
-                                         uploadIcon={<img alt={'icons'} src={addimage}/>}
-                                         name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>
-                        </Form>
 
-                    </div>
-                    <div style={{marginTop:30}}>
-                        <AppointmentFollowUpHistory/>
-                    </div>
-
-                </Col>
             </Row>
         </Layout.Content>
     )

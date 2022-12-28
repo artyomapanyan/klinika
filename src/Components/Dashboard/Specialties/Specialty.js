@@ -1,15 +1,19 @@
-import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+
+import {Button, Form, Space, Input} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
+import {useNavigate, useParams} from "react-router";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
+import {useSelector} from "react-redux";
+import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
+import Resources from "../../../store/Resources";
+const { TextArea } = Input;
 
 
-const resource = 'Service';
-function Service() {
+const resource = 'Taxonomy';
+
+function Specialty() {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
@@ -19,6 +23,7 @@ function Service() {
 
     const onFinish = (values) => {
         setLoading(true)
+        values.type = Resources.TaxonomyTypes.SPECIALTY;
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 setData(response)
@@ -35,33 +40,31 @@ function Service() {
                 setLoading(false)
             })
         }
+
     }
-    console.log(data)
 
     return (
-        <div className={'add_edit_content'}>
-            <h3>{t("Add New Strings")}</h3>
+        <div className={"add_edit_content"}>
+            <h3>{t(`Add New Report - ${data?.title}`)}</h3>
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-
+                initialValues={data}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
-
-                <FormInput label={t('Sub category')} name={'sub_category_id'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.sub_category?.id}
-                           initialData={data?.sub_category?[data.sub_category]:[]}
-                           resource={'SubCategory'}/>
-
+                <FormInput label={t('Title')} name={'title'} initialValue={data?.name} />
+                <Form.Item>
+                    <TextArea placeholder="Description" />
+                </Form.Item>
 
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 
                 </Space>
             </Form>}
         </div>
+
     )
 }
-export default Service;
+
+export default Specialty;
