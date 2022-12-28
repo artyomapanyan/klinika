@@ -108,7 +108,7 @@ export const useGetResourceSingle = (resource,id,additionals={
             })
         })
 
-    }, [resource,id,token,additionals,filterResponse])
+    }, [resource,id,token])
 
     const loadingState = {
         loading,
