@@ -37,6 +37,7 @@ import PaymentMethods from "./Dashboard/PaymentMethods/PaymentMethods";
 import PaymentMethod from "./Dashboard/PaymentMethods/PaymentMethod";
 import Roles from "./Dashboard/User/Roles/Roles";
 import Role from "./Dashboard/User/Roles/Role";
+import Specialties from "./Dashboard/Specialties/Specialties";
 
 
 
@@ -122,7 +123,7 @@ function AppLayout(){
             indexComp:<InsuranceCompanies/>
         },
         {
-            url:'taxonomies',
+            url:'bug-reports',
             resource:'Taxonomy',
             singleComp:<BugReportTopic/>,
             indexComp:<BugReportTopics/>
@@ -138,6 +139,12 @@ function AppLayout(){
             resource:'Role',
             singleComp:<Role/>,
             indexComp:<Roles/>
+        },
+        {
+            url:'specialities',
+            resource:'Taxonomy',
+            //singleComp:<BugReportTopic/>,
+            indexComp:<Specialties/>
         },
 
     ]

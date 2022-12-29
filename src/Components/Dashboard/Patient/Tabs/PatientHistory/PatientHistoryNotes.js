@@ -1,4 +1,4 @@
-import {Button, Card, Checkbox, Col, Form, Layout, Row, Space} from "antd";
+import {Button, Card, Checkbox, Col, Divider, Form, Layout, Row, Space} from "antd";
 import FileManager from "../../../../Fragments/FileManager";
 import addimage from "../../../../../dist/icons/addimage.svg";
 import React, {useRef} from "react";
@@ -27,13 +27,14 @@ function PatientHistoryNotes() {
                     <Row gutter={[40,0]}>
                         <Col lg={16}>
                             <div>
-                                <Card
-                                    title={<h1 className={'h1'}>Doctor Notes</h1>}
-                                    style={{border:"1px solid #cfceca"}}
-                                >
-                                    <div style={{width:'80%'}}>The ective coronary angiography</div>
+                                <div style={{border:"1px solid #cfceca", padding:20, borderRadius:10}}>
+                                    <div><h1 className={'h1'}>Doctor Notes</h1></div>
+                                    <Divider style={{color:'red'}}/>
+                                    <div style={{width:'80%'}}>The patient was discharged 24 hours earlier after he underwent elective coronary angiography and stent placement
+                                        due to left circumflex artery stenosis. He has been taking his prescribed medications and reports no chest pain, shortness of breath,
+                                        or flank pain. His other medical problems include type 2 diabetes, hypertension,</div>
 
-                                </Card>
+                                </div>
                             </div>
 
                         </Col>

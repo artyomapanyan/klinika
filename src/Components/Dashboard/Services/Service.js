@@ -37,6 +37,7 @@ function Service() {
         }
     }
 
+
     return (
         <div className={'add_edit_content'}>
             <h3>{t("Add New Strings")}</h3>
@@ -50,7 +51,7 @@ function Service() {
 
                 <FormInput label={t('Sub category')} name={'sub_category_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.sub_category_id}
+                           initialValue={data?.sub_category?.id}
                            initialData={data?.sub_category?[data.sub_category]:[]}
                            resource={'SubCategory'}/>
 

@@ -13,7 +13,7 @@ const { TextArea } = Input;
 
 const resource = 'Taxonomy';
 
-function BugReportTopic() {
+function Specialty() {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
@@ -23,7 +23,7 @@ function BugReportTopic() {
 
     const onFinish = (values) => {
         setLoading(true)
-        values.type = Resources.TaxonomyTypes.REPORT_TOPIC
+        values.type = Resources.TaxonomyTypes.SPECIALTY;
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 setData(response)
@@ -67,4 +67,4 @@ function BugReportTopic() {
     )
 }
 
-export default BugReportTopic;
+export default Specialty;
