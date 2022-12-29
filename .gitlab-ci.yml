@@ -3,8 +3,7 @@ stages:
 
 deploy:
   stage: deploy
-  image: node
-  timeout: 30 minutes
+  image: node:14
   variables:
     SSH_DEST: forge@159.65.124.162
   when: manual
