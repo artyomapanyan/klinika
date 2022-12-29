@@ -1,0 +1,25 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  image: node
+  variables:
+    SSH_DEST: forge@159.65.124.162
+  when: manual
+  only:
+    - main
+  before_script:
+    - |
+      which ssh-agent || ( apt-get update -y && apt-get install openssh-client coreutils -y --no-install-recommends )
+      eval $(ssh-agent -s)
+      echo "$SSH_PRIVATE_KEY" | base64 -d | ssh-add -
+      mkdir -pv ~/.ssh
+      if [[ -f /.dockerenv ]]; then
+        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      fi
+  script:
+    - apt-get update -y
+    - apt-get install -y rsync
+    - rsync -avz --del ./public/ $SSH_DEST:/var/www/front.klinikatech.com/
+
