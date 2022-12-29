@@ -21,5 +21,7 @@ deploy:
   script:
     - apt-get update -y
     - apt-get install -y rsync
-    - rsync -avz --del ./public/ $SSH_DEST:/var/www/front.klinikatech.com/
+    - npm install
+    - npm run build:dev
+    - rsync -avz --del ./build/ $SSH_DEST:/var/www/front.klinikatech.com/
 
