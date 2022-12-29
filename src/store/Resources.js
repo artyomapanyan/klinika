@@ -1,0 +1,47 @@
+const Resource = {
+    Gender:
+        [
+            {
+                id:1,
+                name:'Male'
+            },
+            {
+                id:2,
+                name:'Female'
+            },
+        ],
+    Status:[
+        {
+            id:2,
+            name:'Active'
+        },
+        {
+            id:3,
+            name:'Inactive'
+        },
+    ],
+    PaymentMethodKeys:[
+        {
+            id:'cash',
+            name:'Cash'
+        },
+        {
+            id:'tap-payments',
+            name:'Tap Payments'
+        },
+    ],
+    TaxonomyTypes:{
+        POST_CATEGORY:1,
+        POST_TAG:2,
+        USER_PROFESSION:3,
+        SPECIALTY:4,
+        DOCTOR_TITLE:5,
+        INSURANCE_TYPE:6,
+        LAB_PACKAGE_CATEGORY:7,
+        LAB_TEST_CATEGORY:8,
+        NURSING_TASK_CATEGORY:9,
+        REPORT_TOPIC:10,
+    }
+}
+
+export default Resource

@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap')
+$primaryColor: #ce4e99
+body
+  div
+    font-family: 'Inter' !important
+.ant-menu-submenu-popup
+  display: none !important
+#root, body, html
+  height: 100%
+  &>span,&>section
+    min-height: 100%
+    .main-container
+      display: flex
+      .app-content
+        flex: 1 1 auto
+.all-div
+  width: 100%
+  border: 1px solid black
+  display: grid
+  grid-template-areas: "nav head" "nav  content" "nav  foot"
+  grid-template-rows: auto auto 50px
+  grid-template-columns:  80px auto
+
+.nav
+  grid-area: nav
+
+.layout-conatiner
+  padding: 0 20px
+  .resource-header .ant-col-lg-12:nth-last-of-type(1)
+    display: flex
+    justify-content: end
+
+.header
+  grid-area: head
+  transition: all .2s
+
+.content
+  grid-area: content
+
+.footer
+  grid-area: foot
+  transition: all .2s
+
+.ant-layout-content
+  transition: all .2s
+
+.ant-btn-secondary
+  border: 1px solid $primaryColor
+  color: $primaryColor
+  border-radius: 10px
+  &:hover
+    color: #fff
+    background-color: $primaryColor
+
+.ant-btn-primary
+  border-radius: 10px
+  background-color: $primaryColor
+  color: white
+  &:hover
+    border: 1px solid $primaryColor
+    background-color: white !important
+    color: $primaryColor !important
+.side-menu
+  position: relative
+  width: 80px
+  z-index: 99
+  .ant-layout-sider
+    overflow: auto !important
+.ant-table-cell
+  .ant-form-item
+    margin-bottom: 0 !important
+  .ant-select
+    width: 200px
+.card-filters
+  .ant-select
+    width: 300px !important
+.input-placeholder
+  position: relative
+  &.date
+    .ant-form-item-label
+      transform: translate(14px, 19px) scale(1)
+  .ant-form-item-row,.ant-form-item-row input,.ant-select,.ant-select-selector
+    min-height: 48px !important
+    border-radius: 12px !important
+    .ant-select-selection-item
+      display: flex
+      margin-top: 10px
+      align-items: center
+  .ant-form-item-label
+    position: absolute
+    color: rgba(0, 0, 0, 0.6)
+    transform-origin: left top
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    max-width: calc(100% - 24px)
+    transform: translate(14px, 10px) scale(1)
+    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
+    z-index: 1
+    pointer-events: none
+  &.input-focused
+    .ant-form-item-label
+      transform: translate(14px, -4px) scale(0.8)
+  label::after
+    display: none
+  .ant-form-item-label >label
+    color: #635D6B
+
+.ar
+  min-height: 100%
+  .input-placeholder .ant-form-item-label
+    right: 40px !important
+  .ant-input-password-icon
+    position: absolute !important
+    margin-right: -60px !important
+    margin-left: initial !important
+.ant_tag
+  font-weight: 700
+  border: none
+  font-size: 11px
+.patient_content
+  background-color: #FFFFFF
+  border-radius: 15px
+  margin-right: 30px
+  margin-left: 30px
+.patient_head_div
+  padding: 10px
+  .avatar_div
+    margin: 24px
+    display: flex
+  .patient_head_name
+    font-size: 24px
+    font-weight: 700
+  .text_norm
+    font-size: 16px
+    letter-spacing: 0.5px
+  .addres_Insurance
+    color: #aaa6ab
+    letter-spacing: 0.5px
+  .phone_mail
+    display: flex
+    margin: 5px
+    letter-spacing: 0.5px
+  .patient_head_text
+    margin-left: 20px
+  .private_note_div
+    padding: 25px
+    margin: 24px
+    background-color: #fdf0e7
+    border-radius: 12px
+  .private_note_text
+    margin-top: 10px
+  .private_note_number
+    font-style: normal
+    font-weight: 700
+    font-size: 24px
+    line-height: 29px
+.button_add
+  height: 48px
+  width: 120px
+.add_edit_content
+  padding: 30px
+.patient_collapse_icon
+  color: #774D9D
+  font-size: 16px
+  margin-Left: 10px
+.collapse_panel
+  font-size: 20px
+  font-weight: 700
+  .collapse_content_head
+    color: #aaa6ab
+    font-size: 14px
+    font-weight: 400
+  .collapse_content_foot
+    font-size: 16px
+    font-weight: 500
+
+.current_medications_card
+  flex: 1 1 auto
+  .patient_card_btn
+    font-size: 16px
+    font-weight: 700
+    border: none
+  .ant-list-item
+    padding-left: 0px
+.PatientCardRight
+  padding: 24px
+.Patient_card_right_img
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+.Patient_card_right_content
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  line-height: 25px
+.Patient_card_right_bold_text
+  font-weight: 700
+  color: #F5A348
+.right_vector
+  font-weight: 700
+.ant-tabs-content
+  .ant-layout-content
+    padding: 40px
+.h1
+  font-weight: 700
+.ant-upload-text
+  font-weight: 600
+  font-size: 18px
+.Patient_card_lab_tests_div
+.ant-table-wrapper .ant-table-thead >tr>th
+  border-bottom: 2px solid rgb(14 13 13 / 24%)
+  .ant-table-cell
+    font-weight: 700
+.medication_card_text1
+  font-size: 13px
+  font-weight: 400
+  color: #635D6B
+.medication_card_text2
+  font-size: 13px
+  font-weight: 700
+.ant-card-head
+  border-bottom: black
+.spaced-checkboxes
+  .ant-space
+    flex: 1 1 auto
+    .ant-checkbox-wrapper
+      width: 90%
+      span:nth-child(1)
+        width: 17px
+      span:nth-child(2)
+        width: 100%
+        display: flex
+        justify-content: space-between
+
+
+
+
+
+
+

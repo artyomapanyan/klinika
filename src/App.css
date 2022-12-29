@@ -1,9 +1,9 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 .ant-layout .ant-layout-sider {
-  background: white;
- }
+    background: white;
+}
 
 .ant-menu-inline .ant-menu-item {
     height: 60px;
@@ -11,3 +11,6 @@
 .ant-menu-vertical .ant-menu-item {
     height: 60px;
 }
+/*.ant-menu-submenu{*/
+/*    margin-bottom: 15px;*/
+/*}*/

@@ -14,20 +14,18 @@ i18n
                 translation: {
                     learn: "Welcome to React",
                     dashboard:"dashboard",
+                    Name:"Name",
+                    Areas: "Areas"
                 }
             },
-            hy: {
+            ar: {
                 translation: {
                     learn: "Բարի գալուստ React",
                     dashboard:"վահանակ",
+                    Name:"Անուն",
+                    Areas: "Արեաներ"
                 }
             },
-            ru: {
-                translation: {
-                    learn: "Добро пожаловать в React",
-                    dashboard:"Приборная доска",
-                }
-            }
         },
         interpolation: {
             escapeValue: false

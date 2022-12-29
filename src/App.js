@@ -1,33 +1,43 @@
 import './App.css';
-import React from 'react';
-import {Button, ConfigProvider} from 'antd';
-import hy from "antd/locale/hy_AM";
-import {useSelector} from "react-redux";
-import "./Styles.sass"
-
-import AppLayout from "./Components/AppLayout";
-import {Route, Routes} from "react-router";
-import Login from "./Components/Auth/Login";
+import React, {useEffect} from 'react';
+import {ConfigProvider} from 'antd';
+import en from "antd/locale/en_US";
+import ar from "antd/locale/ar_EG";
+import {useDispatch, useSelector} from "react-redux";
+import "./dist/styles/Styles.sass"
+import AppRoutes from "./Components/AppRoutes";
+import axios from "axios";
+import api from "./Api";
 
 
 function App() {
-    let redux = useSelector((state) => state);
+    let languageState = useSelector((state) => state?.app?.current_locale);
+    let dispatch = useDispatch()
+    axios.defaults.headers.common['Accept-Language'] = languageState.includes('en')?'en':'ar'
+    useEffect(()=>{
+        axios.get(`${api.apiEndpoint}${api.version}/app`).then(response=>{
+            dispatch({
+                type:'APP',
+                payload:response
+            })
+        })
+    },[dispatch])
+
     return (
+        <span className={languageState??'en'}>
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#fc0398',
+                    colorPrimary: '#ce4e99',
                     color: '#fcfcfc',
                 },
             }}
-            direction={!redux.globalState ? "ltr" : "rtl"}
-            locale={hy}
+            direction={languageState==='ar' ? "rtl" :"ltr" }
+            locale={languageState==='ar'?ar:en}
         >
-        <Routes>
-            <Route path={'/'} element={<Login/>}></Route>
-            <Route path={'dashboard/*'} element={<AppLayout/>}></Route>
-        </Routes>
+            <AppRoutes/>
         </ConfigProvider>
+        </span>
     );
 }
 
