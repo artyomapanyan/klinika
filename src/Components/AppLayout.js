@@ -38,6 +38,9 @@ import PaymentMethod from "./Dashboard/PaymentMethods/PaymentMethod";
 import Roles from "./Dashboard/User/Roles/Roles";
 import Role from "./Dashboard/User/Roles/Role";
 import Specialties from "./Dashboard/Specialties/Specialties";
+import Specialty from "./Dashboard/Specialties/Specialty";
+import SubSpecialties from "./Dashboard/SubSpecialties/SubSpecialties";
+import SubSpecialty from "./Dashboard/SubSpecialties/SubSpecialty";
 
 
 
@@ -141,10 +144,16 @@ function AppLayout(){
             indexComp:<Roles/>
         },
         {
-            url:'specialities',
+            url:'specialties',
             resource:'Taxonomy',
-            //singleComp:<BugReportTopic/>,
+            singleComp:<Specialty/>,
             indexComp:<Specialties/>
+        },
+        {
+            url:'sub-specialties',
+            resource:'Taxonomy',
+            singleComp:<SubSpecialty/>,
+            indexComp:<SubSpecialties/>
         },
 
     ]

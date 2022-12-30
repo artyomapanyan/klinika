@@ -1,5 +1,5 @@
 
-import {Button, Form, Space, Input} from 'antd';
+import {Button, Form, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import Preloader from "../../Preloader";
@@ -8,7 +8,9 @@ import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-const { TextArea } = Input;
+import React, {useRef} from "react";
+import FileManager from "../../Fragments/FileManager";
+
 
 
 const resource = 'Taxonomy';
@@ -16,6 +18,7 @@ const resource = 'Taxonomy';
 function BugReportTopic() {
     const params = useParams();
     const navigate = useNavigate();
+    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
@@ -25,7 +28,7 @@ function BugReportTopic() {
         setLoading(true)
         values.type = Resources.TaxonomyTypes.REPORT_TOPIC
         if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
+            updateResource(resource, params.id, values, token, true).then(response => {
                 setData(response)
             }).finally(() => {
                 setLoading(false)
@@ -33,7 +36,7 @@ function BugReportTopic() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource] + response.id)
+                    navigate(resourceLinks['BugReport'] + response.id)
                 }
 
             }).finally(() => {
@@ -50,12 +53,20 @@ function BugReportTopic() {
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
+                ref={formRef}
                 initialValues={data}
             >
                 <FormInput label={t('Title')} name={'title'} initialValue={data?.name} />
-                <Form.Item>
-                    <TextArea placeholder="Description" />
-                </Form.Item>
+                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.status}
+                           initialData={Resources.Status}
+                />
+                <FileManager text1={'Logo'}
+                             text2={''}
+                             name={'icon'}
+                             initialFileList={[data.icon]} limit={1} formRef={formRef} type={'drag'}/>
 
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>

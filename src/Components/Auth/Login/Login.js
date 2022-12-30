@@ -78,7 +78,7 @@ function Login() {
                             <Form
                                 ref={formRef}
                                 onFinish={handleLogin}>
-                                <FormInput className={'test'} name={'email'} label={'Email'} formRef={formRef}/>
+                                <FormInput className={'test'} name={'email'} label={'Email'} formRef={formRef} initialFocused={true}/>
 
                                 <FormInput className={'test'} inputType={'password'}  formRef={formRef} inputProps={{
                                     iconRender:() => (<Link onClick={(e) => {
@@ -86,7 +86,7 @@ function Login() {
                                         e.stopPropagation();
                                     }}
                                                             to="/forgot">Forgot?</Link>)
-                                }} name={'password'} label={'Password'} />
+                                }} initialFocused={true} name={'password'} label={'Password'} />
                                 <div className={'log_check_div'}>
                                     <Button className={'login_btn'} loading={loading.save} type={'primary'}
                                             htmlType={'submit'}>{t("Login")}</Button>

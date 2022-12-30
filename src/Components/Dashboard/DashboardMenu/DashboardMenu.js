@@ -77,7 +77,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
                 {
                     key: 'nursing-tasks',
-                    label: t(`Nursing task`),
+                    label: t(`Nursing tasks`),
                     permission:'NursingTask'
                 },
                 {
@@ -106,8 +106,13 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     permission:'PaymentMethod'
                 },
                 {
-                    key: 'specialities',
+                    key: 'specialties',
                     label: t(`Specialties`),
+                    permission:'Taxonomy'
+                },
+                {
+                    key: 'sub-specialties',
+                    label: t(`Sub Specialties`),
                     permission:'Taxonomy'
                 },
             ]

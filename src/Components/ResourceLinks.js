@@ -15,6 +15,7 @@ const ResourceLins = {
     Role:'/dashboard/roles/',
     BugReport:'/dashboard/bug-reports/',
     Specialty:'/dashboard/specialties/',
+    SubSpecialty:'/dashboard/sub-specialties/',
 
 }
 export default ResourceLins
