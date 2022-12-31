@@ -5,9 +5,9 @@ import ResourceSelectPaginated from "./ResourceSelectPaginated";
 const NoForm = ['resourceSelect']
 
 function FormInput({name, label, rules, initialValue, inputProps = {},
-                       inputType, initialData = [], resource,resourceParams={}}) {
+                       inputType, initialData = [], resource,resourceParams={},initialFocused=false}) {
 
-    const [focused, setFocused] = useState(true);
+    const [focused, setFocused] = useState(initialFocused);
     const [value, setValue] = useState(initialValue);
     const handleReturnInput = () => {
         switch (inputType) {

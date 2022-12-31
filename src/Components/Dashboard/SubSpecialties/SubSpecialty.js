@@ -1,82 +1,69 @@
-import {t} from "i18next";
-import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
+
+import {Button, Form, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import {useNavigate, useParams} from "react-router";
+import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
+import resourceLinks from "../../ResourceLinks";
+import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
+import Resources from "../../../store/Resources";
 import React, {useRef} from "react";
 import FileManager from "../../Fragments/FileManager";
-import Resources from "../../../store/Resources";
 import {InboxOutlined} from "@ant-design/icons";
 
-const resource = 'LabPackage';
 
-function LabPackage() {
 
+const resource = 'Taxonomy';
+
+function SubSpecialty() {
     const params = useParams();
-    const formRef = useRef();
     const navigate = useNavigate();
+    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+
+
     const onFinish = (values) => {
         setLoading(true)
+        values.type = Resources.TaxonomyTypes.SUB_SPECIALTY
         if (params.id) {
-            updateResource(resource, params.id, values, token,true).then(response => {
-                if(response?.id){
-                    setData(response)
-                }
+            updateResource(resource, params.id, values, token).then(response => {
+                setData(response)
             }).finally(() => {
                 setLoading(false)
             })
         } else {
-            createResource(resource, values, token,true).then((response) => {
+            createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource] + response.id)
+                    navigate(resourceLinks['SubSpecialty'] + response.id)
                 }
 
             }).finally(() => {
                 setLoading(false)
             })
         }
+
     }
 
     return (
         <div className={"add_edit_content"}>
-            <h3>{t('Add New Strings')}</h3>
+            <h3>{t(`Add New Report - ${data?.title}`)}</h3>
             {loading ? <Preloader/> : <Form
-
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
                 initialValues={data}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name}/>
+                <FormInput label={t('Title')} name={'title'} initialValue={data?.name} />
+                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.status}
                            initialData={Resources.Status}
-                           />
-                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
-
-                <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.categories?.map(e=>e.id)??[]}
-                           initialData={data?.categories??[]}
-                           resource={'Category'}
-                           resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
-                />
-
-                <FormInput inputProps={{mode:'multiple'}} label={t('Lab tests')} name={'lab_tests'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.lab_tests?.map(e=>e.id)}
-                           initialData={data?.lab_tests??[]}
-                           resource={'LabTest'}
-                           resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
                 />
 
                 <FileManager text1={'Click or drag file to this area to upload'}
@@ -84,6 +71,7 @@ function LabPackage() {
                              name={'cover'}
                              uploadIcon={<InboxOutlined/>}
                              initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
+
                 <Space>
                     <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
 
@@ -94,4 +82,4 @@ function LabPackage() {
     )
 }
 
-export default LabPackage;
+export default SubSpecialty;

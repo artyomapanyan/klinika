@@ -29,22 +29,7 @@ function PatientCardAppointment() {
                             <div align={'right'}>
                                 <Button style={{right:20, top:-50}} type={'secondary'}>Submit</Button>
                             </div>
-                        </Col>
-                        <Col lg={8}>
-                            <div style={{border:"1px solid #cfceca", borderRadius:12, height:'88%', display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}} >
-                                <div style={{ display:"flex", flexDirection:"column", justifyContent: "center", alignItems:"center", width:'60%'}}>
-                                    <h1 className={'h1'}>Possible Diagnoses</h1>
-                                    <p>Describe patient’s current condition. provide symptoms, signs, lab tests, risk factrors, etc...</p>
-                                    <Button type={'secondary'}>How in works?</Button>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                </Col>
-                <Col lg={24}>
-                    <Row gutter={[40,0]}>
-                        <Col lg={16}>
-                            <div >
+                            <div style={{width:'100%'}}>
                                 <h1 className={'h1'}>Purpose</h1>
                                 <TextArea placeholder="Add notes here" rows={8} />
                                 {
@@ -63,19 +48,25 @@ function PatientCardAppointment() {
                                     <h1 className={'h1'}>Prescription</h1>
                                     <div>
                                         <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>
-                                        {/*<p>Add the medications that the patient needs to take</p>*/}
+                                        <p>Add the medications that the patient needs to take</p>
                                     </div>
-
                                     <Button onClick={showCard} size={'large'} type={'primary'}>Add medications</Button>
                                 </div>
                             </div>
-                            <div style={{width:'90%'}}>
+                            <div >
                                 <AppointmentCheckboxes/>
                             </div>
-
                         </Col>
-                        <Col lg={8}>
 
+
+                        <Col lg={8}>
+                            <div style={{border:"1px solid #cfceca", borderRadius:12, padding:15, display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}} >
+                                <div style={{ display:"flex", flexDirection:"column", justifyContent: "center", alignItems:"center", width:'60%'}}>
+                                    <h1 className={'h1'}>Possible Diagnoses</h1>
+                                    <p>Describe patient’s current condition. provide symptoms, signs, lab tests, risk factrors, etc...</p>
+                                    <Button type={'secondary'}>How in works?</Button>
+                                </div>
+                            </div>
                             <div>
                                 <h1 className={'h1'}>Files and Images</h1>
                                 <Form ref={formRef}>
@@ -89,13 +80,9 @@ function PatientCardAppointment() {
                             <div style={{marginTop:30}}>
                                 <AppointmentFollowUpHistory/>
                             </div>
-
                         </Col>
                     </Row>
-
                 </Col>
-
-
             </Row>
         </Layout.Content>
     )

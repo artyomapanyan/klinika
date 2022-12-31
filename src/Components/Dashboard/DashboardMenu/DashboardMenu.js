@@ -6,11 +6,12 @@ import {MenuOutlined} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
 import {useTranslation} from "react-i18next";
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";
 function DashboardMenu({mouseCollapsed,fixCollapse}){
     const {t} = useTranslation();
     const navigate = useNavigate();
+    let {pathname} = useLocation();
     const permissions = useSelector(state=>state.auth.user.permissions);
     const handleFilterMenus = (item)=>{
         if(item.children){
@@ -39,6 +40,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         {
             label: t(`Inputs`),
             icon: <img alt={'icons'} src={dash1}/>,
+            key:'inputs',
             children: [
                 {
                     key: 'countries',
@@ -77,7 +79,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
                 {
                     key: 'nursing-tasks',
-                    label: t(`Nursing task`),
+                    label: t(`Nursing tasks`),
                     permission:'NursingTask'
                 },
                 {
@@ -106,8 +108,13 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     permission:'PaymentMethod'
                 },
                 {
-                    key: 'specialities',
+                    key: 'specialties',
                     label: t(`Specialties`),
+                    permission:'Taxonomy'
+                },
+                {
+                    key: 'sub-specialties',
+                    label: t(`Sub Specialties`),
                     permission:'Taxonomy'
                 },
             ]
@@ -129,7 +136,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             icon: <img alt={'icons'} src={dash5}/>,
         },*/
     ].filter(handleFilterMenus),[permissions]);
+    const selectedItem = useMemo(()=>{
+       return  items.find(e=>{
+           if(pathname.includes(e.key)){
+               return true
+           }else{
+               return e.children.find(u=>pathname.includes(u.key));
+           }
 
+       })
+    },[pathname])
     const handleMenuClick = (e)=>{
         const link = e.key;
         const event = e.domEvent
@@ -139,7 +155,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             navigate(`/dashboard/${link}`)
         }
     }
-
+    console.log(selectedItem,[selectedItem?.key].filter(e=>e),[selectedItem?.children?.find(u=>pathname.includes(u.key))?.key].filter(e=>e),pathname)
     return (
         <div >
             <div style={{
@@ -155,9 +171,10 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             </div>
             <Divider/>
             <Menu
-
                 mode="inline"
                 theme="light"
+                defaultOpenKeys={[selectedItem?.key].filter(e=>e)}
+                defaultSelectedKeys={[selectedItem?.children?.find(u=>pathname.includes(u.key))?.key].filter(e=>e)}
                 triggerSubMenuAction={'click'}
                 subMenuCloseDelay={0}
                 items={items}

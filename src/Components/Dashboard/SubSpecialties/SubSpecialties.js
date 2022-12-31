@@ -4,12 +4,12 @@ import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import DateParser from "../../Fragments/DateParser";
 
-function Specialties() {
+function SubSpecialties() {
     return(
         <div>
             <ResourceTable resource={'Taxonomy'}
-                           resourceLink={'Specialty'}
-                           tableParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                           resourceLink={'SubSpecialty'}
+                           tableParams={{type:Resources.TaxonomyTypes.SUB_SPECIALTY}}
                            tableColumns={[
                                {
                                    dataIndex:'id',
@@ -34,4 +34,4 @@ function Specialties() {
         </div>
     )
 }
-export default Specialties;
+export default SubSpecialties;

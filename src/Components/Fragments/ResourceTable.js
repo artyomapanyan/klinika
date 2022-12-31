@@ -40,17 +40,18 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
     const {setLoading, loading} = loadingState;
     const {setData, data} = dataState
 
+
     const onResourceEdit = (e) => {
         navigate(ResourceLinks[resourceLink??resource] + e)
 
     }
     const onResourceDelete = (e) => {
-        setLoading(true)
 
+        setLoading(true)
         deleteResource(resource, e, token).then(resp => {
-            setData({
-                ...data, items: data?.items.filter(e => e.id !== resp.id)
-            })
+            setData((prevState)=>({
+                ...prevState, items: prevState?.items?.slice(0)?.filter(e => e.id !== resp.id)
+            }))
             setLoading(false)
         })
     }
@@ -94,7 +95,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
         navigate(ResourceLinks[resourceLink??resource] + 'new')
     }
 
-
+        console.log(data)
     return (<Content className={'layout-conatiner'}>
         <Row className={'resource-header'}>
             <Col lg={12}>
