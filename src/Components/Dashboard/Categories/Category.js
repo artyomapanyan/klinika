@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
+import React from "react";
 
 const resource = 'Category';
 
@@ -20,9 +21,15 @@ function Category() {
 
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -41,7 +48,7 @@ function Category() {
 
     return (
         <div className={"add_edit_content"}>
-            <h3>{t('Add New Strings')}</h3>
+            {data?.name ? <h3>{t(`Editing Category - ${data?.name}`)}</h3> : <h3>{t(`Add new Category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -51,8 +58,8 @@ function Category() {
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
 
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

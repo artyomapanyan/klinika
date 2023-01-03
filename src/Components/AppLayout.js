@@ -41,8 +41,10 @@ import Specialties from "./Dashboard/Specialties/Specialties";
 import Specialty from "./Dashboard/Specialties/Specialty";
 import SubSpecialties from "./Dashboard/SubSpecialties/SubSpecialties";
 import SubSpecialty from "./Dashboard/SubSpecialties/SubSpecialty";
-
-
+import Doctors from "./Dashboard/Doctors/Doctors";
+import Doctor from "./Dashboard/Doctors/Doctor";
+import Users from "./Dashboard/User/Users/Users";
+import User from "./Dashboard/User/Users/User";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -154,6 +156,18 @@ function AppLayout(){
             resource:'Taxonomy',
             singleComp:<SubSpecialty/>,
             indexComp:<SubSpecialties/>
+        },
+        {
+            url:'doctors',
+            resource:'Doctor',
+            singleComp:<Doctor/>,
+            indexComp:<Doctors/>
+        },
+        {
+            url:'users',
+            resource:'User',
+            singleComp:<User/>,
+            indexComp:<Users/>
         },
 
     ]

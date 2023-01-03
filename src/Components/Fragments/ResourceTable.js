@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
-import {Button, Col, Form, Popconfirm, Row, Space, Table, Typography} from "antd";
+import {Button, Col, Form, Popconfirm, Row, Space, Table, Typography, Tooltip} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
 import {DeleteOutlined, EditOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
@@ -73,18 +73,22 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
             return e
         }), {
             dataIndex: 'id', title: 'action', key: 'id', render: (e) => <Space>
-                <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
-                <Popconfirm
-                    title={t("Are you sure to delete this entry?")}
-                    onConfirm={() => onResourceDelete(e)}
-                    okText={t("Yes")}
-                    cancelText={t("No")}
-                    icon={<QuestionCircleOutlined
-                            style={{
-                                color: 'red',
-                            }}/>}>
-                    <Button size={'small'}><DeleteOutlined/></Button>
-                </Popconfirm>
+                <Tooltip title="Update">
+                    <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
+                </Tooltip>
+                <Tooltip title="Delete">
+                    <Popconfirm
+                        title={t("Are you sure to delete this entry?")}
+                        onConfirm={() => onResourceDelete(e)}
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined
+                                style={{
+                                    color: 'red',
+                                }}/>}>
+                        <Button size={'small'}><DeleteOutlined/></Button>
+                    </Popconfirm>
+                </Tooltip>
 
             </Space>
         }]
@@ -101,12 +105,18 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
             <Col lg={12}>
                 <Space>
                     <Typography.Title level={4}>{t(title)}</Typography.Title>
-                    <Button type={'secondary'}>{t("Export to Excel")}</Button>
-                    <Button type={'secondary'}>{t("Import to Database")}</Button>
+                    <Tooltip title="prompt text">
+                        <Button type={'secondary'}>{t("Export to Excel")}</Button>
+                    </Tooltip>
+                    <Tooltip title="prompt text">
+                        <Button type={'secondary'}>{t("Import to Database")}</Button>
+                    </Tooltip>
                 </Space>
             </Col>
             <Col lg={12}>
-                <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
+                <Tooltip title="Add new entry">
+                    <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
+                </Tooltip>
             </Col>
         </Row>
         <Row style={{marginTop:30}}>

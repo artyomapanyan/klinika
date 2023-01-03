@@ -21,10 +21,10 @@ function Country() {
     const {loading, setLoading} = loadingState
     const onFinish = (values) => {
         setLoading(true)
-        setData({
-            ...data,
-            values
-        })
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
@@ -45,16 +45,14 @@ function Country() {
         }
     }
 
-
     return (
         <div className={"add_edit_content"}>
-            {data?.name ? <h3>{t(`Editing Country - ${data?.name}`)}</h3> : <h3>{t(`Editing Country`)}</h3>}
+            {data?.name ? <h3>{t(`Editing Country - ${data?.name}`)}</h3> : <h3>{t(`Add new Country`)}</h3>}
             {loading ? <Preloader/> : <Form
 
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-                initialValues={data}
             >
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
                     <FormInput
@@ -67,6 +65,7 @@ function Country() {
                             },
 
                         ]}
+                        initialValue={data?.alpha2_code}
                     >
 
                     </FormInput>
@@ -79,6 +78,7 @@ function Country() {
                                 len:3
                             },
                         ]}
+                        initialValue={data?.alpha3_code}
                     >
                     </FormInput>
 
@@ -91,12 +91,13 @@ function Country() {
                             len:3
                         },
                     ]}
+                    initialValue={data?.phone_code}
                 >
                 </FormInput>
 
                 <Space>
-                    <Button className={'button_add'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

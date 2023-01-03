@@ -23,9 +23,15 @@ function NursingTask() {
 
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -43,7 +49,7 @@ function NursingTask() {
     }
     return(
         <div className={'add_edit_content'}>
-            <h3>{t('Add New Nursuring Task')}</h3>
+            {data?.name ? <h3>{t(`Editing Nursing Task - ${data?.name}`)}</h3> : <h3>{t(`Add new Nursing Task`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -61,8 +67,8 @@ function NursingTask() {
                 />
                 <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

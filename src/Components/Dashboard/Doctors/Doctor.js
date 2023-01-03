@@ -4,15 +4,16 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
+import {Button, DatePicker, Form, Space} from "antd";
 import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
+import dayjs from 'dayjs';
 
-const resource = 'LabTest';
+const resource = 'Doctor';
 
-function LabTest() {
+function Doctor() {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -24,6 +25,7 @@ function LabTest() {
 
     const onFinish = (values) => {
         setLoading(true)
+        values.dob = values.dob.format('YYYY-MM-DD')
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -41,7 +43,6 @@ function LabTest() {
                 if (response?.id) {
                     navigate(resourceLinks[resource] + response.id)
                 }
-
             }).finally(() => {
                 setLoading(false)
             })
@@ -50,34 +51,32 @@ function LabTest() {
 
     return(
         <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Lub Test - ${data?.name}`)}</h3> : <h3>{t(`Add new Lub Test`)}</h3>}
+            {data?.name ? <h3>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3>{t(`Add new Doctor`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={{
-                    ...data,
-                    categories:data.categories?.map(e=>e.id)
-                }}
             >
-
-                <FormInput label={t('name')} name={'name'}/>
-
-                <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.categories?.map(e=>e.id)??[]}
-                           initialData={data?.categories??[]}
-                           resource={'Taxonomy'}
-                           resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
+                <FormInput label={t('First')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
+                <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
+                <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                <FormInput inputType={'password'}  label={'Password'} name={'Password'} rules={[{required: true}]} />
+                <FormInput inputType={'password'}  label={'password_confirmation'} />
+                <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob?dayjs(data?.dob):null} inputType={'date'} rules={[{required: true}]} />
+                <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
+                <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
+                           initialValue={data?.gender}
+                           initialData={Resources?.Gender}
                 />
+                <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.status}
                            initialData={Resources.Status}
                 />
-
-
+                <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
+                <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
 
 
                 <Space>
@@ -88,4 +87,4 @@ function LabTest() {
         </div>
     )
 }
-export default LabTest;
+export default Doctor;

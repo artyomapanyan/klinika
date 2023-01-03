@@ -21,6 +21,7 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                 />
             case 'date':
                 return <DatePicker   {...inputProps}
+                                     format={'DD-MM-YYYY'}
                                      placeholder={' '}
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}

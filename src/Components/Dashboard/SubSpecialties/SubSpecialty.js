@@ -29,9 +29,15 @@ function SubSpecialty() {
     const onFinish = (values) => {
         setLoading(true)
         values.type = Resources.TaxonomyTypes.SUB_SPECIALTY
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -50,7 +56,7 @@ function SubSpecialty() {
 
     return (
         <div className={"add_edit_content"}>
-            <h3>{t(`Add New Report - ${data?.title}`)}</h3>
+            {data?.title ? <h3>{t(`Editing Sub Specialty - ${data?.title}`)}</h3> : <h3>{t(`Add new Sub Specialty`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -73,8 +79,8 @@ function SubSpecialty() {
                              initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
 
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks["SubSpecialty"]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

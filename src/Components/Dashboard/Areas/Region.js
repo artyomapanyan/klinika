@@ -22,9 +22,15 @@ function Region() {
 
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -42,7 +48,7 @@ function Region() {
     }
     return(
         <div className={'add_edit_content'}>
-            <h3>{t('Add New Area')}</h3>
+            {data?.name ? <h3>{t(`Editing Area - ${data?.name}`)}</h3> : <h3>{t(`Add new Area`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -56,8 +62,8 @@ function Region() {
                            resource={'Country'}/>
 
                 <Space>
-                    <Button className={'button_add'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

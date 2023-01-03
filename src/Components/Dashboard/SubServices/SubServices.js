@@ -33,7 +33,7 @@ function SubServices() {
                      key:'date',
                     render:i=><DateParser date={i}/>
                 },
-            ]} title={t('sub services')}/>
+            ]} title={t('Sub services')}/>
         </div>
     )
 }

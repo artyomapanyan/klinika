@@ -5,6 +5,7 @@ import {Button, Divider, Menu} from "antd";
 import {MenuOutlined} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
+import dash2 from "../../../dist/icons/frame2.svg";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";
@@ -127,6 +128,22 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     key: 'roles',
                     label: t(`Roles`),
                     permission:'Role'
+                },
+                {
+                    key: 'users',
+                    label: t(`Users`),
+                    permission:'User'
+                },
+            ]
+        },
+        {
+            label: `Accounts`,
+            icon: <img alt={'icons'} src={dash2}/>,
+            children: [
+                {
+                    key: 'doctors',
+                    label: t(`Doctors`),
+                    permission:'Doctor'
                 },
             ]
         },

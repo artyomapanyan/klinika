@@ -24,8 +24,12 @@ function LabPackage() {
     const {loading, setLoading} = loadingState
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
-            updateResource(resource, params.id, values, token,true).then(response => {
+            updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
                     setData(response)
                 }
@@ -46,7 +50,7 @@ function LabPackage() {
 
     return (
         <div className={"add_edit_content"}>
-            <h3>{t('Add New Strings')}</h3>
+            {data?.name ? <h3>{t(`Editing Lub Package - ${data?.name}`)}</h3> : <h3>{t(`Add new Lub Package`)}</h3>}
             {loading ? <Preloader/> : <Form
 
                 name="edit"
@@ -85,8 +89,8 @@ function LabPackage() {
                              uploadIcon={<InboxOutlined/>}
                              initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

@@ -89,6 +89,14 @@ let api = {
         url: 'permissions',
         resource: 'Permission',
     },
+    {
+        url: 'doctors',
+        resource: 'Doctor',
+    },
+    {
+        url: 'users',
+        resource: 'User',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

@@ -3,10 +3,10 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
-function LabPackages() {
+function Doctors() {
     return(
         <div>
-            <ResourceTable resource={'LabPackage'} tableColumns={[
+            <ResourceTable resource={'Doctor'} tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -14,10 +14,17 @@ function LabPackages() {
                     sorter:true,
                 },
                 {
-
-                    title:t('Lab packages'),
-                    dataIndex:'name',
-                    key:'name',
+                    title:t('First Name'),
+                    dataIndex:'first',
+                    key:'First Name',
+                    sorter:true,
+                    translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    title:t('Last Name'),
+                    dataIndex:'last',
+                    key:'Last Name',
                     sorter:true,
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
@@ -25,11 +32,11 @@ function LabPackages() {
                 {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
-                     key:'date',
+                    key:'date',
                     render:i=><DateParser date={i}/>
                 },
-            ]} title={t('Lab Packages')}/>
+            ]} title={t('Doctors')}/>
         </div>
     )
 }
-export default LabPackages;
+export default Doctors;
