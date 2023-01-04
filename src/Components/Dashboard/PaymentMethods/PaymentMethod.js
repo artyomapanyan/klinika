@@ -60,7 +60,7 @@ function PaymentMethod() {
                 ref={formRef}
 
             >
-                <FormInput label={t('Name')} name={'title'} initialValue={data?.title}/>
+                <FormInput label={t('Name')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
                 <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                 <FormInput label={t('instructions')} name={'instructions'} inputType={'textArea'} initialValue={data?.instructions}/>
 

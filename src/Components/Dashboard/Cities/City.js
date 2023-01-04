@@ -55,12 +55,8 @@ function City() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={{
-                    ...data,
-                    region_id:data.region?.id
-            }}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
 
 
                 <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}

@@ -53,9 +53,8 @@ function Category() {
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-                initialValues={data}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
 
                 <Space>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>

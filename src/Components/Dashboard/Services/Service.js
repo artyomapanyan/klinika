@@ -52,9 +52,8 @@ function Service() {
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
-
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
 
                 <FormInput label={t('Sub category')} name={'sub_category_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
