@@ -59,7 +59,6 @@ function LabPackage() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={data}
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name}/>
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
@@ -75,7 +74,7 @@ function LabPackage() {
                            rules={[{required: true}]}
                            initialValue={data?.categories?.map(e=>e.id)??[]}
                            initialData={data?.categories??[]}
-                           resource={'Category'}
+                           resource={'Taxonomy'}
                            resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
                 />
 
@@ -83,7 +82,7 @@ function LabPackage() {
                            rules={[{required: true}]}
                            initialValue={data?.lab_tests?.map(e=>e.id)}
                            initialData={data?.lab_tests??[]}
-                           resource={'LabTest'}
+                           resource={'Taxonomy'}
                            resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
                 />
 
