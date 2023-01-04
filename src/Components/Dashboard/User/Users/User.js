@@ -52,7 +52,7 @@ function User() {
 
     return(
         <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3>{t(`Add new Doctor`)}</h3>}
+            {data?.first ? <h3>{t(`Editing User - ${data?.first}`)}</h3> : <h3>{t(`Add new User`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

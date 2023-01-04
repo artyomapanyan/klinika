@@ -97,6 +97,10 @@ let api = {
         url: 'users',
         resource: 'User',
     },
+    {
+        url: 'posts',
+        resource: 'Post',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

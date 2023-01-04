@@ -45,6 +45,8 @@ import Doctors from "./Dashboard/Doctors/Doctors";
 import Doctor from "./Dashboard/Doctors/Doctor";
 import Users from "./Dashboard/User/Users/Users";
 import User from "./Dashboard/User/Users/User";
+import Posts from "./Dashboard/Posts/Posts";
+import Post from "./Dashboard/Posts/Post";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -168,6 +170,12 @@ function AppLayout(){
             resource:'User',
             singleComp:<User/>,
             indexComp:<Users/>
+        },
+        {
+            url:'posts',
+            resource:'Post',
+            singleComp:<Post/>,
+            indexComp:<Posts/>
         },
 
     ]

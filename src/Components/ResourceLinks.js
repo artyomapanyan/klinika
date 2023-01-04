@@ -18,6 +18,7 @@ const ResourceLins = {
     SubSpecialty:'/dashboard/sub-specialties/',
     Doctor:'/dashboard/doctors/',
     User:'/dashboard/users/',
+    Post:'/dashboard/posts/',
 
 }
 export default ResourceLins

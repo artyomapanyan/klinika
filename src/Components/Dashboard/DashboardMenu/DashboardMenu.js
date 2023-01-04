@@ -118,6 +118,11 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Sub Specialties`),
                     permission:'Taxonomy'
                 },
+                {
+                    key: 'posts',
+                    label: t(`Posts`),
+                    permission:'Post'
+                },
             ]
         },
         {
