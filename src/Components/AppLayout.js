@@ -4,6 +4,7 @@ import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {useSelector} from "react-redux";
 import "../dist/styles/Styles.sass"
+import 'draft-js/dist/Draft.css';
 import DashboardMenu from "./Dashboard/DashboardMenu/DashboardMenu";
 import DashboardHeader from "./Dashboard/DashboardHeader/DashboardHeader";
 import {Route, Routes} from "react-router";

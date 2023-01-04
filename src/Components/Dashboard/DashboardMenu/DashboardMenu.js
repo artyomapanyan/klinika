@@ -177,7 +177,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             navigate(`/dashboard/${link}`)
         }
     }
-    console.log(selectedItem,[selectedItem?.key].filter(e=>e),[selectedItem?.children?.find(u=>pathname.includes(u.key))?.key].filter(e=>e),pathname)
     return (
         <div >
             <div style={{

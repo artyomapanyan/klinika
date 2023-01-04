@@ -10,6 +10,7 @@ import React, {useRef} from "react";
 import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
 import {InboxOutlined} from "@ant-design/icons";
+import DraftEditor from "../../Fragments/DraftEditor";
 
 const resource = 'LabPackage';
 
@@ -51,6 +52,7 @@ function LabPackage() {
     return (
         <div className={"add_edit_content"}>
             {data?.name ? <h3>{t(`Editing Lub Package - ${data?.name}`)}</h3> : <h3>{t(`Add new Lub Package`)}</h3>}
+
             {loading ? <Preloader/> : <Form
 
                 name="edit"
@@ -65,7 +67,9 @@ function LabPackage() {
                            initialValue={data?.status}
                            initialData={Resources.Status}
                            />
-                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                <Form.Item name={'description'} label={t('Description')}>
+                    <DraftEditor initialValue={data?.description} formRef={formRef} name={'description'} />
+                </Form.Item>
 
                 <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
