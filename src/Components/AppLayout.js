@@ -49,6 +49,7 @@ import User from "./Dashboard/User/Users/User";
 import Posts from "./Dashboard/Posts/Posts";
 import Post from "./Dashboard/Posts/Post";
 import AppointmentStats from "./Fragments/Charts/AppointmentStats";
+import Calendar from "./Dashboard/Calendar/Calendar";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -213,6 +214,7 @@ function AppLayout(){
                         )}
 
                     <Route path={'patients'} element={<Patient />}/>
+                    <Route path={'calendar'} element={<Calendar />}/>
                 </Routes>
             </Content>
                 <AppointmentStats/>

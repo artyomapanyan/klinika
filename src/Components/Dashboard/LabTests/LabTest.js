@@ -56,13 +56,9 @@ function LabTest() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={{
-                    ...data,
-                    categories:data.categories?.map(e=>e.id)
-                }}
             >
 
-                <FormInput label={t('name')} name={'name'}/>
+                <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>
 
                 <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
                            rules={[{required: true}]}

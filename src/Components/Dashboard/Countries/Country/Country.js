@@ -54,7 +54,7 @@ function Country() {
                 onFinish={onFinish}
                 layout="vertical"
             >
-                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
                     <FormInput
                         label={t('Alpha2 code')}
                         name={'alpha2_code'}

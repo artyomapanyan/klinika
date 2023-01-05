@@ -62,9 +62,8 @@ console.log(data,'f')
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={data}
             >
-                <FormInput label={t('Title')} name={'title'} initialValue={data?.name} />
+                <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
                 <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
