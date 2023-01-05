@@ -48,6 +48,7 @@ import Users from "./Dashboard/User/Users/Users";
 import User from "./Dashboard/User/Users/User";
 import Posts from "./Dashboard/Posts/Posts";
 import Post from "./Dashboard/Posts/Post";
+import AppointmentStats from "./Fragments/Charts/AppointmentStats";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -214,6 +215,7 @@ function AppLayout(){
                     <Route path={'patients'} element={<Patient />}/>
                 </Routes>
             </Content>
+                <AppointmentStats/>
             <div style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
 
             </div>
