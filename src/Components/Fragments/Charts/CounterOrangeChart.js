@@ -1,11 +1,11 @@
 import {useEffect, useRef} from "react";
 import {Chart,registerables} from "chart.js";
+import {Space} from "antd";
 
 function CounterOrangeChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-    console.log(canvasRef)
     const doughnutChartOrangeData = [1.1, 3.9];
 
     const counterforOrangeDoughnut = {
@@ -50,18 +50,19 @@ function CounterOrangeChart() {
         }
     },[])
     return(
-        <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+        <Space style={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
             <div  style={{height:92,width:92}}>
                 <canvas ref={canvasRef}></canvas>
             </div>
-            <div>
-                <div>
+            <Space></Space>
+            <Space direction={'vertical'}>
+                <div className={'chart_counter_bold_text'}>
                     Clinic name
                 </div>
                 <div> Avg. monthly </div>
                 <div>clinic rating </div>
-            </div>
-        </div>
+            </Space>
+        </Space>
     )
 }
 export default CounterOrangeChart;

@@ -76,18 +76,19 @@ function CounterMultipleChart() {
         }
     },[])
     return(
-        <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+        <Space style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
             <div  style={{height:92,width:92}}>
                 <canvas ref={canvasRef}></canvas>
             </div>
+            <Space></Space>
             <Space direction={'vertical'}>
-                <div>
+                <div className={'chart_counter_bold_text'}>
                     Fact/Plan load
                 </div>
                 <div className={'withDot WD-lightpurple'}>Jeddah clinic 67.3% </div>
                 <div className={'withDot WD-purple'}>Clinic name 87%</div>
             </Space>
-        </div>
+        </Space>
     )
 }
 export default CounterMultipleChart;

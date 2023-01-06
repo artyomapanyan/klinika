@@ -1,11 +1,11 @@
 import {useEffect, useRef} from "react";
 import {Chart,registerables} from "chart.js";
+import {Space} from "antd";
 
 function CounterGreenChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-    console.log(canvasRef)
     const doughnutChartGreenData = [0.5, 4.5];
 
     const counterforGreenDoughnut = {
@@ -51,18 +51,19 @@ function CounterGreenChart() {
     },[])
 
     return(
-        <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+        <Space style={{display:"flex", alignItems:"center"}}>
             <div  style={{height:92,width:92}}>
                 <canvas ref={canvasRef}></canvas>
             </div>
-            <div>
-                <div>
+            <Space></Space>
+            <Space direction={'vertical'}>
+                <div className={'chart_counter_bold_text'}>
                     Clinic name
                 </div>
                 <div> Avg. monthly </div>
                 <div>clinic rating </div>
-            </div>
-        </div>
+            </Space>
+        </Space>
     )
 }
 export default CounterGreenChart;
