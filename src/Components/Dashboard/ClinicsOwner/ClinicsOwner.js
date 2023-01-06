@@ -12,18 +12,18 @@ function ClinicsOwner() {
 
     return(
         <div style={{margin:20}} className={'clinics_owner'}>
-            <Row gutter={16}>
-                <Col  lg={6} md={8} >
+            <Row gutter={[16,16]}>
+                <Col  lg={5} md={12} sm={24} xs={24} >
                     <div className="gutter_row">
                         <CounterGreenChart />
                     </div>
                 </Col>
-                <Col lg={6} md={8}>
+                <Col lg={5} md={12} sm={24} xs={24}>
                     <div className="gutter_row">
                         <CounterOrangeChart/>
                     </div>
                 </Col>
-                <Col lg={6} md={8}>
+                <Col lg={7} md={12} sm={24} xs={24}>
                     <div className="gutter_row">
                         <Space>
                             <Space direction={'vertical'}>
@@ -48,7 +48,7 @@ function ClinicsOwner() {
 
                     </div>
                 </Col>
-                <Col lg={6} md={8}>
+                <Col lg={7} md={12} sm={24} xs={24}>
                     <div className="gutter_row">
                         <CounterMultipleChart />
                     </div>

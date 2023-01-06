@@ -47,6 +47,10 @@ function GradientChart() {
 
         let gradientGrey = appointmentsStats.createLinearGradient(0, 500, 0, 50);
         let gradient = appointmentsStats.createLinearGradient(0, 400, 0, 10);
+        gradient.addColorStop(0, "rgba(191, 83, 158, 0.05)");
+        gradient.addColorStop(1, "rgba(191, 83, 158, 1)");
+        gradientGrey.addColorStop(0, "rgba(217, 217, 217, 0)");
+        gradientGrey.addColorStop(1, "rgba(217, 217, 217, 1)");
 
         appointmentChartRef.current = new Chart(appointmentsStats, {
         type: "line",
