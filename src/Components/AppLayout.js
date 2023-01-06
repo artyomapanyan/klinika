@@ -50,6 +50,7 @@ import Posts from "./Dashboard/Posts/Posts";
 import Post from "./Dashboard/Posts/Post";
 import AppointmentStats from "./Fragments/Charts/AppointmentStats";
 import Calendar from "./Dashboard/Calendar/Calendar";
+import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -215,9 +216,10 @@ function AppLayout(){
 
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'calendar'} element={<Calendar />}/>
+                    <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
                 </Routes>
             </Content>
-                <AppointmentStats/>
+                {/*<AppointmentStats/>*/}
             <div style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
 
             </div>

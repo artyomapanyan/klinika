@@ -1,6 +1,7 @@
 import {Col, Divider, List, Row, Tag} from "antd";
 import React from 'react';
 import { useEffect, useState } from 'react';
+import {Link} from "react-router-dom";
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
@@ -77,8 +78,8 @@ function Calendar() {
 
                         {
                             !initLoading && !loading ? (
-                                <div>
-                                    <Tag style={{cursor: 'pointer', fontSize:13}} onClick={onLoadMore} color="magenta" className={'ant_tag'}>and more 2 items</Tag>
+                                <div style={{padding:20}}>
+                                    <Link style={{color:'gray'}} onClick={onLoadMore}>Show all notifications 32</Link>
                                 </div>
                             ) : null
                         }

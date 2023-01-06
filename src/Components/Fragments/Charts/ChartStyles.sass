@@ -1,0 +1,19 @@
+.withDot
+  font-size: 13px
+  font-family: "Roboto Regular"
+  line-height: 15px
+  position: relative
+  margin-right: 15px
+  margin-left: 15px
+  &::before
+    content: ""
+    position: absolute
+    top: 2px
+    left: -17px
+    width: 10px
+    height: 10px
+    border-radius: 50%
+  &.WD-lightpurple::before
+    background-color: #bf539e
+  &.WD-purple::before
+    background-color: #774d9d

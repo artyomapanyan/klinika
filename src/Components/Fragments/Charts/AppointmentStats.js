@@ -155,13 +155,13 @@ function AppointmentStats(){
         <Space>
             <Typography.Title level={3}>Appointments stats</Typography.Title>
             <div>
-                <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} />Canceled
+                <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} /> Canceled
             </div>
             <div>
-                <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} />Rescheduled
+                <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} /> Rescheduled
             </div>
             <div>
-                <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} />Finished
+                <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} /> Finished
             </div>
         </Space>
         <div style={{height: '427px', width: '100%'}}>
