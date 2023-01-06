@@ -4,16 +4,18 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Space} from "antd";
-import React from "react";
+import React, {useRef} from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import FormInput from "../../Fragments/FormInput";
+import DraftEditor from "../../Fragments/DraftEditor";
 
 const resource = 'NursingTask';
 
 function NursingTask() {
 
     const params = useParams();
+    const formRef = useRef();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -53,6 +55,7 @@ function NursingTask() {
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                ref={formRef}
                 layout="vertical"
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
@@ -62,7 +65,9 @@ function NursingTask() {
                            initialValue={data?.status}
                            initialData={Resources.Status}
                 />
-                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                <Form.Item name={'description'} label={t('Description')}>
+                    <DraftEditor initialValue={data?.description} formRef={formRef} name={'description'} />
+                </Form.Item>
                 <Space>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>

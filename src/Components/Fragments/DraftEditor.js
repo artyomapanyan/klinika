@@ -6,10 +6,14 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 class DraftEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            editorState: EditorState.createWithContent( ContentState.createFromBlockArray(
+        let editorState = EditorState.createEmpty()
+        if(this.props.initialValue){
+            editorState = EditorState.createWithContent( ContentState.createFromBlockArray(
                 convertFromHTML(this.props.initialValue)
-            )),
+            ))
+        }
+        this.state = {
+            editorState ,
         };
     }
 

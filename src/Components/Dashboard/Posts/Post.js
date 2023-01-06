@@ -9,6 +9,7 @@ import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
+import DraftEditor from "../../Fragments/DraftEditor";
 
 const resource = 'Post';
 
@@ -67,7 +68,9 @@ function Post() {
                            initialValue={data?.status}
                            initialData={Resources.Status}
                 />
-                <FormInput label={t('Content')} name={'content'} inputType={'textArea'} initialValue={data?.content}/>
+                <Form.Item name={'content'} label={t('Content')}>
+                    <DraftEditor initialValue={data?.content} formRef={formRef} name={'content'} />
+                </Form.Item>
                 <FormInput label={t('Excerpt')} name={'excerpt'} inputType={'textArea'} initialValue={data?.excerpt}/>
                 <FormInput label={t('Notes')} name={'notes'} inputType={'textArea'} initialValue={data?.notes}/>
 
