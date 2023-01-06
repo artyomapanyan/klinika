@@ -61,8 +61,8 @@ function Doctor() {
                 <FormInput label={t('First')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
                 <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
                 <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
-                <FormInput inputType={'password'}  label={'Password'} name={'Password'} rules={[{required: true}]} />
-                <FormInput inputType={'password'}  label={'password_confirmation'} />
+                <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
+                <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} />
                 <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob?dayjs(data?.dob):null} inputType={'date'} rules={[{required: true}]} />
                 <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
                 <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}

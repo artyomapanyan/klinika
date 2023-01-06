@@ -60,8 +60,18 @@ function Post() {
             >
 
                 <FormInput label={t('Name')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
-                <FormInput label={t('type')} name={'type'} initialValue={data?.type} rules={[{required: true}]}/>
-
+                <FormInput label={t('Type')} name={'type'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.type}
+                           initialData={Resources.PostTypes}
+                />
+                <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.category?.id}
+                           initialData={data.category?[data.category]:[]}
+                           resource={'Taxonomy'}
+                           resourceParams={{type:Resources.TaxonomyTypes.POST_CATEGORY}}
+                />
 
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
@@ -73,9 +83,6 @@ function Post() {
                 </Form.Item>
                 <FormInput label={t('Excerpt')} name={'excerpt'} inputType={'textArea'} initialValue={data?.excerpt}/>
                 <FormInput label={t('Notes')} name={'notes'} inputType={'textArea'} initialValue={data?.notes}/>
-
-
-
 
                 <Space>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>

@@ -13,7 +13,7 @@ class DraftEditor extends Component {
             ))
         }
         this.state = {
-            editorState ,
+            editorState,
         };
     }
 
