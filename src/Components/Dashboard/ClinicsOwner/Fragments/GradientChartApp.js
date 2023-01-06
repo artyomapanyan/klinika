@@ -1,12 +1,20 @@
-import {Dropdown, Space} from "antd";
-import {DownOutlined} from "@ant-design/icons";
-import {changeLanguage} from "i18next";
+import {Button, Dropdown, Space, Switch} from "antd";
+import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
 import '../../../Fragments/Charts/ChartStyles.sass'
+import {t} from "i18next";
 
 function GradientChartApp() {
-    let a = ['sdf', 'sdf', 'ggg', 'aaa']
+
 
     const items = [
+        {
+            label: 'English',
+            key: 'en',
+        },
+        {
+            label: 'Arabic',
+            key: 'ar',
+        },
         {
             label: 'English',
             key: 'en',
@@ -18,11 +26,17 @@ function GradientChartApp() {
 
     ];
     const onClick = ({key}) => {
-        changeLanguage(key)
+        console.log(key)
 
     };
+
+    const switchChange = (checked) => {
+        console.log(`switch to ${checked}`);
+    };
+
+
     return(
-        <div>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
             <div className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
                 Appointments:
                 <Dropdown
@@ -31,17 +45,24 @@ function GradientChartApp() {
                         onClick,
                     }}
                     trigger={['click']}
-                    style={{color: 'white', size:'large'}}
                 >
-                    <Space direction={'horizontal'}>
-                        <div style={{color: "#BF539E", fontWeight: 400, fontSize:24}}>All clinic</div>
+                    <Space direction={'horizontal'} style={{cursor:"pointer"}}>
+                        <div style={{color: "#BF539E", fontWeight: 400, fontSize:24, marginLeft:15}}>All clinic</div>
                         <div><DownOutlined /></div>
                     </Space>
 
                 </Dropdown>
             </div>
             <div>
-
+                <Space>
+                    <Switch defaultChecked onChange={switchChange} />
+                    Previous year
+                    <Button type={'secondary'}>{t("12 Month")}</Button>
+                    <Button>{t("1/2 Year")}</Button>
+                    <Button>{t(" Month ")}</Button>
+                    <Button><LeftOutlined /></Button>
+                    <Button><RightOutlined /></Button>
+                </Space>
             </div>
         </div>
     )
