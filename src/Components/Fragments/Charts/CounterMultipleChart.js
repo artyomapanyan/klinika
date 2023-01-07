@@ -3,7 +3,7 @@ import {useEffect, useRef} from "react";
 import {Space} from "antd";
 import './ChartStyles.sass'
 
-function CounterMultipleChart() {
+function CounterMultipleChart({data}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
@@ -51,7 +51,7 @@ function CounterMultipleChart() {
             data: {
                 datasets: [
                     {
-                        data: [33.7, 67.3],
+                        data: [100-67.3, 67.3],
                         backgroundColor: ["#F5F6FA", "#BF539E"],
                         weight: 0.5,
                         spacing: 0,
@@ -85,8 +85,8 @@ function CounterMultipleChart() {
                 <div className={'chart_counter_bold_text'}>
                     Fact/Plan load
                 </div>
-                <div className={'withDot WD-lightpurple'}>Jeddah clinic 67.3% </div>
-                <div className={'withDot WD-purple'}>Clinic name 87%</div>
+                <div className={'withDot WD-color-0'}>Jeddah clinic 67.3% </div>
+                <div className={'withDot WD-color-1'}>Clinic name 87%</div>
             </Space>
         </Space>
     )

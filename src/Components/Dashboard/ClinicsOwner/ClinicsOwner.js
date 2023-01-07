@@ -54,7 +54,10 @@ function ClinicsOwner() {
                 </Col>
                 <Col lg={7} md={12} sm={24} xs={24}>
                     <div className="gutter_row">
-                        <CounterMultipleChart />
+                        <CounterMultipleChart  data={[{
+                            'Jeddah clinic':67.3,
+                            'Clinic name':87.3,
+                        }]}/>
                     </div>
                 </Col>
             </Row>
