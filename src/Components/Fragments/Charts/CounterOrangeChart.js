@@ -2,11 +2,10 @@ import {useEffect, useRef} from "react";
 import {Chart,registerables} from "chart.js";
 import {Space} from "antd";
 
-function CounterOrangeChart() {
+function CounterOrangeChart({data}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-    const doughnutChartOrangeData = [1.1, 3.9];
 
     const counterforOrangeDoughnut = {
         id: "counter",
@@ -19,11 +18,16 @@ function CounterOrangeChart() {
             ctx.font = "700 22px Roboto Bold";
             ctx.textAlign = "center";
             ctx.fillStyle = "rgba(245, 163, 72, 1)";
-            ctx.fillText(doughnutChartOrangeData[1], width / 2, top + height / 2);
+            ctx.fillText(chart.config.data.datasets[0].data[1], width / 2, top + height / 2);
         },
     };
 
-
+    useEffect(()=>{
+        if(appointmentChartRef?.current?.ctx){
+            appointmentChartRef.current.config.data.datasets[0].data = data
+            appointmentChartRef.current.update()
+        }
+    },[data])
 
     useEffect(()=>{
         Chart.register(...registerables)
@@ -34,7 +38,7 @@ function CounterOrangeChart() {
                     {
                         backgroundColor: ["#F5F6FA", "#F5A348"],
                         weight: 0.5,
-                        data: doughnutChartOrangeData,
+                        data: data,
                         spacing: 0,
                         borderWidth: 0,
                     },

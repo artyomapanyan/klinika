@@ -2,11 +2,9 @@ import {useEffect, useRef} from "react";
 import {Chart,registerables} from "chart.js";
 import {Space} from "antd";
 
-function CounterGreenChart({data=[0.5, 4.5]}) {
+function CounterGreenChart({data}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
-
-
 
     const counterforGreenDoughnut = {
         id: "counter",
