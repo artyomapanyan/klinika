@@ -1,5 +1,5 @@
-import {Col, Row, Space} from "antd";
-import React from 'react';
+import {Button, Col, Row, Space} from "antd";
+import React, {useState} from 'react';
 import CounterGreenChart from "../../Fragments/Charts/CounterGreenChart";
 import CounterOrangeChart from "../../Fragments/Charts/CounterOrangeChart";
 import CounterMultipleChart from "../../Fragments/Charts/CounterMultipleChart";
@@ -9,13 +9,17 @@ import {t} from "i18next";
 import GradientChart from "../../Fragments/Charts/GradientChart";
 
 function ClinicsOwner() {
-
+    const [greenData,setGreenData] = useState([0.1,4.9]);
+    const handleAddCount = ()=>{
+        setGreenData((prevState)=>[(+prevState[0]+0.1).toFixed(1),(+prevState[1]-0.1).toFixed(1)])
+    }
     return(
         <div style={{margin:20}} className={'clinics_owner'}>
+            <Button onClick={handleAddCount}>increment</Button>
             <Row gutter={[16,16]}>
                 <Col  lg={5} md={12} sm={24} xs={24} >
                     <div className="gutter_row">
-                        <CounterGreenChart />
+                        <CounterGreenChart data={greenData} />
                     </div>
                 </Col>
                 <Col lg={5} md={12} sm={24} xs={24}>
