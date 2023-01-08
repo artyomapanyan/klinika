@@ -171,15 +171,15 @@ function GradientChart() {
             plugins: {
                 legend: {
                     display: false,
-                        // labels:{
-                        //     usePointStyle:true,
-                        //     pontStyle:'circle',
-                        //     boxWidth:'10',
-                        //     boxHeight:'10',
-                        //     filter: function(label) {
-                        //         if (label.text !== 'hide') return true;
-                        //     }
-                        // },
+                         labels:{
+                             usePointStyle:true,
+                             pontStyle:'circle',
+                             boxWidth:'10',
+                             boxHeight:'10',
+                             filter: function(label) {
+                                 if (label.text !== 'hide') return true;
+                             }
+                         },
                 },
                 datalabels: {
                     anchor: "top",

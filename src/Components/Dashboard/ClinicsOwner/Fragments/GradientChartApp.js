@@ -1,4 +1,4 @@
-import {Button, Dropdown, Space, Switch} from "antd";
+import {Button, Dropdown, Space, Switch,Radio} from "antd";
 import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
 import '../../../Fragments/Charts/ChartStyles.sass'
 import {t} from "i18next";
@@ -7,14 +7,6 @@ function GradientChartApp() {
 
 
     const items = [
-        {
-            label: 'English',
-            key: 'en',
-        },
-        {
-            label: 'Arabic',
-            key: 'ar',
-        },
         {
             label: 'English',
             key: 'en',
@@ -47,7 +39,7 @@ function GradientChartApp() {
                     trigger={['click']}
                 >
                     <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                        <div style={{color: "#BF539E", fontWeight: 400, fontSize:24, marginLeft:15}}>All clinic</div>
+                        <div style={{color: "#BF539E", fontWeight: 400, fontSize:24, marginLeft:15}}>{t("All clinic")}</div>
                         <div><DownOutlined /></div>
                     </Space>
 
@@ -56,10 +48,12 @@ function GradientChartApp() {
             <div>
                 <Space>
                     <Switch defaultChecked onChange={switchChange} />
-                    Previous year
-                    <Button type={'secondary'}>{t("12 Month")}</Button>
-                    <Button>{t("1/2 Year")}</Button>
-                    <Button>{t(" Month ")}</Button>
+                    {t("Previous year")}
+                    <Radio.Group defaultValue="year" size="large">
+                        <Radio.Button value="year">{t("12 Month")}</Radio.Button>
+                        <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
+                        <Radio.Button value="month">{t(" Month ")}</Radio.Button>
+                    </Radio.Group>
                     <Button><LeftOutlined /></Button>
                     <Button><RightOutlined /></Button>
                 </Space>
