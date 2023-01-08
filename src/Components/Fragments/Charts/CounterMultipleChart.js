@@ -6,47 +6,17 @@ import './ChartStyles.sass'
 function CounterMultipleChart({data}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
-
-    // let incomeChannelData = [43.3, 28.3, 28.4];
     const colors = ["#BF539E","#774D9D","#ff0000"]
-
-    // const counterforIncomeChannel = {
-    //     id: "counter",
-    //     beforeDraw(chart, args, opions) {
-    //         const {
-    //             ctx,
-    //             chartArea: { top, right, bottom, left, width, height },
-    //         } = chart;
-    //         ctx.save();
-    //         ctx.font = "700 24px Roboto Bold";
-    //         ctx.textAlign = "center";
-    //         ctx.fillStyle = "#BF539E";
-    //         ctx.fillText(
-    //             incomeChannelData[0] + "%",
-    //             width / 2,
-    //             top + height / 2 - 10
-    //         );
-    //         ctx.restore();
-    //
-    //         ctx.font = "700 18px Roboto Bold";
-    //         ctx.textAlign = "center";
-    //         ctx.fillStyle = "#6DAF56";
-    //         ctx.fillText(
-    //             incomeChannelData[1] + "%",
-    //             width / 2,
-    //             top + height / 2 + 22
-    //         );
-    //
-    //         ctx.strokeStyle = "rgba(225, 220, 231, 1)";
-    //         ctx.strokeRect(width / 2 - 35, height / 2 + 25, width / 2 - 40, 1);
-    //         ctx.restore();
-    //     },
-    // };
-
-
     useEffect(()=>{
         if(appointmentChartRef?.current?.ctx){
-            appointmentChartRef.current.config.data.datasets[0].data = data
+            appointmentChartRef.current.config.data.datasets= Object.values(data).map((number,key)=> (
+                {
+                    data: [100-number,number],
+                    backgroundColor: ["#F5F6FA",colors[key]],
+                    weight: 0.5,
+                    spacing: 0,
+                    borderWidth: 2,
+                }))
             appointmentChartRef.current.update()
         }
     },[data])

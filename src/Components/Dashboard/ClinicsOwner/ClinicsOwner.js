@@ -20,10 +20,11 @@ function ClinicsOwner() {
         setOrangeData((prevState)=>[(+prevState[0]+0.1).toFixed(1),(+prevState[1]-0.1).toFixed(1)])
         setProgressData((prevState)=>(+prevState+0.1).toFixed(1))
         setMultipleData((prevState)=> {
+            let newObj = {}
            Object.keys(prevState).map((key)=>{
-               prevState[key] =  (+prevState[key]+1).toFixed(1);
+               newObj[key] =  (+prevState[key]+1).toFixed(1);
            })
-            return prevState
+            return newObj
         })
     }
     return(
