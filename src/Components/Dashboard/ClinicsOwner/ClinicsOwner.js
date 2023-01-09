@@ -7,6 +7,8 @@ import '../../Fragments/Charts/ChartStyles.sass'
 import GradientChart from "../../Fragments/Charts/GradientChart";
 import LineChartIncomes from "../../Fragments/Charts/LineChartIncomes";
 import CounterProgress from "../../Fragments/Charts/CounterProgress";
+import IncomeChannelsChart from "../../Fragments/Charts/IncomeChannelsChart";
+import ClinicOwnerTableTasks from "./Fragments/ClinicOwnerTableTasks";
 
 function ClinicsOwner() {
     const [greenData,setGreenData] = useState([0.1,4.9]);
@@ -15,6 +17,9 @@ function ClinicsOwner() {
     const [multipleData,setMultipleData] = useState({'Jeddahclinic':67.3,
                                                                'Valod':15.3,
                                                                'Clinic name':87.3,});
+    const [incomeChannelData,setIncomeChannelData] = useState({'All Apointments': 100,
+                                                                         'Orders Mobile app':43.0,
+                                                                         'Offers':18.4,});
     const handleAddCount = ()=>{
         setGreenData((prevState)=>[(+prevState[0]+0.1).toFixed(1),(+prevState[1]-0.1).toFixed(1)])
         setOrangeData((prevState)=>[(+prevState[0]+0.1).toFixed(1),(+prevState[1]-0.1).toFixed(1)])
@@ -24,6 +29,13 @@ function ClinicsOwner() {
            Object.keys(prevState).map((key)=>{
                newObj[key] =  (+prevState[key]+1).toFixed(1);
            })
+            return newObj
+        })
+        setIncomeChannelData((prevState)=> {
+            let newObj = {}
+            Object.keys(prevState).map((key)=>{
+                newObj[key] =  (+prevState[key]+1).toFixed(1);
+            })
             return newObj
         })
     }
@@ -56,7 +68,18 @@ function ClinicsOwner() {
                 <GradientChart />
             </div>
             <div>
-                <LineChartIncomes />
+                <Row gutter={[20,20]}>
+                    <Col lg={17}>
+                        <LineChartIncomes />
+                    </Col>
+                    <Col lg={7}>
+                        <IncomeChannelsChart data={incomeChannelData} />
+                    </Col>
+                </Row>
+
+            </div>
+            <div>
+                <ClinicOwnerTableTasks />
             </div>
 
 

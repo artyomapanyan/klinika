@@ -197,9 +197,9 @@ function GradientChart({data}) {
     },[])
 
     return(
-        <div className={'gradient_chart_big_div'} style={{maxHeight:'350px', }}>
-            <GradientChartApp/>
-            <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
+        <div className={'gradient_chart_big_div'}>
+            <div><GradientChartApp/></div>
+            <canvas ref={canvasRef} className="chart"></canvas>
         </div>
     )
 }

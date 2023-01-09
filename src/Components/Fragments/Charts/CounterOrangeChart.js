@@ -53,6 +53,7 @@ function CounterOrangeChart({data}) {
             appointmentChartRef.current.destroy()
         }
     },[])
+
     return(
         <Space style={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
             <div  style={{height:92,width:92}}>
