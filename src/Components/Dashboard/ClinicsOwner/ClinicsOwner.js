@@ -9,6 +9,12 @@ import LineChartIncomes from "../../Fragments/Charts/LineChartIncomes";
 import CounterProgress from "../../Fragments/Charts/CounterProgress";
 import IncomeChannelsChart from "../../Fragments/Charts/IncomeChannelsChart";
 import ClinicOwnerTableTasks from "./Fragments/ClinicOwnerTableTasks";
+import ClinicOwnerPatientsChart from "../../Fragments/Charts/ClinicOwnerPatientsChart";
+import TopServices from "../../Fragments/Charts/TopServices";
+import PatientGenderChart from "../../Fragments/Charts/PatientGenderChart";
+import DoctorLicensesChart from "../../Fragments/Charts/DoctorLicensesChart";
+import RsultsComponent from "../../Fragments/Charts/RsultsComponent";
+
 
 function ClinicsOwner() {
     const [greenData,setGreenData] = useState([0.1,4.9]);
@@ -20,6 +26,13 @@ function ClinicsOwner() {
     const [incomeChannelData,setIncomeChannelData] = useState({'All Apointments': 100,
                                                                          'Orders Mobile app':43.0,
                                                                          'Offers':18.4,});
+
+    const [patientGenderData,setPatientGenderData] = useState({'Female': 1236,
+                                                                        'Male':864,});
+
+    const [doctorLicensesData,setDoctorLicensesData] = useState({'Actual': 1236,
+                                                                        'Expire soon':785,
+                                                                        'Expired':864});
     const handleAddCount = ()=>{
         setGreenData((prevState)=>[(+prevState[0]+0.1).toFixed(1),(+prevState[1]-0.1).toFixed(1)])
         setOrangeData((prevState)=>[(+prevState[0]+0.1).toFixed(1),(+prevState[1]-0.1).toFixed(1)])
@@ -32,6 +45,22 @@ function ClinicsOwner() {
             return newObj
         })
         setIncomeChannelData((prevState)=> {
+            let newObj = {}
+            Object.keys(prevState).map((key)=>{
+                newObj[key] =  (+prevState[key]+1).toFixed(1);
+            })
+            return newObj
+        })
+
+        setPatientGenderData((prevState)=> {
+            let newObj = {}
+            Object.keys(prevState).map((key)=>{
+                newObj[key] =  (+prevState[key]+1).toFixed(1);
+            })
+            return newObj
+        })
+
+        setDoctorLicensesData((prevState)=> {
             let newObj = {}
             Object.keys(prevState).map((key)=>{
                 newObj[key] =  (+prevState[key]+1).toFixed(1);
@@ -69,10 +98,10 @@ function ClinicsOwner() {
             </div>
             <div>
                 <Row gutter={[20,20]}>
-                    <Col lg={17}>
+                    <Col lg={18}>
                         <LineChartIncomes />
                     </Col>
-                    <Col lg={7}>
+                    <Col lg={6}>
                         <IncomeChannelsChart data={incomeChannelData} />
                     </Col>
                 </Row>
@@ -81,7 +110,29 @@ function ClinicsOwner() {
             <div>
                 <ClinicOwnerTableTasks />
             </div>
-
+            <div>
+                <Row gutter={[20,20]}>
+                    <Col lg={18}>
+                        <ClinicOwnerPatientsChart />
+                    </Col>
+                    <Col lg={6}>
+                        <TopServices />
+                    </Col>
+                </Row>
+            </div>
+            <div>
+                <Row gutter={[20,20]}>
+                    <Col lg={9}>
+                        <PatientGenderChart data={patientGenderData} />
+                    </Col>
+                    <Col lg={9}>
+                        <DoctorLicensesChart data={doctorLicensesData}/>
+                    </Col>
+                    <Col lg={6}>
+                        <RsultsComponent />
+                    </Col>
+                </Row>
+            </div>
 
         </div>
     )

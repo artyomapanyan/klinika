@@ -2,11 +2,11 @@ import React, {useEffect, useRef} from "react";
 import {Chart, registerables} from "chart.js";
 import {Space} from "antd";
 
-function IncomeChannelsChart({data}) {
+function PatientGenderChart({data}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null);
 
-    let incomeChannelData = [43.3, 28.3, 28.4];
+    let incomeChannelData = [43.3, 56.7];
 
     console.log(data, 'f')
 
@@ -33,7 +33,7 @@ function IncomeChannelsChart({data}) {
             ctx.textAlign = "center";
             ctx.fillStyle = "#BF539E";
             ctx.fillText(
-                incomeChannelData[0] + "%",
+                incomeChannelData[0] ,
                 width / 2,
                 top + height / 2 - 10
             );
@@ -41,15 +41,15 @@ function IncomeChannelsChart({data}) {
 
             ctx.font = "700 18px Roboto Bold";
             ctx.textAlign = "center";
-            ctx.fillStyle = "#6DAF56";
+            ctx.fillStyle = "#774D9D";
             ctx.fillText(
-                incomeChannelData[1] + "%",
+                incomeChannelData[1],
                 width / 2,
                 top + height / 2 + 22
             );
 
             ctx.strokeStyle = "rgba(225, 220, 231, 1)";
-            ctx.strokeRect(width / 2 - 45, height / 2 + 25, width / 2 - 50, 1);
+            ctx.strokeRect(width / 3 - 35, height / 2 + 25, width / 2 - 40, 1);
             ctx.restore();
         },
     };
@@ -93,13 +93,15 @@ function IncomeChannelsChart({data}) {
     },[])
 
     return(
-        <div className={'channel_incomes_div'}>
-            <h1 className={'h1'}>Income channels</h1>
+        <div className={'patient_gender_div'}>
             <canvas ref={canvasRef} className="chart_income_channel"></canvas>
-            <Space direction={'vertical'}>
-                {Object.keys(data).map((itemKey,key)=><div key={key} className={`withDot WD-color-${key}`}><span>{itemKey}</span> <span>{data[itemKey]} %</span> </div>)}
-            </Space>
+            <div>
+                <h1 className={'h1'}><div>Patients</div><div>gender</div> </h1>
+                <Space direction={'vertical'}>
+                    {Object.keys(data).map((itemKey,key)=><div key={key} className={`withDot WD-color-${key}`}><span>{itemKey}</span> <span style={{fontWeight:600}}>{data[itemKey]}</span> </div>)}
+                </Space>
+            </div>
         </div>
     )
 }
-export default IncomeChannelsChart;
+export default PatientGenderChart;
