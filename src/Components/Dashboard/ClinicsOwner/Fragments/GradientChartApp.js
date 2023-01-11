@@ -8,12 +8,24 @@ function GradientChartApp() {
 
     const items = [
         {
-            label: 'English',
-            key: 'en',
+            label: 'First Clinic',
+            key: '1',
         },
         {
-            label: 'Arabic',
-            key: 'ar',
+            label: 'Second Clinic',
+            key: '2',
+        },
+        {
+            label: 'Firth Clinic',
+            key: '3',
+        },
+        {
+            label: 'First Clinic',
+            key: '4',
+        },
+        {
+            label: 'Second Clinic',
+            key: '5',
         },
 
     ];

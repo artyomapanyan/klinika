@@ -22,7 +22,6 @@ function ClinicsOwner() {
     const [orangeData,setOrangeData] = useState([1.1,3.9]);
     const [progressData,setProgressData] = useState(123.4);
     const [multipleData,setMultipleData] = useState({'Jeddahclinic':67.3,
-                                                               'Valod':15.3,
                                                                'Clinic name':87.3,});
     const [incomeChannelData,setIncomeChannelData] = useState({'All Apointments': 100,
                                                                          'Orders Mobile app':43.0,

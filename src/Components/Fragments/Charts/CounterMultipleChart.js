@@ -6,7 +6,7 @@ import './ChartStyles.sass'
 function CounterMultipleChart({data}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null);
-    const colors = ["#BF539E","#774D9D","#6DAF56"];
+    const colors = ["#BF539E","#774D9D"];
     useEffect(()=>{
         if(appointmentChartRef?.current?.ctx){
             appointmentChartRef.current.config.data.datasets= Object.values(data).map((number,key)=> (
