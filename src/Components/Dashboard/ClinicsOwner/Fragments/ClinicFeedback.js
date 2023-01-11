@@ -1,0 +1,98 @@
+import React from "react";
+import {Avatar, Button, Col, Row, Space} from "antd";
+import {LeftOutlined, RightOutlined, StarOutlined} from "@ant-design/icons";
+import arrowLeftPurple from "../../../../dist/icons/arrow-left-purple.svg";
+import arrowRightPurple from "../../../../dist/icons/arrow-right-purple.svg";
+import frame5 from "../../../../dist/icons/frame5.svg";
+import starRed from "../../../../dist/icons/star-red.svg";
+import starOrange from "../../../../dist/icons/star-orange.svg";
+
+
+function ClinicFeedback() {
+
+
+    return (
+        <div>
+            <div className={'clinic_fid_head'}>
+                <Space>
+                    <h1 className={'h1'}>Clinic feedback  </h1>
+                    <Space></Space>
+                    <h1 className={'h1'}> 4.7 <img alt={'icons'} src={frame5}/></h1>
+                </Space>
+
+                <Space>
+                    <Button size={'large'}><img alt={'icons'} src={arrowLeftPurple}/></Button>
+                    <Button size={'large'}><img alt={'icons'} src={arrowRightPurple}/></Button>
+                </Space>
+            </div>
+            <Row gutter={[20,20]}>
+                <Col lg={8}>
+                    <div className={'clinic_fid_conteiner'}>
+                        <Row>
+                            <Col lg={4}>
+                                <Avatar size={60}/>
+                            </Col>
+                            <Col lg={20}>
+                                <div style={{display:"flex",flexDirection:"row", justifyContent:"space-between", padding:10}}>
+                                    <div className={'clinic_fid_patient_name'}>Daryl Nehls</div>
+                                    <div className={'clinic_fid_patient_name'}>2.7 <img alt={'icons'} src={starRed}/></div>
+                                </div>
+                                <div  className={'clinic_fid_text'}>
+                                    I came to the clinic with skin rashes on my hands. Dermatologist Alexander
+                                    Ivanovich was very attentive and prescribed treatment in the form of tablets and
+                                    ointments. After treatment, Alexander Ivanovich's skin rashes began to pass.
+                                </div>
+                                <Space style={{padding:15}}><span style={{color:'#BF539E'}}>Doctor name</span> <span style={{color:'rgba(99, 93, 107, 1)'}}>25 April</span> </Space>
+                            </Col>
+                        </Row>
+                    </div>
+
+                </Col>
+                <Col lg={8}>
+                    <div className={'clinic_fid_conteiner'}>
+                        <Row>
+                            <Col lg={4}>
+                                <Avatar size={60}/>
+                            </Col>
+                            <Col lg={20}>
+                                <div style={{display:"flex",flexDirection:"row", justifyContent:"space-between", padding:10}}>
+                                    <div className={'clinic_fid_patient_name'}>Daryl Nehls</div>
+                                    <div className={'clinic_fid_patient_name'}>4.7 <img alt={'icons'} src={starOrange}/></div>
+                                </div>
+                                <div className={'clinic_fid_text'}>
+                                    I came to the clinic with skin rashes on my hands. Dermatologist Alexander
+                                    Ivanovich was very attentive and prescribed treatment in the form of tablets and
+                                    ointments. After treatment, Alexander Ivanovich's skin rashes began to pass.
+                                </div>
+                                <Space style={{padding:15}}><span style={{color:'#BF539E'}}>Doctor name</span> <span style={{color:'rgba(99, 93, 107, 1)'}}>25 April</span> </Space>
+                            </Col>
+                        </Row>
+                    </div>
+                </Col>
+                <Col lg={8}>
+                    <div className={'clinic_fid_conteiner'}>
+                        <Row>
+                            <Col lg={4}>
+                                <Avatar size={60}/>
+                            </Col>
+                            <Col lg={20}>
+                                <div style={{display:"flex",flexDirection:"row", justifyContent:"space-between", padding:10}}>
+                                    <div className={'clinic_fid_patient_name'}>Daryl Nehls</div>
+                                    <div className={'clinic_fid_patient_name'}>2.7 <img alt={'icons'} src={starRed}/></div>
+                                </div>
+                                <div className={'clinic_fid_text'}>
+                                    I came to the clinic with skin rashes on my hands. Dermatologist Alexander
+                                    Ivanovich was very attentive and prescribed treatment in the form of tablets and
+                                    ointments. After treatment, Alexander Ivanovich's skin rashes began to pass.
+                                </div>
+                                <Space style={{padding:15}}><span style={{color:'#BF539E'}}>Doctor name</span> <span style={{color:'rgba(99, 93, 107, 1)'}}>25 April</span> </Space>
+                            </Col>
+                        </Row>
+                    </div>
+                </Col>
+            </Row>
+        </div>
+    );
+}
+
+export default ClinicFeedback;

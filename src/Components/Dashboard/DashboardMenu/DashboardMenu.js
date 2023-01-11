@@ -6,6 +6,7 @@ import {MenuOutlined} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
 import dash2 from "../../../dist/icons/frame2.svg";
+import dash3 from "../../../dist/icons/frame3.svg";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";
@@ -152,6 +153,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
             ]
         },
+        {
+            key: 'clinics-owner',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: `Clinics owner`,
+        },
+        {
+            key: 'patients',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Doctor flow',
+        },
         /*{
             key: `/match-event-naturess`,
             label: t(`Reviews`),
@@ -163,7 +174,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
            if(pathname.includes(e.key)){
                return true
            }else{
-               return e.children.find(u=>pathname.includes(u.key));
+               return e.children?.find(u=>pathname.includes(u.key));
            }
 
        })

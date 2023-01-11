@@ -99,7 +99,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
         navigate(ResourceLinks[resourceLink??resource] + 'new')
     }
 
-        console.log(data)
+
     return (<Content className={'layout-conatiner'}>
         <Row className={'resource-header'}>
             <Col lg={12}>

@@ -8,7 +8,6 @@ function PatientGenderChart({data}) {
 
     let incomeChannelData = [43.3, 56.7];
 
-    console.log(data, 'f')
 
     const shadowPlugin = {
         beforeDraw: (chart, args, options) => {

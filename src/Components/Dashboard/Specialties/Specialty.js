@@ -53,7 +53,7 @@ function Specialty() {
         }
 
     }
-console.log(data,'f')
+
     return (
         <div className={"add_edit_content"}>
             {data?.title ? <h3>{t(`Editing Specialty - ${data?.title}`)}</h3> : <h3>{t(`Add new Specialty`)}</h3>}

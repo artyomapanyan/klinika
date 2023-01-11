@@ -8,7 +8,6 @@ function IncomeChannelsChart({data}) {
 
     let incomeChannelData = [43.3, 28.3, 28.4];
 
-    console.log(data, 'f')
 
     const shadowPlugin = {
         beforeDraw: (chart, args, options) => {

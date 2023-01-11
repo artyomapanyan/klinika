@@ -200,7 +200,7 @@ function AppLayout(){
                 <DashboardHeader/>
 
             </div>
-            <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
+            <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <div className={'patient_content'}>
 
 
