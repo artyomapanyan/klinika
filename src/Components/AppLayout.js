@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
+import 'react-multi-carousel/lib/styles.css';
 import {useSelector} from "react-redux";
 import "../dist/styles/Styles.sass"
 import 'draft-js/dist/Draft.css';
@@ -51,6 +52,8 @@ import Post from "./Dashboard/Posts/Post";
 import AppointmentStats from "./Fragments/Charts/AppointmentStats";
 import Calendar from "./Dashboard/Calendar/Calendar";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
+import Translations from "./Dashboard/Translations/Translations";
+import Carousel from "react-multi-carousel";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -181,10 +184,15 @@ function AppLayout(){
             singleComp:<Post/>,
             indexComp:<Posts/>
         },
+        {
+            url:'translations',
+            resource:'Translation',
+            singleComp:null,
+            indexComp:<Translations/>
+        },
 
     ]
     return <Layout className={'main-container'}>
-
             <div className={'side-menu'}>
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
                        onMouseEnter={toggleCollapsed1}
@@ -201,15 +209,12 @@ function AppLayout(){
 
             </div>
             <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
-                <div className={'patient_content'}>
 
-
-                </div>
                 <Routes>
                     {resourceRoutes.map((item,key)=><Route path={item.url+'/*'} key={key} element={ <Routes>
-                        <Route key={key+'_i21'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>
-                        <Route key={key+'_n312'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>
-                        <Route key={key+'_u312'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>
+                        {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}
+                        {item.singleComp&&<Route key={key+'_n'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>}
+                        {item.singleComp&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>}
                     </Routes>}/>
 
                         )}

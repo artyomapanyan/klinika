@@ -7,15 +7,16 @@ import Reset from "./Auth/Reset";
 import Forgot from "./Auth/Forgot";
 import Login from "./Auth/Login/Login";
 function AppRoutes(){
-    return(
-        <Routes>
-            <Route path={'/'} element={<General/>}></Route>
-            <Route path={'/password/reset/:token'} element={<Reset/>}></Route>
-            <Route path={'forgot'} element={<Forgot/>}></Route>
-            <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
-            <Route path={'login'} element={<Login/>}></Route>
+    return(<Routes>
+                <Route path={'/'} element={<General/>}></Route>
+                <Route path={'/password/reset/:token'} element={<Reset/>}></Route>
+                <Route path={'forgot'} element={<Forgot/>}></Route>
+                <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
+                <Route path={'login'} element={<Login/>}></Route>
 
-        </Routes>
+            </Routes>
+
+
     )
 }
 export default AppRoutes
