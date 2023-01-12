@@ -1,4 +1,4 @@
-import {Avatar, Button, DatePicker, Divider, Dropdown, Progress, Space, Switch, Table, Tag} from "antd";
+import {Avatar, Button, DatePicker, Divider, Dropdown, Progress, Space, Switch, Table} from "antd";
 import {t} from "i18next";
 import {DownOutlined, LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
 import React from "react";
@@ -53,7 +53,7 @@ function ClinicOwnerTableTasks() {
             title: t('Task for'),
             dataIndex: 'task_For',
             key: 'task_for',
-            render:(e,record)=><div>
+            render:()=><div>
                 <Space >
                     <Avatar size={50} icon={<UserOutlined />} />
                     <div style={{display:"block"}}>
@@ -68,7 +68,7 @@ function ClinicOwnerTableTasks() {
             title: 'Task',
             dataIndex: 'task',
             key: 'task',
-            render:(e,record)=><div>
+            render:()=><div>
                 <h3 className={'h1'}>Save the List you made as a template</h3>
             </div>
         },
@@ -76,7 +76,7 @@ function ClinicOwnerTableTasks() {
             title: 'Start',
             dataIndex: 'start',
             key: 'start',
-            render:(e,record)=><div>
+            render:()=><div>
                 <Space >
                     <div style={{display:"block"}}>
                         <h3 className={'h1'}>10 Jul 2022</h3>
@@ -90,7 +90,7 @@ function ClinicOwnerTableTasks() {
             title: 'Deadline',
             dataIndex: 'deadline',
             key: 'deadline',
-            render:(e,record)=><div>
+            render:()=><div>
                 <Space >
                     <div style={{display:"block"}}>
                         <h3 className={'h1'}>10 Jul 2022</h3>
@@ -104,9 +104,9 @@ function ClinicOwnerTableTasks() {
             title: 'Timeline',
             dataIndex: 'timeline',
             key: 'timeline',
-            render:(e,record)=><div className={'clinic_own_table_prog'}>
+            render:()=><div className={'clinic_own_table_prog'}>
                 <Progress percent={80}
-                          format={(percent)=>{
+                          format={()=>{
                               return ""
                           }
                           }/>
@@ -118,7 +118,7 @@ function ClinicOwnerTableTasks() {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render:(e,record)=><Dropdown
+            render:()=><Dropdown
                 menu={{
                     items,
                 }}

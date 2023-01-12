@@ -17,7 +17,7 @@ function Forgot() {
             url: api.Auth.forgot.url,
             method: api.Auth.forgot.method,
             data: values,
-        }).then(response => {
+        }).then(() => {
             setLoading(false)
         })
     }

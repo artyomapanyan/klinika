@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
 import Preloader from "../../../Preloader";
-import {Button, DatePicker, Form, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";

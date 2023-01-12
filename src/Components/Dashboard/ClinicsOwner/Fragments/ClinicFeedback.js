@@ -1,12 +1,10 @@
 import React from "react";
 import {Avatar, Button, Col, Row, Space} from "antd";
-import {LeftOutlined, RightOutlined, StarOutlined} from "@ant-design/icons";
 import arrowLeftPurple from "../../../../dist/icons/arrow-left-purple.svg";
 import arrowRightPurple from "../../../../dist/icons/arrow-right-purple.svg";
 import frame5 from "../../../../dist/icons/frame5.svg";
 import starRed from "../../../../dist/icons/star-red.svg";
 import starOrange from "../../../../dist/icons/star-orange.svg";
-import Carousel from "react-multi-carousel";
 
 
 function ClinicFeedback() {

@@ -49,11 +49,9 @@ import Users from "./Dashboard/User/Users/Users";
 import User from "./Dashboard/User/Users/User";
 import Posts from "./Dashboard/Posts/Posts";
 import Post from "./Dashboard/Posts/Post";
-import AppointmentStats from "./Fragments/Charts/AppointmentStats";
 import Calendar from "./Dashboard/Calendar/Calendar";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import Translations from "./Dashboard/Translations/Translations";
-import Carousel from "react-multi-carousel";
 
 function AppLayout(){
     let redux = useSelector((state) => state);

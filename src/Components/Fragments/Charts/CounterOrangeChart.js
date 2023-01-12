@@ -9,10 +9,10 @@ function CounterOrangeChart({data}) {
 
     const counterforOrangeDoughnut = {
         id: "counter",
-        beforeDraw(chart, args, opions) {
+        beforeDraw(chart) {
             const {
                 ctx,
-                chartArea: { top, right, bottom, left, width, height },
+                chartArea: { top, width, height },
             } = chart;
             ctx.save();
             ctx.font = "700 22px Roboto Bold";

@@ -3,7 +3,7 @@ import {Col, Row, Select} from "antd";
 
 import "../../../dist/styles/Styles.sass"
 import HeaderAccount from "./Fragment/HeaderAccount";
-import i18n, {changeLanguage} from "i18next";
+import {changeLanguage} from "i18next";
 import {useDispatch, useSelector} from "react-redux";
 
 

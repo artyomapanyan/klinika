@@ -1,7 +1,5 @@
 import React, {useEffect, useRef} from "react";
 import {Chart,registerables} from "chart.js";
-import {Dropdown, Space} from "antd";
-import {DownOutlined} from "@ant-design/icons";
 import GradientChartApp from "../../Dashboard/ClinicsOwner/Fragments/GradientChartApp";
 
 function GradientChart({data}) {

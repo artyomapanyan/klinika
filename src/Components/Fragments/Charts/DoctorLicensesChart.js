@@ -10,7 +10,7 @@ function DoctorLicensesChart({data}) {
 
 
     const shadowPlugin = {
-        beforeDraw: (chart, args, options) => {
+        beforeDraw: (chart) => {
             const { ctx } = chart;
             ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
             ctx.shadowBlur = 10;
@@ -22,10 +22,10 @@ function DoctorLicensesChart({data}) {
 
     const counterforIncomeChannel = {
         id: "counter",
-        beforeDraw(chart, args, opions) {
+        beforeDraw(chart) {
             const {
                 ctx,
-                chartArea: { top, right, bottom, left, width, height },
+                chartArea: { top, width, height },
             } = chart;
             ctx.save();
             ctx.font = "700 24px Roboto Bold";

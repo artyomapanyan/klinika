@@ -100,7 +100,7 @@ function LineChartIncomes() {
                             padding: 40,
                             stepSize: 20000,
                             showLabelBackdrop: false,
-                            callback: function (label, index, labels) {
+                            callback: function (label) {
                                 return label / 1000 + "k";
                             },
                         },

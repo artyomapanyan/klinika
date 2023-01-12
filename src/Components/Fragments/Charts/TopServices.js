@@ -41,7 +41,7 @@ function TopServices() {
                         <Progress percent={el?.percent}
                                   strokeLinecap={'round'}
                                   strokeWidth={'13px'}
-                                  format={(percent)=>{
+                                  format={()=>{
                                       return ""}
                                   }/>
                 </div>
