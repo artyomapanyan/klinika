@@ -28,7 +28,7 @@ function Category() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
-                    setData(response)
+                    navigate(resourceLinks[resource])
                 }
             }).finally(() => {
                 setLoading(false)
@@ -36,7 +36,7 @@ function Category() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource] + response.id)
+                    navigate(resourceLinks[resource])
                 }
 
             }).finally(() => {

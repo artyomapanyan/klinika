@@ -5,7 +5,7 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Space} from "antd";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 
@@ -30,7 +30,7 @@ function City() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
-                    setData(response)
+                    navigate(resourceLinks[resource])
                 }
             }).finally(() => {
                 setLoading(false)
@@ -38,7 +38,7 @@ function City() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource] + response.id)
+                    navigate(resourceLinks[resource])
                 }
 
             }).finally(() => {
@@ -49,7 +49,7 @@ function City() {
 
     return(
         <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Sity - ${data?.name}`)}</h3> : <h3>{t(`Add new Sity`)}</h3>}
+            {data?.name ? <h3>{t(`Editing City - ${data?.name}`)}</h3> : <h3>{t(`Add new City`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
