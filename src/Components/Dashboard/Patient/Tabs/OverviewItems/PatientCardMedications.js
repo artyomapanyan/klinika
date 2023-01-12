@@ -56,7 +56,7 @@ function PatientCardMedications() {
                     loading={initLoading}
                     itemLayout="horizontal"
                     dataSource={list}
-                    renderItem={(item) => (
+                    renderItem={() => (
                         <List.Item>
                                 <List.Item.Meta
                                     title={'Lipanthyl 145 mg '}

@@ -4,7 +4,7 @@ import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
 import arrowUpPurple from "../../../../dist/icons/arrow-up-purple.svg";
 const { Panel } = Collapse;
 function PatientCollapse() {
-    const onChange = (key) => {
+    const onChange = () => {
 
     };
     return(

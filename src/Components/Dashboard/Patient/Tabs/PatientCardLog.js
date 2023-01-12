@@ -23,7 +23,7 @@ function PatientCardLog() {
             title: t('Test name'),
             dataIndex: 'name',
             key: 'name',
-            render:(e,record)=>{
+            render:()=>{
                 return <div style={{fontWeight:700, fontSize: 16, color:"#BF539E"}}>Antineutrophil Cytoplasmic Antibodies (ANCA) Test</div>
             }
         },

@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/reset.css';
-import {PersistGate} from "redux-persist/integration/react";
 import configureStore from './store/configureStore';
-import {Provider} from "react-redux";
 import "./i18n";
-import {BrowserRouter} from "react-router-dom";
 import axios from "axios";
 import {notificate} from "./functions";
+import {BrowserRouter} from "react-router-dom";
+import {Provider} from "react-redux";
+import {PersistGate} from "redux-persist/integration/react";
+import App from "./App";
 const {persistor, store} = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,14 +25,13 @@ axios.interceptors.response.use(response => {
     return error
 })
 root.render(
-
-        <BrowserRouter>
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <App/>
-                </PersistGate>
-            </Provider>
-        </BrowserRouter>
+    <BrowserRouter>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <App/>
+            </PersistGate>
+        </Provider>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

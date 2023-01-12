@@ -27,7 +27,7 @@ export function makeUnique(data,key){
 }
 export function notificate(data,status) {
     if (data?.errors) {
-        Object.keys(data.errors).map((type, index) => {
+        Object.keys(data.errors).map((type) => {
             data.errors[type].forEach((message) => {
                 notification.error({
                     message: type,

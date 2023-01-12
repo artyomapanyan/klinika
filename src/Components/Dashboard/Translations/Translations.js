@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Input, Table} from "antd";
-import {createResource, updateResource} from "../../Functions/api_calls";
+import {createResource} from "../../Functions/api_calls";
 
 function Translations(){
     let token = useSelector((state) => state.auth.token);

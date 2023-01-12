@@ -76,7 +76,7 @@ function ResourceSelectPaginated({initialData = [],
                                showSearch
                                allowClear={!disableClear}
                                optionFilterProp={'name'}
-                               onDropdownVisibleChange={(open)=>!isInitedState?setIsInitedState(true):null}
+                               onDropdownVisibleChange={()=>!isInitedState?setIsInitedState(true):null}
 
                         >
         {itemOptions}

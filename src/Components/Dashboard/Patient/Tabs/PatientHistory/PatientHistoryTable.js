@@ -29,7 +29,7 @@ function PatientHistoryTable() {
             title: t('Doctor'),
             dataIndex: 'name',
             key: 'name',
-            render:(e,record)=>{
+            render:()=>{
                 return <div style={{cursor:"pointer"}} onClick={onNextPage} className={'avatar_div'}>
                         <Space >
                             <Avatar shape="square" size={65} icon={<UserOutlined />} />
@@ -47,7 +47,7 @@ function PatientHistoryTable() {
             title: t('Clinic'),
             dataIndex: 'Clinic',
             key: 'Clinic',
-            render:(e, record)=>{
+            render:()=>{
                 return<div style={{fontWeight:700, fontSize:16, color:"#BF539E"}}>Class Clinic Saudi</div>
             }
         },
@@ -55,7 +55,7 @@ function PatientHistoryTable() {
             title: t('Date'),
             dataIndex: 'Date',
             key: 'Date',
-            render:(e, record)=>{
+            render:()=>{
                 return<div style={{fontWeight:700}}>Wed, Mar 16, 2022</div>
             }
         },
@@ -63,7 +63,7 @@ function PatientHistoryTable() {
             title: t('Status'),
             dataIndex: 'Status',
             key: 'Status',
-            render:(e, record)=>{
+            render:()=>{
                 return<Tag className={'ant_tag'} color="green" >Completed</Tag>
             }
         },

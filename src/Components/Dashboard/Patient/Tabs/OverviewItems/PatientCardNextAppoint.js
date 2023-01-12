@@ -13,7 +13,7 @@ function PatientCardNextAppoint() {
                 <List
                     className="demo-loadmore-list"
                     itemLayout="horizontal"
-                    renderItem={(aaa) => (
+                    renderItem={() => (
                         <List.Item>
                             <List.Item.Meta
                                 title={'Lipanthyl 145 mg '}
