@@ -32,7 +32,7 @@ function Post() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
-                    setData(response)
+                    navigate(resourceLinks[resource])
                 }
             }).finally(() => {
                 setLoading(false)
@@ -40,7 +40,7 @@ function Post() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource] + response.id)
+                    navigate(resourceLinks[resource])
                 }
 
             }).finally(() => {
@@ -51,7 +51,7 @@ function Post() {
 
     return(
         <div className={'add_edit_content'}>
-            {data?.title ? <h3>{t(`Editing Lub Test - ${data?.title}`)}</h3> : <h3>{t(`Add new Lub Test`)}</h3>}
+            {data?.title ? <h3>{t(`Editing Lab Test - ${data?.title}`)}</h3> : <h3>{t(`Add new Lab Test`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

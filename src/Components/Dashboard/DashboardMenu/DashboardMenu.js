@@ -128,8 +128,13 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
                 {
                     key: 'translations',
-                    label: t(`Active`),
+                    label: t(`Translations`),
                     permission:'Translation'
+                },
+                {
+                    key: 'preferences',
+                    label: t(`Preferences`),
+                    permission:'Preference'
                 },
             ]
         },

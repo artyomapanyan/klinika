@@ -13,6 +13,7 @@
     "dayjs": "^1.11.7",
     "draft-js": "^0.11.7",
     "env-cmd": "^10.1.0",
+    "highcharts": "^10.3.2",
     "i18next": "^22.0.6",
     "i18next-browser-languagedetector": "^7.0.1",
     "moment": "^2.29.4",

@@ -28,7 +28,7 @@ function SubService() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
-                    setData(response)
+                    navigate(resourceLinks[resource])
                 }
             }).finally(() => {
                 setLoading(false)
@@ -36,7 +36,7 @@ function SubService() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource] + response.id)
+                    navigate(resourceLinks[resource])
                 }
 
             }).finally(() => {
@@ -57,7 +57,7 @@ function SubService() {
 
                 <FormInput label={t('Service')} name={'service_id'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
-                           initialValue={data?.service.id}
+                           initialValue={data?.service?.id}
                            initialData={data?.service?[data.service]:[]}
                            resource={'Service'}/>
 

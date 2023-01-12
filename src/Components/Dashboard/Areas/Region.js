@@ -29,7 +29,7 @@ function Region() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
-                    setData(response)
+                    navigate(resourceLinks[resource])
                 }
             }).finally(() => {
                 setLoading(false)
@@ -37,7 +37,7 @@ function Region() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource] + response.id)
+                    navigate(resourceLinks[resource])
                 }
 
             }).finally(() => {
@@ -46,9 +46,13 @@ function Region() {
         }
 
     }
+
+    const textChange = () => {
+
+    }
     return(
         <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Area - ${data?.name}`)}</h3> : <h3>{t(`Add new Area`)}</h3>}
+            {data?.name ? <h3 onClick={textChange}>{t(`Editing Area - ${data?.name}`)}</h3> : <h3>{t(`Add new Area`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
