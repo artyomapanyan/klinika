@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {clearObject, paramsToObject} from "../../functions";
 
-function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null}) {
+function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null,hideActions=false}) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
@@ -24,6 +24,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
 
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params)
+    console.log(dataState.data)
     const handleTableChange = (pagination, filters, sorter) => {
         let params = {
             ...filters,
@@ -71,7 +72,9 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
                 }
             }
             return e
-        }), {
+        }),
+
+            ...(hideActions?[]:[{
             dataIndex: 'id', title: 'action', key: 'id', render: (e) => <Space>
                 <Tooltip title="Update">
                     <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
@@ -91,7 +94,8 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
                 </Tooltip>
 
             </Space>
-        }]
+        }])
+        ]
 
 
     }, [tableColumns, params])

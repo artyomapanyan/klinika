@@ -52,6 +52,7 @@ import Post from "./Dashboard/Posts/Post";
 import Calendar from "./Dashboard/Calendar/Calendar";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import Translations from "./Dashboard/Translations/Translations";
+import Preferences from "./Dashboard/Preferences/Preferences";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -187,6 +188,12 @@ function AppLayout(){
             resource:'Translation',
             singleComp:null,
             indexComp:<Translations/>
+        },
+        {
+            url:'preferences',
+            resource:'Preference',
+            singleComp:null,
+            indexComp:<Preferences/>
         },
 
     ]
