@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
+import 'react-multi-carousel/lib/styles.css';
 import {useSelector} from "react-redux";
 import "../dist/styles/Styles.sass"
+import 'draft-js/dist/Draft.css';
 import DashboardMenu from "./Dashboard/DashboardMenu/DashboardMenu";
 import DashboardHeader from "./Dashboard/DashboardHeader/DashboardHeader";
 import {Route, Routes} from "react-router";
@@ -41,8 +43,17 @@ import Specialties from "./Dashboard/Specialties/Specialties";
 import Specialty from "./Dashboard/Specialties/Specialty";
 import SubSpecialties from "./Dashboard/SubSpecialties/SubSpecialties";
 import SubSpecialty from "./Dashboard/SubSpecialties/SubSpecialty";
-
-
+import Doctors from "./Dashboard/Doctors/Doctors";
+import Doctor from "./Dashboard/Doctors/Doctor";
+import Users from "./Dashboard/User/Users/Users";
+import User from "./Dashboard/User/Users/User";
+import Posts from "./Dashboard/Posts/Posts";
+import Post from "./Dashboard/Posts/Post";
+import AppointmentStats from "./Fragments/Charts/AppointmentStats";
+import Calendar from "./Dashboard/Calendar/Calendar";
+import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
+import Translations from "./Dashboard/Translations/Translations";
+import Carousel from "react-multi-carousel";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -155,10 +166,33 @@ function AppLayout(){
             singleComp:<SubSpecialty/>,
             indexComp:<SubSpecialties/>
         },
+        {
+            url:'doctors',
+            resource:'Doctor',
+            singleComp:<Doctor/>,
+            indexComp:<Doctors/>
+        },
+        {
+            url:'users',
+            resource:'User',
+            singleComp:<User/>,
+            indexComp:<Users/>
+        },
+        {
+            url:'posts',
+            resource:'Post',
+            singleComp:<Post/>,
+            indexComp:<Posts/>
+        },
+        {
+            url:'translations',
+            resource:'Translation',
+            singleComp:null,
+            indexComp:<Translations/>
+        },
 
     ]
     return <Layout className={'main-container'}>
-
             <div className={'side-menu'}>
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
                        onMouseEnter={toggleCollapsed1}
@@ -174,23 +208,23 @@ function AppLayout(){
                 <DashboardHeader/>
 
             </div>
-            <Content  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
-                <div className={'patient_content'}>
+            <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
 
-
-                </div>
                 <Routes>
                     {resourceRoutes.map((item,key)=><Route path={item.url+'/*'} key={key} element={ <Routes>
-                        <Route key={key+'_i21'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>
-                        <Route key={key+'_n312'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>
-                        <Route key={key+'_u312'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>
+                        {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}
+                        {item.singleComp&&<Route key={key+'_n'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>}
+                        {item.singleComp&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>}
                     </Routes>}/>
 
                         )}
 
                     <Route path={'patients'} element={<Patient />}/>
+                    <Route path={'calendar'} element={<Calendar />}/>
+                    <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
                 </Routes>
             </Content>
+                {/*<AppointmentStats/>*/}
             <div style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
 
             </div>

@@ -24,9 +24,15 @@ function LabTest() {
 
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -44,19 +50,15 @@ function LabTest() {
 
     return(
         <div className={'add_edit_content'}>
-            <h3>{t('Add New Lab Test')}</h3>
+            {data?.name ? <h3>{t(`Editing Lub Test - ${data?.name}`)}</h3> : <h3>{t(`Add new Lub Test`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={{
-                    ...data,
-                    categories:data.categories?.map(e=>e.id)
-                }}
             >
 
-                <FormInput label={t('name')} name={'name'}/>
+                <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>
 
                 <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
@@ -75,8 +77,8 @@ function LabTest() {
 
 
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t("Save")}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

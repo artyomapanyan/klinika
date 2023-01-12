@@ -28,7 +28,7 @@ function LabPackages() {
                      key:'date',
                     render:i=><DateParser date={i}/>
                 },
-            ]} title={t('Lab packages')}/>
+            ]} title={t('Lab Packages')}/>
         </div>
     )
 }

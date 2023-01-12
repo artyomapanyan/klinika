@@ -10,6 +10,7 @@ import React, {useRef} from "react";
 import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
 import {InboxOutlined} from "@ant-design/icons";
+import DraftEditor from "../../Fragments/DraftEditor";
 
 const resource = 'LabPackage';
 
@@ -24,8 +25,12 @@ function LabPackage() {
     const {loading, setLoading} = loadingState
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
-            updateResource(resource, params.id, values, token,true).then(response => {
+            updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
                     setData(response)
                 }
@@ -46,28 +51,30 @@ function LabPackage() {
 
     return (
         <div className={"add_edit_content"}>
-            <h3>{t('Add New Strings')}</h3>
+            {data?.name ? <h3>{t(`Editing Lub Package - ${data?.name}`)}</h3> : <h3>{t(`Add new Lub Package`)}</h3>}
+
             {loading ? <Preloader/> : <Form
 
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={data}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name}/>
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.status}
                            initialData={Resources.Status}
                            />
-                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                <Form.Item name={'description'} label={t('Description')}>
+                    <DraftEditor initialValue={data?.description} formRef={formRef} name={'description'} />
+                </Form.Item>
 
                 <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.categories?.map(e=>e.id)??[]}
                            initialData={data?.categories??[]}
-                           resource={'Category'}
+                           resource={'Taxonomy'}
                            resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
                 />
 
@@ -75,7 +82,7 @@ function LabPackage() {
                            rules={[{required: true}]}
                            initialValue={data?.lab_tests?.map(e=>e.id)}
                            initialData={data?.lab_tests??[]}
-                           resource={'LabTest'}
+                           resource={'Taxonomy'}
                            resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
                 />
 
@@ -85,8 +92,8 @@ function LabPackage() {
                              uploadIcon={<InboxOutlined/>}
                              initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

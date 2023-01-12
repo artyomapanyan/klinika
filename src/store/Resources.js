@@ -1,4 +1,34 @@
 const Resource = {
+    PostTypes:[
+        {
+            id:1,
+            name:'Article'
+        },
+        {
+            id:2,
+            name:'Page'
+        },
+        {
+            id:3,
+            name:'Testimonial User'
+        },
+        {
+            id:4,
+            name:'Testimonial Company'
+        },
+        {
+            id:5,
+            name:'FAQ'
+        },
+        {
+            id:6,
+            name:'Porfolio'
+        },
+        {
+            id:7,
+            name:'Service'
+        },
+    ],
     Gender:
         [
             {

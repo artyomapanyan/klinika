@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ConfigProvider} from 'antd';
 import en from "antd/locale/en_US";
 import ar from "antd/locale/ar_EG";
@@ -8,14 +8,19 @@ import "./dist/styles/Styles.sass"
 import AppRoutes from "./Components/AppRoutes";
 import axios from "axios";
 import api from "./Api";
+import i18n from "i18next";
 
 
 function App() {
     let languageState = useSelector((state) => state?.app?.current_locale??'');
+    const [loading,setLoading] = useState(false);
     let dispatch = useDispatch()
     axios.defaults.headers.common['Accept-Language'] = languageState?.includes('en')?'en':'ar'
     useEffect(()=>{
+        setLoading(true)
         axios.get(`${api.apiEndpoint}${api.version}/app`).then(response=>{
+            i18n.addResources(axios.defaults.headers.common['Accept-Language'],'translation',response.translations)
+            setLoading(false)
             dispatch({
                 type:'APP',
                 payload:response
@@ -35,7 +40,7 @@ function App() {
             direction={languageState==='ar' ? "rtl" :"ltr" }
             locale={languageState==='ar'?ar:en}
         >
-            <AppRoutes/>
+            {loading?null:<AppRoutes/>}
         </ConfigProvider>
         </span>
     );

@@ -12,6 +12,14 @@ export default function app(state = {}, action) {
 
 
     }
+    if(action.type === 'UPDATE_TRANSLATIONS'){
+        return {
+            ...state,
+            translations: action.payload
+        }
+
+
+    }
     return state
 
 }

@@ -12,18 +12,11 @@ i18n
             fallbackLng: "en",
             en: {
                 translation: {
-                    learn: "Welcome to React",
-                    dashboard:"dashboard",
-                    Name:"Name",
-                    Areas: "Areas"
                 }
             },
             ar: {
                 translation: {
-                    learn: "Բարի գալուստ React",
-                    dashboard:"վահանակ",
-                    Name:"Անուն",
-                    Areas: "Արեաներ"
+
                 }
             },
         },

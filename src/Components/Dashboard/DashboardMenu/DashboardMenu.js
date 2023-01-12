@@ -5,9 +5,12 @@ import {Button, Divider, Menu} from "antd";
 import {MenuOutlined} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
+import dash2 from "../../../dist/icons/frame2.svg";
+import dash3 from "../../../dist/icons/frame3.svg";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";
+import i18n from "i18next";
 function DashboardMenu({mouseCollapsed,fixCollapse}){
     const {t} = useTranslation();
     const navigate = useNavigate();
@@ -21,6 +24,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         }
         return true
     }
+    console.log(i18n.getDataByLanguage('ar'))
     const items = useMemo(()=>[
        /* {
             key: `/`,
@@ -117,6 +121,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Sub Specialties`),
                     permission:'Taxonomy'
                 },
+                {
+                    key: 'posts',
+                    label: t(`Posts`),
+                    permission:'Post'
+                },
+                {
+                    key: 'translations',
+                    label: t(`Active`),
+                    permission:'Translation'
+                },
             ]
         },
         {
@@ -128,7 +142,33 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Roles`),
                     permission:'Role'
                 },
+                {
+                    key: 'users',
+                    label: t(`Users`),
+                    permission:'User'
+                },
             ]
+        },
+        {
+            label: `Accounts`,
+            icon: <img alt={'icons'} src={dash2}/>,
+            children: [
+                {
+                    key: 'doctors',
+                    label: t(`Doctors`),
+                    permission:'Doctor'
+                },
+            ]
+        },
+        {
+            key: 'clinics-owner',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: `Clinics owner`,
+        },
+        {
+            key: 'patients',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Doctor flow',
         },
         /*{
             key: `/match-event-naturess`,
@@ -141,7 +181,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
            if(pathname.includes(e.key)){
                return true
            }else{
-               return e.children.find(u=>pathname.includes(u.key));
+               return e.children?.find(u=>pathname.includes(u.key));
            }
 
        })
@@ -155,7 +195,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             navigate(`/dashboard/${link}`)
         }
     }
-    console.log(selectedItem,[selectedItem?.key].filter(e=>e),[selectedItem?.children?.find(u=>pathname.includes(u.key))?.key].filter(e=>e),pathname)
     return (
         <div >
             <div style={{

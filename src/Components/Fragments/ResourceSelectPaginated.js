@@ -52,15 +52,18 @@ function ResourceSelectPaginated({initialData = [],
         }
     }
     const handleSearch = (e) => {
-        if (timeout.current) {
-            clearTimeout(timeout.current)
+        if(resource){
+            if (timeout.current) {
+                clearTimeout(timeout.current)
+            }
+            timeout.current = setTimeout(() => {
+                setLocalData([])
+                setParams({
+                    page: 1, name: e
+                })
+            }, 500)
         }
-        timeout.current = setTimeout(() => {
-            setLocalData([])
-            setParams({
-                page: 1, name: e
-            })
-        }, 500)
+
     }
 
    const itemOptions  = useMemo(()=>handleGenerateOptions(localData ?? []),[localData])

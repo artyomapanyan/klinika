@@ -30,7 +30,7 @@ function SubSpecialties() {
                                    key:'date',
                                    render:i=><DateParser date={i}/>
                                },
-                           ]} title={t('Specialties')}/>
+                           ]} title={t('Sub Specialties')}/>
         </div>
     )
 }

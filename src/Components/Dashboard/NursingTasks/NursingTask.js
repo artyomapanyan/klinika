@@ -4,16 +4,18 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Space} from "antd";
-import React from "react";
+import React, {useRef} from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import FormInput from "../../Fragments/FormInput";
+import DraftEditor from "../../Fragments/DraftEditor";
 
 const resource = 'NursingTask';
 
 function NursingTask() {
 
     const params = useParams();
+    const formRef = useRef();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -23,9 +25,15 @@ function NursingTask() {
 
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -43,26 +51,26 @@ function NursingTask() {
     }
     return(
         <div className={'add_edit_content'}>
-            <h3>{t('Add New Nursuring Task')}</h3>
+            {data?.name ? <h3>{t(`Editing Nursing Task - ${data?.name}`)}</h3> : <h3>{t(`Add new Nursing Task`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                ref={formRef}
                 layout="vertical"
-                initialValues={{
-                    ...data,
-                }}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
 
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={data?.status}
                            initialData={Resources.Status}
                 />
-                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                <Form.Item name={'description'} label={t('Description')}>
+                    <DraftEditor initialValue={data?.description} formRef={formRef} name={'description'} />
+                </Form.Item>
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t('Save')}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

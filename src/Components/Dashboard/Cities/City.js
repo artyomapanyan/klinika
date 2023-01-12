@@ -23,9 +23,15 @@ function City() {
 
     const onFinish = (values) => {
         setLoading(true)
+        setData((prevState)=>({
+            ...prevState,
+            ...values
+        }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                setData(response)
+                if(response?.id){
+                    setData(response)
+                }
             }).finally(() => {
                 setLoading(false)
             })
@@ -43,18 +49,14 @@ function City() {
 
     return(
         <div className={'add_edit_content'}>
-            <h3>{t('Add New City')}</h3>
+            {data?.name ? <h3>{t(`Editing Sity - ${data?.name}`)}</h3> : <h3>{t(`Add new Sity`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-                initialValues={{
-                    ...data,
-                    region_id:data.region?.id
-            }}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
 
 
                 <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
@@ -64,8 +66,8 @@ function City() {
                            resource={'Region'}/>
 
                 <Space>
-                    <Button type={'primary'} htmlType="submit">{t("Save")}</Button>
-
+                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>
