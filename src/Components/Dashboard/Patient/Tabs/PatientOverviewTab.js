@@ -5,6 +5,7 @@ import PatientCardRiskFactors from "./OverviewItems/PatientCardRiskFactors";
 import PatientCardAllergy from "./OverviewItems/PatientCardAllergy";
 import PatientCardChronicDiseases from "./OverviewItems/PatientCardChronicDiseases";
 import PatientCardRight from "./OverviewItems/PatientCardRight";
+import PatientCardChart from "../../../Fragments/Charts/PatientCardChart";
 function PatientOverviewTab(){
     return <Row gutter={[16,16]}>
         <Col lg={16}>
@@ -15,6 +16,9 @@ function PatientOverviewTab(){
             <div style={{display:"flex", gap: 24, padding: 24}}>
                 <PatientCardAllergy/>
                 <PatientCardChronicDiseases/>
+            </div>
+            <div style={{padding: 24}}>
+                <PatientCardChart />
             </div>
 
         </Col>
