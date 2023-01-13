@@ -77,6 +77,9 @@ function Doctor() {
                 />
                 <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
                 <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
+                <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at?dayjs(data?.plid_expired_at):null} inputType={'date'} rules={[{required: true}]} />
+
 
 
                 <Space>

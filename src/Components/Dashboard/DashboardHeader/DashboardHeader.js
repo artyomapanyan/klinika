@@ -26,8 +26,9 @@ function DashboardHeader() {
         <Col lg={12} style={{display:"flex", justifyContent:"flex-end", alignItems: "center"}}>
             <Select
                 defaultValue={current_locale}
-                style={{width: 120}}
+                style={{width: 120, borderRadius:15}}
                 onChange={languageChange}
+                className={'lngSelect'}
             >
                 {
                     Object.keys(supported_locales??[]).map((el) => (
