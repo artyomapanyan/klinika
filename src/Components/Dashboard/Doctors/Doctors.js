@@ -3,6 +3,8 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import TableEditable from "../../Fragments/TableEditable";
+import Resources from "../../../store/Resources";
 function Doctors() {
     return(
         <div>
@@ -28,6 +30,44 @@ function Doctors() {
                     sorter:true,
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    title:t('Email'),
+                    dataIndex:'email',
+                    key:'email',
+                    sorter:true,
+                    translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    title:t('Phone number'),
+                    dataIndex:'phone_number',
+                    key:'phone_number',
+                    sorter:true,
+                    translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    title:t('PLID'),
+                    dataIndex:'plid',
+                    key:'plid',
+                    sorter:true,
+                    translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    dataIndex:['status'],
+                    title:t('Status'),
+                    key:'category',
+                    shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                    render:(e,record)=><TableEditable
+                        label={'Status'}
+                        resource={'Doctor'}
+                        initialData={Resources.Status}
+                        updateKey={'status'}
+                        value={e}
+                        record={record}
+                        inputType={'resourceSelect'}/>
                 },
                 {
                     dataIndex:['created_at','iso_string'],
