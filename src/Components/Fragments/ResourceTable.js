@@ -24,7 +24,6 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
 
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params)
-    console.log(dataState.data)
     const handleTableChange = (pagination, filters, sorter) => {
         let params = {
             ...filters,

@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import {updateResource} from "../Functions/api_calls";
 import {t} from "i18next";
 import FormInput from "./FormInput";
+import {Spin} from "antd";
 function TableEditable({resource,record,initialData,inputType,value,label,updateKey}){
     let token = useSelector((state) => state?.auth?.token);
     const [loading,setLoading] = useState({});
@@ -15,7 +16,7 @@ function TableEditable({resource,record,initialData,inputType,value,label,update
             setLoading({})
         })
     }
-    return  <FormInput name={[record.id,updateKey]}
+    return  loading[record.id]?<Spin/>:<FormInput name={[record.id,updateKey]}
                        initialData={initialData}
                        initialValue={value}
                        inputType={inputType}

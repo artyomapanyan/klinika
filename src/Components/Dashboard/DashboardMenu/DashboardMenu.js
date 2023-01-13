@@ -24,7 +24,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         }
         return true
     }
-    console.log(i18n.getDataByLanguage('ar'))
     const items = useMemo(()=>[
        /* {
             key: `/`,

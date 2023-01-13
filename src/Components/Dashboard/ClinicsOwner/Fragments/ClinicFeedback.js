@@ -14,7 +14,6 @@ import Slider from "react-slick";
 function ClinicFeedback() {
     const slideRef = useRef();
 
-    console.log(slideRef?.current, 'f')
 
     const settings = {
         dots: false,

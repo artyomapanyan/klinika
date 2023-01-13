@@ -29,7 +29,6 @@ function Translations(){
                 type:'UPDATE_TRANSLATIONS',
                 payload:data
             })
-            console.log(data)
         })
    }
     return(
