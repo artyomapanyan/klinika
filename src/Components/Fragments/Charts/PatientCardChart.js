@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import Highcharts from 'highcharts';
 import Exporting from 'highcharts/modules/exporting';
-import {Chart,registerables} from "chart.js";
 import PatientCatdChartHeader from "../../Dashboard/Patient/Tabs/OverviewItems/PatientCatdChartHeader";
 Exporting(Highcharts);
 function PatientCardChart() {
