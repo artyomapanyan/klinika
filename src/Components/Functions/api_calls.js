@@ -131,7 +131,6 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
         formData = new FormData();
         formData.append('_method','PUT')
         for (const name in values) {
-            console.log(values[name])
             if(Array.isArray(values[name])){
                 values[name].map(e=>formData.append(name+'[]', e))
             }else{
