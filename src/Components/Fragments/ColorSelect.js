@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {Dropdown, Space} from "antd";
-import {t} from "i18next";
 import {DownOutlined} from "@ant-design/icons";
 
 function ColorSelect({items=[],initialValue,onChange=null}){

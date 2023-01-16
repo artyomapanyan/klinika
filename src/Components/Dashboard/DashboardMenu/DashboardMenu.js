@@ -174,12 +174,19 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             icon: <img alt={'icons'} src={dash3}/>,
             label: 'Doctor flow',
         },
+        {
+            key: 'clinic-manager',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Clinic Manager',
+        },
         /*{
             key: `/match-event-naturess`,
             label: t(`Reviews`),
             icon: <img alt={'icons'} src={dash5}/>,
         },*/
     ].filter(handleFilterMenus),[permissions]);
+
+
     const selectedItem = useMemo(()=>{
        return  items.find(e=>{
            if(pathname.includes(e.key)){

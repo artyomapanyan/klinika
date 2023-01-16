@@ -26,12 +26,14 @@ function Cities() {
                     title:t('Area'),
                     key:'area',
                     translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props} resource={'Region'}/>,
                 },
                 {
                     dataIndex:['region','country','name'],
                     title:t('Country'),
                     key:'country',
                     translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props} resource={'Country'}/>,
                 },
                 {
                     dataIndex:['created_at','iso_string'],
