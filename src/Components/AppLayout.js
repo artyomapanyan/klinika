@@ -53,6 +53,9 @@ import Calendar from "./Dashboard/Calendar/Calendar";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import Translations from "./Dashboard/Translations/Translations";
 import Preferences from "./Dashboard/Preferences/Preferences";
+import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
+import Clinics from "./Dashboard/Clinics/Clinics";
+import Clinic from "./Dashboard/Clinics/Clinic";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -195,6 +198,12 @@ function AppLayout(){
             singleComp:null,
             indexComp:<Preferences/>
         },
+        {
+            url:'clinics',
+            resource:'Clinic',
+            singleComp:<Clinic/>,
+            indexComp:<Clinics/>
+        },
 
     ]
     return <Layout className={'main-container'}>
@@ -227,6 +236,7 @@ function AppLayout(){
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'calendar'} element={<Calendar />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
+                    <Route path={'clinic-manager'} element={<ClinicManager />}/>
                 </Routes>
             </Content>
                 {/*<AppointmentStats/>*/}

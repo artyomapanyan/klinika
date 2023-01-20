@@ -45,6 +45,8 @@ function Country() {
         }
     }
 
+    console.log(data)
+
     return (
         <div className={"add_edit_content"}>
             {data?.name ? <h3>{t(`Editing Country - ${data?.name}`)}</h3> : <h3>{t(`Add new Country`)}</h3>}
@@ -94,6 +96,12 @@ function Country() {
                     initialValue={data?.phone_code}
                 >
                 </FormInput>
+
+                <FormInput label={t('Language')} name={'language_id'} inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           initialValue={data?.language?.id}
+                           initialData={data?.language?[data.language]:[]}
+                           resource={'Country'}/>
 
                 <Space>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>

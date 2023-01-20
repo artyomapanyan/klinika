@@ -24,7 +24,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         }
         return true
     }
-    console.log(i18n.getDataByLanguage('ar'))
     const items = useMemo(()=>[
        /* {
             key: `/`,
@@ -163,8 +162,14 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Doctors`),
                     permission:'Doctor'
                 },
+                {
+                    key: 'clinics',
+                    label: t(`Clinics`),
+                    permission:'Clinic'
+                },
             ]
         },
+
         {
             key: 'clinics-owner',
             icon: <img alt={'icons'} src={dash3}/>,
@@ -175,12 +180,19 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             icon: <img alt={'icons'} src={dash3}/>,
             label: 'Doctor flow',
         },
+        {
+            key: 'clinic-manager',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Clinic Manager',
+        },
         /*{
             key: `/match-event-naturess`,
             label: t(`Reviews`),
             icon: <img alt={'icons'} src={dash5}/>,
         },*/
     ].filter(handleFilterMenus),[permissions]);
+
+
     const selectedItem = useMemo(()=>{
        return  items.find(e=>{
            if(pathname.includes(e.key)){

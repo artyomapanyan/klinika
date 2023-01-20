@@ -1,0 +1,184 @@
+.appointmentsTable {
+  border-collapse: separate !important;
+  border-spacing: 0 16px !important;
+  width: 100%;
+  margin-top: 20px;
+
+  td {
+    padding: 15px;
+  }
+  tr {
+    td:first-child {
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+    }
+    td:last-child {
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+  }
+}
+
+.appointmentsProgressTable {
+  width: 100%;
+  &__shownRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  td:first-child {
+    margin-right: 14px;
+  }
+  td {
+    border: none;
+    padding: 3px;
+  }
+}
+
+.appointmentsBranch {
+  font-weight: 700;
+  background: none;
+  width: 220px;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    color: black;
+    }
+}
+.appointmentsBranch:focus {
+  outline: none !important;
+}
+.circleImageHolder {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  margin-right: 16px;
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.progressInactive {
+  width: 144px;
+  height: 56px;
+  border-radius: 8px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: white;
+}
+.appointmentsDate {
+  padding: 14px 4px;
+  &__content {
+    background-color: #f5f6fa;
+    padding: 11px 0;
+    border-radius: 12px;
+    width: 144px;
+    text-align: center;
+    &__text {
+      font-size: 18px;
+      color: black;
+      &--light {
+        color: rgba(0, 0, 0, 0.5);
+        text-transform: uppercase;
+      }
+      &--disabled {
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
+.progressPurple {
+  width: 144px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: rgba(119, 77, 157, 0.15);
+  position: relative;
+  &__inside {
+    background-color: red;
+  }
+}
+.hiddenTableRow {
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__col {
+    padding: 3px 10px;
+    border: none;
+    &-item {
+      width: 220px;
+      display: flex;
+      align-items: center;
+
+      font-size: 14px;
+    }
+  }
+  &__col:first-child {
+    margin-right: 15px;
+  }
+}
+.progressGreen {
+  width: 144px;
+  height: 56px;
+  border-radius: 8px;
+  background-color: rgba(119, 77, 157, 0.15);
+  position: relative;
+  cursor: pointer;
+  &__inside {
+    background-color: red;
+  }
+  &--disabled {
+    background-color: #f8e1cf;
+  }
+}
+.progressText {
+  padding: 4px 6px;
+  background-color: white;
+  max-width: 50px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.input-group {
+  width: 240px !important;
+}
+
+@media only screen and (max-width: 1200px) {
+  .input-group {
+    width: 180px !important;
+  }
+}
+.content {
+  width: 100%;
+  padding: 0 17px 0 90px;
+  background: red;
+}
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.15);
+  text-align: center;
+  white-space: nowrap;
+  background-color: #774d9d;
+  transition: width .6s ease;
+  height: 100%;
+  border-radius: 8px;
+}
+.w-100 {
+  width: 100% !important;
+}
+.progressGreen__inside {
+  background-color: #6daf56;
+  border-radius: 8px;
+}
+

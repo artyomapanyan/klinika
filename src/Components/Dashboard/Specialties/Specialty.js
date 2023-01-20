@@ -34,7 +34,7 @@ function Specialty() {
             ...values
         }))
         if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
+            updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
                     setData(response)
                 }
@@ -53,6 +53,7 @@ function Specialty() {
         }
 
     }
+    console.log(data)
 
     return (
         <div className={"add_edit_content"}>

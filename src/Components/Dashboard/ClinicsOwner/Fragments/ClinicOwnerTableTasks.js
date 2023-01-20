@@ -2,6 +2,7 @@ import {Avatar, Button, DatePicker, Divider, Dropdown, Progress, Space, Switch, 
 import {t} from "i18next";
 import {DownOutlined, LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
 import React from "react";
+import ColorSelect from "../../../Fragments/ColorSelect";
 
 function ClinicOwnerTableTasks() {
 
@@ -118,18 +119,7 @@ function ClinicOwnerTableTasks() {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render:()=><Dropdown
-                menu={{
-                    items,
-                }}
-                trigger={['click']}
-            >
-                <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor:"red", padding:10, borderRadius:30, width:150, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-                    <div style={{color:"#FFFFFF", fontWeight:700}}>{t("Select")}</div>
-                    <div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
-                </Space>
-
-            </Dropdown>
+            render:()=><ColorSelect items={items} initialValue={'Select'}/>
         },
     ];
 

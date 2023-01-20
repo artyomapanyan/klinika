@@ -1,14 +1,28 @@
 import React, {useState} from 'react'
 import {DatePicker, Form, Input} from "antd";
 import ResourceSelectPaginated from "./ResourceSelectPaginated";
+import dayjs from "dayjs";
 
 const NoForm = ['resourceSelect']
 
 function FormInput({name, label, rules, initialValue, inputProps = {},
                        inputType, initialData = [], resource,resourceParams={},initialFocused=false}) {
+    if(inputType==='date'){
+        if(initialValue?.iso_string){
+            initialValue =initialValue?.iso_string?dayjs(initialValue?.iso_string):null
+        }else{
+            if(initialValue){
+                initialValue =initialValue?dayjs(initialValue):null
+            }else{
+                initialValue = null
+            }
 
+        }
+
+    }
     const [focused, setFocused] = useState(initialFocused);
     const [value, setValue] = useState(initialValue);
+
     const handleReturnInput = () => {
         switch (inputType) {
             case 'password':
@@ -25,7 +39,9 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                      placeholder={' '}
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
-                                     onChange={e => setValue(e)}/>
+                                     onChange={e => setValue(e)}
+                                     style={{width:'100%', height:48}}
+                />
             case 'textArea':
                 return <Input.TextArea   {...inputProps}
                                      placeholder={' '}

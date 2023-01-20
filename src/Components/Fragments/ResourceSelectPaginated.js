@@ -28,6 +28,10 @@ function ResourceSelectPaginated({initialData = [],
     const handleGenerateOptions = (data) => {
         return data.map(item => {
             let name = item.name??item.title
+            if(resource==='User'){
+                name = `${item.first} ${item.last}`
+            }
+
             return <Select.Option key={item.id} value={item.id} name={name}>{name}</Select.Option>
         })
     }
