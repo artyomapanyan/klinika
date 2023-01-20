@@ -4,6 +4,11 @@ import CounterPurpleChart from "../../Fragments/Charts/CounterPurpleChart";
 import StatusesChart from "../../Fragments/Charts/StatusesChart";
 import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";
 import ClinicManagerCalendar from "./Fragments/ClinicManagerCalendar/ClinicManagerCalendar";
+import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointmentsTable/ClinicManagerAppointmentsTable";
+import ClinicManagerConfirmation from "./Fragments/ClinicManagerConfirmation/ClinicManagerConfirmation";
+import ClinicManagerDoctorsLicensesTable
+    from "./Fragments/ClinicManagerDoctorsLicensesTable/ClinicManagerDoctorsLicensesTable";
+import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 
 
 
@@ -49,6 +54,20 @@ function ClinicManager() {
                 </Row>
                 <div>
                     <ClinicManagerCalendar />
+                </div>
+                <div>
+                    <ClinicManagerAppointmentsTable />
+                </div>
+                <Row gutter={[16, 16]}>
+                    <Col lg={12}>
+                        <ClinicManagerConfirmation />
+                    </Col>
+                    <Col lg={12}>
+                        <ClinicManagerDoctorsLicensesTable />
+                    </Col>
+                </Row>
+                <div>
+                    <ClinicFeedback />
                 </div>
             </div>
         </div>

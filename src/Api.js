@@ -109,6 +109,10 @@ let api = {
         url: 'preferences',
         resource: 'Preference',
     },
+    {
+        url: 'clinics',
+        resource: 'Clinic',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

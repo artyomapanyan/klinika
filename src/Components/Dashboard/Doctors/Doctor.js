@@ -63,7 +63,7 @@ function Doctor() {
                 <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
                 <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
                 <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} />
-                <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob?dayjs(data?.dob):null} inputType={'date'} rules={[{required: true}]} />
+                <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[{required: true}]} />
                 <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
                 <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                            initialValue={data?.gender}
@@ -78,7 +78,7 @@ function Doctor() {
                 <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
                 <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
                 <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
-                <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at?dayjs(data?.plid_expired_at):null} inputType={'date'} rules={[{required: true}]} />
+                <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} rules={[{required: true}]} />
 
 
 

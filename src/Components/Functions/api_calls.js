@@ -131,7 +131,6 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
         formData = new FormData();
         formData.append('_method','PUT')
         for (const name in values) {
-            console.log(values[name])
             if(Array.isArray(values[name])){
                 values[name].map(e=>formData.append(name+'[]', e))
             }else{
@@ -140,6 +139,7 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
                         formData.append(name, values[name]);
                     }
                 }else{
+                    values[name] = values[name]===true?1:values[name]===false?0: values[name]
                     formData.append(name, values[name]);
                 }
 
@@ -191,9 +191,9 @@ export const createResource = (resource,values,token,withFormData=false)=>{
                         formData.append(name, values[name]);
                     }
                 }else{
+                    values[name] = values[name]===true?1:values[name]===false?0: values[name]
                     formData.append(name, values[name]);
                 }
-
             }
         }
     }else{

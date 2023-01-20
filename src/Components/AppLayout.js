@@ -54,6 +54,8 @@ import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import Translations from "./Dashboard/Translations/Translations";
 import Preferences from "./Dashboard/Preferences/Preferences";
 import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
+import Clinics from "./Dashboard/Clinics/Clinics";
+import Clinic from "./Dashboard/Clinics/Clinic";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -195,6 +197,12 @@ function AppLayout(){
             resource:'Preference',
             singleComp:null,
             indexComp:<Preferences/>
+        },
+        {
+            url:'clinics',
+            resource:'Clinic',
+            singleComp:<Clinic/>,
+            indexComp:<Clinics/>
         },
 
     ]

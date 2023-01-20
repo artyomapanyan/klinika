@@ -162,8 +162,14 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Doctors`),
                     permission:'Doctor'
                 },
+                {
+                    key: 'clinics',
+                    label: t(`Clinics`),
+                    permission:'Clinic'
+                },
             ]
         },
+
         {
             key: 'clinics-owner',
             icon: <img alt={'icons'} src={dash3}/>,

@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 import "./ClinicManagerCalendar.scss";
-import {Avatar, Button, Input} from "antd";
+import {Avatar, Input} from "antd";
 import {SearchOutlined, DownOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarHead from "./Fragments/ClinicManagerCalendarHead";
 import ClicicManagerCalendarCollapse from "./Fragments/ClicicManagerCalendarCollapse";
@@ -11,7 +11,7 @@ function ClinicManagerCalendar() {
 
 
     return(
-        <section style={{backgroundColor:"white", marginTop:20, borderRadius:10}}>
+        <section className={'table_conteiner'}>
             <ClinicManagerCalendarHead />
             <div className="container-fluid">
                 <div className="row">
