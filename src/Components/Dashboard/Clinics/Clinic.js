@@ -5,11 +5,10 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Checkbox, Col, Form, Space} from "antd";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-import dayjs from 'dayjs';
 import {InboxOutlined} from "@ant-design/icons";
 import FileManager from "../../Fragments/FileManager";
 import {Row} from "antd/lib";
@@ -25,10 +24,18 @@ function Clinic() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
 
-
     const onFinish = (values) => {
         setLoading(true)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
+        values.has_telehealth_service = values.has_telehealth_service === true
+        values.has_home_visit_service === true ? values.has_home_visit_service = true : values.has_home_visit_service = false;
+        values.has_clinic_visit_service === true ? values.has_clinic_visit_service = true : values.has_clinic_visit_service = false;
+        values.has_laboratory_home_visit_service === true ? values.has_laboratory_home_visit_service = true : values.has_laboratory_home_visit_service = false;
+        values.has_laboratory_clinic_visit_service === true ? values.has_laboratory_clinic_visit_service = true : values.has_laboratory_clinic_visit_service = false;
+        values.has_nursing_service === true ? values.has_nursing_service = true : values.has_nursing_service = false;
+        values.has_physical_therapy_home_visit_service === true ? values.has_physical_therapy_home_visit_service = true : values.has_physical_therapy_home_visit_service = false;
+        values.has_physical_therapy_clinic_visit_service === true ? values.has_physical_therapy_clinic_visit_service = true : values.has_physical_therapy_clinic_visit_service = false;
+
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -51,7 +58,6 @@ function Clinic() {
             })
         }
     }
-console.log(data)
 
     return(
         <div >
@@ -121,7 +127,6 @@ console.log(data)
                                 name="has_clinic_visit_service"
                                 valuePropName="checked"
                                 initialValue={data?.has_clinic_visit_service}
-
                             >
                                 <Checkbox defaultChecked={true}/>
                             </Form.Item>
@@ -138,7 +143,6 @@ console.log(data)
                                 name="has_home_visit_service"
                                 valuePropName="checked"
                                 initialValue={data?.has_home_visit_service}
-
                             >
                                 <Checkbox />
                             </Form.Item>

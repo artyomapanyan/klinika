@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
-import {DatePicker, Form, Input} from "antd";
+import {DatePicker, Form, Input, InputNumber} from "antd";
 import ResourceSelectPaginated from "./ResourceSelectPaginated";
 import dayjs from "dayjs";
 
 const NoForm = ['resourceSelect']
 
 function FormInput({name, label, rules, initialValue, inputProps = {},
-                       inputType, initialData = [], resource,resourceParams={},initialFocused=false}) {
+                       inputType, initialData = [], resource,resourceParams={},initialFocused=false, inputNumberStyle}) {
     if(inputType==='date'){
         if(initialValue?.iso_string){
             initialValue =initialValue?.iso_string?dayjs(initialValue?.iso_string):null
@@ -48,6 +48,13 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
                                      onChange={e => setValue(e?.target.value)}/>
+            case 'number':
+                return <InputNumber   {...inputProps}
+                                         placeholder={' '}
+                                         onFocus={() => setFocused(true)}
+                                         onBlur={() => setFocused(false)}
+                                         onChange={e => setValue(e)}
+                                         style={inputNumberStyle}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceParams={resourceParams}

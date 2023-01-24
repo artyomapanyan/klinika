@@ -28,7 +28,7 @@ function ResourceSelectPaginated({initialData = [],
     const handleGenerateOptions = (data) => {
         return data.map(item => {
             let name = item.name??item.title
-            if(resource==='User'){
+            if(resource==='User' || resource==='Doctor'){
                 name = `${item.first} ${item.last}`
             }
 

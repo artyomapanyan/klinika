@@ -56,6 +56,10 @@ import Preferences from "./Dashboard/Preferences/Preferences";
 import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
 import Clinics from "./Dashboard/Clinics/Clinics";
 import Clinic from "./Dashboard/Clinics/Clinic";
+import Offers from "./Dashboard/Offers/Offers";
+import Offer from "./Dashboard/Offers/Offer";
+import Coupons from "./Dashboard/Coupons/Coupons";
+import Coupon from "./Dashboard/Coupons/Coupon";
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -203,6 +207,18 @@ function AppLayout(){
             resource:'Clinic',
             singleComp:<Clinic/>,
             indexComp:<Clinics/>
+        },
+        {
+            url:'offers',
+            resource:'Offer',
+            singleComp:<Offer/>,
+            indexComp:<Offers/>
+        },
+        {
+            url:'coupons',
+            resource:'Coupon',
+            singleComp:<Coupon/>,
+            indexComp:<Coupons/>
         },
 
     ]

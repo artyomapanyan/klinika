@@ -20,6 +20,8 @@ const ResourceLins = {
     User:'/dashboard/users/',
     Post:'/dashboard/posts/',
     Clinic:'/dashboard/clinics/',
+    Offer:'/dashboard/offers/',
+    Coupon:'/dashboard/coupons/',
 
 }
 export default ResourceLins

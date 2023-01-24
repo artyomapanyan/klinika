@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import logo from "../../../dist/Img/logo.svg";
 import logoShort from "../../../dist/Img/Logo-short.svg";
 import {Button, Divider, Menu} from "antd";
-import {MenuOutlined} from "@ant-design/icons";
+import {MenuOutlined, NotificationOutlined, PercentageOutlined, RedEnvelopeOutlined} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
 import dash2 from "../../../dist/icons/frame2.svg";
@@ -138,7 +138,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             ]
         },
         {
-            label: `User`,
+            label: t(`User`),
             icon: <img alt={'icons'} src={dash4}/>,
             children: [
                 {
@@ -154,7 +154,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             ]
         },
         {
-            label: `Accounts`,
+            label: t(`Accounts`),
             icon: <img alt={'icons'} src={dash2}/>,
             children: [
                 {
@@ -166,6 +166,24 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     key: 'clinics',
                     label: t(`Clinics`),
                     permission:'Clinic'
+                },
+            ]
+        },
+        {
+            label: t(`Marketing`),
+            icon: <NotificationOutlined style={{color:'#ce4e99', fontSize:20}}  />,
+            children: [
+                {
+                    icon:<PercentageOutlined style={{color:'#c98a1e', fontSize:20}} />,
+                    key: 'offers',
+                    label:  t(`Offers`),
+                    permission:'Offer'
+                },
+                {
+                    icon:<RedEnvelopeOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'coupons',
+                    label:  t(`Coupons`),
+                    permission:'Coupon'
                 },
             ]
         },

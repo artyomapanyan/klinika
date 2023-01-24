@@ -8,7 +8,9 @@ import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
-import {clearObject, paramsToObject} from "../../functions";
+import {blobToObjectUrl, clearObject, paramsToObject} from "../../functions";
+import axios from "axios";
+import api from "../../Api";
 
 function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null,hideActions=false}) {
 
@@ -101,7 +103,24 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
     const onAddNew = () => {
         navigate(ResourceLinks[resourceLink??resource] + 'new')
     }
+    const handleExportExcel =()=>{
+        axios.request({
+            url: api[resource].exportExcel.url,
+            method: api[resource].exportExcel.method,
+            headers: {
+                'Authorization': token,
+            },
+            responseType: 'blob',
 
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', resource+'.xlsx');
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
 
     return (<Content className={'layout-conatiner'}>
         <Row className={'resource-header'}>
@@ -109,7 +128,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
                 <Space>
                     <Typography.Title level={4}>{t(title)}</Typography.Title>
                     <Tooltip title="prompt text">
-                        <Button type={'secondary'}>{t("Export to Excel")}</Button>
+                        <Button onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
                     </Tooltip>
                     <Tooltip title="prompt text">
                         <Button type={'secondary'}>{t("Import to Database")}</Button>

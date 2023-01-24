@@ -113,6 +113,14 @@ let api = {
         url: 'clinics',
         resource: 'Clinic',
     },
+    {
+        url: 'offers',
+        resource: 'Offer',
+    },
+    {
+        url: 'coupons',
+        resource: 'Coupon',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {
@@ -142,6 +150,10 @@ let api = {
                 },
                 search: {
                     url: `${endpoint}${version}/${item.url}/search`,
+                    method: 'GET',
+                },
+                exportExcel: {
+                    url: `${endpoint}${version}/${item.url}/export`,
                     method: 'GET',
                 },
                 ...item.custom

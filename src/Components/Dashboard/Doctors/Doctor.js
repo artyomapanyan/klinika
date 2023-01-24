@@ -4,12 +4,14 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
+import {Button, Checkbox, Col, Form, Space} from "antd";
 import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import dayjs from 'dayjs';
+import DraftEditor from "../../Fragments/DraftEditor";
+import {Row} from "antd/lib";
 
 const resource = 'Doctor';
 
@@ -50,39 +52,62 @@ function Doctor() {
     }
 
     return(
-        <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3>{t(`Add new Doctor`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
             >
-                <FormInput label={t('First')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
-                <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
-                <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
-                <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
-                <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} />
-                <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[{required: true}]} />
-                <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
-                <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
-                           initialValue={data?.gender}
-                           initialData={Resources?.Gender}
-                />
-                <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
-                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.status}
-                           initialData={Resources.Status}
-                />
-                <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
-                <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
-                <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
-                <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} rules={[{required: true}]} />
 
+                <div className={'add_edit_content'}>
+                    <Row>
+                        <Col lg={12} className="gutter-row">
+                            <FormInput label={t('First')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
+                        </Col>
+                        <Col lg={12} className="gutter-row">
+                            <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
+                        </Col>
+                    </Row>
+                    <FormInput label={t('Bio')} name={'Bio'} inputType={'textArea'} initialValue={data?.bio}/>
+                </div>
 
+                <div className={'add_edit_content'}>
+                    <Row>
+                        <Col lg={12} className="gutter-row">
+                            <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                            <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[{required: true}]} />
 
-                <Space>
+                            <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
+                                       initialValue={data?.gender}
+                                       initialData={Resources?.Gender}
+                            />
+                            <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.status}
+                                       initialData={Resources.Status}
+                            />
+                            <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
+                            <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} />
+                        </Col>
+                        <Col lg={12} className="gutter-row">
+                            <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
+                            <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.status}
+                                       initialData={Resources.Status}
+                            />
+                            <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
+                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                            <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
+                            <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} rules={[{required: true}]} />
+
+                        </Col>
+                    </Row>
+                </div>
+
+                <Space className={'create_apdate_btns'}>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
