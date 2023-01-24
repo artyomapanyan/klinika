@@ -49,7 +49,6 @@ import Users from "./Dashboard/User/Users/Users";
 import User from "./Dashboard/User/Users/User";
 import Posts from "./Dashboard/Posts/Posts";
 import Post from "./Dashboard/Posts/Post";
-import Calendar from "./Dashboard/Calendar/Calendar";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import Translations from "./Dashboard/Translations/Translations";
 import Preferences from "./Dashboard/Preferences/Preferences";
@@ -60,6 +59,8 @@ import Offers from "./Dashboard/Offers/Offers";
 import Offer from "./Dashboard/Offers/Offer";
 import Coupons from "./Dashboard/Coupons/Coupons";
 import Coupon from "./Dashboard/Coupons/Coupon";
+import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
+
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -250,9 +251,10 @@ function AppLayout(){
                         )}
 
                     <Route path={'patients'} element={<Patient />}/>
-                    <Route path={'calendar'} element={<Calendar />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
                     <Route path={'clinic-manager'} element={<ClinicManager />}/>
+                    <Route path={'Doctor-reworked'} element={<DoctorReworked />}/>
+
                 </Routes>
             </Content>
                 {/*<AppointmentStats/>*/}

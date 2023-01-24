@@ -203,6 +203,11 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             icon: <img alt={'icons'} src={dash3}/>,
             label: 'Clinic Manager',
         },
+        {
+            key: 'Doctor-reworked',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Doctor reworked',
+        },
         /*{
             key: `/match-event-naturess`,
             label: t(`Reviews`),
