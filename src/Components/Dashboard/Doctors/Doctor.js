@@ -102,7 +102,26 @@ function Doctor() {
                             <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
                             <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
                             <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} rules={[{required: true}]} />
-
+                            <FormInput inputProps={{mode:'multiple'}} label={t('Specialties')} name={'specialties'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.specialties?.map(e=>e.id)}
+                                       initialData={data?.specialties??[]}
+                                       resource={'InsuranceCompany'}
+                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                            />
+                            <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.sub_specialties?.map(e=>e.id)}
+                                       initialData={data?.sub_specialties??[]}
+                                       resource={'InsuranceCompany'}
+                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                            />
+                            <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.languages?.map(e=>e.id)}
+                                       initialData={data?.languages??[]}
+                                       resource={'Country'}
+                            />
                         </Col>
                     </Row>
                 </div>

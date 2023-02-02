@@ -1,18 +1,15 @@
-import {Button, Col, List, Row, Tag} from "antd";
+import {Button, Col, Row} from "antd";
 import React from 'react';
 import { useState } from 'react';
-import {Link} from "react-router-dom";
+
 import DoctorReworkedNotifications from "./Fragments/DoctorReworkedNotifications/DoctorReworkedNotifications";
 import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";
 import CounterPurpleChart from "../../Fragments/Charts/CounterPurpleChart";
 import StatusesChart from "../../Fragments/Charts/StatusesChart";
-
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
-import DoctorReworkedProgressChart from "../../Fragments/Charts/DoctorReworkedProgressChart";
-import DoctorReworkedPurpleChart from "../../Fragments/Charts/DoctorReworkedPurpleChart";
-import DoctorReworkedStatusesChart from "../../Fragments/Charts/DoctorReworkedStatusesChart";
-import DoctorReworkedCallsChart from "../../Fragments/Charts/DoctorReworkedCallsChart";
 import DoctorReworkedCalendar from "./Fragments/DoctorReworkedCalendar/DoctorReworkedCalendar";
+import AppointmentStats from "../../Fragments/Charts/AppointmentStats";
+import MonthStatistics from "../../Fragments/Charts/MonthStatistics";
 
 
 
@@ -37,23 +34,23 @@ function DoctorReworked() {
                 <Row gutter={[16,16]}>
                     <Col  lg={6} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
-                            <DoctorReworkedProgressChart data={progressData1} />
+                            <ClinicManagerProgressCount data={progressData1} />
 
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <DoctorReworkedPurpleChart data={purpleData} />
+                            <CounterPurpleChart data={purpleData} />
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <DoctorReworkedStatusesChart data={statusesData}/>
+                            <StatusesChart data={statusesData}/>
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <DoctorReworkedCallsChart data={progressData2} />
+                            <ClinicManagerProgressCount data={progressData2} />
                         </div>
                     </Col>
                 </Row>
@@ -65,7 +62,18 @@ function DoctorReworked() {
                         <DoctorReworkedNotifications />
                     </Col>
                 </Row>
+                <Row gutter={[16, 16]}>
+                    <Col lg={18}>
+                        <AppointmentStats />
+                    </Col>
+                    <Col lg={6} >
+                        <MonthStatistics />
+                    </Col>
+                </Row>
 
+            </div>
+            <div>
+                <ClinicFeedback />
             </div>
 
 

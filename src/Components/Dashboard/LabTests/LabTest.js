@@ -49,34 +49,30 @@ function LabTest() {
     }
 
     return(
-        <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Lab Test - ${data?.name}`)}</h3> : <h3>{t(`Add new Lab Test`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Lab Test - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Test`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
             >
+                <div className={'add_edit_content'}>
+                    <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>
 
-                <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>
-
-                <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.categories?.map(e=>e.id)??[]}
-                           initialData={data?.categories??[]}
-                           resource={'Taxonomy'}
-                           resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
-                />
-                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.status}
-                           initialData={Resources.Status}
-                />
-
-
-
-
-                <Space>
+                    <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.categories?.map(e=>e.id)??[]}
+                               initialData={data?.categories??[]}
+                               resource={'Category'}
+                    />
+                    <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.status}
+                               initialData={Resources.Status}
+                    />
+                </div>
+                <Space className={'create_apdate_btns'}>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>

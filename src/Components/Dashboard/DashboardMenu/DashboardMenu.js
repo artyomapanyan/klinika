@@ -204,9 +204,14 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             label: 'Clinic Manager',
         },
         {
-            key: 'Doctor-reworked',
+            key: 'doctor-reworked',
             icon: <img alt={'icons'} src={dash3}/>,
             label: 'Doctor reworked',
+        },
+        {
+            key: 'super-admin',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Super admin',
         },
         /*{
             key: `/match-event-naturess`,

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Divider, List, Tag} from "antd";
 import {Link} from "react-router-dom";
 
-const count = 3;
+const count = 6;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 function DoctorReworkedNotifications() {
     const [initLoading, setInitLoading] = useState(true);
@@ -41,7 +41,7 @@ function DoctorReworkedNotifications() {
             });
     };
     return(
-        <div style={{borderRadius:15, backgroundColor: "white", border:"1px solid #d2d9d4", padding:15, marginTop:20}}>
+        <div className={'chart_incomes_div'} >
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:20}}>
                 <h1 className={'h1'}>Notifications</h1>
                 <Tag color="magenta" className={'ant_tag'}>ID: 1561654</Tag>

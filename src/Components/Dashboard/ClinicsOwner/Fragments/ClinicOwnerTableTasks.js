@@ -142,7 +142,7 @@ function ClinicOwnerTableTasks() {
 
             </div>
             <Divider/>
-            <Table dataSource={dataSource} columns={columns} />
+            <Table dataSource={dataSource} pagination={false} columns={columns} />
         </div>
     )
 }

@@ -7,6 +7,8 @@ function Translations(){
     let token = useSelector((state) => state.auth.token);
     const translations = useSelector(state=>state.app.translations)
     const dispatch = useDispatch();
+
+
     const filteredTranslations = useMemo(()=>{
        let transArray = []
        Object.keys(translations).forEach(key=>{

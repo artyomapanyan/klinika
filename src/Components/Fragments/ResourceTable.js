@@ -12,7 +12,7 @@ import {blobToObjectUrl, clearObject, paramsToObject} from "../../functions";
 import axios from "axios";
 import api from "../../Api";
 
-function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null,hideActions=false}) {
+function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null,hideActions=false, exportButton = true}) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
@@ -103,6 +103,8 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
     const onAddNew = () => {
         navigate(ResourceLinks[resourceLink??resource] + 'new')
     }
+
+
     const handleExportExcel =()=>{
         axios.request({
             url: api[resource].exportExcel.url,
@@ -127,9 +129,12 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
             <Col lg={12}>
                 <Space>
                     <Typography.Title level={4}>{t(title)}</Typography.Title>
-                    <Tooltip title="prompt text">
-                        <Button onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
-                    </Tooltip>
+                    {
+                        exportButton ? <Tooltip title="prompt text">
+                            <Button onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
+                        </Tooltip> : null
+                    }
+
                     <Tooltip title="prompt text">
                         <Button type={'secondary'}>{t("Import to Database")}</Button>
                     </Tooltip>

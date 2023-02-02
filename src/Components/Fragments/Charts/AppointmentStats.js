@@ -151,7 +151,7 @@ function AppointmentStats(){
 
     }
 
-    return<div>
+    return<div className={'chart_incomes_div'}>
         <Space>
             <Typography.Title level={3}>Appointments stats</Typography.Title>
             <div>

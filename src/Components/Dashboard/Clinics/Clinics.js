@@ -35,7 +35,7 @@ function Clinics() {
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
                     render:(e,record)=><TableEditable
                         label={'Status'}
-                        resource={'Doctor'}
+                        resource={'Clinic'}
                         initialData={Resources.Status}
                         updateKey={'status'}
                         value={e}

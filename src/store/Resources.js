@@ -71,7 +71,6 @@ const Resource = {
         LAB_TEST_CATEGORY:8,
         NURSING_TASK_CATEGORY:9,
         REPORT_TOPIC:10,
-        SUB_SPECIALTY:11,
     }
 }
 

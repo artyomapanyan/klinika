@@ -47,16 +47,19 @@ function Category() {
     }
 
     return (
-        <div className={"add_edit_content"}>
-            {data?.name ? <h3>{t(`Editing Category - ${data?.name}`)}</h3> : <h3>{t(`Add new Category`)}</h3>}
+        <div >
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Category - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
+                <div className={"add_edit_content"}>
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
+                </div>
 
-                <Space>
+
+                <Space className={'create_apdate_btns'}>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>

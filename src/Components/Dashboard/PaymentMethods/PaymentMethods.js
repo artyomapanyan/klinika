@@ -9,7 +9,7 @@ function PaymentMethods() {
     return (<div>
         <ResourceTable resource={'PaymentMethod'}
                        tableParams={{type: Resources.TaxonomyTypes.REPORT_TOPIC}}
-
+                       exportButton={false}
                        tableColumns={[
                            {
                                dataIndex: 'id',

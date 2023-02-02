@@ -46,23 +46,23 @@ function Service() {
 
 
     return (
-        <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Service - ${data?.name}`)}</h3> : <h3>{t(`Add new Service`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Service - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Service`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
+                <div className={'add_edit_content'}>
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
 
-                <FormInput label={t('Sub category')} name={'sub_category_id'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.sub_category?.id}
-                           initialData={data?.sub_category?[data.sub_category]:[]}
-                           resource={'SubCategory'}/>
-
-
-                <Space>
+                    <FormInput label={t('Sub category')} name={'sub_category_id'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.sub_category?.id}
+                               initialData={data?.sub_category?[data.sub_category]:[]}
+                               resource={'SubCategory'}/>
+                </div>
+                <Space className={'create_apdate_btns'}>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>

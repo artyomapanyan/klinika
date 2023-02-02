@@ -47,7 +47,9 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                      placeholder={' '}
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
-                                     onChange={e => setValue(e?.target.value)}/>
+                                     onChange={e => setValue(e?.target.value)}
+                                     style={{height:100}}
+                />
             case 'number':
                 return <InputNumber   {...inputProps}
                                          placeholder={' '}

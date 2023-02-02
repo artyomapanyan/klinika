@@ -112,6 +112,12 @@ let api = {
     {
         url: 'clinics',
         resource: 'Clinic',
+        custom:{
+            WorkingHours:{
+                url: `${endpoint}${version}/clinics/working-hours/`,
+                method: 'GET',
+            }
+        }
     },
     {
         url: 'offers',

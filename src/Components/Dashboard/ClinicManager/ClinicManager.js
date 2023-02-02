@@ -8,7 +8,6 @@ import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointment
 import ClinicManagerConfirmation from "./Fragments/ClinicManagerConfirmation/ClinicManagerConfirmation";
 import ClinicManagerDoctorsLicensesTable from "./Fragments/ClinicManagerDoctorsLicensesTable/ClinicManagerDoctorsLicensesTable";
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
-import ClinicManagerCallChart from "../../Fragments/Charts/ClinicManagerCallChart";
 
 
 
@@ -48,7 +47,7 @@ function ClinicManager() {
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <ClinicManagerCallChart data={progressData2} />
+                            <ClinicManagerProgressCount data={progressData2} />
                         </div>
                     </Col>
                 </Row>

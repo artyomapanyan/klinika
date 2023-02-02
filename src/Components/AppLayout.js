@@ -60,6 +60,7 @@ import Offer from "./Dashboard/Offers/Offer";
 import Coupons from "./Dashboard/Coupons/Coupons";
 import Coupon from "./Dashboard/Coupons/Coupon";
 import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
+import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
 
 
 function AppLayout(){
@@ -253,7 +254,8 @@ function AppLayout(){
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
                     <Route path={'clinic-manager'} element={<ClinicManager />}/>
-                    <Route path={'Doctor-reworked'} element={<DoctorReworked />}/>
+                    <Route path={'doctor-reworked'} element={<DoctorReworked />}/>
+                    <Route path={'super-admin'} element={<SuperAdmin />}/>
 
                 </Routes>
             </Content>

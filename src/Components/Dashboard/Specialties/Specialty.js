@@ -56,28 +56,29 @@ function Specialty() {
     console.log(data)
 
     return (
-        <div className={"add_edit_content"}>
-            {data?.title ? <h3>{t(`Editing Specialty - ${data?.title}`)}</h3> : <h3>{t(`Add new Specialty`)}</h3>}
+        <div>
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Specialty - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Specialty`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
             >
-                <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
-                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
-                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.status}
-                           initialData={Resources.Status}
-                />
-                <FileManager text1={'Click or drag file to this area to upload'}
-                             text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
-                             name={'icon'}
-                             uploadIcon={<InboxOutlined/>}
-                             initialFileList={[data.icon]} limit={1} formRef={formRef} type={'drag'}/>
-
-                <Space>
+                <div  className={"add_edit_content"}>
+                    <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
+                    <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.status}
+                               initialData={Resources.Status}
+                    />
+                    <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                    <FileManager text1={'Click or drag file to this area to upload'}
+                                 text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                                 name={'icon'}
+                                 uploadIcon={<InboxOutlined/>}
+                                 initialFileList={[data.icon]} limit={1} formRef={formRef} type={'drag'}/>
+                </div>
+                <Space className={'create_apdate_btns'}>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks['Specialty']))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>

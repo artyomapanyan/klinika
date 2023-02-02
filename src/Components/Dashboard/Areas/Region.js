@@ -47,25 +47,26 @@ function Region() {
 
     }
 
-    const textChange = () => {
 
-    }
     return(
-        <div className={'add_edit_content'}>
-            {data?.name ? <h3 onClick={textChange}>{t(`Editing Area - ${data?.name}`)}</h3> : <h3>{t(`Add new Area`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Area - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Area`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
-                <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.country?.id}
-                           initialData={data?.country?[data.country]:[]}
-                           resource={'Country'}/>
+                <div className={'add_edit_content'}>
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+                    <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.country?.id}
+                               initialData={data?.country?[data.country]:[]}
+                               resource={'Country'}/>
+                </div>
 
-                <Space>
+
+                <Space className={'create_apdate_btns'}>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>

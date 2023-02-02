@@ -169,10 +169,14 @@ export const deleteResource = (resource,id,token)=>{
     })
 }
 export const postResource = (resource,param,token,id=null,params)=>{
+    const method = api[resource][param].method;
+
     return  axios.request({
         url:`${api[resource][param].url}${id??''}`,
-        method:api[resource][param].method,
-        data:params,
+        method,
+    ...(method!=='GET'?{
+        data:params
+    }:{params}),
         headers: {
             'Authorization': token,
         }
