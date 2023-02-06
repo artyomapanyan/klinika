@@ -11,7 +11,6 @@ import ClinicOwnerPatientsChart from "../../Fragments/Charts/ClinicOwnerPatients
 import IncomeChannelsChart from "../../Fragments/Charts/IncomeChannelsChart";
 import GradientChart from "../../Fragments/Charts/GradientChart";
 import MonthStatistics from "../../Fragments/Charts/MonthStatistics";
-import LineChartIncomes from "../../Fragments/Charts/LineChartIncomes";
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import SuperAdminIncomesChart from "../../Fragments/Charts/SuperAdminIncomesChart";
 import SuperAdminIncVsConvers from "../../Fragments/Charts/SuperAdminIncVsConvers";

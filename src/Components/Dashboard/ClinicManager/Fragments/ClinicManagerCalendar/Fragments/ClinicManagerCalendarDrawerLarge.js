@@ -4,7 +4,6 @@ import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
 import React from "react";
 import Resources from "../../../../../../store/Resources";
-import dayjs from "dayjs";
 
 
 function ClinicManagerCalendarDrawerLarge({openDrawer}) {

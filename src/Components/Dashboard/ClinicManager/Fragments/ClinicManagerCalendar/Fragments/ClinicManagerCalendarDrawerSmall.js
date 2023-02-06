@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
-import {Avatar, Button, Drawer, Form, Space, Tag} from "antd";
+import React from 'react';
+import {Avatar, Button, Form, Space, Tag} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
-import ClinicManagerCalendarDrawerLarge from "./ClinicManagerCalendarDrawerLarge";
 
 
 function ClinicManagerCalendarDrawerSmall({openLargeDrawer}) {

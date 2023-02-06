@@ -8,11 +8,18 @@ import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
-import {blobToObjectUrl, clearObject, paramsToObject} from "../../functions";
+import {clearObject, paramsToObject} from "../../functions";
 import axios from "axios";
 import api from "../../Api";
 
-function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null,hideActions=false, exportButton = true}) {
+function ResourceTable({resource, tableColumns,
+                           title,tableParams={},
+                           resourceLink=null,
+                           hideActions=false,
+                           exportButton = true,
+                           except={},
+                           handleTableBelowData,
+                           noHeader=false}) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
@@ -77,10 +84,10 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
 
             ...(hideActions?[]:[{
             dataIndex: 'id', title: 'action', key: 'id', render: (e) => <Space>
-                <Tooltip title="Update">
+                    {!except.edit&&<Tooltip title="Update">
                     <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
-                </Tooltip>
-                <Tooltip title="Delete">
+                </Tooltip>}
+                {!except.delete&&<Tooltip title="Delete">
                     <Popconfirm
                         title={t("Are you sure to delete this entry?")}
                         onConfirm={() => onResourceDelete(e)}
@@ -92,7 +99,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
                                 }}/>}>
                         <Button size={'small'}><DeleteOutlined/></Button>
                     </Popconfirm>
-                </Tooltip>
+                </Tooltip>}
 
             </Space>
         }])
@@ -125,7 +132,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
     }
 
     return (<Content className={'layout-conatiner'}>
-        <Row className={'resource-header'}>
+        {!noHeader&&<Row className={'resource-header'}>
             <Col lg={12}>
                 <Space>
                     <Typography.Title level={4}>{t(title)}</Typography.Title>
@@ -145,20 +152,24 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
                     <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
                 </Tooltip>
             </Col>
-        </Row>
+        </Row>}
         <Row style={{marginTop:30}}>
             <Col lg={24}>
                 <Form>
                 <Table
                     columns={columns}
                     loading={loading}
-                    pagination={data.pagination}
+                    pagination={{
+                        ...data.pagination,
+                        showTotal: (total) =>handleTableBelowData?handleTableBelowData(dataState,loadingState,total):null
+                    }}
                     onChange={handleTableChange}
                     dataSource={data?.items}
                     rowKey={e => e.id}
                     size={'small'}
                 />
                 </Form>
+
             </Col>
         </Row>
     </Content>)

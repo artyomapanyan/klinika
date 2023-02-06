@@ -3,12 +3,11 @@ import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, postResource, updateResource} from "../../../../Functions/api_calls";
 import Preloader from "../../../../Preloader";
-import {Button, Col, Form, Row, Select, Space, Switch} from "antd";
+import {Button, Form, Space} from "antd";
 import {t} from "i18next";
 
 import resourceLinks from "../../../../ResourceLinks";
 import Monday from "./WorkingDays/Monday";
-
 
 
 const resource = "Clinic";
@@ -17,18 +16,35 @@ function ClinicWorkingHours({loadingState, dataState}) {
     const navigate = useNavigate();
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
-    const {data, setData} = dataState;
     const {loading, setLoading} = loadingState;
 
     const [workingData, setWorkingData] = useState({})
 
+
+
     //const [switchValuesState, setSwitchValuesState] = useState({})
+    let a = {
+        friday: [{day: 'friday', opens_at: '00:00', closes_at: '23:59', is_day_off: false, type: 'telehealth'}],
+        monday:[{day: 'monday', opens_at: '00:00', closes_at: '12:45', is_day_off: false, type: 'telehealth'}],
+        saturday:[{day: 'saturday', opens_at: '00:00', closes_at: '23:59', is_day_off: false, type: 'telehealth'}],
+        sunday:[{day: 'sunday', opens_at: '00:00', closes_at: '23:59', is_day_off: false, type: 'telehealth'}],
+        thursday:[{day: 'thursday', opens_at: '00:00', closes_at: '23:59', is_day_off: false, type: 'telehealth'}],
+        tuesday:[{day: 'tuesday', opens_at: '00:00', closes_at: '23:59', is_day_off: false, type: 'telehealth'}],
+        wednesday:[{day: 'wednesday', opens_at: '00:00', closes_at: '23:59', is_day_off: false, type: 'telehealth'}],
+
+    }
 
 
     useEffect(()=>{
-        postResource(resource,'WorkingHours',token,params.id,{service:'telehealth'}).then(responses => {
-            setWorkingData(responses)
-        })
+        if(params.id){
+            postResource(resource,'WorkingHours',token,params.id,{service:'telehealth'}).then(responses => {
+                console.log(responses)
+                setWorkingData(responses)
+            })
+        }else{
+            setWorkingData(a)
+        }
+
     }, []);
 
 
@@ -38,7 +54,7 @@ function ClinicWorkingHours({loadingState, dataState}) {
         return;
         setLoading(true)
 
-        setData((prevState)=>({
+        setWorkingData((prevState)=>({
             ...prevState,
             ...values
         }))
@@ -61,15 +77,21 @@ function ClinicWorkingHours({loadingState, dataState}) {
         }
     }
 
-    const handleValuesChange = (e)=>{
-        setData((prevState)=>({
+    const handleValuesChange = (e,v)=>{
+
+        setWorkingData((prevState)=>({
             ...prevState,
-            ...e
+            ...v
         }))
+
     }
-    console.log(data, 'ffffd')
-
-
+    const handleUpdateWorkState = (data,key)=>{
+        setWorkingData(prevState => {
+            let newData = {...prevState};
+            newData[key] = data;
+            return newData
+        })
+    }
 
 
     return(
@@ -83,15 +105,16 @@ function ClinicWorkingHours({loadingState, dataState}) {
             >
                 <div className={'add_edit_content'}>
                     {Object.keys(workingData).map(key=>{
-                    return  <Monday key={key} dataKey={key} workingData={workingData} data={workingData[key]}/>
+                    return  <Monday handleUpdateParent={handleUpdateWorkState} key={key} dataKey={key} workingData={workingData} data={workingData[key]} />
                     })}
 
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks["SubSpecialty"]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate("clinics"))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
+
         </div>
     )
 }

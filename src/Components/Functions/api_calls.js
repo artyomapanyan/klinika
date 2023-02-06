@@ -125,27 +125,48 @@ export const useGetResourceSingle = (resource,id,additionals={
 
     return {loadingState,dataState,addDataState}
 }
-export const updateResource = (resource,id,values,token,withFormData=false)=>{
-    let formData = {}
-    if(withFormData){
-        formData = new FormData();
-        formData.append('_method','PUT')
-        for (const name in values) {
-            if(Array.isArray(values[name])){
-                values[name].map(e=>formData.append(name+'[]', e))
+
+function hGOD(formData,name,object){
+    Object.keys(object).forEach(key=>{
+        if(typeof object[key]==='object'){
+            hGOD(formData,name+'.'+key,object[key])
+        }else{
+            formData.append(name+'.'+key,object[key])
+        }
+    })
+
+}
+function handleGenerateFD(values,method){
+    let formData = new FormData();
+    if(method){
+        formData.append('_method',method)
+    }
+    for (const name in values) {
+        if(Array.isArray(values[name])){
+            values[name].map(e=>formData.append(name+'[]', e))
+        }else{
+            if(name.includes('_deleted')){
+                if(values[name]){
+                    formData.append(name, values[name]);
+                }
             }else{
-                if(name.includes('_deleted')){
-                    if(values[name]){
-                        formData.append(name, values[name]);
-                    }
+                values[name] = values[name]===true?1:values[name]===false?0: values[name]
+                if(typeof values[name] === "object"){
+                    hGOD(formData,name,values[name])
                 }else{
-                    values[name] = values[name]===true?1:values[name]===false?0: values[name]
                     formData.append(name, values[name]);
                 }
 
             }
 
         }
+    }
+    return formData
+}
+export const updateResource = (resource,id,values,token,withFormData=false)=>{
+    let formData = {}
+    if(withFormData){
+        handleGenerateFD(values,"PUT")
     }else{
         formData = values;
     }
@@ -185,21 +206,7 @@ export const postResource = (resource,param,token,id=null,params)=>{
 export const createResource = (resource,values,token,withFormData=false)=>{
     let formData = {}
     if(withFormData){
-        formData = new FormData();
-        for (const name in values) {
-            if(Array.isArray(values[name])){
-                values[name].map(e=>formData.append(name+'[]', e))
-            }else{
-                if(name.includes('_deleted')){
-                    if(values[name]){
-                        formData.append(name, values[name]);
-                    }
-                }else{
-                    values[name] = values[name]===true?1:values[name]===false?0: values[name]
-                    formData.append(name, values[name]);
-                }
-            }
-        }
+        handleGenerateFD(values,null)
     }else{
         formData = values;
     }

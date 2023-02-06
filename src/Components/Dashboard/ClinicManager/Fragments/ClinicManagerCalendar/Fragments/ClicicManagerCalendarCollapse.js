@@ -1,6 +1,6 @@
 
 import React, {useState} from "react";
-import {Avatar, Button} from "antd";
+import {Button} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse";
 

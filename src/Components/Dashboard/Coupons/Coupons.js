@@ -2,8 +2,6 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
-import TableEditable from "../../Fragments/TableEditable";
-import Resources from "../../../store/Resources";
 import DateParser from "../../Fragments/DateParser";
 
 function Coupons() {

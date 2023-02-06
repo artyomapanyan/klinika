@@ -22,6 +22,7 @@ const ResourceLins = {
     Clinic:'/dashboard/clinics/',
     Offer:'/dashboard/offers/',
     Coupon:'/dashboard/coupons/',
+    ClinicDoctor:'/dashboard/clinics/doctors/',
 
 }
 export default ResourceLins

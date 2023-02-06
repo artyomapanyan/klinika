@@ -9,7 +9,6 @@ import React, {useRef} from "react";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import Resources from "../../../../store/Resources";
-import dayjs from 'dayjs';
 
 const resource = 'User';
 

@@ -2,8 +2,6 @@ import React from 'react';
 import {t} from "i18next";
 import {Avatar, Button, Divider, Radio, Space, Table} from "antd";
 import {LeftOutlined, RightOutlined, AlibabaOutlined} from "@ant-design/icons";
-import phoneLogoPuple from "../../../../dist/icons/phoneLogoPuple.svg";
-import ColorSelect from "../../../Fragments/ColorSelect";
 import starRed from "../../../../dist/icons/star-red.svg";
 
 

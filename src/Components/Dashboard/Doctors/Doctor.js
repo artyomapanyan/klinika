@@ -50,7 +50,7 @@ function Doctor() {
             })
         }
     }
-
+    console.log(data)
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
@@ -106,15 +106,15 @@ function Doctor() {
                                        rules={[{required: true}]}
                                        initialValue={data?.specialties?.map(e=>e.id)}
                                        initialData={data?.specialties??[]}
-                                       resource={'InsuranceCompany'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                                       resource={'Taxonomy'}
+                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:0}}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties??[]}
-                                       resource={'InsuranceCompany'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                                       resource={'Taxonomy'}
+                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1}}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}

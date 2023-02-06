@@ -53,7 +53,7 @@ function Specialty() {
         }
 
     }
-    console.log(data)
+
 
     return (
         <div>

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React from "react";
 import 'devextreme/dist/css/dx.light.css';
 import Scheduler, {Resource} from 'devextreme-react/scheduler';
 import DoctorReworkedCalendarHeader from "./Fragments/DoctorReworkedCalendarHeader";

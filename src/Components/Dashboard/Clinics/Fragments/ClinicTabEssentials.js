@@ -2,16 +2,16 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useRef} from "react";
-import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
+import {createResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {Button, Col, Form, InputNumber, Row, Space, Spin, Switch} from "antd";
+import {Button, Col, Form, InputNumber, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import FileManager from "../../../Fragments/FileManager";
 import {CheckOutlined, CloseOutlined, InboxOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
-import {Status, Wrapper} from "@googlemaps/react-wrapper";
+import {Wrapper} from "@googlemaps/react-wrapper";
 import React from "react";
 import MyMapComponent from "./MapComponent";
 
@@ -27,21 +27,65 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
+
     let token = useSelector((state) => state.auth.token);
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
 
     const onFinish = (values) => {
         setLoading(true)
+        console.log(values)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
         values.has_telehealth_service = values.has_telehealth_service === true
-        values.has_home_visit_service === true ? values.has_home_visit_service = true : values.has_home_visit_service = false;
-        values.has_clinic_visit_service === true ? values.has_clinic_visit_service = true : values.has_clinic_visit_service = false;
-        values.has_laboratory_home_visit_service === true ? values.has_laboratory_home_visit_service = true : values.has_laboratory_home_visit_service = false;
-        values.has_laboratory_clinic_visit_service === true ? values.has_laboratory_clinic_visit_service = true : values.has_laboratory_clinic_visit_service = false;
-        values.has_nursing_service === true ? values.has_nursing_service = true : values.has_nursing_service = false;
-        values.has_physical_therapy_home_visit_service === true ? values.has_physical_therapy_home_visit_service = true : values.has_physical_therapy_home_visit_service = false;
-        values.has_physical_therapy_clinic_visit_service === true ? values.has_physical_therapy_clinic_visit_service = true : values.has_physical_therapy_clinic_visit_service = false;
+        values.has_home_visit_service = values.has_home_visit_service === true
+        values.has_clinic_visit_service = values.has_clinic_visit_service === true
+        values.has_laboratory_home_visit_service = values.has_laboratory_home_visit_service === true
+        values.has_laboratory_clinic_visit_service = values.has_laboratory_clinic_visit_service === true
+        values.has_nursing_service = values.has_nursing_service === true
+        values.has_physical_therapy_home_visit_service = values.has_physical_therapy_home_visit_service === true
+        values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
+
+        if(values.has_clinic_visit_service) {
+            values.service_settings.clinic_visit.fixed_diagnoses_price = 60
+            values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
+            values.service_settings.clinic_visit.enable_vat_calculation = values.service_settings.clinic_visit.enable_vat_calculation === true
+        }
+        if(values.has_home_visit_service){
+            values.service_settings.home_visit.fixed_diagnoses_price =  60
+            values.service_settings.home_visit.has_insurance_company = values.service_settings.home_visit.has_insurance_company === true
+            values.service_settings.home_visit.enable_vat_calculation = values.service_settings.home_visit.enable_vat_calculation === true
+        }
+
+        if(values.has_laboratory_clinic_visit_service) {
+            values.service_settings.laboratory_clinic_visit.fixed_diagnoses_price = 60
+            values.service_settings.laboratory_clinic_visit.has_insurance_company = values.service_settings.laboratory_clinic_visit.has_insurance_company === true
+            values.service_settings.laboratory_clinic_visit.enable_vat_calculation = values.service_settings.laboratory_clinic_visit.enable_vat_calculation === true
+        }
+        if(values.has_laboratory_home_visit_service) {
+            values.service_settings.laboratory_home_visit.fixed_diagnoses_price = 60
+            values.service_settings.laboratory_home_visit.has_insurance_company = values.service_settings.laboratory_home_visit.has_insurance_company === true
+            values.service_settings.laboratory_home_visit.enable_vat_calculation = values.service_settings.laboratory_home_visit.enable_vat_calculation === true
+        }
+        if(values.has_nursing_service) {
+            values.service_settings.nursing.fixed_diagnoses_price = 60
+            values.service_settings.nursing.has_insurance_company = values.service_settings.nursing.has_insurance_company === true
+            values.service_settings.nursing.enable_vat_calculation = values.service_settings.nursing.enable_vat_calculation === true
+        }
+        if(values.has_physical_therapy_clinic_visit_service) {
+            values.service_settings.physical_therapy_clinic_visit.fixed_diagnoses_price = 60
+            values.service_settings.physical_therapy_clinic_visit.has_insurance_company = values.service_settings.physical_therapy_clinic_visit.has_insurance_company === true
+            values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation = values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation === true
+        }
+        if(values.has_physical_therapy_home_visit_service) {
+            values.service_settings.physical_therapy_home_visit.fixed_diagnoses_price = 60
+            values.service_settings.physical_therapy_home_visit.has_insurance_company = values.service_settings.physical_therapy_home_visit.has_insurance_company === true
+            values.service_settings.physical_therapy_home_visit.enable_vat_calculation = values.service_settings.physical_therapy_home_visit.enable_vat_calculation === true
+        }
+        if(values.has_telehealth_service) {
+            values.service_settings.telehealth.fixed_diagnoses_price = 60
+            values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
+            values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
+        }
 
         setData((prevState)=>({
             ...prevState,
@@ -187,8 +231,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","clinic_visit","duration"]}
-                                            initialValue={data?.service_settings?.clinic_visit?.duration}
+                                            name={["service_settings","clinic_visit","fixed_diagnoses_price"]}
+                                            initialValue={data?.service_settings?.clinic_visit?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>
@@ -233,8 +277,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","telehealth","duration"]}
-                                            initialValue={data?.service_settings?.telehealth?.duration}
+                                            name={["service_settings","telehealth","fixed_diagnoses_price"]}
+                                            initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>
@@ -278,12 +322,15 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","home_visit","duration"]}
-                                            initialValue={data?.service_settings?.home_visit?.duration}
+                                            name={["service_settings","home_visit","fixed_diagnoses_price"]}
+                                            initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>
                                     </div>
+
+
+
                                 </div> : <div></div>
                             }
                             <Form.Item
@@ -323,8 +370,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","laboratory_home_visit","duration"]}
-                                            initialValue={data?.laboratory_home_visit?.home_visit?.duration}
+                                            name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]}
+                                            initialValue={data?.laboratory_home_visit?.home_visit?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>
@@ -370,8 +417,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","laboratory_clinic_visit","duration"]}
-                                            initialValue={data?.laboratory_home_visit?.laboratory_clinic_visit?.duration}
+                                            name={["service_settings","laboratory_clinic_visit","fixed_diagnoses_price"]}
+                                            initialValue={data?.laboratory_home_visit?.laboratory_clinic_visit?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>
@@ -415,8 +462,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","nursing","duration"]}
-                                            initialValue={data?.laboratory_home_visit?.nursing?.duration}
+                                            name={["service_settings","nursing","fixed_diagnoses_price"]}
+                                            initialValue={data?.laboratory_home_visit?.nursing?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>
@@ -460,8 +507,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","physical_therapy_home_visit","duration"]}
-                                            initialValue={data?.laboratory_home_visit?.physical_therapy_home_visit?.duration}
+                                            name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]}
+                                            initialValue={data?.laboratory_home_visit?.physical_therapy_home_visit?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>
@@ -505,8 +552,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <div>
                                         <Form.Item
                                             label={t(`Service Fee`)}
-                                            name={["service_settings","physical_therapy_clinic_visit","duration"]}
-                                            initialValue={data?.laboratory_home_visit?.physical_therapy_clinic_visit?.duration}
+                                            name={["service_settings","physical_therapy_clinic_visit","fixed_diagnoses_price"]}
+                                            initialValue={data?.laboratory_home_visit?.physical_therapy_clinic_visit?.fixed_diagnoses_price}
                                         >
                                             <InputNumber size={'small'} />
                                         </Form.Item>

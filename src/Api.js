@@ -127,6 +127,10 @@ let api = {
         url: 'coupons',
         resource: 'Coupon',
     },
+    {
+        url: 'clinic-doctors',
+        resource: 'ClinicDoctor',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

@@ -1,9 +1,8 @@
 
 import {Tabs} from "antd";
 import React, {useEffect, useState} from "react";
-import ClinicTabBars from "./Fragments/ClinicTabBars";
 import ClinicTabEssentials from "./Fragments/ClinicTabEssentials";
-import ClinicTabManageDoctors from "./Fragments/ClinicTabManageDoctors";
+import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
 import ClinicWorkingHours from "./Fragments/ClinicWorkingHours/ClinicWorkingHours";
 import {useGetResourceSingle} from "../../Functions/api_calls";
 import { useParams} from "react-router";
@@ -31,15 +30,15 @@ const handleChange = (e)=>{
     return(
         <div >
 
-                <ClinicTabBars onChange={handleChange} activeKey={tab}>
+                <Tabs onChange={handleChange} activeKey={tab}>
                     <Tabs.TabPane key={'essentials'} tab={'Essentials'} >
                         <ClinicTabEssentials loadingState={loadingState}
                                              dataState={dataState}/>
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'manage'} tab={'Manage Doctors'} >
+                    <Tabs.TabPane key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
                         <ClinicTabManageDoctors />
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'working'} tab={'Working Hours'} >
+                    <Tabs.TabPane key={'working'} tab={'Working Hours'} disabled={!params.id}>
                         <ClinicWorkingHours loadingState={loadingState}
                                             dataState={dataState}
                                             />
@@ -53,7 +52,7 @@ const handleChange = (e)=>{
                     <Tabs.TabPane key={'overview6'} tab={'Patient 6'} >
                         dfgdf
                     </Tabs.TabPane>
-                </ClinicTabBars>
+                </Tabs>
           </div>
     )
 }

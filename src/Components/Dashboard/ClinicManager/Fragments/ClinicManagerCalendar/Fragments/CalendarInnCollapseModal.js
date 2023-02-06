@@ -1,7 +1,5 @@
-import {AutoComplete, Avatar, Button, Drawer, Input, Space, Tag} from "antd";
+import {AutoComplete, Avatar, Button, Drawer, Space, Tag} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import {t} from "i18next";
-import FormInput from "../../../../../Fragments/FormInput";
 import React, {useState} from "react";
 import ClinicManagerCalendarDrawerSmall from "./ClinicManagerCalendarDrawerSmall";
 import ClinicManagerCalendarDrawerLarge from "./ClinicManagerCalendarDrawerLarge";

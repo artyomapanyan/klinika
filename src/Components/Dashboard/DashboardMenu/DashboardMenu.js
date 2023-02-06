@@ -10,7 +10,7 @@ import dash3 from "../../../dist/icons/frame3.svg";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";
-import i18n from "i18next";
+
 function DashboardMenu({mouseCollapsed,fixCollapse}){
     const {t} = useTranslation();
     const navigate = useNavigate();

@@ -1,6 +1,6 @@
-import {Avatar, Button, DatePicker, Divider, Dropdown, Progress, Space, Switch, Table} from "antd";
+import {Avatar, Button, DatePicker, Divider, Progress, Space, Switch, Table} from "antd";
 import {t} from "i18next";
-import {DownOutlined, LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
+import {LeftOutlined, RightOutlined, UserOutlined} from "@ant-design/icons";
 import React from "react";
 import ColorSelect from "../../../Fragments/ColorSelect";
 
