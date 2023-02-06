@@ -383,7 +383,7 @@ let options1 = [
     },
 ];
 
-function Monday({data,dataKey,handleUpdateParent}) {
+function WorkingWeekDays({data,dataKey,handleUpdateParent}) {
 
 
     const handleAddHours =()=>{
@@ -403,7 +403,6 @@ function Monday({data,dataKey,handleUpdateParent}) {
 
   const handleChangeSwitch = (e)=>{
       const newData = {...data}
-      console.log(e,newData)
       newData[0].is_day_off = !e
       handleUpdateParent(Object.values(newData),dataKey)
   }
@@ -411,7 +410,7 @@ function Monday({data,dataKey,handleUpdateParent}) {
         data?.length&&<div>
 
                <Row>
-                        <Col lg={2}>
+                        <Col lg={3}>
                             <div style={{margin:15, fontSize:18, fontWeight:600}}>{data[0]?.day}</div>
                         </Col>
                         <Col lg={3}>
@@ -437,7 +436,7 @@ function Monday({data,dataKey,handleUpdateParent}) {
                                 initialValue={data[0]?.day}
                             />:null}
                         </Col>
-                   <Col lg={19}>
+                   <Col lg={18}>
                    {data?.map((el,key) => {
                        let currentOptions = [...options1]
                        if(key>0){
@@ -502,4 +501,4 @@ function Monday({data,dataKey,handleUpdateParent}) {
         </div>
     )
 }
-export default Monday;
+export default WorkingWeekDays;

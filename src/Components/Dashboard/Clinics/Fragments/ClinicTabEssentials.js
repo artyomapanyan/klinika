@@ -34,7 +34,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
 
     const onFinish = (values) => {
         setLoading(true)
-        console.log(values)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
         values.has_telehealth_service = values.has_telehealth_service === true
         values.has_home_visit_service = values.has_home_visit_service === true

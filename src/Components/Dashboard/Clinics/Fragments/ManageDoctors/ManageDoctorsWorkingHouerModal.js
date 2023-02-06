@@ -5,13 +5,13 @@ import {createResource, postResource, updateResource} from "../../../../Function
 import Preloader from "../../../../Preloader";
 import {Button, Form, Space} from "antd";
 import {t} from "i18next";
-
 import resourceLinks from "../../../../ResourceLinks";
-import WorkingWeekDays from "./WorkingDays/WorkingWeekDays";
+import WorkingWeekDays from "../ClinicWorkingHours/WorkingDays/WorkingWeekDays";
+
 
 
 const resource = "Clinic";
-function ClinicWorkingHours({loadingState, dataState}) {
+function ManageDoctorsWorkingHouerModal({loadingState, dataState}) {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -99,7 +99,7 @@ function ClinicWorkingHours({loadingState, dataState}) {
             >
                 <div className={'add_edit_content'}>
                     {Object.keys(workingData).map(key=>{
-                    return  <WorkingWeekDays handleUpdateParent={handleUpdateWorkState} key={key} dataKey={key} workingData={workingData} data={workingData[key]} />
+                        return  <WorkingWeekDays handleUpdateParent={handleUpdateWorkState} key={key} dataKey={key} workingData={workingData} data={workingData[key]} />
                     })}
 
                 </div>
@@ -112,4 +112,4 @@ function ClinicWorkingHours({loadingState, dataState}) {
         </div>
     )
 }
-export default ClinicWorkingHours;
+export default ManageDoctorsWorkingHouerModal;

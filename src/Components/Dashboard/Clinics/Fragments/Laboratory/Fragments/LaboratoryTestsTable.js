@@ -1,24 +1,27 @@
-import React, {useState,useRef} from "react";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
-import {Button, Space} from "antd";
-import ResourceTable from "../../../../Fragments/ResourceTable";
-import ManageDoctorsModal from "./ManageDoctorsModal";
-import {useParams} from "react-router";
-import {createResource} from "../../../../Functions/api_calls";
-import {useSelector} from "react-redux";
-import ClinicApprovedDoctors from "./ClinicApprovedDoctors";
 
-function ClinicTabManageDoctors({loadingState}) {
+import {useParams} from "react-router";
+import {Button, InputNumber, Space,} from "antd";
+
+import {useSelector} from "react-redux";
+import {createResource} from "../../../../../Functions/api_calls";
+import ResourceTable from "../../../../../Fragments/ResourceTable";
+import LaboratorytestModal from "./LaboratorytestModal";
+import FormInput from "../../../../../Fragments/FormInput";
+
+
+function LaboratoryTestsTable() {
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
     let doctorsTable = useRef();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const showModal = () => {
+    const openTestModal = () => {
         setIsModalOpen(true);
-    };
-    const onDoctorCreate = (data) => {
+    }
+
+    const onCreate = (data) => {
         if (!data) {
             return setIsModalOpen(false);
         }
@@ -34,39 +37,40 @@ function ClinicTabManageDoctors({loadingState}) {
         })
     }
 
-    return (
+
+    return(
         <div>
             <div  className={'add_edit_content'}>
                 <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
                 <ResourceTable
                     ref={doctorsTable}
                     noHeader={true}
-                    except={{
-                        edit: true
-                    }}
-                    tableParams={{
-                        clinic: params.id
-                    }}
+                    except={{edit: true}}
                     resource={'ClinicDoctor'}
                     tableColumns={[
                         {
                             dataIndex: ['doctor', 'plid'],
                             title: 'Doctor PLID',
                             key: 'plid',
-                            sorter: true,
+                            render:(e,record)=> {
+                                return<div><FormInput name={'doctor_id'} inputType={'resourceSelect'} /></div>
+                            }
+                        },
+                        {
+                            dataIndex: ['doctor', 'plid'],
+                            title: 'Doctor PLID',
+                            key: 'plid',
+                            render:(e,record)=> {
+                                return<div><InputNumber name={'doctor_id'}  /></div>
+                            }
                         },
                     ]}
                     handleTableBelowData={(dataState,loadingState,total)=>{
-                        return <Button type={'primary'} onClick={showModal}>+</Button>
+                        return <Button type={'primary'} onClick={openTestModal}>+</Button>
                     }}
                 />
-
-                <ManageDoctorsModal isModalOpen={isModalOpen} onDoctorCreate={onDoctorCreate}/>
             </div >
-            <div className={'add_edit_content'}>
-                <ClinicApprovedDoctors loadingState={loadingState}/>
-            </div>
-
+            <LaboratorytestModal isModalOpen={isModalOpen} onCreate={onCreate}/>
 
             <Space className={'create_apdate_btns'}>
                 <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
@@ -76,5 +80,4 @@ function ClinicTabManageDoctors({loadingState}) {
         </div>
     )
 }
-
-export default ClinicTabManageDoctors;
+export default LaboratoryTestsTable;

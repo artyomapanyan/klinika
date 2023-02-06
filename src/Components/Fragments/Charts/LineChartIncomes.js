@@ -141,7 +141,6 @@ function LineChartIncomes() {
                         shadowColor: "rgba(0, 0, 0, 0.5)",
                         // callbacks: {
                         //   label: function (context) {
-                        //     console.log(context);
                         //     return context.dataset.data.map((item) => item + "$ ");
                         //   },
                         //   //     afterLabel: function(tooltipItem, data) {

@@ -7,6 +7,8 @@ import ClinicWorkingHours from "./Fragments/ClinicWorkingHours/ClinicWorkingHour
 import {useGetResourceSingle} from "../../Functions/api_calls";
 import { useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
+import ClinicHomeVisit from "./Fragments/ClinicHomeVisit/ClinicHomeVisit";
+import Laboratory from "./Fragments/Laboratory/Laboratory";
 
 const resource = "Clinic"
 
@@ -36,18 +38,17 @@ const handleChange = (e)=>{
                                              dataState={dataState}/>
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
-                        <ClinicTabManageDoctors />
+                        <ClinicTabManageDoctors  loadingState={loadingState}/>
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'working'} tab={'Working Hours'} disabled={!params.id}>
                         <ClinicWorkingHours loadingState={loadingState}
-                                            dataState={dataState}
-                                            />
+                                            dataState={dataState}/>
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'overview4'} tab={'Patient 4'} >
-                        dfgdf
+                    <Tabs.TabPane key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
+                        <ClinicHomeVisit />
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'overview5'} tab={'Patient 5'} >
-                        dfgdf
+                    <Tabs.TabPane key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                        <Laboratory />
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'overview6'} tab={'Patient 6'} >
                         dfgdf

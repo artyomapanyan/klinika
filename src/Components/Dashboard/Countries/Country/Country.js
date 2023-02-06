@@ -44,8 +44,6 @@ function Country() {
         }
     }
 
-    console.log(data)
-
     return (
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Country - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Country`)}</h3>}

@@ -50,7 +50,6 @@ function Doctor() {
             })
         }
     }
-    console.log(data)
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
