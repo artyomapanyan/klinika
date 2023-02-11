@@ -19,8 +19,9 @@ function ClinicWorkingHours({loadingState, dataState}) {
 
 
     useEffect(()=>{
-            postResource(resource,'WorkingHours',token,params.id,{service}).then(responses => {
-                setData(responses)
+            postResource(resource,'WorkingHours',token,params.id,{service}).then(response => {
+                console.log(response,'get')
+                setData(response)
             })
 
 
@@ -31,10 +32,11 @@ function ClinicWorkingHours({loadingState, dataState}) {
         setLoading(true)
         setData((prevState)=>({
             ...prevState,
-            ...prevValues
+            ...prevValues?.working_hours
         }))
         if (params.id) {
             updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
+                console.log(response,'updatge')
                 setData(response)
             }).finally(() => {
                 setLoading(false)
