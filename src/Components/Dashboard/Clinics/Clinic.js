@@ -7,8 +7,11 @@ import ClinicWorkingHours from "./Fragments/ClinicWorkingHours/ClinicWorkingHour
 import {useGetResourceSingle} from "../../Functions/api_calls";
 import { useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
-import ClinicHomeVisit from "./Fragments/ClinicHomeVisit/ClinicHomeVisit";
+import HomeVisit from "./Fragments/HomeVisit/HomeVisit";
 import Laboratory from "./Fragments/Laboratory/Laboratory";
+import ClinicVisit from "./Fragments/ClinicVisit/ClinicVisit";
+import Nursing from "./Fragments/Nursing/Nursing";
+
 
 const resource = "Clinic"
 
@@ -34,24 +37,25 @@ const handleChange = (e)=>{
 
                 <Tabs onChange={handleChange} activeKey={tab}>
                     <Tabs.TabPane key={'essentials'} tab={'Essentials'} >
-                        <ClinicTabEssentials loadingState={loadingState}
-                                             dataState={dataState}/>
+                        <ClinicTabEssentials loadingState={loadingState} dataState={dataState}/>
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
                         <ClinicTabManageDoctors  loadingState={loadingState}/>
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'working'} tab={'Working Hours'} disabled={!params.id}>
-                        <ClinicWorkingHours loadingState={loadingState}
-                                            dataState={dataState}/>
+                        <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
+                        <ClinicVisit />
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
-                        <ClinicHomeVisit />
+                        <HomeVisit />
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
                         <Laboratory />
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'overview6'} tab={'Patient 6'} >
-                        dfgdf
+                    <Tabs.TabPane key={'nursing'} tab={'Nursing'} disabled={!params.id}>
+                        <Nursing />
                     </Tabs.TabPane>
                 </Tabs>
           </div>

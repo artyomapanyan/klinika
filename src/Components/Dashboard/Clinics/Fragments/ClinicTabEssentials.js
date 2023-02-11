@@ -86,10 +86,12 @@ function ClinicTabEssentials({loadingState, dataState}) {
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
         }
 
+
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
+
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -184,7 +186,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                         </Col>
                         <Col lg={8} className="gutter-row">
                             <Wrapper apiKey="AIzaSyD9MbMz7FESa79v-nntPfcxJHYTw8Am1S4" >
-                                <MyMapComponent />
+                                <MyMapComponent data={data} />
                             </Wrapper>
                         </Col>
                     </Row>
@@ -229,11 +231,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","clinic_visit","fixed_diagnoses_price"]}
                                             initialValue={data?.service_settings?.clinic_visit?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
                                 </div> : <div></div>
@@ -275,11 +276,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","telehealth","fixed_diagnoses_price"]}
                                             initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
                                 </div> : <div></div>
@@ -320,11 +320,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","home_visit","fixed_diagnoses_price"]}
                                             initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
 
@@ -368,11 +367,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]}
                                             initialValue={data?.laboratory_home_visit?.home_visit?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
                                 </div> : <div></div>
@@ -415,11 +413,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","laboratory_clinic_visit","fixed_diagnoses_price"]}
                                             initialValue={data?.laboratory_home_visit?.laboratory_clinic_visit?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
                                 </div> : <div></div>
@@ -460,11 +457,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","nursing","fixed_diagnoses_price"]}
                                             initialValue={data?.laboratory_home_visit?.nursing?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
                                 </div> : <div></div>
@@ -505,11 +501,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]}
                                             initialValue={data?.laboratory_home_visit?.physical_therapy_home_visit?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
                                 </div> : <div></div>
@@ -550,11 +545,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     </div>
                                     <div>
                                         <Form.Item
-                                            label={t(`Service Fee`)}
                                             name={["service_settings","physical_therapy_clinic_visit","fixed_diagnoses_price"]}
                                             initialValue={data?.laboratory_home_visit?.physical_therapy_clinic_visit?.fixed_diagnoses_price}
                                         >
-                                            <InputNumber size={'small'} />
+                                            <InputNumber size={'small'} /> Service Free
                                         </Form.Item>
                                     </div>
                                 </div> : <div></div>

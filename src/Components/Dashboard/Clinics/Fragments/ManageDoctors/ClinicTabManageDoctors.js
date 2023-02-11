@@ -1,15 +1,19 @@
-import React, {useState,useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {t} from "i18next";
 import {Button, Space} from "antd";
 import ResourceTable from "../../../../Fragments/ResourceTable";
-import ManageDoctorsModal from "./ManageDoctorsModal";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {createResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import ClinicApprovedDoctors from "./ClinicApprovedDoctors";
+import resourceLinks from "../../../../ResourceLinks";
+import LaboratorytestModal from "../Laboratory/Fragments/LaboratorytestModal";
+
+const resource = 'Clinic'
 
 function ClinicTabManageDoctors({loadingState}) {
     const params = useParams();
+    const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     let doctorsTable = useRef();
 
@@ -18,7 +22,9 @@ function ClinicTabManageDoctors({loadingState}) {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    const onDoctorCreate = (data) => {
+
+
+    const onCreate = (data) => {
         if (!data) {
             return setIsModalOpen(false);
         }
@@ -56,12 +62,10 @@ function ClinicTabManageDoctors({loadingState}) {
                             sorter: true,
                         },
                     ]}
-                    handleTableBelowData={(dataState,loadingState,total)=>{
-                        return <Button type={'primary'} onClick={showModal}>+</Button>
-                    }}
                 />
+                <Button type={'primary'} onClick={showModal}>+ Add new Doctor</Button>
 
-                <ManageDoctorsModal isModalOpen={isModalOpen} onDoctorCreate={onDoctorCreate}/>
+                <LaboratorytestModal isModalOpen={isModalOpen} onCreate={onCreate}/>
             </div >
             <div className={'add_edit_content'}>
                 <ClinicApprovedDoctors loadingState={loadingState}/>
@@ -70,7 +74,7 @@ function ClinicTabManageDoctors({loadingState}) {
 
             <Space className={'create_apdate_btns'}>
                 <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
             </Space>
 
         </div>

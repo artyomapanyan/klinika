@@ -4,9 +4,6 @@ import {createResource, postResource, updateResource} from "../../../../Function
 import {useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 import resourceLinks from "../../../../ResourceLinks";
-import {t} from "i18next";
-import {Switch, Space} from "antd";
-import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
 import LaboratoryTestsTable from "./Fragments/LaboratoryTestsTable";
 
 const resource = "Clinic";
@@ -17,7 +14,7 @@ function Laboratory() {
 
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
-    const [switchState, setSwitchState] = useState(true)
+
 
 
     let type = "laboratory";
@@ -55,25 +52,10 @@ function Laboratory() {
         }
     }
 
-    const onChange = (checked) => {
-        setSwitchState(checked)
-    };
 
     return(
         <div className={'add_edit_content'}>
-            <div className={'home_visit_head'}>
-                <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
-                <Space >
-                    <Switch defaultChecked onChange={onChange} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                    Sync with main working hours
-                </Space>
-
-            </div>
-            {
-                switchState ? <div className={'add_edit_content'} align={"center"}>
-                    <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
-                </div> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
-            }
+            <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
 
             <div className={'add_edit_content'}>
                 <LaboratoryTestsTable />

@@ -166,7 +166,7 @@ function handleGenerateFD(values,method){
 export const updateResource = (resource,id,values,token,withFormData=false)=>{
     let formData = {}
     if(withFormData){
-        handleGenerateFD(values,"PUT")
+        formData = handleGenerateFD(values,"PUT")
     }else{
         formData = values;
     }
@@ -206,7 +206,7 @@ export const postResource = (resource,param,token,id=null,params)=>{
 export const createResource = (resource,values,token,withFormData=false)=>{
     let formData = {}
     if(withFormData){
-        handleGenerateFD(values,null)
+        formData =  handleGenerateFD(values,null)
     }else{
         formData = values;
     }

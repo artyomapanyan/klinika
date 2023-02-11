@@ -124,6 +124,10 @@ let api = {
         resource: 'Offer',
     },
     {
+        url: 'clinics/working-hours',
+        resource: 'ClinicWorkingHours',
+    },
+    {
         url: 'coupons',
         resource: 'Coupon',
     },

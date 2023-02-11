@@ -5,17 +5,16 @@ import { LeftOutlined, RightOutlined} from "@ant-design/icons";
 function IncomesVsConversHeader() {
     let data = ['Jeddah Clinic', 'Clinic name']
     return(
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
+        <div style={{padding:30}}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
-                {t("Incomes")}
-                {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
+                {t("Incomes vs Conversion Rate")}
+                <Button><LeftOutlined /></Button>
+                <Button><RightOutlined /></Button>
             </Space>
             <div>
-                <Space>
-                    <Button><LeftOutlined /></Button>
-                    <Button><RightOutlined /></Button>
-                </Space>
+                {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
             </div>
+
         </div>
     )
 }

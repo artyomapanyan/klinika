@@ -23,6 +23,7 @@ const ResourceLins = {
     Offer:'/dashboard/offers/',
     Coupon:'/dashboard/coupons/',
     ClinicDoctor:'/dashboard/clinics/doctors/',
+    ClinicWorkingHours:'/dashboard/clinics/working-hours/',
 
 }
 export default ResourceLins

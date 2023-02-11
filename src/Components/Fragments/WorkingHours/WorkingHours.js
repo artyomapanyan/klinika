@@ -1,21 +1,22 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router";
-import {Button, Form, Space} from "antd";
+import {Button, Form, Space, Switch} from "antd";
 import {t} from "i18next";
 
 import WorkingWeekDays from "./Fragments/WorkingWeekDays";
+import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
+import Preloader from "../../Preloader";
 
 
 
 
-function WorkingHours({onFinish, data, loading, type}) {
+function WorkingHours({onFinish, data, loading, type,syncable}) {
 
     const navigate = useNavigate();
     const formRef = useRef();
 
-
-
     const [workingData, setWorkingData] = useState({})
+    const [switchChange, setSwitchChange] = useState(false)
 
 
     let customWorkingHouers = {
@@ -29,7 +30,6 @@ function WorkingHours({onFinish, data, loading, type}) {
 
     }
 
-
     useEffect(() => {
         if (data.length !== 0)  {
             setWorkingData(data)
@@ -41,11 +41,21 @@ function WorkingHours({onFinish, data, loading, type}) {
 
 
     const onFormFinish = (values) => {
-        onFinish(values)
+        let prevValues = {...values}
+        let working_hours = [];
+        Object.keys(values.working_hours).forEach(key=>{
+            working_hours = [...working_hours,...values.working_hours[key]]
+        })
+        values.working_hours = working_hours.map(e=>{
+            e.is_day_off = !e.is_day_off
+            return e
+        })
+        values.service=type;
+
+        onFinish(values,prevValues)
     }
 
     const handleValuesChange = (e, v) => {
-
         setWorkingData((prevState) => ({
             ...prevState,
             ...v
@@ -60,9 +70,8 @@ function WorkingHours({onFinish, data, loading, type}) {
         })
     }
 
-
     return (
-        <Form
+        loading?<Preloader/>:<Form
             onValuesChange={handleValuesChange}
             name="edit"
             onFinish={onFormFinish}
@@ -70,12 +79,29 @@ function WorkingHours({onFinish, data, loading, type}) {
             ref={formRef}
         >
             <div className={'add_edit_content'}>
-                {Object.keys(workingData).map(key => {
-                    return <WorkingWeekDays handleUpdateParent={handleUpdateWorkState} key={key} dataKey={key}
-                                            workingData={workingData} data={workingData[key]}/>
-                })}
+                <div className={'home_visit_head'}>
+                    <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
+                    <Space >
+                        <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'} label={'Sync with main working hours'}>
+                            <Switch defaultChecked checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                        </Form.Item>
 
+                    </Space>
+
+                </div>
+
+
+                <div>
+                    {
+                        switchChange ? <div className={'add_edit_content'} align={"center"}>
+                            <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
+                        </div> : Object.keys(workingData).map(key => {
+                        return <WorkingWeekDays handleUpdateParent={handleUpdateWorkState} key={key} dataKey={key} data={workingData[key]} formRef={formRef}/>
+                    })}
+
+                </div>
             </div>
+
             <Space className={'create_apdate_btns'}>
                 <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                 <Button size={'large'} onClick={() => (navigate("clinics"))} type={'secondary'}

@@ -13,12 +13,12 @@ import GradientChart from "../../Fragments/Charts/GradientChart";
 import MonthStatistics from "../../Fragments/Charts/MonthStatistics";
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import SuperAdminIncomesChart from "../../Fragments/Charts/SuperAdminIncomesChart";
-import SuperAdminIncVsConvers from "../../Fragments/Charts/SuperAdminIncVsConvers";
 import SuperAdminProfitableTable from "./SuperAdminProfitableTable/SuperAdminProfitableTable";
 import SuperAdminUnprofitableTable from "./SuperAdminUnprofitableTable/SuperAdminUnprofitableTable";
 import PatientGenderChart from "../../Fragments/Charts/PatientGenderChart";
 import DoctorLicensesChart from "../../Fragments/Charts/DoctorLicensesChart";
 import SuperAdminPlatformIssues from "./SuperAdminPlatformIssues/SuperAdminPlatformIssues";
+import IncomesVsConversRate from "./IncomesVsConversRate/IncomesVsConversRate";
 
 
 
@@ -38,6 +38,48 @@ function SuperAdmin() {
     const [doctorLicensesData,setDoctorLicensesData] = useState({'Actual': 1236,
         'Expire soon':785,
         'Expired':864});
+    const [issuesData,setIssuesData] = useState({
+        web: {
+            'active': 3,
+            'solved':3,
+            name:'web'
+            },
+        mobile: {
+            'active': 1,
+            'solved':9,
+            name:'mobile'
+        }
+        });
+    const [incomeVsConvertData,setIncomeVsConvertData] = useState({
+            jan: {
+                month: "Jan",
+                income: 16576,
+                offer_sold: 920,
+                views: 9.8,
+                conversation_rate: 9.38,
+            },
+            feb: {
+                month: "Feb",
+                income: 4978,
+                offer_sold: 256,
+                views: 4.7,
+                conversation_rate: 5.38,
+            },
+            mar: {
+                month: "Mar",
+                income: 24565,
+                offer_sold: 1058,
+                views: 18.3,
+                conversation_rate: 5.69,
+            },
+            apr: {
+                month: "Apr",
+                income: 1069,
+                offer_sold: 10,
+                views: 2.8,
+                conversation_rate: 0.68,
+            },
+    });
 
     const handleAddCount = ()=> {
         setStatusesData((prevState) => [(+prevState[0] + 1).toFixed(1), (+prevState[1] - 1).toFixed(1), (+prevState[1] - 1).toFixed(1), (+prevState[1] - 1).toFixed(1)])
@@ -113,7 +155,7 @@ function SuperAdmin() {
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={8}>
-                        <SuperAdminIncVsConvers />
+                        <IncomesVsConversRate data={incomeVsConvertData}/>
                     </Col>
                     <Col lg={16}>
                         <SuperAdminIncomesChart />
@@ -135,7 +177,7 @@ function SuperAdmin() {
                         <DoctorLicensesChart data={doctorLicensesData}/>
                     </Col>
                     <Col lg={8}>
-                        <SuperAdminPlatformIssues />
+                        <SuperAdminPlatformIssues data={issuesData}/>
                     </Col>
                 </Row>
             </div>

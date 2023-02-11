@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Col, Form, Row, Select, Space, Switch} from "antd";
+import React,{useEffect,useState} from "react";
+import {Button, Checkbox, Col, Form, Input, Row, Select, Space, Switch} from "antd";
 import {t} from "i18next";
 let options1 = [
     {
@@ -383,9 +383,13 @@ let options1 = [
     },
 ];
 
-function WorkingWeekDays({data,dataKey,handleUpdateParent}) {
+function WorkingWeekDays({data,dataKey,handleUpdateParent,formRef}) {
+    const [workingDay,setWorkingDay] = useState(data);
+    const [isWD,setIsWD] = useState(workingDay[0]?.is_day_off);
 
-
+    useEffect(()=>{
+        setWorkingDay(data)
+    },[data])
     const handleAddHours =()=>{
         handleUpdateParent([...data,{
             closes_at:null,
@@ -395,104 +399,101 @@ function WorkingWeekDays({data,dataKey,handleUpdateParent}) {
             type:data[0].type,
         }],dataKey)
     }
+
     const handleRemoveHours =(key)=>{
         const newData = {...data}
         delete newData[key]
         handleUpdateParent(Object.values(newData),dataKey)
     }
-
-  const handleChangeSwitch = (e)=>{
-      const newData = {...data}
-      newData[0].is_day_off = !e
-      handleUpdateParent(Object.values(newData),dataKey)
-  }
+    const onSwitchChange = (e)=>{
+        setIsWD(!e)
+    }
     return(
-        data?.length&&<div>
+        workingDay?.length &&<div>
 
                <Row>
                         <Col lg={3}>
-                            <div style={{margin:15, fontSize:18, fontWeight:600}}>{data[0]?.day}</div>
+                            <div style={{fontSize:18, fontWeight:600}} className={'working_houre_margin'} >{workingDay[0]?.day}</div>
                         </Col>
                         <Col lg={3}>
-                            <div style={{margin:20}}>
-                                <Switch checkedChildren="Open" unCheckedChildren="Closed"  onChange={handleChangeSwitch} checked={!data[0]?.is_day_off} />
+                            <div className={'working_houre_margin'}>
+                                <Form.Item
+                                    label={t(``)}
+                                    name={['working_hours',dataKey,0, "is_day_off"]}
+                                    valuePropName={'checked'}
+                                    initialValue={!workingDay[0]?.is_day_off}
+                                >
+                                    <Switch checkedChildren="Open" unCheckedChildren="Closed" onChange={onSwitchChange}    />
+                                </Form.Item>
                             </div>
 
-                            <Form.Item
-                                label={t(``)}
-                                name={[dataKey,0, "is_day_off"]}
-                                valuePropName="checked"
-                                initialValue={data[0]?.is_day_off}
-                                style={{margin:15}}
-                                hidden={true}
-
-                            />
 
 
-                            {data[0]?.is_day_off?<Form.Item
-
-                                name={[dataKey,0, "day"]}
-                                hidden={true}
-                                initialValue={data[0]?.day}
-                            />:null}
                         </Col>
                    <Col lg={18}>
-                   {data?.map((el,key) => {
+                   {workingDay?.map((el,key) => {
                        let currentOptions = [...options1]
-                       if(key>0){
+                       let hours = formRef.current?.getFieldValue(['working_hours',dataKey]);
+                       if(key>0&& hours?.length){
 
-                            currentOptions =currentOptions.slice(currentOptions.findIndex(e=>e?.value===data[key-1].closes_at)+1, currentOptions.length-1);
+                            currentOptions =currentOptions.slice(currentOptions.findIndex(e=>e?.value===hours[key-1].closes_at)+1, currentOptions.length-1);
                        }
-                   return !data[0]?.is_day_off ? <Row key={dataKey+key}>
+                   return   <Row key={dataKey+key}
+                                 className={isWD?'d-none':''}
+                   >
                                 <Col>
                                     <Form.Item
                                         label={t(``)}
-                                        name={[dataKey,key, "opens_at"]}
+                                        name={['working_hours',dataKey,key, "opens_at"]}
                                         initialValue={el?.opens_at}
                                     >
                                         <Select
-                                            style={{width: 120, margin:15}}
+                                            style={{width: 120}}
                                             options={currentOptions}
+                                            className={'working_houre_margin'}
                                         />
                                     </Form.Item>
                                 </Col>
                                 <Col>
                                     <Form.Item
                                         label={t(``)}
-                                        name={[dataKey, key,"closes_at"]}
+                                        name={['working_hours',dataKey, key,"closes_at"]}
                                         initialValue={el?.closes_at}
                                     >
                                         <Select
-
-                                            style={{width: 120, margin:15}}
+                                            className={'working_houre_margin'}
+                                            style={{width: 120,}}
                                             options={currentOptions}
                                         />
                                     </Form.Item>
                                     <Form.Item
-
-                                        name={[dataKey,key, "day"]}
+                                        name={['working_hours',dataKey,key, "day"]}
                                         hidden={true}
                                         initialValue={el?.day}
                                     />
+                                    <Form.Item
+                                        name={['working_hours',dataKey,key, "is_day_off"]}
+                                        hidden={true}
+                                    />
                                 </Col>
                        {currentOptions.length!==0 ? <Col>
-                                    <div style={{margin:15}}>
+                                    <div className={'working_houre_margin'}>
                                         <Space>
                                             {key!==0&&<Button type={'secondary'} style={{border:'none'}} onClick={()=>handleRemoveHours(key)}>x</Button>}
-                                            {key===(data.length-1) && currentOptions.slice(currentOptions.findIndex(e=>e?.value===data[key].closes_at)+1, currentOptions.length-1).length>0&&<Button type={'secondary'} style={{border:'none'}} onClick={handleAddHours}>Add Hours</Button>}
+                                            {((key===(data.length-1) && currentOptions.slice(currentOptions.findIndex(e=>e?.value===hours[key]?.closes_at)+1, currentOptions.length-1).length>0)) &&<Button type={'secondary'} style={{border:'none'}} onClick={handleAddHours}>Add Hours</Button>}
                                         </Space>
 
                                     </div>
                                 </Col>:
                            <Col>
-                               <div style={{margin:15}}>
+                               <div className={'working_houre_margin'}>
                                <Space>
                                    {key!==0&&<Button type={'secondary'} style={{border:'none'}} onClick={()=>handleRemoveHours(key)}>x</Button>}
                                </Space>
 
                            </div>
                        </Col>}
-                            </Row> : <div style={{height:86}}></div>
+                            </Row>
                         })}
                    </Col>
                     </Row>

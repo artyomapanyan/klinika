@@ -1,74 +1,30 @@
 import React from "react";
-import { Progress, Tooltip } from 'antd';
-function SuperAdminPlatformIssues() {
+import {Button, Progress, Space, Tooltip} from 'antd';
+import {t} from "i18next";
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import FIssuesItem from "./Fragments/FIssuesItem";
+function SuperAdminPlatformIssues({data}) {
+    let dataColor = ['Active', 'Solved']
+
     return(
         <div className={'issues_div'}>
-            <div>Current month</div>
-            <Tooltip title="3 done / 3 in progress / 4 to do">
-                <Progress
-                    percent={20}
-                    success={{
-                        percent: 20,
-                    }}
-                    showInfo={true}
-                    strokeWidth={20}
-                    strokeColor={'#F5A348'}
-                    strokeLinecap="butt"
-                    format={((percent) => {
-                        return <div style={{marginLeft:-20, color:'white'}}>dfdfdf</div>
-                    })
-                    }
-                />
-            </Tooltip>
-            <Tooltip title="3 done / 3 in progress / 4 to do">
-                <Progress
-                    percent={50}
-                    success={{
-                        percent: 30,
-                    }}
-                    showInfo={true}
-                    strokeWidth={20}
-                    strokeColor={'#F5A348'}
-                    strokeLinecap="butt"
-                    format={((percent) => {
-                        return <div style={{marginLeft:-20, color:'white'}}>dfdfdf</div>
-                    })
-                    }
-                />
-            </Tooltip>
-            <div>Previous month</div>
-            <Tooltip title="3 done / 3 in progress / 4 to do">
-                <Progress
-                    percent={100}
-                    success={{
-                        percent: 60,
-                    }}
-                    showInfo={true}
-                    strokeWidth={20}
-                    strokeColor={'#F5A348'}
-                    strokeLinecap="butt"
-                    format={((percent) => {
-                        return <div style={{marginLeft:-20, color:'white'}}>dfdfdf</div>
-                    })
-                    }
-                />
-            </Tooltip>
-            <Tooltip title="3 done / 3 in progress / 4 to do">
-                <Progress
-                    percent={70}
-                    success={{
-                        percent: 50,
-                    }}
-                    showInfo={true}
-                    strokeWidth={20}
-                    strokeColor={'#F5A348'}
-                    strokeLinecap="butt"
-                    format={((percent) => {
-                        return <div style={{marginLeft:-20, color:'white'}}>dfdfdf</div>
-                    })
-                    }
-                />
-            </Tooltip>
+                <div>
+
+                    <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
+                        {t("Platform issues")}
+                        {dataColor.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
+                    </Space>
+                </div>
+            <div className={'current'}>Current month</div>
+            {Object.keys(data).map(key=>{
+                return  <FIssuesItem key={key} data={data[key]}/>
+
+            })}
+            <div className={'current'}>Previous month</div>
+            {Object.keys(data).map(key=>{
+                return  <FIssuesItem key={key} data={data[key]}/>
+
+            })}
         </div>
     )
 }

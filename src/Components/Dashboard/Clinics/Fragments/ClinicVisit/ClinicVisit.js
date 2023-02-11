@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
-import {createResource, postResource, updateResource} from "../../../../Functions/api_calls";
-import resourceLinks from "../../../../ResourceLinks";
-
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
-
+import {createResource, postResource, updateResource} from "../../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import {useNavigate, useParams} from "react-router";
+import resourceLinks from "../../../../ResourceLinks";
 
 
 const resource = "Clinic";
-function ManageDoctorsModal({loadingState, dataState}) {
+function ClinicVisit() {
     let token = useSelector((state) => state.auth.token);
     const navigate = useNavigate();
     const params = useParams();
@@ -21,7 +19,7 @@ function ManageDoctorsModal({loadingState, dataState}) {
     let type = "home_visit";
 
     useEffect(() => {
-        postResource(resource,'WorkingHours',token,params.id,{service:'home_visit'}).then(responses => {
+        postResource(resource,'WorkingHours',token,params.id,{service:'clinic_visit'}).then(responses => {
             setData(responses)
         })
 
@@ -52,12 +50,10 @@ function ManageDoctorsModal({loadingState, dataState}) {
     }
 
 
-
-
     return(
         <div>
-            <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+          <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
         </div>
     )
 }
-export default ManageDoctorsModal;
+export default ClinicVisit;
