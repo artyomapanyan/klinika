@@ -4,7 +4,7 @@ import {Form, Modal, Spin} from "antd";
 import FormInput from "../../../../../Fragments/FormInput";
 
 
-function LaboratorytestModal({isModalOpen,onCreate}) {
+function ManageDoctorsModal({isModalOpen,onCreate}) {
 
     const formRef = useRef();
 
@@ -34,4 +34,4 @@ function LaboratorytestModal({isModalOpen,onCreate}) {
         </Modal>
     )
 }
-export default LaboratorytestModal;
+export default ManageDoctorsModal;

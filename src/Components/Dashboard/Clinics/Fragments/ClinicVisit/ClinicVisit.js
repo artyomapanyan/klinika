@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
-import {createResource, postResource, updateResource} from "../../../../Functions/api_calls";
+import {postResource, updateResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
-import resourceLinks from "../../../../ResourceLinks";
+
 
 
 const resource = "Clinic";
@@ -16,7 +16,7 @@ function ClinicVisit() {
     const [loading, setLoading] = useState(false)
 
 
-    let type = "home_visit";
+    let type = "clinic_visit";
 
     useEffect(() => {
         postResource(resource,'WorkingHours',token,params.id,{service:'clinic_visit'}).then(responses => {
@@ -25,24 +25,15 @@ function ClinicVisit() {
 
     }, []);
 
-    const onFinish = (values) => {
-        data((prevState)=>({
+    const onFinish = (values,prevValues) => {
+        setLoading(true)
+        setData((prevState)=>({
             ...prevState,
-            ...values
+            ...prevValues?.working_hours
         }))
         if (params.id) {
-            updateResource(resource, params.id, values, token, true).then(response => {
-                if(response?.id){
-                    navigate(resourceLinks[resource])
-                }
-            }).finally(() => {
-                setLoading(false)
-            })
-        } else {
-            createResource(resource, values, token, true).then((response) => {
-                if (response?.id) {
-                    navigate(resourceLinks[resource])
-                }
+            updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
+                setData(response)
             }).finally(() => {
                 setLoading(false)
             })

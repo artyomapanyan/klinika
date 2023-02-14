@@ -24,6 +24,7 @@ function BugReportTopic() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
 
+
     const onFinish = (values) => {
         setLoading(true)
         values.type = Resources.TaxonomyTypes.REPORT_TOPIC

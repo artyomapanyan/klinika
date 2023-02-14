@@ -7,7 +7,7 @@ import {createResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import ClinicApprovedDoctors from "./ClinicApprovedDoctors";
 import resourceLinks from "../../../../ResourceLinks";
-import LaboratorytestModal from "../Laboratory/Fragments/LaboratorytestModal";
+import ManageDoctorsModal from "./Fragments/ManageDoctorsModal";
 
 const resource = 'Clinic'
 
@@ -65,7 +65,7 @@ function ClinicTabManageDoctors({loadingState}) {
                 />
                 <Button type={'primary'} onClick={showModal}>+ Add new Doctor</Button>
 
-                <LaboratorytestModal isModalOpen={isModalOpen} onCreate={onCreate}/>
+                <ManageDoctorsModal isModalOpen={isModalOpen} onCreate={onCreate}/>
             </div >
             <div className={'add_edit_content'}>
                 <ClinicApprovedDoctors loadingState={loadingState}/>

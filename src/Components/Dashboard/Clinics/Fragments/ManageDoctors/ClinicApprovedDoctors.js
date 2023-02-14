@@ -3,8 +3,7 @@ import {t} from "i18next";
 import ResourceTable from "../../../../Fragments/ResourceTable";
 import {useParams} from "react-router";
 import {Button, Modal} from "antd";
-import FormInput from "../../../../Fragments/FormInput";
-import ManageDoctorsModal from "./ManageDoctorsModal";
+import DoctorsHoursModal from "./DoctorsHoursModal";
 import Preloader from "../../../../Preloader";
 
 
@@ -95,7 +94,7 @@ function ClinicApprovedDoctors({loadingState}) {
                 />}
 
             <Modal title="Worcing Houer" width={"65%"} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={false}>
-                <ManageDoctorsModal loadingState={loadingState}/>
+                <DoctorsHoursModal loadingState={loadingState}/>
             </Modal>
         </div>
     )

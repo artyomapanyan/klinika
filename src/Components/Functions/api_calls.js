@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
 
-export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false) => {
+export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
@@ -16,7 +16,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
     })
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
-        if(resource){
+        if(resource && !resourceData){
             if(needsInit && !isInited){
                 return;
             }
@@ -44,6 +44,16 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
 
             }).finally(()=>{
                 setLoading(false)
+            })
+        }else if(resourceData){
+            setData({
+                items:resourceData,
+                pagination:{
+                    pageSize:15,
+                    current:1,
+                    total:5,
+                    last_page:1
+                }
             })
         }
 

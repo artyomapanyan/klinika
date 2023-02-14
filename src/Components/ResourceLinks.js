@@ -24,6 +24,8 @@ const ResourceLins = {
     Coupon:'/dashboard/coupons/',
     ClinicDoctor:'/dashboard/clinics/doctors/',
     ClinicWorkingHours:'/dashboard/clinics/working-hours/',
+    ClinicLabTest:'/dashboard/clinics/lab-tests/',
+    ClinicLabPackage:'/dashboard/clinics/lab-packages/',
 
 }
 export default ResourceLins

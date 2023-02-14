@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
-import {createResource, postResource, updateResource} from "../../../../Functions/api_calls";
+import {postResource, updateResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
-import resourceLinks from "../../../../ResourceLinks";
+
 import LaboratoryTestsTable from "./Fragments/LaboratoryTestsTable";
+import ManageDoctorsModal from "../ManageDoctors/Fragments/ManageDoctorsModal";
+import LabPackagesTable from "./Fragments/LabPackagesTable";
 
 const resource = "Clinic";
 function Laboratory() {
@@ -17,35 +19,26 @@ function Laboratory() {
 
 
 
-    let type = "laboratory";
+    let type = "laboratory_clinic_visit";
 
     useEffect(() => {
         setLoading(true)
-        postResource(resource,'WorkingHours',token,params.id,{service:'laboratory'}).then(responses => {
+        postResource(resource,'WorkingHours',token,params.id,{service:'laboratory_clinic_visit'}).then(responses => {
             setData(responses)
             setLoading(false)
         })
 
     }, []);
 
-    const onFinish = (values) => {
-        data((prevState)=>({
+    const onFinish = (values,prevValues) => {
+        setLoading(true)
+        setData((prevState)=>({
             ...prevState,
-            ...values
+            ...prevValues?.working_hours
         }))
         if (params.id) {
-            updateResource(resource, params.id, values, token, true).then(response => {
-                if(response?.id){
-                    navigate(resourceLinks[resource])
-                }
-            }).finally(() => {
-                setLoading(false)
-            })
-        } else {
-            createResource(resource, values, token, true).then((response) => {
-                if (response?.id) {
-                    navigate(resourceLinks[resource])
-                }
+            updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
+                setData(response)
             }).finally(() => {
                 setLoading(false)
             })
@@ -57,9 +50,11 @@ function Laboratory() {
         <div className={'add_edit_content'}>
             <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
 
-            <div className={'add_edit_content'}>
+            <div>
                 <LaboratoryTestsTable />
+                <LabPackagesTable />
             </div>
+
 
         </div>
     )

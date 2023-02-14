@@ -1,10 +1,10 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {Button, Col, Form, InputNumber, Row, Space, Switch} from "antd";
+import {Button, Col, Form, InputNumber, Row, Space, Switch, Spin} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -31,9 +31,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
     let token = useSelector((state) => state.auth.token);
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
         values.has_telehealth_service = values.has_telehealth_service === true
         values.has_home_visit_service = values.has_home_visit_service === true
@@ -98,7 +99,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token, true).then((response) => {
@@ -106,7 +107,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
@@ -584,7 +585,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
 
                 </div>
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

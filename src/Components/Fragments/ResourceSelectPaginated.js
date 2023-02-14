@@ -13,7 +13,9 @@ function ResourceSelectPaginated({initialData = [],
                                      resourceParams={},
                                      initialValue=null,
                                      disableClear=false,
-                                    updateLoading=false
+                                    updateLoading=false,
+                                     resourceSelectStyle,
+                                     resourceData
 }) {
     const timeout = useRef(null);
     const [params, setParams] = useState({page: 1,...resourceParams})
@@ -21,9 +23,11 @@ function ResourceSelectPaginated({initialData = [],
 
     const [isInitedState, setIsInitedState] = useState(false)
 
-    const {loadingState, dataState} = useGetResourceIndex(resource, params,isInitedState,true)
-    const {loading} = loadingState;
-    const {data} = dataState;
+   const {loadingState, dataState} = useGetResourceIndex(resource, params,isInitedState,true,resourceData)
+   const {loading} = loadingState;
+   const {data} = dataState;
+
+
 
     const handleGenerateOptions = (data) => {
         return data.map(item => {
@@ -81,7 +85,7 @@ function ResourceSelectPaginated({initialData = [],
                                allowClear={!disableClear}
                                optionFilterProp={'name'}
                                onDropdownVisibleChange={()=>!isInitedState?setIsInitedState(true):null}
-
+                                style={resourceSelectStyle}
                         >
         {itemOptions}
         {loading ?

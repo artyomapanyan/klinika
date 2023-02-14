@@ -9,7 +9,7 @@ import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 
 
 const resource = "Clinic";
-function ManageDoctorsModal({loadingState, dataState}) {
+function DoctorsHoursModal({loadingState, dataState}) {
     let token = useSelector((state) => state.auth.token);
     const navigate = useNavigate();
     const params = useParams();
@@ -18,41 +18,29 @@ function ManageDoctorsModal({loadingState, dataState}) {
     const [loading, setLoading] = useState(false)
 
 
-    let type = "home_visit";
+    let type = "main";
 
     useEffect(() => {
-        postResource(resource,'WorkingHours',token,params.id,{service:'home_visit'}).then(responses => {
+        postResource(resource,'WorkingHours',token,params.id,{service:'main'}).then(responses => {
             setData(responses)
         })
 
     }, []);
 
-    const onFinish = (values) => {
-        data((prevState)=>({
+    const onFinish = (values,prevValues) => {
+        setLoading(true)
+        setData((prevState)=>({
             ...prevState,
-            ...values
+            ...prevValues?.working_hours
         }))
         if (params.id) {
-            updateResource(resource, params.id, values, token, true).then(response => {
-                if(response?.id){
-                    navigate(resourceLinks[resource])
-                }
-            }).finally(() => {
-                setLoading(false)
-            })
-        } else {
-            createResource(resource, values, token, true).then((response) => {
-                if (response?.id) {
-                    navigate(resourceLinks[resource])
-                }
+            updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
+                setData(response)
             }).finally(() => {
                 setLoading(false)
             })
         }
     }
-
-
-
 
     return(
         <div>
@@ -60,4 +48,4 @@ function ManageDoctorsModal({loadingState, dataState}) {
         </div>
     )
 }
-export default ManageDoctorsModal;
+export default DoctorsHoursModal;

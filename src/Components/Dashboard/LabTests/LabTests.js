@@ -15,7 +15,7 @@ function LabTests() {
                 },
                 {
 
-                    title:t('Lab packages'),
+                    title:t('Lab tests'),
                     dataIndex:'name',
                     key:'name',
                     sorter:true,

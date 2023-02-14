@@ -116,8 +116,24 @@ let api = {
             WorkingHours:{
                 url: `${endpoint}${version}/clinics/working-hours/`,
                 method: 'GET',
+            },
+            LabTest:{
+                url: `${endpoint}${version}/clinics/lab-tests/`,
+                method: 'GET',
+            },
+            LabPackage:{
+                url: `${endpoint}${version}/clinics/lab-packages/`,
+                method: 'GET',
             }
         }
+    },
+    {
+        url: 'clinics/lab-tests',
+        resource: 'ClinicLabTest',
+    },
+    {
+        url: 'clinics/lab-packages',
+        resource: 'ClinicLabPackage',
     },
     {
         url: 'offers',

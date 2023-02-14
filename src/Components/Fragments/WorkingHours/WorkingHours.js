@@ -394,6 +394,7 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
 
     const navigate = useNavigate();
     const formRef = useRef();
+    const [, updateState] = React.useState();
 
     const [workingData, setWorkingData] = useState({})
     const [switchChange, setSwitchChange] = useState(false)
@@ -409,14 +410,22 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
         wednesday: [{day: 'wednesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
 
     }
-
+    const handleFilterData =(data)=>{
+        let newData = {...data}
+       Object.keys(newData).forEach(key=>{
+           newData[key] = newData[key].map(e=>({...e,is_day_off:!e.is_day_off}))
+       })
+        return newData
+    }
     useEffect(() => {
         if (data.length !== 0)  {
-            setWorkingData(data)
+
+            setWorkingData(  handleFilterData(data))
         } else {
             setWorkingData(customWorkingHouers)
         }
-    }, [data]);
+
+    }, [data, switchChange]);
 
 
 
@@ -464,6 +473,11 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
         delete newData[key]
         handleUpdateWorkState(Object.values(newData),dataKey)
     }
+
+    const onChangeSwitch = (val) => {
+        setSwitchChange(val)
+    }
+
     return (
         loading?<Preloader/>:<Form
             onValuesChange={handleValuesChange}
@@ -477,7 +491,7 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
                     <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
                     <Space >
                         <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'} label={'Sync with main working hours'}>
-                            <Switch defaultChecked checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                            <Switch onChange={onChangeSwitch} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                         </Form.Item>
 
                     </Space>
@@ -489,8 +503,7 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
                     {
                         switchChange ? <div className={'add_edit_content'} align={"center"}>
                             <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
-                        </div> :
-                            Object.keys(workingData).map(dataKey => {
+                        </div> : Object.keys(workingData).map(dataKey => {
                             let workingDay  = workingData[dataKey]
 
                         return workingDay &&<div>
@@ -505,7 +518,7 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
                                             label={t(``)}
                                             name={['working_hours',dataKey,0, "is_day_off"]}
                                             valuePropName={'checked'}
-                                            initialValue={!workingDay[0]?.is_day_off}
+                                            initialValue={workingDay[0]?.is_day_off}
                                         >
                                             <Switch checkedChildren="Open" unCheckedChildren="Closed"    />
                                         </Form.Item>
@@ -522,7 +535,7 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
                                             currentOptions =currentOptions.slice(currentOptions.findIndex(e=>e?.value===workingDay[key-1].closes_at)+1, currentOptions.length-1);
                                         }
                                         return   <Row key={dataKey+key+(new Date())}
-                                                     /* className={!workingDay[0]?.is_day_off?'d-none':''}*/
+                                                     className={!workingDay[0]?.is_day_off?'d-none':''}
                                         >
                                             <Col>
                                                 <Form.Item

@@ -6,7 +6,13 @@ import dayjs from "dayjs";
 const NoForm = ['resourceSelect']
 
 function FormInput({name, label, rules, initialValue, inputProps = {},
-                       inputType, initialData = [], resource,resourceParams={},initialFocused=false, inputNumberStyle}) {
+                       resourceSelectStyle,
+                       inputType, initialData = [],
+                       resource,resourceParams={},
+                       initialFocused=false,
+                       inputNumberStyle,
+                   resourceData
+                   }) {
     if(inputType==='date'){
         if(initialValue?.iso_string){
             initialValue =initialValue?.iso_string?dayjs(initialValue?.iso_string):null
@@ -59,10 +65,13 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                          style={inputNumberStyle}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
+                                                resourceSelectStyle={resourceSelectStyle}
                                                 resourceParams={resourceParams}
                                                 initialValue={initialValue}
                                                 formItemClass={`input-placeholder ${focused || value ? 'input-focused' : ''}`}
-                                                resource={resource} initialData={initialData}  inputProps={{
+                                                resource={resource} initialData={initialData}
+                                                resourceData={resourceData}
+                                                inputProps={{
                     onFocus: () => setFocused(true),
                     onChange: e =>{
                         setValue(e)

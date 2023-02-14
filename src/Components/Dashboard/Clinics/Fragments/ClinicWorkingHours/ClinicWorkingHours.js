@@ -20,7 +20,7 @@ function ClinicWorkingHours({loadingState, dataState}) {
 
     useEffect(()=>{
             postResource(resource,'WorkingHours',token,params.id,{service}).then(response => {
-                console.log(response,'get')
+
                 setData(response)
             })
 

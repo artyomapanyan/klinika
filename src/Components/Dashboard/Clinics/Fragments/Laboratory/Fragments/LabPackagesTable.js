@@ -1,43 +1,42 @@
 import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
-
+import {Button, Form, Space, Table} from "antd";
 import {useParams} from "react-router";
-import {Button, Form, Space, Table,} from "antd";
-
 import {useSelector} from "react-redux";
 import {createResource, postResource, updateResource} from "../../../../../Functions/api_calls";
 import FormInput from "../../../../../Fragments/FormInput";
 import {DeleteOutlined} from "@ant-design/icons";
 
+
 const resource = "Clinic";
 const service = 'laboratory_clinic_visit'
-function LaboratoryTestsTable() {
+function LabPackagesTable() {
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
     const LabTestRef = useRef();
     const [loading, setLoading] = useState(false)
 
-    const [testData, setTestData] = useState([]);
-    const [labTests, setLabTest] = useState([]);
+    const [testData, setTestData] = useState();
+    const [labPackages, setLabPackages] = useState([]);
 
 
 
     useEffect(()=>{
         Promise.all([
-            postResource(resource,'LabTest',token,params.id,{service}),
-            postResource('LabTest','list',token,null,{per_page:5000}),
+            postResource(resource,'LabPackage',token,params.id,{service}),
+            postResource('LabPackage','list',token,null,{per_page:5000}),
 
         ]).then(responses => {
             const testDataKeys = responses[0].map((el) => {
-                return el.lab_test_id
+                return el.lab_package_id
             })
 
             LabTestRef.current = responses[1].items;
 
-            setTimeout(()=>setLabTest(LabTestRef.current.filter(item => !testDataKeys.includes(item.id))),50)
-            setLabTest(LabTestRef.current)
+            setTimeout(()=>setLabPackages(LabTestRef.current.filter(item => !testDataKeys.includes(item.id))),50)
+            setLabPackages(LabTestRef.current)
             setTestData(responses[0])
-            console.log(responses[0], 'res')
+            console.log(responses[0], 'f')
         })
     },[])
 
@@ -45,14 +44,12 @@ function LaboratoryTestsTable() {
 
     const onFinish = (values) => {
         values = Object.values(values)
-        let data = {
-            lab_tests:values
-        }
+
         setLoading(true)
 
         if (params.id) {
-            updateResource('ClinicLabTest', params.id, data, token).then(response => {
-                console.log(response, 'sss')
+            updateResource('ClinicLabPackage', params.id, values, token, ).then(response => {
+
             }).finally(() => {
                 setLoading(false)
             })
@@ -67,7 +64,7 @@ function LaboratoryTestsTable() {
             dataIndex: 'name',
             key: 'name',
             render:(e, record, key)=> {
-                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'lab_test_id']} inputType={'resourceSelect'} resource={'LabTest'} initialValue={record?.lab_test_id} resourceData={labTests}/>
+                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'lab_package_id']} inputType={'resourceSelect'} resource={'LabPackage'} initialValue={record?.lab_package_id} resourceData={labPackages}/>
             }
         },
         {
@@ -93,7 +90,7 @@ function LaboratoryTestsTable() {
         setTestData([
             ...testData,
             {
-                lab_test_id: null,
+                lab_package_id: null,
                 price: null,
             }
         ])
@@ -102,9 +99,9 @@ function LaboratoryTestsTable() {
 
     const formOnChange = (changedValues, allValues) => {
         let testDataKeys = Object.values(allValues).map((el) => {
-            return el?.lab_test_id
+            return el?.lab_package_id
         })
-        setLabTest(LabTestRef.current.filter(item => !testDataKeys.includes(item.id)))
+        setLabPackages(LabTestRef.current.filter(item => !testDataKeys.includes(item.id)))
     }
 
     const onDelete = (key) => {
@@ -115,31 +112,29 @@ function LaboratoryTestsTable() {
         )
     }
 
-
     return(
-        <div>
-            <div  className={'add_edit_content'}>
-                <h1 className={'h1'}>{t(`Tests`)}</h1>
+        <div  className={'add_edit_content'}>
+            <h1 className={'h1'}>{t(`Packages`)}</h1>
 
 
-                <Form
-                    name="edit"
-                    onFinish={onFinish}
-                    layout="vertical"
-                    onValuesChange={formOnChange}
-                >
+            <Form
+                name="edit"
+                onFinish={onFinish}
+                layout="vertical"
+                onValuesChange={formOnChange}
+            >
 
-                    <Table loading={loading} dataSource={testData} columns={columns} footer={false} pagination={false} rowKey={(e,v)=>v} />
-                    <Button type={'primary'} size={'large'} style={{margin:20}} onClick={addNewTest}>+</Button>
-                    <div>
-                        <Space className={'lab_save'}>
-                            <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                            <Button size={'large'}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                        </Space>
-                    </div>
-                </Form>
-            </div>
+                <Table loading={loading} dataSource={testData} columns={columns} footer={false} pagination={false} rowKey={(e,v)=>v} />
+                <Button type={'primary'} size={'large'} style={{margin:20}} onClick={addNewTest}>+</Button>
+                <div>
+                    <Space className={'lab_save'}>
+                        <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                        <Button size={'large'}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Space>
+                </div>
+            </Form>
+
         </div>
     )
 }
-export default LaboratoryTestsTable;
+export default LabPackagesTable;
