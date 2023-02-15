@@ -5,7 +5,7 @@ import {createResource, updateResource, useGetResourceSingle} from "../../../Fun
 import resourceLinks from "../../../ResourceLinks";
 import Preloader from "../../../Preloader";
 import {Button, Form, Space} from "antd";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import Resources from "../../../../store/Resources";
@@ -20,10 +20,11 @@ function User() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         values.dob = values.dob.format('YYYY-MM-DD')
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
@@ -31,7 +32,7 @@ function User() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token).then((response) => {
@@ -39,7 +40,7 @@ function User() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
@@ -81,7 +82,7 @@ function User() {
 
 
                 <Space>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

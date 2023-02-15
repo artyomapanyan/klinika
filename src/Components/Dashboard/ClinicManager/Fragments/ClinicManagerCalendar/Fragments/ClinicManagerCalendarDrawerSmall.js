@@ -48,7 +48,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer}) {
                         <Button style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     </div>
                     <div>
-                        <Button onClick={openLargeDrawer} style={{width:'100%', marginTop:15}} size={'large'}  type={'secondary'} htmlType="submit">{t('Fill full form now')}</Button>
+                        <Button onClick={openLargeDrawer} style={{width:'100%', marginTop:15}} size={'large'}  type={'secondary'} htmlType="submit">{t('Show Extended')}</Button>
                     </div>
                     <div>
                         <Button style={{width:'100%', marginTop:15, border:"none"}} size={'large'}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>

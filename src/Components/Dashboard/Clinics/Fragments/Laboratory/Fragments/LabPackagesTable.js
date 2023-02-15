@@ -3,7 +3,7 @@ import {t} from "i18next";
 import {Button, Form, Space, Table} from "antd";
 import {useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {createResource, postResource, updateResource} from "../../../../../Functions/api_calls";
+import {postResource, updateResource} from "../../../../../Functions/api_calls";
 import FormInput from "../../../../../Fragments/FormInput";
 import {DeleteOutlined} from "@ant-design/icons";
 
@@ -16,7 +16,7 @@ function LabPackagesTable() {
     const LabTestRef = useRef();
     const [loading, setLoading] = useState(false)
 
-    const [testData, setTestData] = useState();
+    const [testData, setTestData] = useState([]);
     const [labPackages, setLabPackages] = useState([]);
 
 
@@ -36,7 +36,6 @@ function LabPackagesTable() {
             setTimeout(()=>setLabPackages(LabTestRef.current.filter(item => !testDataKeys.includes(item.id))),50)
             setLabPackages(LabTestRef.current)
             setTestData(responses[0])
-            console.log(responses[0], 'f')
         })
     },[])
 
@@ -44,11 +43,13 @@ function LabPackagesTable() {
 
     const onFinish = (values) => {
         values = Object.values(values)
-
+        let data = {
+            lab_packages:values
+        }
         setLoading(true)
 
         if (params.id) {
-            updateResource('ClinicLabPackage', params.id, values, token, ).then(response => {
+            updateResource('ClinicLabPackage', params.id, data, token, ).then(response => {
 
             }).finally(() => {
                 setLoading(false)
@@ -64,7 +65,8 @@ function LabPackagesTable() {
             dataIndex: 'name',
             key: 'name',
             render:(e, record, key)=> {
-                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'lab_package_id']} inputType={'resourceSelect'} resource={'LabPackage'} initialValue={record?.lab_package_id} resourceData={labPackages}/>
+                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'lab_package_id']} inputType={'resourceSelect'}
+                                  resource={'LabPackage'} initialValue={record?.lab_package_id} resourceData={labPackages}/>
             }
         },
         {

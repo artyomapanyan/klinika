@@ -27,12 +27,13 @@ function Coupon() {
     })
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
     const [switchState, setSwitchState] = useState(data?.discount_by_percentage)
 
 
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
         values.discount_by_percentage = switchState
 
@@ -46,7 +47,7 @@ function Coupon() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token, true).then((response) => {
@@ -54,7 +55,7 @@ function Coupon() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
@@ -132,7 +133,7 @@ function Coupon() {
                     </div>
                 </div>
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

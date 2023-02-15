@@ -139,9 +139,9 @@ export const useGetResourceSingle = (resource,id,additionals={
 function hGOD(formData,name,object){
     Object.keys(object).forEach(key=>{
         if(typeof object[key]==='object'){
-            hGOD(formData,name+'.'+key,object[key])
+            hGOD(formData,name+'['+key+']',object[key])
         }else{
-            formData.append(name+'.'+key,object[key])
+            formData.append(name+'['+key+']',object[key])
         }
     })
 

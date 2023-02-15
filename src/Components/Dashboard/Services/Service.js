@@ -6,7 +6,7 @@ import Preloader from "../../Preloader";
 import {Button, Form, Space} from "antd";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
-import React from "react";
+import React, {useState} from "react";
 
 
 const resource = 'Service';
@@ -17,9 +17,10 @@ function Service() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -30,7 +31,7 @@ function Service() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token).then((response) => {
@@ -39,7 +40,7 @@ function Service() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
@@ -63,7 +64,7 @@ function Service() {
                                resource={'SubCategory'}/>
                 </div>
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

@@ -4,7 +4,7 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Space} from "antd";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import FormInput from "../../Fragments/FormInput";
@@ -21,10 +21,11 @@ function NursingTask() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -35,7 +36,7 @@ function NursingTask() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token).then((response) => {
@@ -44,7 +45,7 @@ function NursingTask() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
 
@@ -71,7 +72,7 @@ function NursingTask() {
                     </Form.Item>
                 </div>
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

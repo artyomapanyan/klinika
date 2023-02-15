@@ -21,6 +21,7 @@ function Clinic() {
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
 
+
     useEffect(()=>{
         setTab(searchParams.get('tab')??'essentials')
     },[])
@@ -33,14 +34,14 @@ const handleChange = (e)=>{
 
 
     return(
-        <div >
+        <div className={'clinic_tab_div'}>
 
                 <Tabs onChange={handleChange} activeKey={tab}>
                     <Tabs.TabPane key={'essentials'} tab={'Essentials'} >
                         <ClinicTabEssentials loadingState={loadingState} dataState={dataState}/>
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
-                        <ClinicTabManageDoctors  loadingState={loadingState}/>
+                        <ClinicTabManageDoctors  loadingState={loadingState} />
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'working'} tab={'Working Hours'} disabled={!params.id}>
                         <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>
@@ -55,7 +56,7 @@ const handleChange = (e)=>{
                         <Laboratory />
                     </Tabs.TabPane>
                     <Tabs.TabPane key={'nursing'} tab={'Nursing'} disabled={!params.id}>
-                        <Nursing />
+                        <Nursing/>
                     </Tabs.TabPane>
                 </Tabs>
           </div>

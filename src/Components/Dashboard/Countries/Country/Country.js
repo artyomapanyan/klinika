@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Col, Form, Row, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
@@ -18,8 +18,9 @@ function Country() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -30,7 +31,7 @@ function Country() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token).then((response) => {
@@ -39,10 +40,11 @@ function Country() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
+
 
     return (
         <div>
@@ -106,7 +108,7 @@ function Country() {
 
 
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

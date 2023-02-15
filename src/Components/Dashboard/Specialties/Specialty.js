@@ -8,7 +8,7 @@ import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
 import {InboxOutlined} from "@ant-design/icons";
 
@@ -24,10 +24,11 @@ function Specialty() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         values.type = Resources.TaxonomyTypes.SPECIALTY
         setData((prevState)=>({
             ...prevState,
@@ -39,7 +40,7 @@ function Specialty() {
                     setData(response)
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token, true).then((response) => {
@@ -48,7 +49,7 @@ function Specialty() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
 
@@ -79,7 +80,7 @@ function Specialty() {
                                  initialFileList={[data.icon]} limit={1} formRef={formRef} type={'drag'}/>
                 </div>
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks['Specialty']))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

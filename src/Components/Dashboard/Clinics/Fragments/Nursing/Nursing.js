@@ -3,6 +3,7 @@ import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 import { postResource, updateResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {useParams} from "react-router";
+import ClinicNursingTasks from "./Fragments/ClinicNursingTasks";
 
 
 const resource = "Clinic";
@@ -46,6 +47,7 @@ function Nursing() {
     return(
         <div>
           <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+            <ClinicNursingTasks />
         </div>
     )
 }

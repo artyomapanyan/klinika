@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef} from "react";
 import {t} from "i18next";
 import {Button, Space} from "antd";
 import ResourceTable from "../../../../Fragments/ResourceTable";
@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import ClinicApprovedDoctors from "./ClinicApprovedDoctors";
 import resourceLinks from "../../../../ResourceLinks";
 import ManageDoctorsModal from "./Fragments/ManageDoctorsModal";
+import Preloader from "../../../../Preloader";
 
 const resource = 'Clinic'
 
@@ -18,6 +19,7 @@ function ClinicTabManageDoctors({loadingState}) {
     let doctorsTable = useRef();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -29,7 +31,7 @@ function ClinicTabManageDoctors({loadingState}) {
             return setIsModalOpen(false);
         }
         setIsModalOpen(1)
-
+        setLoading(true)
         data.clinic_id=params.id
         createResource("ClinicDoctor", data, token).then((response) => {
             if(response.id){
@@ -37,6 +39,7 @@ function ClinicTabManageDoctors({loadingState}) {
             }else{
                 setIsModalOpen(true)
             }
+            setLoading(false)
         })
     }
 
@@ -44,15 +47,11 @@ function ClinicTabManageDoctors({loadingState}) {
         <div>
             <div  className={'add_edit_content'}>
                 <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
-                <ResourceTable
+                {loading ? <Preloader/> : <ResourceTable
                     ref={doctorsTable}
                     noHeader={true}
-                    except={{
-                        edit: true
-                    }}
-                    tableParams={{
-                        clinic: params.id
-                    }}
+                    except={{edit: true}}
+                    tableParams={{clinic: params.id}}
                     resource={'ClinicDoctor'}
                     tableColumns={[
                         {
@@ -62,7 +61,7 @@ function ClinicTabManageDoctors({loadingState}) {
                             sorter: true,
                         },
                     ]}
-                />
+                />}
                 <Button type={'primary'} onClick={showModal}>+ Add new Doctor</Button>
 
                 <ManageDoctorsModal isModalOpen={isModalOpen} onCreate={onCreate}/>

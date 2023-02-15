@@ -6,7 +6,7 @@ import resourceLinks from "../../ResourceLinks";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import FormInput from "../../Fragments/FormInput";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
 import {InboxOutlined} from "@ant-design/icons";
@@ -23,8 +23,9 @@ function LabPackage() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -35,7 +36,7 @@ function LabPackage() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token,true).then((response) => {
@@ -44,7 +45,7 @@ function LabPackage() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
@@ -93,7 +94,7 @@ function LabPackage() {
                                  initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
                 </div>
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

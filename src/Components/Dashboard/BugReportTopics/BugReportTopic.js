@@ -8,7 +8,7 @@ import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
 
 
@@ -23,10 +23,10 @@ function BugReportTopic() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
-
+    const [saveLoading, setSaveLoading] = useState(false)
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         values.type = Resources.TaxonomyTypes.REPORT_TOPIC
         setData((prevState)=>({
             ...prevState,
@@ -38,7 +38,7 @@ function BugReportTopic() {
                     setData(response)
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token, true).then((response) => {
@@ -47,7 +47,7 @@ function BugReportTopic() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
 
@@ -76,7 +76,7 @@ function BugReportTopic() {
                                  initialFileList={[data.icon]} limit={1} formRef={formRef} type={'drag'}/>
                 </div>
                 <Space className={'create_apdate_btns'}>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
                     <Button size={'large'} onClick={()=>(navigate(resourceLinks['BugReport']))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}

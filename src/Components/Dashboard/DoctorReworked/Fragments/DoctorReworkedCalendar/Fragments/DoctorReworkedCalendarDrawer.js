@@ -11,10 +11,10 @@ function DoctorReworkedCalendarDrawer() {
             <FormInput label={t('Select patient')} name={'status'} inputType={'resourceSelect'}
                        initialData={Resources.Status}
             />
+            <FormInput label={t('Doctor name')}  />
             <FormInput label={t('Specialty')} name={'status'} inputType={'resourceSelect'}
                        initialData={Resources.Status}
             />
-            <FormInput label={t('Doctor name')}  />
             <FormInput label={t('Date')} name={'date'}  inputType={'date'}  />
             <div>
                 {

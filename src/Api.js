@@ -124,6 +124,10 @@ let api = {
             LabPackage:{
                 url: `${endpoint}${version}/clinics/lab-packages/`,
                 method: 'GET',
+            },
+            NursingTask:{
+                url: `${endpoint}${version}/clinics/nursing-tasks/`,
+                method: 'GET',
             }
         }
     },
@@ -134,6 +138,10 @@ let api = {
     {
         url: 'clinics/lab-packages',
         resource: 'ClinicLabPackage',
+    },
+    {
+        url: 'clinics/nursing-tasks',
+        resource: 'ClinicNursingTask',
     },
     {
         url: 'offers',

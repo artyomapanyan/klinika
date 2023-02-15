@@ -1,10 +1,10 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {useRef, useState} from "react";
-import {createResource, updateResource} from "../../../Functions/api_calls";
+import {useEffect, useRef, useState} from "react";
+import {createResource, postResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {Button, Col, Form, InputNumber, Row, Space, Switch, Spin} from "antd";
+import {Button, Col, Form, InputNumber, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -46,43 +46,43 @@ function ClinicTabEssentials({loadingState, dataState}) {
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
         if(values.has_clinic_visit_service) {
-            values.service_settings.clinic_visit.fixed_diagnoses_price = 60
+            //values.service_settings.clinic_visit.fixed_diagnoses_price = 60
             values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
             values.service_settings.clinic_visit.enable_vat_calculation = values.service_settings.clinic_visit.enable_vat_calculation === true
         }
         if(values.has_home_visit_service){
-            values.service_settings.home_visit.fixed_diagnoses_price =  60
+            //values.service_settings.home_visit.fixed_diagnoses_price =  60
             values.service_settings.home_visit.has_insurance_company = values.service_settings.home_visit.has_insurance_company === true
             values.service_settings.home_visit.enable_vat_calculation = values.service_settings.home_visit.enable_vat_calculation === true
         }
 
         if(values.has_laboratory_clinic_visit_service) {
-            values.service_settings.laboratory_clinic_visit.fixed_diagnoses_price = 60
+            //values.service_settings.laboratory_clinic_visit.fixed_diagnoses_price = 60
             values.service_settings.laboratory_clinic_visit.has_insurance_company = values.service_settings.laboratory_clinic_visit.has_insurance_company === true
             values.service_settings.laboratory_clinic_visit.enable_vat_calculation = values.service_settings.laboratory_clinic_visit.enable_vat_calculation === true
         }
         if(values.has_laboratory_home_visit_service) {
-            values.service_settings.laboratory_home_visit.fixed_diagnoses_price = 60
+            //values.service_settings.laboratory_home_visit.fixed_diagnoses_price = 60
             values.service_settings.laboratory_home_visit.has_insurance_company = values.service_settings.laboratory_home_visit.has_insurance_company === true
             values.service_settings.laboratory_home_visit.enable_vat_calculation = values.service_settings.laboratory_home_visit.enable_vat_calculation === true
         }
         if(values.has_nursing_service) {
-            values.service_settings.nursing.fixed_diagnoses_price = 60
+            //values.service_settings.nursing.fixed_diagnoses_price = 60
             values.service_settings.nursing.has_insurance_company = values.service_settings.nursing.has_insurance_company === true
             values.service_settings.nursing.enable_vat_calculation = values.service_settings.nursing.enable_vat_calculation === true
         }
         if(values.has_physical_therapy_clinic_visit_service) {
-            values.service_settings.physical_therapy_clinic_visit.fixed_diagnoses_price = 60
+            //values.service_settings.physical_therapy_clinic_visit.fixed_diagnoses_price = 60
             values.service_settings.physical_therapy_clinic_visit.has_insurance_company = values.service_settings.physical_therapy_clinic_visit.has_insurance_company === true
             values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation = values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation === true
         }
         if(values.has_physical_therapy_home_visit_service) {
-            values.service_settings.physical_therapy_home_visit.fixed_diagnoses_price = 60
+            //values.service_settings.physical_therapy_home_visit.fixed_diagnoses_price = 60
             values.service_settings.physical_therapy_home_visit.has_insurance_company = values.service_settings.physical_therapy_home_visit.has_insurance_company === true
             values.service_settings.physical_therapy_home_visit.enable_vat_calculation = values.service_settings.physical_therapy_home_visit.enable_vat_calculation === true
         }
         if(values.has_telehealth_service) {
-            values.service_settings.telehealth.fixed_diagnoses_price = 60
+            //values.service_settings.telehealth.fixed_diagnoses_price = 60
             values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
         }
@@ -118,6 +118,18 @@ function ClinicTabEssentials({loadingState, dataState}) {
             ...e
         }))
     }
+    // useEffect(()=>{
+    //
+    //         postResource('Country','list',token,null,{per_page:5000}).then(responses => {
+    //             setCountryCode(responses)
+    //         })
+    //
+    // },[])
+    const handleMapItems = (item,name)=>{
+        name = item.phone_code?`(+${item.phone_code}) `:null
+        item.id = '+'+item.phone_code
+        return [name,item]
+    }
 
 
     return(
@@ -131,7 +143,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 ref={formRef}
             >
                 <div className={'add_edit_content'}>
-                    <FormInput label={t('First')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+                    <FormInput label={t('Clinic Name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                 </div>
                 <div className={'add_edit_content'}>
@@ -139,8 +151,12 @@ function ClinicTabEssentials({loadingState, dataState}) {
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
                             <div style={{display:"flex"}}>
-                                <div style={{width:'20%'}}>
-                                    <FormInput label={t('country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} rules={[{required: true}]} />
+                                <div style={{width:'35%'}}>
+                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={`(+${data?.phone_country_code})`}
+                                               handleMapItems={handleMapItems}
+                                               resource={'Country'}/>
                                 </div>
                                 <div style={{width:'100%', marginLeft:10}}>
                                     <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
@@ -197,9 +213,10 @@ function ClinicTabEssentials({loadingState, dataState}) {
                     <Row gutter={[16, 16]}>
                         <Col lg={12} className="gutter-row">
                             <Form.Item
-                                label={t(`Clinic visit`)}
+                                label={t(`Clinic Visit`)}
                                 name="has_clinic_visit_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_clinic_visit_service}
                             >
@@ -230,21 +247,18 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","clinic_visit","fixed_diagnoses_price"]}
-                                            initialValue={data?.service_settings?.clinic_visit?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>
+                                        <span style={{margin:4}}>Duration</span>
                                     </div>
                                 </div> : <div></div>
                             }
 
                             <Form.Item
-                                label={t(`Has telehealth service`)}
+                                label={t(`Telehealth`)}
                                 name="has_telehealth_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_telehealth_service}
                             >
@@ -275,20 +289,21 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","telehealth","fixed_diagnoses_price"]}
-                                            initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
+                                        <span style={{margin:4}}>Service Fee</span>
+                                    </div>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>
+                                        <span style={{margin:4}}>Duration</span>
                                     </div>
                                 </div> : <div></div>
                             }
                             <Form.Item
-                                label={t(`Has home visit service`)}
+                                label={t(`Home Visit`)}
                                 name="has_home_visit_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_home_visit_service}
                             >
@@ -319,23 +334,21 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","home_visit","fixed_diagnoses_price"]}
-                                            initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                        <span style={{margin:4}}>Service Fee</span>
                                     </div>
-
-
-
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.duration}/>
+                                        <span style={{margin:4}}>Duration</span>
+                                    </div>
                                 </div> : <div></div>
                             }
                             <Form.Item
-                                label={t(`Has laboratory home visit service`)}
+                                label={t(`Laboratory Home Visit`)}
                                 name="has_laboratory_home_visit_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_laboratory_home_visit_service}
                             >
@@ -366,22 +379,19 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]}
-                                            initialValue={data?.laboratory_home_visit?.home_visit?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                        <span style={{margin:4}}>Service Fee</span>
                                     </div>
                                 </div> : <div></div>
                             }
                         </Col>
                         <Col lg={12} className="gutter-row">
                             <Form.Item
-                                label={t(`Has laboratory clinic visit service`)}
+                                label={t(`Laboratory Clinic Visit`)}
                                 name="has_laboratory_clinic_visit_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_laboratory_clinic_visit_service}
                             >
@@ -412,24 +422,18 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","laboratory_clinic_visit","fixed_diagnoses_price"]}
-                                            initialValue={data?.laboratory_home_visit?.laboratory_clinic_visit?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
-                                    </div>
+
                                 </div> : <div></div>
                             }
                             <Form.Item
-                                label={t(`Has nursing service`)}
+                                label={t(`Nursing`)}
                                 name="has_nursing_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_nursing_service}
                             >
-                                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                <Switch checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />
                             </Form.Item>
                             {
                                 data?.has_nursing_service ? <div style={{marginLeft:60}}>
@@ -456,20 +460,17 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","nursing","fixed_diagnoses_price"]}
-                                            initialValue={data?.laboratory_home_visit?.nursing?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
+                                        <span style={{margin:4}}>Service Fee</span>
                                     </div>
                                 </div> : <div></div>
                             }
                             <Form.Item
-                                label={t(`Has physical therapy home visit service`)}
+                                label={t(`Physical Therapy Home Visit`)}
                                 name="has_physical_therapy_home_visit_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_physical_therapy_home_visit_service}
                             >
@@ -500,20 +501,21 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]}
-                                            initialValue={data?.laboratory_home_visit?.physical_therapy_home_visit?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
+                                        <span style={{margin:4}}>Service Fee</span>
+                                    </div>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.duration}/>
+                                        <span style={{margin:4}}>Duration</span>
                                     </div>
                                 </div> : <div></div>
                             }
                             <Form.Item
-                                label={t(`Has physical therapy clinic visit service`)}
+                                label={t(`Physical Therapy Clinic Visit`)}
                                 name="has_physical_therapy_clinic_visit_service"
                                 className={'right-label'}
+                                style={{fontSize:20, fontWeight:600}}
                                 valuePropName="checked"
                                 initialValue={data?.has_physical_therapy_clinic_visit_service}
                             >
@@ -544,13 +546,9 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div>
-                                        <Form.Item
-                                            name={["service_settings","physical_therapy_clinic_visit","fixed_diagnoses_price"]}
-                                            initialValue={data?.laboratory_home_visit?.physical_therapy_clinic_visit?.fixed_diagnoses_price}
-                                        >
-                                            <InputNumber size={'small'} /> Service Free
-                                        </Form.Item>
+                                    <div style={{display:'flex'}}>
+                                        <FormInput  label={t('')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>
+                                        <span style={{margin:4}}>Duration</span>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -560,14 +558,14 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 <div className={'add_edit_content'}>
                     <Row gutter={[16, 16]}>
                         <Col lg={12} className="gutter-row">
-                            <FileManager text1={'Click or drag file to this area to upload'}
+                            <FileManager text1={'Logo'}
                                          text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
                                          name={'logo'}
                                          uploadIcon={<InboxOutlined/>}
                                          initialFileList={[data?.logo]} limit={1} formRef={formRef} type={'drag'}/>
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FileManager text1={'Click or drag file to this area to upload'}
+                            <FileManager text1={'Cover Pic'}
                                          text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
                                          name={'cover'}
                                          uploadIcon={<InboxOutlined/>}
@@ -576,7 +574,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                     </Row>
 
 
-                    <FileManager text1={'Click or drag file to this area to upload'}
+                    <FileManager text1={'Gallery'}
                                  text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
                                  name={'gallery'}
                                  uploadIcon={<InboxOutlined/>}

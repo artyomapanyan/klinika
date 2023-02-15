@@ -488,7 +488,7 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
         >
             <div className={'add_edit_content'}>
                 <div className={'home_visit_head'}>
-                    <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
+                    <h1 className={'h1'}>{t(`Working Hours`)}</h1>
                     <Space >
                         <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'} label={'Sync with main working hours'}>
                             <Switch onChange={onChangeSwitch} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />

@@ -15,7 +15,8 @@ function ResourceSelectPaginated({initialData = [],
                                      disableClear=false,
                                     updateLoading=false,
                                      resourceSelectStyle,
-                                     resourceData
+                                     resourceData,
+                                     handleMapItems=null
 }) {
     const timeout = useRef(null);
     const [params, setParams] = useState({page: 1,...resourceParams})
@@ -35,8 +36,14 @@ function ResourceSelectPaginated({initialData = [],
             if(resource==='User' || resource==='Doctor'){
                 name = `${item.first} ${item.last}`
             }
+            if(handleMapItems){
+              let [newName,newItem]  = handleMapItems(item,name)
+                name = newName;
+              item = newItem
+            }
 
-            return <Select.Option key={item.id} value={item.id} name={name}>{name}</Select.Option>
+
+            return name?<Select.Option key={item.id} value={item.id} name={name}>{name}</Select.Option>:null
         })
     }
     useEffect(() => {

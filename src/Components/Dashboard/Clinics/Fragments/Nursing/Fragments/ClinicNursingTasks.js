@@ -10,32 +10,32 @@ import FormInput from "../../../../../Fragments/FormInput";
 import {DeleteOutlined} from "@ant-design/icons";
 
 const resource = "Clinic";
-const service = 'laboratory_clinic_visit'
-function LaboratoryTestsTable() {
+const service = 'nursing'
+function ClinicNursingTasks() {
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
     const LabTestRef = useRef();
     const [loading, setLoading] = useState(false)
 
     const [testData, setTestData] = useState([]);
-    const [labTests, setLabTest] = useState([]);
+    const [nursingTasks, setNursingTasks] = useState([]);
 
 
 
     useEffect(()=>{
         Promise.all([
-            postResource(resource,'LabTest',token,params.id,{service}),
-            postResource('LabTest','list',token,null,{per_page:5000}),
+            postResource(resource,'NursingTask',token,params.id,{service}),
+            postResource('NursingTask','list',token,null,{per_page:5000}),
 
         ]).then(responses => {
             const testDataKeys = responses[0].map((el) => {
-                return el.lab_test_id
+                return el.nursing_task_id
             })
 
             LabTestRef.current = responses[1].items;
 
-            setTimeout(()=>setLabTest(LabTestRef.current.filter(item => !testDataKeys.includes(item.id))),50)
-            setLabTest(LabTestRef.current)
+            setTimeout(()=>setNursingTasks(LabTestRef.current.filter(item => !testDataKeys.includes(item.id))),50)
+            setNursingTasks(LabTestRef.current)
             setTestData(responses[0])
         })
     },[])
@@ -45,13 +45,12 @@ function LaboratoryTestsTable() {
     const onFinish = (values) => {
         values = Object.values(values)
         let data = {
-            lab_tests:values
+            nursing_tasks:values
         }
         setLoading(true)
 
         if (params.id) {
-            updateResource('ClinicLabTest', params.id, data, token).then(response => {
-                console.log(response, 'sss')
+            updateResource('ClinicNursingTask', params.id, data, token).then(response => {
             }).finally(() => {
                 setLoading(false)
             })
@@ -66,8 +65,8 @@ function LaboratoryTestsTable() {
             dataIndex: 'name',
             key: 'name',
             render:(e, record, key)=> {
-                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'lab_test_id']} inputType={'resourceSelect'}
-                                  resource={'LabTest'} initialValue={record?.lab_test_id} resourceData={labTests}/>
+                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'nursing_task_id']} inputType={'resourceSelect'}
+                                  resource={'LabTest'} initialValue={record?.nursing_task_id} resourceData={nursingTasks}/>
             }
         },
         {
@@ -93,7 +92,7 @@ function LaboratoryTestsTable() {
         setTestData([
             ...testData,
             {
-                lab_test_id: null,
+                nursing_task_id: null,
                 price: null,
             }
         ])
@@ -102,9 +101,9 @@ function LaboratoryTestsTable() {
 
     const formOnChange = (changedValues, allValues) => {
         let testDataKeys = Object.values(allValues).map((el) => {
-            return el?.lab_test_id
+            return el?.nursing_task_id
         })
-        setLabTest(LabTestRef.current.filter(item => !testDataKeys.includes(item.id)))
+        setNursingTasks(LabTestRef.current.filter(item => !testDataKeys.includes(item.id)))
     }
 
     const onDelete = (key) => {
@@ -142,4 +141,4 @@ function LaboratoryTestsTable() {
         </div>
     )
 }
-export default LaboratoryTestsTable;
+export default ClinicNursingTasks;

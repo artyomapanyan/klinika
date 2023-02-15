@@ -11,7 +11,8 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                        resource,resourceParams={},
                        initialFocused=false,
                        inputNumberStyle,
-                   resourceData
+                       resourceData,
+                       handleMapItems
                    }) {
     if(inputType==='date'){
         if(initialValue?.iso_string){
@@ -71,6 +72,7 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                                 formItemClass={`input-placeholder ${focused || value ? 'input-focused' : ''}`}
                                                 resource={resource} initialData={initialData}
                                                 resourceData={resourceData}
+                                                handleMapItems={handleMapItems}
                                                 inputProps={{
                     onFocus: () => setFocused(true),
                     onChange: e =>{
