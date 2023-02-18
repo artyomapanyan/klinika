@@ -1,17 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
-import {useNavigate, useParams} from "react-router";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router";
 import {useSelector} from "react-redux";
 import { postResource, updateResource} from "../../../../Functions/api_calls";
-import resourceLinks from "../../../../ResourceLinks";
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 
 
 const resource = "Clinic";
 const service = 'telehealth'
-function ClinicWorkingHours({loadingState, dataState}) {
+function ClinicWorkingHours({loadingState}) {
     const params = useParams();
-    const navigate = useNavigate();
-    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loading, setLoading} = loadingState;
 
@@ -48,7 +45,7 @@ function ClinicWorkingHours({loadingState, dataState}) {
     let type = "telehealth"
 
     return(
-        <div>
+        <div className={'add_edit_content'}>
             <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
         </div>
     )

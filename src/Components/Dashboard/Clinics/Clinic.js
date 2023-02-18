@@ -31,7 +31,7 @@ const handleChange = (e)=>{
     setSearchParams({tab:e})
 
 }
-
+    console.log(dataState.data, 'datastate')
 
     return(
         <div className={'clinic_tab_div'}>
@@ -46,18 +46,18 @@ const handleChange = (e)=>{
                     <Tabs.TabPane key={'working'} tab={'Working Hours'} disabled={!params.id}>
                         <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
+                    {dataState.data.has_clinic_visit_service && <Tabs.TabPane key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
                         <ClinicVisit />
-                    </Tabs.TabPane>
-                    <Tabs.TabPane key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
+                    </Tabs.TabPane>}
+                    {dataState.data.has_home_visit_service && <Tabs.TabPane key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit />
-                    </Tabs.TabPane>
-                    <Tabs.TabPane key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                    </Tabs.TabPane>}
+                    {dataState.data.has_laboratory_clinic_visit_service || dataState.data.has_laboratory_home_visit_service ? <Tabs.TabPane key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
                         <Laboratory />
-                    </Tabs.TabPane>
-                    <Tabs.TabPane key={'nursing'} tab={'Nursing'} disabled={!params.id}>
+                    </Tabs.TabPane> : null}
+                    {dataState.data.has_nursing_service && <Tabs.TabPane key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing/>
-                    </Tabs.TabPane>
+                    </Tabs.TabPane>}
                 </Tabs>
           </div>
     )

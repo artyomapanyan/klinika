@@ -61,6 +61,11 @@ import Coupons from "./Dashboard/Coupons/Coupons";
 import Coupon from "./Dashboard/Coupons/Coupon";
 import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
 import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
+import Laboratory from "./Dashboard/Laboratory/Laboratory";
+import LabPackageCategory from "./Dashboard/LabPackagesCategory/LabPackageCategory";
+import LabTestCategories from "./Dashboard/LabTestCategories/LabTestCategories";
+import LabPackagesCategories from "./Dashboard/LabPackagesCategory/LabPackagesCategories";
+import LabTestCategory from "./Dashboard/LabTestCategories/LabTestCategory";
 
 
 function AppLayout(){
@@ -221,6 +226,24 @@ function AppLayout(){
             resource:'Coupon',
             singleComp:<Coupon/>,
             indexComp:<Coupons/>
+        },
+        {
+            url:'taxonomies',
+            resource:'Taxonomy',
+            //singleComp:<Coupon/>,
+            indexComp:<Laboratory/>
+        },
+        {
+            url:'lab-packages-category',
+            resource:'Taxonomy',
+            singleComp:<LabPackageCategory/>,
+            indexComp:<LabPackagesCategories/>
+        },
+        {
+            url:'lab-tests-category',
+            resource:'Taxonomy',
+            singleComp:<LabTestCategory/>,
+            indexComp:<LabTestCategories/>
         },
 
     ]

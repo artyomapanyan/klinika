@@ -1,18 +1,16 @@
-
 import {useNavigate, useParams} from "react-router";
+import React, {useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
+import {t} from "i18next";
 import Preloader from "../../Preloader";
 import {Button, Form, Space} from "antd";
-import React, {useRef, useState} from "react";
-import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 
-const resource = 'LabTest';
-
-function LabTest() {
+const resource = 'Taxonomy';
+function LabPackageCategory() {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -22,51 +20,49 @@ function LabTest() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
 
+
     const onFinish = (values) => {
         setSaveLoading(true)
+        values.type = Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
         if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
+            updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+                    setData(response)
                 }
             }).finally(() => {
                 setSaveLoading(false)
             })
         } else {
-            createResource(resource, values, token).then((response) => {
+            createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(resourceLinks['Taxonomy'])
                 }
 
             }).finally(() => {
                 setSaveLoading(false)
             })
         }
+
     }
-    let res = "Taxonomy"
+
+    console.log(setLoading, 'ddd')
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Lab Test - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Test`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing City - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Package Category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
             >
-                <div className={'add_edit_content'}>
-                    <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>
-
-                    <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
-                               rules={[{required: true}]}
-                               initialValue={data?.categories?.map(e=>e.id)??[]}
-                               initialData={data?.categories??[]}
-                               resource={'Category'}
-                    />
+                <div  className={'add_edit_content'}>
+                    <FormInput label={t('name')} name={'title'} initialValue={data?.title} rules={[{required: true}]} />
+                    <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}
@@ -75,10 +71,10 @@ function LabTest() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[res]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>
     )
 }
-export default LabTest;
+export default LabPackageCategory;

@@ -5,7 +5,10 @@ import {t} from "i18next";
 
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
+import FormInput from "../FormInput";
+import resourceLinks from "../../ResourceLinks";
 
+let res = "Clinic";
 
 let options1 = [
     {
@@ -390,24 +393,27 @@ let options1 = [
 ];
 
 
-function WorkingHours({onFinish, data, loading, type,syncable}) {
+function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true,isDoctorHours}) {
 
     const navigate = useNavigate();
     const formRef = useRef();
-    const [, updateState] = React.useState();
+    //const [, updateState] = React.useState();
 
     const [workingData, setWorkingData] = useState({})
     const [switchChange, setSwitchChange] = useState(false)
 
 
     let customWorkingHouers = {
-        friday: [{day: 'friday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
         monday: [{day: 'monday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
-        saturday: [{day: 'saturday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
-        sunday: [{day: 'sunday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
-        thursday: [{day: 'thursday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
         tuesday: [{day: 'tuesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
         wednesday: [{day: 'wednesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
+        thursday: [{day: 'thursday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
+        friday: [{day: 'friday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
+        saturday: [{day: 'saturday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
+        sunday: [{day: 'sunday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
+
+
+
 
     }
     const handleFilterData =(data)=>{
@@ -430,6 +436,7 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
 
 
     const onFormFinish = (values) => {
+        values.status ? values.status = true : values.status = false
         let prevValues = {...values}
         let working_hours = [];
         Object.keys(values.working_hours).forEach(key=>{
@@ -486,19 +493,26 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
             layout="vertical"
             ref={formRef}
         >
-            <div className={'add_edit_content'}>
-                <div className={'home_visit_head'}>
-                    <h1 className={'h1'}>{t(`Working Hours`)}</h1>
-                    <Space >
-                        <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'} label={'Sync with main working hours'}>
-                            <Switch onChange={onChangeSwitch} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                        </Form.Item>
+            <div>
+                {!isDoctorHours ? <div className={'home_visit_head'}>
+                            <h1 className={'h1'}>{t(`Working Hours`)}</h1>
+                            <Space >
+                            <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'} label={'Sync with main working hours'}>
+                                <Switch onChange={onChangeSwitch} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                            </Form.Item>
 
-                    </Space>
-
-                </div>
-
-
+                        </Space> </div> : <Space >
+                            <FormInput inputType='number' inputNumberStyle={{width:200}} label={'Diagnosis price'} name={'diagnosis_price'} />
+                            <Form.Item
+                                label={t(`Status`)}
+                                name="status"
+                                className={'right-label'}
+                                valuePropName="checked"
+                                initialValue={data?.has_clinic_visit_service}
+                            >
+                                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                            </Form.Item>
+                        </Space>}
                 <div>
                     {
                         switchChange ? <div className={'add_edit_content'} align={"center"}>
@@ -523,9 +537,6 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
                                             <Switch checkedChildren="Open" unCheckedChildren="Closed"    />
                                         </Form.Item>
                                     </div>
-
-
-
                                 </Col>
                                 <Col lg={18}>
                                     {workingDay?.map((el,key) => {
@@ -598,9 +609,9 @@ function WorkingHours({onFinish, data, loading, type,syncable}) {
                 </div>
             </div>
 
-            <Space className={'create_apdate_btns'}>
+            <Space>
                 <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                <Button size={'large'} onClick={() => (navigate("clinics"))} type={'secondary'}
+                <Button size={'large'} onClick={()=>(navigate(resourceLinks[res]))} type={'secondary'}
                         htmlType="submit">{t('Cancel')}</Button>
             </Space>
         </Form>

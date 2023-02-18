@@ -5,12 +5,12 @@ import Resources from "../../../store/Resources";
 import DateParser from "../../Fragments/DateParser";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 
-function Specialties() {
+function LabTestCategories() {
     return(
         <div>
             <ResourceTable resource={'Taxonomy'}
-                           resourceLink={'Specialty'}
-                           tableParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                           resourceLink={'LabTestCategory'}
+                           tableParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
                            tableColumns={[
                                {
                                    dataIndex:'id',
@@ -32,8 +32,8 @@ function Specialties() {
                                    key:'date',
                                    render:i=><DateParser date={i}/>
                                },
-                           ]} title={t('Specialties')}/>
+                           ]} title={t('Lab Tests Categories')}/>
         </div>
     )
 }
-export default Specialties;
+export default LabTestCategories;

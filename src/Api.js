@@ -156,8 +156,18 @@ let api = {
         resource: 'Coupon',
     },
     {
+        url: 'clinic-doctors/working-hours',
+        resource: 'ClinicDoctorWorkingHours',
+    },
+    {
         url: 'clinic-doctors',
         resource: 'ClinicDoctor',
+        custom: {
+            WorkingHours:{
+                url: `${endpoint}${version}/clinic-doctors/working-hours/`,
+                method: 'GET',
+            },
+        }
     },
     ].forEach(item => {
         if (!item.type) {

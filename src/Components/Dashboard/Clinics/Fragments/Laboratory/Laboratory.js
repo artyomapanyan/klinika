@@ -45,7 +45,9 @@ function Laboratory() {
 
     return(
         <div className={'add_edit_content'}>
-            <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+            <div className={'add_edit_content'}>
+                <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+            </div>
 
             <div>
                 <LaboratoryTestsTable />

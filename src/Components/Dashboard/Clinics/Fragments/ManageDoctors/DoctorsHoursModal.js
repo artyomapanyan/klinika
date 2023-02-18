@@ -1,31 +1,29 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router";
+import {useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {createResource, postResource, updateResource} from "../../../../Functions/api_calls";
-import resourceLinks from "../../../../ResourceLinks";
-
+import {postResource, updateResource} from "../../../../Functions/api_calls";
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 
 
 
-const resource = "Clinic";
-function DoctorsHoursModal({loadingState, dataState}) {
+
+const resource = "ClinicDoctor";
+function DoctorsHoursModal({id,type}) {
     let token = useSelector((state) => state.auth.token);
-    const navigate = useNavigate();
     const params = useParams();
 
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
 
 
-    let type = "main";
+
 
     useEffect(() => {
-        postResource(resource,'WorkingHours',token,params.id,{service:'main'}).then(responses => {
+        postResource(resource,'WorkingHours',token,id,{service:type}).then(responses => {
             setData(responses)
         })
 
-    }, []);
+    },[]);
 
     const onFinish = (values,prevValues) => {
         setLoading(true)
@@ -34,7 +32,7 @@ function DoctorsHoursModal({loadingState, dataState}) {
             ...prevValues?.working_hours
         }))
         if (params.id) {
-            updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
+            updateResource('ClinicDoctorWorkingHours', id, values, token, ).then(response => {
                 setData(response)
             }).finally(() => {
                 setLoading(false)
@@ -42,9 +40,10 @@ function DoctorsHoursModal({loadingState, dataState}) {
         }
     }
 
+    console.log(data, 'data')
     return(
-        <div>
-            <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+        <div className={'add_edit_content'}>
+            <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type} switchHours={false} isDoctorHours={true} />
         </div>
     )
 }

@@ -1,10 +1,10 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {useEffect, useRef, useState} from "react";
-import {createResource, postResource, updateResource} from "../../../Functions/api_calls";
+import {useRef, useState} from "react";
+import {createResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {Button, Col, Form, InputNumber, Row, Space, Switch} from "antd";
+import {Button, Col, Form, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -46,43 +46,35 @@ function ClinicTabEssentials({loadingState, dataState}) {
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
         if(values.has_clinic_visit_service) {
-            //values.service_settings.clinic_visit.fixed_diagnoses_price = 60
             values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
             values.service_settings.clinic_visit.enable_vat_calculation = values.service_settings.clinic_visit.enable_vat_calculation === true
         }
         if(values.has_home_visit_service){
-            //values.service_settings.home_visit.fixed_diagnoses_price =  60
             values.service_settings.home_visit.has_insurance_company = values.service_settings.home_visit.has_insurance_company === true
             values.service_settings.home_visit.enable_vat_calculation = values.service_settings.home_visit.enable_vat_calculation === true
         }
 
         if(values.has_laboratory_clinic_visit_service) {
-            //values.service_settings.laboratory_clinic_visit.fixed_diagnoses_price = 60
             values.service_settings.laboratory_clinic_visit.has_insurance_company = values.service_settings.laboratory_clinic_visit.has_insurance_company === true
             values.service_settings.laboratory_clinic_visit.enable_vat_calculation = values.service_settings.laboratory_clinic_visit.enable_vat_calculation === true
         }
         if(values.has_laboratory_home_visit_service) {
-            //values.service_settings.laboratory_home_visit.fixed_diagnoses_price = 60
             values.service_settings.laboratory_home_visit.has_insurance_company = values.service_settings.laboratory_home_visit.has_insurance_company === true
             values.service_settings.laboratory_home_visit.enable_vat_calculation = values.service_settings.laboratory_home_visit.enable_vat_calculation === true
         }
         if(values.has_nursing_service) {
-            //values.service_settings.nursing.fixed_diagnoses_price = 60
             values.service_settings.nursing.has_insurance_company = values.service_settings.nursing.has_insurance_company === true
             values.service_settings.nursing.enable_vat_calculation = values.service_settings.nursing.enable_vat_calculation === true
         }
         if(values.has_physical_therapy_clinic_visit_service) {
-            //values.service_settings.physical_therapy_clinic_visit.fixed_diagnoses_price = 60
             values.service_settings.physical_therapy_clinic_visit.has_insurance_company = values.service_settings.physical_therapy_clinic_visit.has_insurance_company === true
             values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation = values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation === true
         }
         if(values.has_physical_therapy_home_visit_service) {
-            //values.service_settings.physical_therapy_home_visit.fixed_diagnoses_price = 60
             values.service_settings.physical_therapy_home_visit.has_insurance_company = values.service_settings.physical_therapy_home_visit.has_insurance_company === true
             values.service_settings.physical_therapy_home_visit.enable_vat_calculation = values.service_settings.physical_therapy_home_visit.enable_vat_calculation === true
         }
         if(values.has_telehealth_service) {
-            //values.service_settings.telehealth.fixed_diagnoses_price = 60
             values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
         }
@@ -134,7 +126,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
 
     return(
         <div >
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
+            {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
             {loading ? <Preloader/> : <Form
                 onValuesChange={handleValuesChange}
                 name="edit"

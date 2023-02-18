@@ -9,7 +9,10 @@ const ResourceLins = {
     SubService:'/dashboard/sub-services/',
     NursingTask:'/dashboard/nursing-tasks/',
     LabPackage:'/dashboard/lab-packages/',
+    LabPackageCategory:'/dashboard/lab-packages-category/',
+    LabTestCategory:'/dashboard/lab-tests-category/',
     LabTest:'/dashboard/lab-tests/',
+    Taxonomy:'/dashboard/taxonomies/',
     InsuranceCompany:'/dashboard/insurance-companies/',
     PaymentMethod:'/dashboard/payment-methods/',
     Role:'/dashboard/roles/',
@@ -26,6 +29,7 @@ const ResourceLins = {
     ClinicWorkingHours:'/dashboard/clinics/working-hours/',
     ClinicLabTest:'/dashboard/clinics/lab-tests/',
     ClinicLabPackage:'/dashboard/clinics/lab-packages/',
+    ClinicDoctorWorkingHours:'/dashboard/clinic-doctors/working-hours/',
 
 }
 export default ResourceLins

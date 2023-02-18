@@ -86,16 +86,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     permission:'NursingTask'
                 },
                 {
-                    key: 'lab-packages',
-                    label: t(`Lab packages`),
-                    permission:'LabPackage'
-                },
-                {
-                    key: 'lab-tests',
-                    label: t(`Lab tests`),
-                    permission:'LabTest'
-                },
-                {
                     key: 'insurance-companies',
                     label: t(`Insurance companies`),
                     permission:'InsuranceCompany'
@@ -134,6 +124,11 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     key: 'preferences',
                     label: t(`Preferences`),
                     permission:'Preference'
+                },
+                {
+                    key: 'taxonomies',
+                    label: t(`Laboratory`),
+                    permission:'Taxonomy'
                 },
             ]
         },

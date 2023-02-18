@@ -50,6 +50,7 @@ function LabPackage() {
         }
     }
 
+    let res = "Taxonomy"
     return (
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Lab Package - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Package`)}</h3>}
@@ -95,7 +96,7 @@ function LabPackage() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[res]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                 </Space>
             </Form>}
         </div>

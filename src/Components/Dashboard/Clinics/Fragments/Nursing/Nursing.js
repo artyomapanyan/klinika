@@ -45,8 +45,10 @@ function Nursing() {
     }
 
     return(
-        <div>
-          <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+        <div className={'add_edit_content'}>
+            <div className={'add_edit_content'}>
+                <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+            </div>
             <ClinicNursingTasks />
         </div>
     )

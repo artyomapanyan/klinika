@@ -42,7 +42,7 @@ function ClinicVisit() {
 
 
     return(
-        <div>
+        <div className={'add_edit_content'}>
           <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
         </div>
     )

@@ -1,18 +1,20 @@
 import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {Button, Form, Space, Table,} from "antd";
 
 import {useSelector} from "react-redux";
 import {postResource, updateResource} from "../../../../../Functions/api_calls";
 import FormInput from "../../../../../Fragments/FormInput";
 import {DeleteOutlined} from "@ant-design/icons";
+import resourceLinks from "../../../../../ResourceLinks";
 
 const resource = "Clinic";
 const service = 'laboratory_clinic_visit'
 function LaboratoryTestsTable() {
     const params = useParams();
+    const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     const LabTestRef = useRef();
     const [loading, setLoading] = useState(false)
@@ -134,7 +136,7 @@ function LaboratoryTestsTable() {
                     <div>
                         <Space className={'lab_save'}>
                             <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                            <Button size={'large'}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                            <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                         </Space>
                     </div>
                 </Form>
