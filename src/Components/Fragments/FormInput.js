@@ -5,22 +5,23 @@ import dayjs from "dayjs";
 
 const NoForm = ['resourceSelect']
 
-function FormInput({name, label, rules, initialValue, inputProps = {},
+function FormInput({
+                       name, label, rules, initialValue, inputProps = {},
                        resourceSelectStyle,
                        inputType, initialData = [],
-                       resource,resourceParams={},
-                       initialFocused=false,
+                       resource, resourceParams = {},
+                       initialFocused = false,
                        inputNumberStyle,
                        resourceData,
                        handleMapItems
                    }) {
-    if(inputType==='date'){
-        if(initialValue?.iso_string){
-            initialValue =initialValue?.iso_string?dayjs(initialValue?.iso_string):null
-        }else{
-            if(initialValue){
-                initialValue =initialValue?dayjs(initialValue):null
-            }else{
+    if (inputType === 'date') {
+        if (initialValue?.iso_string) {
+            initialValue = initialValue?.iso_string ? dayjs(initialValue?.iso_string) : null
+        } else {
+            if (initialValue) {
+                initialValue = initialValue ? dayjs(initialValue) : null
+            } else {
                 initialValue = null
             }
 
@@ -47,23 +48,23 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
                                      onChange={e => setValue(e)}
-                                     style={{width:'100%', height:48}}
+                                     style={{width: '100%', height: 48}}
                 />
             case 'textArea':
                 return <Input.TextArea   {...inputProps}
-                                     placeholder={' '}
-                                     onFocus={() => setFocused(true)}
-                                     onBlur={() => setFocused(false)}
-                                     onChange={e => setValue(e?.target.value)}
-                                     style={{height:100}}
-                />
-            case 'number':
-                return <InputNumber   {...inputProps}
                                          placeholder={' '}
                                          onFocus={() => setFocused(true)}
                                          onBlur={() => setFocused(false)}
-                                         onChange={e => setValue(e)}
-                                         style={inputNumberStyle}/>
+                                         onChange={e => setValue(e?.target.value)}
+                                         style={{height: 100}}
+                />
+            case 'number':
+                return <InputNumber   {...inputProps}
+                                      placeholder={' '}
+                                      onFocus={() => setFocused(true)}
+                                      onBlur={() => setFocused(false)}
+                                      onChange={e => setValue(e)}
+                                      style={inputNumberStyle}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
@@ -74,23 +75,23 @@ function FormInput({name, label, rules, initialValue, inputProps = {},
                                                 resourceData={resourceData}
                                                 handleMapItems={handleMapItems}
                                                 inputProps={{
-                    onFocus: () => setFocused(true),
-                    onChange: e =>{
-                        setValue(e)
-                        if(inputProps.onChange){
-                            inputProps.onChange(e)
-                        }
-                    },
-                    onBlur: () => setFocused(false),
-                    mode:inputProps.mode
-                }}/>
+                                                    onFocus: () => setFocused(true),
+                                                    onChange: e => {
+                                                        setValue(e)
+                                                        if (inputProps.onChange) {
+                                                            inputProps.onChange(e)
+                                                        }
+                                                    },
+                                                    onBlur: () => setFocused(false),
+                                                    mode: inputProps.mode
+                                                }}/>
 
             default:
                 return <Input {...inputProps} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
                               onInput={e => setValue(e.target.value)}/>
         }
     }
-    let flyPlaceholder = focused || (Array.isArray(value)?value.length:value)
+    let flyPlaceholder = focused || (Array.isArray(value) ? value.length : value)
     return (
         <div>
             {NoForm.includes(inputType) ? handleReturnInput() : <Form.Item initialValue={initialValue}
