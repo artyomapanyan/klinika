@@ -9,11 +9,12 @@ import Preloader from "../../../../Preloader";
 
 
 const resource = "ClinicDoctor";
-function DoctorsHoursModal({id,type, price, status}) {
+function DoctorsHoursModal({id,type, keys=[]}) {
     let token = useSelector((state) => state.auth.token);
     const params = useParams();
 
-    const [data, setData] = useState({})
+    const [data, setData] = useState([])
+    const [docData, setDocData] = useState({})
     const [loading, setLoading] = useState(true)
 
 
@@ -22,8 +23,12 @@ function DoctorsHoursModal({id,type, price, status}) {
     useEffect(() => {
 
         setLoading(true)
-        postResource(resource,'WorkingHours',token,id,{service:type}).then(responses => {
-            setData(responses)
+        postResource(resource,'WorkingHours',token,id,{service:type}).then(response => {
+            setData(response?.working_hours)
+            setDocData({
+                price:response?.clinic_doctor[keys[1]],
+                status:response?.clinic_doctor[keys[0]]
+            })
             setLoading(false)
         })
 
@@ -37,7 +42,11 @@ function DoctorsHoursModal({id,type, price, status}) {
         }))
         if (params.id) {
             updateResource('ClinicDoctorWorkingHours', id, values, token, ).then(response => {
-                setData(response)
+                setData(response?.working_hours)
+                setDocData({
+                    price:response?.clinic_doctor[keys[1]],
+                    status:response?.clinic_doctor[keys[0]]
+                })
             }).finally(() => {
                 setLoading(false)
             })
@@ -46,7 +55,7 @@ function DoctorsHoursModal({id,type, price, status}) {
 
     return(
         <div className={'add_edit_content'}>
-            {loading?<Preloader/>:<WorkingHours loading={loading} workData={data} onFinish={onFinish} type={type} doctorData={{status,price}}  isDoctorHours={true} />}
+            {loading?<Preloader/>:<WorkingHours loading={loading} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} />}
         </div>
     )
 }

@@ -3,11 +3,15 @@ import React, {useEffect, useRef} from "react";
 
 function MyMapComponent({data}) {
     const ref = useRef();
-
+console.log(data)
     useEffect(() => {
-        new window.google.maps.Map(ref.current, {
+        Object.keys(data).length !== 0 ? new window.google.maps.Map(ref.current, {
             center:{ lat: +data.latitude,
                      lng: +data.longitude},
+            zoom:15,
+        }) : new window.google.maps.Map(ref.current, {
+            center:{ lat: 0,
+                     lng: 0},
             zoom:15,
         });
     });

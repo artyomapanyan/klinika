@@ -432,7 +432,6 @@ function WorkingHours({onFinish, data, loading, type, syncable,isDoctorHours, do
 
     useEffect(() => {
         if (data.length !== 0)  {
-
             setWorkingData(  handleFilterData(data))
         } else {
             setWorkingData(customWorkingHouers)
@@ -443,14 +442,14 @@ function WorkingHours({onFinish, data, loading, type, syncable,isDoctorHours, do
 
 
     const onFormFinish = (values) => {
-        values.status ? values.status = true : values.status = false
+        values?.status ? values.status = true : values.status = false
         let prevValues = {...values}
         let working_hours = [];
         Object.keys(values.working_hours).forEach(key=>{
             working_hours = [...working_hours,...values.working_hours[key]]
         })
         values.working_hours = working_hours.map(e=>{
-            e.is_day_off = !e.is_day_off
+            e.is_day_off = !e?.is_day_off
             return e
         })
         values.service=type;
