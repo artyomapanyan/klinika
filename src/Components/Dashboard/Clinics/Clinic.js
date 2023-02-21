@@ -31,7 +31,6 @@ const handleChange = (e)=>{
     setSearchParams({tab:e})
 
 }
-    console.log(dataState.data, 'datastate')
 
     return(
         <div className={'clinic_tab_div'}>

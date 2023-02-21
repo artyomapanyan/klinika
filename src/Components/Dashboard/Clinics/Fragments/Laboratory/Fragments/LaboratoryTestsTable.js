@@ -53,7 +53,6 @@ function LaboratoryTestsTable() {
 
         if (params.id) {
             updateResource('ClinicLabTest', params.id, data, token).then(response => {
-                console.log(response, 'sss')
             }).finally(() => {
                 setLoading(false)
             })

@@ -393,11 +393,10 @@ let options1 = [
 ];
 
 
-function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true,isDoctorHours}) {
+function WorkingHours({onFinish, data, loading, type, syncable,isDoctorHours, doctorData}) {
 
     const navigate = useNavigate();
     const formRef = useRef();
-    //const [, updateState] = React.useState();
 
     const [workingData, setWorkingData] = useState({})
     const [switchChange, setSwitchChange] = useState(false)
@@ -412,9 +411,6 @@ function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true
         saturday: [{day: 'saturday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
         sunday: [{day: 'sunday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
 
-
-
-
     }
     const handleFilterData =(data)=>{
         let newData = {...data}
@@ -423,6 +419,17 @@ function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true
        })
         return newData
     }
+
+
+    useEffect(()=>{
+        formRef?.current?.setFieldsValue({
+            status:doctorData?.status,
+            diagnosis_price: doctorData?.price,
+            working_hours: workingData
+        })
+    },[doctorData])
+
+
     useEffect(() => {
         if (data.length !== 0)  {
 
@@ -485,6 +492,7 @@ function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true
         setSwitchChange(val)
     }
 
+
     return (
         loading?<Preloader/>:<Form
             onValuesChange={handleValuesChange}
@@ -502,13 +510,13 @@ function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true
                             </Form.Item>
 
                         </Space> </div> : <Space >
-                            <FormInput inputType='number' inputNumberStyle={{width:200}} label={'Diagnosis price'} name={'diagnosis_price'} />
+                    <FormInput inputType='number' inputNumberStyle={{width:200}} label={'Diagnosis price'} name={'diagnosis_price'} initialValue={doctorData.price} />
                             <Form.Item
                                 label={t(`Status`)}
                                 name="status"
                                 className={'right-label'}
                                 valuePropName="checked"
-                                initialValue={data?.has_clinic_visit_service}
+                                initialValue={doctorData.status}
                             >
                                 <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                             </Form.Item>
@@ -517,10 +525,10 @@ function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true
                     {
                         switchChange ? <div className={'add_edit_content'} align={"center"}>
                             <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
-                        </div> : Object.keys(workingData).map(dataKey => {
+                        </div> : Object.keys(workingData).map((dataKey,iKey) => {
                             let workingDay  = workingData[dataKey]
 
-                        return workingDay &&<div>
+                        return workingDay &&<div key={iKey}>
 
                             <Row>
                                 <Col lg={3}>
@@ -601,7 +609,6 @@ function WorkingHours({onFinish, data, loading, type, syncable, switchHours=true
                                     })}
                                 </Col>
                             </Row>
-
 
                         </div>
                     })}

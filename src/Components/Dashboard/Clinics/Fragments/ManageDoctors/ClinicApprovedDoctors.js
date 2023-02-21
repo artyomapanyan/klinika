@@ -11,16 +11,22 @@ function ClinicApprovedDoctors({loadingState}) {
     const params = useParams();
     const {loading, setLoading} = loadingState;
     const [isModalOpen, setIsModalOpen] = useState({});
-    const showModal = (id,type) => {
+
+    const showModal = (id,type, price, status) => {
+
         setIsModalOpen({
+            price,
             id,
+            status,
             type
         });
     };
+
     const handleOk = () => {
         setIsModalOpen({});
     };
     const handleCancel = () => {
+
         setIsModalOpen({});
     };
 
@@ -51,8 +57,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Telehealth',
                             key: 'telehealth',
                             render:(e, record)=> {
-
-                                return <div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'telehealth')} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return <div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'telehealth', record.telehealth_diagnosis_price, record.telehealth_activated_at)} type={'primary'} size={'large'}>Manage Doctors</Button></div>
                             }
                         },
                         {
@@ -60,7 +65,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Clinic Visit',
                             key: 'clinic_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'clinic_visit')} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'clinic_visit', record.clinic_visit_diagnosis_price, record.clinic_visit_activated_at)} type={'primary'} size={'large'}>Manage Doctors</Button></div>
                             }
                         },
                         {
@@ -68,7 +73,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Home Visit',
                             key: 'home_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'home_visit')} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'home_visit', record.home_visit_diagnosis_price, record.home_visit_activated_at)} type={'primary'} size={'large'}>Manage Doctors</Button></div>
                             }
                         },
                         {
@@ -76,7 +81,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Physical Therapy Home Visit',
                             key: 'physical_therapy_home_visit',
                             render:(e, record)=> {
-                                return<div style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_home_visit')} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_home_visit', record.physical_therapy_home_visit_diagnosis_price, record.physical_therapy_home_visit_activated_at)} type={'primary'} size={'large'}>Manage Doctors</Button></div>
                             }
                         },
                         {
@@ -84,7 +89,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Physical Therapy Clinic Visit',
                             key: 'physical_therapy_clinic_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_clinic_visit')} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_clinic_visit', record.physical_therapy_clinic_visit_diagnosis_price, record.physical_therapy_clinic_visit_activated_at)} type={'primary'} size={'large'}>Manage Doctors</Button></div>
                             }
                         },
                         {
@@ -106,7 +111,7 @@ function ClinicApprovedDoctors({loadingState}) {
                 />}
 
             <Modal title="Worcing Houer" width={"65%"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
-                <DoctorsHoursModal loadingState={loadingState} id={isModalOpen?.id} type={isModalOpen?.type}/>
+                {isModalOpen?.id ? <DoctorsHoursModal loadingState={loadingState} id={isModalOpen?.id} type={isModalOpen?.type} price={isModalOpen.price} status={isModalOpen.status} />:null}
             </Modal>
         </div>
     )

@@ -66,6 +66,8 @@ import LabPackageCategory from "./Dashboard/LabPackagesCategory/LabPackageCatego
 import LabTestCategories from "./Dashboard/LabTestCategories/LabTestCategories";
 import LabPackagesCategories from "./Dashboard/LabPackagesCategory/LabPackagesCategories";
 import LabTestCategory from "./Dashboard/LabTestCategories/LabTestCategory";
+import Appointments from "./Dashboard/Appointments/Appointments";
+import Appointment from "./Dashboard/Appointments/Appointment";
 
 
 function AppLayout(){
@@ -246,6 +248,7 @@ function AppLayout(){
             indexComp:<LabTestCategories/>
         },
 
+
     ]
     return <Layout className={'main-container'}>
             <div className={'side-menu'}>
@@ -273,6 +276,10 @@ function AppLayout(){
                     </Routes>}/>
 
                         )}
+
+
+                    <Route path={'appointments'} element={<Appointments />}/>
+                    <Route path={'appointment'} element={<Appointment />}/>
 
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>

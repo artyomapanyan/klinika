@@ -34,6 +34,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const [saveLoading, setSaveLoading] = useState(false)
 
     const onFinish = (values) => {
+
         setSaveLoading(true)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
         values.has_telehealth_service = values.has_telehealth_service === true
@@ -46,6 +47,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
         if(values.has_clinic_visit_service) {
+            values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
             values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
             values.service_settings.clinic_visit.enable_vat_calculation = values.service_settings.clinic_visit.enable_vat_calculation === true
         }
@@ -78,6 +80,9 @@ function ClinicTabEssentials({loadingState, dataState}) {
             values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
         }
+
+        console.log(values)
+        return;
 
 
         setData((prevState)=>({
@@ -118,8 +123,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
     //
     // },[])
     const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(+${item.phone_code}) `:null
-        item.id = '+'+item.phone_code
+        name = item.phone_code?`(${item.phone_code}) `:null
+        item.id = item.phone_code
         return [name,item]
     }
 
@@ -146,7 +151,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                 <div style={{width:'35%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={`(+${data?.phone_country_code})`}
+                                               initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}
                                                resource={'Country'}/>
                                 </div>

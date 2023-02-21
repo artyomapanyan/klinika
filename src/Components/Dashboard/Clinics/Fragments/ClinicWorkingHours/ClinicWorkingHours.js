@@ -33,7 +33,6 @@ function ClinicWorkingHours({loadingState}) {
         }))
         if (params.id) {
             updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
-                console.log(response,'updatge')
                 setData(response)
             }).finally(() => {
                 setLoading(false)
