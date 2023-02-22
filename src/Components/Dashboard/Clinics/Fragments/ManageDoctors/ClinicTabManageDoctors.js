@@ -16,7 +16,6 @@ function ClinicTabManageDoctors({loadingState}) {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
-    let doctorsTable = useRef();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -48,7 +47,6 @@ function ClinicTabManageDoctors({loadingState}) {
             <div  className={'add_edit_content'}>
                 <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
                 {loading ? <Preloader/> : <ResourceTable
-                    ref={doctorsTable}
                     noHeader={true}
                     except={{edit: true}}
                     tableParams={{clinic: params.id}}

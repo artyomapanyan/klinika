@@ -49,7 +49,6 @@ function LabPackageCategory() {
 
     }
 
-    console.log(setLoading, 'ddd')
 
     return(
         <div>

@@ -11,6 +11,7 @@ import HomeVisit from "./Fragments/HomeVisit/HomeVisit";
 import Laboratory from "./Fragments/Laboratory/Laboratory";
 import ClinicVisit from "./Fragments/ClinicVisit/ClinicVisit";
 import Nursing from "./Fragments/Nursing/Nursing";
+import ClinicTabBars from "./Fragments/ClinicTabBars";
 
 
 const resource = "Clinic"
@@ -29,34 +30,33 @@ function Clinic() {
 const handleChange = (e)=>{
     setTab(e)
     setSearchParams({tab:e})
-
 }
 
     return(
         <div className={'clinic_tab_div'}>
 
                 <Tabs onChange={handleChange} activeKey={tab}>
-                    <Tabs.TabPane key={'essentials'} tab={'Essentials'} >
+                    <items key={'essentials'} tab={'Essentials'} >
                         <ClinicTabEssentials loadingState={loadingState} dataState={dataState}/>
-                    </Tabs.TabPane>
-                    <Tabs.TabPane key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
+                    </items>
+                    {params.id && <items key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
                         <ClinicTabManageDoctors  loadingState={loadingState} />
-                    </Tabs.TabPane>
-                    <Tabs.TabPane key={'working'} tab={'Working Hours'} disabled={!params.id}>
+                    </items>}
+                    {params.id && <items key={'working'} tab={'Working Hours'}>
                         <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>
-                    </Tabs.TabPane>
-                    {dataState.data.has_clinic_visit_service && <Tabs.TabPane key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
+                    </items>}
+                    {dataState.data.has_clinic_visit_service && <items key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
                         <ClinicVisit />
-                    </Tabs.TabPane>}
-                    {dataState.data.has_home_visit_service && <Tabs.TabPane key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
+                    </items>}
+                    {dataState.data.has_home_visit_service && <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit />
-                    </Tabs.TabPane>}
-                    {dataState.data.has_laboratory_clinic_visit_service || dataState.data.has_laboratory_home_visit_service ? <Tabs.TabPane key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                    </items>}
+                    {dataState.data.has_laboratory_clinic_visit_service || dataState.data.has_laboratory_home_visit_service ? <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
                         <Laboratory />
-                    </Tabs.TabPane> : null}
-                    {dataState.data.has_nursing_service && <Tabs.TabPane key={'nursing'} tab={'Nursing'} disabled={!params.id}>
+                    </items> : null}
+                    {dataState.data.has_nursing_service && <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing/>
-                    </Tabs.TabPane>}
+                    </items>}
                 </Tabs>
           </div>
     )

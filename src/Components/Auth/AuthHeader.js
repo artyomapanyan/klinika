@@ -41,7 +41,7 @@ function AuthHeader() {
                     style={{color: 'white'}}
                 >
                     <Space style={{color: "white", fontWeight: 700}}>
-                        {lngs === "en" ? "English" : "Arabic"}
+                        {lngs === "ar" ? "Arabic" : "English"}
                         <DownOutlined />
                     </Space>
 

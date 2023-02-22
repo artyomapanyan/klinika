@@ -56,7 +56,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Telehealth',
                             key: 'telehealth',
                             render:(e, record)=> {
-                                return <div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'telehealth',['telehealth_activated_at','telehealth_diagnosis_price'])} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return <div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'telehealth',['telehealth_activated_at','telehealth_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
                             }
                         },
                         {
@@ -64,7 +64,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Clinic Visit',
                             key: 'clinic_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'clinic_visit', ['clinic_visit_activated_at','clinic_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'clinic_visit', ['clinic_visit_activated_at','clinic_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
                             }
                         },
                         {
@@ -72,7 +72,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Home Visit',
                             key: 'home_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'home_visit', ['home_visit_activated_at','home_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'home_visit', ['home_visit_activated_at','home_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
                             }
                         },
                         {
@@ -80,7 +80,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Physical Therapy Home Visit',
                             key: 'physical_therapy_home_visit',
                             render:(e, record)=> {
-                                return<div style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_home_visit', ['physical_therapy_home_visit_activated_at','physical_therapy_home_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_home_visit', ['physical_therapy_home_visit_activated_at','physical_therapy_home_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
                             }
                         },
                         {
@@ -88,7 +88,7 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Physical Therapy Clinic Visit',
                             key: 'physical_therapy_clinic_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_clinic_visit', ['physical_therapy_clinic_visit_activated_at','physical_therapy_clinic_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Doctors</Button></div>
+                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_clinic_visit', ['physical_therapy_clinic_visit_activated_at','physical_therapy_clinic_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
                             }
                         },
                         {
@@ -96,8 +96,8 @@ function ClinicApprovedDoctors({loadingState}) {
                             title: 'Related Specialty',
                             key: 'specialty',
                             render:(e, record)=> {
-                               return <div>{record?.specialties?.map((el) => {
-                                   return<span> <span> {"  "} </span><span style={{backgroundColor: "orange"}}>{el?.title + ",   "}</span></span>
+                               return <div>{record?.specialties?.map((el, key) => {
+                                   return<span key={key}> <span> {"  "} </span><span style={{backgroundColor: "orange"}}>{el?.title + ",   "}</span></span>
                                 })}
                                </div>
 

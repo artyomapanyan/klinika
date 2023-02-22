@@ -9,6 +9,7 @@ import {postResource, updateResource} from "../../../../../Functions/api_calls";
 import FormInput from "../../../../../Fragments/FormInput";
 import {DeleteOutlined} from "@ant-design/icons";
 import resourceLinks from "../../../../../ResourceLinks";
+import ManageDoctorsModal from "../../ManageDoctors/Fragments/ManageDoctorsModal";
 
 const resource = "Clinic";
 const service = 'laboratory_clinic_visit'
@@ -68,7 +69,7 @@ function LaboratoryTestsTable() {
             key: 'name',
             render:(e, record, key)=> {
                 return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'lab_test_id']} inputType={'resourceSelect'}
-                                  resource={'LabTest'} initialValue={record?.lab_test_id} resourceData={labTests}/>
+                                  resource={'LabTest'} initialValue={record?.lab_test_id ?? null} resourceData={labTests}/>
             }
         },
         {
@@ -132,6 +133,7 @@ function LaboratoryTestsTable() {
 
                     <Table loading={loading} dataSource={testData} columns={columns} footer={false} pagination={false} rowKey={(e,v)=>v} />
                     <Button type={'primary'} size={'large'} style={{margin:20}} onClick={addNewTest}>+</Button>
+
                     <div>
                         <Space className={'lab_save'}>
                             <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>

@@ -81,9 +81,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
         }
 
-        console.log(values)
-        return;
-
 
         setData((prevState)=>({
             ...prevState,
@@ -134,7 +131,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
             {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
             {loading ? <Preloader/> : <Form
                 onValuesChange={handleValuesChange}
-                name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}

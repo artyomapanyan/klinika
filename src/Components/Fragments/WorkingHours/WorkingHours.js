@@ -504,7 +504,7 @@ function WorkingHours({onFinish, data, loading, type, syncable,isDoctorHours, do
                 {!isDoctorHours ? <div className={'home_visit_head'}>
                             <h1 className={'h1'}>{t(`Working Hours`)}</h1>
                             <Space >
-                            <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'} label={'Sync with main working hours'}>
+                            <Form.Item name={'sync_with_main'} valuePropName="checked"  className={'right-label'} label={'Sync with main working hours'}>
                                 <Switch onChange={onChangeSwitch} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                             </Form.Item>
 
