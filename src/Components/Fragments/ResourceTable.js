@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
 import {Button, Col, Form, Popconfirm, Row, Space, Table, Typography, Tooltip} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
@@ -56,7 +56,7 @@ function ResourceTable({resource, tableColumns,
 
 
     const onResourceEdit = (record) => {
-        if(customActions.edit){
+        if(customActions?.edit){
             return customActions.edit(record)
         }
         navigate(ResourceLinks[resourceLink??resource] + record.id)
@@ -72,6 +72,12 @@ function ResourceTable({resource, tableColumns,
             setLoading(false)
         })
     }
+    useEffect(()=>{
+        if(getAll){
+            getAll(data.items)
+        }
+
+    },[data])
 
     const columns = useMemo(() => {
             let filterKeys = Object.keys(params);
@@ -174,7 +180,7 @@ function ResourceTable({resource, tableColumns,
                     size={'small'}
                 />
                 </Form>
-                {customTableButton?<Button type={'primary'} size={'large'} style={{margin:20}} icon={customTableButton.icon} onClick={()=>customTableButton.onClick()}>{customTableButton.title}</Button>:null}
+                {customTableButton?<Button loading={loading} type={'primary'} size={'large'} style={{margin:20}} icon={customTableButton.icon} onClick={()=>customTableButton.onClick()}>{customTableButton.title}</Button>:null}
             </Col>
         </Row>
     </Content>)

@@ -29,6 +29,7 @@ const ResourceLins = {
     ClinicDoctor:'/dashboard/clinics/doctors/',
     ClinicWorkingHours:'/dashboard/clinics/working-hours/',
     ClinicLabPackage:'/dashboard/clinic-lab-packages/',
+    ClinicNursingTask:'/dashboard/clinic-nursing-tasks/',
     ClinicDoctorWorkingHours:'/dashboard/clinic-doctors/working-hours/',
 
 }

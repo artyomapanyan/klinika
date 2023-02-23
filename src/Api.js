@@ -117,14 +117,6 @@ let api = {
                 url: `${endpoint}${version}/clinics/working-hours/`,
                 method: 'GET',
             },
-            LabPackage:{
-                url: `${endpoint}${version}/clinics/lab-packages/`,
-                method: 'GET',
-            },
-            NursingTask:{
-                url: `${endpoint}${version}/clinics/nursing-tasks/`,
-                method: 'GET',
-            }
         }
     },
 
@@ -133,7 +125,7 @@ let api = {
         resource: 'ClinicLabPackage',
     },
     {
-        url: 'clinics/nursing-tasks',
+        url: 'clinic-nursing-tasks',
         resource: 'ClinicNursingTask',
     },
     {

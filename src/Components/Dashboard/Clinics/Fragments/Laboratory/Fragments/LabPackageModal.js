@@ -15,7 +15,7 @@ function LabPackageModal({isModalOpen,onCreate,labPackagesState, loading,handleC
         <Modal title="Add New Package" open={isModalOpen} onOk={handleOk} onCancel={()=>handleClose(false)} okText={t("Save")} >
             <Spin spinning={loading}>
                 {isModalOpen?<Form
-                    key={isModalOpen?.id}
+                    key={isModalOpen?.id+(new Date())}
 
                         name="edit"
                         onFinish={onCreate}

@@ -4,16 +4,12 @@ import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
 
 
-
-function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose}) {
+function NursingModal({isModalOpen,onCreate,nursingState, loading,handleClose}) {
     const formRef = useRef();
-
-
 
     const handleOk =()=>{
         formRef.current.submit();
     }
-
 
     return(
         <Modal title="Add New Package" open={isModalOpen} onOk={handleOk} onCancel={()=>handleClose(false)} okText={t("Save")} >
@@ -27,14 +23,14 @@ function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose})
                     ref={formRef}
                 >
                     <div  className={'add_clinic_modal'}>
-                        <FormInput label={t('Lab Tests')}
-                                   name={'lab_test_id'}
+                        <FormInput label={t('Nursing tasks')}
+                                   name={'nursing_task_id'}
                                    rules={[{required: true}]}
                                    inputType={'resourceSelect'}
-                                   initialValue={isModalOpen?.lab_test?.id}
-                                   initialData={isModalOpen.lab_test?[isModalOpen?.lab_test]:[]}
-                                   resourceData={labTestState}
-                                   resource={'LabTest'}/>
+                                   initialValue={isModalOpen?.nursing_task?.id}
+                                   initialData={isModalOpen.nursing_task?[isModalOpen?.nursing_task]:[]}
+                                   resourceData={nursingState}
+                                   resource={'NursingTask'}/>
 
                         <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')}
                                    name={'price'}
@@ -50,4 +46,4 @@ function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose})
         </Modal>
     )
 }
-export default LabTestsModal;
+export default NursingModal;

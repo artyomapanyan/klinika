@@ -1,146 +1,111 @@
 import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
-
-import {useNavigate, useParams} from "react-router";
-import {Button, Form, Space, Table,} from "antd";
-
+import {useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {postResource, updateResource} from "../../../../../Functions/api_calls";
-import FormInput from "../../../../../Fragments/FormInput";
-import {DeleteOutlined} from "@ant-design/icons";
-import resourceLinks from "../../../../../ResourceLinks";
+import {createResource, postResource, updateResource} from "../../../../../Functions/api_calls";
+import {PlusOutlined} from "@ant-design/icons";
+import Preloader from "../../../../../Preloader";
+import ResourceTable from "../../../../../Fragments/ResourceTable";
+import TableFilterElement from "../../../../../Fragments/TableFilterElements/TableFilterElement";
+import NursingModal from "./NursingModal";
 
-const resource = "Clinic";
-const service = 'nursing'
-function ClinicNursingTasks() {
+
+
+function LabPackagesTable() {
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
-    const navigate = useNavigate();
-    const LabTestRef = useRef();
     const [loading, setLoading] = useState(false)
-
+    const nursingData = useRef();
     const [testData, setTestData] = useState([]);
-    const [nursingTasks, setNursingTasks] = useState([]);
-
-
+    const [nursingState, setNursingState] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(()=>{
-        Promise.all([
-            postResource(resource,'NursingTask',token,params.id,{service}),
-            postResource('NursingTask','list',token,null,{per_page:5000}),
+        if(isModalOpen){
+            let ids = testData.map(e=>e.nursing_task?.id)
+            setNursingState(nursingData.current?.filter(e=>!ids.includes(e.id)))
+        }
 
-        ]).then(responses => {
-            const testDataKeys = responses[0].map((el) => {
-                return el.nursing_task_id
-            })
-
-            LabTestRef.current = responses[1].items;
-
-            setTimeout(()=>setNursingTasks(LabTestRef.current.filter(item => !testDataKeys.includes(item.id))),50)
-            setNursingTasks(LabTestRef.current)
-            setTestData(responses[0])
+    },[isModalOpen])
+    useEffect(()=>{
+        postResource('NursingTask','list',token,null,{per_page:5000}).then(responses => {
+            nursingData.current = responses.items
         })
+
     },[])
 
+    const showModal = (data) => {
+        setIsModalOpen(data);
+    };
 
 
-    const onFinish = (values) => {
-        values = Object.values(values)
-        let data = {
-            nursing_tasks:values
-        }
+    const onCreate = (data) => {
+
         setLoading(true)
+        data.clinic_id=params.id
 
-        if (params.id) {
-            updateResource('ClinicNursingTask', params.id, data, token).then(response => {
-            }).finally(() => {
+        if(isModalOpen?.id) {
+            updateResource('ClinicNursingTask', isModalOpen?.id, data, token).then(response => {
+                if(response?.id){
+                    setIsModalOpen(false)
+                }
+                setLoading(false)
+            })
+        } else {
+            createResource("ClinicNursingTask", data, token).then((response) => {
+                if(response?.id){
+                    setIsModalOpen(false)
+                }
                 setLoading(false)
             })
         }
+
     }
 
-
-
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render:(e, record, key)=> {
-                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'nursing_task_id']} inputType={'resourceSelect'}
-                                  resource={'LabTest'} initialValue={record?.nursing_task_id} resourceData={nursingTasks}/>
-            }
-        },
-        {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
-            render:(e, record, key)=> {
-                return <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')} name={[key,'price']} inputType={'number'} initialValue={e}/>
-            }
-        },
-        {
-            title: 'Delete',
-            dataIndex: 'delete',
-            key: 'delete',
-            render:(e,v,key)=> {
-                return <Button onClick={()=>onDelete(key)}><DeleteOutlined /></Button>
-            }
-        },
-
-    ];
-
-    const addNewTest = () => {
-        setTestData([
-            ...testData,
-            {
-                nursing_task_id: null,
-                price: null,
-            }
-        ])
-    }
-
-
-    const formOnChange = (changedValues, allValues) => {
-        let testDataKeys = Object.values(allValues).map((el) => {
-            return el?.nursing_task_id
-        })
-        setNursingTasks(LabTestRef.current.filter(item => !testDataKeys.includes(item.id)))
-    }
-
-    const onDelete = (key) => {
-        setTestData(
-            testData.filter((el, keys)=> {
-                return keys !== key
-            })
-        )
-    }
 
 
     return(
         <div>
             <div  className={'add_edit_content'}>
-                <h1 className={'h1'}>{t(`Tests`)}</h1>
+                <h1 className={'h1'}>{t(`Nursing Tasks`)}</h1>
 
+                {loading ? <Preloader/> : <ResourceTable
+                    noHeader={true}
+                    customTableButton={{
+                        title:'Add New Nursing Task',
+                        onClick:()=>showModal({}),
+                        icon:<PlusOutlined/>
+                    }}
+                    customActions={{
+                        edit:(record)=>{
+                            showModal(record)
+                        }
+                    }}
 
-                <Form
-                    name="edit"
-                    onFinish={onFinish}
-                    layout="vertical"
-                    onValuesChange={formOnChange}
-                >
+                    getAll={(data)=>{
+                        setTestData(data)
+                    }}
+                    tableParams={{clinic: params.id}}
+                    resource={'ClinicNursingTask'}
+                    tableColumns={[
+                        {
+                            dataIndex: ['nursing_task', 'name'],
+                            title: 'Nursing task',
+                            key: 'nursing_task',
+                            sorter: true,
+                            filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
-                    <Table loading={loading} dataSource={testData} columns={columns} footer={false} pagination={false} rowKey={(e,v)=>v} />
-                    <Button type={'primary'} size={'large'} style={{margin:20}} onClick={addNewTest}>+</Button>
-                    <div>
-                        <Space className={'lab_save'}>
-                            <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                            <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                        </Space>
-                    </div>
-                </Form>
+                        },
+                        {
+                            dataIndex: "price",
+                            title: 'price',
+                            key: 'price',
+                        }
+                    ]}
+                />}
+                <NursingModal isModalOpen={isModalOpen} onCreate={onCreate}  handleClose={showModal} nursingState={nursingState} loading={loading} />
             </div>
         </div>
     )
 }
-export default ClinicNursingTasks;
+export default LabPackagesTable;

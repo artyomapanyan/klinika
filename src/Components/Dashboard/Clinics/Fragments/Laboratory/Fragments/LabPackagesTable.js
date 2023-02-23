@@ -1,14 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
-
 import {useParams} from "react-router";
-
-
 import {useSelector} from "react-redux";
 import {createResource, postResource, updateResource} from "../../../../../Functions/api_calls";
 import {PlusOutlined} from "@ant-design/icons";
-
-
 import Preloader from "../../../../../Preloader";
 import ResourceTable from "../../../../../Fragments/ResourceTable";
 import TableFilterElement from "../../../../../Fragments/TableFilterElements/TableFilterElement";
@@ -26,7 +21,7 @@ function LabPackagesTable() {
 
     useEffect(()=>{
        if(isModalOpen){
-           let ids = testData.map(e=>e.lab_package?.id)
+           let ids = testData?.map(e=>e.lab_package?.id)
            setLabPackagesState(labPackageData.current?.filter(e=>!ids.includes(e.id)))
        }
 
