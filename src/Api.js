@@ -117,10 +117,6 @@ let api = {
                 url: `${endpoint}${version}/clinics/working-hours/`,
                 method: 'GET',
             },
-            LabTest:{
-                url: `${endpoint}${version}/clinics/lab-tests/`,
-                method: 'GET',
-            },
             LabPackage:{
                 url: `${endpoint}${version}/clinics/lab-packages/`,
                 method: 'GET',
@@ -131,12 +127,9 @@ let api = {
             }
         }
     },
+
     {
-        url: 'clinics/lab-tests',
-        resource: 'ClinicLabTest',
-    },
-    {
-        url: 'clinics/lab-packages',
+        url: 'clinic-lab-packages',
         resource: 'ClinicLabPackage',
     },
     {
@@ -154,6 +147,10 @@ let api = {
     {
         url: 'coupons',
         resource: 'Coupon',
+    },
+    {
+        url: 'clinic-lab-tests',
+        resource: 'ClinicLabTest',
     },
     {
         url: 'clinic-doctors/working-hours',

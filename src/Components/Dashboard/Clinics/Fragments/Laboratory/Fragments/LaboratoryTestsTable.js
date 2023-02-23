@@ -2,119 +2,80 @@ import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 
 import {useNavigate, useParams} from "react-router";
-import {Button, Form, Space, Table,} from "antd";
+import {Button, Space,} from "antd";
 
 import {useSelector} from "react-redux";
-import {postResource, updateResource} from "../../../../../Functions/api_calls";
-import FormInput from "../../../../../Fragments/FormInput";
-import {DeleteOutlined} from "@ant-design/icons";
+import {createResource, postResource, updateResource} from "../../../../../Functions/api_calls";
+import {EditOutlined} from "@ant-design/icons";
 import resourceLinks from "../../../../../ResourceLinks";
-import ManageDoctorsModal from "../../ManageDoctors/Fragments/ManageDoctorsModal";
+
+import LabTestsModal from "./LabTestsModal";
+import Preloader from "../../../../../Preloader";
+import ResourceTable from "../../../../../Fragments/ResourceTable";
+import TableFilterElement from "../../../../../Fragments/TableFilterElements/TableFilterElement";
 
 const resource = "Clinic";
-const service = 'laboratory_clinic_visit'
 function LaboratoryTestsTable() {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
-    const LabTestRef = useRef();
     const [loading, setLoading] = useState(false)
 
     const [testData, setTestData] = useState([]);
     const [labTests, setLabTest] = useState([]);
-
-
+    const [recordState, setRecordState] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(()=>{
-        Promise.all([
-            postResource(resource,'LabTest',token,params.id,{service}),
-            postResource('LabTest','list',token,null,{per_page:5000}),
-
-        ]).then(responses => {
-            const testDataKeys = responses[0].map((el) => {
-                return el.lab_test_id
-            })
-
-            LabTestRef.current = responses[1].items;
-
-            setTimeout(()=>setLabTest(LabTestRef.current.filter(item => !testDataKeys.includes(item.id))),50)
-            setLabTest(LabTestRef.current)
-            setTestData(responses[0])
-        })
-    },[])
-
-
-
-    const onFinish = (values) => {
-        values = Object.values(values)
-        let data = {
-            lab_tests:values
-        }
         setLoading(true)
+        postResource('LabTest','list',token,null,{per_page:5000}).then(responses => {
+            setLoading(false)
+            let selectedIds = testData.map(e=>e.lab_test?.id)
+            setLabTest(responses.items.filter(i=>!selectedIds.includes(i.id)))
 
-        if (params.id) {
+        })
+
+    },[isModalOpen])
+
+    const showModal = () => {
+        setTimeout(()=>setIsModalOpen(true), 10);
+    };
+
+
+    const onCreate = (data) => {
+
+        if (!data) {
+            return setIsModalOpen(false);
+        }
+        setIsModalOpen(1)
+        setLoading(true)
+        data.clinic_id=params.id
+
+        if(recordState?.id) {
             updateResource('ClinicLabTest', params.id, data, token).then(response => {
-            }).finally(() => {
+                if(response?.id){
+                    setIsModalOpen(false)
+                }else{
+                    setIsModalOpen(true)
+                }
+                setLoading(false)
+            })
+        } else {
+            createResource("ClinicLabTest", data, token).then((response) => {
+                if(response?.id){
+                    setIsModalOpen(false)
+                }else{
+                    setIsModalOpen(true)
+                }
                 setLoading(false)
             })
         }
+
     }
 
-
-
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render:(e, record, key)=> {
-                return <FormInput resourceSelectStyle={{width: '100%'}} label={t('Test')} name={[key,'lab_test_id']} inputType={'resourceSelect'}
-                                  resource={'LabTest'} initialValue={record?.lab_test_id ?? null} resourceData={labTests}/>
-            }
-        },
-        {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
-            render:(e, record, key)=> {
-                return <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')} name={[key,'price']} inputType={'number'} initialValue={e}/>
-            }
-        },
-        {
-            title: 'Delete',
-            dataIndex: 'delete',
-            key: 'delete',
-            render:(e,v,key)=> {
-                return <Button onClick={()=>onDelete(key)}><DeleteOutlined /></Button>
-            }
-        },
-
-    ];
-
-    const addNewTest = () => {
-        setTestData([
-            ...testData,
-            {
-                lab_test_id: null,
-                price: null,
-            }
-        ])
-    }
-
-
-    const formOnChange = (changedValues, allValues) => {
-        let testDataKeys = Object.values(allValues).map((el) => {
-            return el?.lab_test_id
-        })
-        setLabTest(LabTestRef.current.filter(item => !testDataKeys.includes(item.id)))
-    }
-
-    const onDelete = (key) => {
-        setTestData(
-            testData.filter((el, keys)=> {
-                return keys !== key
-            })
-        )
+    const onEdit = (e, record) => {
+        setRecordState(record)
+        setIsModalOpen(true)
     }
 
 
@@ -123,24 +84,47 @@ function LaboratoryTestsTable() {
             <div  className={'add_edit_content'}>
                 <h1 className={'h1'}>{t(`Tests`)}</h1>
 
+                {loading ? <Preloader/> : <ResourceTable
+                    noHeader={true}
+                    except={{edit: true}}
+                    getAll={(data)=>{
+                        setTestData(data)
+                    }}
+                    tableParams={{clinic: params.id}}
+                    resource={'ClinicLabTest'}
+                    tableColumns={[
+                        {
+                            dataIndex: ['lab_test', 'name'],
+                            title: 'test',
+                            key: 'lab_test',
+                            sorter: true,
+                            filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
-                <Form
-                    name="edit"
-                    onFinish={onFinish}
-                    layout="vertical"
-                    onValuesChange={formOnChange}
-                >
+                        },
+                        {
+                            dataIndex: "price",
+                            title: 'price',
+                            key: 'price',
+                        },
+                        {
+                            dataIndex: "update",
+                            title: 'Update',
+                            key: 'update',
+                            render:(e,record)=>{
+                                return<Button onClick={() => onEdit(e, record)}><EditOutlined/></Button>
+                            }
 
-                    <Table loading={loading} dataSource={testData} columns={columns} footer={false} pagination={false} rowKey={(e,v)=>v} />
-                    <Button type={'primary'} size={'large'} style={{margin:20}} onClick={addNewTest}>+</Button>
-
+                        },
+                    ]}
+                />}
+                    <Button type={'primary'} size={'large'} style={{margin:20}} onClick={showModal}>+ Add New Test</Button>
+                    <LabTestsModal isModalOpen={isModalOpen} onCreate={onCreate} labTests={labTests} loading={loading} recordState={recordState}/>
                     <div>
                         <Space className={'lab_save'}>
                             <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                             <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
                         </Space>
                     </div>
-                </Form>
             </div>
         </div>
     )

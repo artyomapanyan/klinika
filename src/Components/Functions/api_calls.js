@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
 
-export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData) => {
+export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
@@ -30,6 +30,9 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                 }
             }).then(response=>{
                 if(response){
+                    if(getAll){
+                        getAll(response.items)
+                    }
                     setData({
                         items:response.items,
                         pagination:{

@@ -19,11 +19,13 @@ function ResourceTable({resource, tableColumns,
                            exportButton = true,
                            except={},
                            handleTableBelowData,
+                           getAll=false,
                            noHeader=false}) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
-       ...tableParams
+       ...tableParams,
+        ...(getAll?{per_page:9999}:{})
 })
     let token = useSelector((state) => state?.auth?.token);
     let lngs = useSelector((state) => state?.app?.current_locale);
@@ -32,7 +34,7 @@ function ResourceTable({resource, tableColumns,
     let navigate = useNavigate();
 
 
-    const {loadingState, dataState} = useGetResourceIndex(resource, params)
+    const {loadingState, dataState} = useGetResourceIndex(resource, params,false,false,false,getAll)
     const handleTableChange = (pagination, filters, sorter) => {
         let params = {
             ...filters,
@@ -93,10 +95,7 @@ function ResourceTable({resource, tableColumns,
                         onConfirm={() => onResourceDelete(e)}
                         okText={t("Yes")}
                         cancelText={t("No")}
-                        icon={<QuestionCircleOutlined
-                                style={{
-                                    color: 'red',
-                                }}/>}>
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
                         <Button size={'small'}><DeleteOutlined/></Button>
                     </Popconfirm>
                 </Tooltip>}

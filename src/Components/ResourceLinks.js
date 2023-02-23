@@ -12,6 +12,7 @@ const ResourceLins = {
     LabPackageCategory:'/dashboard/lab-packages-category/',
     LabTestCategory:'/dashboard/lab-tests-category/',
     LabTest:'/dashboard/lab-tests/',
+    ClinicLabTest:'/dashboard/clinic-lab-tests/',
     Taxonomy:'/dashboard/taxonomies/',
     InsuranceCompany:'/dashboard/insurance-companies/',
     PaymentMethod:'/dashboard/payment-methods/',
@@ -27,8 +28,7 @@ const ResourceLins = {
     Coupon:'/dashboard/coupons/',
     ClinicDoctor:'/dashboard/clinics/doctors/',
     ClinicWorkingHours:'/dashboard/clinics/working-hours/',
-    ClinicLabTest:'/dashboard/clinics/lab-tests/',
-    ClinicLabPackage:'/dashboard/clinics/lab-packages/',
+    ClinicLabPackage:'/dashboard/clinic-lab-packages/',
     ClinicDoctorWorkingHours:'/dashboard/clinic-doctors/working-hours/',
 
 }
