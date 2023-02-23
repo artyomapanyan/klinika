@@ -1,62 +1,51 @@
 import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
-
-import {useNavigate, useParams} from "react-router";
-import {Button, Space,} from "antd";
-
+import {useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, postResource, updateResource} from "../../../../../Functions/api_calls";
-import {EditOutlined} from "@ant-design/icons";
-import resourceLinks from "../../../../../ResourceLinks";
-
+import {PlusOutlined} from "@ant-design/icons";
 import LabTestsModal from "./LabTestsModal";
 import Preloader from "../../../../../Preloader";
 import ResourceTable from "../../../../../Fragments/ResourceTable";
 import TableFilterElement from "../../../../../Fragments/TableFilterElements/TableFilterElement";
 
-const resource = "Clinic";
 function LaboratoryTestsTable() {
     const params = useParams();
-    const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     const [loading, setLoading] = useState(false)
-
+    const labTestData = useRef();
     const [testData, setTestData] = useState([]);
-    const [labTests, setLabTest] = useState([]);
-    const [recordState, setRecordState] = useState('');
+    const [labTestState, setLabTestState] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(()=>{
-        setLoading(true)
-        postResource('LabTest','list',token,null,{per_page:5000}).then(responses => {
-            setLoading(false)
-            let selectedIds = testData.map(e=>e.lab_test?.id)
-            setLabTest(responses.items.filter(i=>!selectedIds.includes(i.id)))
-
-        })
+        if(isModalOpen){
+            let ids = testData.map(e=>e.lab_test?.id)
+            setLabTestState(labTestData.current?.filter(e=>!ids.includes(e.id)))
+        }
 
     },[isModalOpen])
+    useEffect(()=>{
+        postResource('LabTest','list',token,null,{per_page:5000}).then(responses => {
+            labTestData.current = responses.items
+        })
 
-    const showModal = () => {
-        setTimeout(()=>setIsModalOpen(true), 10);
+    },[])
+
+    const showModal = (data) => {
+        setIsModalOpen(data);
     };
 
 
     const onCreate = (data) => {
 
-        if (!data) {
-            return setIsModalOpen(false);
-        }
-        setIsModalOpen(1)
         setLoading(true)
         data.clinic_id=params.id
 
-        if(recordState?.id) {
-            updateResource('ClinicLabTest', params.id, data, token).then(response => {
+        if(isModalOpen?.id) {
+            updateResource('ClinicLabTest', isModalOpen?.id, data, token).then(response => {
                 if(response?.id){
                     setIsModalOpen(false)
-                }else{
-                    setIsModalOpen(true)
                 }
                 setLoading(false)
             })
@@ -64,8 +53,6 @@ function LaboratoryTestsTable() {
             createResource("ClinicLabTest", data, token).then((response) => {
                 if(response?.id){
                     setIsModalOpen(false)
-                }else{
-                    setIsModalOpen(true)
                 }
                 setLoading(false)
             })
@@ -73,10 +60,6 @@ function LaboratoryTestsTable() {
 
     }
 
-    const onEdit = (e, record) => {
-        setRecordState(record)
-        setIsModalOpen(true)
-    }
 
 
     return(
@@ -86,7 +69,17 @@ function LaboratoryTestsTable() {
 
                 {loading ? <Preloader/> : <ResourceTable
                     noHeader={true}
-                    except={{edit: true}}
+                    customTableButton={{
+                        title:'Add New Test',
+                        onClick:()=>showModal({}),
+                        icon:<PlusOutlined/>
+                    }}
+                    customActions={{
+                        edit:(record)=>{
+                            showModal(record)
+                        }
+                    }}
+
                     getAll={(data)=>{
                         setTestData(data)
                     }}
@@ -95,7 +88,7 @@ function LaboratoryTestsTable() {
                     tableColumns={[
                         {
                             dataIndex: ['lab_test', 'name'],
-                            title: 'test',
+                            title: 'Tests',
                             key: 'lab_test',
                             sorter: true,
                             filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
@@ -105,26 +98,10 @@ function LaboratoryTestsTable() {
                             dataIndex: "price",
                             title: 'price',
                             key: 'price',
-                        },
-                        {
-                            dataIndex: "update",
-                            title: 'Update',
-                            key: 'update',
-                            render:(e,record)=>{
-                                return<Button onClick={() => onEdit(e, record)}><EditOutlined/></Button>
-                            }
-
-                        },
+                        }
                     ]}
                 />}
-                    <Button type={'primary'} size={'large'} style={{margin:20}} onClick={showModal}>+ Add New Test</Button>
-                    <LabTestsModal isModalOpen={isModalOpen} onCreate={onCreate} labTests={labTests} loading={loading} recordState={recordState}/>
-                    <div>
-                        <Space className={'lab_save'}>
-                            <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                            <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                        </Space>
-                    </div>
+                <LabTestsModal isModalOpen={isModalOpen} onCreate={onCreate}  handleClose={showModal} labTestState={labTestState} loading={loading} />
             </div>
         </div>
     )

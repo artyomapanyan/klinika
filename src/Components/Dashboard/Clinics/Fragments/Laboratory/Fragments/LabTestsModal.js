@@ -1,11 +1,11 @@
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
 import {Form, Modal, Spin} from "antd";
 import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
-import Preloader from "../../../../../Preloader";
 
 
-function LabTestsModal({isModalOpen,onCreate,labTests, loading, recordState}) {
+
+function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose}) {
     const formRef = useRef();
 
 
@@ -16,33 +16,35 @@ function LabTestsModal({isModalOpen,onCreate,labTests, loading, recordState}) {
 
 
     return(
-        <Modal title="Add New Test" open={isModalOpen} onOk={handleOk} onCancel={()=>onCreate()} okText={t("Save")} >
-            <Spin spinning={isModalOpen===1}>
-                {
-                    loading ? <Preloader/> : <Form
-                        name="edit"
-                        onFinish={onCreate}
-                        layout="vertical"
-                        ref={formRef}
-                    >
-                        <div  className={'add_clinic_modal'}>
+        <Modal title="Add New Package" open={isModalOpen} onOk={handleOk} onCancel={()=>handleClose(false)} okText={t("Save")} >
+            <Spin spinning={loading}>
+                {isModalOpen?<Form
+                    key={isModalOpen?.id}
 
-                            <FormInput label={t('Lab Test')}
-                                       name={'lab_test_id'}
-                                       inputType={'resourceSelect'}
-                                       initialValue={recordState?.lab_test?.id}
-                                       initialData={[]}
-                                       resourceData={labTests}
-                                       resource={'LabTest'}/>
+                    name="edit"
+                    onFinish={onCreate}
+                    layout="vertical"
+                    ref={formRef}
+                >
+                    <div  className={'add_clinic_modal'}>
+                        <FormInput label={t('Lab Tests')}
+                                   name={'lab_test_id'}
+                                   rules={[{required: true}]}
+                                   inputType={'resourceSelect'}
+                                   initialValue={isModalOpen?.lab_test?.id}
+                                   initialData={isModalOpen.lab_test?[isModalOpen?.lab_test]:[]}
+                                   resourceData={labTestState}
+                                   resource={'LabPackage'}/>
 
-                            <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')}
-                                       name={'price'}
-                                       inputType={'number'}
-                                       initialValue={recordState?.price}
-                            />
-                        </div>
-                    </Form>
-                }
+                        <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')}
+                                   name={'price'}
+                                   rules={[{required: true}]}
+                                   inputType={'number'}
+                                   initialValue={isModalOpen?.price}
+                        />
+                    </div>
+                </Form>:null}
+
             </Spin>
 
         </Modal>

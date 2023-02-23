@@ -20,7 +20,10 @@ function ResourceTable({resource, tableColumns,
                            except={},
                            handleTableBelowData,
                            getAll=false,
-                           noHeader=false}) {
+                           noHeader=false,
+                           customActions,
+    customTableButton
+                       }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
@@ -52,14 +55,17 @@ function ResourceTable({resource, tableColumns,
     const {setData, data} = dataState
 
 
-    const onResourceEdit = (e) => {
-        navigate(ResourceLinks[resourceLink??resource] + e)
+    const onResourceEdit = (record) => {
+        if(customActions.edit){
+            return customActions.edit(record)
+        }
+        navigate(ResourceLinks[resourceLink??resource] + record.id)
 
     }
-    const onResourceDelete = (e) => {
+    const onResourceDelete = (record) => {
 
         setLoading(true)
-        deleteResource(resource, e, token).then(resp => {
+        deleteResource(resource, record.id, token).then(resp => {
             setData((prevState)=>({
                 ...prevState, items: prevState?.items?.slice(0)?.filter(e => e.id !== resp.id)
             }))
@@ -85,14 +91,14 @@ function ResourceTable({resource, tableColumns,
         }),
 
             ...(hideActions?[]:[{
-            dataIndex: 'id', title: 'action', key: 'id', render: (e) => <Space>
+            dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
                     {!except.edit&&<Tooltip title="Update">
-                    <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
+                    <Button onClick={() => onResourceEdit(record)} size={'small'}><EditOutlined/></Button>
                 </Tooltip>}
                 {!except.delete&&<Tooltip title="Delete">
                     <Popconfirm
                         title={t("Are you sure to delete this entry?")}
-                        onConfirm={() => onResourceDelete(e)}
+                        onConfirm={() => onResourceDelete(record)}
                         okText={t("Yes")}
                         cancelText={t("No")}
                         icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
@@ -168,7 +174,7 @@ function ResourceTable({resource, tableColumns,
                     size={'small'}
                 />
                 </Form>
-
+                {customTableButton?<Button type={'primary'} size={'large'} style={{margin:20}} icon={customTableButton.icon} onClick={()=>customTableButton.onClick()}>{customTableButton.title}</Button>:null}
             </Col>
         </Row>
     </Content>)

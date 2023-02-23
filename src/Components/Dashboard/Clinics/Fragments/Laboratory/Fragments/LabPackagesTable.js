@@ -1,62 +1,57 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 
-import {useNavigate, useParams} from "react-router";
-import {Button, Space,} from "antd";
+import {useParams} from "react-router";
+
 
 import {useSelector} from "react-redux";
 import {createResource, postResource, updateResource} from "../../../../../Functions/api_calls";
-import {EditOutlined} from "@ant-design/icons";
-import resourceLinks from "../../../../../ResourceLinks";
+import {PlusOutlined} from "@ant-design/icons";
+
 
 import Preloader from "../../../../../Preloader";
 import ResourceTable from "../../../../../Fragments/ResourceTable";
 import TableFilterElement from "../../../../../Fragments/TableFilterElements/TableFilterElement";
 import LabPackageModal from "./LabPackageModal";
 
-const resource = "Clinic";
+
 function LabPackagesTable() {
     const params = useParams();
-    const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     const [loading, setLoading] = useState(false)
-
+    const labPackageData = useRef();
     const [testData, setTestData] = useState([]);
     const [labPackagesState, setLabPackagesState] = useState([]);
-    const [recordState, setRecordState] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(()=>{
-        setLoading(true)
-        postResource('LabPackage','list',token,null,{per_page:5000}).then(responses => {
-            setLoading(false)
-            let selectedIds = testData.map(e=>e.lab_package?.id)
-            setLabPackagesState(responses.items.filter(i=>!selectedIds.includes(i.id)))
-
-        })
+       if(isModalOpen){
+           let ids = testData.map(e=>e.lab_package?.id)
+           setLabPackagesState(labPackageData.current?.filter(e=>!ids.includes(e.id)))
+       }
 
     },[isModalOpen])
+    useEffect(()=>{
+        postResource('LabPackage','list',token,null,{per_page:5000}).then(responses => {
+            labPackageData.current = responses.items
+        })
 
-    const showModal = () => {
-        setTimeout(()=>setIsModalOpen(true), 10);
+    },[])
+
+    const showModal = (data) => {
+        setIsModalOpen(data);
     };
 
 
     const onCreate = (data) => {
 
-        if (!data) {
-            return setIsModalOpen(false);
-        }
-        setIsModalOpen(1)
         setLoading(true)
         data.clinic_id=params.id
 
-        if(recordState?.id) {
-            updateResource('ClinicLabPackage', params.id, data, token).then(response => {
+        if(isModalOpen?.id) {
+            updateResource('ClinicLabPackage', isModalOpen?.id, data, token).then(response => {
                 if(response?.id){
                     setIsModalOpen(false)
-                }else{
-                    setIsModalOpen(true)
                 }
                 setLoading(false)
             })
@@ -64,8 +59,6 @@ function LabPackagesTable() {
             createResource("ClinicLabPackage", data, token).then((response) => {
                 if(response?.id){
                     setIsModalOpen(false)
-                }else{
-                    setIsModalOpen(true)
                 }
                 setLoading(false)
             })
@@ -73,10 +66,6 @@ function LabPackagesTable() {
 
     }
 
-    const onEdit = (e, record) => {
-        setRecordState(record)
-        setIsModalOpen(true)
-    }
 
 
     return(
@@ -86,7 +75,17 @@ function LabPackagesTable() {
 
                 {loading ? <Preloader/> : <ResourceTable
                     noHeader={true}
-                    except={{edit: true}}
+                    customTableButton={{
+                        title:'Add New Package',
+                        onClick:()=>showModal({}),
+                        icon:<PlusOutlined/>
+                    }}
+                    customActions={{
+                        edit:(record)=>{
+                         showModal(record)
+                        }
+                    }}
+
                     getAll={(data)=>{
                         setTestData(data)
                     }}
@@ -95,8 +94,8 @@ function LabPackagesTable() {
                     tableColumns={[
                         {
                             dataIndex: ['lab_package', 'name'],
-                            title: 'test',
-                            key: 'lab_test',
+                            title: 'Packages',
+                            key: 'lab_package',
                             sorter: true,
                             filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
@@ -105,26 +104,10 @@ function LabPackagesTable() {
                             dataIndex: "price",
                             title: 'price',
                             key: 'price',
-                        },
-                        {
-                            dataIndex: "update",
-                            title: 'Update',
-                            key: 'update',
-                            render:(e,record)=>{
-                                return<Button onClick={() => onEdit(e, record)}><EditOutlined/></Button>
-                            }
-
-                        },
+                        }
                     ]}
                 />}
-                <Button type={'primary'} size={'large'} style={{margin:20}} onClick={showModal}>+ Add New Test</Button>
-                <LabPackageModal isModalOpen={isModalOpen} onCreate={onCreate} labPackagesState={labPackagesState} loading={loading} recordState={recordState}/>
-                <div>
-                    <Space className={'lab_save'}>
-                        <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                        <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Space>
-                </div>
+                <LabPackageModal isModalOpen={isModalOpen} onCreate={onCreate}  handleClose={showModal} labPackagesState={labPackagesState} loading={loading} />
             </div>
         </div>
     )
