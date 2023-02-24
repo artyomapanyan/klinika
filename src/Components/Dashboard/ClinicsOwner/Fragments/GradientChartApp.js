@@ -31,7 +31,6 @@ function GradientChartApp() {
     ];
     const onClick = ({key}) => {
         console.log(key)
-
     };
 
     const switchChange = (checked) => {

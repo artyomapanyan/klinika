@@ -93,6 +93,7 @@ function ResourceSelectPaginated({initialData = [],
                                optionFilterProp={'name'}
                                onDropdownVisibleChange={()=>!isInitedState?setIsInitedState(true):null}
                                 style={resourceSelectStyle}
+                                className="FormInput-select"
                         >
         {itemOptions}
         {loading ?

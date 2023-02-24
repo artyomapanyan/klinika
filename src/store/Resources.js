@@ -65,8 +65,8 @@ const Resource = {
             label: "Closes"
         },
         {
-            value: "24 hours",
-            label: "24 hours"
+            value: "00:00",
+            label: '00:00',
         },
         {
             value: "00:15",
@@ -435,8 +435,8 @@ const Resource = {
             label: '23:45',
         },
         {
-            value: "00:00",
-            label: '00:00',
+            value: "23:59",
+            label: '23:59',
         },
     ],
     TaxonomyTypes: {

@@ -101,8 +101,6 @@ function FormInput({
             </Form.Item>}
         </div>
     )
-
-
 }
 
 export default FormInput
