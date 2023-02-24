@@ -72,7 +72,7 @@ function DoctorReworkedCalendar() {
 
 
     return(
-        <div className={'chart_incomes_div'}>
+        <div className={'dr_reworked_not'}>
             <DoctorReworkedCalendarHeader />
             <div>
                 <Scheduler

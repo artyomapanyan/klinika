@@ -41,7 +41,7 @@ function DoctorReworkedNotifications() {
             });
     };
     return(
-        <div className={'chart_incomes_div'} >
+        <div className={'dr_reworked_calendar'} >
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:20}}>
                 <h1 className={'h1'}>Notifications</h1>
                 <Tag color="magenta" className={'ant_tag'}>ID: 1561654</Tag>

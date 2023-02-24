@@ -42,7 +42,6 @@ function WorkingWeekDays({data,dataKey,handleUpdateParent}) {
                             <Form.Item
                                 label={t(``)}
                                 name={[dataKey,0, "is_day_off"]}
-                                valuePropName="checked"
                                 initialValue={data[0]?.is_day_off}
                                 style={{margin:15}}
                                 hidden={true}

@@ -81,7 +81,7 @@ function Offer() {
                                        initialValue={data?.status}
                                        initialData={Resources.Status}
                             />
-                            <Form.Item label={t(`Top offer`)} name="top" valuePropName="checked" initialValue={data?.top}>
+                            <Form.Item label={t(`Top offer`)} name="top"  initialValue={data?.top}>
                                 <Checkbox defaultChecked={true}/>
                             </Form.Item>
                             <FormInput label={t('Clinic')} name={'clinic_id'} inputType={'resourceSelect'}
