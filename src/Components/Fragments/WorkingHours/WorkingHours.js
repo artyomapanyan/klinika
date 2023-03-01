@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router";
-import {Button, Col, Form, Row, Select, Space, Switch} from "antd";
+import {Button, Col, Form, Popconfirm, Row, Select, Space, Switch} from "antd";
 import {t} from "i18next";
 
-import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, DeleteOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import FormInput from "../FormInput";
 import resourceLinks from "../../ResourceLinks";
@@ -230,8 +230,14 @@ function WorkingHours({onFinish, data, loading, type, syncable, isDoctorHours, d
 
     <Space>
       <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-      <Button size={'large'} onClick={() => (navigate(resourceLinks[res]))} type={'secondary'}
-              htmlType="submit">{t('Cancel')}</Button>
+      <Popconfirm
+          title={t("Your hours will not be protected")}
+          onConfirm={() => navigate(resourceLinks[res]) }
+          okText={t("Yes")}
+          cancelText={t("No")}
+          icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+      </Popconfirm>
     </Space>
   </Form>)
 }

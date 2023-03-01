@@ -67,13 +67,7 @@ function ClinicTabManageDoctors({loadingState}) {
             <div className={'add_edit_content'}>
                 <ClinicApprovedDoctors loadingState={loadingState}/>
             </div>
-
-
-            <Space className={'create_apdate_btns'}>
-                <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-            </Space>
-
+            
         </div>
     )
 }

@@ -1,13 +1,16 @@
 import React, {useState} from 'react'
-import {DatePicker, Form, Input, InputNumber} from "antd";
+import {DatePicker, Form} from "antd";
 import ResourceSelectPaginated from "./ResourceSelectPaginated";
 import dayjs from "dayjs";
+import CInput from "./Inputs/CInput";
+import CTextAreas from "./Inputs/CTextAreas";
 
 const NoForm = ['resourceSelect']
 
 function FormInput({
                        name, label, rules, initialValue, inputProps = {},
                        resourceSelectStyle,
+                       disabled,
                        inputType, initialData = [],
                        resource, resourceParams = {},
                        initialFocused = false,
@@ -34,40 +37,23 @@ function FormInput({
     const handleReturnInput = () => {
         switch (inputType) {
             case 'password':
-                return <Input.Password
-                    {...inputProps} onFocus={() => setFocused(true)}
-                    onBlur={() => setFocused(false)}
-                    onInput={e => setValue(e.target.value)}
-                    iconRender={inputProps.iconRender}
-                    style={{position: 'static'}}
-                />
+                return <CInput label={label} inputProps={inputProps} type={'password'}/>
             case 'date':
                 return <DatePicker   {...inputProps}
                                      format={'DD-MM-YYYY'}
-                                     placeholder={' '}
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
                                      onChange={e => setValue(e)}
                                      style={{width: '100%', height: 48}}
                 />
             case 'textArea':
-                return <Input.TextArea   {...inputProps}
-                                         placeholder={' '}
-                                         onFocus={() => setFocused(true)}
-                                         onBlur={() => setFocused(false)}
-                                         onChange={e => setValue(e?.target.value)}
-                                         style={{height: 100}}
-                />
+                return <CTextAreas label={label} inputProps={inputProps} type={'textArea'}/>
             case 'number':
-                return <InputNumber   {...inputProps}
-                                      placeholder={' '}
-                                      onFocus={() => setFocused(true)}
-                                      onBlur={() => setFocused(false)}
-                                      onChange={e => setValue(e)}
-                                      style={inputNumberStyle}/>
+                return <CInput label={label} inputProps={inputProps} type={'number'}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
+                                                disabled={disabled}
                                                 resourceParams={resourceParams}
                                                 initialValue={initialValue}
                                                 formItemClass={`input-placeholder ${focused || value ? 'input-focused' : ''}`}
@@ -87,16 +73,16 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <Input {...inputProps} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
-                              onInput={e => setValue(e.target.value)}/>
+                return <CInput label={label} inputProps={inputProps}/>
         }
     }
-    let flyPlaceholder = focused || (Array.isArray(value) ? value.length : value)
     return (
         <div>
             {NoForm.includes(inputType) ? handleReturnInput() : <Form.Item initialValue={initialValue}
-                                                                           className={`input-placeholder ${flyPlaceholder ? 'input-focused' : ''} ${inputType}`}
-                                                                           name={name} label={label} rules={rules}>
+                                                                           preserve={false}
+                                                                           className={`input-placeholder`}
+                                                                           name={name}
+                                                                           rules={rules}>
                 {handleReturnInput()}
             </Form.Item>}
         </div>

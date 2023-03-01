@@ -108,7 +108,8 @@ body
   .ant-form-item-label
     position: absolute
     background-color: #fff
-    padding: 0px 5px
+    padding-left: 5px
+    padding-right: 5px
     color: rgba(0, 0, 0, 0.6)
     transform-origin: left top
     white-space: nowrap
@@ -129,8 +130,15 @@ body
     display: none
 
   .ant-form-item-label > label
-    color: #635D6B
-
+    top: 7px
+.ant-select-selection-item
+  top: -5px
+  left: 4px
+.ant-select-selection-overflow
+  max-height: 40px
+.ant-select-selection-overflow-item
+  margin-left: 5px
+  margin-top: -2px
 .ar
   min-height: 100%
 
@@ -559,3 +567,40 @@ body
   display: flex
   flex-direction: row
   justify-content: center
+.flying-label
+    input:not(:placeholder-shown) + label,input:focus + label
+      position: absolute !important
+      top: -8px
+      font-size: 11px
+      background-color: #FFFFFF
+      padding-right: 3px
+      padding-left: 3px
+    label
+      position: absolute
+      left: 15px
+      top: 11px
+      transition: 0.2s
+      font-size: 15px
+
+.ant-form-item-control
+  margin: 5px
+
+.flying-label-textarea
+  textArea:not(:placeholder-shown) + label,textArea:focus + label
+    position: absolute !important
+    left: 15px
+    top: -8px
+    font-size: 11px
+    background-color: #FFFFFF
+    padding-right: 3px
+    padding-left: 3px
+  label
+    position: absolute !important
+    top: 20px
+    left: 15px
+    transition: 0.2s
+    font-size: 15px
+
+
+
+

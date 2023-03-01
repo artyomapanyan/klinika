@@ -158,6 +158,10 @@ let api = {
             },
         }
     },
+    {
+        url: 'appointments',
+        resource: 'Appointment',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

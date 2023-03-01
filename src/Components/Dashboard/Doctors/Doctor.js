@@ -50,6 +50,14 @@ function Doctor() {
             })
         }
     }
+
+    const handleMapItems = (item,name)=>{
+        name = item.phone_code?`(${item.phone_code}) `:null
+        item.id = item.phone_code
+        return [name,item]
+    }
+
+
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
@@ -63,13 +71,16 @@ function Doctor() {
                 <div className={'add_edit_content'}>
                     <Row>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('First')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
+                            <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
+                            <FormInput label={t('Last name')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
                         </Col>
                     </Row>
-                    <FormInput label={t('Bio')} name={'Bio'} inputType={'textArea'} initialValue={data?.bio}/>
+                    <div className="gutter-row">
+                        <FormInput label={t('Bio')} name={'Bio'} inputType={'textArea'} initialValue={data?.bio}/>
+                    </div>
+
                 </div>
 
                 <div className={'add_edit_content'}>
@@ -89,6 +100,12 @@ function Doctor() {
                             />
                             <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
                             <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} />
+                            <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.languages?.map(e=>e.id)}
+                                       initialData={data?.languages??[]}
+                                       resource={'Country'}
+                            />
                         </Col>
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
@@ -97,8 +114,18 @@ function Doctor() {
                                        initialValue={data?.status}
                                        initialData={Resources.Status}
                             />
-                            <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
-                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                            <div style={{display: 'flex', "column-gap": 10}}>
+                                <div style={{width: '20%'}}>
+                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={data?.phone_country_code}
+                                               handleMapItems={handleMapItems}
+                                               resource={'Country'}/>
+                                </div>
+                                <div style={{width: '80%'}}>
+                                    <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} inputType={'number'} />
+                                </div>
+                            </div>
                             <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
                             <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} rules={[{required: true}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Specialties')} name={'specialties'} inputType={'resourceSelect'}
@@ -115,12 +142,7 @@ function Doctor() {
                                        resource={'Taxonomy'}
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1}}
                             />
-                            <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.languages?.map(e=>e.id)}
-                                       initialData={data?.languages??[]}
-                                       resource={'Country'}
-                            />
+
                         </Col>
                     </Row>
                 </div>

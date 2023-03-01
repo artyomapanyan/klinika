@@ -23,7 +23,7 @@ function DashboardHeader() {
     return <Row>
         <Col lg={12}>
         </Col>
-        <Col lg={12} style={{display:"flex", justifyContent:"flex-end", alignItems: "center"}}>
+        <Col lg={12} style={{display:"flex", justifyContent:"flex-end", alignItems: "center"}} className={'lng_select'}>
             <Select
                 defaultValue={current_locale}
                 style={{width: 120, borderRadius:15}}

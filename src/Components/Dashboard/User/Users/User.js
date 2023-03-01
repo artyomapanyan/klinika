@@ -54,7 +54,7 @@ function User() {
                 layout="vertical"
                 ref={formRef}
             >
-                <FormInput label={t('First')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
+                <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
                 <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
                 <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
                 <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />

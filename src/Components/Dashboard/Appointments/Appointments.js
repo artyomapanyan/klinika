@@ -5,6 +5,8 @@ import FormInput from "../../Fragments/FormInput";
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import DateParser from "../../Fragments/DateParser";
+import {CheckCircleOutlined} from "@ant-design/icons";
+import CInput from "../../Fragments/Inputs/CInput";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
@@ -30,6 +32,10 @@ function Appointments() {
                             name={"filter"}
                         >
                             <Row>
+
+                                <Form.Item >
+                                    <CInput label={'valodik'}/>
+                                </Form.Item>
                                 <Col lg={8} className="gutter-row">
                                     <Form.Item name={'date'}>
                                         <RangePicker size={'large'} />
@@ -76,7 +82,9 @@ function Appointments() {
 
 
             <div>
-                <ResourceTable resource={'Category'} tableColumns={[
+                <ResourceTable resource={'Appointment'}
+                               except={{edit: true}}
+                               tableColumns={[
                     {
                         dataIndex:'id',
                         title:'ID',
@@ -84,22 +92,49 @@ function Appointments() {
                         sorter:true,
                     },
                     {
-                        dataIndex:'name',
-                        title:t('Name'),
-                        key:'name',
-                        sorter:true,
+                        dataIndex:'service',
+                        title:t('Service'),
+                        key:'service',
                         translatable:true,
-                        filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                     },
                     {
+                        dataIndex:["clinic", "name"],
+                        title:t('Clinic'),
+                        key:'clinic',
+                        translatable:true,
+                        sorter:true,
+
+                    },
+                    {
+                        dataIndex:'offer',
+                        title:t('Offer'),
+                        key:'offer',
+                        render:(e, record)=> {
+                            return<div>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</div>
+                        }
+                    },
+
+                    {
                         dataIndex:['created_at','iso_string'],
-                        title:t('Create date'),
+                        title:t('Appointment Date'),
                         key:'date',
                         render:i=><DateParser date={i}/>
                     },
-                ]} title={t('Categories')}/>
+                    {
+                       dataIndex:'name',
+                       title:t('Status'),
+                       key:'name',
+                       sorter:true,
+                       translatable:true,
+                       filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+
+                       },
+                ]} title={t('Appointments')}/>
             </div>
         </div>
     )
 }
 export default Appointments;
+
+
+

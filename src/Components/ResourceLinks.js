@@ -31,6 +31,7 @@ const ResourceLins = {
     ClinicLabPackage:'/dashboard/clinic-lab-packages/',
     ClinicNursingTask:'/dashboard/clinic-nursing-tasks/',
     ClinicDoctorWorkingHours:'/dashboard/clinic-doctors/working-hours/',
+    Appointment:'/dashboard/appointments/',
 
 }
 export default ResourceLins

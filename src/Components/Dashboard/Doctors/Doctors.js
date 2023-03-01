@@ -60,14 +60,15 @@ function Doctors() {
                     title:t('Status'),
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                    render:(e,record)=><TableEditable
-                        label={'Status'}
-                        resource={'Doctor'}
-                        initialData={Resources.Status}
-                        updateKey={'status'}
-                        value={e}
-                        record={record}
-                        inputType={'resourceSelect'}/>
+                    render:(e,record)=>{
+                        return<TableEditable
+                                label={'Status'}
+                                resource={'Doctor'}
+                                initialData={Resources.Status}
+                                updateKey={'status'}
+                                value={e}
+                                record={record}
+                                inputType={'resourceSelect'}/>}
                 },
                 {
                     dataIndex:['created_at','iso_string'],

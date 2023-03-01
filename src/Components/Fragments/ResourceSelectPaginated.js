@@ -17,6 +17,7 @@ function ResourceSelectPaginated({
                                    updateLoading = false,
                                    resourceSelectStyle,
                                    resourceData,
+                                   disabled,
                                    handleMapItems = null
                                  }) {
   const timeout = useRef(null);
@@ -85,6 +86,7 @@ function ResourceSelectPaginated({
 
   const SelectItem = <Select
     {...inputProps}
+      disabled={disabled}
     loading={loading || updateLoading}
     onPopupScroll={handleScroll}
     onSearch={handleSearch}
@@ -92,7 +94,7 @@ function ResourceSelectPaginated({
     allowClear={!disableClear}
     optionFilterProp={'name'}
     onDropdownVisibleChange={() => !isInitedState ? setIsInitedState(true) : null}
-    style={resourceSelectStyle}
+    style={{backgroundColor:'red'}}
   >
     {itemOptions}
     {loading ?
@@ -100,6 +102,7 @@ function ResourceSelectPaginated({
                      name={params.name}><Spin/></Select.Option> : null}
 
   </Select>;
+
 
   return name ? <Form.Item
     className={formItemClass}

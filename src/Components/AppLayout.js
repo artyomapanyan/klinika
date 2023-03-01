@@ -247,6 +247,12 @@ function AppLayout(){
             singleComp:<LabTestCategory/>,
             indexComp:<LabTestCategories/>
         },
+        {
+            url:'appointments',
+            resource:'Appointment',
+            singleComp:<Appointment/>,
+            indexComp:<Appointments/>
+        },
 
 
     ]
@@ -277,9 +283,6 @@ function AppLayout(){
 
                         )}
 
-
-                    <Route path={'appointments'} element={<Appointments />}/>
-                    <Route path={'appointment'} element={<Appointment />}/>
 
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
