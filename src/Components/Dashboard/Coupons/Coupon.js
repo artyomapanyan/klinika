@@ -4,13 +4,13 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Col, Form, Space, Switch} from "antd";
+import {Button, Col, Form, Popconfirm, Space, Switch} from "antd";
 import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import {Row} from "antd/lib";
 import Resources from "../../../store/Resources";
-import {PercentageOutlined} from "@ant-design/icons";
+import {PercentageOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 
 const resource = 'Coupon';
 
@@ -96,16 +96,16 @@ function Coupon() {
                                 </div>
 
                                 {
-                                    switchState ? <Row>
+                                    switchState ? <Row style={{paddingTop:10}}>
                                         <Col lg={1} className={'percentable'}>
-                                            <PercentageOutlined style={{fontSize:20, color:'#9d9e9d'}}/>
+                                            <PercentageOutlined style={{fontSize:20, }}/>
                                         </Col>
                                         <Col lg={23}>
                                             <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount by percentage')}  name={'discount_amount'} inputType={'number'} initialValue={data?.discount_amount} rules={[{required: true}]}/>
                                         </Col>
-                                    </Row> : <Row>
+                                    </Row> : <Row style={{paddingTop:10}}>
                                         <Col lg={1} className={'percentable'}>
-                                            <div>SAR</div>
+                                            <div style={{fontWeight:600}}>SAR</div>
                                         </Col>
                                         <Col lg={23}>
                                             <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount amount')} name={'discount_amount'} inputType={'number'} initialValue={data?.discount_amount} rules={[{required: true}]} />
@@ -134,7 +134,14 @@ function Coupon() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

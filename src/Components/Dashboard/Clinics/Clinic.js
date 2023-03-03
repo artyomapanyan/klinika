@@ -35,7 +35,7 @@ const handleChange = (e)=>{
     return(
         <div className={'clinic_tab_div'}>
 
-                <Tabs onChange={handleChange} activeKey={tab}>
+                <ClinicTabBars onChange={handleChange} activeKey={tab}>
                     <items key={'essentials'} tab={'Essentials'} >
                         <ClinicTabEssentials loadingState={loadingState} dataState={dataState}/>
                     </items>
@@ -57,7 +57,7 @@ const handleChange = (e)=>{
                     {dataState.data.has_nursing_service && <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing/>
                     </items>}
-                </Tabs>
+                </ClinicTabBars>
           </div>
     )
 }

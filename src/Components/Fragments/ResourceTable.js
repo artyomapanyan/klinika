@@ -22,7 +22,7 @@ function ResourceTable({resource, tableColumns,
                            getAll=false,
                            noHeader=false,
                            customActions,
-    customTableButton
+                            customTableButton
                        }) {
 
     let [searchParams, setSearchParams] = useSearchParams();

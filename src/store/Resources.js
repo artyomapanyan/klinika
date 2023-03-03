@@ -59,6 +59,7 @@ const Resource = {
             name: 'Tap Payments'
         },
     ],
+
     dateOptions: [
         {
             values: "Closes",

@@ -1,6 +1,6 @@
 import React from 'react';
-import {DatePicker, Input, InputNumber} from "antd";
-const { TextArea } = Input;
+import {DatePicker, Input} from "antd";
+
 
 function CInput({ value, onChange,label, inputProps,type}){
 
@@ -10,7 +10,7 @@ function CInput({ value, onChange,label, inputProps,type}){
          type==='date' ? <DatePicker   {...inputProps} format={'DD-MM-YYYY'} placeholder={' '} style={{width: '100%', height: 48}}/>:
          type === 'number' ? <Input type={'number'}  {...inputProps} size={'large'} value={value} onChange={onChange} placeholder={' '} style={{width:'100%'}}/> :
          <Input {...inputProps} size={'large'} value={value} onChange={onChange} placeholder={' '}  style={{paddingLeft:16}} />}
-        <label >{label}</label>
+        <label className={'input_label'}>{label}</label>
     </div>;
 }
 export default CInput

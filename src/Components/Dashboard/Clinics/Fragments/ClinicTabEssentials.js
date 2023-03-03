@@ -4,12 +4,12 @@ import {useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {Button, Col, Form, Row, Space, Switch} from "antd";
+import {Button, Col, Form, Popconfirm, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import FileManager from "../../../Fragments/FileManager";
-import {CheckOutlined, CloseOutlined, InboxOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
 import {Wrapper} from "@googlemaps/react-wrapper";
 import React from "react";
@@ -240,9 +240,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>
-                                        <span style={{margin:4}}>Duration</span>
+                                    <div style={{width:200}}>
+                                        <FormInput  label={t('Duration')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -282,13 +281,9 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
-                                        <span style={{margin:4}}>Service Fee</span>
-                                    </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>
-                                        <span style={{margin:4}}>Duration</span>
+                                    <div style={{width:200}}>
+                                        <FormInput  label={t('Service Fee')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
+                                        <FormInput  label={t('Duration')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -327,13 +322,9 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
-                                        <span style={{margin:4}}>Service Fee</span>
-                                    </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.duration}/>
-                                        <span style={{margin:4}}>Duration</span>
+                                    <div style={{width:200}}>
+                                        <FormInput  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                        <FormInput  label={t('Duration')} name={["service_settings","home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.duration}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -372,9 +363,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
-                                        <span style={{margin:4}}>Service Fee</span>
+                                    <div style={{width:200}}>
+                                        <FormInput  label={t('Service Fee')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -453,9 +443,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
-                                        <span style={{margin:4}}>Service Fee</span>
+                                    <div style={{width:200}}>
+                                        <FormInput  label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -494,13 +483,9 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
-                                        <span style={{margin:4}}>Service Fee</span>
-                                    </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.duration}/>
-                                        <span style={{margin:4}}>Duration</span>
+                                    <div style={{width:200}}>
+                                        <FormInput  label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
+                                        <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.duration}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -539,9 +524,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                             <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                         </Form.Item>
                                     </div>
-                                    <div style={{display:'flex'}}>
-                                        <FormInput  label={t('')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>
-                                        <span style={{margin:4}}>Duration</span>
+                                    <div style={{width:200}}>
+                                        <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -552,14 +536,14 @@ function ClinicTabEssentials({loadingState, dataState}) {
                     <Row gutter={[16, 16]}>
                         <Col lg={12} className="gutter-row">
                             <FileManager text1={'Logo'}
-                                         text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                                         text2={'Download the file'}
                                          name={'logo'}
                                          uploadIcon={<InboxOutlined/>}
                                          initialFileList={[data?.logo]} limit={1} formRef={formRef} type={'drag'}/>
                         </Col>
                         <Col lg={12} className="gutter-row">
                             <FileManager text1={'Cover Pic'}
-                                         text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                                         text2={'Download the file'}
                                          name={'cover'}
                                          uploadIcon={<InboxOutlined/>}
                                          initialFileList={[data?.cover]} limit={1} formRef={formRef} type={'drag'}/>
@@ -568,7 +552,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
 
 
                     <FileManager text1={'Gallery'}
-                                 text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                                 text2={'Download files'}
                                  name={'gallery'}
                                  uploadIcon={<InboxOutlined/>}
                                  initialFileList={[data?.gallery]} limit={5} formRef={formRef} type={'drag'}/>
@@ -577,7 +561,14 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

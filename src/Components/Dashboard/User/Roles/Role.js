@@ -1,12 +1,13 @@
 import React, {useMemo, useRef, useState} from "react";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
-import {Button, Form, Space, Tree} from "antd";
+import {Button, Form, Popconfirm, Space, Tree} from "antd";
 import FormInput from "../../../Fragments/FormInput";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const resource = 'Role';
 function Role() {
@@ -94,7 +95,14 @@ function Role() {
 
                 <Space>
                     <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

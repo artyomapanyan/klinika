@@ -30,13 +30,24 @@ function ResourceSelectPaginated({
   const {loading} = loadingState;
   const {data} = dataState;
 
-
+    // useEffect(()=>{
+    //     if(JSON.stringify(resourceParams)!==JSON.stringify(params)){
+    //         console.log(JSON.stringify(resourceParams),JSON.stringify(params))
+    //         console.log(resourceParams,resource)
+    //         setParams(resourceParams)
+    //     }
+    //
+    //
+    // },[resourceParams])
   const handleGenerateOptions = (data) => {
     return data.map(item => {
       let name = item.name ?? item.title
       if (resource === 'User' || resource === 'Doctor') {
         name = `${item.first} ${item.last}`
       }
+        if (resource === 'ClinicDoctor') {
+            name = `${item.doctor.first} ${item.doctor.last}`
+        }
       if (handleMapItems) {
         let [newName, newItem] = handleMapItems(item, name)
         name = newName;
@@ -94,7 +105,6 @@ function ResourceSelectPaginated({
     allowClear={!disableClear}
     optionFilterProp={'name'}
     onDropdownVisibleChange={() => !isInitedState ? setIsInitedState(true) : null}
-    style={{backgroundColor:'red'}}
   >
     {itemOptions}
     {loading ?

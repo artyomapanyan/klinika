@@ -1,6 +1,6 @@
 import {t} from "i18next";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
+import {Button, Form, Popconfirm, Space} from "antd";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import {useNavigate, useParams} from "react-router";
@@ -9,7 +9,7 @@ import FormInput from "../../Fragments/FormInput";
 import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
-import {InboxOutlined} from "@ant-design/icons";
+import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import DraftEditor from "../../Fragments/DraftEditor";
 
 const resource = 'LabPackage';
@@ -96,7 +96,14 @@ function LabPackage() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[res]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[res]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

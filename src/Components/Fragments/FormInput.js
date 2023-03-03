@@ -5,12 +5,14 @@ import dayjs from "dayjs";
 import CInput from "./Inputs/CInput";
 import CTextAreas from "./Inputs/CTextAreas";
 
-const NoForm = ['resourceSelect']
+const NoForm = ['resourceSelect'];
+
 
 function FormInput({
                        name, label, rules, initialValue, inputProps = {},
                        resourceSelectStyle,
                        disabled,
+                       disabledDate,
                        inputType, initialData = [],
                        resource, resourceParams = {},
                        initialFocused = false,
@@ -41,9 +43,11 @@ function FormInput({
             case 'date':
                 return <DatePicker   {...inputProps}
                                      format={'DD-MM-YYYY'}
+                                     placeholder={' '}
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
                                      onChange={e => setValue(e)}
+                                     disabledDate={disabledDate}
                                      style={{width: '100%', height: 48}}
                 />
             case 'textArea':
@@ -76,11 +80,16 @@ function FormInput({
                 return <CInput label={label} inputProps={inputProps}/>
         }
     }
+    let isDate = inputType==='date';
+    let flyPlaceholder = isDate&&(focused || (Array.isArray(value) ? value.length : value))
+
+
     return (
         <div>
             {NoForm.includes(inputType) ? handleReturnInput() : <Form.Item initialValue={initialValue}
                                                                            preserve={false}
-                                                                           className={`input-placeholder`}
+                                                                           className={`input-placeholder ${flyPlaceholder ? 'input-focused' : ''}`}
+                                                                           label={isDate?label:null}
                                                                            name={name}
                                                                            rules={rules}>
                 {handleReturnInput()}

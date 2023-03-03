@@ -2,7 +2,7 @@ import React from 'react';
 import {Input} from "antd";
 const { TextArea } = Input;
 
-function CTextAreas({ value, onChange,label, inputProps,type}){
+function CTextAreas({ value, onChange,label, inputProps}){
 
 
     return <div className={'flying-label-textarea'}>
