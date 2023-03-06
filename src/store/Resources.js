@@ -41,12 +41,12 @@ const Resource = {
     ],
     Status: [
         {
-            id: 2,
-            name: 'Active'
+            key: '2',
+            label: 'Active'
         },
         {
-            id: 3,
-            name: 'Inactive'
+            key: '3',
+            label: 'Inactive'
         },
     ],
     PaymentMethodKeys: [

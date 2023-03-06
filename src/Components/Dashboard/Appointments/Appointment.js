@@ -15,206 +15,206 @@ import dayjs from 'dayjs';
 
 const resource = 'Appointment';
 
-const dateOptions = [
-
-    {
-        id: "00:00",
-        name: '00:00',
-    },
-    {
-        id: "00:30",
-        name: '00:30',
-    },
-    {
-        id: "01:00",
-        name: '01:00',
-    },
-    {
-        id: "01:30",
-        name: '01:30',
-    },
-    {
-        id: "02:00",
-        name: '02:00',
-    },
-    {
-        id: "02:30",
-        name: '02:30',
-    },
-    {
-        id: "03:00",
-        name: '03:00',
-    },
-    {
-        id: "03:30",
-        name: '03:30',
-    },
-    {
-        id: "04:00",
-        name: '04:00',
-    },
-    {
-        id: "04:30",
-        name: '04:30',
-    },
-    {
-        id: "05:00",
-        name: '05:00',
-    },
-    {
-        id: "05:30",
-        name: '05:30',
-    },
-    {
-        id: "06:00",
-        name: '06:00',
-    },
-    {
-        id: "06:30",
-        name: '06:30',
-    },
-    {
-        id: "07:00",
-        name: '07:00',
-    },
-    {
-        id: "07:30",
-        name: '07:30',
-    },
-    {
-        id: "08:00",
-        name: '08:00',
-    },
-    {
-        id: "08:30",
-        name: '08:30',
-    },
-    {
-        id: "09:00",
-        name: '09:00',
-    },
-    {
-        id: "09:30",
-        name: '09:30',
-    },
-    {
-        id: "10:00",
-        name: '10:00',
-    },
-    {
-        id: "10:30",
-        name: '10:30',
-    },
-    {
-        id: "11:00",
-        name: '11:00',
-    },
-    {
-        id: "11:30",
-        name: '11:30',
-    },
-    {
-        id: "12:00",
-        name: '12:00',
-    },
-    {
-        id: "12:30",
-        name: '12:30',
-    },
-    {
-        id: "13:00",
-        name: '13:00',
-    },
-    {
-        id: "13:30",
-        name: '13:30',
-    },
-    {
-        id: "14:00",
-        name: '14:00',
-    },
-    {
-        id: "14:30",
-        name: '14:30',
-    },
-    {
-        id: "15:00",
-        name: '15:00',
-    },
-    {
-        id: "15:30",
-        name: '15:30',
-    },
-    {
-        id: "16:00",
-        name: '16:00',
-    },
-    {
-        id: "16:30",
-        name: '16:30',
-    },
-    {
-        id: "17:00",
-        name: '17:00',
-    },
-    {
-        id: "17:30",
-        name: '17:30',
-    },
-    {
-        id: "18:00",
-        name: '18:00',
-    },
-    {
-        id: "18:30",
-        name: '18:30',
-    },
-    {
-        id: "19:00",
-        name: '19:00',
-    },
-    {
-        id: "19:30",
-        name: '19:30',
-    },
-    {
-        id: "20:00",
-        name: '20:00',
-    },
-    {
-        id: "20:30",
-        name: '20:30',
-    },
-    {
-        id: "21:00",
-        name: '21:00',
-    },
-    {
-        id: "21:30",
-        name: '21:30',
-    },
-    {
-        id: "22:00",
-        name: '22:00',
-    },
-    {
-        id: "22:30",
-        name: '22:30',
-    },
-    {
-        id: "23:00",
-        name: '23:00',
-    },
-    {
-        id: "23:30",
-        name: '23:30',
-    },
-
-    {
-        id: "23:59",
-        name: '23:59',
-    },
-]
+// const dateOptions = [
+//
+//     {
+//         id: "00:00",
+//         name: '00:00',
+//     },
+//     {
+//         id: "00:30",
+//         name: '00:30',
+//     },
+//     {
+//         id: "01:00",
+//         name: '01:00',
+//     },
+//     {
+//         id: "01:30",
+//         name: '01:30',
+//     },
+//     {
+//         id: "02:00",
+//         name: '02:00',
+//     },
+//     {
+//         id: "02:30",
+//         name: '02:30',
+//     },
+//     {
+//         id: "03:00",
+//         name: '03:00',
+//     },
+//     {
+//         id: "03:30",
+//         name: '03:30',
+//     },
+//     {
+//         id: "04:00",
+//         name: '04:00',
+//     },
+//     {
+//         id: "04:30",
+//         name: '04:30',
+//     },
+//     {
+//         id: "05:00",
+//         name: '05:00',
+//     },
+//     {
+//         id: "05:30",
+//         name: '05:30',
+//     },
+//     {
+//         id: "06:00",
+//         name: '06:00',
+//     },
+//     {
+//         id: "06:30",
+//         name: '06:30',
+//     },
+//     {
+//         id: "07:00",
+//         name: '07:00',
+//     },
+//     {
+//         id: "07:30",
+//         name: '07:30',
+//     },
+//     {
+//         id: "08:00",
+//         name: '08:00',
+//     },
+//     {
+//         id: "08:30",
+//         name: '08:30',
+//     },
+//     {
+//         id: "09:00",
+//         name: '09:00',
+//     },
+//     {
+//         id: "09:30",
+//         name: '09:30',
+//     },
+//     {
+//         id: "10:00",
+//         name: '10:00',
+//     },
+//     {
+//         id: "10:30",
+//         name: '10:30',
+//     },
+//     {
+//         id: "11:00",
+//         name: '11:00',
+//     },
+//     {
+//         id: "11:30",
+//         name: '11:30',
+//     },
+//     {
+//         id: "12:00",
+//         name: '12:00',
+//     },
+//     {
+//         id: "12:30",
+//         name: '12:30',
+//     },
+//     {
+//         id: "13:00",
+//         name: '13:00',
+//     },
+//     {
+//         id: "13:30",
+//         name: '13:30',
+//     },
+//     {
+//         id: "14:00",
+//         name: '14:00',
+//     },
+//     {
+//         id: "14:30",
+//         name: '14:30',
+//     },
+//     {
+//         id: "15:00",
+//         name: '15:00',
+//     },
+//     {
+//         id: "15:30",
+//         name: '15:30',
+//     },
+//     {
+//         id: "16:00",
+//         name: '16:00',
+//     },
+//     {
+//         id: "16:30",
+//         name: '16:30',
+//     },
+//     {
+//         id: "17:00",
+//         name: '17:00',
+//     },
+//     {
+//         id: "17:30",
+//         name: '17:30',
+//     },
+//     {
+//         id: "18:00",
+//         name: '18:00',
+//     },
+//     {
+//         id: "18:30",
+//         name: '18:30',
+//     },
+//     {
+//         id: "19:00",
+//         name: '19:00',
+//     },
+//     {
+//         id: "19:30",
+//         name: '19:30',
+//     },
+//     {
+//         id: "20:00",
+//         name: '20:00',
+//     },
+//     {
+//         id: "20:30",
+//         name: '20:30',
+//     },
+//     {
+//         id: "21:00",
+//         name: '21:00',
+//     },
+//     {
+//         id: "21:30",
+//         name: '21:30',
+//     },
+//     {
+//         id: "22:00",
+//         name: '22:00',
+//     },
+//     {
+//         id: "22:30",
+//         name: '22:30',
+//     },
+//     {
+//         id: "23:00",
+//         name: '23:00',
+//     },
+//     {
+//         id: "23:30",
+//         name: '23:30',
+//     },
+//
+//     {
+//         id: "23:59",
+//         name: '23:59',
+//     },
+// ]
 
 function Appointment() {
     const params = useParams();
@@ -228,6 +228,7 @@ function Appointment() {
     const [load, setLoad] = useState(false)
 
     const [serviceTypeState, setServiceTypeState] = useState([])
+    const [availableTimeState, setAvailableTimesState] = useState([])
 
 
 
@@ -240,42 +241,42 @@ function Appointment() {
                 setServiceTypeState([
                     {
                         service: responses?.has_telehealth_service,
-                        id: 'has_telehealth_service',
+                        id: 'telehealth',
                         name: "Telehealth",
                     },
                     {
                         service: responses?.has_clinic_visit_service,
-                        id: 'has_clinic_visit_service',
+                        id: 'clinic_visit',
                         name: 'Clinic Visit',
                     },
                     {
                         service: responses?.has_home_visit_service,
-                        id: 'has_home_visit_service',
+                        id: 'home_visit',
                         name: 'Home Visit',
                     },
                     {
                         service: responses?.has_physical_therapy_home_visit_service,
-                        id: 'has_physical_therapy_home_visit_service',
+                        id: 'physical_therapy_home_visit',
                         name: 'Physical Therapy Home Visit',
                     },
                     {
                         service: responses?.has_physical_therapy_clinic_visit_service,
-                        id: 'has_physical_therapy_clinic_visit_service',
+                        id: 'physical_therapy_clinic_visit',
                         name: 'Physical Therapy Clinic Visit',
                     },
                     {
                         service: responses?.has_laboratory_home_visit_service,
-                        id: 'has_laboratory_home_visit_service',
+                        id: 'laboratory_home_visit',
                         name: 'Laboratory Home Visit'
                     },
                     {
                         service: responses?.has_nursing_service,
-                        id: 'has_nursing_service',
+                        id: 'nursing',
                         name: 'Nursing'
                     },
                     {
                         service: responses?.has_laboratory_clinic_visit_service,
-                        id: 'has_laboratory_clinic_visit_service',
+                        id: 'laboratory_clinic_visit',
                         name: 'Laboratory Clinic Visit'
                     }
                 ].filter(el => el.service === true))
@@ -284,6 +285,26 @@ function Appointment() {
             })
         }
     },[data?.clinic_id])
+
+    useEffect(() => {
+        if(data?.appointment_date) {
+            postResource('ClinicDoctorAvailableTimes','single', token, 204, {service:'telehealth',date:'3-3-2023'}).then((responce) => {
+                setAvailableTimesState(responce.map((el) => {
+                    return {
+                        label: 'Break Time',
+                        options: el.map((el1) => {
+                            return {
+                                lebel: el1,
+                                value: el1
+                            }
+                        })
+                    }
+                }))
+            })
+        }
+
+    }, [data?.appointment_date])
+
 
 
 /*
@@ -344,10 +365,8 @@ function Appointment() {
         return [name,item]
     }
     const disabledDate = (current) => {
-        console.log(dayjs().weekday(0))
-
-        return current.add(1,'day') < dayjs().endOf('date') && current.add(-3,'month') > dayjs().endOf('date');
-    };
+        const disabledDates = [0,2]
+         return current.add(1,'day') < dayjs().endOf('date') || current.add(-3,'month') > dayjs().endOf('date') || current.add(1,'day') < dayjs().day(1) || disabledDates.includes(current.day())};
 
 
 
@@ -379,7 +398,7 @@ function Appointment() {
                                                        resource={'Country'}/>
                                         </Col>
                                         <Col lg={18} className="gutter-row">
-                                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} rules={[{required: true}]}/>
                                         </Col>
                                     </Row>
                                     <Row>
@@ -388,7 +407,7 @@ function Appointment() {
                                             <FormInput label={t('Last Name')} name={'last'} rules={[{required: true}]} />
                                             <FormInput label={t('Email')} name={'email'} rules={[{required: true}]}/>
                                             <FormInput label={'Password'} name={'password'} initialValue={''} rules={[{required: !data?.id}]} />
-                                            <FormInput label={'Password Confirmation'} name={'password_confirmation'} />
+                                            <FormInput label={'Password Confirmation'} name={'password_confirmation'} rules={[{required: true}]} />
                                         </Col>
                                         <Col lg={12} className="gutter-row">
 
@@ -466,7 +485,7 @@ function Appointment() {
                                             }
                                         </Row>
                                         {
-                                            data?.service_type === 'has_telehealth_service' || data?.service_type === 'has_clinic_visit_service' || data?.service_type === 'has_home_visit_service' ? <Row>
+                                            data?.service_type === 'telehealth' || data?.service_type === 'clinic_visit' || data?.service_type === 'home_visit' ? <Row>
                                                 <Col lg={12} className="gutter-row">
                                                     <FormInput label={t('Specialties')} name={'specialty_id'}
                                                                inputType={'resourceSelect'}
@@ -494,7 +513,7 @@ function Appointment() {
 
                                                 </Col>
 
-                                            </Row> : data?.service_type === 'has_physical_therapy_home_visit_service' || data?.service_type === 'has_physical_therapy_clinic_visit_service' ? <Row>
+                                            </Row> : data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ? <Row>
                                                 <Col lg={12} className="gutter-row">
                                                     <div></div>
                                                 </Col>
@@ -511,7 +530,7 @@ function Appointment() {
                                                                initialData={[]}/>
                                                 </Col>
 
-                                            </Row> : data?.service_type === 'has_laboratory_home_visit_service' || data?.service_type === 'has_laboratory_clinic_visit_service' ? <Row>
+                                            </Row> : data?.service_type === 'laboratory_home_visit' || data?.service_type === 'laboratory_clinic_visit' ? <Row>
                                                 <Col lg={12} className="gutter-row">
                                                     <FormInput label={t('Lab Tests')}
                                                                name={'lab_test_id'}
@@ -526,7 +545,7 @@ function Appointment() {
                                                                inputType={'resourceSelect'}
                                                                resource={'LabPackage'}/>
                                                 </Col>
-                                            </Row> : data?.service_type === 'has_nursing_service' ? <Row>
+                                            </Row> : data?.service_type === 'nursing' ? <Row>
                                                 <Col lg={24} className="gutter-row">
                                                     <FormInput label={t('Nursing tasks')}
                                                                name={'nursing_task_id'}
@@ -558,7 +577,8 @@ function Appointment() {
                                                                                         name={'appointment_time'}
                                                                                         rules={[{required: true}]}
                                                                                         inputType={'resourceSelect'}
-                                                                                        initialData={dateOptions}
+                                                                                        options={availableTimeState}
+                                                                                        initialData={[]}
                                                                                         /> : <div></div>
                                                 }
                                             </Col>

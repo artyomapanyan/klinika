@@ -149,6 +149,10 @@ let api = {
         resource: 'ClinicDoctorWorkingHours',
     },
     {
+        url: 'clinic-doctors/available-times',
+        resource: 'ClinicDoctorAvailableTimes',
+    },
+    {
         url: 'clinic-doctors',
         resource: 'ClinicDoctor',
         custom: {
@@ -196,6 +200,10 @@ let api = {
                 exportExcel: {
                     url: `${endpoint}${version}/${item.url}/export`,
                     method: 'GET',
+                },
+                updateField: {
+                    url: `${endpoint}${version}/${item.url}/update-field/`,
+                    method: 'POST',
                 },
                 ...item.custom
             }

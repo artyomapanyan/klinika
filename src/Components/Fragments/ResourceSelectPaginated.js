@@ -7,6 +7,7 @@ function ResourceSelectPaginated({
                                    initialData = [],
                                    resource = null,
                                    name,
+                                   options,
                                    label,
                                    rules,
                                    inputProps = {},
@@ -40,7 +41,7 @@ function ResourceSelectPaginated({
     //
     // },[resourceParams])
   const handleGenerateOptions = (data) => {
-    return data.map(item => {
+    return data.map((item, key) => {
       let name = item.name ?? item.title
       if (resource === 'User' || resource === 'Doctor') {
         name = `${item.first} ${item.last}`
@@ -55,7 +56,7 @@ function ResourceSelectPaginated({
       }
 
 
-      return name ? <Select.Option key={item.id} value={item.id} name={name}>{name}</Select.Option> : null
+      return name ? <Select.Option key={key} value={item.id} name={name}>{name}</Select.Option> : null
     })
   }
   useEffect(() => {
@@ -103,6 +104,7 @@ function ResourceSelectPaginated({
     onSearch={handleSearch}
     showSearch
     allowClear={!disableClear}
+    options={options}
     optionFilterProp={'name'}
     onDropdownVisibleChange={() => !isInitedState ? setIsInitedState(true) : null}
   >

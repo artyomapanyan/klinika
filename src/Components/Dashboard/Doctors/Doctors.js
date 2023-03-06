@@ -5,10 +5,13 @@ import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
 import TableEditable from "../../Fragments/TableEditable";
 import Resources from "../../../store/Resources";
+import Resource from "../../../store/Resources";
+import ColorSelect from "../../Fragments/ColorSelect";
+const resource = 'Doctor';
 function Doctors() {
     return(
         <div>
-            <ResourceTable resource={'Doctor'} tableColumns={[
+            <ResourceTable resource={resource} tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -61,14 +64,7 @@ function Doctors() {
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
                     render:(e,record)=>{
-                        return<TableEditable
-                                label={'Status'}
-                                resource={'Doctor'}
-                                initialData={Resources.Status}
-                                updateKey={'status'}
-                                value={e}
-                                record={record}
-                                inputType={'resourceSelect'}/>}
+                        return<ColorSelect items={Resource.Status} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>}
                 },
                 {
                     dataIndex:['created_at','iso_string'],

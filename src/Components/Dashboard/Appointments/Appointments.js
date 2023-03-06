@@ -7,10 +7,12 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import DateParser from "../../Fragments/DateParser";
 import {CheckCircleOutlined} from "@ant-design/icons";
 import CInput from "../../Fragments/Inputs/CInput";
+import ColorSelect from "../../Fragments/ColorSelect";
+import Resource from "../../../store/Resources";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
-
+const resource = 'Appointment';
 function Appointments() {
 
     const onFinish = (values) => {
@@ -24,65 +26,65 @@ function Appointments() {
 
     return(
         <div >
-            <div className={'add_edit_content'}>
-                <Collapse defaultActiveKey={[]} onChange={onChange}>
-                    <Panel header="Filter" key="1">
-                        <Form
-                            onFinish={onFinish}
-                            name={"filter"}
-                        >
-                            <Row>
+            {/*<div className={'add_edit_content'}>*/}
+            {/*    <Collapse defaultActiveKey={[]} onChange={onChange}>*/}
+            {/*        <Panel header="Filter" key="1">*/}
+            {/*            <Form*/}
+            {/*                onFinish={onFinish}*/}
+            {/*                name={"filter"}*/}
+            {/*            >*/}
+            {/*                <Row>*/}
 
-                                <Form.Item >
-                                    <CInput label={'valodik'}/>
-                                </Form.Item>
-                                <Col lg={8} className="gutter-row">
-                                    <Form.Item name={'date'}>
-                                        <RangePicker size={'large'} />
-                                    </Form.Item>
-                                </Col>
-                                <Col lg={8} className="gutter-row">
-                                    <FormInput label={t('Doctor')} name={'doctor_id'} inputType={'resourceSelect'}
-                                               initialValue={null}
-                                               initialData={[]}
-                                               resource={'Doctor'}/>
-                                </Col>
-                                <Col lg={8} className="gutter-row">
-                                    <FormInput label={t('Clinic')} name={'clinic_id'} inputType={'resourceSelect'}
-                                               initialValue={null}
-                                               initialData={[]}
-                                               resource={'Clinic'}/>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col lg={12} className="gutter-row">
-                                    <FormInput label={t('Service')} name={'service_id'} inputType={'resourceSelect'}
-                                               initialValue={null}
-                                               initialData={[]}
-                                               resource={'Service'}/>
-                                </Col>
-                                <Col lg={12} className="gutter-row">
-                                    <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}
-                                               initialValue={null}
-                                               initialData={[]}
-                                               resource={'Taxonomy'}/>
-                                </Col>
-                            </Row>
+            {/*                    <Form.Item >*/}
+            {/*                        <CInput label={'valodik'}/>*/}
+            {/*                    </Form.Item>*/}
+            {/*                    <Col lg={8} className="gutter-row">*/}
+            {/*                        <Form.Item name={'date'}>*/}
+            {/*                            <RangePicker size={'large'} />*/}
+            {/*                        </Form.Item>*/}
+            {/*                    </Col>*/}
+            {/*                    <Col lg={8} className="gutter-row">*/}
+            {/*                        <FormInput label={t('Doctor')} name={'doctor_id'} inputType={'resourceSelect'}*/}
+            {/*                                   initialValue={null}*/}
+            {/*                                   initialData={[]}*/}
+            {/*                                   resource={'Doctor'}/>*/}
+            {/*                    </Col>*/}
+            {/*                    <Col lg={8} className="gutter-row">*/}
+            {/*                        <FormInput label={t('Clinic')} name={'clinic_id'} inputType={'resourceSelect'}*/}
+            {/*                                   initialValue={null}*/}
+            {/*                                   initialData={[]}*/}
+            {/*                                   resource={'Clinic'}/>*/}
+            {/*                    </Col>*/}
+            {/*                </Row>*/}
+            {/*                <Row>*/}
+            {/*                    <Col lg={12} className="gutter-row">*/}
+            {/*                        <FormInput label={t('Service')} name={'service_id'} inputType={'resourceSelect'}*/}
+            {/*                                   initialValue={null}*/}
+            {/*                                   initialData={[]}*/}
+            {/*                                   resource={'Service'}/>*/}
+            {/*                    </Col>*/}
+            {/*                    <Col lg={12} className="gutter-row">*/}
+            {/*                        <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}*/}
+            {/*                                   initialValue={null}*/}
+            {/*                                   initialData={[]}*/}
+            {/*                                   resource={'Taxonomy'}/>*/}
+            {/*                    </Col>*/}
+            {/*                </Row>*/}
 
-                            <div>
-                                <Button type={'primary'} htmlType="submit">Filter</Button>
-                            </div>
-                        </Form>
+            {/*                <div>*/}
+            {/*                    <Button type={'primary'} htmlType="submit">Filter</Button>*/}
+            {/*                </div>*/}
+            {/*            </Form>*/}
 
-                    </Panel>
+            {/*        </Panel>*/}
 
-                </Collapse>
-            </div>
+            {/*    </Collapse>*/}
+            {/*</div>*/}
 
 
 
             <div>
-                <ResourceTable resource={'Appointment'}
+                <ResourceTable resource={resource}
                                except={{edit: true}}
                                tableColumns={[
                     {
@@ -92,9 +94,9 @@ function Appointments() {
                         sorter:true,
                     },
                     {
-                        dataIndex:'service',
+                        dataIndex:'service_type',
                         title:t('Service'),
-                        key:'service',
+                        key:'service_type',
                         translatable:true,
                     },
                     {
@@ -110,6 +112,7 @@ function Appointments() {
                         title:t('Offer'),
                         key:'offer',
                         render:(e, record)=> {
+                            console.log(record)
                             return<div>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</div>
                         }
                     },
@@ -121,12 +124,12 @@ function Appointments() {
                         render:i=><DateParser date={i}/>
                     },
                     {
-                       dataIndex:'name',
+                       dataIndex:'status',
                        title:t('Status'),
-                       key:'name',
-                       sorter:true,
-                       translatable:true,
-                       filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                       key:'status',
+                        render: (e, record) => {
+                            return <ColorSelect items={Resource.Status} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                        }
 
                        },
                 ]} title={t('Appointments')}/>

@@ -2,13 +2,14 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
-import TableEditable from "../../Fragments/TableEditable";
-import Resources from "../../../store/Resources";
+import Resource from "../../../store/Resources";
+import ColorSelect from "../../Fragments/ColorSelect";
 
+const resource='Offer'
 function Offers() {
     return(
         <div>
-            <ResourceTable resource={'Offer'} tableColumns={[
+            <ResourceTable resource={resource} tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -48,14 +49,7 @@ function Offers() {
                     title:t('Status'),
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                    render:(e,record)=><TableEditable
-                        label={'Status'}
-                        resource={'Doctor'}
-                        initialData={Resources.Status}
-                        updateKey={'status'}
-                        value={e}
-                        record={record}
-                        inputType={'resourceSelect'}/>
+                    render:(e,record)=><ColorSelect items={Resource.Status} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },
 
             ]} title={t('Offers')}/>

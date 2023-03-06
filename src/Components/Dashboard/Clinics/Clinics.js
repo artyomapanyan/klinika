@@ -4,10 +4,14 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import {t} from "i18next";
 import TableEditable from "../../Fragments/TableEditable";
 import Resources from "../../../store/Resources";
+import ColorSelect from "../../Fragments/ColorSelect";
+import Resource from "../../../store/Resources";
+
+const resource='Clinic';
 function Clinics() {
     return(
         <div>
-            <ResourceTable resource={'Clinic'} tableColumns={[
+            <ResourceTable resource={resource} tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -33,14 +37,7 @@ function Clinics() {
                     title:t('Status'),
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                    render:(e,record)=><TableEditable
-                        label={''}
-                        resource={'Clinic'}
-                        initialData={Resources.Status}
-                        updateKey={'status'}
-                        value={e}
-                        record={record}
-                        inputType={'resourceSelect'}/>
+                    render:(e,record)=><ColorSelect items={Resource.Status} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },
             ]} title={t('Clinics')}/>
         </div>

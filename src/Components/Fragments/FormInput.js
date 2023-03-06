@@ -12,6 +12,7 @@ function FormInput({
                        name, label, rules, initialValue, inputProps = {},
                        resourceSelectStyle,
                        disabled,
+                       options,
                        disabledDate,
                        inputType, initialData = [],
                        resource, resourceParams = {},
@@ -37,9 +38,10 @@ function FormInput({
     const [value, setValue] = useState(initialValue);
 
     const handleReturnInput = () => {
+        const isRequired= rules?.find(e=>e.required)
         switch (inputType) {
             case 'password':
-                return <CInput label={label} inputProps={inputProps} type={'password'}/>
+                return <CInput isRequired={isRequired} label={label} inputProps={inputProps} type={'password'}/>
             case 'date':
                 return <DatePicker   {...inputProps}
                                      format={'DD-MM-YYYY'}
@@ -51,12 +53,13 @@ function FormInput({
                                      style={{width: '100%', height: 48}}
                 />
             case 'textArea':
-                return <CTextAreas label={label} inputProps={inputProps} type={'textArea'}/>
+                return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps} type={'textArea'}/>
             case 'number':
-                return <CInput label={label} inputProps={inputProps} type={'number'}/>
+                return <CInput isRequired={isRequired} label={label} inputProps={inputProps} type={'number'}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
+                                                options={options}
                                                 disabled={disabled}
                                                 resourceParams={resourceParams}
                                                 initialValue={initialValue}
@@ -77,7 +80,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput label={label} inputProps={inputProps}/>
+                return <CInput isRequired={isRequired} label={label} inputProps={inputProps}/>
         }
     }
     let isDate = inputType==='date';

@@ -9,7 +9,7 @@ import Preloader from "../../../../Preloader";
 
 
 const resource = "ClinicDoctor";
-function DoctorsHoursModal({id,type, keys=[]}) {
+function DoctorsHoursModal({id,type, handleCancel, keys=[]}) {
     let token = useSelector((state) => state.auth.token);
     const params = useParams();
 
@@ -55,7 +55,7 @@ function DoctorsHoursModal({id,type, keys=[]}) {
 
     return(
         <div className={'add_edit_content'}>
-            {loading?<Preloader/>:<WorkingHours loading={loading} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} />}
+            {loading?<Preloader/>:<WorkingHours handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} />}
         </div>
     )
 }

@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, syncable, isDoctorHours, doctorData}) {
+function WorkingHours({onFinish, data, loading, type, modalId, syncable, isDoctorHours, doctorData, handleCancel}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
@@ -50,6 +50,7 @@ function WorkingHours({onFinish, data, loading, type, syncable, isDoctorHours, d
   }, [data, switchChange]);
 
 
+
   const onFormFinish = (values) => {
     values?.status ? values.status = true : values.status = false
     let prevValues = {...values}
@@ -57,10 +58,17 @@ function WorkingHours({onFinish, data, loading, type, syncable, isDoctorHours, d
     Object.keys(values.working_hours).forEach(key => {
       working_hours = [...working_hours, ...values.working_hours[key]]
     })
+    console.log(working_hours,'first')
     values.working_hours = working_hours.map(e => {
-      e.is_day_off = !e?.is_day_off
+      if(e.is_day_off!==undefined){
+        e.is_day_off = !e.is_day_off
+      }else{
+        e.is_day_off = false
+      }
+
       return e
     })
+    console.log(working_hours,values.working_hours)
     values.service = type;
 
     onFinish(values, prevValues)
@@ -81,7 +89,7 @@ function WorkingHours({onFinish, data, loading, type, syncable, isDoctorHours, d
   }
   const handleAddHours = (workingDay, dataKey) => {
     handleUpdateWorkState([...workingDay, {
-      closes_at: null, day: dataKey, is_day_off: false, opens_at: null, type: workingDay.type,
+      closes_at: null, day: dataKey, is_day_off: true, opens_at: null, type: workingDay.type,
     }], dataKey)
   }
 
@@ -232,7 +240,7 @@ function WorkingHours({onFinish, data, loading, type, syncable, isDoctorHours, d
       <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
       <Popconfirm
           title={t("Your hours will not be protected")}
-          onConfirm={() => navigate(resourceLinks[res]) }
+          onConfirm={modalId ? handleCancel : () => navigate(resourceLinks[res]) }
           okText={t("Yes")}
           cancelText={t("No")}
           icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>

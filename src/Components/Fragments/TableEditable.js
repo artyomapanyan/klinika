@@ -9,6 +9,7 @@ function TableEditable({resource,record,initialData,inputType,value,label,update
     const [loading,setLoading] = useState({});
 
     const statusChange = (values) => {
+        console.log(values)
         setLoading({
             [record.id]:true
         })

@@ -110,7 +110,7 @@ function ClinicApprovedDoctors({loadingState}) {
                 />}
 
             <Modal title="Worcing Houer" width={"65%"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
-                {isModalOpen?.id ? <DoctorsHoursModal loadingState={loadingState} id={isModalOpen?.id} type={isModalOpen?.type} keys={isModalOpen.keys} />:null}
+                {isModalOpen?.id ? <DoctorsHoursModal loadingState={loadingState} id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} />:null}
             </Modal>
         </div>
     )
