@@ -2,8 +2,6 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
-import TableEditable from "../../Fragments/TableEditable";
-import Resources from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 
@@ -37,7 +35,7 @@ function Clinics() {
                     title:t('Status'),
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                    render:(e,record)=><ColorSelect items={Resource.Status} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                    render:(e,record)=><ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },
             ]} title={t('Clinics')}/>
         </div>

@@ -39,7 +39,7 @@ const Resource = {
             name: 'Female'
         },
     ],
-    Status: [
+    Status1: [
         {
             key: '2',
             label: 'Active'
@@ -47,6 +47,16 @@ const Resource = {
         {
             key: '3',
             label: 'Inactive'
+        },
+    ],
+    Status: [
+        {
+            id: 2,
+            name: 'Active'
+        },
+        {
+            id: 3,
+            name: 'Inactive'
         },
     ],
     PaymentMethodKeys: [

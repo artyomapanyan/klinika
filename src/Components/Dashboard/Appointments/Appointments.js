@@ -128,7 +128,7 @@ function Appointments() {
                        title:t('Status'),
                        key:'status',
                         render: (e, record) => {
-                            return <ColorSelect items={Resource.Status} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                            return <ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                         }
 
                        },
