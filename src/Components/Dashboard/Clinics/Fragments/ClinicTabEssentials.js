@@ -158,13 +158,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                             <FormInput label={t('License Number')} name={'license_number'} initialValue={data?.license_number} rules={[{required: true}]} />
                             <FormInput label={t('License number expired at')} name={'license_number_expired_at'} initialValue={data?.license_number_expired_at} inputType={'date'} rules={[{required: true}]} />
                             <FormInput label={t('Website')} name={'website'} initialValue={data?.website} />
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.insurance_companies?.map(e=>e.id)}
-                                       initialData={data?.insurance_companies??[]}
-                                       resource={'InsuranceCompany'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
-                            />
+
                         </Col>
                         <Col lg={12} className="gutter-row">
 
@@ -183,6 +177,13 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                        initialValue={data?.languages?.map(e=>e.id)}
                                        initialData={data?.languages??[]}
                                        resource={'Country'}
+                            />
+                            <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.insurance_companies?.map(e=>e.id)}
+                                       initialData={data?.insurance_companies??[]}
+                                       resource={'InsuranceCompany'}
+                                       resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
                             />
 
                         </Col>

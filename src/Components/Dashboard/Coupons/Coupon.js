@@ -62,7 +62,7 @@ function Coupon() {
    const onChange = (checked) => {
        setSwitchState(checked)
    }
-
+console.log(switchState)
     return(
         <div >
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing - ${data?.name}`)}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new Coupon`)}</h3>}
@@ -101,7 +101,7 @@ function Coupon() {
                                             <PercentageOutlined style={{fontSize:20, }}/>
                                         </Col>
                                         <Col lg={23}>
-                                            <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount by percentage')}  name={'discount_amount'} inputType={'number'} initialValue={data?.discount_amount} rules={[{required: true}]}/>
+                                            <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount by percentage')}  name={'discount_by_percentage'} inputType={'number'} initialValue={data?.discount_by_percentage} rules={[{required: true}]}/>
                                         </Col>
                                     </Row> : <Row style={{paddingTop:10}}>
                                         <Col lg={1} className={'percentable'}>

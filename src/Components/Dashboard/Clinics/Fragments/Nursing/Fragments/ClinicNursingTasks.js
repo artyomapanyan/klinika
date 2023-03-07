@@ -93,7 +93,6 @@ function LabPackagesTable() {
                             title: 'Nursing task',
                             key: 'nursing_task',
                             sorter: true,
-                            filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
                         },
                         {

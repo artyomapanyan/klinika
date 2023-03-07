@@ -91,7 +91,6 @@ function LaboratoryTestsTable() {
                             title: 'Tests',
                             key: 'lab_test',
                             sorter: true,
-                            filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
                         },
                         {

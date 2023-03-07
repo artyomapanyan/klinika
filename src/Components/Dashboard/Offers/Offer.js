@@ -82,14 +82,14 @@ function Offer() {
                                        initialValue={data?.status}
                                        initialData={Resources.Status}
                             />
-                            <Form.Item label={t(`Top offer`)} name="top"  initialValue={data?.top}>
-                                <Checkbox defaultChecked={true}/>
-                            </Form.Item>
                             <FormInput label={t('Clinic')} name={'clinic_id'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.clinic?.id}
                                        initialData={data?.clinic?[data.clinic]:[]}
                                        resource={'Clinic'}/>
+                            <Form.Item label={t(`Top offer`)} name="top"  initialValue={data?.top}>
+                                <Checkbox defaultChecked={true}/>
+                            </Form.Item>
                         </Col>
                         <Col lg={12} className="gutter-row">
                             <FormInput inputProps={{mode:'multiple'}} label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}

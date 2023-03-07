@@ -92,7 +92,6 @@ function LabPackagesTable() {
                             title: 'Packages',
                             key: 'lab_package',
                             sorter: true,
-                            filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
                         },
                         {
