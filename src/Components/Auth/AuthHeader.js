@@ -2,8 +2,10 @@ import {changeLanguage} from "i18next";
 import {Button, Dropdown, Space} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {ArrowLeftOutlined, DownOutlined} from "@ant-design/icons";
+import React from "react";
+import logo from "../../dist/Img/logo_klinika.png";
 
-function AuthHeader() {
+function AuthHeader({headerState}) {
      let lngs = useSelector((state) => state?.app?.current_locale);
     let dispatch = useDispatch()
 
@@ -28,10 +30,13 @@ function AuthHeader() {
     };
 
     return (
-        <div style={{width:'100%', position:"absolute", top:45, display: "flex", flexDirection:"row", JustifyContent:'space-around'}}>
-
-                <Button style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
-            <div style={{marginLeft:'90%', cursor:"pointer"}}>
+        <div style={{width:'100%', position:"absolute", top:40, display: "flex", flexDirection:"row", JustifyContent:'space-around'}}>
+            {
+                headerState ? <div style={{marginLeft:'15%'}}>
+                    <img src={logo} alt={'logo_klinika'}/>
+                </div> : <Button style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
+            }
+            <div style={{marginLeft:headerState ? '55%' : '90%', cursor:"pointer"}}>
                 <Dropdown
                     menu={{
                         items,
@@ -40,7 +45,7 @@ function AuthHeader() {
                     trigger={['click']}
                     style={{color: 'white'}}
                 >
-                    <Space style={{color: "white", fontWeight: 700}}>
+                    <Space style={{color: headerState ? "#ce4e99" : 'white', fontWeight: 700}}>
                         {lngs === "ar" ? "Arabic" : "English"}
                         <DownOutlined />
                     </Space>

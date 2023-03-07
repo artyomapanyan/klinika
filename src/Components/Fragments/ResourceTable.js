@@ -22,6 +22,7 @@ function ResourceTable({resource, tableColumns,
                            getAll=false,
                            noHeader=false,
                            customActions,
+                           buttonAdd,
                             customTableButton
                        }) {
 
@@ -159,9 +160,12 @@ function ResourceTable({resource, tableColumns,
                 </Space>
             </Col>
             <Col lg={12}>
-                <Tooltip title="Add new entry">
-                    <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
-                </Tooltip>
+                {
+                    buttonAdd ? <Tooltip title="Add new entry">
+                        <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
+                    </Tooltip> : null
+                }
+
             </Col>
         </Row>}
         <Row style={{marginTop:30}}>
