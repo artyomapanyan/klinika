@@ -99,6 +99,7 @@ function ResourceSelectPaginated({
   const SelectItem = <Select
     {...inputProps}
       disabled={disabled}
+
     loading={loading || updateLoading}
     onPopupScroll={handleScroll}
     onSearch={handleSearch}

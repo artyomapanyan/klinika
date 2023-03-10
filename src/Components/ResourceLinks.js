@@ -32,6 +32,7 @@ const ResourceLins = {
     ClinicNursingTask:'/dashboard/clinic-nursing-tasks/',
     ClinicDoctorWorkingHours:'/dashboard/clinic-doctors/working-hours/',
     ClinicDoctorAvailableTimes:'/dashboard/clinic-doctors/available-times/',
+    ClinicDoctorAvailableTimeForDayByDoctorAndClinic:'/dashboard/clinic-doctors/available-times-by-doctor-and-clinic/',
     Appointment:'/dashboard/appointments/',
 
 }

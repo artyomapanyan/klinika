@@ -48,7 +48,7 @@ function PatientHistoryNotes() {
                     </Row>
                 </Col>
 
-                <Col lg={16}>
+                <Col lg={16} style={{marginTop:20}}>
                     <div >
                         <Card
                             title={<h1 className={'h1'}>Purpose</h1>}

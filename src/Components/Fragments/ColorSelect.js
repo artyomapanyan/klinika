@@ -35,7 +35,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
         }}
         trigger={['click']}
     >
-        <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor:value === '2' ? "#ce4e99" : "black", padding:10, borderRadius:30, width:150, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+        <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor:value === '2' ? "#ce4e99" : "#a7a8a7", padding:10, borderRadius:30, width:150, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
             <div style={{color:"#FFFFFF", fontWeight:700}}>{items.find(e=>e.key===value)?.label}</div>
             <div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
         </Space>

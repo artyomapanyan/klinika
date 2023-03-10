@@ -7,6 +7,7 @@ import {Avatar, Button, Card, Divider, Dropdown, Space} from "antd";
 import HeaderAccountDropdown from "./Fragment/HeaderAccountDropdown";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
+import Languages from "./Languages";
 
 
 function HeaderAccount() {
@@ -34,7 +35,8 @@ function HeaderAccount() {
                         </Space>
                     </Button>
                 </Dropdown>
-
+                <Divider type={'vertical'} style={{height: 32, margin:16}} />
+                <Languages />
 
 
 

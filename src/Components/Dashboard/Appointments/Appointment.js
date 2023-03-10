@@ -232,6 +232,7 @@ function Appointment() {
 
 
 
+
     useEffect(()=>{
         setLoad(true)
         if( data?.clinic_id){
@@ -288,23 +289,23 @@ function Appointment() {
 
     useEffect(() => {
         if(data?.appointment_date) {
-            postResource('ClinicDoctorAvailableTimes','single', token, 204, {service:'telehealth',date:'3-3-2023'}).then((responce) => {
-                setAvailableTimesState(responce.map((el) => {
-                    return {
-                        label: 'Break Time',
-                        options: el.map((el1) => {
-                            return {
-                                lebel: el1,
-                                value: el1
-                            }
-                        })
-                    }
-                }))
+            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic','single', token, data?.doctor_id + "/" + data?.clinic_id, {service:data?.service_type, date:data?.appointment_date.format('YYYY-MM-DD')}).then((responce) => {
+               console.log(responce, 'res')
+                // setAvailableTimesState(responce.map((el) => {
+                //     return {
+                //         label: 'Break Time',
+                //         options: el.map((el1) => {
+                //             return {
+                //                 lebel: el1,
+                //                 value: el1
+                //             }
+                //         })
+                //     }
+                // }))
             })
         }
 
-    }, [data?.appointment_date])
-
+    }, [data?.appointment_date, data?.doctor_id])
 
 
 /*
@@ -386,7 +387,7 @@ function Appointment() {
                         <div className={'add_edit_content'}>
 
                             <div className="gutter-row">
-                                <FormInput  label={t('Select Patient (Search By phone number)')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+                                <FormInput  label={t('Select Patient (Search By phone number)')} name={'name'} initialValue={data?.name}  />
                             </div>
                             <div>
                                     <Row>
@@ -427,17 +428,14 @@ function Appointment() {
 
                                         <Row>
                                             <Col lg={12} className="gutter-row">
-                                                <FormInput label={t('Plid')} name={'plid'} rules={[
-                                                    {
+                                                <FormInput label={t('Plid')} name={'plid'} rules={[{
                                                         required: true,
                                                         len:11
-                                                    },
-
-                                                ]} />
-
+                                                    }]} />
+                                                <FormInput label={t('Plid expired at')} name={'plid_expired_at'}  inputType={'date'} rules={[{required: true}]} />
                                             </Col>
                                             <Col lg={12} className="gutter-row">
-                                                <FormInput label={t('Plid expired at')} name={'plid_expired_at'}  inputType={'date'} rules={[{required: true}]} />
+
                                                 <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
                                                            rules={[{required: true}]}
                                                            initialValue={data?.sub_specialties?.map(e=>e.id)}

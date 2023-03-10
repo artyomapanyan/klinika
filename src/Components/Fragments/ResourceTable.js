@@ -22,7 +22,7 @@ function ResourceTable({resource, tableColumns,
                            getAll=false,
                            noHeader=false,
                            customActions,
-                           buttonAdd,
+                           buttonAdd = true,
                             customTableButton
                        }) {
 
@@ -168,7 +168,7 @@ function ResourceTable({resource, tableColumns,
 
             </Col>
         </Row>}
-        <Row style={{marginTop:30}}>
+        <Row style={{marginTop:15}}>
             <Col lg={24}>
                 <Form>
                 <Table

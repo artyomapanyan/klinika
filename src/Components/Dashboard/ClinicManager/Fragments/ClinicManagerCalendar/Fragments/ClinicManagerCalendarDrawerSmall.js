@@ -38,7 +38,12 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer}) {
                     <FormInput label={t('Email')}  rules={[{required: true}]} />
                     <div style={{display:"flex", width:'100%'}}>
                         <div style={{width:80}}>
-                            <FormInput name={'phone_country_code'} rules={[{required: true}]} initialValue={'374'} />
+                            <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={966}
+                                // handleMapItems={handleMapItems}
+                                // resource={'Country'}
+                            />
                         </div>
                         <div style={{marginLeft:20, width:'100%'}}>
                             <FormInput label={t('Phone number')} name={'phone_number'} />

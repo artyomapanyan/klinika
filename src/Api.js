@@ -153,6 +153,10 @@ let api = {
         resource: 'ClinicDoctorAvailableTimes',
     },
     {
+        url: 'clinic-doctors/available-times-by-doctor-and-clinic',
+        resource: 'ClinicDoctorAvailableTimeForDayByDoctorAndClinic',
+    },
+    {
         url: 'clinic-doctors',
         resource: 'ClinicDoctor',
         custom: {
