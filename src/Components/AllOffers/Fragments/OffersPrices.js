@@ -1,39 +1,53 @@
 import React, {useState} from "react";
-import {Button, Col, Dropdown, Row, Slider, Space} from "antd";
-import {DownOutlined, FunnelPlotOutlined, InsertRowRightOutlined} from "@ant-design/icons";
+import {Button, Col, Dropdown, Input, Row, Slider, Space} from "antd";
+import {DownOutlined, FunnelPlotOutlined, InsertRowRightOutlined, SearchOutlined} from "@ant-design/icons";
 import {t} from "i18next";
-import Search from "antd/es/input/Search";
 
-function OffersPrices() {
+function OffersPrices({clinics, setParams, params}) {
+    const [lowHighState, setLowHighState] = useState(false)
 
-    const [price, setPrice] = useState({});
+    const items = clinics?.map((el) => {
+        return{
+            key: el?.id,
+            label: el?.name,
+        }
+    })
 
-    const items = [
-        {
-            label: 'First Clinic',
-            key: '1',
-        },
-        {
-            label: 'Second Clinic',
-            key: '2',
-        },
-        {
-            label: 'Firth Clinic',
-            key: '3',
-        },
-        {
-            label: 'First Clinic',
-            key: '4',
-        },
-        {
-            label: 'Second Clinic',
-            key: '5',
-        },
-
-    ];
     const onClick = ({key}) => {
-        console.log(key)
+        setParams({
+            ...params,
+            clinic_id: key
+        })
     };
+
+    const onReset = () => {
+        setParams({})
+    }
+
+    const changeInputSearch = (e) => {
+        setParams({
+            ...params,
+            offer_name: e?.target?.value
+        })
+    }
+    const onLowHigh = () => {
+        setLowHighState(!lowHighState)
+        if(lowHighState) {
+            setParams(
+                {
+                    ...params,
+                    low_high: "low_to_high"
+                }
+            )
+        } else {
+            setParams(
+                {
+                    ...params,
+                    low_high: "high_to_low"
+                }
+            )
+        }
+    }
 
 
     return(
@@ -44,22 +58,26 @@ function OffersPrices() {
                         Price:
                     </div>
                     <div className={'price_text'}>
-                        {price?.value1 ?? 0} SAR
+                        {params?.prices?.min ?? 0} SAR
                     </div>
                     <div className={'price_text'}>
                         -
                     </div>
                     <div className={'price_text'}>
-                        {price?.value2 ?? 10000} SAR
+                        {params?.prices?.max ?? 10000} SAR
                     </div>
                 </div>
                 <div style={{width:'100%'}} align={'right'}>
                     <div className={'slider_div'} >
                         <Slider range defaultValue={[0, 10000]}
                                 max={10000}
-                                onAfterChange={([val1, val2]) => setPrice({
-                                    value1: val1,
-                                    value2: val2
+                                onAfterChange={([val1, val2]) => setParams({
+                                    ...params,
+                                    prices : {
+                                        min: val1,
+                                        max: val2
+                                    }
+
                                 })}
                         />
                     </div>
@@ -67,27 +85,31 @@ function OffersPrices() {
 
 
             </Col>
-            <Col lg={5}>
-                <div align={'center'}>
-                    <FunnelPlotOutlined style={{color:'#ce4e99', fontSize:20, paddingRight:10}}/>
-                    <span style={{fontSize: 16}}>
-                        Price: Low to High
+            <Col lg={4}>
+                <div align={'center'} style={{cursor:'pointer'}} onClick={onLowHigh}>
+                    <FunnelPlotOutlined style={{color:'#ce4e99', fontSize:20, paddingRight:10, }} />
+                    <span style={{fontSize: 14}} >
+                        {
+                            lowHighState ? "Price: Low to High" : 'Price: High to Low'
+                        }
+
                     </span>
 
                 </div>
             </Col>
-            <Col lg={5}>
+            <Col lg={6}>
                 <div align={'center'}>
                     <InsertRowRightOutlined style={{color:'#ce4e99', fontSize: 18}}/>
                     <Dropdown
                         menu={{
                             items,
-                            onClick,
-                        }}
+                            onClick,}}
                         trigger={['click']}
+
                     >
                         <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                            <div style={{marginLeft:15, fontSize:16}}>{t("All clinic (32)")}</div>
+                            <div style={{marginLeft:10, fontSize:14}}>{params?.clinic_id ? items?.find((el) => {
+                                return el?.key === +params?.clinic_id})?.label : `All Clinics (${clinics?.length})`}</div>
                             <div><DownOutlined style={{color:'#ce4e99'}}/></div>
                         </Space>
 
@@ -96,18 +118,12 @@ function OffersPrices() {
             </Col>
             <Col lg={5}>
                 <div align={'center'}>
-                        <Search
-                            placeholder="input search text"
-                            //onSearch={onSearch}
-                            style={{
-                                width: 200,
-                            }}
-                        />
+                    <Input className={'offers_search_input'} size="large" placeholder="Search" onChange={(e)=>changeInputSearch(e)} prefix={<SearchOutlined />} />
                 </div>
             </Col>
             <Col lg={2} align={'center'}>
                 <div>
-                    <Button>Reset</Button>
+                    <Button type={"secondary"} style={{backgroundColor:'#F3F3F3', border:'none', color:'#8d8c8d', fontWeight:600, height:37}} onClick={onReset}>Reset</Button>
                 </div>
             </Col>
         </Row>

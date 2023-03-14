@@ -170,6 +170,22 @@ let api = {
         url: 'appointments',
         resource: 'Appointment',
     },
+    {
+        url: 'public/offers',
+        resource: 'PublicOffer',
+    },
+    {
+        url: 'public/clinics',
+        resource: 'PublicClinic',
+    },
+    {
+        url: 'public/services',
+        resource: 'PublicService',
+    },
+    {
+        url: 'public/categories',
+        resource: 'PublicCategory',
+    },
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

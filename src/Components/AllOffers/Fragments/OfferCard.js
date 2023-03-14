@@ -1,27 +1,35 @@
 import React from "react";
 import {Avatar, Button, Col, Divider, Rate, Space} from "antd";
 import {UserOutlined} from "@ant-design/icons";
+import off_image_1 from "../../../dist/Img/off_image_1.jpg";
+import {useNavigate} from "react-router";
 
-function OfferCard({el}) {
+function OfferCard({data, id}) {
+    const navigate = useNavigate()
+    const onBookNow = () => {
+        navigate(`/all-offers/${id}`)
+    }
+
+    console.log(id)
     return(
         <Col lg={8} >
             <div className={'offer_card'}>
                 <div className={'offer_card_image_div'}>
-                    {el?.image}
+                    <img src={off_image_1} alt={'off_image_1'} className={'offer_card_image'}/>
                     <div style={{width:'100%', display: 'flex', flexDirection: 'row', justifyContent: 'right'}} >
                         <div className={'offer_card_percent'}>
-                            50%
+                            {(100 - (data?.new_price *100 / data?.old_price)).toFixed(1)}%
                         </div>
                     </div>
                     <div className={'offer_card_big_text'}>
-                        Long name of offer name will be placed here
+                        {data?.title}
                     </div>
                     <div className={'offer_card_smoll_text'}>
-                        5 Test Hair Fall Package
+                        {data?.category?.name}
                     </div>
                     <div className={'offer_card_stars'}>
-                        <Rate disabled value={5} />
-                        <span style={{marginLeft:10}}>32 Reviews</span>
+                        <Rate disabled value={+data?.avg_rating} />
+                        <span style={{marginLeft:10}}>{data?.rating_count} Reviews</span>
                     </div>
                     <div align={'center'} >
                         <div style={{width: '90%'}}>
@@ -32,7 +40,7 @@ function OfferCard({el}) {
                         <Space >
                             <Avatar size={50} icon={<UserOutlined />} />
                             <div style={{display:"block"}}>
-                                <h2 style={{fontWeight: 600}}>Clinic Name here</h2>
+                                <h2 style={{fontWeight: 600}}>{data?.clinic?.name}</h2>
                                 <div  className={'offer_card_smoll_text1'}>King Fahd Rd, Al Olaya, Riyadh</div>
                             </div>
 
@@ -47,14 +55,14 @@ function OfferCard({el}) {
                         <div className={'off_card_price_btn'}>
                             <Space >
                                 <div style={{display:"block"}}>
-                                    <h2 style={{fontWeight: 600}}>369 SAR</h2>
+                                    <h2 style={{fontWeight: 600}}>{data?.new_price} SAR</h2>
                                     <div>
-                                        <span style={{fontSize: 14, }}>562 SAR</span><span style={{marginLeft: 10, color:'#CD499B'}}>Save 223 SAR</span>
+                                        <span style={{fontSize: 14, }}>{data?.old_price} SAR</span><span style={{marginLeft: 20, color:'#CD499B'}}>Save {data?.old_price - data?.new_price} SAR</span>
                                         <div className={'line'}></div>
                                     </div>
                                 </div>
                             </Space>
-                            <Button size={'large'} type={'primary'}>Book now</Button>
+                            <Button size={'large'} type={'primary'} onClick={onBookNow}>Book now</Button>
                         </div>
 
                     </div>

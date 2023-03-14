@@ -62,7 +62,7 @@ function Coupon() {
    const onChange = (checked) => {
        setSwitchState(checked)
    }
-console.log(switchState)
+
     return(
         <div >
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing - ${data?.name}`)}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new Coupon`)}</h3>}

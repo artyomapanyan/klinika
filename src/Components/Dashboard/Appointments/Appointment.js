@@ -287,10 +287,12 @@ function Appointment() {
         }
     },[data?.clinic_id])
 
+
+
+
     useEffect(() => {
         if(data?.appointment_date) {
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic','single', token, data?.doctor_id + "/" + data?.clinic_id, {service:data?.service_type, date:data?.appointment_date.format('YYYY-MM-DD')}).then((responce) => {
-               console.log(responce, 'res')
                 // setAvailableTimesState(responce.map((el) => {
                 //     return {
                 //         label: 'Break Time',
@@ -329,9 +331,6 @@ function Appointment() {
         })
     }, [data?.specialty_id])
 */
-
-
-
 
     const onFinish = (values) => {
         values.dob = values.dob.format('YYYY-MM-DD')
@@ -375,7 +374,7 @@ function Appointment() {
 
     return(
         <div >
-            {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
+            <h3 className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>
             {loading ? <Preloader/> : <Form
                 onValuesChange={handleValuesChange}
                 name="edit"

@@ -7,6 +7,7 @@ import Reset from "./Auth/Reset";
 import Forgot from "./Auth/Forgot";
 import Login from "./Auth/Login/Login";
 import AllOffers from "./AllOffers/AllOffers";
+import OfferBook from "./AllOffers/OfferBook/OfferBook";
 
 function AppRoutes(){
     return(<Routes>
@@ -16,6 +17,7 @@ function AppRoutes(){
                 <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
                 <Route path={'login'} element={<Login/>}></Route>
                 <Route path={'all-offers'} element={<AllOffers/>}></Route>
+                <Route path={'all-offers/:id'} element={<OfferBook/>}></Route>
 
             </Routes>
 

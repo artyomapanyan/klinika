@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
 
-export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll) => {
+export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll, additionalResources = {}) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
@@ -14,6 +14,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
             last_page:1
         }
     })
+    const [addData, setAddData] = useState({})
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
         if(resource && !resourceData){
@@ -21,30 +22,47 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                 return;
             }
             setLoading(true)
-            axios.request({
-                url:api[resource].list.url,
-                method:api[resource].list.method,
-                params:params,
-                headers: {
-                    'Authorization': token,
-                }
-            }).then(response=>{
-                if(response){
+            let dataResources  =Object.keys(additionalResources);
+            Promise.all([
+                axios.request({
+                    url:api[resource].list.url,
+                    method:api[resource].list.method,
+                    params:params,
+                    headers: {
+                        'Authorization': token,
+                    }
+                }),
+                ...dataResources.map(resourceKey=>axios.request({
+                    url:api[resourceKey].list.url,
+                    method:api[resourceKey].list.method,
+                    params:additionalResources[resourceKey],
+                    headers: {
+                        'Authorization': token,
+                    }
+                }))
+
+            ]).then(responses=>{
+                if(responses[0]){
                     if(getAll){
-                        getAll(response.items)
+                        getAll(responses[0].items)
                     }
                     setData({
-                        items:response.items,
+                        items:responses[0].items,
                         pagination:{
                             pageSize:15,
-                            current:response.current_page,
-                            total:response.total_items,
-                            last_page:response.last_page
+                            current:responses[0].current_page,
+                            total:responses[0].total_items,
+                            last_page:responses[0].last_page
                         }
                     })
+                    if(dataResources.length){
+                        let dataObj = {}
+                        dataResources.forEach((e,key)=>{
+                            dataObj[e] = responses[key+1]
+                        })
+                        setAddData(dataObj)
+                    }
                 }
-
-
             }).finally(()=>{
                 setLoading(false)
             })
@@ -71,10 +89,11 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
         setData
     }
 
-    return {loadingState,dataState}
+
+
+    return {loadingState,dataState, addData}
 }
-export const useGetResourceSingle = (resource,id,additionals={
-},filterResponse = null)=>{
+export const useGetResourceSingle = (resource,id,additionals={},filterResponse = null)=>{
     const [loading, setLoading] = useState(true)
     const [data,setData] = useState({})
     const [addData,setAddData] = useState({})

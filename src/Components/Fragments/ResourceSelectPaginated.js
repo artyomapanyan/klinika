@@ -31,15 +31,13 @@ function ResourceSelectPaginated({
   const {loading} = loadingState;
   const {data} = dataState;
 
-    // useEffect(()=>{
-    //     if(JSON.stringify(resourceParams)!==JSON.stringify(params)){
-    //         console.log(JSON.stringify(resourceParams),JSON.stringify(params))
-    //         console.log(resourceParams,resource)
-    //         setParams(resourceParams)
-    //     }
-    //
-    //
-    // },[resourceParams])
+    useEffect(()=>{
+        if(JSON.stringify(resourceParams)!==JSON.stringify(params)){
+            setParams(resourceParams)
+        }
+
+
+    },[resourceParams])
   const handleGenerateOptions = (data) => {
     return data.map((item, key) => {
       let name = item.name ?? item.title
@@ -69,10 +67,10 @@ function ResourceSelectPaginated({
       if (timeout.current) {
         clearTimeout(timeout.current)
       }
-      if (data.pagination.last_page >= params.page + 1) {
+      if (data.pagination.last_page >= (params.page??1) + 1) {
         timeout.current = setTimeout(() => {
           setParams({
-            ...params, page: params.page + 1
+            ...params, page: (params.page??1)+ 1
           })
 
         }, 300)

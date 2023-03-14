@@ -58,7 +58,6 @@ function WorkingHours({onFinish, data, loading, type, modalId, syncable, isDocto
     Object.keys(values.working_hours).forEach(key => {
       working_hours = [...working_hours, ...values.working_hours[key]]
     })
-    console.log(working_hours,'first')
     values.working_hours = working_hours.map(e => {
       if(e.is_day_off!==undefined){
         e.is_day_off = !e.is_day_off
@@ -68,7 +67,6 @@ function WorkingHours({onFinish, data, loading, type, modalId, syncable, isDocto
 
       return e
     })
-    console.log(working_hours,values.working_hours)
     values.service = type;
 
     onFinish(values, prevValues)
