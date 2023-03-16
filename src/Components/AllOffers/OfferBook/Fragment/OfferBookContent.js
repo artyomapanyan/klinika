@@ -1,14 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 import clinic1 from "../../../../dist/Img/clinic1.jpg";
 import {Avatar, Button, Divider, Rate, Space, Badge, Tag} from "antd";
 import {RightOutlined, UserOutlined} from "@ant-design/icons";
 import "../../AllOffers.sass";
+import OfferBookDetails from "./OfferBookDetails";
+import {postResource, useGetResourceSingle} from "../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import {useParams} from "react-router";
+import BookAnAppointment from "./BookAnAppointment";
 
 function OfferBookContent() {
+    const params = useParams();
+    const {loadingState, dataState} = useGetResourceSingle('Offer', params.id)
+    const {data, setData} = dataState;
+    const {loading, setLoading} = loadingState
+
+
+    console.log(data)
+
     return (
         <div className={'offer_book_card'}>
             <div className={'offer_book_card_image_div'}>
-                <Badge.Ribbon text="50.0%" color={'red'} style={{marginTop:'30%', height: 60, width:150, fontWeight:700, fontSize: 32, display:'flex',  alignItems:"center"}}>
+                <Badge.Ribbon text="50.0%" color={'red'} style={{marginTop:'28%', height: 60, width:150, fontWeight:700, fontSize: 32, display:'flex',  alignItems:"center"}}>
                 <img src={clinic1} alt={'clinic1'} className={'offer_card_image'}/>
                 </Badge.Ribbon>
                 <div className={'avatar_and_price_div'}>
@@ -48,9 +61,19 @@ function OfferBookContent() {
                 </div>
 
                 <div align={'center'} >
-                        <Divider style={{background:'#aaa6ab'}}/>
+                    <div className={'purple_text'}>Offer Details</div>
+                        <Divider style={{background:'#e3e0e3'}}/>
                 </div>
-
+                <div style={{width: '100%'}}>
+                    <OfferBookDetails data={data} />
+                </div>
+                <div align={'center'} >
+                    <div className={'purple_text'} >Book an appointment</div>
+                    <Divider style={{background:'#e3e0e3'}}/>
+                </div>
+                <div className={'app_border_div'}>
+                    <BookAnAppointment />
+                </div>
             </div>
         </div>
     )

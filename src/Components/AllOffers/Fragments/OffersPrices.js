@@ -3,7 +3,7 @@ import {Button, Col, Dropdown, Input, Row, Slider, Space} from "antd";
 import {DownOutlined, FunnelPlotOutlined, InsertRowRightOutlined, SearchOutlined} from "@ant-design/icons";
 import {t} from "i18next";
 
-function OffersPrices({clinics, setParams, params}) {
+function OffersPrices({clinics, setParams, params, data, setResetState, resetState}) {
     const [lowHighState, setLowHighState] = useState(false)
 
     const items = clinics?.map((el) => {
@@ -16,19 +16,29 @@ function OffersPrices({clinics, setParams, params}) {
     const onClick = ({key}) => {
         setParams({
             ...params,
-            clinic_id: key
+            clinic: key
         })
     };
 
     const onReset = () => {
+        setResetState(true)
         setParams({})
+        setTimeout(() => {
+            setResetState(false)
+        }, 100)
     }
 
     const changeInputSearch = (e) => {
-        setParams({
-            ...params,
-            offer_name: e?.target?.value
-        })
+        if(e?.target?.value?.length >= 3) {
+            setTimeout(() => {
+                setParams({
+                    ...params,
+                    title: e?.target?.value
+                })
+            }, 500)
+
+        }
+
     }
     const onLowHigh = () => {
         setLowHighState(!lowHighState)
@@ -36,19 +46,19 @@ function OffersPrices({clinics, setParams, params}) {
             setParams(
                 {
                     ...params,
-                    low_high: "low_to_high"
+                    order: 'desc'
                 }
             )
         } else {
             setParams(
                 {
                     ...params,
-                    low_high: "high_to_low"
+                    order: "asc"
                 }
             )
         }
     }
-
+console.log(data)
 
     return(
         <Row className={'filter_div'}>
@@ -58,26 +68,23 @@ function OffersPrices({clinics, setParams, params}) {
                         Price:
                     </div>
                     <div className={'price_text'}>
-                        {params?.prices?.min ?? 0} SAR
+                        {params?.min_price ?? 0} SAR
                     </div>
                     <div className={'price_text'}>
                         -
                     </div>
                     <div className={'price_text'}>
-                        {params?.prices?.max ?? 10000} SAR
+                        {params?.max_price ?? 5000} SAR
                     </div>
                 </div>
                 <div style={{width:'100%'}} align={'right'}>
                     <div className={'slider_div'} >
-                        <Slider range defaultValue={[0, 10000]}
-                                max={10000}
+                        <Slider range defaultValue={[0, 5000]}
+                                max={5000}
                                 onAfterChange={([val1, val2]) => setParams({
                                     ...params,
-                                    prices : {
-                                        min: val1,
-                                        max: val2
-                                    }
-
+                                    min_price: val1,
+                                    max_price: val2
                                 })}
                         />
                     </div>
@@ -108,8 +115,8 @@ function OffersPrices({clinics, setParams, params}) {
 
                     >
                         <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                            <div style={{marginLeft:10, fontSize:14}}>{params?.clinic_id ? items?.find((el) => {
-                                return el?.key === +params?.clinic_id})?.label : `All Clinics (${clinics?.length})`}</div>
+                            <div style={{marginLeft:10, fontSize:14}}>{params?.clinic ? items?.find((el) => {
+                                return el?.key === +params?.clinic})?.label : `All Clinics (${clinics?.length})`}</div>
                             <div><DownOutlined style={{color:'#ce4e99'}}/></div>
                         </Space>
 

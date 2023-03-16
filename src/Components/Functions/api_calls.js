@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
 
-export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll, additionalResources = {}) => {
+export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll, additionalResources = {},pushToParams=false) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
@@ -14,6 +14,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
             last_page:1
         }
     })
+    const [isSecondCall,setIsSecondCall] = useState(false);
     const [addData, setAddData] = useState({})
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
@@ -32,14 +33,14 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                         'Authorization': token,
                     }
                 }),
-                ...dataResources.map(resourceKey=>axios.request({
+                ...(!isSecondCall?dataResources.map(resourceKey=>axios.request({
                     url:api[resourceKey].list.url,
                     method:api[resourceKey].list.method,
                     params:additionalResources[resourceKey],
                     headers: {
                         'Authorization': token,
                     }
-                }))
+                })):[])
 
             ]).then(responses=>{
                 if(responses[0]){
@@ -55,7 +56,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                             last_page:responses[0].last_page
                         }
                     })
-                    if(dataResources.length){
+                    if(dataResources.length && !isSecondCall){
                         let dataObj = {}
                         dataResources.forEach((e,key)=>{
                             dataObj[e] = responses[key+1]
@@ -65,6 +66,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                 }
             }).finally(()=>{
                 setLoading(false)
+                setIsSecondCall(true)
             })
         }else if(resourceData){
             setData({

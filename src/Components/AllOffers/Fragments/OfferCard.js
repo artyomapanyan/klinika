@@ -10,7 +10,6 @@ function OfferCard({data, id}) {
         navigate(`/all-offers/${id}`)
     }
 
-    console.log(id)
     return(
         <Col lg={8} >
             <div className={'offer_card'}>
