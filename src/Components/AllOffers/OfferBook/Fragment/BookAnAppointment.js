@@ -1,7 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button, Divider} from "antd";
+import AppDoctor from "./AppDoctor";
+import AppDate from "./AppDate";
+import AppTime from "./AppTime";
+import AppPersonalDetails from "./AppPersonalDetails";
 
 function BookAnAppointment() {
+    const [dataState, setDataState] = useState({});
+
     return(
         <div className={'app_big_div'}>
             <div className={'app_title'}>
@@ -14,13 +20,23 @@ function BookAnAppointment() {
                 <Divider style={{background: '#e3e0e3'}}/>
             </div>
             <div className={'app_content'}>
-
+                <div className={'app_doctor'}>
+                    <AppDoctor setDataState={setDataState} dataState={dataState}/>
+                </div>
+                <div className={'app_doctor'}>
+                    <AppDate setDataState={setDataState} dataState={dataState}/>
+                </div>
+                <div className={'app_doctor'}>
+                    <AppTime setDataState={setDataState} dataState={dataState}/>
+                </div>
+                <div className={'app_doctor'}>
+                    <AppPersonalDetails setDataState={setDataState} dataState={dataState}/>
+                </div>
             </div>
             <Divider style={{background: '#e3e0e3'}}/>
             <div className={'app_btn_div'}>
                 <Button size={'large'} type={'primary'}>Book Now</Button>
             </div>
-
         </div>
     )
 }

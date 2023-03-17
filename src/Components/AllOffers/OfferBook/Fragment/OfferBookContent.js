@@ -21,7 +21,7 @@ function OfferBookContent() {
     return (
         <div className={'offer_book_card'}>
             <div className={'offer_book_card_image_div'}>
-                <Badge.Ribbon text="50.0%" color={'red'} style={{marginTop:'28%', height: 60, width:150, fontWeight:700, fontSize: 32, display:'flex',  alignItems:"center"}}>
+                <Badge.Ribbon text={`${(100 - (data?.new_price *100 / data?.old_price)).toFixed(1)}%`} color={'red'} style={{marginTop:'300px', height: 60, width:150, fontWeight:700, fontSize: 32, display:'flex',  alignItems:"center"}}>
                 <img src={clinic1} alt={'clinic1'} className={'offer_card_image'}/>
                 </Badge.Ribbon>
                 <div className={'avatar_and_price_div'}>
@@ -44,13 +44,14 @@ function OfferBookContent() {
                         <div>
                             <Tag color="#63183e" style={{marginBottom:-5, marginLeft:15, fontWeight:600}}>Save 50%</Tag>
                             <div className={'price_div'}>
-                                <div>
+                                <div style={{marginTop:8}}>
                                     <div className={'line'}></div>
-                                    <span style={{fontSize: 14}}>300.00 SAR</span><span style={{marginLeft: 10, color:'#ffffff'}}>150 SAR</span>
+                                    <span style={{fontSize: 20}}>{data?.old_price}.0</span> <span style={{fontSize: 12}}>SAR</span><span style={{marginLeft: 10, color:'#ffffff', fontSize: 20}}>{data?.new_price}.0</span><span style={{fontSize: 12}}>SAR</span>
 
                                 </div>
                                 <Divider type={'vertical'} style={{backgroundColor: '#ffffff', height: 25}} />
                                 <div style={{display: 'flex'}}>
+
                                     <div>Claim Now</div>
                                     <RightOutlined />
                                 </div>

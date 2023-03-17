@@ -229,6 +229,7 @@ function Appointment() {
 
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
+    const [availableDateState, setAvailableDateState] = useState([])
 
 
 
@@ -288,49 +289,47 @@ function Appointment() {
     },[data?.clinic_id])
 
 
+useEffect(() => {
+    if(data?.doctor_id) {
+        postResource('ClinicDoctorWorkingHours','single', token, data?.doctor_id, {service:data?.service_type}).then(responses => {
+            const res = responses?.working_hours
+            let day = [];
+            let a = Object.values(res)?.map((el, i) => {
+                return el.filter((el1) => el1.is_day_off ===true)
+            }).map((el, i) => {
+                if (el.length > 0) {
+                    day.push(i+1)
+                }
+            })
+            setAvailableDateState(day)
 
+        })
+    }
+}, [data?.doctor_id])
+
+    //console.log(availableDateState,'av')
 
     useEffect(() => {
         if(data?.appointment_date) {
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic','single', token, data?.doctor_id + "/" + data?.clinic_id, {service:data?.service_type, date:data?.appointment_date.format('YYYY-MM-DD')}).then((responce) => {
-                // setAvailableTimesState(responce.map((el) => {
-                //     return {
-                //         label: 'Break Time',
-                //         options: el.map((el1) => {
-                //             return {
-                //                 lebel: el1,
-                //                 value: el1
-                //             }
-                //         })
-                //     }
-                // }))
+               // console.log(responce,'iiiiiiiiiiiiiiiiiiii')
+                setAvailableTimesState(responce.map((el) => {
+                    return {
+                        label: 'Break Time',
+                        options: el.map((el1) => {
+                            return {
+                                lebel: el1,
+                                value: el1
+                            }
+                        })
+                    }
+                }))
             })
         }
 
     }, [data?.appointment_date, data?.doctor_id])
 
 
-/*
-    useEffect(() => {
-        setLoad(true)
-        postResource('ClinicDoctor','list', token, null, {per_page:5000} ).then(responses => {
-
-            setClinicDoctorsState(
-                responses?.items?.filter((el) => {
-                return el?.clinic?.id === data?.clinic_id && el?.specialty_ids?.includes(data?.specialty_id)
-            }))
-            setDoctorState(clinicDoctorsState.map((el) => {
-                return{
-                    name: el?.doctor?.first,
-                    id: el?.id
-                }
-            }))
-
-            setLoad(false)
-
-        })
-    }, [data?.specialty_id])
-*/
 
     const onFinish = (values) => {
         values.dob = values.dob.format('YYYY-MM-DD')
@@ -365,8 +364,7 @@ function Appointment() {
         return [name,item]
     }
     const disabledDate = (current) => {
-        const disabledDates = [0,2]
-         return current.add(1,'day') < dayjs().endOf('date') || current.add(-3,'month') > dayjs().endOf('date') || current.add(1,'day') < dayjs().day(1) || disabledDates.includes(current.day())};
+         return current.add(1,'day') < dayjs().endOf('date') || current.add(-3,'month') > dayjs().endOf('date') || current.add(1,'day') < dayjs().day(1) || availableDateState.includes(current.day())};
 
 
 
