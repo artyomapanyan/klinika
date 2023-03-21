@@ -307,12 +307,12 @@ useEffect(() => {
     }
 }, [data?.doctor_id])
 
-    //console.log(availableDateState,'av')
+
 
     useEffect(() => {
         if(data?.appointment_date) {
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic','single', token, data?.doctor_id + "/" + data?.clinic_id, {service:data?.service_type, date:data?.appointment_date.format('YYYY-MM-DD')}).then((responce) => {
-               // console.log(responce,'iiiiiiiiiiiiiiiiiiii')
+
                 setAvailableTimesState(responce.map((el) => {
                     return {
                         label: 'Break Time',
@@ -364,7 +364,8 @@ useEffect(() => {
         return [name,item]
     }
     const disabledDate = (current) => {
-         return current.add(1,'day') < dayjs().endOf('date') || current.add(-3,'month') > dayjs().endOf('date') || current.add(1,'day') < dayjs().day(1) || availableDateState.includes(current.day())};
+         return current.add(1,'day') < dayjs().endOf('date') || current.add(-3,'month') > dayjs().endOf('date') || current.add(1,'day') < dayjs().day(1) || availableDateState.includes(current.day())
+    };
 
 
 

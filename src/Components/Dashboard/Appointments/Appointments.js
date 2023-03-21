@@ -112,7 +112,6 @@ function Appointments() {
                         title:t('Offer'),
                         key:'offer',
                         render:(e, record)=> {
-                            console.log(record)
                             return<div>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</div>
                         }
                     },

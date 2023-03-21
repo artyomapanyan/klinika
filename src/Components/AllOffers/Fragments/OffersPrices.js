@@ -58,7 +58,7 @@ function OffersPrices({clinics, setParams, params, data, setResetState, resetSta
             )
         }
     }
-console.log(data)
+
 
     return(
         <Row className={'filter_div'}>

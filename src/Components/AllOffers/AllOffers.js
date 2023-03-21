@@ -25,7 +25,6 @@ function AllOffers() {
 
     const {loadingState, dataState, addData} = useGetResourceIndex('PublicOffer', params,false,false,false,false, {
         PublicClinic:{per_page:5000},
-        //PublicService:{},
         PublicCategory:{},
         })
 

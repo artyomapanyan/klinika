@@ -1,11 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import clinic1 from "../../../../dist/Img/clinic1.jpg";
 import {Avatar, Button, Divider, Rate, Space, Badge, Tag} from "antd";
 import {RightOutlined, UserOutlined} from "@ant-design/icons";
 import "../../AllOffers.sass";
 import OfferBookDetails from "./OfferBookDetails";
-import {postResource, useGetResourceSingle} from "../../../Functions/api_calls";
-import {useSelector} from "react-redux";
+import {useGetResourceSingle} from "../../../Functions/api_calls";
 import {useParams} from "react-router";
 import BookAnAppointment from "./BookAnAppointment";
 
@@ -15,8 +14,7 @@ function OfferBookContent() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
 
-
-    console.log(data)
+console.log(data, 'data')
 
     return (
         <div className={'offer_book_card'}>
@@ -27,7 +25,7 @@ function OfferBookContent() {
                 <div className={'avatar_and_price_div'}>
                     <div className={'offer_card_avatar'}>
                         <Space >
-                            <Avatar shape="square" size={130} icon={<UserOutlined />} style={{marginTop:-40, background:'grey'}}/>
+                            <Avatar shape="square" size={130} src={<img src={data?.logo?.url} />} style={{marginTop:-40, background:'grey'}}/>
                             <div style={{display:"block"}}>
                                 <h2 style={{fontWeight: 600}}>Fractional Laser Session</h2>
                                 <div>
@@ -42,7 +40,7 @@ function OfferBookContent() {
 
                     <div className={'big_price_div'}>
                         <div>
-                            <Tag color="#63183e" style={{marginBottom:-5, marginLeft:15, fontWeight:600}}>Save 50%</Tag>
+                            <Tag color="#63183e" style={{marginBottom:-5, marginLeft:15, fontWeight:600}}>Save {(100 - (data?.new_price *100 / data?.old_price)).toFixed(1)}%</Tag>
                             <div className={'price_div'}>
                                 <div style={{marginTop:8}}>
                                     <div className={'line'}></div>

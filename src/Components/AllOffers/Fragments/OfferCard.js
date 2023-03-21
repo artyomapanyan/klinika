@@ -7,14 +7,22 @@ import {useNavigate} from "react-router";
 function OfferCard({data, id}) {
     const navigate = useNavigate()
     const onBookNow = () => {
-        navigate(`/all-offers/${id}`)
+        navigate(`/offers/${id}`)
     }
+
 
     return(
         <Col lg={8} >
             <div className={'offer_card'}>
                 <div className={'offer_card_image_div'}>
-                    <img src={off_image_1} alt={'off_image_1'} className={'offer_card_image'}/>
+                    <div className={'offer_card_image'}>
+                        <img src={data?.logo ? data?.logo?.url : off_image_1} alt={"image"} className={'offer_card_image'}
+                            onError={({ currentTarget }) => {
+                            currentTarget.onerror = null; // prevents looping
+                            currentTarget.src=off_image_1;}}
+                             />
+                    </div>
+
                     <div style={{width:'100%', display: 'flex', flexDirection: 'row', justifyContent: 'right'}} >
                         <div className={'offer_card_percent'}>
                             {(100 - (data?.new_price *100 / data?.old_price)).toFixed(1)}%
@@ -37,10 +45,12 @@ function OfferCard({data, id}) {
                     </div>
                     <div className={'offer_card_avatar'}>
                         <Space >
-                            <Avatar size={50} icon={<UserOutlined />} />
+                            <Avatar size={50} src={<img src={data?.clinic?.logo?.url} alt="avatar" onError={({ currentTarget }) => {
+                                currentTarget.onerror = null; // prevents looping
+                                currentTarget.src=off_image_1;}}  />}  />
                             <div style={{display:"block"}}>
                                 <h2 style={{fontWeight: 600}}>{data?.clinic?.name}</h2>
-                                <div  className={'offer_card_smoll_text1'}>King Fahd Rd, Al Olaya, Riyadh</div>
+                                <div  className={'offer_card_smoll_text1'}>{data?.clinic?.location?.address1}</div>
                             </div>
 
                         </Space>

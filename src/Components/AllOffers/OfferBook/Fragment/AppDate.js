@@ -109,12 +109,14 @@ function AppDate({setDataState, dataState}) {
                         <Slider {...settings}>
                             {
                                 date.map((el) => {
-                                    return <div key={el.key} onClick={onDate} style={{width:100}} className={'date_div'} align={'center'}>
-                                        <div style={{fontSize:12, color:'gray'}}>Fri</div>
-                                        <Space>
-                                            <CalendarOutlined style={{color:'gray'}}/>
-                                            {el.content}
-                                        </Space>
+                                    return <div key={el.key} onClick={onDate} style={{width:50}} className={'date_div'} align={'center'}>
+                                        <div className={'date_div_inn'}>
+                                            <div style={{fontSize:12, color:'gray'}}>Fri</div>
+                                            <Space>
+                                                <CalendarOutlined style={{color:'gray'}}/>
+                                                {el.content}
+                                            </Space>
+                                        </div>
                                     </div>
                                 })
                             }

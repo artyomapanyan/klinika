@@ -108,10 +108,12 @@ function AppTime({setDataState, dataState}) {
                             {
                                 date.map((el) => {
                                     return <div key={el.key} onClick={onTime} style={{width:100}} className={'date_div'} align={'center'}>
-                                        <Space>
-                                            <ClockCircleOutlined style={{color:'gray'}}/>
-                                            {el.content}
-                                        </Space>
+                                        <div style={{padding:15}} className={'date_div_inn'}>
+                                            <Space>
+                                                <ClockCircleOutlined style={{color:'gray'}}/>
+                                                {el.content}
+                                            </Space>
+                                        </div>
                                     </div>
                                 })
                             }

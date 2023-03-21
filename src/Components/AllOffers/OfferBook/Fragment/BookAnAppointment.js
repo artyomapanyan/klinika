@@ -4,6 +4,7 @@ import AppDoctor from "./AppDoctor";
 import AppDate from "./AppDate";
 import AppTime from "./AppTime";
 import AppPersonalDetails from "./AppPersonalDetails";
+import AppPaymentMethods from "./AppPaymentMethods";
 
 function BookAnAppointment() {
     const [dataState, setDataState] = useState({});
@@ -31,6 +32,9 @@ function BookAnAppointment() {
                 </div>
                 <div className={'app_doctor'}>
                     <AppPersonalDetails setDataState={setDataState} dataState={dataState}/>
+                </div>
+                <div className={'app_doctor'}>
+                    <AppPaymentMethods setDataState={setDataState} dataState={dataState}/>
                 </div>
             </div>
             <Divider style={{background: '#e3e0e3'}}/>

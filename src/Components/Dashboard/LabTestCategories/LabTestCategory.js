@@ -33,7 +33,7 @@ function LabTestCategory() {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
                     setData(response)
-                    navigate(resourceLinks[resource])
+                    navigate(`${resourceLinks[resource]}?lab=tests_category`)
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -41,7 +41,7 @@ function LabTestCategory() {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(`${resourceLinks[resource]}?lab=tests_category`)
                 }
 
             }).finally(() => {
@@ -73,7 +73,7 @@ function LabTestCategory() {
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Popconfirm
                         title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        onConfirm={() => navigate(`${resourceLinks[resource]}?lab=tests_category`) }
                         okText={t("Yes")}
                         cancelText={t("No")}
                         icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
