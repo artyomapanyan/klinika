@@ -6,7 +6,7 @@ import {PushpinOutlined} from "@ant-design/icons";
 
 
 
-function MyMapComponent({data, setMapData}) {
+function MyMapComponent({data, setMapData, setAddress,formRef}) {
     const googleRef = useRef();
     const [autocomplete, setAutocomplete] = useState()
     const [initialPosition,setInitialPosition] = useState({ lat: +data.latitude, lng: +data.longitude })
@@ -23,20 +23,28 @@ function MyMapComponent({data, setMapData}) {
     };
     function onSetMarkerPosition(latLng) {
         let geocoder =  new window.google.maps.Geocoder();
-
+        setTimeout(() => {
             geocoder?.geocode({'latLng': marker.getPosition()}, function (results, status) {
                 if (results[0]) {
-                    console.log(results)
+                    console.log(formRef.current,results[0]?.formatted_address,formRef.current.getFieldsValue())
+                    formRef.current.setFieldValue('address',results[0]?.formatted_address)
+
                 }
             });
-
-
-
+        }, 50)
     }
     const onLoad = (autocomplete) => {
         setAutocomplete(autocomplete)
     }
     const onDragMarker = (pos) => {
+        let geocoder =  new window.google.maps.Geocoder();
+        setTimeout(() => {
+            geocoder?.geocode({'latLng': marker.getPosition()}, function (results, status) {
+                if (results[0]) {
+                    setAddress(results[0]?.formatted_address)
+                }
+            });
+        }, 50)
         setInitialPosition(pos.latLng)
         setMapData(pos.latLng)
     }
@@ -77,43 +85,46 @@ function MyMapComponent({data, setMapData}) {
     const uluru = { lat: 24.845909101072877, lng: 39.569421557617204 }
 
     return(
+        <div>
 
-        <LoadScript
-            id="script-loader"
-            googleMapsApiKey={apiKey}
-            //language={this.props.state.Intl.locale}
-            libraries={['places']}
-        >
-
-            <GoogleMap
-                ref={googleRef}
-                id="position-map"
-                center={data ? initialPosition : uluru}
-                zoom={11}
-                onLoad={onLoadMap}
-                onClick={onClickMap}
-                options={{
-                    mapTypeControl: false,
-                    streetViewControl: false,
-                    rotateControl: false,
-                }}
-
+            <LoadScript
+                id="script-loader"
+                googleMapsApiKey={apiKey}
+                //language={this.props.state.Intl.locale}
+                libraries={['places']}
             >
-               <Autocomplete
-                     onLoad={onLoad}
-                     onPlaceChanged={onPlaceChanged}
-                >
-                    <Input addonAfter={<PushpinOutlined onClick={onCurrentPosition} />} />
-                </Autocomplete>
 
-                <Marker
-                    onMouseUp={onDragMarker}
-                    onLoad={onLoadMarker}
-                    draggable
-                    position={initialPosition}
-                />
-            </GoogleMap>
-        </LoadScript>
+                <GoogleMap
+                    ref={googleRef}
+                    id="position-map"
+                    center={data ? initialPosition : uluru}
+                    zoom={11}
+                    onLoad={onLoadMap}
+                    onClick={onClickMap}
+                    options={{
+                        mapTypeControl: false,
+                        streetViewControl: false,
+                        rotateControl: false,
+                    }}
+
+                >
+                    <Autocomplete
+                        onLoad={onLoad}
+                        onPlaceChanged={onPlaceChanged}
+                    >
+                        <Input />
+                    </Autocomplete>
+
+                    <Marker
+                        onMouseUp={onDragMarker}
+                        onLoad={onLoadMarker}
+                        draggable
+                        position={initialPosition}
+                    />
+                </GoogleMap>
+            </LoadScript>
+        </div>
+
 
     )
 

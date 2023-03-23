@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {AutoComplete, Button, Col, Form, Popconfirm, Row, Space, Switch} from "antd";
+import {AutoComplete, Button, Col, Form, Input, Popconfirm, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -33,6 +33,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [mapData, setMapData] = useState({})
+    const [address, setAddress] = useState('')
 
 
     const onFinish = (values) => {
@@ -193,12 +194,13 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 <div className={'add_edit_content'}>
                     <Row gutter={[16, 16]}>
                         <Col lg={16} className="gutter-row">
-                            <FormInput label={t('Latitude')} inputValue={Object.keys(mapData).length === 0 ? data?.latitude : mapData?.lat()} name={'latitude'} initialValue={data?.latitude} />
-                            <FormInput label={t('Longitude')} inputValue={Object.keys(mapData).length === 0 ? data?.longitude : mapData?.lng()} name={'longitude'} initialValue={data?.longitude} />
+                            <FormInput label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} />
+                            <FormInput label={t('Longitude')}  name={'longitude'} initialValue={data?.longitude} />
+
                         </Col>
                         <Col lg={8} className="gutter-row">
 
-                                <MyMapComponent data={data} setMapData={setMapData} />
+                                <MyMapComponent formRef={formRef} data={data} setMapData={setMapData} setAddress={setAddress}/>
                         </Col>
                     </Row>
                 </div>

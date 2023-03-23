@@ -4,12 +4,21 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import {t} from "i18next";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
+import {useNavigate} from "react-router";
 
 const resource='Clinic';
 function Clinics() {
+    const navigate = useNavigate()
+
     return(
         <div>
-            <ResourceTable resource={resource} eyeShow={true} tableColumns={[
+            <ResourceTable resource={resource} eyeShow={true}
+                           customActions={{
+                               edit:(record)=>{
+                                   navigate(`${record.id}/show`)
+                               }
+                           }}
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

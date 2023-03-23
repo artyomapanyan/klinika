@@ -1,5 +1,5 @@
 
-import {Tabs} from "antd";
+
 import React, {useEffect, useState} from "react";
 import ClinicTabEssentials from "./Fragments/ClinicTabEssentials";
 import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";

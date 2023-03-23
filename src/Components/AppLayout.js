@@ -216,7 +216,7 @@ function AppLayout(){
         {
             url:'clinics',
             resource:'Clinic',
-            //singleComp:<Clinic/>,
+            singleComp:<Clinic/>,
             indexComp:<Clinics/>,
             showComp:<ShowClinic/>
         },
@@ -282,8 +282,8 @@ function AppLayout(){
                     {resourceRoutes.map((item,key)=><Route path={item.url+'/*'} key={key} element={ <Routes>
                         {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}
                         {item.singleComp&&<Route key={key+'_n'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>}
-                        {(item.singleComp || item.showComp)&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.showComp??item.singleComp}</AuthCheck>}/>}
-                        {/*{ item.showComp&& <Route key={key+'_e'} path={`:id/show`} element={<AuthCheck permission={`${item.resource}:show`}>{item.showComp}</AuthCheck>}/>}*/}
+                        {item.singleComp&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>}
+                        {item.showComp&& <Route key={key+'_e'} path={`:id/show`} element={<AuthCheck permission={`${item.resource}:create`}>{item.showComp}</AuthCheck>}/>}
                     </Routes>}/>
 
                         )}
@@ -294,6 +294,7 @@ function AppLayout(){
                     <Route path={'clinic-manager'} element={<ClinicManager />}/>
                     <Route path={'doctor-reworked'} element={<DoctorReworked />}/>
                     <Route path={'super-admin'} element={<SuperAdmin />}/>
+
 
                 </Routes>
             </Content>
