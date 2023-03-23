@@ -9,7 +9,7 @@ const resource='Clinic';
 function Clinics() {
     return(
         <div>
-            <ResourceTable resource={resource} tableColumns={[
+            <ResourceTable resource={resource} eyeShow={true} tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

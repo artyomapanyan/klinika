@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
 import {Button, Col, Form, Popconfirm, Row, Space, Table, Typography, Tooltip} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
-import {DeleteOutlined, EditOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
@@ -21,6 +21,7 @@ function ResourceTable({resource, tableColumns,
                            handleTableBelowData,
                            getAll=false,
                            noHeader=false,
+                           eyeShow=false,
                            customActions,
                            buttonAdd = true,
                             customTableButton
@@ -57,6 +58,7 @@ function ResourceTable({resource, tableColumns,
 
 
     const onResourceEdit = (record) => {
+        console.log(record)
         if(customActions?.edit){
             return customActions.edit(record)
         }
@@ -99,9 +101,10 @@ function ResourceTable({resource, tableColumns,
 
             ...(hideActions?[]:[{
             dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
-                    {!except.edit&&<Tooltip title="Update">
+
+                    {!except.edit ? <Tooltip title="Update">
                     <Button onClick={() => onResourceEdit(record)} size={'small'}><EditOutlined/></Button>
-                </Tooltip>}
+                </Tooltip> :  <div></div>}
                 {!except.delete&&<Tooltip title="Delete">
                     <Popconfirm
                         title={t("Are you sure to delete this entry?")}
@@ -112,6 +115,11 @@ function ResourceTable({resource, tableColumns,
                         <Button size={'small'}><DeleteOutlined/></Button>
                     </Popconfirm>
                 </Tooltip>}
+                    {
+                        eyeShow ? <Tooltip title="Show">
+                            <Button style={{border:'none'}} onClick={() => onResourceEdit(record)} ><EyeOutlined style={{color: '#c98a1e'}} /></Button>
+                        </Tooltip> : <div></div>
+                    }
 
             </Space>
         }])
@@ -168,7 +176,7 @@ function ResourceTable({resource, tableColumns,
 
             </Col>
         </Row>}
-        <Row style={{marginTop:15}}>
+        <Row style={{marginTop:10}}>
             <Col lg={24}>
                 <Form>
                 <Table

@@ -68,6 +68,8 @@ import LabPackagesCategories from "./Dashboard/LabPackagesCategory/LabPackagesCa
 import LabTestCategory from "./Dashboard/LabTestCategories/LabTestCategory";
 import Appointments from "./Dashboard/Appointments/Appointments";
 import Appointment from "./Dashboard/Appointments/Appointment";
+import ShowAppointment from "./Dashboard/Appointments/Fragments/ShowAppointment";
+import ShowClinic from "./Dashboard/Clinics/ShowClinic";
 
 
 function AppLayout(){
@@ -214,8 +216,9 @@ function AppLayout(){
         {
             url:'clinics',
             resource:'Clinic',
-            singleComp:<Clinic/>,
-            indexComp:<Clinics/>
+            //singleComp:<Clinic/>,
+            indexComp:<Clinics/>,
+            showComp:<ShowClinic/>
         },
         {
             url:'offers',
@@ -250,8 +253,9 @@ function AppLayout(){
         {
             url:'appointments',
             resource:'Appointment',
-            singleComp:<Appointment/>,
-            indexComp:<Appointments/>
+            //singleComp:<Appointment/>,
+            indexComp:<Appointments/>,
+            showComp:<ShowAppointment/>
         },
 
 
@@ -278,7 +282,8 @@ function AppLayout(){
                     {resourceRoutes.map((item,key)=><Route path={item.url+'/*'} key={key} element={ <Routes>
                         {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}
                         {item.singleComp&&<Route key={key+'_n'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>}
-                        {item.singleComp&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>}
+                        {(item.singleComp || item.showComp)&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.showComp??item.singleComp}</AuthCheck>}/>}
+                        {/*{ item.showComp&& <Route key={key+'_e'} path={`:id/show`} element={<AuthCheck permission={`${item.resource}:show`}>{item.showComp}</AuthCheck>}/>}*/}
                     </Routes>}/>
 
                         )}

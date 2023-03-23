@@ -13,6 +13,7 @@ function FormInput({
                        resourceSelectStyle,
                        disabled,
                        options,
+                       inputValue,
                        disabledDate,
                        inputType, initialData = [],
                        resource, resourceParams = {},
@@ -20,6 +21,7 @@ function FormInput({
                        inputNumberStyle,
                        resourceData,
                        handleMapItems
+
                    }) {
     if (inputType === 'date') {
         if (initialValue?.iso_string) {
@@ -41,7 +43,7 @@ function FormInput({
         const isRequired= rules?.find(e=>e.required)
         switch (inputType) {
             case 'password':
-                return <CInput isRequired={isRequired} label={label} inputProps={inputProps} type={'password'}/>
+                return <CInput inputValue={inputValue} isRequired={isRequired} label={label} inputProps={inputProps} type={'password'}/>
             case 'date':
                 return <DatePicker   {...inputProps}
                                      format={'DD-MM-YYYY'}
@@ -53,9 +55,9 @@ function FormInput({
                                      style={{width: '100%', height: 48}}
                 />
             case 'textArea':
-                return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps} type={'textArea'}/>
+                return <CTextAreas inputValue={inputValue} isRequired={isRequired} label={label} inputProps={inputProps} type={'textArea'}/>
             case 'number':
-                return <CInput isRequired={isRequired} label={label} inputProps={inputProps} type={'number'}/>
+                return <CInput inputValue={inputValue} isRequired={isRequired} label={label} inputProps={inputProps} type={'number'}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
@@ -80,7 +82,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput isRequired={isRequired} label={label} inputProps={inputProps}/>
+                return <CInput isRequired={isRequired} label={label} inputValue={inputValue} inputProps={inputProps}/>
         }
     }
     let isDate = inputType==='date';

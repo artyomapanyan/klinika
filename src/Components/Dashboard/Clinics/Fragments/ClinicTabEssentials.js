@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {Button, Col, Form, Popconfirm, Row, Space, Switch} from "antd";
+import {AutoComplete, Button, Col, Form, Popconfirm, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -32,6 +32,8 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [mapData, setMapData] = useState({})
+
 
     const onFinish = (values) => {
 
@@ -125,7 +127,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
         return [name,item]
     }
 
-
     return(
         <div >
             {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
@@ -192,13 +193,12 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 <div className={'add_edit_content'}>
                     <Row gutter={[16, 16]}>
                         <Col lg={16} className="gutter-row">
-                            <FormInput label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} />
-                            <FormInput label={t('Longitude')} name={'longitude'} initialValue={data?.longitude} />
+                            <FormInput label={t('Latitude')} inputValue={Object.keys(mapData).length === 0 ? data?.latitude : mapData?.lat()} name={'latitude'} initialValue={data?.latitude} />
+                            <FormInput label={t('Longitude')} inputValue={Object.keys(mapData).length === 0 ? data?.longitude : mapData?.lng()} name={'longitude'} initialValue={data?.longitude} />
                         </Col>
                         <Col lg={8} className="gutter-row">
-                            <Wrapper apiKey="AIzaSyD9MbMz7FESa79v-nntPfcxJHYTw8Am1S4" >
-                                <MyMapComponent data={data} />
-                            </Wrapper>
+
+                                <MyMapComponent data={data} setMapData={setMapData} />
                         </Col>
                     </Row>
                 </div>

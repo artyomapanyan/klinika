@@ -9,11 +9,14 @@ import {CheckCircleOutlined} from "@ant-design/icons";
 import CInput from "../../Fragments/Inputs/CInput";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
+import {useNavigate} from "react-router";
+import ResourceLinks from "../../ResourceLinks";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
 const resource = 'Appointment';
 function Appointments() {
+    const navigate = useNavigate();
 
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -85,6 +88,12 @@ function Appointments() {
 
             <div>
                 <ResourceTable resource={resource}
+                               customActions={{
+                                   edit:(record)=>{
+                                       navigate(`${ResourceLinks[resource] + record.id}`)
+                                   }
+                               }}
+                               eyeShow={true}
                                except={{edit: true}}
                                tableColumns={[
                     {
@@ -98,6 +107,9 @@ function Appointments() {
                         title:t('Service'),
                         key:'service_type',
                         translatable:true,
+                        render:(e, record) => {
+                            return record?.service_type[0]?.toUpperCase()+record?.service_type?.slice(1)?.replaceAll("_", " ")
+                        }
                     },
                     {
                         dataIndex:["clinic", "name"],
