@@ -23,7 +23,7 @@ function MyMapComponent({data, setMapData}) {
     };
     function onSetMarkerPosition(latLng) {
         let geocoder =  new window.google.maps.Geocoder();
-        setTimeout
+
             geocoder?.geocode({'latLng': marker.getPosition()}, function (results, status) {
                 if (results[0]) {
                     console.log(results)
