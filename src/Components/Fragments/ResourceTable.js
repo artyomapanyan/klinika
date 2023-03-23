@@ -58,11 +58,19 @@ function ResourceTable({resource, tableColumns,
 
 
     const onResourceEdit = (record) => {
-        console.log(record)
+
         if(customActions?.edit){
             return customActions.edit(record)
         }
         navigate(ResourceLinks[resourceLink??resource] + record.id)
+
+    }
+    const onResourceShow = (record) => {
+
+        if(customActions?.show){
+            return customActions.show(record)
+        }
+        navigate(ResourceLinks[resourceLink??resource] + record.id+'/show')
 
     }
     const onResourceDelete = (record) => {
@@ -117,7 +125,7 @@ function ResourceTable({resource, tableColumns,
                 </Tooltip>}
                     {
                         eyeShow ? <Tooltip title="Show">
-                            <Button style={{border:'none'}} onClick={() => onResourceEdit(record)} ><EyeOutlined style={{color: '#c98a1e'}} /></Button>
+                            <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><EyeOutlined style={{color: '#c98a1e'}} /></Button>
                         </Tooltip> : <div></div>
                     }
 

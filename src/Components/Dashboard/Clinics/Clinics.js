@@ -13,11 +13,7 @@ function Clinics() {
     return(
         <div>
             <ResourceTable resource={resource} eyeShow={true}
-                           customActions={{
-                               edit:(record)=>{
-                                   navigate(`${record.id}/show`)
-                               }
-                           }}
+
                            tableColumns={[
                 {
                     title:'ID',
