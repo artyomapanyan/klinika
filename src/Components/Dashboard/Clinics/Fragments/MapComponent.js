@@ -13,6 +13,7 @@ function MyMapComponent({data, setMapData}) {
     const [marker,setMarker] = useState()
     const [map,setMap] = useState()
 
+
     const onLoadMap = (map) => {
         setMap(map);
     };
@@ -22,19 +23,15 @@ function MyMapComponent({data, setMapData}) {
     };
     function onSetMarkerPosition(latLng) {
         let geocoder =  new window.google.maps.Geocoder();
-        setTimeout(()=>{
-            geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
-                if (status == window.google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        console.log(results);
-                        //VueApp.setRegion(results[0])
-                    }
+        setTimeout
+            geocoder?.geocode({'latLng': marker.getPosition()}, function (results, status) {
+                if (results[0]) {
+                    console.log(results)
                 }
             });
-        },50)
 
-        console.log(geocoder,'geocoder')
-        console.log(latLng,'latlng')
+
+
     }
     const onLoad = (autocomplete) => {
         setAutocomplete(autocomplete)
