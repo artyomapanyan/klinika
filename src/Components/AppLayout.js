@@ -69,7 +69,7 @@ import LabTestCategory from "./Dashboard/LabTestCategories/LabTestCategory";
 import Appointments from "./Dashboard/Appointments/Appointments";
 import Appointment from "./Dashboard/Appointments/Appointment";
 import ShowAppointment from "./Dashboard/Appointments/Fragments/ShowAppointment";
-import ShowClinic from "./Dashboard/Clinics/ShowClinic";
+import ShowClinic from "./Dashboard/Clinics/Fragments/ShowClinic/ShowClinic";
 import DoctorShow from "./Dashboard/Doctors/DoctorShow";
 
 
