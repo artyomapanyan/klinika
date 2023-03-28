@@ -1,13 +1,20 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Divider} from "antd";
 import AppDoctor from "./AppDoctor";
 import AppDate from "./AppDate";
 import AppTime from "./AppTime";
 import AppPersonalDetails from "./AppPersonalDetails";
 import AppPaymentMethods from "./AppPaymentMethods";
+import {postResource} from "../../../Functions/api_calls";
+import {useSelector} from "react-redux";
 
-function BookAnAppointment() {
+function BookAnAppointment({data}) {
     const [dataState, setDataState] = useState({});
+
+
+
+
+console.log()
 
     return(
         <div className={'app_big_div'}>
@@ -22,13 +29,13 @@ function BookAnAppointment() {
             </div>
             <div className={'app_content'}>
                 <div className={'app_doctor'}>
-                    <AppDoctor setDataState={setDataState} dataState={dataState}/>
+                    <AppDoctor data={data} setDataState={setDataState} dataState={dataState}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppDate setDataState={setDataState} dataState={dataState}/>
+                    <AppDate data={data} setDataState={setDataState} dataState={dataState}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppTime setDataState={setDataState} dataState={dataState}/>
+                    <AppTime data={data} setDataState={setDataState} dataState={dataState}/>
                 </div>
                 <div className={'app_doctor'}>
                     <AppPersonalDetails setDataState={setDataState} dataState={dataState}/>

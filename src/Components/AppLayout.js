@@ -70,6 +70,7 @@ import Appointments from "./Dashboard/Appointments/Appointments";
 import Appointment from "./Dashboard/Appointments/Appointment";
 import ShowAppointment from "./Dashboard/Appointments/Fragments/ShowAppointment";
 import ShowClinic from "./Dashboard/Clinics/ShowClinic";
+import DoctorShow from "./Dashboard/Doctors/DoctorShow";
 
 
 function AppLayout(){
@@ -187,7 +188,8 @@ function AppLayout(){
             url:'doctors',
             resource:'Doctor',
             singleComp:<Doctor/>,
-            indexComp:<Doctors/>
+            indexComp:<Doctors/>,
+            showComp:<DoctorShow/>
         },
         {
             url:'users',

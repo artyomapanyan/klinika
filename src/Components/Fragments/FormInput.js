@@ -81,7 +81,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput isRequired={isRequired} label={label}  inputProps={inputProps}/>
+                return <CInput isRequired={isRequired} label={label} inputProps={inputProps}/>
         }
     }
     let isDate = inputType==='date';

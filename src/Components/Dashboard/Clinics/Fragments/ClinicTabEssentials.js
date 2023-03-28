@@ -11,9 +11,9 @@ import {t} from "i18next";
 import FileManager from "../../../Fragments/FileManager";
 import {CheckOutlined, CloseOutlined, InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
-import {Wrapper} from "@googlemaps/react-wrapper";
 import React from "react";
 import MyMapComponent from "./MapComponent";
+import {Autocomplete} from "@react-google-maps/api";
 
 
 
@@ -32,9 +32,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
-    const [mapData, setMapData] = useState({})
-    const [address, setAddress] = useState('')
-
 
     const onFinish = (values) => {
 
@@ -90,6 +87,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
             ...values
         }))
 
+        return
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -127,6 +125,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         item.id = item.phone_code
         return [name,item]
     }
+
 
     return(
         <div >
@@ -192,17 +191,11 @@ function ClinicTabEssentials({loadingState, dataState}) {
                     </Row>
                 </div>
                 <div className={'add_edit_content'}>
-                    <Row gutter={[16, 16]}>
-                        <Col lg={16} className="gutter-row">
-                            <FormInput label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} />
-                            <FormInput label={t('Longitude')}  name={'longitude'} initialValue={data?.longitude} />
 
-                        </Col>
-                        <Col lg={8} className="gutter-row">
 
-                                <MyMapComponent formRef={formRef} data={data} setMapData={setMapData} setAddress={setAddress}/>
-                        </Col>
-                    </Row>
+                                <MyMapComponent formRef={formRef} data={data}/>
+
+
                 </div>
 
                 <div className={'add_edit_content'}>

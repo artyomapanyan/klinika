@@ -450,6 +450,7 @@ const Resource = {
             label: '23:59',
         },
     ],
+    Days:['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     TaxonomyTypes: {
         POST_CATEGORY: 1,
         POST_TAG: 2,

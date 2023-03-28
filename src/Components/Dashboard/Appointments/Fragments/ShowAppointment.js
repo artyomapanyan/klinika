@@ -1,8 +1,8 @@
-import React, {useRef} from "react";
-import {useNavigate, useParams} from "react-router";
+import React from "react";
+import {useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
-import {Avatar, Button, message, Rate, Space} from "antd";
+import {Avatar, Button, message, Space} from "antd";
 import {CopyOutlined, FilePdfOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons";
 import axios from "axios";
 import api from "../../../../Api";
@@ -26,8 +26,8 @@ function ShowAppointment() {
         });
     };
 
-    console.log(data)
-    const handleExportExcel =()=>{
+
+    const handleExportPDF =()=>{
         axios.request({
             url: api[resource].exportExcel.url,
             method: api[resource].exportExcel.method,
@@ -40,7 +40,7 @@ function ShowAppointment() {
             const url = window.URL.createObjectURL(new Blob([response]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', resource+'.xlsx');
+            link.setAttribute('download', resource+'.pdf');
             document.body.appendChild(link);
             link.click();
         });
@@ -60,7 +60,7 @@ function ShowAppointment() {
                                     <Space>
                                         <div className={'show_mail_btn'}><a href={`mailto:${data?.patient?.email}`}><MailOutlined style={{fontSize: 20, color:'black'}}/></a></div>
                                         <div className={'show_phone_btn'}><a href={`${data?.patient?.phone}`}><PhoneOutlined style={{color: "#ffffff", fontSize: 20}}/></a></div>
-                                        <button onClick={handleExportExcel} className={'show_pdf_btn'}><FilePdfOutlined style={{color: "#ffffff"}}/> Appointment report</button>
+                                        <button onClick={handleExportPDF} className={'show_pdf_btn'}><FilePdfOutlined style={{color: "#ffffff"}}/> Appointment report</button>
                                     </Space>
                                 </div>
                             </div>

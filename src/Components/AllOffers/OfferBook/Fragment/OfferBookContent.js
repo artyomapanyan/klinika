@@ -1,20 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 import clinic1 from "../../../../dist/Img/clinic1.jpg";
 import {Avatar, Button, Divider, Rate, Space, Badge, Tag} from "antd";
 import {RightOutlined, UserOutlined} from "@ant-design/icons";
 import "../../AllOffers.sass";
 import OfferBookDetails from "./OfferBookDetails";
-import {useGetResourceSingle} from "../../../Functions/api_calls";
+import {postResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {useParams} from "react-router";
 import BookAnAppointment from "./BookAnAppointment";
+import {useSelector} from "react-redux";
 
 function OfferBookContent() {
     const params = useParams();
-    const {loadingState, dataState} = useGetResourceSingle('Offer', params.id)
+
+
+    const {loadingState, dataState} = useGetResourceSingle('PublicOffer', params.id)
+
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
 
-console.log(data, 'data')
+
+
+
+
 
     return (
         <div className={'offer_book_card'}>
@@ -71,7 +78,7 @@ console.log(data, 'data')
                     <Divider style={{background:'#e3e0e3'}}/>
                 </div>
                 <div className={'app_border_div'}>
-                    <BookAnAppointment />
+                    <BookAnAppointment data={data}/>
                 </div>
             </div>
         </div>

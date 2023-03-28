@@ -1,18 +1,16 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {GoogleMap, LoadScript, Marker, Autocomplete} from "@react-google-maps/api";
-import {Input} from "antd";
-import {PushpinOutlined} from "@ant-design/icons";
+import {AutoComplete, Col, Form, Input, Row} from "antd";
+import {t} from "i18next";
+import Preloader from "../../../Preloader";
+import FormInput from "../../../Fragments/FormInput";
 
-
-
-
-function MyMapComponent({data, setMapData, setAddress,formRef}) {
+function MyMapComponent({data,formRef}) {
     const googleRef = useRef();
     const [autocomplete, setAutocomplete] = useState()
     const [initialPosition,setInitialPosition] = useState({ lat: +data.latitude, lng: +data.longitude })
     const [marker,setMarker] = useState()
     const [map,setMap] = useState()
-
 
     const onLoadMap = (map) => {
         setMap(map);
@@ -26,12 +24,13 @@ function MyMapComponent({data, setMapData, setAddress,formRef}) {
         setTimeout(() => {
             geocoder?.geocode({'latLng': marker.getPosition()}, function (results, status) {
                 if (results[0]) {
-                    console.log(formRef.current,results[0]?.formatted_address,formRef.current.getFieldsValue())
+                    console.log(results[0]?.geometry?.location?.lng().toString(),results[0]?.formatted_address, 'ddddddd')
+                    formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
+                    formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
                     formRef.current.setFieldValue('address',results[0]?.formatted_address)
-
                 }
             });
-        }, 50)
+        }, 100)
     }
     const onLoad = (autocomplete) => {
         setAutocomplete(autocomplete)
@@ -41,33 +40,20 @@ function MyMapComponent({data, setMapData, setAddress,formRef}) {
         setTimeout(() => {
             geocoder?.geocode({'latLng': marker.getPosition()}, function (results, status) {
                 if (results[0]) {
-                    setAddress(results[0]?.formatted_address)
+                    formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
+                    formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
+                    formRef.current.setFieldValue('address',results[0]?.formatted_address)
+
                 }
             });
-        }, 50)
+        }, 100)
         setInitialPosition(pos.latLng)
-        setMapData(pos.latLng)
     }
 
     const onLoadMarker = (marker) => {
         setMarker(marker)
     };
-    const onCurrentPosition = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((geo) => {
-                const position = {
-                    lat: geo.coords.latitude,
-                    lng: geo.coords.longitude,
-                };
 
-                map.setCenter(position);
-                marker.setPosition(position);
-                onSetMarkerPosition(map.center);
-            }, () => {
-                // handleLocationError(true, infoWindow, map.getCenter());
-            });
-        }
-    }
 
     const onPlaceChanged = () => {
         if (autocomplete !== null) {
@@ -79,53 +65,74 @@ function MyMapComponent({data, setMapData, setAddress,formRef}) {
         }
     }
 
-
     const apiKey = 'AIzaSyD9MbMz7FESa79v-nntPfcxJHYTw8Am1S4'
 
     const uluru = { lat: 24.845909101072877, lng: 39.569421557617204 }
 
     return(
-        <div>
+        <LoadScript
+            id="script-loader"
+            googleMapsApiKey={apiKey}
+            //language={this.props.state.Intl.locale}
+            libraries={['places']}
+        >
+        <Row gutter={[16, 16]}>
 
-            <LoadScript
-                id="script-loader"
-                googleMapsApiKey={apiKey}
-                //language={this.props.state.Intl.locale}
-                libraries={['places']}
-            >
-
-                <GoogleMap
-                    ref={googleRef}
-                    id="position-map"
-                    center={data ? initialPosition : uluru}
-                    zoom={11}
-                    onLoad={onLoadMap}
-                    onClick={onClickMap}
-                    options={{
-                        mapTypeControl: false,
-                        streetViewControl: false,
-                        rotateControl: false,
-                    }}
-
+            <Col lg={14} className="gutter-row">
+                <FormInput label={t('Area')} name={'areas'} inputType={'resourceSelect'}
+                           initialValue={data?.areas?.map(e=>e.id)}
+                           initialData={data?.areas??[]}
+                           resource={'Country'} />
+                <FormInput label={t('City')} name={'citys'} inputType={'resourceSelect'}
+                           initialValue={data?.citys?.map(e=>e.id)}
+                           initialData={data?.citys??[]}
+                           resource={'City'} />
+                <Form.Item label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} className={'map_input_label'}>
+                    <Input style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>
+                </Form.Item>
+                <Form.Item label={t('Longitude')}  name={'longitude'} initialValue={data?.longitude}>
+                    <Input style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>
+                </Form.Item>
+                <Autocomplete
+                    onLoad={onLoad}
+                    onPlaceChanged={onPlaceChanged}
                 >
-                    <Autocomplete
-                        onLoad={onLoad}
-                        onPlaceChanged={onPlaceChanged}
+                    <Form.Item name={'address'} label={'Address'}>
+                        <Input  style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}} />
+                    </Form.Item>
+                </Autocomplete>
+            </Col>
+            <Col lg={10} className="gutter-row">
+
+
+
+                    <GoogleMap
+                        ref={googleRef}
+                        id="position-map"
+                        center={data ? initialPosition : uluru}
+                        zoom={11}
+                        onLoad={onLoadMap}
+                        onClick={onClickMap}
+                        options={{
+                            mapTypeControl: false,
+                            streetViewControl: false,
+                            rotateControl: false,
+                        }}
+
                     >
-                        <Input />
-                    </Autocomplete>
-
-                    <Marker
-                        onMouseUp={onDragMarker}
-                        onLoad={onLoadMarker}
-                        draggable
-                        position={initialPosition}
-                    />
-                </GoogleMap>
-            </LoadScript>
-        </div>
 
 
+                        <Marker
+                            onMouseUp={onDragMarker}
+                            onLoad={onLoadMarker}
+                            draggable
+                            position={initialPosition}
+                        />
+                    </GoogleMap>
+
+            </Col>
+        </Row>
+        </LoadScript>
     )
 
 

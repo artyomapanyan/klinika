@@ -29,7 +29,7 @@ function AppPaymentMethods({setDataState, dataState}) {
                 <h2 style={{fontWeight: 600, marginTop:8}}>Payment Method</h2>
             </Space>
             {
-                dataState?.doctor && dataState?.date && dataState?.time && dataState?.number && dataState?.payment && dataState?.verifyNumber ? <div>
+                dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.number && dataState?.payment && dataState?.verifyNumber ? <div>
                     <Space>
                         Selected Payment Method
                         <Button type={'secondary'} onClick={onChangeDetails} style={{borderRadius:15}}>Change Selected Doctor</Button>
