@@ -2,12 +2,19 @@ import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
-import TableEditable from "../../Fragments/TableEditable";
-import Resources from "../../../store/Resources";
+import ColorSelect from "../../Fragments/ColorSelect";
+import Resource from "../../../store/Resources";
+import {useNavigate} from "react-router";
+
+const resource='Clinic';
 function Clinics() {
+    const navigate = useNavigate()
+
     return(
         <div>
-            <ResourceTable resource={'Clinic'} tableColumns={[
+            <ResourceTable resource={resource} eyeShow={true}
+
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -33,14 +40,7 @@ function Clinics() {
                     title:t('Status'),
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                    render:(e,record)=><TableEditable
-                        label={'Status'}
-                        resource={'Doctor'}
-                        initialData={Resources.Status}
-                        updateKey={'status'}
-                        value={e}
-                        record={record}
-                        inputType={'resourceSelect'}/>
+                    render:(e,record)=><ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },
             ]} title={t('Clinics')}/>
         </div>

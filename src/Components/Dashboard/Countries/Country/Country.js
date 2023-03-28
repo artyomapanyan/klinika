@@ -1,6 +1,5 @@
-import React from 'react';
-import {Button, Form, Space} from 'antd';
-import "./Country.sass"
+import React, {useState} from 'react';
+import {Button, Col, Form, Popconfirm, Row, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import Preloader from "../../../Preloader";
@@ -9,6 +8,7 @@ import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import "../../../../dist/styles/Styles.sass";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const resource = 'Country';
 
@@ -19,8 +19,9 @@ function Country() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -31,7 +32,7 @@ function Country() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token).then((response) => {
@@ -40,72 +41,83 @@ function Country() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
 
-    console.log(data)
 
     return (
-        <div className={"add_edit_content"}>
-            {data?.name ? <h3>{t(`Editing Country - ${data?.name}`)}</h3> : <h3>{t(`Add new Country`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Country - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Country`)}</h3>}
             {loading ? <Preloader/> : <Form
 
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
             >
+                <div className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
-                    <FormInput
-                        label={t('Alpha2 code')}
-                        name={'alpha2_code'}
-                        rules={[
-                            {
-                                required: true,
-                                len:2
-                            },
+                    <Row>
+                        <Col lg={12} className="gutter-row">
+                            <FormInput
+                                label={t('Alpha2 code')}
+                                name={'alpha2_code'}
+                                rules={[
+                                    {
+                                        required: true,
+                                        len:2
+                                    },
 
-                        ]}
-                        initialValue={data?.alpha2_code}
-                    >
+                                ]}
+                                initialValue={data?.alpha2_code}
+                            >
 
-                    </FormInput>
-                    <FormInput
-                        label={t('Alpha3 code')}
-                        name={'alpha3_code'}
-                        rules={[
-                            {
-                                required: true,
-                                len:3
-                            },
-                        ]}
-                        initialValue={data?.alpha3_code}
-                    >
-                    </FormInput>
+                            </FormInput>
+                            <FormInput label={t('Alpha3 code')} name={'alpha3_code'} rules={[
+                                {
+                                    required: true,
+                                    len:3
+                                },
+                            ]}
+                                       initialValue={data?.alpha3_code}
+                            >
+                            </FormInput>
+                        </Col>
+                        <Col lg={12} className="gutter-row">
+                            <FormInput
+                                label={t('Phone code')}
+                                name={'phone_code'}
+                                rules={[
+                                    {
+                                        required: true,
+                                        len:3
+                                    },
+                                ]}
+                                initialValue={data?.phone_code}
+                            >
+                            </FormInput>
 
-                <FormInput
-                    label={t('Phone code')}
-                    name={'phone_code'}
-                    rules={[
-                        {
-                            required: true,
-                            len:3
-                        },
-                    ]}
-                    initialValue={data?.phone_code}
-                >
-                </FormInput>
+                            <FormInput label={t('Language')} name={'language_id'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.language?.id}
+                                       initialData={data?.language?[data.language]:[]}
+                                       resource={'Country'}/>
+                        </Col>
+                    </Row>
+                </div>
 
-                <FormInput label={t('Language')} name={'language_id'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.language?.id}
-                           initialData={data?.language?[data.language]:[]}
-                           resource={'Country'}/>
 
-                <Space>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                <Space className={'create_apdate_btns'}>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

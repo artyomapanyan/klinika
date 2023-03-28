@@ -25,6 +25,30 @@ export function makeUnique(data,key){
         return uniqueData;
 
 }
+
+export function blobToObjectUrl(blob, noPdf) {
+    let fileUrl = URL.createObjectURL(blob)
+    if (noPdf) {
+        var element = document.createElement('a');
+        element.setAttribute('href', fileUrl);
+        element.setAttribute('download', noPdf);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    } else {
+        let openedWindow = window.open(fileUrl)
+        if (openedWindow) {
+            openedWindow.onload = function () {
+                this.onbeforeunload = function () {
+                    URL.revokeObjectURL(fileUrl)
+                }
+            }
+        }
+    }
+
+
+}
 export function notificate(data,status) {
     if (data?.errors) {
         Object.keys(data.errors).map((type) => {

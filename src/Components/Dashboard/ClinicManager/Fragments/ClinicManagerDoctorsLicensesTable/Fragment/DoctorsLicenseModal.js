@@ -20,7 +20,7 @@ function DoctorsLicenseModal() {
                 </Space>
             </div>
             <FormInput label={t('New Liciense Date')} inputType={'date'} />
-            <FormInput label={t('First')} name={'first'} />
+            <FormInput label={t('Liciense Number')} name={'first'} />
             <Button size={'large'} type={'primary'} style={{width:'100%'}}>{t("Save")}</Button>
         </Form>
     )

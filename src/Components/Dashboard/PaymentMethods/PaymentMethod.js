@@ -4,12 +4,13 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
-import React, {useRef} from "react";
+import {Button, Col, Form, Popconfirm, Row, Space} from "antd";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import FileManager from "../../Fragments/FileManager";
+import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 
 
 const resource = 'PaymentMethod';
@@ -22,10 +23,11 @@ function PaymentMethod() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -36,7 +38,7 @@ function PaymentMethod() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token,true).then((response) => {
@@ -45,46 +47,57 @@ function PaymentMethod() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
 
     return(
-        <div className={'add_edit_content'}>
-            {data?.title ? <h3>{t(`Editing Payment Method - ${data?.title}`)}</h3> : <h3>{t(`Add new Payment Method`)}</h3>}
+        <div>
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Payment Method - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Payment Method`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
-
             >
-                <FormInput label={t('Name')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
-                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
-                <FormInput label={t('instructions')} name={'instructions'} inputType={'textArea'} initialValue={data?.instructions}/>
+                <div className={'add_edit_content'}>
+                    <Row>
+                        <Col lg={18} className="gutter-row">
+                            <FormInput label={t('Name')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
+                            <FormInput label={t('Payment method Type')} name={'key'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.key}
+                                       initialData={Resources.PaymentMethodKeys}
+                            />
 
-                <FormInput label={t('Payment method Type')} name={'key'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.key}
-                           initialData={Resources.PaymentMethodKeys}
-                />
-
-                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.status}
-                           initialData={Resources.Status}
-                />
-                <FileManager text1={'Logo'}
-                             text2={''}
-                             name={'logo'}
-                             initialFileList={[data.logo]} limit={1} formRef={formRef} type={'drag'}/>
-
-
-
-                <Space>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                            <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.status}
+                                       initialData={Resources.Status}
+                            />
+                        </Col>
+                        <Col lg={6} className="gutter-row">
+                            <FileManager text1={'Logo'}
+                                         text2={'Click or drag file to this area to upload'}
+                                         uploadIcon={<InboxOutlined/>}
+                                         name={'logo'}
+                                         initialFileList={[data.logo]} limit={1} formRef={formRef} type={'drag'}/>
+                        </Col>
+                    </Row>
+                    <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                    <FormInput label={t('instructions')} name={'instructions'} inputType={'textArea'} initialValue={data?.instructions}/>
+                </div>
+                <Space className={'create_apdate_btns'}>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

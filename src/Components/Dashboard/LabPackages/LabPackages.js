@@ -3,10 +3,14 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import Resource from "../../../store/Resources";
+import ColorSelect from "../../Fragments/ColorSelect";
+
+const resource='LabPackage'
 function LabPackages() {
     return(
         <div>
-            <ResourceTable resource={'LabPackage'} tableColumns={[
+            <ResourceTable resource={resource} tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -21,6 +25,13 @@ function LabPackages() {
                     sorter:true,
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    dataIndex:['status'],
+                    title:t('Status'),
+                    key:'category',
+                    shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                    render:(e,record)=><ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },
                 {
                     dataIndex:['created_at','iso_string'],

@@ -3,29 +3,36 @@ $primaryColor: #ce4e99
 body
   div
     font-family: 'Inter' !important
+
 .ant-menu-submenu-popup
   display: none !important
+
 #root, body, html
   height: 100%
-  &>span,&>section
+
+  & > span, & > section
     min-height: 100%
+
     .main-container
       display: flex
+
       .app-content
         flex: 1 1 auto
+
 .all-div
   width: 100%
   border: 1px solid black
   display: grid
   grid-template-areas: "nav head" "nav  content" "nav  foot"
   grid-template-rows: auto auto 50px
-  grid-template-columns:  80px auto
+  grid-template-columns: 80px auto
 
 .nav
   grid-area: nav
 
 .layout-conatiner
   padding: 0 20px
+
   .resource-header .ant-col-lg-12:nth-last-of-type(1)
     display: flex
     justify-content: end
@@ -48,6 +55,7 @@ body
   border: 1px solid $primaryColor
   color: $primaryColor
   border-radius: 10px
+
   &:hover
     color: #fff
     background-color: $primaryColor
@@ -56,38 +64,52 @@ body
   border-radius: 10px
   background-color: $primaryColor
   color: white
+
   &:hover
     border: 1px solid $primaryColor
     background-color: white !important
     color: $primaryColor !important
+
 .side-menu
   position: relative
   flex: 0 0 80px
   z-index: 99
+
   .ant-layout-sider
     overflow: auto !important
+
 .ant-table-cell
   .ant-form-item
     margin-bottom: 0 !important
+
   .ant-select
     width: 200px
+
 .card-filters
   .ant-select
     width: 300px !important
+
 .input-placeholder
   position: relative
+
   &.date
     .ant-form-item-label
       transform: translate(14px, 19px) scale(1)
-  .ant-form-item-row,.ant-form-item-row input,.ant-select,.ant-select-selector
+
+  .ant-form-item-row, .ant-form-item-row input, .ant-select, .ant-select-selector
     min-height: 48px !important
     border-radius: 12px !important
+
     .ant-select-selection-item
       display: flex
       margin-top: 10px
       align-items: center
+
   .ant-form-item-label
     position: absolute
+    background-color: #fff
+    padding-left: 5px
+    padding-right: 5px
     color: rgba(0, 0, 0, 0.6)
     transform-origin: left top
     white-space: nowrap
@@ -98,151 +120,206 @@ body
     transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
     z-index: 1
     pointer-events: none
+
   &.input-focused
     .ant-form-item-label
-      transform: translate(14px, -4px) scale(0.8)
+      transform: translate(19px, -4px) scale(0.7)
+      line-height: 1em
+
   label::after
     display: none
-  .ant-form-item-label >label
-    color: #635D6B
 
+  .ant-form-item-label > label
+    top: 7px
+.ant-select-selection-item
+  top: -5px
+  left: 4px
+.ant-select-selection-overflow
+  max-height: 40px
+.ant-select-selection-overflow-item
+  margin-left: 5px
+  margin-top: -2px
 .ar
   min-height: 100%
+
   .input-placeholder .ant-form-item-label
     right: 40px !important
+
   .ant-input-password-icon
     position: absolute !important
     margin-right: -60px !important
     margin-left: initial !important
+
 .ant_tag
   font-weight: 700
   border: none
   font-size: 11px
+
 .patient_content
   background-color: #FFFFFF
   border-radius: 15px
   margin-right: 30px
   margin-left: 30px
+
 .patient_head_div
   padding: 10px
+
   .avatar_div
     margin: 24px
     display: flex
+
   .patient_head_name
     font-size: 24px
     font-weight: 700
+
   .text_norm
     font-size: 16px
     letter-spacing: 0.5px
+
   .addres_Insurance
     color: #aaa6ab
     letter-spacing: 0.5px
+
   .phone_mail
     display: flex
     margin: 5px
     letter-spacing: 0.5px
+
   .patient_head_text
     margin-left: 20px
+
   .private_note_div
     padding: 25px
     margin: 24px
     background-color: #fdf0e7
     border-radius: 12px
+
   .private_note_text
     margin-top: 10px
+
   .private_note_number
     font-style: normal
     font-weight: 700
     font-size: 24px
     line-height: 29px
+
 .button_add
   height: 48px
   width: 120px
+
 .add_edit_content
   padding: 30px
   background-color: #FFFFFF
   border-radius: 15px
   border: 1px solid #e6e8eb
-  margin-bottom: 50px
-  margin: 20px
+  margin-left: 20px
+  margin-right: 20px
+  margin-bottom: 20px
+
 .patient_collapse_icon
   color: #774D9D
   font-size: 16px
   margin-Left: 10px
+
 .collapse_panel
   font-size: 20px
   font-weight: 700
+
   .collapse_content_head
     color: #aaa6ab
     font-size: 14px
     font-weight: 400
+
   .collapse_content_foot
     font-size: 16px
     font-weight: 500
 
 .current_medications_card
   flex: 1 1 auto
+
   .patient_card_btn
     font-size: 16px
     font-weight: 700
     border: none
+
   .ant-list-item
     padding-left: 0px
+
 .PatientCardRight
   padding: 24px
+
 .Patient_card_right_img
   display: flex
   flex-direction: column
   justify-content: center
   align-items: center
+
 .Patient_card_right_content
   display: flex
   flex-direction: row
   justify-content: center
   align-items: center
   line-height: 25px
+
 .Patient_card_right_bold_text
   font-weight: 700
   color: #F5A348
+
 .right_vector
   font-weight: 700
+
 .ant-tabs-content
   .ant-layout-content
     padding: 40px
+
 .h1
   font-weight: 700
+
 .ant-upload-text
   font-weight: 600
   font-size: 18px
+
 .Patient_card_lab_tests_div
-.ant-table-wrapper .ant-table-thead >tr>th
+
+.ant-table-wrapper .ant-table-thead > tr > th
   border-bottom: 2px solid rgb(14 13 13 / 24%)
+
   .ant-table-cell
     font-weight: 700
+
 .medication_card_text1
   font-size: 13px
   font-weight: 400
   color: #635D6B
+
 .medication_card_text2
   font-size: 13px
   font-weight: 700
+
 .ant-card-head
   border-bottom: black
+
 .spaced-checkboxes
   .ant-space
     flex: 1 1 auto
+
     .ant-checkbox-wrapper
       width: 90%
+
       span:nth-child(1)
         width: 17px
+
       span:nth-child(2)
         width: 100%
         display: flex
         justify-content: space-between
+
 .rdw-editor-wrapper
   border: 1px solid #d9d9d9
+
 .clinics_owner
   position: relative
+
   .gutter_row
     box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
     background: #FFFFFF
@@ -268,31 +345,378 @@ body
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover
   background: #a7a8a7
+
 .lngSelect
   .ant-select-arrow
     color: #FFFFFF
+
   .ant-select-selector
     background-color: #ce4e99 !important
     color: #FFFFFF
+
 .clinic_man_table_success
-  :where(.css-dev-only-do-not-override-pdfigf).ant-result .ant-result-icon>.anticon
+  :where(.css-dev-only-do-not-override-pdfigf).ant-result .ant-result-icon > .anticon
     font-size: 24px
+
   :where(.css-dev-only-do-not-override-pdfigf).ant-result .ant-result-icon
     margin: 5px
+
 .success
   color: green
   font-size: 20px
+
 .table_conteiner
   background-color: #FFFFFF
   margin-top: 30px
   border-radius: 10px
   box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
 .table_header_none
   .ant-table-thead
     display: none
+
 .gutter-row
   padding: 10px
 
+.create_apdate_btns
+  margin-top: -35px
+  margin-left: 28px
+  font-weight: 700
+  font-size: 22px
+
+.percentable
+  margin-bottom: 24px
+  border-radius: 7px 0px 0px 7px
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+
+//.dx-item
+//  background-color: #ce4e99 !important
+.dx-shape-standard
+  margin-right: 20px
+
+.dx-button
+  border: none !important
+
+.dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-item-selected
+  background-color: #ce4e99 !important
+
+.dx-buttongroup-item.dx-button-mode-contained.dx-button
+  border-radius: 5px !important
+
+.issues_div
+  border-radius: 15px
+  height: 350px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+  background-color: #FFFFFF
+  margin-top: 50px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: flex-start
+  padding: 30px
+
+.Clinic_tab_conteiner
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+  margin: 20px
+  padding-top: 10px
+
+  .tab_item_container
+    cursor: pointer
+    padding-left: 25px
+    padding-right: 25px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 100%
+
+    &.tab_active
+      .clinic_tab_below
+        background-color: #ce4e99
+
+      .clinic_tab_item
+        color: #ce4e99
+        border-color: #ce4e99
+
+    .clinic_tab_item
+      display: flex
+      flex-direction: row
+      justify-content: center
+      align-items: center
+      border: 1px solid #FFFFFF
+      border-radius: 8px 8px 0 0
+      border-top: none
+      border-right: none
+      border-left: none
+      width: 100%
+      font-style: normal
+      font-weight: 600
+      padding: 7px
+      font-size: 18px
+      line-height: 22px
+      transition: all .3s
+
+.right-label
+  .ant-form-item-label
+    padding: 0
+    margin-left: 10px
+
+  .ant-form-item-row
+    display: flex
+    flex-wrap: nowrap
+    flex-direction: row-reverse
+    justify-content: flex-end
+    align-items: center
+
+  .ant-form-item-control
+    flex-grow: initial !important
+    width: initial !important
+
+.add_clinic_modal
+  padding: 30px
+
+.home_visit_head
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  margin: 30px
+
+.working_houre_margin
+  margin: 5px
+
+.web
+  margin-top: 5px
+  font-size: 18px
+  font-weight: 700
+  color: #FFFFFF
+  margin-left: 6px
+  opacity: 0.99
+
+.bar1
+  height: 30px
+  background-color: #60a428
+
+.bar2
+  height: 30px
+  background-color: #F5A348
+
+.int
+  margin-top: 5px
+  margin-left: -5px
+  margin-right: 6px
+  font-size: 18px
+  font-weight: 700
+  display: flex
+  flex-direction: row
+  justify-content: flex-end
+  color: #FFFFFF
+
+.container
+  width: 100%
+  display: flex
+  margin: 5px
+
+.current
+  font-size: 18px
+  font-weight: 600
+  color: #635D6B
+  margin-top: 15px
+
+.d-none
+  display: none !important
+
+.lab_save
+  margin-left: 20px
+  margin-bottom: 50px
+
+.lab_radio_btn
+  display: flex
+  flex-direction: row
+  justify-content: center
+.flying-label
+    input:not(:placeholder-shown) + label,input:focus + label
+      position: absolute !important
+      top: -8px
+      font-size: 11px
+      background-color: #FFFFFF
+      padding-right: 3px
+      padding-left: 3px
+    label
+      position: absolute
+      left: 15px
+      top: 11px
+      transition: 0.2s
+      font-size: 15px
+      pointer-events: none
+
+.ant-form-item-control
+  margin: 5px
+
+.ant-form-item-required:before
+  display: inline-block
+  margin-inline-end: 4px
+  color: #ff4d4f
+  font-size: 14px
+  font-family: SimSun,sans-serif
+  line-height: 1
+  content: "*"
+.flying-label-textarea
+  textArea:not(:placeholder-shown) + label,textArea:focus + label
+    position: absolute !important
+    left: 15px
+    top: -8px
+    font-size: 11px
+    background-color: #FFFFFF
+    padding-right: 3px
+    padding-left: 3px
+  label
+    position: absolute !important
+    top: 20px
+    left: 15px
+    transition: 0.2s
+    font-size: 15px
+    pointer-events: none
+.ant-picker
+  border-radius: 12px
+.ant-select-selection-search-input
+  padding-left: 6px !important
+.ant-picker-input
+  padding-left: 6px !important
+.flying-label-textarea label
+  top: 10px
+.show_mail_btn
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: none
+  background-color: #e7e5e7
+  display: flex
+  justify-content: center
+  align-items: center
+.show_mail_btn:hover
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: none
+  background-color: #d2cfd2
+  cursor: pointer
+  display: flex
+  justify-content: center
+  align-items: center
+.show_phone_btn
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: 1px solid #13d340
+  background-color: #18c46e
+.show_phone_btn:hover
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: 1px solid #1fab40
+  background-color: #1fad66
+  cursor: pointer
+.show_pdf_btn
+  height: 40px
+  border-radius: 30px
+  background-color: #dc4aa0
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_pdf_btn:hover
+  height: 40px
+  border-radius: 30px
+  background-color: #bd3183
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+  cursor: pointer
+#show_header
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+.show_copy_btn
+  height: 50px
+  border-radius: 30px
+  background-color: #28c3d7
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_copy_btn:hover
+  cursor: pointer
+  height: 50px
+  border-radius: 30px
+  background-color: #23a5b6
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_table
+  width: 50%
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px 0
+          border-bottom: 1px solid #c4c2c2
+.show_td_1
+  font-size: 16px
+  font-weight: 600
+.show_td_2
+  margin-left: 100px
+.show_table_right
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px
+    thead
+      tr
+        td
+          padding: 10px
+          border-bottom: 1px solid #c4c2c2
+          font-size: 16px
+          font-weight: 600
+.show_table_bottom
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px
+          border-bottom: 1px solid #c4c2c2
+          color: #969698
+          font-weight: 600
+          font-style: italic
+          font-size: 16px
+    thead
+      tr
+        td
+          padding: 10px
+          font-size: 16px
+          font-weight: 600
+
+
+#position-map
+  height: 400px
 
 
 

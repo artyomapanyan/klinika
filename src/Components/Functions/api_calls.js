@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
 
-export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false) => {
+export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll, additionalResources = {},pushToParams=false) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
@@ -14,36 +14,69 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
             last_page:1
         }
     })
+    const [isSecondCall,setIsSecondCall] = useState(false);
+    const [addData, setAddData] = useState({})
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
-        if(resource){
+        if(resource && !resourceData){
             if(needsInit && !isInited){
                 return;
             }
             setLoading(true)
-            axios.request({
-                url:api[resource].list.url,
-                method:api[resource].list.method,
-                params:params,
-                headers: {
-                    'Authorization': token,
-                }
-            }).then(response=>{
-                if(response){
+            let dataResources  =Object.keys(additionalResources);
+            Promise.all([
+                axios.request({
+                    url:api[resource].list.url,
+                    method:api[resource].list.method,
+                    params:params,
+                    headers: {
+                        'Authorization': token,
+                    }
+                }),
+                ...(!isSecondCall?dataResources.map(resourceKey=>axios.request({
+                    url:api[resourceKey].list.url,
+                    method:api[resourceKey].list.method,
+                    params:additionalResources[resourceKey],
+                    headers: {
+                        'Authorization': token,
+                    }
+                })):[])
+
+            ]).then(responses=>{
+                if(responses[0]){
+                    if(getAll){
+                        getAll(responses[0].items)
+                    }
                     setData({
-                        items:response.items,
+                        items:responses[0].items,
                         pagination:{
                             pageSize:15,
-                            current:response.current_page,
-                            total:response.total_items,
-                            last_page:response.last_page
+                            current:responses[0].current_page,
+                            total:responses[0].total_items,
+                            last_page:responses[0].last_page
                         }
                     })
+                    if(dataResources.length && !isSecondCall){
+                        let dataObj = {}
+                        dataResources.forEach((e,key)=>{
+                            dataObj[e] = responses[key+1]
+                        })
+                        setAddData(dataObj)
+                    }
                 }
-
-
             }).finally(()=>{
                 setLoading(false)
+                setIsSecondCall(true)
+            })
+        }else if(resourceData){
+            setData({
+                items:resourceData,
+                pagination:{
+                    pageSize:15,
+                    current:1,
+                    total:5,
+                    last_page:1
+                }
             })
         }
 
@@ -58,10 +91,11 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
         setData
     }
 
-    return {loadingState,dataState}
+
+
+    return {loadingState,dataState, addData}
 }
-export const useGetResourceSingle = (resource,id,additionals={
-},filterResponse = null)=>{
+export const useGetResourceSingle = (resource,id,additionals={},filterResponse = null)=>{
     const [loading, setLoading] = useState(true)
     const [data,setData] = useState({})
     const [addData,setAddData] = useState({})
@@ -125,27 +159,48 @@ export const useGetResourceSingle = (resource,id,additionals={
 
     return {loadingState,dataState,addDataState}
 }
-export const updateResource = (resource,id,values,token,withFormData=false)=>{
-    let formData = {}
-    if(withFormData){
-        formData = new FormData();
-        formData.append('_method','PUT')
-        for (const name in values) {
-            if(Array.isArray(values[name])){
-                values[name].map(e=>formData.append(name+'[]', e))
+
+function hGOD(formData,name,object){
+    Object.keys(object).forEach(key=>{
+        if(typeof object[key]==='object'){
+            hGOD(formData,name+'['+key+']',object[key])
+        }else{
+            formData.append(name+'['+key+']',object[key])
+        }
+    })
+
+}
+function handleGenerateFD(values,method){
+    let formData = new FormData();
+    if(method){
+        formData.append('_method',method)
+    }
+    for (const name in values) {
+        if(Array.isArray(values[name])){
+            values[name].map(e=>formData.append(name+'[]', e))
+        }else{
+            if(name.includes('_deleted')){
+                if(values[name]){
+                    formData.append(name, values[name]);
+                }
             }else{
-                if(name.includes('_deleted')){
-                    if(values[name]){
-                        formData.append(name, values[name]);
-                    }
+                values[name] = values[name]===true?1:values[name]===false?0: values[name]
+                if(typeof values[name] === "object"){
+                    hGOD(formData,name,values[name])
                 }else{
-                    values[name] = values[name]===true?1:values[name]===false?0: values[name]
                     formData.append(name, values[name]);
                 }
 
             }
 
         }
+    }
+    return formData
+}
+export const updateResource = (resource,id,values,token,withFormData=false)=>{
+    let formData = {}
+    if(withFormData){
+        formData = handleGenerateFD(values,"PUT")
     }else{
         formData = values;
     }
@@ -169,10 +224,14 @@ export const deleteResource = (resource,id,token)=>{
     })
 }
 export const postResource = (resource,param,token,id=null,params)=>{
+    const method = api[resource][param].method;
+
     return  axios.request({
         url:`${api[resource][param].url}${id??''}`,
-        method:api[resource][param].method,
-        data:params,
+        method,
+    ...(method!=='GET'?{
+        data:params
+    }:{params}),
         headers: {
             'Authorization': token,
         }
@@ -181,21 +240,7 @@ export const postResource = (resource,param,token,id=null,params)=>{
 export const createResource = (resource,values,token,withFormData=false)=>{
     let formData = {}
     if(withFormData){
-        formData = new FormData();
-        for (const name in values) {
-            if(Array.isArray(values[name])){
-                values[name].map(e=>formData.append(name+'[]', e))
-            }else{
-                if(name.includes('_deleted')){
-                    if(values[name]){
-                        formData.append(name, values[name]);
-                    }
-                }else{
-                    values[name] = values[name]===true?1:values[name]===false?0: values[name]
-                    formData.append(name, values[name]);
-                }
-            }
-        }
+        formData =  handleGenerateFD(values,null)
     }else{
         formData = values;
     }

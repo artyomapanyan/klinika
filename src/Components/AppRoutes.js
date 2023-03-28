@@ -6,6 +6,9 @@ import AuthCheck from "./Fragments/AuthCheck";
 import Reset from "./Auth/Reset";
 import Forgot from "./Auth/Forgot";
 import Login from "./Auth/Login/Login";
+import AllOffers from "./AllOffers/AllOffers";
+import OfferBook from "./AllOffers/OfferBook/OfferBook";
+
 function AppRoutes(){
     return(<Routes>
                 <Route path={'/'} element={<General/>}></Route>
@@ -13,6 +16,8 @@ function AppRoutes(){
                 <Route path={'forgot'} element={<Forgot/>}></Route>
                 <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
                 <Route path={'login'} element={<Login/>}></Route>
+                <Route path={'offers'} element={<AllOffers/>}></Route>
+                <Route path={'offers/:id'} element={<OfferBook/>}></Route>
 
             </Routes>
 

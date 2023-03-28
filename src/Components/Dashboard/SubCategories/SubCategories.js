@@ -23,7 +23,7 @@ function SubCategories() {
                 },
                 {
                     dataIndex:['category','name'],
-                    title:t('category'),
+                    title:t('Category'),
                     key:'category',
                     translatable:true,
                 },

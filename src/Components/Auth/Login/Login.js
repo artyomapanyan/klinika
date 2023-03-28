@@ -102,7 +102,7 @@ function Login() {
                                             <div className={'div_icon'}><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>
                                             <div >
                                                 <div className={"head_account_drop_text"}>{role?.name}</div>
-                                                <div>{role?.key}</div>
+                                                <div className={'role_key'} align={'start'}>{role?.key}</div>
                                             </div>
                                         </Button>)}
                             <div>

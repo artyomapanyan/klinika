@@ -4,12 +4,13 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
-import React, {useRef} from "react";
+import {Button, Form, Popconfirm, Space} from "antd";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import DraftEditor from "../../Fragments/DraftEditor";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const resource = 'Post';
 
@@ -21,10 +22,11 @@ function Post() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -35,7 +37,7 @@ function Post() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token).then((response) => {
@@ -44,7 +46,7 @@ function Post() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
@@ -85,8 +87,15 @@ function Post() {
                 <FormInput label={t('Notes')} name={'notes'} inputType={'textArea'} initialValue={data?.notes}/>
 
                 <Space>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

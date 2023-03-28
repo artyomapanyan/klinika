@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
-import {Avatar, Button, Drawer, Form, Space, Tag} from "antd";
+import React from 'react';
+import {Avatar, Button, Form, Space, Tag} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
-import ClinicManagerCalendarDrawerLarge from "./ClinicManagerCalendarDrawerLarge";
 
 
 function ClinicManagerCalendarDrawerSmall({openLargeDrawer}) {
@@ -39,7 +38,12 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer}) {
                     <FormInput label={t('Email')}  rules={[{required: true}]} />
                     <div style={{display:"flex", width:'100%'}}>
                         <div style={{width:80}}>
-                            <FormInput name={'phone_country_code'} rules={[{required: true}]} initialValue={'374'} />
+                            <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={966}
+                                // handleMapItems={handleMapItems}
+                                // resource={'Country'}
+                            />
                         </div>
                         <div style={{marginLeft:20, width:'100%'}}>
                             <FormInput label={t('Phone number')} name={'phone_number'} />
@@ -49,7 +53,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer}) {
                         <Button style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     </div>
                     <div>
-                        <Button onClick={openLargeDrawer} style={{width:'100%', marginTop:15}} size={'large'}  type={'secondary'} htmlType="submit">{t('Fill full form now')}</Button>
+                        <Button onClick={openLargeDrawer} style={{width:'100%', marginTop:15}} size={'large'}  type={'secondary'} htmlType="submit">{t('Show Extended')}</Button>
                     </div>
                     <div>
                         <Button style={{width:'100%', marginTop:15, border:"none"}} size={'large'}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>

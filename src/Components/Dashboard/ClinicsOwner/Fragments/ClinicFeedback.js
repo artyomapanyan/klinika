@@ -54,7 +54,7 @@ function ClinicFeedback() {
 
     return (
         <div style={{position:'relative',minHeight:'400px',background:'rgba(255,255,255,0)'}}>
-            <div style={{position:"absolute", width:'99%'}}>
+            <div style={{position:"absolute", width:'98%'}}>
                 <div className={'clinic_fid_head'}>
                     <Space>
                         <h1 className={'h1'}>Clinic feedback  </h1>

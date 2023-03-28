@@ -49,13 +49,28 @@ import Users from "./Dashboard/User/Users/Users";
 import User from "./Dashboard/User/Users/User";
 import Posts from "./Dashboard/Posts/Posts";
 import Post from "./Dashboard/Posts/Post";
-import Calendar from "./Dashboard/Calendar/Calendar";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import Translations from "./Dashboard/Translations/Translations";
 import Preferences from "./Dashboard/Preferences/Preferences";
 import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
 import Clinics from "./Dashboard/Clinics/Clinics";
 import Clinic from "./Dashboard/Clinics/Clinic";
+import Offers from "./Dashboard/Offers/Offers";
+import Offer from "./Dashboard/Offers/Offer";
+import Coupons from "./Dashboard/Coupons/Coupons";
+import Coupon from "./Dashboard/Coupons/Coupon";
+import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
+import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
+import Laboratory from "./Dashboard/Laboratory/Laboratory";
+import LabPackageCategory from "./Dashboard/LabPackagesCategory/LabPackageCategory";
+import LabTestCategories from "./Dashboard/LabTestCategories/LabTestCategories";
+import LabPackagesCategories from "./Dashboard/LabPackagesCategory/LabPackagesCategories";
+import LabTestCategory from "./Dashboard/LabTestCategories/LabTestCategory";
+import Appointments from "./Dashboard/Appointments/Appointments";
+import Appointment from "./Dashboard/Appointments/Appointment";
+import ShowAppointment from "./Dashboard/Appointments/Fragments/ShowAppointment";
+import ShowClinic from "./Dashboard/Clinics/ShowClinic";
+
 
 function AppLayout(){
     let redux = useSelector((state) => state);
@@ -202,8 +217,47 @@ function AppLayout(){
             url:'clinics',
             resource:'Clinic',
             singleComp:<Clinic/>,
-            indexComp:<Clinics/>
+            indexComp:<Clinics/>,
+            showComp:<ShowClinic/>
         },
+        {
+            url:'offers',
+            resource:'Offer',
+            singleComp:<Offer/>,
+            indexComp:<Offers/>
+        },
+        {
+            url:'coupons',
+            resource:'Coupon',
+            singleComp:<Coupon/>,
+            indexComp:<Coupons/>
+        },
+        {
+            url:'taxonomies',
+            resource:'Taxonomy',
+            //singleComp:<Coupon/>,
+            indexComp:<Laboratory/>
+        },
+        {
+            url:'lab-packages-category',
+            resource:'Taxonomy',
+            singleComp:<LabPackageCategory/>,
+            indexComp:<LabPackagesCategories/>
+        },
+        {
+            url:'lab-tests-category',
+            resource:'Taxonomy',
+            singleComp:<LabTestCategory/>,
+            indexComp:<LabTestCategories/>
+        },
+        {
+            url:'appointments',
+            resource:'Appointment',
+            //singleComp:<Appointment/>,
+            indexComp:<Appointments/>,
+            showComp:<ShowAppointment/>
+        },
+
 
     ]
     return <Layout className={'main-container'}>
@@ -229,14 +283,19 @@ function AppLayout(){
                         {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}
                         {item.singleComp&&<Route key={key+'_n'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>}
                         {item.singleComp&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>}
+                        {item.showComp&& <Route key={key+'_e'} path={`:id/show`} element={<AuthCheck permission={`${item.resource}:create`}>{item.showComp}</AuthCheck>}/>}
                     </Routes>}/>
 
                         )}
 
+
                     <Route path={'patients'} element={<Patient />}/>
-                    <Route path={'calendar'} element={<Calendar />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
                     <Route path={'clinic-manager'} element={<ClinicManager />}/>
+                    <Route path={'doctor-reworked'} element={<DoctorReworked />}/>
+                    <Route path={'super-admin'} element={<SuperAdmin />}/>
+
+
                 </Routes>
             </Content>
                 {/*<AppointmentStats/>*/}

@@ -1,14 +1,15 @@
 import {Avatar, Button, Col, Form, Row, Space, Tag} from "antd";
-import { LeftOutlined, UserOutlined} from "@ant-design/icons";
+import {InboxOutlined, LeftOutlined, UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
-import React from "react";
+import React, {useRef} from "react";
 import Resources from "../../../../../../store/Resources";
-import dayjs from "dayjs";
+import FileManager from "../../../../../Fragments/FileManager";
+import addimage from "../../../../../../dist/icons/addimage.svg";
 
 
 function ClinicManagerCalendarDrawerLarge({openDrawer}) {
-
+    const formRef = useRef();
     const onFinish = () => {
 
     }
@@ -33,13 +34,19 @@ function ClinicManagerCalendarDrawerLarge({openDrawer}) {
                             name="edit"
                             onFinish={onFinish}
                             layout="vertical"
+                            ref={formRef}
                         >
                             <FormInput label={t('First name')}   rules={[{required: true}]} />
                             <FormInput label={t('Last name')} rules={[{required: true}]} />
                             <FormInput label={t('Email')}  rules={[{required: true}]} />
                             <div style={{display:"flex", width:'100%'}}>
-                                <div style={{width:80}}>
-                                    <FormInput name={'phone_country_code'} rules={[{required: true}]} initialValue={'374'} />
+                                <div style={{width:110}}>
+                                    <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={966}
+                                               // handleMapItems={handleMapItems}
+                                               // resource={'Country'}
+                                    />
                                 </div>
                                 <div style={{marginLeft:20, width:'100%'}}>
                                     <FormInput label={t('Phone number')} name={'phone_number'} />
@@ -48,6 +55,10 @@ function ClinicManagerCalendarDrawerLarge({openDrawer}) {
                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                        initialData={Resources?.Gender}
                             />
+                                <FileManager text1={'Insurance Card Front'}
+                                             text2={'upload image'}
+                                             uploadIcon={<img alt={'icons'} src={addimage}/>}
+                                             name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>
                             <div>
                                 <Button style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                             </div>
@@ -69,6 +80,10 @@ function ClinicManagerCalendarDrawerLarge({openDrawer}) {
                             <FormInput label={t('Natoinality')} />
                             <FormInput label={t('Identification number')} />
                             <FormInput label={t('Insurance company')} />
+                            <FileManager text1={'Insurance Card Back'}
+                                         text2={'upload image'}
+                                         uploadIcon={<img alt={'icons'} src={addimage}/>}
+                                         name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>
 
                             <div >
                                 <Button style={{width:'100%',}} size={'large'}  type={'secondary'} htmlType="submit">{t('Cancel')}</Button>

@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import logo from "../../../dist/Img/logo.svg";
 import logoShort from "../../../dist/Img/Logo-short.svg";
 import {Button, Divider, Menu} from "antd";
-import {MenuOutlined} from "@ant-design/icons";
+import {MenuOutlined, NotificationOutlined, PercentageOutlined, RedEnvelopeOutlined, DiffOutlined} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
 import dash2 from "../../../dist/icons/frame2.svg";
@@ -10,7 +10,7 @@ import dash3 from "../../../dist/icons/frame3.svg";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";
-import i18n from "i18next";
+
 function DashboardMenu({mouseCollapsed,fixCollapse}){
     const {t} = useTranslation();
     const navigate = useNavigate();
@@ -86,16 +86,6 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     permission:'NursingTask'
                 },
                 {
-                    key: 'lab-packages',
-                    label: t(`Lab packages`),
-                    permission:'LabPackage'
-                },
-                {
-                    key: 'lab-tests',
-                    label: t(`Lab tests`),
-                    permission:'LabTest'
-                },
-                {
                     key: 'insurance-companies',
                     label: t(`Insurance companies`),
                     permission:'InsuranceCompany'
@@ -135,10 +125,15 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     label: t(`Preferences`),
                     permission:'Preference'
                 },
+                {
+                    key: 'taxonomies',
+                    label: t(`Laboratory`),
+                    permission:'Taxonomy'
+                },
             ]
         },
         {
-            label: `User`,
+            label: t(`User`),
             icon: <img alt={'icons'} src={dash4}/>,
             children: [
                 {
@@ -154,7 +149,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             ]
         },
         {
-            label: `Accounts`,
+            label: t(`Accounts`),
             icon: <img alt={'icons'} src={dash2}/>,
             children: [
                 {
@@ -166,6 +161,29 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     key: 'clinics',
                     label: t(`Clinics`),
                     permission:'Clinic'
+                },
+            ]
+        },
+        {
+            key: 'appointments',
+            icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Appointments`),
+        },
+        {
+            label: t(`Marketing`),
+            icon: <NotificationOutlined style={{color:'#ce4e99', fontSize:20}}  />,
+            children: [
+                {
+                    icon:<PercentageOutlined style={{color:'#c98a1e', fontSize:20}} />,
+                    key: 'offers',
+                    label:  t(`Offers`),
+                    permission:'Offer'
+                },
+                {
+                    icon:<RedEnvelopeOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'coupons',
+                    label:  t(`Coupons`),
+                    permission:'Coupon'
                 },
             ]
         },
@@ -184,6 +202,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             key: 'clinic-manager',
             icon: <img alt={'icons'} src={dash3}/>,
             label: 'Clinic Manager',
+        },
+        {
+            key: 'doctor-reworked',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Doctor reworked',
+        },
+        {
+            key: 'super-admin',
+            icon: <img alt={'icons'} src={dash3}/>,
+            label: 'Super admin',
         },
         /*{
             key: `/match-event-naturess`,

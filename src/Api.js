@@ -112,6 +112,79 @@ let api = {
     {
         url: 'clinics',
         resource: 'Clinic',
+        custom:{
+            WorkingHours:{
+                url: `${endpoint}${version}/clinics/working-hours/`,
+                method: 'GET',
+            },
+        }
+    },
+
+    {
+        url: 'clinic-lab-packages',
+        resource: 'ClinicLabPackage',
+    },
+    {
+        url: 'clinic-nursing-tasks',
+        resource: 'ClinicNursingTask',
+    },
+    {
+        url: 'offers',
+        resource: 'Offer',
+    },
+    {
+        url: 'clinics/working-hours',
+        resource: 'ClinicWorkingHours',
+    },
+    {
+        url: 'coupons',
+        resource: 'Coupon',
+    },
+    {
+        url: 'clinic-lab-tests',
+        resource: 'ClinicLabTest',
+    },
+    {
+        url: 'clinic-doctors/working-hours',
+        resource: 'ClinicDoctorWorkingHours',
+    },
+    {
+        url: 'clinic-doctors/available-times',
+        resource: 'ClinicDoctorAvailableTimes',
+    },
+    {
+        url: 'clinic-doctors/available-times-by-doctor-and-clinic',
+        resource: 'ClinicDoctorAvailableTimeForDayByDoctorAndClinic',
+    },
+    {
+        url: 'clinic-doctors',
+        resource: 'ClinicDoctor',
+        custom: {
+            WorkingHours:{
+                url: `${endpoint}${version}/clinic-doctors/working-hours/`,
+                method: 'GET',
+            },
+        }
+    },
+    {
+        url: 'appointments',
+        resource: 'Appointment',
+    },
+    {
+        url: 'public/offers',
+        resource: 'PublicOffer',
+    },
+    {
+        url: 'public/clinics',
+        resource: 'PublicClinic',
+    },
+    {
+        url: 'public/services',
+        resource: 'PublicService',
+    },
+    {
+        url: 'public/categories',
+        resource: 'PublicCategory',
     },
     ].forEach(item => {
         if (!item.type) {
@@ -143,6 +216,14 @@ let api = {
                 search: {
                     url: `${endpoint}${version}/${item.url}/search`,
                     method: 'GET',
+                },
+                exportExcel: {
+                    url: `${endpoint}${version}/${item.url}/export`,
+                    method: 'GET',
+                },
+                updateField: {
+                    url: `${endpoint}${version}/${item.url}/update-field/`,
+                    method: 'POST',
                 },
                 ...item.custom
             }

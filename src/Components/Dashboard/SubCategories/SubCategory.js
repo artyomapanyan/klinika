@@ -3,10 +3,11 @@ import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
+import {Button, Form, Popconfirm, Space} from "antd";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
-import React from "react";
+import React, {useState} from "react";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const resource = 'SubCategory';
 function SubCategory() {
@@ -16,9 +17,10 @@ function SubCategory() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
 
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -29,7 +31,7 @@ function SubCategory() {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token).then((response) => {
@@ -38,7 +40,7 @@ function SubCategory() {
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
@@ -46,24 +48,32 @@ function SubCategory() {
 
 
     return (
-        <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Sub Category - ${data?.name}`)}</h3> : <h3>{t(`Add new Sub Category`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Sub Category - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Sub Category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+                <div  className={'add_edit_content'}>
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
 
-                <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.category?.id}
-                           initialData={data?.category?[data.category]:[]}
-                           resource={'Category'}/>
-
-                <Space>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.category?.id}
+                               initialData={data?.category?[data.category]:[]}
+                               resource={'Category'}/>
+                </div>
+                <Space className={'create_apdate_btns'}>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(resourceLinks[resource]) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

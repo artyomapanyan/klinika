@@ -1,15 +1,15 @@
 import {t} from "i18next";
 import Preloader from "../../Preloader";
-import {Button, Form, Space} from "antd";
+import {Button, Form, Popconfirm, Space} from "antd";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import resourceLinks from "../../ResourceLinks";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import FormInput from "../../Fragments/FormInput";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
-import {InboxOutlined} from "@ant-design/icons";
+import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import DraftEditor from "../../Fragments/DraftEditor";
 
 const resource = 'LabPackage';
@@ -23,8 +23,9 @@ function LabPackage() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [saveLoading, setSaveLoading] = useState(false)
     const onFinish = (values) => {
-        setLoading(true)
+        setSaveLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -32,26 +33,27 @@ function LabPackage() {
         if (params.id) {
             updateResource(resource, params.id, values, token,true).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+                    navigate(`${resourceLinks[resource]}?lab=packages`)
                 }
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         } else {
             createResource(resource, values, token,true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(`${resourceLinks[resource]}?lab=packages`)
                 }
 
             }).finally(() => {
-                setLoading(false)
+                setSaveLoading(false)
             })
         }
     }
 
+    let res = "Taxonomy"
     return (
-        <div className={"add_edit_content"}>
-            {data?.name ? <h3>{t(`Editing Lab Package - ${data?.name}`)}</h3> : <h3>{t(`Add new Lab Package`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Lab Package - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Package`)}</h3>}
 
             {loading ? <Preloader/> : <Form
 
@@ -60,40 +62,48 @@ function LabPackage() {
                 layout="vertical"
                 ref={formRef}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
-                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.status}
-                           initialData={Resources.Status}
-                           />
-                <Form.Item name={'description'} label={t('Description')}>
-                    <DraftEditor initialValue={data?.description} formRef={formRef} name={'description'} />
-                </Form.Item>
+                <div  className={"add_edit_content"}>
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
+                    <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.status}
+                               initialData={Resources.Status}
+                    />
+                    <Form.Item name={'description'} label={t('Description')}>
+                        <DraftEditor initialValue={data?.description} formRef={formRef} name={'description'} />
+                    </Form.Item>
 
-                <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.categories?.map(e=>e.id)??[]}
-                           initialData={data?.categories??[]}
-                           resource={'Taxonomy'}
-                           resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
-                />
+                    <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.categories?.map(e=>e.id)??[]}
+                               initialData={data?.categories??[]}
+                               resource={'Category'}
+                    />
 
-                <FormInput inputProps={{mode:'multiple'}} label={t('Lab tests')} name={'lab_tests'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.lab_tests?.map(e=>e.id)}
-                           initialData={data?.lab_tests??[]}
-                           resource={'Taxonomy'}
-                           resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
-                />
+                    <FormInput inputProps={{mode:'multiple'}} label={t('Lab tests')} name={'lab_tests'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.lab_tests?.map(e=>e.id)}
+                               initialData={data?.lab_tests??[]}
+                               resource={'Taxonomy'}
+                               resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
+                    />
 
-                <FileManager text1={'Click or drag file to this area to upload'}
-                             text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
-                             name={'cover'}
-                             uploadIcon={<InboxOutlined/>}
-                             initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
-                <Space>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Button size={'large'} onClick={()=>(navigate(resourceLinks[resource]))} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <FileManager text1={'Click or drag file to this area to upload'}
+                                 text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                                 name={'cover'}
+                                 uploadIcon={<InboxOutlined/>}
+                                 initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
+                </div>
+                <Space className={'create_apdate_btns'}>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Popconfirm
+                        title={t("Your hours will not be protected")}
+                        onConfirm={() => navigate(`${resourceLinks[res]}?lab=packages`) }
+                        okText={t("Yes")}
+                        cancelText={t("No")}
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    </Popconfirm>
                 </Space>
             </Form>}
         </div>

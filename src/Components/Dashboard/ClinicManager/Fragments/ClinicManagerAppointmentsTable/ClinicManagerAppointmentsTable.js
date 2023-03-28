@@ -1,12 +1,10 @@
-import React, {useState} from "react";
-import {Button, Drawer, Table} from "antd";
+import React from "react";
+import {Button, Table} from "antd";
 import { RightOutlined} from "@ant-design/icons";
 import ColorSelect from "../../../../Fragments/ColorSelect";
 import ClinicManagerAppointmentsTableHead from "./Fregment/ClinicManagerAppointmentsTableHead";
 import checkmarkGreen from "../../../../../dist/icons/checkmark-green.svg";
 import printIcon from "../../../../../dist/icons/printIcon.svg";
-import ClinicManagerCalendarDrawerSmall from "../ClinicManagerCalendar/Fragments/ClinicManagerCalendarDrawerSmall";
-
 
 
 function ClinicManagerAppointmentsTable() {

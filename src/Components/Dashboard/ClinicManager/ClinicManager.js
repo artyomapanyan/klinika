@@ -6,8 +6,7 @@ import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProg
 import ClinicManagerCalendar from "./Fragments/ClinicManagerCalendar/ClinicManagerCalendar";
 import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointmentsTable/ClinicManagerAppointmentsTable";
 import ClinicManagerConfirmation from "./Fragments/ClinicManagerConfirmation/ClinicManagerConfirmation";
-import ClinicManagerDoctorsLicensesTable
-    from "./Fragments/ClinicManagerDoctorsLicensesTable/ClinicManagerDoctorsLicensesTable";
+import ClinicManagerDoctorsLicensesTable from "./Fragments/ClinicManagerDoctorsLicensesTable/ClinicManagerDoctorsLicensesTable";
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 
 

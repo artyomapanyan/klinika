@@ -1,20 +1,36 @@
-import React, {useMemo, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
 import {Button, Col, Form, Popconfirm, Row, Space, Table, Typography, Tooltip} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
-import {DeleteOutlined, EditOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {clearObject, paramsToObject} from "../../functions";
+import axios from "axios";
+import api from "../../Api";
 
-function ResourceTable({resource, tableColumns, title,tableParams={},resourceLink=null,hideActions=false}) {
+function ResourceTable({resource, tableColumns,
+                           title,tableParams={},
+                           resourceLink=null,
+                           hideActions=false,
+                           exportButton = true,
+                           except={},
+                           handleTableBelowData,
+                           getAll=false,
+                           noHeader=false,
+                           eyeShow=false,
+                           customActions,
+                           buttonAdd = true,
+                            customTableButton
+                       }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
-       ...tableParams
+       ...tableParams,
+        ...(getAll?{per_page:9999}:{})
 })
     let token = useSelector((state) => state?.auth?.token);
     let lngs = useSelector((state) => state?.app?.current_locale);
@@ -23,7 +39,7 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
     let navigate = useNavigate();
 
 
-    const {loadingState, dataState} = useGetResourceIndex(resource, params)
+    const {loadingState, dataState} = useGetResourceIndex(resource, params,false,false,false,getAll)
     const handleTableChange = (pagination, filters, sorter) => {
         let params = {
             ...filters,
@@ -41,20 +57,38 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
     const {setData, data} = dataState
 
 
-    const onResourceEdit = (e) => {
-        navigate(ResourceLinks[resourceLink??resource] + e)
+    const onResourceEdit = (record) => {
+
+        if(customActions?.edit){
+            return customActions.edit(record)
+        }
+        navigate(ResourceLinks[resourceLink??resource] + record.id)
 
     }
-    const onResourceDelete = (e) => {
+    const onResourceShow = (record) => {
+
+        if(customActions?.show){
+            return customActions.show(record)
+        }
+        navigate(ResourceLinks[resourceLink??resource] + record.id+'/show')
+
+    }
+    const onResourceDelete = (record) => {
 
         setLoading(true)
-        deleteResource(resource, e, token).then(resp => {
+        deleteResource(resource, record.id, token).then(resp => {
             setData((prevState)=>({
                 ...prevState, items: prevState?.items?.slice(0)?.filter(e => e.id !== resp.id)
             }))
             setLoading(false)
         })
     }
+    useEffect(()=>{
+        if(getAll){
+            getAll(data.items)
+        }
+
+    },[data])
 
     const columns = useMemo(() => {
             let filterKeys = Object.keys(params);
@@ -74,23 +108,26 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
         }),
 
             ...(hideActions?[]:[{
-            dataIndex: 'id', title: 'action', key: 'id', render: (e) => <Space>
-                <Tooltip title="Update">
-                    <Button onClick={() => onResourceEdit(e)} size={'small'}><EditOutlined/></Button>
-                </Tooltip>
-                <Tooltip title="Delete">
+            dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
+
+                    {!except.edit ? <Tooltip title="Update">
+                    <Button onClick={() => onResourceEdit(record)} size={'small'}><EditOutlined/></Button>
+                </Tooltip> :  <div></div>}
+                {!except.delete&&<Tooltip title="Delete">
                     <Popconfirm
                         title={t("Are you sure to delete this entry?")}
-                        onConfirm={() => onResourceDelete(e)}
+                        onConfirm={() => onResourceDelete(record)}
                         okText={t("Yes")}
                         cancelText={t("No")}
-                        icon={<QuestionCircleOutlined
-                                style={{
-                                    color: 'red',
-                                }}/>}>
+                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
                         <Button size={'small'}><DeleteOutlined/></Button>
                     </Popconfirm>
-                </Tooltip>
+                </Tooltip>}
+                    {
+                        eyeShow ? <Tooltip title="Show">
+                            <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><EyeOutlined style={{color: '#c98a1e'}} /></Button>
+                        </Tooltip> : <div></div>
+                    }
 
             </Space>
         }])
@@ -103,38 +140,67 @@ function ResourceTable({resource, tableColumns, title,tableParams={},resourceLin
     }
 
 
+    const handleExportExcel =()=>{
+        axios.request({
+            url: api[resource].exportExcel.url,
+            method: api[resource].exportExcel.method,
+            headers: {
+                'Authorization': token,
+            },
+            responseType: 'blob',
+
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', resource+'.xlsx');
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
+
     return (<Content className={'layout-conatiner'}>
-        <Row className={'resource-header'}>
+        {!noHeader&&<Row className={'resource-header'}>
             <Col lg={12}>
                 <Space>
                     <Typography.Title level={4}>{t(title)}</Typography.Title>
-                    <Tooltip title="prompt text">
-                        <Button type={'secondary'}>{t("Export to Excel")}</Button>
-                    </Tooltip>
+                    {
+                        exportButton ? <Tooltip title="prompt text">
+                            <Button onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
+                        </Tooltip> : null
+                    }
+
                     <Tooltip title="prompt text">
                         <Button type={'secondary'}>{t("Import to Database")}</Button>
                     </Tooltip>
                 </Space>
             </Col>
             <Col lg={12}>
-                <Tooltip title="Add new entry">
-                    <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
-                </Tooltip>
+                {
+                    buttonAdd ? <Tooltip title="Add new entry">
+                        <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
+                    </Tooltip> : null
+                }
+
             </Col>
-        </Row>
-        <Row style={{marginTop:30}}>
+        </Row>}
+        <Row style={{marginTop:10}}>
             <Col lg={24}>
                 <Form>
                 <Table
                     columns={columns}
                     loading={loading}
-                    pagination={data.pagination}
+                    pagination={{
+                        ...data.pagination,
+                        showTotal: (total) =>handleTableBelowData?handleTableBelowData(dataState,loadingState,total):null
+                    }}
                     onChange={handleTableChange}
                     dataSource={data?.items}
                     rowKey={e => e.id}
                     size={'small'}
                 />
                 </Form>
+                {customTableButton?<Button loading={loading} type={'primary'} size={'large'} style={{margin:20}} icon={customTableButton.icon} onClick={()=>customTableButton.onClick()}>{customTableButton.title}</Button>:null}
             </Col>
         </Row>
     </Content>)

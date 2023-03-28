@@ -148,20 +148,19 @@ function AppointmentStats(){
         let appointmentChart = appointmentChartRef.current;
         appointmentChart.config.data.datasets[key].hidden = !e
         appointmentChart.update()
-
     }
 
-    return<div>
+    return<div className={'chart_incomes_div'}>
         <Space>
             <Typography.Title level={3}>Appointments stats</Typography.Title>
             <div>
-                <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} /> Canceled
+                <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} style={{background:'#a7a8a7'}} /> Canceled
             </div>
             <div>
-                <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} /> Rescheduled
+                <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} style={{background:'#F5A348'}} /> Rescheduled
             </div>
             <div>
-                <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} /> Finished
+                <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} style={{background:'#60a428'}} /> Finished
             </div>
         </Space>
         <div style={{height: '427px', width: '100%'}}>

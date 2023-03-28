@@ -1,16 +1,16 @@
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
-import Resources from "../../../store/Resources";
-
 import DateParser from "../../Fragments/DateParser";
-import TableEditable from "../../Fragments/TableEditable";
-
+import Resource from "../../../store/Resources";
+import ColorSelect from "../../Fragments/ColorSelect";
+import React from "react";
+const resource = 'InsuranceCompany'
 function InsuranceCompanies() {
 
     return (
         <div>
-            <ResourceTable resource={'InsuranceCompany'} tableColumns={[
+            <ResourceTable resource={resource} tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',
@@ -30,14 +30,7 @@ function InsuranceCompanies() {
                     title:t('Status'),
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                    render:(e,record)=><TableEditable
-                        label={'Status'}
-                        resource={'InsuranceCompany'}
-                        initialData={Resources.Status}
-                        updateKey={'status'}
-                        value={e}
-                        record={record}
-                        inputType={'resourceSelect'}/>
+                    render:(e,record)=><ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },
                 {
                     dataIndex:['created_at','iso_string'],

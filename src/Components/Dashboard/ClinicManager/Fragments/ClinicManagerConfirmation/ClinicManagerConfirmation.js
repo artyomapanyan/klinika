@@ -101,7 +101,7 @@ function ClinicManagerConfirmation() {
     ];
 
     return(
-        <div className={'chart_incomes_div'}>
+        <div className={'cl_man_tables'}>
             <div className={'incomes_table_head'}>
                 <h1 className={'h1'}>Confirmation of attendance</h1>
                 <Space>

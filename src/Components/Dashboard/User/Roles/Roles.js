@@ -7,7 +7,7 @@ import DateParser from "../../../Fragments/DateParser";
 function Roles() {
     return (
         <div>
-            <ResourceTable resource={'Role'} tableColumns={[
+            <ResourceTable resource={'Role'} exportButton={false} tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',
