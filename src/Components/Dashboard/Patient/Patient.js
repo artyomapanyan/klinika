@@ -12,10 +12,13 @@ import PatientHistory from "./Tabs/PatientHistory";
 function Patient() {
     return(
         <div>
-            <PatientHeader />
-            <Divider />
-            <PatientCollapse />
-            <div style={{backgroundColor:'white', margin:24}}>
+            <div style={{background:"#ffffff", margin:'0 24px', borderRadius: 12}}>
+                <PatientHeader />
+                <Divider />
+                <PatientCollapse />
+            </div>
+
+            <div style={{backgroundColor:'white', margin:'0 24px'}}>
             <TabBars>
                 <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
                     <PatientOverviewTab/>

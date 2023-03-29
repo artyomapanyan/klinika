@@ -255,7 +255,7 @@ function AppLayout(){
         {
             url:'appointments',
             resource:'Appointment',
-            //singleComp:<Appointment/>,
+            singleComp:<Appointment/>,
             indexComp:<Appointments/>,
             showComp:<ShowAppointment/>
         },

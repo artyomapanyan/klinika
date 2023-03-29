@@ -1,18 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Col, Row, Image, Button, Typography, Tabs } from 'antd';
 import { PhoneOutlined, MailOutlined, GlobalOutlined, EditOutlined } from '@ant-design/icons';
 import ShowClinicAboutTab from './ShowClinicAboutTab';
 import ShowClinicHoursTab from './ShowClinicHoursTab';
 import { useParams } from 'react-router';
-import { useGetResourceSingle } from '../../../../Functions/api_calls';
+import {postResource, useGetResourceSingle} from '../../../../Functions/api_calls';
 import ShowClinicDoctorsTab from './ShowClinicDoctorsTab';
+import {useSelector} from "react-redux";
 
+let resource = 'Clinic';
 function ShowClinic () {
   const params = useParams ();
+  let token = useSelector((state) => state.auth.token);
   const { loadingState, dataState } = useGetResourceSingle ('Clinic', params.id);
   const { name, email, phone_number, website, cover, description, insurance_companies } = dataState?.data;
 
-  console.log (dataState);
+  useEffect(()=>{
+    postResource(resource,'WorkingHours',token,params.id,{}).then(response => {
+
+     console.log(response)
+    })
+
+
+  }, []);
+
 
   const tabItems = [
     {

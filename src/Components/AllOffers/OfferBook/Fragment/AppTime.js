@@ -76,8 +76,8 @@ function AppTime({setDataState, dataState, data}) {
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time ? <div>
                     <Space>
-                        Selected Time : 01:00
-                        <Button type={'secondary'} onClick={onChangeTime} style={{borderRadius:15}}>Change Selected Doctor</Button>
+                        Selected Time : <span className={'selected_text'}>{dataState?.time}</span>
+                        <Button type={'secondary'} onClick={onChangeTime} style={{borderRadius:15}}>Change Time</Button>
                     </Space>
                 </div> : (dataState?.doctor_id && dataState?.date) || dataState?.time ? <div className={'date_carousel_div'}>
                     <div style={{position:'absolute', width:'98%'}}>

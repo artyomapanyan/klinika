@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {CheckCircleOutlined, UserOutlined} from "@ant-design/icons";
 import {Button, Form, Input, InputNumber, Space} from "antd";
 import {postResource, useGetResourceIndex} from "../../../Functions/api_calls";
@@ -11,63 +11,78 @@ import FormInput from "../../../Fragments/FormInput";
 
 function AppPersonalDetails({setDataState, dataState}) {
     let token = useSelector((state) => state.auth.token);
-
+    let formRef= useRef();
+    let refObj = formRef?.current?.getFieldValue()
     const [phoneLoading, setPhoneLoading] = useState(false);
     const [verifyState, setVerifyState] = useState(0);
     const [codeAndNumber, setCodeAndNumber] = useState()
+    const [verifyResponse, setVerifyResponse] = useState()
 
+    useEffect(() => {
+        if(dataState?.payment){
+            setDataState((prevState) => ({
+                ...prevState,
+                ...refObj,
+                ...codeAndNumber
+            }))
+        }
+    }, [dataState?.payment])
 
-    const onNumberChange = (e) => {
-        setDataState((prevState) => ({
-            ...prevState,
-            number: e,
-        }))
-    }
-
-    const onCodeChange = (e) => {
-        setDataState((prevState) => ({
-            ...prevState,
-            code: e,
-        }))
-    }
-
+    console.log(dataState, 'dataState')
 
     const onVerifyNumber = (values) => {
         setPhoneLoading(true)
         postResource('PublicOffer', 'PhoneVerify', token, '', values).then((response) => {
-            console.log(response)
             setPhoneLoading(false)
             setVerifyState(1)
+
         })
         setCodeAndNumber(values)
 
     }
-    const enterInput = (e) => {
-        setDataState((prevState) => ({
-            ...prevState,
-            verifyNumber: e?.target?.value,
-        }))
-    }
+    // const enterInput = (e) => {
+    //     setDataState((prevState) => ({
+    //         ...prevState,
+    //         verifyNumber: e?.target?.value,
+    //     }))
+    // }
 
     const onChack = (values) => {
-        console.log(values, 'ddddd')
         values = {
             ...values,
             phone_country_code: codeAndNumber?.phone_country_code,
             phone_number: codeAndNumber?.phone_number,
         }
+        setCodeAndNumber(values)
+
         setPhoneLoading(true)
         postResource('PublicOffer', 'PhoneVerify', token, '', values).then((response) => {
-            console.log(response)
+            console.log(response, 'response')
+            setVerifyResponse(response)
             setPhoneLoading(false)
             setVerifyState(2)
+            if(response?.message === 'Verification code successfully sent to your phone number'){
+                setDataState((prevState) => ({
+                    ...prevState,
+                    verifyNumber: 'Verification code successfully sent to your phone number',
+                }))
+            }
+
         })
+
+
     }
+
+
 
     const hoursMinSecs = {};
     const { minutes = 2, seconds = 0 } = hoursMinSecs;
     const [[mins, secs], setTime] = React.useState([minutes, seconds]);
-
+    const onSendSMSAgain = () => {
+        setVerifyState(0)
+        setCodeAndNumber(null)
+        setTime([1, 59])
+    }
 
     const tick = () => {
 
@@ -94,11 +109,11 @@ function AppPersonalDetails({setDataState, dataState}) {
         return [name,item]
     }
 
-    console.log(codeAndNumber, 'ghfjgfhjg')
+
     return (
         <div>
             <Space>
-                <CheckCircleOutlined style={{color: dataState?.number ? '#2ce310' : 'gray', fontSize: 22}}/>
+                <CheckCircleOutlined style={{color:verifyResponse?.message === 'Verification code successfully sent to your phone number' ? '#2ce310' : 'gray', fontSize: 22}}/>
                 <h2 style={{fontWeight: 600, marginTop: 8}}>Personal Details</h2>
             </Space>
             {dataState?.doctor_id && dataState?.date && dataState?.time ? <div className={'date_carousel_div'}>
@@ -129,7 +144,10 @@ function AppPersonalDetails({setDataState, dataState}) {
                                     <FormInput initialValue={'dddddddd'} label={t('Phone number')} />
                                 </div>
                                 <div style={{width: '20%'}} align={'center'}>
-                                    <p>{`${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`}</p>
+                                    {
+                                        mins === 0 && secs === 0 ? <div className={'send_again_text'} onClick={onSendSMSAgain}>Send Again</div> :
+                                            <p>{`${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`}</p>
+                                    }
                                 </div>
                                 <div className={'space_compact'}>
                                     <FormInput label={t('Verify code')} name={'code'} />
@@ -138,15 +156,15 @@ function AppPersonalDetails({setDataState, dataState}) {
                             </div>
 
                         </Form>
-
-
-
                     </div>}
                     {verifyState === 2 && <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
-                            <Input size={'large'} placeholder='500-000-000' disabled={true}/>
-                            <Input size={'large'} placeholder='500-000-000' disabled={true}/>
-                            <Input size={'large'} placeholder='500-000-000' disabled={true}/>
+                            <Form ref={formRef}>
+                                <FormInput label={t('First Name')} name={'first'} initialValue={verifyResponse?.first} rules={[{required: true}]} />
+                                <FormInput label={t('Last Name')} name={'last'} initialValue={verifyResponse?.last} rules={[{required: true}]} />
+                                <FormInput label={t('Email')} name={'email'} initialValue={verifyResponse?.email} rules={[{required: true}]} />
+                            </Form>
+
                         </Space>
 
                     </div>}

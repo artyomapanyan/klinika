@@ -24,7 +24,6 @@ function MyMapComponent({data,formRef}) {
         setTimeout(() => {
             geocoder?.geocode({'latLng': marker.getPosition()}, function (results, status) {
                 if (results[0]) {
-                    console.log(results[0]?.geometry?.location?.lng().toString(),results[0]?.formatted_address, 'ddddddd')
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
                     formRef.current.setFieldValue('address',results[0]?.formatted_address)
@@ -43,7 +42,6 @@ function MyMapComponent({data,formRef}) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
                     formRef.current.setFieldValue('address',results[0]?.formatted_address)
-
                 }
             });
         }, 100)
@@ -79,15 +77,15 @@ function MyMapComponent({data,formRef}) {
         <Row gutter={[16, 16]}>
 
             <Col lg={14} className="gutter-row">
-                <FormInput label={t('Area')} name={'areas'} inputType={'resourceSelect'}
-                           initialValue={data?.areas?.map(e=>e.id)}
-                           initialData={data?.areas??[]}
-                           resource={'Country'} />
-                <FormInput label={t('City')} name={'citys'} inputType={'resourceSelect'}
-                           initialValue={data?.citys?.map(e=>e.id)}
-                           initialData={data?.citys??[]}
-                           resource={'City'} />
-                <Form.Item label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} className={'map_input_label'}>
+                {/*<FormInput label={t('Area')} name={'areas'} inputType={'resourceSelect'}*/}
+                {/*           initialValue={data?.areas?.map(e=>e.id)}*/}
+                {/*           initialData={data?.areas??[]}*/}
+                {/*           resource={'Country'} />*/}
+                {/*<FormInput label={t('City')} name={'citys'} inputType={'resourceSelect'}*/}
+                {/*           initialValue={data?.citys?.map(e=>e.id)}*/}
+                {/*           initialData={data?.citys??[]}*/}
+                {/*           resource={'City'} />*/}
+                <Form.Item label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} >
                     <Input style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>
                 </Form.Item>
                 <Form.Item label={t('Longitude')}  name={'longitude'} initialValue={data?.longitude}>

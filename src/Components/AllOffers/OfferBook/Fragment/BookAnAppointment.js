@@ -5,16 +5,17 @@ import AppDate from "./AppDate";
 import AppTime from "./AppTime";
 import AppPersonalDetails from "./AppPersonalDetails";
 import AppPaymentMethods from "./AppPaymentMethods";
-import {postResource} from "../../../Functions/api_calls";
+import {postResource, useGetResourceIndex} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
 function BookAnAppointment({data}) {
+    let token = useSelector((state) => state.auth.token);
+
     const [dataState, setDataState] = useState({});
 
-
-
-
-console.log()
+    const onBooking = () => {
+        postResource('PublicOffer', 'PhoneVerify', token, '', dataState)
+    }
 
     return(
         <div className={'app_big_div'}>
@@ -46,7 +47,7 @@ console.log()
             </div>
             <Divider style={{background: '#e3e0e3'}}/>
             <div className={'app_btn_div'}>
-                <Button size={'large'} type={'primary'}>Book Now</Button>
+                <Button onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment && dataState?.verifyNumber ? false : true}>Book Now</Button>
             </div>
         </div>
     )
