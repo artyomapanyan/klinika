@@ -9,7 +9,7 @@ import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 
 
-function AppPersonalDetails({setDataState, dataState}) {
+function AppPersonalDetails({setDataState, dataState, setResponseCodeState, params}) {
     let token = useSelector((state) => state.auth.token);
     let formRef= useRef();
     let refObj = formRef?.current?.getFieldValue()
@@ -17,18 +17,30 @@ function AppPersonalDetails({setDataState, dataState}) {
     const [verifyState, setVerifyState] = useState(0);
     const [codeAndNumber, setCodeAndNumber] = useState()
     const [verifyResponse, setVerifyResponse] = useState()
-
+console.log(dataState, 'dataState')
     useEffect(() => {
-        if(dataState?.payment){
-            setDataState((prevState) => ({
-                ...prevState,
-                ...refObj,
-                ...codeAndNumber
-            }))
-        }
-    }, [dataState?.payment])
+        if(dataState?.payment_method_id){
+            if(verifyResponse?.patient?.id) {
+                setDataState((prevState) => ({
+                    ...prevState,
+                    code: codeAndNumber?.code,
+                    patient_id: dataState?.payment_method_id,
+                    offer_id:params.id
+                }))
+            } else {
+                setDataState((prevState) => ({
+                    ...prevState,
+                    code: codeAndNumber?.code,
+                    patient: {
+                        ...refObj,
+                        phone_number: codeAndNumber?.phone_number,
+                        phone_country_code:codeAndNumber?.phone_country_code,
+                    },
+                }))
+            }
 
-    console.log(dataState, 'dataState')
+        }
+    }, [dataState?.payment_method_id])
 
     const onVerifyNumber = (values) => {
         setPhoneLoading(true)
@@ -47,7 +59,7 @@ function AppPersonalDetails({setDataState, dataState}) {
     //     }))
     // }
 
-    const onChack = (values) => {
+    const onVerifyCode = (values) => {
         values = {
             ...values,
             phone_country_code: codeAndNumber?.phone_country_code,
@@ -56,8 +68,8 @@ function AppPersonalDetails({setDataState, dataState}) {
         setCodeAndNumber(values)
 
         setPhoneLoading(true)
-        postResource('PublicOffer', 'PhoneVerify', token, '', values).then((response) => {
-            console.log(response, 'response')
+        postResource('PublicOffer', 'CodeVerify', token, '', values).then((response) => {
+            setResponseCodeState(response)
             setVerifyResponse(response)
             setPhoneLoading(false)
             setVerifyState(2)
@@ -113,7 +125,7 @@ function AppPersonalDetails({setDataState, dataState}) {
     return (
         <div>
             <Space>
-                <CheckCircleOutlined style={{color:verifyResponse?.message === 'Verification code successfully sent to your phone number' ? '#2ce310' : 'gray', fontSize: 22}}/>
+                <CheckCircleOutlined style={{color:verifyResponse ? '#2ce310' : 'gray', fontSize: 22}}/>
                 <h2 style={{fontWeight: 600, marginTop: 8}}>Personal Details</h2>
             </Space>
             {dataState?.doctor_id && dataState?.date && dataState?.time ? <div className={'date_carousel_div'}>
@@ -131,17 +143,18 @@ function AppPersonalDetails({setDataState, dataState}) {
                                 <FormInput label={t('Phone number')} name={'phone_number'} />
                             </div>
 
-                            <Button loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>Verify New</Button>
+                            <Button loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>Send code</Button>
 
                         </div>
                     </Form>}
 
 
                     {verifyState === 1 && <div>
-                        <Form name={'verify_code'} onFinish={onChack}>
+                        <Form name={'verify_code'} onFinish={onVerifyCode}>
                             <div style={{display: 'flex', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <div style={{width:'50%', marginLeft:10}}>
-                                    <FormInput initialValue={'dddddddd'} label={t('Phone number')} />
+                                    <Input value={`+${codeAndNumber?.phone_country_code}${codeAndNumber?.phone_number}`} style={{marginTop:7, height:46, borderRadius:12}}/>
+                                    <div className={'change_number'} onClick={onSendSMSAgain}>Change Number</div>
                                 </div>
                                 <div style={{width: '20%'}} align={'center'}>
                                     {
@@ -152,7 +165,7 @@ function AppPersonalDetails({setDataState, dataState}) {
                                 <div className={'space_compact'}>
                                     <FormInput label={t('Verify code')} name={'code'} />
                                 </div>
-                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>Check</Button>
+                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>Virify</Button>
                             </div>
 
                         </Form>
@@ -160,9 +173,9 @@ function AppPersonalDetails({setDataState, dataState}) {
                     {verifyState === 2 && <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
                             <Form ref={formRef}>
-                                <FormInput label={t('First Name')} name={'first'} initialValue={verifyResponse?.first} rules={[{required: true}]} />
-                                <FormInput label={t('Last Name')} name={'last'} initialValue={verifyResponse?.last} rules={[{required: true}]} />
-                                <FormInput label={t('Email')} name={'email'} initialValue={verifyResponse?.email} rules={[{required: true}]} />
+                                <FormInput inputDisabled={verifyResponse?.patient?.first} label={t('First Name')} name={'first'} initialValue={verifyResponse?.patient?.first} rules={[{required: true}]} />
+                                <FormInput inputDisabled={verifyResponse?.patient?.last} label={t('Last Name')} name={'last'} initialValue={verifyResponse?.patient?.last} rules={[{required: true}]} />
+                                <FormInput inputDisabled={verifyResponse?.patient?.email} label={t('Email')} name={'email'} initialValue={verifyResponse?.patient?.email} rules={[{required: true}]} />
                             </Form>
 
                         </Space>

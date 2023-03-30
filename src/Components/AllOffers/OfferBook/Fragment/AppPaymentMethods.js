@@ -7,7 +7,7 @@ import FormInput from "../../../Fragments/FormInput";
 import Radio from "antd/lib/radio/radio";
 
 
-function AppPaymentMethods({setDataState, dataState}) {
+function AppPaymentMethods({setDataState, dataState, responseCodeState}) {
     const [paymentMethodState, setPaymentMethodState] = useState('')
 
 
@@ -15,7 +15,7 @@ function AppPaymentMethods({setDataState, dataState}) {
     const onChangeDetails = () => {
         setDataState((prevState)=>({
             ...prevState,
-            payment: ''
+            payment_method_id: ''
         }))
         setPaymentMethodState('');
     }
@@ -24,7 +24,7 @@ function AppPaymentMethods({setDataState, dataState}) {
         setPaymentMethodState(e.target.value);
         setDataState((prevState)=>({
             ...prevState,
-            payment: e.target.value,
+            payment_method_id: e.target.value,
         }))
     };
 
@@ -37,15 +37,15 @@ function AppPaymentMethods({setDataState, dataState}) {
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment && dataState?.verifyNumber ? <div>
                     <Space>
-                        Selected Payment Method: <span className={'selected_text'}>{dataState?.payment}</span>
+                        Selected Payment Method: <span className={'selected_text'}>{dataState?.payment_method_id}</span>
                         <Button type={'secondary'} onClick={onChangeDetails} style={{borderRadius:15}}>Change Payment Method</Button>
                     </Space>
-                </div> : dataState?.verifyNumber === 'Verification code successfully sent to your phone number' ? <div className={'date_carousel_div'}>
+                </div> : responseCodeState ? <div className={'date_carousel_div'}>
                     <div>
                         <Radio.Group onChange={onChange}>
                             <Space direction="vertical">
-                                <Radio value={'cash'}>Cash</Radio>
-                                <Radio value={'tap-payments'}>Tap Payments</Radio>
+                                <Radio value={1}>Cash</Radio>
+                                <Radio value={2}>Tap Payments</Radio>
                             </Space>
                         </Radio.Group>
                     </div>

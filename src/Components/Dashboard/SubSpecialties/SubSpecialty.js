@@ -63,6 +63,7 @@ function SubSpecialty() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
                 <div className={"add_edit_content"}>
                     <FormInput label={t('Title')} name={'title'} initialValue={data?.name} rules={[{required: true}]}/>

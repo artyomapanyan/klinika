@@ -73,37 +73,40 @@ function Role() {
     };
 
     return(
-        <div className={'add_edit_content'}>
-            {data?.name ? <h3>{t(`Editing Role - ${data?.name}`)}</h3> : <h3>{t(`Add new Role`)}</h3>}
+        <div>
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Role - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Role`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
+                <div className={'add_edit_content'}>
+                    <FormInput label={t('name')} name={'name'} initialValue={data?.name}/>
+                    <Form.Item name={'permissions'}
+                               valuePropName={'selectedKeys'}>
+                        <Tree
+                            checkable
+                            checkedKeys={checkKeysState}
+                            onCheck={onCheck}
+                            treeData={treeData}
+                        />
+                    </Form.Item>
 
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name}/>
-                <Form.Item name={'permissions'}
-                           valuePropName={'selectedKeys'}>
-                    <Tree
-                        checkable
-                        checkedKeys={checkKeysState}
-                        onCheck={onCheck}
-                        treeData={treeData}
-                    />
-                </Form.Item>
+                    <Space>
+                        <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                        <Popconfirm
+                            title={t("Your hours will not be protected")}
+                            onConfirm={() => navigate(resourceLinks[resource]) }
+                            okText={t("Yes")}
+                            cancelText={t("No")}
+                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                            <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                        </Popconfirm>
+                    </Space>
+                </div>
 
-                <Space>
-                    <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
-                </Space>
             </Form>}
         </div>
     )

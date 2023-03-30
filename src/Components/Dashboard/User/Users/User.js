@@ -47,52 +47,56 @@ function User() {
     }
 
     return(
-        <div className={'add_edit_content'}>
-            {data?.first ? <h3>{t(`Editing User - ${data?.first}`)}</h3> : <h3>{t(`Add new User`)}</h3>}
+        <div>
+            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing User - ${data?.first}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new User`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
-                <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
-                <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
-                <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
-                <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
-                <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'}  />
-                <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[{required: true}]} />
-                <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
-                <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
-                           initialValue={data?.gender}
-                           initialData={Resources?.Gender}
-                />
-                <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
-                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.status}
-                           initialData={Resources.Status}
-                />
-                <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
-                <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
-                <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.roles?.map(e=>e.id)}
-                           initialData={data?.roles??[]}
-                           resource={'Role'}
-                />
+                <div className={'add_edit_content'}>
+                    <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
+                    <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
+                    <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                    <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
+                    <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'}  />
+                    <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[{required: true}]} />
+                    <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
+                    <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
+                               initialValue={data?.gender}
+                               initialData={Resources?.Gender}
+                    />
+                    <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
+                    <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.status}
+                               initialData={Resources.Status}
+                    />
+                    <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
+                    <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                    <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.roles?.map(e=>e.id)}
+                               initialData={data?.roles??[]}
+                               resource={'Role'}
+                    />
 
 
-                <Space>
-                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
-                </Space>
+                    <Space>
+                        <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                        <Popconfirm
+                            title={t("Your hours will not be protected")}
+                            onConfirm={() => navigate(resourceLinks[resource]) }
+                            okText={t("Yes")}
+                            cancelText={t("No")}
+                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                            <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                        </Popconfirm>
+                    </Space>
+                </div>
+
             </Form>}
         </div>
     )

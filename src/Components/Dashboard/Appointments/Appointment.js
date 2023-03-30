@@ -380,6 +380,7 @@ useEffect(() => {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
                 <div>
                         <div className={'add_edit_content'}>

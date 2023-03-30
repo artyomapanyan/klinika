@@ -71,6 +71,8 @@ import Appointment from "./Dashboard/Appointments/Appointment";
 import ShowAppointment from "./Dashboard/Appointments/Fragments/ShowAppointment";
 import ShowClinic from "./Dashboard/Clinics/Fragments/ShowClinic/ShowClinic";
 import DoctorShow from "./Dashboard/Doctors/DoctorShow";
+import InvoiceItems from "./Dashboard/Invoices/InvoiceItems/InvoiceItems";
+import InvoiceItem from "./Dashboard/Invoices/InvoiceItems/InvoiceItem";
 
 
 function AppLayout(){
@@ -237,7 +239,6 @@ function AppLayout(){
         {
             url:'taxonomies',
             resource:'Taxonomy',
-            //singleComp:<Coupon/>,
             indexComp:<Laboratory/>
         },
         {
@@ -258,6 +259,12 @@ function AppLayout(){
             singleComp:<Appointment/>,
             indexComp:<Appointments/>,
             showComp:<ShowAppointment/>
+        },
+        {
+            url:'invoice-items',
+            resource:'InvoiceItem',
+            singleComp:<InvoiceItem/>,
+            indexComp:<InvoiceItems/>
         },
 
 

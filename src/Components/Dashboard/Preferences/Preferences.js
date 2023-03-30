@@ -45,7 +45,7 @@ function Preferences() {
                                key: 'save',
                                render:(i,record)=><Button type={'primary'} loading={loading[record.id]} onClick={()=>handleSave(record)}>{t('Save')}</Button>
                            },
-                       ]}/>
+                       ]} title={t('Preference')}/>
     )
 }
 

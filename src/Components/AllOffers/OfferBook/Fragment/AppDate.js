@@ -10,13 +10,14 @@ import Resources from "../../../../store/Resources";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function AppDate({setDataState, dataState, data}) {
+function AppDate({setDataState, dataState, data, date, setDate}) {
     let token = useSelector((state) => state.auth.token);
     const [dayOff, setDayOff] = useState([]);
 
     useEffect(() => {
         if(dataState?.doctor_id) {
             postResource('PublicClinicDoctorWorkingHours','single', token,  dataState?.doctor_id+ '/' + data?.clinic?.id, {service:'home_visit'}).then(response => {
+
                 const res = response?.working_hours
                 let day = [];
                 Object.values(res)?.map((el, i) => {
@@ -80,17 +81,7 @@ function AppDate({setDataState, dataState, data}) {
         ]
     }
 
-
-
     const currentDate = dayjs();
-
-    // let arrDays = [...Array(30).keys()].map((el) => {
-    //     const date = currentDate.add(el,'day').day();
-    //     return date
-    // }).filter((el) => {
-    //     return !dayOff.includes(el)
-    // })
-
 
     return(
         <div>
@@ -109,8 +100,9 @@ function AppDate({setDataState, dataState, data}) {
                         <Slider {...settings}>
                             {[...Array(30).keys()].map((key, i)=>{
                                 const date = currentDate.add(key,'day')
+                                console.log(date.day(),dayOff)
 
-                                return <div key={key} onClick={()=>onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>
+                                return !dayOff.includes(date.day())? <div key={key} onClick={()=>onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>
                                     <div className={'date_div_inn'}>
                                         <div style={{fontSize:12, color:'gray'}}>{Resources.Days[date.day()]}</div>
                                         <Space>
@@ -118,7 +110,7 @@ function AppDate({setDataState, dataState, data}) {
                                             <div>{date.format('DD-MM-YYYY')}</div>
                                         </Space>
                                     </div>
-                                </div>
+                                </div>:null
                             })}
 
                         </Slider>

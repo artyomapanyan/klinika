@@ -11,6 +11,7 @@ const NoForm = ['resourceSelect'];
 function FormInput({
                        name, label, rules, initialValue, inputProps = {},
                        resourceSelectStyle,
+                       inputDisabled,
                        disabled,
                        options,
                        disabledDate,
@@ -81,7 +82,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput isRequired={isRequired} label={label} inputProps={inputProps}/>
+                return <CInput inputDisabled={inputDisabled} isRequired={isRequired} label={label} inputProps={inputProps}/>
         }
     }
     let isDate = inputType==='date';

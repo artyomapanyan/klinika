@@ -16,7 +16,7 @@ function Laboratory() {
     let getLab = searchParams.get('lab')
 
     return(
-        <div>
+        <div style={{marginTop: -30}}>
             <div className={'lab_radio_btn'}>
                 <Radio.Group onChange={onChange} value={getLab ? getLab : 'packages'} size="large">
                     <Radio.Button  value="tests_category">{t("Tests Categories")}</Radio.Button>

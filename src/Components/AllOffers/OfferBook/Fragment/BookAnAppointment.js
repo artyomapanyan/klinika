@@ -5,16 +5,22 @@ import AppDate from "./AppDate";
 import AppTime from "./AppTime";
 import AppPersonalDetails from "./AppPersonalDetails";
 import AppPaymentMethods from "./AppPaymentMethods";
-import {postResource, useGetResourceIndex} from "../../../Functions/api_calls";
+import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import {useParams} from "react-router";
 
 function BookAnAppointment({data}) {
     let token = useSelector((state) => state.auth.token);
+    let params = useParams();
+
 
     const [dataState, setDataState] = useState({});
+    const [date, setDate] = useState();
+    const [time, setTime] = useState();
+    const [responseCodeState, setResponseCodeState] = useState();
 
     const onBooking = () => {
-        postResource('PublicOffer', 'PhoneVerify', token, '', dataState)
+        postResource('PublicAppointment', 'create', token, '', dataState)
     }
 
     return(
@@ -30,24 +36,24 @@ function BookAnAppointment({data}) {
             </div>
             <div className={'app_content'}>
                 <div className={'app_doctor'}>
-                    <AppDoctor data={data} setDataState={setDataState} dataState={dataState}/>
+                    <AppDoctor data={data} setDataState={setDataState} dataState={dataState} />
                 </div>
                 <div className={'app_doctor'}>
-                    <AppDate data={data} setDataState={setDataState} dataState={dataState}/>
+                    <AppDate data={data} setDataState={setDataState} dataState={dataState} date={date} setDate={setDate}/>
                 </div>
                 <div className={'app_doctor'}>
                     <AppTime data={data} setDataState={setDataState} dataState={dataState}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppPersonalDetails setDataState={setDataState} dataState={dataState}/>
+                    <AppPersonalDetails setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppPaymentMethods setDataState={setDataState} dataState={dataState}/>
+                    <AppPaymentMethods setDataState={setDataState} dataState={dataState}  responseCodeState={responseCodeState}/>
                 </div>
             </div>
             <Divider style={{background: '#e3e0e3'}}/>
             <div className={'app_btn_div'}>
-                <Button onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment && dataState?.verifyNumber ? false : true}>Book Now</Button>
+                <Button onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment_method_id  ? false : true}>Book Now</Button>
             </div>
         </div>
     )

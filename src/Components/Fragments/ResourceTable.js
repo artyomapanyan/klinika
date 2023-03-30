@@ -185,7 +185,7 @@ function ResourceTable({resource, tableColumns,
 
             </Col>
         </Row>}
-        <Row style={{marginTop:10}}>
+        <Row style={{marginTop:42}}>
             <Col lg={24}>
                 <Form>
                 <Table

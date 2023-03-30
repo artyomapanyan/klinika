@@ -60,6 +60,7 @@ function LabPackageCategory() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
                 <div  className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'title'} initialValue={data?.title} rules={[{required: true}]} />

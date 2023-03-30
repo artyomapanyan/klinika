@@ -17,7 +17,6 @@ function ShowClinic () {
 
   useEffect(()=>{
     postResource(resource,'WorkingHours',token,params.id,{}).then(response => {
-
      console.log(response)
     })
 

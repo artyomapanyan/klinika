@@ -1,4 +1,4 @@
-import { Divider, Tabs} from "antd";
+import {Button, Divider, Tabs} from "antd";
 import TabBars from "../../Fragments/TabBars/TabBars";
 import PatientHeader from "./Fragments/PatientHeader/PatientHeader";
 import PatientCollapse from "./Fragments/PatientCollapse";
@@ -8,10 +8,17 @@ import PatientCardLabTests from "./Tabs/PatientCardLabTests";
 import PatientCardMedications from "./Tabs/PatientCardMedications";
 import PatientCardLog from "./Tabs/PatientCardLog";
 import PatientHistory from "./Tabs/PatientHistory";
+import arrow_prev_large from "../../../dist/icons/arrow-prev-large.svg";
+import React from "react";
+import {LeftOutlined} from "@ant-design/icons";
 
 function Patient() {
     return(
         <div>
+            <div style={{marginTop: -119}}>
+                <Button style={{margin:"40px 24px", height:45, width:45}}><LeftOutlined /></Button>
+                <span style={{fontSize:24, fontWeight:700}}>Patient Card</span>
+            </div>
             <div style={{background:"#ffffff", margin:'0 24px', borderRadius: 12}}>
                 <PatientHeader />
                 <Divider />
