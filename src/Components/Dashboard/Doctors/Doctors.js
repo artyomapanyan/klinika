@@ -3,15 +3,13 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
-import TableEditable from "../../Fragments/TableEditable";
-import Resources from "../../../store/Resources";
 import Resource from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
 const resource = 'Doctor';
 function Doctors() {
     return(
         <div>
-            <ResourceTable resource={resource} tableColumns={[
+            <ResourceTable resource={resource} eyeShow={true} tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

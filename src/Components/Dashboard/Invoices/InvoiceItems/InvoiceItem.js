@@ -1,20 +1,24 @@
+
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
-import Preloader from "../../Preloader";
+
+
 import {Button, Form, Popconfirm, Space} from "antd";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
-import FormInput from "../../Fragments/FormInput";
+
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
+import resourceLinks from "../../../ResourceLinks";
+import Preloader from "../../../Preloader";
+import FormInput from "../../../Fragments/FormInput";
 
-const resource = 'Region';
+const resource = 'InvoiceItem';
 
-function Region() {
-
+function IncoiceItem() {
     const params = useParams();
     const navigate = useNavigate();
+    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
@@ -46,31 +50,28 @@ function Region() {
                 setSaveLoading(false)
             })
         }
-
     }
-
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Area - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Area`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Invoice item`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
+                ref={formRef}
                 className={'add_create_form'}
             >
-                <div className={'add_edit_content'}>
+                <div  className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
-                    <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
-                               rules={[{required: true}]}
-                               initialValue={data?.country?.id}
-                               initialData={data?.country?[data.country]:[]}
-                               resource={'Country'}/>
+                    <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                    <FormInput label={t('Price')} name={'price'} initialValue={data?.price} rules={[{required: true}]} />
+                    <FormInput label={t('Tax percentage')} name={'tax_percentage'} initialValue={data?.tax_percentage} rules={[{required: true}]} />
                 </div>
 
 
                 <Space className={'create_apdate_btns'}>
-                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <Popconfirm
                         title={t("Your hours will not be protected")}
                         onConfirm={() => navigate(resourceLinks[resource]) }
@@ -84,4 +85,4 @@ function Region() {
         </div>
     )
 }
-export default Region;
+export default IncoiceItem;

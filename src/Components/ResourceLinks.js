@@ -38,6 +38,10 @@ const ResourceLins = {
     ClinicDoctorAvailableTimes:'/dashboard/clinic-doctors/available-times/',
     ClinicDoctorAvailableTimeForDayByDoctorAndClinic:'/dashboard/clinic-doctors/available-times-by-doctor-and-clinic/',
     Appointment:'/dashboard/appointments/',
+    PublicClinicDoctorWorkingHours:'/dashboard/public/clinic-doctors/working-hours-by-doctor-and-clinic/',
+    PublicClinicDoctorAvailableTimes:'/dashboard/public/clinic-doctors/available-times-by-doctor-and-clinic/',
+    PublicAppointment:'/dashboard/public/appointments/store-from-offers/',
+    InvoiceItem:'/dashboard/invoice-items/',
 
 }
 export default ResourceLins

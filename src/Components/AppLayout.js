@@ -69,7 +69,10 @@ import LabTestCategory from "./Dashboard/LabTestCategories/LabTestCategory";
 import Appointments from "./Dashboard/Appointments/Appointments";
 import Appointment from "./Dashboard/Appointments/Appointment";
 import ShowAppointment from "./Dashboard/Appointments/Fragments/ShowAppointment";
-import ShowClinic from "./Dashboard/Clinics/ShowClinic";
+import ShowClinic from "./Dashboard/Clinics/Fragments/ShowClinic/ShowClinic";
+import DoctorShow from "./Dashboard/Doctors/DoctorShow";
+import InvoiceItems from "./Dashboard/Invoices/InvoiceItems/InvoiceItems";
+import InvoiceItem from "./Dashboard/Invoices/InvoiceItems/InvoiceItem";
 
 
 function AppLayout(){
@@ -187,7 +190,8 @@ function AppLayout(){
             url:'doctors',
             resource:'Doctor',
             singleComp:<Doctor/>,
-            indexComp:<Doctors/>
+            indexComp:<Doctors/>,
+            showComp:<DoctorShow/>
         },
         {
             url:'users',
@@ -235,7 +239,6 @@ function AppLayout(){
         {
             url:'taxonomies',
             resource:'Taxonomy',
-            //singleComp:<Coupon/>,
             indexComp:<Laboratory/>
         },
         {
@@ -253,9 +256,15 @@ function AppLayout(){
         {
             url:'appointments',
             resource:'Appointment',
-            //singleComp:<Appointment/>,
+            singleComp:<Appointment/>,
             indexComp:<Appointments/>,
             showComp:<ShowAppointment/>
+        },
+        {
+            url:'invoice-items',
+            resource:'InvoiceItem',
+            singleComp:<InvoiceItem/>,
+            indexComp:<InvoiceItems/>
         },
 
 

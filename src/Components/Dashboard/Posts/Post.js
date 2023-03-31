@@ -52,51 +52,54 @@ function Post() {
     }
 
     return(
-        <div className={'add_edit_content'}>
-            {data?.title ? <h3>{t(`Editing Lab Test - ${data?.title}`)}</h3> : <h3>{t(`Add new Lab Test`)}</h3>}
+        <div>
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Lab Test - ${data?.title}`)}</h3> : <h3  className={'create_apdate_btns'}>{t(`Add new Lab Test`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
+                <div className={'add_edit_content'}>
+                    <FormInput label={t('Name')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
+                    <FormInput label={t('Type')} name={'type'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.type}
+                               initialData={Resources.PostTypes}
+                    />
+                    <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.category?.id}
+                               initialData={data.category?[data.category]:[]}
+                               resource={'Taxonomy'}
+                               resourceParams={{type:Resources.TaxonomyTypes.POST_CATEGORY}}
+                    />
 
-                <FormInput label={t('Name')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
-                <FormInput label={t('Type')} name={'type'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.type}
-                           initialData={Resources.PostTypes}
-                />
-                <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.category?.id}
-                           initialData={data.category?[data.category]:[]}
-                           resource={'Taxonomy'}
-                           resourceParams={{type:Resources.TaxonomyTypes.POST_CATEGORY}}
-                />
+                    <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.status}
+                               initialData={Resources.Status}
+                    />
+                    <Form.Item name={'content'} label={t('Content')}>
+                        <DraftEditor initialValue={data?.content} formRef={formRef} name={'content'} />
+                    </Form.Item>
+                    <FormInput label={t('Excerpt')} name={'excerpt'} inputType={'textArea'} initialValue={data?.excerpt}/>
+                    <FormInput label={t('Notes')} name={'notes'} inputType={'textArea'} initialValue={data?.notes}/>
 
-                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={data?.status}
-                           initialData={Resources.Status}
-                />
-                <Form.Item name={'content'} label={t('Content')}>
-                    <DraftEditor initialValue={data?.content} formRef={formRef} name={'content'} />
-                </Form.Item>
-                <FormInput label={t('Excerpt')} name={'excerpt'} inputType={'textArea'} initialValue={data?.excerpt}/>
-                <FormInput label={t('Notes')} name={'notes'} inputType={'textArea'} initialValue={data?.notes}/>
+                    <Space>
+                        <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                        <Popconfirm
+                            title={t("Your hours will not be protected")}
+                            onConfirm={() => navigate(resourceLinks[resource]) }
+                            okText={t("Yes")}
+                            cancelText={t("No")}
+                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                            <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                        </Popconfirm>
+                    </Space>
+                </div>
 
-                <Space>
-                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
-                </Space>
             </Form>}
         </div>
     )

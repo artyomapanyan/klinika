@@ -58,6 +58,7 @@ function LabTest() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
                 <div className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>

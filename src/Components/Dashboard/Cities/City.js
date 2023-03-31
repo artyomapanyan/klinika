@@ -57,6 +57,7 @@ function City() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
                 <div  className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />

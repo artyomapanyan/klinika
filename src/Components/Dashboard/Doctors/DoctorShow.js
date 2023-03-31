@@ -1,10 +1,10 @@
 import React from "react";
 
-function ShowClinic() {
+function DoctorShow() {
     return(
         <div>
-            sdddddddddd
+            sdfdfg
         </div>
     )
 }
-export default ShowClinic;
+export default DoctorShow;

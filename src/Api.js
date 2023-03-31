@@ -173,6 +173,16 @@ let api = {
     {
         url: 'public/offers',
         resource: 'PublicOffer',
+        custom: {
+            PhoneVerify:{
+                url: `${endpoint}${version}/public/offers/send-verification-code`,
+                method: 'POST',
+            },
+            CodeVerify:{
+                url: `${endpoint}${version}/public/offers/verify-code`,
+                method: 'POST',
+            },
+        }
     },
     {
         url: 'public/clinics',
@@ -185,6 +195,26 @@ let api = {
     {
         url: 'public/categories',
         resource: 'PublicCategory',
+    },
+    {
+        url: 'public/clinic-doctors/working-hours-by-doctor-and-clinic',
+        resource: 'PublicClinicDoctorWorkingHours',
+    },
+    {
+        url: 'public/clinic-doctors/available-times-by-doctor-and-clinic',
+        resource: 'PublicClinicDoctorAvailableTimes',
+    },
+    {
+        url: 'public/appointments/store-from-offers',
+        resource: 'PublicAppointment',
+    },
+    {
+        url: 'invoice-items',
+        resource: 'InvoiceItem',
+    },
+    {
+        url: 'public/thank-you',
+        resource: 'PublicThankYouOffer',
     },
     ].forEach(item => {
         if (!item.type) {

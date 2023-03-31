@@ -71,6 +71,7 @@ function Coupon() {
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
+                className={'add_create_form'}
             >
                 <div className={'add_edit_content'}>
                     <Row>

@@ -8,6 +8,7 @@ import Forgot from "./Auth/Forgot";
 import Login from "./Auth/Login/Login";
 import AllOffers from "./AllOffers/AllOffers";
 import OfferBook from "./AllOffers/OfferBook/OfferBook";
+import ThankYouOffer from "./AllOffers/ThankYouOffer/ThankYouOffer";
 
 function AppRoutes(){
     return(<Routes>
@@ -18,6 +19,7 @@ function AppRoutes(){
                 <Route path={'login'} element={<Login/>}></Route>
                 <Route path={'offers'} element={<AllOffers/>}></Route>
                 <Route path={'offers/:id'} element={<OfferBook/>}></Route>
+                <Route path={'thank-you'} element={<ThankYouOffer/>}></Route>
 
             </Routes>
 

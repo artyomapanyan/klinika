@@ -163,28 +163,29 @@ function ResourceTable({resource, tableColumns,
         {!noHeader&&<Row className={'resource-header'}>
             <Col lg={12}>
                 <Space>
-                    <Typography.Title level={4}>{t(title)}</Typography.Title>
+                    <Typography.Title level={4}>{t(title)}:</Typography.Title>
+                    {
+                        buttonAdd ? <Tooltip title="Add new entry">
+                            <Button style={{marginLeft:10}} className={'resource_table_btn'} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
+                        </Tooltip> : null
+                    }
                     {
                         exportButton ? <Tooltip title="prompt text">
-                            <Button onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
+                            <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
                         </Tooltip> : null
                     }
 
                     <Tooltip title="prompt text">
-                        <Button type={'secondary'}>{t("Import to Database")}</Button>
+                        <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button>
                     </Tooltip>
                 </Space>
             </Col>
             <Col lg={12}>
-                {
-                    buttonAdd ? <Tooltip title="Add new entry">
-                        <Button icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
-                    </Tooltip> : null
-                }
+
 
             </Col>
         </Row>}
-        <Row style={{marginTop:10}}>
+        <Row style={{marginTop:42}}>
             <Col lg={24}>
                 <Form>
                 <Table

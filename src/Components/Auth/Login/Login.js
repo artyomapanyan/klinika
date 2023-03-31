@@ -81,7 +81,7 @@ function Login() {
                                 <FormInput className={'test'} name={'email'} label={'Email'} formRef={formRef} initialFocused={true}/>
 
                                 <FormInput className={'test'} inputType={'password'}  formRef={formRef} inputProps={{
-                                    iconRender:() => (<Link onClick={(e) => {
+                                    iconrender:() => (<Link onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }}

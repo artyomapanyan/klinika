@@ -2,7 +2,14 @@ import React, {useMemo} from 'react';
 import logo from "../../../dist/Img/logo.svg";
 import logoShort from "../../../dist/Img/Logo-short.svg";
 import {Button, Divider, Menu} from "antd";
-import {MenuOutlined, NotificationOutlined, PercentageOutlined, RedEnvelopeOutlined, DiffOutlined} from "@ant-design/icons";
+import {
+    MenuOutlined,
+    NotificationOutlined,
+    PercentageOutlined,
+    RedEnvelopeOutlined,
+    DiffOutlined,
+    DollarOutlined
+} from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
 import dash2 from "../../../dist/icons/frame2.svg";
@@ -170,6 +177,18 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             label: t(`Appointments`),
         },
         {
+            label: t(`Invoices`),
+            icon: <DollarOutlined style={{color:'#ce4e99', fontSize:20}}  />,
+            children: [
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoice-items',
+                    label:  t(`Invoice Items`),
+                    permission:'InvoiceItem'
+                },
+            ]
+        },
+        {
             label: t(`Marketing`),
             icon: <NotificationOutlined style={{color:'#ce4e99', fontSize:20}}  />,
             children: [
@@ -187,6 +206,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
             ]
         },
+
 
         {
             key: 'clinics-owner',

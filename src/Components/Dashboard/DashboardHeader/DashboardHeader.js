@@ -12,7 +12,7 @@ function DashboardHeader() {
     return <Row>
         <Col lg={14}>
         </Col>
-        <Col lg={10} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", paddingRight:40, paddingLeft:40}} className={'lng_select'}>
+        <Col lg={10} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", padding:'15px 40px'}} className={'lng_select'}>
             <HeaderAccount />
 
         </Col>

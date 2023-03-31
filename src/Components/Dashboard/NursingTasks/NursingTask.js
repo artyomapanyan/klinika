@@ -59,6 +59,7 @@ function NursingTask() {
                 onFinish={onFinish}
                 ref={formRef}
                 layout="vertical"
+                className={'add_create_form'}
             >
                 <div  className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>

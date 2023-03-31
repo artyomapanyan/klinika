@@ -49,7 +49,7 @@ function AllOffers() {
             </div>
             { resetState ? <Preloader /> :
              <div className={'menu_div'}>
-                <div className={'tab_div'}>
+                <div className={'tab_div'} style={{boxShadow: '0 0 10px 5px rgb(140 152 164 / 40%)' }}>
                     <Radio.Group onChange={onChangeRadio} defaultValue={params.category??''} className={'radio_grup'}>
                         <Radio.Button value={''}>{t("All offers")}</Radio.Button>
                         {
