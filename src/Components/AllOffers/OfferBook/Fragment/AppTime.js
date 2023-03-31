@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import {useSelector} from "react-redux";
 import {postResource} from "../../../Functions/api_calls";
 
-function AppTime({setDataState, dataState, data}) {
+function AppTime({setDataState, dataState, data, setDataTimes}) {
     let token = useSelector((state) => state.auth.token);
 
     const [times, setTimes] = useState([])
@@ -23,6 +23,7 @@ function AppTime({setDataState, dataState, data}) {
             ...prevState,
             time: time,
         }))
+        setDataTimes({time:time})
     }
     const onChangeTime = () => {
         setDataState((prevState)=>({

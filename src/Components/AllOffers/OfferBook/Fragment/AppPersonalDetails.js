@@ -9,7 +9,7 @@ import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 
 
-function AppPersonalDetails({setDataState, dataState, setResponseCodeState, params}) {
+function AppPersonalDetails({setDataState, dataState, setResponseCodeState, params, dataTimes, date}) {
     let token = useSelector((state) => state.auth.token);
     let formRef= useRef();
     let refObj = formRef?.current?.getFieldValue()
@@ -17,20 +17,23 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
     const [verifyState, setVerifyState] = useState(0);
     const [codeAndNumber, setCodeAndNumber] = useState()
     const [verifyResponse, setVerifyResponse] = useState()
-console.log(dataState, 'dataState')
+
     useEffect(() => {
         if(dataState?.payment_method_id){
             if(verifyResponse?.patient?.id) {
                 setDataState((prevState) => ({
                     ...prevState,
+                    booked_at:date?.date,
                     code: codeAndNumber?.code,
-                    patient_id: dataState?.payment_method_id,
+                    patient_id: verifyResponse?.patient?.id,
                     offer_id:params.id
                 }))
             } else {
                 setDataState((prevState) => ({
                     ...prevState,
+                    offer_id:params.id,
                     code: codeAndNumber?.code,
+                    booked_at:date?.date + " " + dataTimes?.time,
                     patient: {
                         ...refObj,
                         phone_number: codeAndNumber?.phone_number,

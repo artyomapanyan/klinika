@@ -37,6 +37,7 @@ function AppDate({setDataState, dataState, data, date, setDate}) {
             ...prevState,
             date: date?.format('YYYY-MM-DD'),
         }))
+        setDate({date: date?.format('YYYY-MM-DD')})
     }
 
     const onChangeDate = () => {

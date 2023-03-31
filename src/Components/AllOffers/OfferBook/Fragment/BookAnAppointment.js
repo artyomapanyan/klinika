@@ -7,20 +7,22 @@ import AppPersonalDetails from "./AppPersonalDetails";
 import AppPaymentMethods from "./AppPaymentMethods";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 
 function BookAnAppointment({data}) {
     let token = useSelector((state) => state.auth.token);
     let params = useParams();
+    let navigate = useNavigate();
 
 
     const [dataState, setDataState] = useState({});
     const [date, setDate] = useState();
-    const [time, setTime] = useState();
+    const [dataTimes, setDataTimes] = useState();
     const [responseCodeState, setResponseCodeState] = useState();
 
     const onBooking = () => {
         postResource('PublicAppointment', 'create', token, '', dataState)
+        navigate('/thank-you');
     }
 
     return(
@@ -42,10 +44,10 @@ function BookAnAppointment({data}) {
                     <AppDate data={data} setDataState={setDataState} dataState={dataState} date={date} setDate={setDate}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppTime data={data} setDataState={setDataState} dataState={dataState}/>
+                    <AppTime data={data} setDataState={setDataState} dataState={dataState} setDataTimes={setDataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppPersonalDetails setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params}/>
+                    <AppPersonalDetails setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params} date={date} dataTimes={dataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
                     <AppPaymentMethods setDataState={setDataState} dataState={dataState}  responseCodeState={responseCodeState}/>
