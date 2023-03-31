@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../../Api";
 import {useSelector} from "react-redux";
 
-export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll, additionalResources = {},pushToParams=false) => {
+export const useGetResourceIndex = (resource,params, isInited = false ,needsInit=false,resourceData=false,getAll, additionalResources = {}, options= {}) => {
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
@@ -47,15 +47,15 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                     if(getAll){
                         getAll(responses[0].items)
                     }
-                    setData({
-                        items:responses[0].items,
+                    setData((prevState)=>({
+                        items:options.loadMore?[...prevState.items,...responses[0].items]:responses[0].items,
                         pagination:{
                             pageSize:15,
                             current:responses[0].current_page,
                             total:responses[0].total_items,
                             last_page:responses[0].last_page
                         }
-                    })
+                    }))
                     if(dataResources.length && !isSecondCall){
                         let dataObj = {}
                         dataResources.forEach((e,key)=>{

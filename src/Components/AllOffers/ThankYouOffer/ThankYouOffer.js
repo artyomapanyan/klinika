@@ -35,6 +35,8 @@ function ThankYouOffer() {
     const {loading} = loadingState;
     const {data} = dataState;
 
+    console.log(addData, dataState, data)
+
     useEffect(()=>setSearchParams(params),[params])
     const onChangeRadio = (e) => {
         setParams({
