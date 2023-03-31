@@ -49,7 +49,7 @@ function AllOffers() {
             category: e?.target?.value
         })
     }
-    console.log(data)
+
     return(
         <div>
             <div className={'bac_div'}>

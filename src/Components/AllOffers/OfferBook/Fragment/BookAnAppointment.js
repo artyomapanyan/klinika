@@ -6,13 +6,14 @@ import AppTime from "./AppTime";
 import AppPersonalDetails from "./AppPersonalDetails";
 import AppPaymentMethods from "./AppPaymentMethods";
 import {postResource} from "../../../Functions/api_calls";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 
 function BookAnAppointment({data}) {
     let token = useSelector((state) => state.auth.token);
     let params = useParams();
     let navigate = useNavigate();
+    let dispatch = useDispatch()
 
 
     const [dataState, setDataState] = useState({});
@@ -24,6 +25,16 @@ function BookAnAppointment({data}) {
         postResource('PublicAppointment', 'create', token, '', dataState)
         navigate('/thank-you');
     }
+
+    useEffect(() => {
+        if(data?.clinic?.id) {
+            dispatch({
+                type:'CLINIC_ID',
+                payload:data?.clinic?.id
+            })
+        }
+
+    }, [data?.clinic?.id])
 
     return(
         <div className={'app_big_div'}>

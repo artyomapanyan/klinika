@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import "../AllOffers.sass"
-import {Col, Divider, Radio, Result, Row} from "antd";
+import {Button, Col, Divider, Radio, Result, Row} from "antd";
 import {t} from "i18next";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../../functions";
-import {useGetResourceIndex} from "../../Functions/api_calls";
+import {postResource, useGetResourceIndex} from "../../Functions/api_calls";
 import AuthHeader from "../../Auth/AuthHeader";
 import Preloader from "../../Preloader";
 import OffersPrices from "../Fragments/OffersPrices";
@@ -13,14 +13,20 @@ import OffersFooter from "../Fragments/OffersFooter";
 import off_head from "../../../dist/Img/off_head.png"
 import img_thank_you from "../../../dist/Img/thank_you.png"
 import CongratulationsText from "./Fragments/CongratulationsText";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router";
 
 
 
 
 function ThankYouOffer() {
+    let clinicId = useSelector((state) => state?.publicClinicId);
+    let token = useSelector((state) => state.auth.token);
+    let navigate = useNavigate();
+
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
-        order_by: 'new_price',
+        clinic: clinicId,
         ...paramsToObject(searchParams.entries())
     })
 
@@ -34,8 +40,18 @@ function ThankYouOffer() {
 
     const {loading} = loadingState;
     const {data} = dataState;
+    const [filterClinic, setFilterClinic] = useState('')
 
-    console.log(addData, dataState, data)
+    console.log(clinicId, 'id')
+
+    useEffect(() => {
+        if(clinicId) {
+            postResource('PublicClinic','single', token, clinicId).then((response) => {
+                console.log(response, 'res')
+                setFilterClinic(response)
+            })
+        }
+    }, [clinicId])
 
     useEffect(()=>setSearchParams(params),[params])
     const onChangeRadio = (e) => {
@@ -88,7 +104,7 @@ function ThankYouOffer() {
                         </Radio.Group>
                         <Divider />
                         <div>
-                            <OffersPrices clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
+                            <OffersPrices filterClinic={filterClinic} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
                         </div>
                     </div>
                     <div className={'big_div_cards'}>
@@ -107,9 +123,16 @@ function ThankYouOffer() {
 
                         </Row>}
 
-
+                        <div className={'load_more_div'}>
+                            <div style={{fontSize: 40, fontWeight: 600}}>
+                                Offers from other clinics
+                            </div>
+                            <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >Show All</Button>
+                        </div>
                     </div>
+
                 </div>}
+
             <OffersFooter />
         </div>
     )

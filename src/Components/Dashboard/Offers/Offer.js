@@ -5,7 +5,7 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Checkbox, Col, Form, Popconfirm, Space} from "antd";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
@@ -36,6 +36,7 @@ function Offer() {
             ...prevState,
             ...values
         }))
+
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -54,6 +55,7 @@ function Offer() {
             })
         }
     }
+
 
     return(
         <div >
@@ -98,6 +100,9 @@ function Offer() {
                                        initialValue={data?.doctors?.map(e=>e.id)}
                                        initialData={data?.doctors??[]}
                                        resource={'Doctor'}
+                                       resourceParams={{
+                                           clinic:1
+                                       }}
                             />
                             <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}

@@ -48,9 +48,9 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                         getAll(responses[0].items)
                     }
                     setData((prevState)=>({
-                        items:options.loadMore?[...prevState.items,...responses[0].items]:responses[0].items,
+                        items:options.loadMore && params.page!=1?[...prevState.items,...responses[0].items]:responses[0].items,
                         pagination:{
-                            pageSize:15,
+                            pageSize:responses[0].per_page,
                             current:responses[0].current_page,
                             total:responses[0].total_items,
                             last_page:responses[0].last_page

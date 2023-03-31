@@ -46,7 +46,8 @@ function ResourceTable({resource, tableColumns,
             ...tableParams,
             order_by: sorter.order?sorter?.column?.translatable ? `${sorter.columnKey}->${lngs}` : sorter.columnKey:null,
             order: sorter.order ? sorter.order === 'ascend' ? 'asc' : 'desc' : null,
-            page: pagination.current
+            page: pagination.current,
+            per_page: pagination.pageSize
         }
         clearObject(params)
         setSearchParams(params)
@@ -158,11 +159,12 @@ function ResourceTable({resource, tableColumns,
             link.click();
         });
     }
+    console.log(dataState, 'data')
 
     return (<Content className={'layout-conatiner'}>
         {!noHeader&&<Row className={'resource-header'}>
-            <Col lg={12}>
-                <Space>
+            <Col lg={11}>
+                <div style={{display:'flex', gap: 4}}>
                     <Typography.Title level={4}>{t(title)}:</Typography.Title>
                     {
                         buttonAdd ? <Tooltip title="Add new entry">
@@ -178,12 +180,9 @@ function ResourceTable({resource, tableColumns,
                     <Tooltip title="prompt text">
                         <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button>
                     </Tooltip>
-                </Space>
+                </div>
             </Col>
-            <Col lg={12}>
 
-
-            </Col>
         </Row>}
         <Row style={{marginTop:42}}>
             <Col lg={24}>
@@ -193,7 +192,9 @@ function ResourceTable({resource, tableColumns,
                     loading={loading}
                     pagination={{
                         ...data.pagination,
-                        showTotal: (total) =>handleTableBelowData?handleTableBelowData(dataState,loadingState,total):null
+                        showTotal: (total) =>handleTableBelowData?handleTableBelowData(dataState,loadingState,total):null,
+                        pageSize: data.pagination.pageSize,
+                        showSizeChanger:true
                     }}
                     onChange={handleTableChange}
                     dataSource={data?.items}
