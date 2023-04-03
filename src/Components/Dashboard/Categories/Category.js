@@ -9,6 +9,7 @@ import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import React, {useState} from "react";
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'Category';
 
@@ -20,6 +21,7 @@ function Category() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [changeValuesState, setChangeValuesState] = useState({})
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -47,6 +49,9 @@ function Category() {
         }
 
     }
+    const handleValuesChange = (changed)=>{
+        setChangeValuesState(changed)
+    }
 
     return (
         <div >
@@ -54,6 +59,7 @@ function Category() {
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 layout="vertical"
                 className={'add_create_form'}
             >
@@ -64,14 +70,7 @@ function Category() {
 
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
             </Form>}
         </div>

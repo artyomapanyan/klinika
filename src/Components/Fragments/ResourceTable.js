@@ -159,7 +159,7 @@ function ResourceTable({resource, tableColumns,
             link.click();
         });
     }
-    console.log(dataState, 'data')
+
 
     return (<Content className={'layout-conatiner'}>
         {!noHeader&&<Row className={'resource-header'}>

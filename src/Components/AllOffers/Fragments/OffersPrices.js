@@ -113,7 +113,7 @@ function OffersPrices({clinics, setParams, params, data, setResetState, resetSta
             <Col lg={6}>
                 <div align={'center'}>
                     {
-                        filterClinic ? <div></div> : <div>
+                        params?.clinic ? <div></div> : <div>
                             <InsertRowRightOutlined style={{color:'#ce4e99', fontSize: 18}}/>
                             <Dropdown
                                 menu={{

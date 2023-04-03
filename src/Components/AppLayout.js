@@ -285,8 +285,8 @@ function AppLayout(){
                 <DashboardHeader/>
 
             </div>
-            <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
 
+            <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <Routes>
                     {resourceRoutes.map((item,key)=><Route path={item.url+'/*'} key={key} element={ <Routes>
                         {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}

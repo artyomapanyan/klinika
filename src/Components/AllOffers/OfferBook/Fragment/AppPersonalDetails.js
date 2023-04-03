@@ -23,7 +23,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
             if(verifyResponse?.patient?.id) {
                 setDataState((prevState) => ({
                     ...prevState,
-                    booked_at:date?.date,
+                    booked_at:date?.date + " " + dataTimes?.time,
                     code: codeAndNumber?.code,
                     patient_id: verifyResponse?.patient?.id,
                     offer_id:params.id

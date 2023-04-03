@@ -14,6 +14,7 @@ import Preloader from "../../../Preloader";
 import React from "react";
 import MyMapComponent from "./MapComponent";
 import {Autocomplete} from "@react-google-maps/api";
+import CancelComponent from "../../../Fragments/CancelComponent";
 
 
 
@@ -32,6 +33,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [changeValuesState, setChangeValuesState] = useState({})
 
     const onFinish = (values) => {
 
@@ -112,6 +114,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
             ...prevState,
             ...e
         }))
+        setChangeValuesState(e)
     }
     // useEffect(()=>{
     //
@@ -557,14 +560,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
             </Form>}
         </div>

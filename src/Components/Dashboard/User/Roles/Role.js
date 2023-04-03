@@ -7,7 +7,7 @@ import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import CancelComponent from "../../../Fragments/CancelComponent";
 
 const resource = 'Role';
 function Role() {
@@ -16,6 +16,7 @@ function Role() {
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const [checkKeysState, setCheckKeysState] = useState([]);
+    const [changeValuesState, setChangeValuesState] = useState({})
     const handleFilterResponse = (data)=>{
         setCheckKeysState(data.permissions.map(e=>e.id))
         return data
@@ -72,12 +73,17 @@ function Role() {
         setCheckKeysState(checkedKeys)
     };
 
+    const handleValuesChange = (changed)=>{
+        setChangeValuesState(changed)
+    }
+
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Role - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Role`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 layout="vertical"
                 ref={formRef}
                 className={'add_create_form'}
@@ -96,14 +102,7 @@ function Role() {
 
                     <Space>
                         <Button size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                        <Popconfirm
-                            title={t("Your hours will not be protected")}
-                            onConfirm={() => navigate(resourceLinks[resource]) }
-                            okText={t("Yes")}
-                            cancelText={t("No")}
-                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                            <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                        </Popconfirm>
+                        <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                     </Space>
                 </div>
 

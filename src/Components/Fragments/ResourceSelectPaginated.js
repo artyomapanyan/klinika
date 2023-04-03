@@ -31,13 +31,13 @@ function ResourceSelectPaginated({
   const {loading} = loadingState;
   const {data} = dataState;
 
-    // useEffect(()=>{
-    //     if(JSON.stringify(resourceParams)!==JSON.stringify(params)){
-    //         setParams(resourceParams)
-    //     }
-    //
-    //
-    // },[resourceParams])
+    useEffect(()=>{
+        if(JSON.stringify(resourceParams)!==JSON.stringify(params)){
+            setParams(resourceParams)
+        }
+
+
+    },[resourceParams])
   const handleGenerateOptions = (data) => {
     return data.map((item, key) => {
       let name = item.name ?? item.title

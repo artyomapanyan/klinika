@@ -9,6 +9,7 @@ import Login from "./Auth/Login/Login";
 import AllOffers from "./AllOffers/AllOffers";
 import OfferBook from "./AllOffers/OfferBook/OfferBook";
 import ThankYouOffer from "./AllOffers/ThankYouOffer/ThankYouOffer";
+import OfferMap from "./AllOffers/ThankYouOffer/Fragments/OfferMap";
 
 function AppRoutes(){
     return(<Routes>
@@ -20,6 +21,7 @@ function AppRoutes(){
                 <Route path={'offers'} element={<AllOffers/>}></Route>
                 <Route path={'offers/:id'} element={<OfferBook/>}></Route>
                 <Route path={'thank-you'} element={<ThankYouOffer/>}></Route>
+                <Route path={'maps'} element={<OfferMap/>}></Route>
 
             </Routes>
 

@@ -22,19 +22,41 @@ function BookAnAppointment({data}) {
     const [responseCodeState, setResponseCodeState] = useState();
 
     const onBooking = () => {
-        postResource('PublicAppointment', 'create', token, '', dataState)
+        postResource('PublicAppointment', 'create', token, '', dataState).then((response) => {
+            console.log(response, 'response')
+        })
         navigate('/thank-you');
     }
+
 
     useEffect(() => {
         if(data?.clinic?.id) {
             dispatch({
-                type:'CLINIC_ID',
-                payload:data?.clinic?.id
+                type:'PUBLIC_CLINIC',
+                payload:data?.clinic
             })
         }
-
     }, [data?.clinic?.id])
+
+    useEffect(() => {
+        if(dataState?.date) {
+            dispatch({
+                type:'PUBLIC_CLINIC',
+                payload:{
+                    date: dataState?.date
+                }
+            })
+        }
+        if(dataState?.time) {
+            dispatch({
+                type:'PUBLIC_CLINIC',
+                payload:{
+                    time: dataState?.time
+                }
+            })
+        }
+    }, [dataState?.date, dataState?.time])
+
 
     return(
         <div className={'app_big_div'}>

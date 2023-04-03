@@ -11,6 +11,7 @@ import Resources from "../../../store/Resources";
 import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import FileManager from "../../Fragments/FileManager";
 import dayjs from 'dayjs';
+import CancelComponent from "../../Fragments/CancelComponent";
 
 
 const resource = 'Appointment';
@@ -31,6 +32,7 @@ function Appointment() {
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
     const [availableDateState, setAvailableDateState] = useState([])
+    const [changeValuesState, setChangeValuesState] = useState({})
 
 
 
@@ -157,6 +159,8 @@ useEffect(() => {
             ...prevState,
             ...e
         }))
+        setChangeValuesState(e)
+
     }
 
     const handleMapItems = (item,name)=>{
@@ -414,14 +418,7 @@ useEffect(() => {
 
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
             </Form>}
         </div>

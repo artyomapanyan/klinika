@@ -99,10 +99,10 @@ function ClinicsOwner() {
                 </div>
                 <div>
                     <Row gutter={[20,20]}>
-                        <Col lg={18}>
+                        <Col lg={18} sm={24}>
                             <LineChartIncomes />
                         </Col>
-                        <Col lg={6}>
+                        <Col lg={6} sm={24}>
                             <IncomeChannelsChart data={incomeChannelData} />
                         </Col>
                     </Row>
@@ -113,23 +113,23 @@ function ClinicsOwner() {
                 </div>
                 <div>
                     <Row gutter={[20,20]}>
-                        <Col lg={18}>
+                        <Col lg={18} sm={24}>
                             <ClinicOwnerPatientsChart />
                         </Col>
-                        <Col lg={6}>
+                        <Col lg={6} sm={24}>
                             <TopServices />
                         </Col>
                     </Row>
                 </div>
                 <div>
                     <Row gutter={[20,20]}>
-                        <Col lg={9}>
+                        <Col lg={9} sm={24}>
                             <PatientGenderChart data={patientGenderData} />
                         </Col>
-                        <Col lg={9}>
+                        <Col lg={9} sm={24}>
                             <DoctorLicensesChart data={doctorLicensesData}/>
                         </Col>
-                        <Col lg={6}>
+                        <Col lg={6} sm={24}>
                             <ResultsComponent />
                         </Col>
                     </Row>

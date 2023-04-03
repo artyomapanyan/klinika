@@ -10,6 +10,7 @@ import Resources from "../../../store/Resources";
 import FormInput from "../../Fragments/FormInput";
 import DraftEditor from "../../Fragments/DraftEditor";
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'NursingTask';
 
@@ -23,6 +24,7 @@ function NursingTask() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [changeValuesState, setChangeValuesState] = useState({})
 
 
     const onFinish = (values) => {
@@ -51,12 +53,16 @@ function NursingTask() {
         }
 
     }
+    const handleValuesChange = (changed)=>{
+        setChangeValuesState(changed)
+    }
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Nursing Task - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Nursing Task`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 ref={formRef}
                 layout="vertical"
                 className={'add_create_form'}
@@ -75,14 +81,7 @@ function NursingTask() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
             </Form>}
         </div>

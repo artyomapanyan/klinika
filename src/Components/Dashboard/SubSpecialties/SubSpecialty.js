@@ -11,6 +11,7 @@ import Resources from "../../../store/Resources";
 import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
 import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import CancelComponent from "../../Fragments/CancelComponent";
 
 
 
@@ -25,6 +26,7 @@ function SubSpecialty() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [changeValuesState, setChangeValuesState] = useState({})
 
 
     const onFinish = (values) => {
@@ -54,6 +56,10 @@ function SubSpecialty() {
         }
 
     }
+    const handleValuesChange = (changed)=>{
+        setChangeValuesState(changed)
+    }
+    const res = 'SubSpecialty'
 
     return (
         <div>
@@ -61,6 +67,7 @@ function SubSpecialty() {
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 layout="vertical"
                 ref={formRef}
                 className={'add_create_form'}
@@ -81,14 +88,7 @@ function SubSpecialty() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks['SubSpecialty']) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={res}/>
                 </Space>
             </Form>}
         </div>

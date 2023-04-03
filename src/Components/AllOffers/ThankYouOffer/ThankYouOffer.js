@@ -20,13 +20,12 @@ import {useNavigate} from "react-router";
 
 
 function ThankYouOffer() {
-    let clinicId = useSelector((state) => state?.publicClinicId);
-    let token = useSelector((state) => state.auth.token);
+    let clinicRedux = useSelector((state) => state?.publicClinic);
     let navigate = useNavigate();
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
-        clinic: clinicId,
+        clinic: clinicRedux?.id,
         ...paramsToObject(searchParams.entries())
     })
 
@@ -42,16 +41,7 @@ function ThankYouOffer() {
     const {data} = dataState;
     const [filterClinic, setFilterClinic] = useState('')
 
-    console.log(clinicId, 'id')
-
-    useEffect(() => {
-        if(clinicId) {
-            postResource('PublicClinic','single', token, clinicId).then((response) => {
-                console.log(response, 'res')
-                setFilterClinic(response)
-            })
-        }
-    }, [clinicId])
+console.log(clinicRedux,'clinic')
 
     useEffect(()=>setSearchParams(params),[params])
     const onChangeRadio = (e) => {
@@ -75,7 +65,7 @@ function ThankYouOffer() {
                             <img src={img_thank_you} alt={'img_thank_you'} style={{width:200}}/>
                         </Col>
                         <Col lg={14} style={{padding:60}}>
-                            <CongratulationsText />
+                            <CongratulationsText clinicRedux={clinicRedux} />
                         </Col>
                     </Row>
 
@@ -87,7 +77,7 @@ function ThankYouOffer() {
                         Discover other offers from
                     </div>
                     <div style={{fontSize:40, fontWeight:600}}>
-                        Dr. Sulaiman Al habib Olaya Medical Complex
+                        {clinicRedux?.name}
                     </div>
                 </div>
             </div>
