@@ -224,6 +224,14 @@ let api = {
                 url: `${endpoint}${version}/dashboard/owner/clinic-rating/`,
                 method: 'GET',
             },
+            MonthlyIncomes: {
+                url: `${endpoint}${version}/dashboard/owner/monthly-incomes/`,
+                method: 'GET',
+            },
+            PeriodAppointments: {
+                url: `${endpoint}${version}/dashboard/owner/period-appointments/`,
+                method: 'GET',
+            },
         },
     },
     {

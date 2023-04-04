@@ -15,7 +15,6 @@ function CounterGreenChart() {
 
     useEffect(() => {
         postResource('ClinicOwner','OwnerClinicRating', token,  ownerClinics?.id, ).then((response) => {
-            console.log(response)
             let arr = []
             arr.push(+((+response?.avg_rating).toFixed(1)));
             arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))

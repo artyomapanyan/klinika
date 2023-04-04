@@ -78,7 +78,7 @@ function ClinicsOwner() {
                 <Row gutter={[16,16]}>
                     <Col  lg={5} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
-                            <CounterGreenChart data={greenData} />
+                            <CounterGreenChart />
                         </div>
                     </Col>
                     <Col lg={5} md={12} sm={24} xs={24}>
@@ -88,7 +88,7 @@ function ClinicsOwner() {
                     </Col>
                     <Col lg={7} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <CounterProgress data={progressData} />
+                            <CounterProgress  />
                         </div>
                     </Col>
                     <Col lg={7} md={12} sm={24} xs={24}>

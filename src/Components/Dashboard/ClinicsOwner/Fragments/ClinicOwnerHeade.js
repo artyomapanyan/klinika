@@ -12,14 +12,17 @@ function ClinicOwnerHeade() {
 
     useEffect(() => {
         postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
-            response.clinics.forEach((el) => {
-                return setItems([
-                    {
-                        label: el?.name?.en,
-                        key: el?.id
-                    }
-                ])
-            })
+            if(response) {
+                response.clinics.forEach((el) => {
+                    return setItems([
+                        {
+                            label: el?.name?.en,
+                            key: el?.id
+                        }
+                    ])
+                })
+            }
+
 
         })
     }, [])
@@ -37,17 +40,27 @@ function ClinicOwnerHeade() {
 
     };
 
-    const handleChange = (value, e) => {
-        console.log(value, 'val')
+    const handleChange = (e) => {
+        console.log(e.target.value, 'val')
+        if(e.target.value) {
+            dispatch({
+                type:'MONTH',
+                payload: {
+                    month_key: e.target.value.length < 2 ? 0 + e.target.value : e.target.value
+                }
+            })
+        }
     }
 
+    let date = new Date().getMonth()
+    console.log(date)
     const monthNames = Array.from({ length: 12 }, (_, i) => dayjs().month(i).format('MMM'));
-    console.log(monthNames, 'd')
+
     return(
         <div className={'clinic_owner_header'}>
             <div style={{margin:"40px 24px", fontSize:40}}>Dashboard</div>
             <div>
-                <select onChange={handleChange}>
+                <select onChange={handleChange} defaultValue={date}>
                     {monthNames.map((month, index) => (
                         <option key={index} value={index}>{month}</option>
                     ))}

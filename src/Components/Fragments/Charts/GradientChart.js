@@ -1,19 +1,32 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Chart,registerables} from "chart.js";
 import GradientChartApp from "../../Dashboard/ClinicsOwner/Fragments/GradientChartApp";
+import {useSelector} from "react-redux";
+import {postResource} from "../../Functions/api_calls";
 
-function GradientChart({data}) {
+function GradientChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
 
+    let token = useSelector((state) => state.auth.token);
+    let ownerClinics = useSelector((state) => state?.owner);
+
+    const [data,setData] = useState([]);
+
+    let date = new Date().getFullYear().toString()
+
+    useEffect(() => {
+        postResource('ClinicOwner','PeriodAppointments', token,  ownerClinics?.id, {year: date, month: ownerClinics?.month_key}).then((response) => {
+            console.log(response, 'gt')
+            setData(response)
+        });
+
+    }, [])
 
 
 
 
-        useEffect(()=>{
-
-        },[data])
     useEffect(()=>{
         const previousData = [
             0, 54, 130, 100, 220, 122, 380, 220, 355, 117, 352, 40,
