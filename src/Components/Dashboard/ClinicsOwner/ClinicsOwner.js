@@ -1,5 +1,5 @@
 import {Button, Col, Row} from "antd";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CounterGreenChart from "../../Fragments/Charts/CounterGreenChart";
 import CounterOrangeChart from "../../Fragments/Charts/CounterOrangeChart";
 import CounterMultipleChart from "../../Fragments/Charts/CounterMultipleChart";
@@ -18,6 +18,7 @@ import ClinicFeedback from "./Fragments/ClinicFeedback";
 
 
 function ClinicsOwner() {
+
     const [greenData,setGreenData] = useState([0.1,4.9]);
     const [orangeData,setOrangeData] = useState([1.1,3.9]);
     const [progressData,setProgressData] = useState(123.4);
@@ -68,6 +69,8 @@ function ClinicsOwner() {
             return newObj
         })
     }
+
+
     return(
         <>
             <div style={{margin:20}} className={'clinics_owner'}>

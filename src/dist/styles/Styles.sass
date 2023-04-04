@@ -32,7 +32,11 @@ body
 
 .layout-conatiner
   padding: 0 20px
-  margin-top: -75px
+  @media screen and (max-width: 2024px)
+    margin-top: -75px
+  @media screen and (max-width: 1050px)
+    margin-top: 1px
+
   .ant-select-selection-item
     margin-top: 3px
 
@@ -384,7 +388,10 @@ body
   padding: 10px
 
 .create_apdate_btns
-  margin-top: -70px
+  @media screen and (max-width: 2024px)
+    margin-top: -70px
+  @media screen and (max-width: 1050px)
+    margin-top: 1px
   margin-left: 28px
   font-weight: 700
   font-size: 22px

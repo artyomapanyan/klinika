@@ -216,6 +216,21 @@ let api = {
         url: 'public/thank-you',
         resource: 'PublicThankYouOffer',
     },
+    {
+        url: 'dashboard/owner/',
+        resource: 'ClinicOwner',
+        custom: {
+            OwnerClinicRating: {
+                url: `${endpoint}${version}/dashboard/owner/clinic-rating/`,
+                method: 'GET',
+            },
+        },
+    },
+    {
+        url: 'dashboard/owner/clinics',
+        resource: 'ClinicOwnerClinics',
+    },
+
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

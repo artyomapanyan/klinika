@@ -1,10 +1,29 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Chart,registerables} from "chart.js";
 import {Space} from "antd";
+import {useSelector} from "react-redux";
+import {postResource} from "../../Functions/api_calls";
 
-function CounterGreenChart({data}) {
+function CounterGreenChart() {
+    let token = useSelector((state) => state.auth.token);
+    let ownerClinics = useSelector((state) => state?.owner);
+
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
+
+    const [data,setData] = useState([]);
+
+    useEffect(() => {
+        postResource('ClinicOwner','OwnerClinicRating', token,  ownerClinics?.id, ).then((response) => {
+            console.log(response)
+            let arr = []
+            arr.push(+((+response?.avg_rating).toFixed(1)));
+            arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
+            setData(arr)
+        });
+
+    }, [])
+
 
     const counterforGreenDoughnut = {
         id: "counter",

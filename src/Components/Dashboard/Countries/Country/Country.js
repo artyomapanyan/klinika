@@ -49,6 +49,7 @@ function Country() {
     }
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+        changed.length = 5
     }
 
 
