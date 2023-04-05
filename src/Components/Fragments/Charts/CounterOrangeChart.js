@@ -1,10 +1,33 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Chart,registerables} from "chart.js";
-import {Space} from "antd";
+import {Space, Spin} from "antd";
+import {useSelector} from "react-redux";
+import {postResource} from "../../Functions/api_calls";
+import dayjs from "dayjs";
 
-function CounterOrangeChart({data}) {
+function CounterOrangeChart() {
+    let token = useSelector((state) => state.auth.token);
+    let ownerClinics = useSelector((state) => state?.owner);
+    const [loading, setLoading] = useState(true);
+
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
+
+    let date = new Date().getFullYear().toString()
+    const [data,setData] = useState([]);
+    const [responseState,setResponseState] = useState({});
+
+    useEffect(() => {
+        postResource('ClinicOwner','OwnerClinicMontlyRating', token,  ownerClinics?.id, {year:date, month: ownerClinics?.month_key}).then((response) => {
+            setResponseState(response)
+            let arr = []
+            arr.push(+((+response?.avg_rating).toFixed(1)));
+            arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
+            setData(arr)
+            setLoading(false)
+        });
+
+    }, [ownerClinics])
 
 
     const counterforOrangeDoughnut = {
@@ -55,19 +78,22 @@ function CounterOrangeChart({data}) {
     },[])
 
     return(
-        <Space style={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-            <div  style={{height:92,width:92}}>
-                <canvas ref={canvasRef}></canvas>
-            </div>
-            <Space></Space>
-            <Space direction={'vertical'}>
-                <div className={'chart_counter_bold_text'}>
-                    Clinic name
+        <Spin spinning={loading}>
+            <Space style={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+                <div  style={{height:92,width:92}}>
+                    <canvas ref={canvasRef}></canvas>
                 </div>
-                <div> Avg. monthly </div>
-                <div>clinic rating </div>
+                <Space></Space>
+                <Space direction={'vertical'}>
+                    <div className={'chart_counter_bold_text'}>
+                        {responseState?.clinic}
+                    </div>
+                    <div> Avg. monthly {dayjs().month(ownerClinics?.month_key).format('MMM')}</div>
+                    <div>clinic rating {responseState?.avg_rating}</div>
+                </Space>
             </Space>
-        </Space>
+        </Spin>
+
     )
 }
 export default CounterOrangeChart;

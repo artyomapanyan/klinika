@@ -63,8 +63,7 @@ function ClinicsOwner() {
 
     return(
         <>
-            <div style={{margin:20}} className={'clinics_owner'}>
-                <Button onClick={handleAddCount}>increment</Button>
+            <div style={{margin:'10px 20px'}} className={'clinics_owner'}>
                 <Row gutter={[16,16]}>
                     <Col  lg={5} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
@@ -117,7 +116,7 @@ function ClinicsOwner() {
                 <div>
                     <Row gutter={[20,20]}>
                         <Col lg={9} sm={24}>
-                            <PatientGenderChart data={patientGenderData} />
+                            <PatientGenderChart  />
                         </Col>
                         <Col lg={9} sm={24}>
                             <DoctorLicensesChart data={doctorLicensesData}/>

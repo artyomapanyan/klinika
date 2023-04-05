@@ -2,13 +2,13 @@ import {Button, Radio, Space} from "antd";
 import {t} from "i18next";
 import { LeftOutlined, RightOutlined} from "@ant-design/icons";
 
-function IncomeChannelChartHead() {
+function PatientChartHeader() {
     let data = ['Jeddah Clinic', 'Clinic name', 'Total']
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
-            <Space className={'incomes_color'} style={{fontSize:24, fontWeight:600}}>
-                {t("Incomes")}
-                    {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
+            <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
+                {t('Patients')}
+                {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
             </Space>
             <div>
                 <Space>
@@ -24,4 +24,4 @@ function IncomeChannelChartHead() {
         </div>
     )
 }
-export default IncomeChannelChartHead;
+export default PatientChartHeader;

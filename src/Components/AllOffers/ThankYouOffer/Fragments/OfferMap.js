@@ -13,7 +13,6 @@ function OfferMap() {
     const [map,setMap] = useState()
 
 
-console.log(clinicRedux?.location)
     const onLoadMap = (map) => {
         setMap(map);
     };

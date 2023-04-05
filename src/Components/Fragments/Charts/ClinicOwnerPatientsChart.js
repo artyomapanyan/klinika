@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react'
 import {Chart,registerables} from "chart.js";
 import IncomeChannelChartHead from "../../Dashboard/ClinicsOwner/Fragments/IncomeChannelChartHead";
+import PatientChartHeader from "../../Dashboard/ClinicsOwner/Fragments/PatientChartHeader";
 function ClinicOwnerPatientsChart(){
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
@@ -129,7 +130,7 @@ function ClinicOwnerPatientsChart(){
 
 
     return<div className={'chart_incomes_div'}>
-            <IncomeChannelChartHead />
+            <PatientChartHeader />
             <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
 
     </div>

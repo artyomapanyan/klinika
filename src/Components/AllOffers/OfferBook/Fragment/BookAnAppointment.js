@@ -23,7 +23,7 @@ function BookAnAppointment({data}) {
 
     const onBooking = () => {
         postResource('PublicAppointment', 'create', token, '', dataState).then((response) => {
-            console.log(response, 'response')
+
         })
         navigate('/thank-you');
     }

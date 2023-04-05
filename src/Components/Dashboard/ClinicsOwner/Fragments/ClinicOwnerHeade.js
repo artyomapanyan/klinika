@@ -40,8 +40,7 @@ function ClinicOwnerHeade() {
 
     };
 
-    const handleChange = (e) => {
-        console.log(e.target.value, 'val')
+    const handleChange = (e, options) => {
         if(e.target.value) {
             dispatch({
                 type:'MONTH',
@@ -53,14 +52,14 @@ function ClinicOwnerHeade() {
     }
 
     let date = new Date().getMonth()
-    console.log(date)
+
     const monthNames = Array.from({ length: 12 }, (_, i) => dayjs().month(i).format('MMM'));
 
     return(
         <div className={'clinic_owner_header'}>
             <div style={{margin:"40px 24px", fontSize:40}}>Dashboard</div>
             <div>
-                <select onChange={handleChange} defaultValue={date}>
+                <select onChange={handleChange} defaultValue={date} className={'owner_month_select'}>
                     {monthNames.map((month, index) => (
                         <option key={index} value={index}>{month}</option>
                     ))}

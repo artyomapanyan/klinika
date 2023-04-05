@@ -224,12 +224,32 @@ let api = {
                 url: `${endpoint}${version}/dashboard/owner/clinic-rating/`,
                 method: 'GET',
             },
+            OwnerClinicMontlyRating: {
+                url: `${endpoint}${version}/dashboard/owner/clinic-monthly-rating/`,
+                method: 'GET',
+            },
             MonthlyIncomes: {
                 url: `${endpoint}${version}/dashboard/owner/monthly-incomes/`,
                 method: 'GET',
             },
             PeriodAppointments: {
                 url: `${endpoint}${version}/dashboard/owner/period-appointments/`,
+                method: 'GET',
+            },
+            PatientGenders: {
+                url: `${endpoint}${version}/dashboard/owner/patient-genders/`,
+                method: 'GET',
+            },
+            ClinicLicenses: {
+                url: `${endpoint}${version}/dashboard/owner/clinic-licenses/`,
+                method: 'GET',
+            },
+            TotalEntries: {
+                url: `${endpoint}${version}/dashboard/owner/total-entries/`,
+                method: 'GET',
+            },
+            TopServices: {
+                url: `${endpoint}${version}/dashboard/owner/top-services/`,
                 method: 'GET',
             },
             IncomeChannels: {

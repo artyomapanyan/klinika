@@ -41,7 +41,6 @@ function ThankYouOffer() {
     const {data} = dataState;
     const [filterClinic, setFilterClinic] = useState('')
 
-console.log(clinicRedux,'clinic')
 
     useEffect(()=>setSearchParams(params),[params])
     const onChangeRadio = (e) => {

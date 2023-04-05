@@ -3,26 +3,47 @@ import {Chart,registerables} from "chart.js";
 import GradientChartApp from "../../Dashboard/ClinicsOwner/Fragments/GradientChartApp";
 import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
+import {Button, Dropdown, Radio, Space, Spin, Switch} from "antd";
+import {t} from "i18next";
+import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
+import dayjs from "dayjs";
 
 function GradientChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-
     let token = useSelector((state) => state.auth.token);
     let ownerClinics = useSelector((state) => state?.owner);
 
+    const [loading, setLoading] = useState(true)
     const [data,setData] = useState([]);
+    const [radioState,setRadioState] = useState();
+    let dateFrom = '';
 
-    let date = new Date().getFullYear().toString()
+    switch (radioState) {
+        case 'year':
+            dateFrom = dayjs().add(-12,'month').format('YYYY-MM-DD')
+            break;
+        case 'half':
+            dateFrom = dayjs().add(-6,'month').format('YYYY-MM-DD')
+            break;
+        case 'month':
+            dateFrom = dayjs().add(-1,'month').format('YYYY-MM-DD')
+            break;
+    }
+
+    let dateTo = dayjs().format('YYYY-MM-DD')
+
+
 
     useEffect(() => {
-        postResource('ClinicOwner','PeriodAppointments', token,  ownerClinics?.id, {year: date, month: ownerClinics?.month_key}).then((response) => {
-            console.log(response, 'gt')
+        postResource('ClinicOwner','PeriodAppointments', token,  ownerClinics?.id, {from: dateFrom, to: dateTo}).then((response) => {
+            console.log(response,'resposegr')
             setData(response)
+            setLoading(false)
         });
 
-    }, [])
+    }, [ownerClinics, radioState])
 
 
 
@@ -207,11 +228,39 @@ function GradientChart() {
         }
     },[])
 
+    const switchChange = (checked) => {
+        console.log(`switch to ${checked}`);
+    };
+
+    const onChange = (e) => {
+        setRadioState(e.target.value)
+    }
+
     return(
-        <div className={'gradient_chart_big_div'}>
-            <div><GradientChartApp/></div>
-            <canvas ref={canvasRef} className="chart"></canvas>
-        </div>
+        <Spin spinning={loading}>
+            <div className={'gradient_chart_big_div'}>
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
+                    <div className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
+                        Appointments:
+                    </div>
+                    <div>
+                        <Space>
+                            <Switch defaultChecked onChange={switchChange} />
+                            {t("Previous year")}
+                            <Radio.Group onChange={onChange} defaultValue="year" size="large">
+                                <Radio.Button value="year">{t("12 Month")}</Radio.Button>
+                                <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
+                                <Radio.Button value="month">{t(" Month ")}</Radio.Button>
+                            </Radio.Group>
+                            <Button><LeftOutlined /></Button>
+                            <Button><RightOutlined /></Button>
+                        </Space>
+                    </div>
+                </div>
+                <canvas ref={canvasRef} className="chart"></canvas>
+            </div>
+        </Spin>
+
     )
 }
 export default GradientChart;
