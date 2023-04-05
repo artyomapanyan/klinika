@@ -232,6 +232,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/owner/period-appointments/`,
                 method: 'GET',
             },
+            IncomeChannels: {
+                url: `${endpoint}${version}/dashboard/owner/income-channels/`,
+                method: 'GET',
+            },
         },
     },
     {

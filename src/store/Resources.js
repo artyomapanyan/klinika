@@ -69,7 +69,6 @@ const Resource = {
             name: 'Tap Payments'
         },
     ],
-
     dateOptions: [
         {
             values: "Closes",
@@ -463,6 +462,11 @@ const Resource = {
         NURSING_TASK_CATEGORY: 9,
         REPORT_TOPIC: 10,
     },
+    incomeChannelsLabels: [
+        'Offers',
+        'Orders Mobile App',
+        'All Apointments',
+    ],
 }
 
 

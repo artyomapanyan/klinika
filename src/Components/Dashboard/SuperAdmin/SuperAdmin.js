@@ -1,5 +1,5 @@
 import {Button, Col, Row} from "antd";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 
 
@@ -19,6 +19,8 @@ import PatientGenderChart from "../../Fragments/Charts/PatientGenderChart";
 import DoctorLicensesChart from "../../Fragments/Charts/DoctorLicensesChart";
 import SuperAdminPlatformIssues from "./SuperAdminPlatformIssues/SuperAdminPlatformIssues";
 import IncomesVsConversRate from "./IncomesVsConversRate/IncomesVsConversRate";
+import { postResource } from '../../Functions/api_calls';
+import { useSelector } from 'react-redux';
 
 
 
@@ -29,12 +31,8 @@ function SuperAdmin() {
     const [progressData1,setProgressData1] = useState(64.4);
     const [statusesData,setStatusesData] = useState([70,40, 20, 10]);
     const [progressData2,setProgressData2] = useState(16.4);
-    const [incomeChannelData,setIncomeChannelData] = useState({'All Apointments': 100,
-        'Orders Mobile app':43.0,
-        'Offers':18.4,});
     const [patientGenderData,setPatientGenderData] = useState({'Female': 1236,
         'Male':864,});
-
     const [doctorLicensesData,setDoctorLicensesData] = useState({'Actual': 1236,
         'Expire soon':785,
         'Expired':864});
@@ -86,13 +84,6 @@ function SuperAdmin() {
         setPurpleData((prevState) => [(+prevState[0] + 0.1).toFixed(1), (+prevState[1] - 0.1).toFixed(1)])
         setProgressData1((prevState) => (+prevState + 0.1).toFixed(1))
         setProgressData2((prevState) => (+prevState + 0.1).toFixed(1))
-        setIncomeChannelData((prevState)=> {
-            let newObj = {}
-            Object.keys(prevState).map((key)=>{
-                newObj[key] =  (+prevState[key]+1).toFixed(1);
-            })
-            return newObj
-        })
         setPatientGenderData((prevState)=> {
             let newObj = {}
             Object.keys(prevState).map((key)=>{
@@ -100,7 +91,6 @@ function SuperAdmin() {
             })
             return newObj
         })
-
         setDoctorLicensesData((prevState)=> {
             let newObj = {}
             Object.keys(prevState).map((key)=>{
@@ -118,7 +108,6 @@ function SuperAdmin() {
                     <Col  lg={6} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
                             <ClinicManagerProgressCount data={progressData1} />
-
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
@@ -142,7 +131,7 @@ function SuperAdmin() {
                         <ClinicOwnerPatientsChart />
                     </Col>
                     <Col lg={6} >
-                        <IncomeChannelsChart data={incomeChannelData} />
+                        <IncomeChannelsChart />
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
@@ -184,12 +173,6 @@ function SuperAdmin() {
             <div>
                 <ClinicFeedback />
             </div>
-
-
-
-
-
-
         </div>
     )
 }

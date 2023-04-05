@@ -24,9 +24,6 @@ function ClinicsOwner() {
     const [progressData,setProgressData] = useState(123.4);
     const [multipleData,setMultipleData] = useState({'Jeddahclinic':67.3,
                                                                'Clinic name':87.3,});
-    const [incomeChannelData,setIncomeChannelData] = useState({'All Apointments': 100,
-                                                                         'Orders Mobile app':43.0,
-                                                                         'Offers':18.4,});
 
     const [patientGenderData,setPatientGenderData] = useState({'Female': 1236,
                                                                         'Male':864,});
@@ -43,13 +40,6 @@ function ClinicsOwner() {
            Object.keys(prevState).map((key)=>{
                newObj[key] =  (+prevState[key]+1).toFixed(1);
            })
-            return newObj
-        })
-        setIncomeChannelData((prevState)=> {
-            let newObj = {}
-            Object.keys(prevState).map((key)=>{
-                newObj[key] =  (+prevState[key]+1).toFixed(1);
-            })
             return newObj
         })
 
@@ -106,7 +96,7 @@ function ClinicsOwner() {
                             <LineChartIncomes />
                         </Col>
                         <Col lg={6} sm={24}>
-                            <IncomeChannelsChart data={incomeChannelData} />
+                            <IncomeChannelsChart />
                         </Col>
                     </Row>
 
