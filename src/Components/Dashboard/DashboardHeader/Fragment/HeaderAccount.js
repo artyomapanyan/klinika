@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./HeaderAccount.sass"
 import notification from "../../../../dist/icons/notification.svg";
 import alert from "../../../../dist/icons/alert.svg";
@@ -8,21 +8,37 @@ import HeaderAccountDropdown from "./Fragment/HeaderAccountDropdown";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
 import Languages from "./Languages";
+import PermCheck from "../../../Fragments/PermCheck";
+import {postResource} from "../../../Functions/api_calls";
 
 
 function HeaderAccount() {
+    let token = useSelector((state) => state.auth.token);
     let user = useSelector((state) => state?.auth?.user);
+
+    const [approve, setApprove] = useState({})
+
+    useEffect(() => {
+        postResource('ApproveClinicDoctor','single', token, ``, ).then((response) => {
+            console.log(response, 'fe')
+            setApprove(response)
+        });
+    }, [])
 
     return(
         <div>
 
             <Space  className="header-properties small-gap">
-                <Dropdown  dropdownRender={()=><Card>111</Card>} trigger={['click']} placement="bottomRight">
+                <Dropdown  dropdownRender={()=><div>
+                    <div>Clinic Name</div>
+                    <Button  type={'primary'} size={'small'}>Ok</Button>
+                    <Button type={'secondary'} size={'small'}>Cancel</Button>
+                </div>} trigger={['click']} placement="bottomRight">
                     <Button type="link" className="header_call_dropdown"><Space><img alt={'icons'} src={notification}/>32</Space></Button>
                 </Dropdown>
 
 
-                    <Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>{t("Report")}</Space></Button>
+                {PermCheck('User:viewAny')?<Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>{t("Report")}</Space></Button>:<div></div>}
                     <Divider type={"vertical"} style={{height: 32, margin:16}} />
 
 

@@ -212,6 +212,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             key: 'clinics-owner',
             icon: <img alt={'icons'} src={dash3}/>,
             label: `Clinics owner`,
+
         },
         {
             key: 'patients',

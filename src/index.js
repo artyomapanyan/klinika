@@ -18,10 +18,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 axios.defaults.withCredentials = true;
 
 axios.interceptors.response.use(response => {
-
     notificate(response?.data, response?.status)
     return response?.data?.data??response?.data
 }, error => {
+
     notificate(error?.response?.data)
     return error
 })

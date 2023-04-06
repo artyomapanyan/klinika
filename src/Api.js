@@ -262,6 +262,14 @@ let api = {
         url: 'dashboard/owner/clinics',
         resource: 'ClinicOwnerClinics',
     },
+    {
+        url: 'clinic-doctors/pending-requests',
+        resource: 'ApproveClinicDoctor',
+        // ApproveDecline: {
+        //     url: `${endpoint}${version}/clinic-doctors`,
+        //     method: 'POST',
+        // },
+    },
 
     ].forEach(item => {
         if (!item.type) {

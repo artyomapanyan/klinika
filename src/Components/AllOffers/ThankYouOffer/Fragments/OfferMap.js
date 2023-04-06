@@ -13,6 +13,7 @@ function OfferMap() {
     const [map,setMap] = useState()
 
 
+
     const onLoadMap = (map) => {
         setMap(map);
     };

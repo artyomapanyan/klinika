@@ -30,10 +30,21 @@ function GradientChart() {
         case 'month':
             dateFrom = dayjs().add(-1,'month').format('YYYY-MM-DD')
             break;
+        default:
+            dateFrom = dayjs().add(-12,'month').format('YYYY-MM-DD')
     }
 
     let dateTo = dayjs().format('YYYY-MM-DD')
 
+
+//     let previousData = Object.values(data?.incomes).map((el) => {
+//         return Object.values(el)
+//     })
+//
+//
+// console.log(Object.values(data?.incomes).map((el) => {
+//     return Object.values(el)
+// }), data?.incomes, 'ddddddd')
 
 
     useEffect(() => {
@@ -43,12 +54,9 @@ function GradientChart() {
             setLoading(false)
         });
 
-    }, [ownerClinics, radioState])
 
 
 
-
-    useEffect(()=>{
         const previousData = [
             0, 54, 130, 100, 220, 122, 380, 220, 355, 117, 352, 40,
         ];
@@ -88,145 +96,151 @@ function GradientChart() {
             },
         };
         appointmentChartRef.current = new Chart(appointmentsStats, {
-        type: "line",
-        data: {
-            labels: [
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-            ],
-            datasets: [
-                {
-                    label: "Canceled",
-                    data: canceledData,
-                    backgroundColor: gradientGrey,
-                    fill: "start",
-                    borderColor: "white",
-                    borderWidth: 3,
-                    borderRadius: 222,
-                    type: "line",
-                    pointBorderColor: "#C1BEC4",
-                    pointStyle: "circle",
-                    pointBackgroundColor: "#C1BEC4",
-                    pointRadius: 1,
-                },
-                {
-                    label: "Approved",
-                    data: approvedData,
-                    backgroundColor: gradient,
-                    fill: "start",
-                    borderColor: ["rgba(191, 83, 158, 1)"],
-                    borderWidth: 3,
-                    borderRadius: 222,
-                    type: "line",
-                    pointBorderColor: "white",
-                    pointStyle: "circle",
-                    pointRadius: 5,
-                },
-                {
-                    label: "Previous",
-                    data: previousData,
-                    borderColor: ["rgba(119, 77, 157, 1)"],
-                    backgroundColor: "transparent",
-                    borderSkipped: false,
-                    borderWidth: 2,
-                    borderRadius: 222,
-                    type: "line",
-                    pointBorderColor: "#774D9D",
-                    pointBackgroundColor: "#774D9D",
-                    pointRadius: 3,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: {
-                padding: {
-                    left: -30,
-                },
-            },
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    grid: {
-                        drawBorder: false,
-                        borderDash: [4, 2],
-                        color: "rgba(99, 93, 107, 0.2)",
-                    },
-                    ticks: {
-                        color: "rgba(66, 57, 77, 0.5)",
-                        font: {
-                            size: "14",
-                            weight: "700",
-                        },
-                        stepSize: 100,
-                        showLabelBackdrop: false,
-                        padding: 40,
-                    },
-                },
-                x: {
-                    beginAtZero: false,
-                    grid: {
-                        drawBorder: false,
-                        display: false,
+            type: "line",
+            data: {
+                labels: [
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                ],
+                datasets: [
+                    {
+                        label: "Canceled",
+                        data: canceledData,
+                        backgroundColor: gradientGrey,
+                        fill: "start",
                         borderColor: "white",
+                        borderWidth: 3,
+                        borderRadius: 222,
+                        type: "line",
+                        pointBorderColor: "#C1BEC4",
+                        pointStyle: "circle",
+                        pointBackgroundColor: "#C1BEC4",
+                        pointRadius: 1,
                     },
-                    ticks: {
-                        color: "rgba(66, 57, 77, 1)",
+                    {
+                        label: "Approved",
+                        data: approvedData,
+                        backgroundColor: gradient,
+                        fill: "start",
+                        borderColor: ["rgba(191, 83, 158, 1)"],
+                        borderWidth: 3,
+                        borderRadius: 222,
+                        type: "line",
+                        pointBorderColor: "white",
+                        pointStyle: "circle",
+                        pointRadius: 5,
+                    },
+                    {
+                        label: "Previous",
+                        data: previousData,
+                        borderColor: ["rgba(119, 77, 157, 1)"],
+                        backgroundColor: "transparent",
+                        borderSkipped: false,
+                        borderWidth: 2,
+                        borderRadius: 222,
+                        type: "line",
+                        pointBorderColor: "#774D9D",
+                        pointBackgroundColor: "#774D9D",
+                        pointRadius: 3,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: -30,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            drawBorder: false,
+                            borderDash: [4, 2],
+                            color: "rgba(99, 93, 107, 0.2)",
+                        },
+                        ticks: {
+                            color: "rgba(66, 57, 77, 0.5)",
+                            font: {
+                                size: "14",
+                                weight: "700",
+                            },
+                            stepSize: 100,
+                            showLabelBackdrop: false,
+                            padding: 40,
+                        },
+                    },
+                    x: {
+                        beginAtZero: false,
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            borderColor: "white",
+                        },
+                        ticks: {
+                            color: "rgba(66, 57, 77, 1)",
+                            font: {
+                                size: "14",
+                                weight: "700",
+                            },
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                        labels:{
+                            usePointStyle:true,
+                            pontStyle:'circle',
+                            boxWidth:'10',
+                            boxHeight:'10',
+                            filter: function(label) {
+                                if (label.text !== 'hide') return true;
+                            }
+                        },
+                    },
+                    datalabels: {
+                        anchor: "top",
+                        align: "right",
+                        color: "#a09ca6",
                         font: {
-                            size: "14",
-                            weight: "700",
+                            weight: "bold",
+                            size: 12,
+                        },
+                        padding: {
+                            bottom: 54,
+                            left: 30,
+                        },
+                        display: function (context) {
+                            return context.dataset.label === "Approved";
                         },
                     },
                 },
             },
-            plugins: {
-                legend: {
-                    display: false,
-                         labels:{
-                             usePointStyle:true,
-                             pontStyle:'circle',
-                             boxWidth:'10',
-                             boxHeight:'10',
-                             filter: function(label) {
-                                 if (label.text !== 'hide') return true;
-                             }
-                         },
-                },
-                datalabels: {
-                    anchor: "top",
-                    align: "right",
-                    color: "#a09ca6",
-                    font: {
-                        weight: "bold",
-                        size: 12,
-                    },
-                    padding: {
-                        bottom: 54,
-                        left: 30,
-                    },
-                    display: function (context) {
-                        return context.dataset.label === "Approved";
-                    },
-                },
-            },
-        },
-        plugins: [verticalLine],
-    });
+            plugins: [verticalLine],
+        });
         return () => {
             appointmentChartRef.current.destroy()
         }
-    },[])
+
+    }, [ownerClinics, radioState])
+
+
+
+
+
 
     const switchChange = (checked) => {
         console.log(`switch to ${checked}`);

@@ -13,6 +13,7 @@ export function clearObject(obj){
         }
     })
 }
+
 export function makeUnique(data,key){
         let uniqueKeys = [];
         let uniqueData = [];
