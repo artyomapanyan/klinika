@@ -31,7 +31,7 @@ function HeaderAccount() {
             <Space  className="header-properties small-gap">
                 <Dropdown  dropdownRender={()=><div>
                     <div>Clinic Name</div>
-                    <Button  type={'primary'} size={'small'}>Ok</Button>
+                    <Button style={{margin:3}} type={'primary'} size={'small'}>Ok</Button>
                     <Button type={'secondary'} size={'small'}>Cancel</Button>
                 </div>} trigger={['click']} placement="bottomRight">
                     <Button type="link" className="header_call_dropdown"><Space><img alt={'icons'} src={notification}/>32</Space></Button>
