@@ -25,11 +25,12 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
     const permissions = useSelector(state=>state.auth.user.permissions);
     const handleFilterMenus = (item)=>{
         if(item.children){
-            return item.children.filter(handleFilterMenus).length
+            item.children = item.children.map(handleFilterMenus).filter(e=>e)
+            return item
         }else if(item.permission){
-            return permissions.includes(item.permission+':viewAny')
+            return permissions.includes(item.permission+':viewAny')?item:false
         }
-        return true
+        return item
     }
     const items = useMemo(()=>[
        /* {
@@ -239,7 +240,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             label: t(`Reviews`),
             icon: <img alt={'icons'} src={dash5}/>,
         },*/
-    ].filter(handleFilterMenus),[permissions]);
+    ].map(handleFilterMenus).filter((e)=>e),[permissions]);
 
 
     const selectedItem = useMemo(()=>{

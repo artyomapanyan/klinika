@@ -15,10 +15,12 @@ import PatientGenderChart from "../../Fragments/Charts/PatientGenderChart";
 import DoctorLicensesChart from "../../Fragments/Charts/DoctorLicensesChart";
 import ResultsComponent from "../../Fragments/Charts/ResultsComponent";
 import ClinicFeedback from "./Fragments/ClinicFeedback";
+import { useSelector } from 'react-redux';
+import Preloader from '../../Preloader';
 
 
 function ClinicsOwner() {
-
+    let ownerClinics = useSelector((state) => state?.owner);
     const [greenData,setGreenData] = useState([0.1,4.9]);
     const [orangeData,setOrangeData] = useState([1.1,3.9]);
     const [progressData,setProgressData] = useState(123.4);
@@ -63,7 +65,7 @@ function ClinicsOwner() {
 
     return(
         <>
-            <div style={{margin:'10px 20px'}} className={'clinics_owner'}>
+            {!ownerClinics?.id || !ownerClinics?.month_key?<Preloader/>:<div style={{margin:'10px 20px'}} className={'clinics_owner'}>
                 <Row gutter={[16,16]}>
                     <Col  lg={5} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
@@ -129,7 +131,7 @@ function ClinicsOwner() {
                 <div>
                     <ClinicFeedback />
                 </div>
-            </div>
+            </div>}
 
         </>
 

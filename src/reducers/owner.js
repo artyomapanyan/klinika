@@ -1,15 +1,17 @@
-export default function owner(state = {}, action){
+import dayjs from 'dayjs'
+export default function owner(state = {
+    month_key: dayjs().month()
+}, action){
 
-    if(action.type === 'CLINIC_ID'){
+    if(action.type === 'OWNER_DATA'){
         return {
             ...state,
             ...action.payload
         }
     }
-    if(action.type === 'MONTH'){
+    if(action.type === 'CLEAR_OWNER_DATA'){
         return {
-            ...state,
-            ...action.payload
+
         }
     }
 

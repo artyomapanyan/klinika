@@ -53,10 +53,6 @@ function GradientChart() {
             setData(response)
             setLoading(false)
         });
-
-
-
-
         const previousData = [
             0, 54, 130, 100, 220, 122, 380, 220, 355, 117, 352, 40,
         ];
@@ -235,7 +231,7 @@ function GradientChart() {
             appointmentChartRef.current.destroy()
         }
 
-    }, [ownerClinics, radioState])
+    }, [ownerClinics.id, radioState])
 
 
 

@@ -76,6 +76,7 @@ function CounterGreenChart() {
             appointmentChartRef.current.destroy()
         }
     },[])
+    console.log(dayjs().set('month',ownerClinics?.month_key),ownerClinics?.month_key)
 
     return(
         <Spin spinning={loading}>
@@ -88,7 +89,7 @@ function CounterGreenChart() {
                     <div className={'chart_counter_bold_text'}>
                         {responseState?.clinic}
                     </div>
-                    <div>{dayjs().month(ownerClinics?.month_key).format('MMM')}</div>
+                 {/*   <div>{dayjs().month(ownerClinics?.month_key).format('MMM')}</div>*/}
                     <div>clinic rating {responseState?.avg_rating}</div>
                 </Space>
             </Space>
