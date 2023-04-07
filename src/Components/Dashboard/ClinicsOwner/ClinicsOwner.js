@@ -129,7 +129,7 @@ function ClinicsOwner() {
                     </Row>
                 </div>
                 <div>
-                    <ClinicFeedback />
+                    {/*<ClinicFeedback />*/}
                 </div>
             </div>}
 

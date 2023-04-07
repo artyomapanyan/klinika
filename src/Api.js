@@ -133,6 +133,10 @@ let api = {
         resource: 'Offer',
     },
     {
+        url: 'reports',
+        resource: 'Report',
+    },
+    {
         url: 'clinics/working-hours',
         resource: 'ClinicWorkingHours',
     },
@@ -163,6 +167,10 @@ let api = {
             WorkingHours:{
                 url: `${endpoint}${version}/clinic-doctors/working-hours/`,
                 method: 'GET',
+            },
+            ApproveDecline: {
+                url: `${endpoint}${version}/clinic-doctors`,
+                method: 'POST',
             },
         }
     },
@@ -265,10 +273,7 @@ let api = {
     {
         url: 'clinic-doctors/pending-requests',
         resource: 'ApproveClinicDoctor',
-        // ApproveDecline: {
-        //     url: `${endpoint}${version}/clinic-doctors`,
-        //     method: 'POST',
-        // },
+
     },
 
     ].forEach(item => {

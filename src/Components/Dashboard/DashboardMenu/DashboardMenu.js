@@ -104,6 +104,16 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                     permission:'Taxonomy'
                 },
                 {
+                    key: 'reports',
+                    label: t(`Reports`),
+                    permission:'Report'
+                },
+                {
+                    key: 'reports/new',
+                    label: t(`Requests`),
+                    permission:'Report'
+                },
+                {
                     key: 'payment-methods',
                     label: t(`Payment Methods`),
                     permission:'PaymentMethod'
