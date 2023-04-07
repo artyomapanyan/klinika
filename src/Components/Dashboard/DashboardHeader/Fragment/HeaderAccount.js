@@ -9,33 +9,88 @@ import {useSelector} from "react-redux";
 import {t} from "i18next";
 import Languages from "./Languages";
 import PermCheck from "../../../Fragments/PermCheck";
-import {postResource} from "../../../Functions/api_calls";
+import {createResource, postResource} from "../../../Functions/api_calls";
+import resourceLinks from "../../../ResourceLinks";
+import Preloader from "../../../Preloader";
 
 
 function HeaderAccount() {
     let token = useSelector((state) => state.auth.token);
     let user = useSelector((state) => state?.auth?.user);
 
-    const [approve, setApprove] = useState({})
+
+    const [approve, setApprove] = useState([])
+    const [elem, setElem] = useState([])
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
+        setLoading(true)
         postResource('ApproveClinicDoctor','single', token, ``, ).then((response) => {
-            console.log(response, 'fe')
             setApprove(response)
+            setLoading(false)
         });
-    }, [])
+    }, [elem])
+
+    const onOk = (el, key) => {
+        setElem(el)
+        postResource('ClinicDoctor','ApproveDecline', token, `/${el?.id}/approve`,{approve:1}  ).then((response) => {
+        });
+
+
+    }
+
+    const onCancel = (el, key) => {
+        setElem(el)
+        postResource('ClinicDoctor','ApproveDecline', token, `/${el?.id}/approve`,{approve:0}  ).then((response) => {
+        });
+
+
+
+
+
+
+        // setApprove([
+        //     approve.filter((elem) => {
+        //         return elem.id === key
+        //     })
+        //
+        // ])
+    }
+
 
     return(
         <div>
 
             <Space  className="header-properties small-gap">
-                <Dropdown  dropdownRender={()=><div>
-                    <div>Clinic Name</div>
-                    <Button style={{margin:3}} type={'primary'} size={'small'}>Ok</Button>
-                    <Button type={'secondary'} size={'small'}>Cancel</Button>
-                </div>} trigger={['click']} placement="bottomRight">
+                {
+                    <Dropdown  dropdownRender={()=>{
+                        return <div className={'approve_drop_div'}>
+
+                                {
+                                    loading ? <Preloader /> : <div>
+                                        {
+                                            approve.length < 1 ? <div>No clinics to approve!</div> :  approve?.map((el, key) => {
+                                                return <div key={key} className={'approve_drop_inn_div'}>
+                                                    <div>{el?.clinic?.name}</div>
+                                                    <div>
+                                                        <Button onClick={()=>onOk(el, key)} style={{margin:3}} type={'primary'} size={'small'}>Ok</Button>
+                                                        <Button onClick={()=>onCancel(el, key)} style={{margin:3}} type={'secondary'} size={'small'}>Cancel</Button>
+                                                    </div>
+                                                </div>
+                                            })
+                                        }
+                                    </div>
+                                }
+
+
+                        </div>
+
+                }
+                } trigger={['click']} placement="bottom">
                     <Button type="link" className="header_call_dropdown"><Space><img alt={'icons'} src={notification}/>32</Space></Button>
                 </Dropdown>
+                }
 
 
                 {PermCheck('User:viewAny')?<Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>{t("Report")}</Space></Button>:<div></div>}

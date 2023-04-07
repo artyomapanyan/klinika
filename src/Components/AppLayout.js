@@ -73,6 +73,9 @@ import ShowClinic from "./Dashboard/Clinics/Fragments/ShowClinic/ShowClinic";
 import DoctorShow from "./Dashboard/Doctors/DoctorShow";
 import InvoiceItems from "./Dashboard/Invoices/InvoiceItems/InvoiceItems";
 import InvoiceItem from "./Dashboard/Invoices/InvoiceItems/InvoiceItem";
+import Reports from "./Dashboard/Reports/Reports";
+import Report from "./Dashboard/Reports/Report";
+
 
 
 function AppLayout(){
@@ -266,6 +269,13 @@ function AppLayout(){
             singleComp:<InvoiceItem/>,
             indexComp:<InvoiceItems/>
         },
+        {
+            url:'reports',
+            resource:'Report',
+            //singleComp:<Report/>,
+            indexComp:<Reports/>
+        },
+
 
 
     ]
@@ -297,7 +307,7 @@ function AppLayout(){
 
                         )}
 
-
+                    <Route path={'Reports/new'} element={<Report />}/>
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
                     <Route path={'clinic-manager'} element={<ClinicManager />}/>
