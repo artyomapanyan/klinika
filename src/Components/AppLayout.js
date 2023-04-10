@@ -73,6 +73,9 @@ import ShowClinic from "./Dashboard/Clinics/Fragments/ShowClinic/ShowClinic";
 import DoctorShow from "./Dashboard/Doctors/DoctorShow";
 import InvoiceItems from "./Dashboard/Invoices/InvoiceItems/InvoiceItems";
 import InvoiceItem from "./Dashboard/Invoices/InvoiceItems/InvoiceItem";
+import Reports from "./Dashboard/Reports/Reports";
+import Report from "./Dashboard/Reports/Report";
+
 
 
 function AppLayout(){
@@ -266,6 +269,13 @@ function AppLayout(){
             singleComp:<InvoiceItem/>,
             indexComp:<InvoiceItems/>
         },
+        {
+            url:'reports',
+            resource:'Report',
+            //singleComp:<Report/>,
+            indexComp:<Reports/>
+        },
+
 
 
     ]
@@ -285,8 +295,8 @@ function AppLayout(){
                 <DashboardHeader/>
 
             </div>
-            <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
 
+            <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <Routes>
                     {resourceRoutes.map((item,key)=><Route path={item.url+'/*'} key={key} element={ <Routes>
                         {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}
@@ -297,7 +307,7 @@ function AppLayout(){
 
                         )}
 
-
+                    <Route path={'Reports/new'} element={<Report />}/>
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
                     <Route path={'clinic-manager'} element={<ClinicManager />}/>

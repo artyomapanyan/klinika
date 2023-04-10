@@ -5,13 +5,14 @@ import {createResource, updateResource, useGetResourceSingle} from "../../Functi
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Checkbox, Col, Form, Popconfirm, Space} from "antd";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'Offer';
 
@@ -24,7 +25,7 @@ function Offer() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
-
+    const [changeValuesState, setChangeValuesState] = useState({})
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -36,6 +37,7 @@ function Offer() {
             ...prevState,
             ...values
         }))
+
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -54,6 +56,15 @@ function Offer() {
             })
         }
     }
+ const handleValuesChange = (changed,all)=>{
+        if(changed.clinic_id) {
+            setData((prevData)=>({
+                ...prevData,
+                ...changed
+            }))
+        }
+     setChangeValuesState(changed)
+ }
 
     return(
         <div >
@@ -61,6 +72,7 @@ function Offer() {
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 layout="vertical"
                 ref={formRef}
                 className={'add_create_form'}
@@ -98,6 +110,9 @@ function Offer() {
                                        initialValue={data?.doctors?.map(e=>e.id)}
                                        initialData={data?.doctors??[]}
                                        resource={'Doctor'}
+                                       resourceParams={{
+                                           clinic:data.clinic_id
+                                       }}
                             />
                             <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
@@ -141,14 +156,7 @@ function Offer() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
             </Form>}
         </div>

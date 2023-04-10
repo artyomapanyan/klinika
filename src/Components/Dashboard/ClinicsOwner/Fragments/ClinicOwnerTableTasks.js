@@ -105,6 +105,7 @@ function ClinicOwnerTableTasks() {
             title: 'Timeline',
             dataIndex: 'timeline',
             key: 'timeline',
+            responsive: ['md'],
             render:()=><div className={'clinic_own_table_prog'}>
                 <Progress percent={80}
                           format={()=>{

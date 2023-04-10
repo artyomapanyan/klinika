@@ -6,22 +6,57 @@ import AppTime from "./AppTime";
 import AppPersonalDetails from "./AppPersonalDetails";
 import AppPaymentMethods from "./AppPaymentMethods";
 import {postResource} from "../../../Functions/api_calls";
-import {useSelector} from "react-redux";
-import {useParams} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate, useParams} from "react-router";
 
 function BookAnAppointment({data}) {
     let token = useSelector((state) => state.auth.token);
     let params = useParams();
+    let navigate = useNavigate();
+    let dispatch = useDispatch()
 
 
     const [dataState, setDataState] = useState({});
     const [date, setDate] = useState();
-    const [time, setTime] = useState();
+    const [dataTimes, setDataTimes] = useState();
     const [responseCodeState, setResponseCodeState] = useState();
 
     const onBooking = () => {
-        postResource('PublicAppointment', 'create', token, '', dataState)
+        postResource('PublicAppointment', 'create', token, '', dataState).then((response) => {
+
+        })
+        navigate('/thank-you');
     }
+
+
+    useEffect(() => {
+        if(data?.clinic?.id) {
+            dispatch({
+                type:'PUBLIC_CLINIC',
+                payload:data?.clinic
+            })
+        }
+    }, [data?.clinic?.id])
+
+    useEffect(() => {
+        if(dataState?.date) {
+            dispatch({
+                type:'PUBLIC_CLINIC',
+                payload:{
+                    date: dataState?.date
+                }
+            })
+        }
+        if(dataState?.time) {
+            dispatch({
+                type:'PUBLIC_CLINIC',
+                payload:{
+                    time: dataState?.time
+                }
+            })
+        }
+    }, [dataState?.date, dataState?.time])
+
 
     return(
         <div className={'app_big_div'}>
@@ -42,10 +77,10 @@ function BookAnAppointment({data}) {
                     <AppDate data={data} setDataState={setDataState} dataState={dataState} date={date} setDate={setDate}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppTime data={data} setDataState={setDataState} dataState={dataState}/>
+                    <AppTime data={data} setDataState={setDataState} dataState={dataState} setDataTimes={setDataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppPersonalDetails setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params}/>
+                    <AppPersonalDetails setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params} date={date} dataTimes={dataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
                     <AppPaymentMethods setDataState={setDataState} dataState={dataState}  responseCodeState={responseCodeState}/>

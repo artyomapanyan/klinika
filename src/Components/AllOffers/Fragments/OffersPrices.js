@@ -3,7 +3,7 @@ import {Button, Col, Dropdown, Input, Row, Slider, Space} from "antd";
 import {DownOutlined, FunnelPlotOutlined, InsertRowRightOutlined, SearchOutlined} from "@ant-design/icons";
 import {t} from "i18next";
 
-function OffersPrices({clinics, setParams, params, data, setResetState, resetState}) {
+function OffersPrices({clinics, setParams, params, data, setResetState, resetState, filterClinic}) {
     const [lowHighState, setLowHighState] = useState(false)
 
     const items = clinics?.map((el) => {
@@ -16,13 +16,16 @@ function OffersPrices({clinics, setParams, params, data, setResetState, resetSta
     const onClick = ({key}) => {
         setParams({
             ...params,
+            page:1,
             clinic: key
         })
     };
 
     const onReset = () => {
         setResetState(true)
-        setParams({})
+        setParams({
+            page:1
+        })
         setTimeout(() => {
             setResetState(false)
         }, 100)
@@ -33,6 +36,7 @@ function OffersPrices({clinics, setParams, params, data, setResetState, resetSta
             setTimeout(() => {
                 setParams({
                     ...params,
+                    page:1,
                     title: e?.target?.value
                 })
             }, 500)
@@ -46,6 +50,7 @@ function OffersPrices({clinics, setParams, params, data, setResetState, resetSta
             setParams(
                 {
                     ...params,
+                    page:1,
                     order: 'desc'
                 }
             )
@@ -53,6 +58,7 @@ function OffersPrices({clinics, setParams, params, data, setResetState, resetSta
             setParams(
                 {
                     ...params,
+                    page:1,
                     order: "asc"
                 }
             )
@@ -106,21 +112,26 @@ function OffersPrices({clinics, setParams, params, data, setResetState, resetSta
             </Col>
             <Col lg={6}>
                 <div align={'center'}>
-                    <InsertRowRightOutlined style={{color:'#ce4e99', fontSize: 18}}/>
-                    <Dropdown
-                        menu={{
-                            items,
-                            onClick,}}
-                        trigger={['click']}
+                    {
+                        params?.clinic ? <div></div> : <div>
+                            <InsertRowRightOutlined style={{color:'#ce4e99', fontSize: 18}}/>
+                            <Dropdown
+                                menu={{
+                                    items,
+                                    onClick,}}
+                                trigger={['click']}
 
-                    >
-                        <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                            <div style={{marginLeft:10, fontSize:14}}>{params?.clinic ? items?.find((el) => {
-                                return el?.key === +params?.clinic})?.label : `All Clinics (${clinics?.length})`}</div>
-                            <div><DownOutlined style={{color:'#ce4e99'}}/></div>
-                        </Space>
+                            >
+                                <Space direction={'horizontal'} style={{cursor:"pointer"}}>
+                                    <div style={{marginLeft:10, fontSize:14}}>{params?.clinic ? items?.find((el) => {
+                                        return el?.key === +params?.clinic})?.label : `All Clinics (${clinics?.length})`}</div>
+                                    <div><DownOutlined style={{color:'#ce4e99'}}/></div>
+                                </Space>
 
-                    </Dropdown>
+                            </Dropdown>
+                        </div>
+                    }
+
                 </div>
             </Col>
             <Col lg={5}>

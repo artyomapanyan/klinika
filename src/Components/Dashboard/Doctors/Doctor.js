@@ -12,6 +12,7 @@ import Resources from "../../../store/Resources";
 
 import {Row} from "antd/lib";
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'Doctor';
 
@@ -24,6 +25,7 @@ function Doctor() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [changeValuesState, setChangeValuesState] = useState({})
 
 
     const onFinish = (values) => {
@@ -58,6 +60,9 @@ function Doctor() {
         return [name,item]
     }
 
+    const handleValuesChange = (changed)=>{
+        setChangeValuesState(changed)
+    }
 
     return(
         <div>
@@ -65,6 +70,7 @@ function Doctor() {
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 layout="vertical"
                 ref={formRef}
                 className={'add_create_form'}
@@ -151,14 +157,7 @@ function Doctor() {
 
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
             </Form>}
         </div>

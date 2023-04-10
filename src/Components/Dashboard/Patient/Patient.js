@@ -15,10 +15,6 @@ import {LeftOutlined} from "@ant-design/icons";
 function Patient() {
     return(
         <div>
-            <div style={{marginTop: -119}}>
-                <Button style={{margin:"40px 24px", height:45, width:45}}><LeftOutlined /></Button>
-                <span style={{fontSize:24, fontWeight:700}}>Patient Card</span>
-            </div>
             <div style={{background:"#ffffff", margin:'0 24px', borderRadius: 12}}>
                 <PatientHeader />
                 <Divider />

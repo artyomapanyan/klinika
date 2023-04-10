@@ -22,6 +22,7 @@ function LabTest() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [changeValuesState, setChangeValuesState] = useState({})
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -48,6 +49,9 @@ function LabTest() {
             })
         }
     }
+    const handleValuesChange = (changed)=>{
+        setChangeValuesState(changed)
+    }
     let res = "Taxonomy"
 
     return(
@@ -56,6 +60,7 @@ function LabTest() {
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 layout="vertical"
                 ref={formRef}
                 className={'add_create_form'}
@@ -77,14 +82,17 @@ function LabTest() {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(`${resourceLinks[res]}?lab=tests`) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    {
+                        Object.keys(changeValuesState).length > 0 ? <Popconfirm
+                            title={t("your changes will not be saved")}
+                            onConfirm={() => navigate(`${resourceLinks[res]}?lab=tests`)}
+                            okText={t("Yes")}
+                            cancelText={t("No")}
+                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                            <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                        </Popconfirm> : <Button onClick={() => navigate(`${resourceLinks[res]}?lab=tests`)} size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    }
+
                 </Space>
             </Form>}
         </div>

@@ -12,6 +12,7 @@ import {createResource, updateResource, useGetResourceSingle} from "../../../Fun
 import resourceLinks from "../../../ResourceLinks";
 import Preloader from "../../../Preloader";
 import FormInput from "../../../Fragments/FormInput";
+import CancelComponent from "../../../Fragments/CancelComponent";
 
 const resource = 'InvoiceItem';
 
@@ -24,6 +25,7 @@ function IncoiceItem() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
+    const [changeValuesState, setChangeValuesState] = useState({})
 
 
     const onFinish = (values) => {
@@ -52,12 +54,17 @@ function IncoiceItem() {
         }
     }
 
+    const handleValuesChange = (changed)=>{
+        setChangeValuesState(changed)
+    }
+
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Invoice item`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
+                onValuesChange={handleValuesChange}
                 layout="vertical"
                 ref={formRef}
                 className={'add_create_form'}
@@ -72,14 +79,7 @@ function IncoiceItem() {
 
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <Popconfirm
-                        title={t("Your hours will not be protected")}
-                        onConfirm={() => navigate(resourceLinks[resource]) }
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                    </Popconfirm>
+                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
             </Form>}
         </div>

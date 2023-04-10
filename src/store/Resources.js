@@ -59,6 +59,50 @@ const Resource = {
             name: 'Inactive'
         },
     ],
+    StatusAppointments: [
+        {
+            key: '0',
+            label: 'New'
+        },
+        {
+            key: '1',
+            label: 'Confirmed'
+        },
+        {
+            key: '2',
+            label: 'Finished'
+        },
+        {
+            key: '3',
+            label: 'Cancelled'
+        },
+        {
+            key: '4',
+            label: 'Rescheduled'
+        },
+        {
+            key: '5',
+            label: 'Absent'
+        },
+        {
+            key: '6',
+            label: 'Follow up'
+        },
+    ],
+    StatusReports: [
+        {
+            key: '1',
+            label: 'New'
+        },
+        {
+            key: '2',
+            label: 'Rejected'
+        },
+        {
+            key: '3',
+            label: 'Fixed'
+        },
+    ],
     PaymentMethodKeys: [
         {
             id: 'cash',
@@ -69,7 +113,6 @@ const Resource = {
             name: 'Tap Payments'
         },
     ],
-
     dateOptions: [
         {
             values: "Closes",
@@ -463,6 +506,11 @@ const Resource = {
         NURSING_TASK_CATEGORY: 9,
         REPORT_TOPIC: 10,
     },
+    incomeChannelsLabels: [
+        'Offers',
+        'Orders Mobile App',
+        'All Apointments',
+    ],
 }
 
 

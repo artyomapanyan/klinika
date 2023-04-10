@@ -37,6 +37,7 @@ function AppDate({setDataState, dataState, data, date, setDate}) {
             ...prevState,
             date: date?.format('YYYY-MM-DD'),
         }))
+        setDate({date: date?.format('YYYY-MM-DD')})
     }
 
     const onChangeDate = () => {
@@ -100,7 +101,6 @@ function AppDate({setDataState, dataState, data, date, setDate}) {
                         <Slider {...settings}>
                             {[...Array(30).keys()].map((key, i)=>{
                                 const date = currentDate.add(key,'day')
-                                console.log(date.day(),dayOff)
 
                                 return !dayOff.includes(date.day())? <div key={key} onClick={()=>onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>
                                     <div className={'date_div_inn'}>

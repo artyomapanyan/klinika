@@ -69,7 +69,7 @@ function ClinicFeedback() {
                 <Slider {...settings} ref={slideRef}>
                     {
                         sliderConteiner.map((el, key) => {
-                            return<div>
+                            return<div key={key}>
                                 <div className={'clinic_fid_conteiner'} >
                                     <Row>
                                         <Col lg={4}>

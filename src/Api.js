@@ -133,6 +133,10 @@ let api = {
         resource: 'Offer',
     },
     {
+        url: 'reports',
+        resource: 'Report',
+    },
+    {
         url: 'clinics/working-hours',
         resource: 'ClinicWorkingHours',
     },
@@ -163,6 +167,10 @@ let api = {
             WorkingHours:{
                 url: `${endpoint}${version}/clinic-doctors/working-hours/`,
                 method: 'GET',
+            },
+            ApproveDecline: {
+                url: `${endpoint}${version}/clinic-doctors`,
+                method: 'POST',
             },
         }
     },
@@ -216,6 +224,66 @@ let api = {
         url: 'public/thank-you',
         resource: 'PublicThankYouOffer',
     },
+    {
+        url: 'dashboard/owner/',
+        resource: 'ClinicOwner',
+        custom: {
+            OwnerClinicRating: {
+                url: `${endpoint}${version}/dashboard/owner/clinic-rating/`,
+                method: 'GET',
+            },
+            OwnerClinicMontlyRating: {
+                url: `${endpoint}${version}/dashboard/owner/clinic-monthly-rating/`,
+                method: 'GET',
+            },
+            MonthlyIncomes: {
+                url: `${endpoint}${version}/dashboard/owner/monthly-incomes/`,
+                method: 'GET',
+            },
+            PeriodAppointments: {
+                url: `${endpoint}${version}/dashboard/owner/period-appointments/`,
+                method: 'GET',
+            },
+            PatientGenders: {
+                url: `${endpoint}${version}/dashboard/owner/patient-genders/`,
+                method: 'GET',
+            },
+            ClinicLicenses: {
+                url: `${endpoint}${version}/dashboard/owner/clinic-licenses/`,
+                method: 'GET',
+            },
+            TotalEntries: {
+                url: `${endpoint}${version}/dashboard/owner/total-entries/`,
+                method: 'GET',
+            },
+            TopServices: {
+                url: `${endpoint}${version}/dashboard/owner/top-services/`,
+                method: 'GET',
+            },
+            IncomeChannels: {
+                url: `${endpoint}${version}/dashboard/owner/income-channels/`,
+                method: 'GET',
+            },
+            PeriodIncomes: {
+                url: `${endpoint}${version}/dashboard/owner/period-incomes/`,
+                method: 'GET',
+            },
+            NewPatients: {
+                url: `${endpoint}${version}/dashboard/owner/new-patients/`,
+                method: 'GET',
+            },
+        },
+    },
+    {
+        url: 'dashboard/owner/clinics',
+        resource: 'ClinicOwnerClinics',
+    },
+    {
+        url: 'clinic-doctors/pending-requests',
+        resource: 'ApproveClinicDoctor',
+
+    },
+
     ].forEach(item => {
         if (!item.type) {
             api[item.resource] = {

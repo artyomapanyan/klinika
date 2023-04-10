@@ -32,7 +32,13 @@ body
 
 .layout-conatiner
   padding: 0 20px
-  margin-top: -75px
+  @media screen and (max-width: 2024px)
+    margin-top: -75px
+  @media screen and (max-width: 1050px)
+    margin-top: 1px
+
+  .ant-select-selection-item
+    margin-top: 3px
 
   .resource-header .ant-col-lg-12:nth-last-of-type(1)
     display: flex
@@ -382,7 +388,10 @@ body
   padding: 10px
 
 .create_apdate_btns
-  margin-top: -70px
+  @media screen and (max-width: 2024px)
+    margin-top: -70px
+  @media screen and (max-width: 1050px)
+    margin-top: 1px
   margin-left: 28px
   font-weight: 700
   font-size: 22px
@@ -728,6 +737,27 @@ body
   cursor: pointer
 .resource_table_btn
   border-radius: 30px
+.clinic_owner_header
+  display: flex
+  flex-direction: row
+  align-items: center
+#offer_map
+  height: 700px
+.approve_drop_div
+  background: #FFFFFF
+  border-radius: 12px
+  padding: 5px
+  min-width: 250px
+.approve_drop_inn_div
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  width: 100%
+.own_head_clinics
+  background: #e1e3e2
+  margin-left: 10px
+  border-radius: 25px
+  padding: 12px
 
 
 

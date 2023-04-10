@@ -1,6 +1,5 @@
 import React from "react";
 import {Avatar, Button, Col, Divider, Rate, Space} from "antd";
-import {UserOutlined} from "@ant-design/icons";
 import off_image_1 from "../../../dist/Img/off_image_1.jpg";
 import {useNavigate} from "react-router";
 

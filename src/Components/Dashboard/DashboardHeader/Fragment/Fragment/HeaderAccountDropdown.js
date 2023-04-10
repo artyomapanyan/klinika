@@ -60,7 +60,7 @@ function HeaderAccountDropdown() {
                     <div><img alt={'icons'} src={settings}/> {t("Account setings")}</div>
 
                 </Button>
-                <Button onClick={handleLogout} >
+                <Button style={{marginTop:7}} onClick={handleLogout} >
                     <div><img alt={'icons'} src={logout}/> {t("Logout")}</div>
                 </Button>
             </div>

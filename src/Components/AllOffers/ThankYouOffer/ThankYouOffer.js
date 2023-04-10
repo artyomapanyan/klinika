@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import "../AllOffers.sass"
-import {Col, Divider, Radio, Result, Row} from "antd";
+import {Button, Col, Divider, Radio, Result, Row} from "antd";
 import {t} from "i18next";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../../functions";
-import {useGetResourceIndex} from "../../Functions/api_calls";
+import {postResource, useGetResourceIndex} from "../../Functions/api_calls";
 import AuthHeader from "../../Auth/AuthHeader";
 import Preloader from "../../Preloader";
 import OffersPrices from "../Fragments/OffersPrices";
@@ -13,14 +13,19 @@ import OffersFooter from "../Fragments/OffersFooter";
 import off_head from "../../../dist/Img/off_head.png"
 import img_thank_you from "../../../dist/Img/thank_you.png"
 import CongratulationsText from "./Fragments/CongratulationsText";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router";
 
 
 
 
 function ThankYouOffer() {
+    let clinicRedux = useSelector((state) => state?.publicClinic);
+    let navigate = useNavigate();
+
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
-        order_by: 'new_price',
+        clinic: clinicRedux?.id,
         ...paramsToObject(searchParams.entries())
     })
 
@@ -34,6 +39,8 @@ function ThankYouOffer() {
 
     const {loading} = loadingState;
     const {data} = dataState;
+    const [filterClinic, setFilterClinic] = useState('')
+
 
     useEffect(()=>setSearchParams(params),[params])
     const onChangeRadio = (e) => {
@@ -57,7 +64,7 @@ function ThankYouOffer() {
                             <img src={img_thank_you} alt={'img_thank_you'} style={{width:200}}/>
                         </Col>
                         <Col lg={14} style={{padding:60}}>
-                            <CongratulationsText />
+                            <CongratulationsText clinicRedux={clinicRedux} />
                         </Col>
                     </Row>
 
@@ -69,7 +76,7 @@ function ThankYouOffer() {
                         Discover other offers from
                     </div>
                     <div style={{fontSize:40, fontWeight:600}}>
-                        Dr. Sulaiman Al habib Olaya Medical Complex
+                        {clinicRedux?.name}
                     </div>
                 </div>
             </div>
@@ -86,7 +93,7 @@ function ThankYouOffer() {
                         </Radio.Group>
                         <Divider />
                         <div>
-                            <OffersPrices clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
+                            <OffersPrices filterClinic={filterClinic} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
                         </div>
                     </div>
                     <div className={'big_div_cards'}>
@@ -105,9 +112,16 @@ function ThankYouOffer() {
 
                         </Row>}
 
-
+                        <div className={'load_more_div'}>
+                            <div style={{fontSize: 40, fontWeight: 600}}>
+                                Offers from other clinics
+                            </div>
+                            <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >Show All</Button>
+                        </div>
                     </div>
+
                 </div>}
+
             <OffersFooter />
         </div>
     )

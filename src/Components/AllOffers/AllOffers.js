@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./AllOffers.sass"
 import off_head from "../../dist/Img/off_head.png";
 import AuthHeader from "../Auth/AuthHeader";
-import {Divider, Radio, Result, Row} from "antd";
+import {Button, Divider, Radio, Result, Row} from "antd";
 import OffersPrices from "./Fragments/OffersPrices";
 import {t} from "i18next";
 import OfferCard from "./Fragments/OfferCard";
@@ -18,6 +18,8 @@ function AllOffers() {
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
         order_by: 'new_price',
+        page:1,
+        per_page:5,
         ...paramsToObject(searchParams.entries())
     })
 
@@ -26,19 +28,28 @@ function AllOffers() {
     const {loadingState, dataState, addData} = useGetResourceIndex('PublicOffer', params,false,false,false,false, {
         PublicClinic:{per_page:5000},
         PublicCategory:{},
-        })
+        }, {
+        loadMore:true
+    })
 
 
     const {loading} = loadingState;
     const {data} = dataState;
 
     useEffect(()=>setSearchParams(params),[params])
+    const handleNextPage = ()=>{
+        setParams((prevState)=>({
+            ...prevState,
+            page: (+prevState.page)+1
+        }))
+    }
     const onChangeRadio = (e) => {
         setParams({
             ...params,
             category: e?.target?.value
         })
     }
+
     return(
         <div>
             <div className={'bac_div'}>
@@ -82,6 +93,10 @@ function AllOffers() {
 
                 </div>
             </div>}
+            <div align={'center'} style={{marginTop:30}}>
+                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>Load more</Button>
+            </div>
+
             <OffersFooter />
         </div>
     )
