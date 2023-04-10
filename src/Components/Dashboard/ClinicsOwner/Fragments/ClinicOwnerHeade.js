@@ -17,14 +17,13 @@ function ClinicOwnerHeade() {
             if(response) {
                 response.clinics.forEach((el,key) => {
                     if(key===0){
-                      console.log('dasds')
-                       /* dispatch({
+                        dispatch({
                             type:'OWNER_DATA',
                             payload: {
                                 id:  el?.id,
                                 month_key:currentMonth
                             }
-                        })*/
+                        })
                     }
                     return setItems([
                         {
@@ -54,11 +53,11 @@ function ClinicOwnerHeade() {
 
     };
 
-    const handleChange = (value) => {
+    const handleChange = (e) => {
             dispatch({
                 type:'OWNER_DATA',
                 payload: {
-                    month_key: value
+                    month_key: e.target.value
                 }
             })
     }
@@ -68,7 +67,7 @@ function ClinicOwnerHeade() {
         <div className={'clinic_owner_header'}>
             <div style={{margin:"40px 24px", fontSize:40}}>Dashboard</div>
             <div>
-                <select onSelect={handleChange} defaultValue={ownerClinics.month_key??currentMonth} className={'owner_month_select'}>
+                <select onChange={handleChange} defaultValue={ownerClinics.month_key??currentMonth} className={'owner_month_select'}>
                     {monthNames.map((month, index) => (
                         <option key={index} value={index}>{month}</option>
                     ))}
@@ -81,9 +80,10 @@ function ClinicOwnerHeade() {
                         onClick,
                     }}
                     trigger={['click']}
+                    className={'own_head_clinics'}
                 >
                     <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                        <div style={{color: "#BF539E", fontWeight: 400, fontSize:24, marginLeft:15}}>{items.find(e=>e.id==ownerClinics.id)?.name??t('All Clinics')}</div>
+                        <div style={{ fontWeight: 400, fontSize:18}}>{items.find(e=>e.id==ownerClinics.id)?.name??t('All Clinics')}</div>
                         <div><DownOutlined /></div>
                     </Space>
 

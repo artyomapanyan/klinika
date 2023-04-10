@@ -264,6 +264,14 @@ let api = {
                 url: `${endpoint}${version}/dashboard/owner/income-channels/`,
                 method: 'GET',
             },
+            PeriodIncomes: {
+                url: `${endpoint}${version}/dashboard/owner/period-incomes/`,
+                method: 'GET',
+            },
+            NewPatients: {
+                url: `${endpoint}${version}/dashboard/owner/new-patients/`,
+                method: 'GET',
+            },
         },
     },
     {

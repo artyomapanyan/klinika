@@ -6,7 +6,7 @@ function IncomeChannelChartHead() {
     let data = ['Jeddah Clinic', 'Clinic name', 'Total']
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
-            <Space className={'incomes_color'} style={{fontSize:24, fontWeight:600}}>
+            <Space  style={{fontSize:24, fontWeight:600}}>
                 {t("Incomes")}
                     {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
             </Space>

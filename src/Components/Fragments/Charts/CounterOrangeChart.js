@@ -73,7 +73,7 @@ function CounterOrangeChart() {
             plugins: [counterforOrangeDoughnut],
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
     },[])
 

@@ -64,7 +64,7 @@ function HeaderAccount() {
 
             <Space  className="header-properties small-gap">
                 {
-                    <Dropdown  dropdownRender={()=>{
+                    PermCheck('Doctor:viewAny')? <Dropdown  dropdownRender={()=>{
                         return <div className={'approve_drop_div'}>
 
                                 {
@@ -89,11 +89,11 @@ function HeaderAccount() {
                 }
                 } trigger={['click']} placement="bottom">
                     <Button type="link" className="header_call_dropdown"><Space><img alt={'icons'} src={notification}/>32</Space></Button>
-                </Dropdown>
+                </Dropdown> :<div></div>
                 }
 
 
-                {PermCheck('User:viewAny')?<Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>{t("Report")}</Space></Button>:<div></div>}
+                {<Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>{t("Report")}</Space></Button>}
                     <Divider type={"vertical"} style={{height: 32, margin:16}} />
 
 

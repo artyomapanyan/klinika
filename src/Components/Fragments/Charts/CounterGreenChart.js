@@ -73,10 +73,10 @@ function CounterGreenChart() {
             plugins: [counterforGreenDoughnut],
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
     },[])
-    console.log(dayjs().set('month',ownerClinics?.month_key),ownerClinics?.month_key)
+
 
     return(
         <Spin spinning={loading}>

@@ -59,7 +59,7 @@ function StatusesChart({data}) {
             plugins: [counterforGreenDoughnut],
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
     },[])
 

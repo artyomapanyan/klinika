@@ -156,7 +156,7 @@ function SuperAdminIncomesChart() {
             },
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
     },[])
 

@@ -141,7 +141,7 @@ function AppointmentStats(){
             },
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
     },[])
     const handleShowHide = (key,e)=>{

@@ -1,139 +1,228 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Chart,registerables} from "chart.js";
 import IncomeChannelChartHead from "../../Dashboard/ClinicsOwner/Fragments/IncomeChannelChartHead";
 import PatientChartHeader from "../../Dashboard/ClinicsOwner/Fragments/PatientChartHeader";
+import dayjs from "dayjs";
+import {useSelector} from "react-redux";
+import {Button, Radio, Space, Spin} from "antd";
+import {t} from "i18next";
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {postResource} from "../../Functions/api_calls";
 function ClinicOwnerPatientsChart(){
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
+    let token = useSelector((state) => state.auth.token);
+    let ownerClinics = useSelector((state) => state?.owner);
+    const [loading, setLoading] = useState(true)
+    const [date, setDate] = useState({
+        from: dayjs().add(-12, 'month').format('YYYY-MM-DD'),
+        to: dayjs().format('YYYY-MM-DD'),
+        period:12
+    });
+
 
     useEffect(()=>{
-        const appointmentsStats = canvasRef.current.getContext("2d")
-        Chart.register(...registerables)
-        appointmentChartRef.current = new Chart(appointmentsStats, {
-            type: "bar",
-            data: {
-                labels: [
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec",
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                ],
-                datasets: [
-                    {
-                        label: "Finished",
-                        data: [40, 10, 7, 42, 45, 19, 13, 7, 20, 35, 42, 30],
-                        stack: "Stack 0",
-                        backgroundColor: ["#6DAF56"],
-                        borderColor: ["white"],
-                        borderSkipped: false,
-                        borderWidth: 2,
-                        borderRadius: {
-                            topRight: 222,
-                            topLeft: 222,
-                            bottomLeft: 222,
-                            bottomRight: 222,
-                        },
-                        type: "bar",
-                        hidden: false,
-                    },
-
-                    {
-                        label: "Canceled",
-                        data: [10, 30, 51, 0, 15, 32, 26, 22, 15, 7, 10, 10],
-                        stack: "Stack 0",
-                        backgroundColor: ["#BF539E"],
-                        borderColor: ["white"],
-                        borderSkipped: false,
-                        borderWidth: 2,
-                        borderRadius: {
-                            topRight: 222,
-                            topLeft: 222,
-                            bottomLeft: 222,
-                            bottomRight: 222,
-                        },
-                        type: "bar",
-                        hidden: false,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                barThickness: 13,
-                layout: {
-                    padding: {
-                        left: -30,
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        grid: {
-                            drawBorder: false,
-                            borderDash: [4, 2],
-                            color: "rgba(99, 93, 107, 0.2)",
-                        },
-                        stacked: true,
-                        ticks: {
-                            color: "rgba(66, 57, 77, 0.5)",
-                            font: {
-                                size: "14",
-                                weight: "700",
+        setLoading(true)
+        postResource('ClinicOwner', 'NewPatients', token, ownerClinics?.id, date).then((response) => {
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            const endDate = dayjs(date.to);
+            const startDate = dayjs(date.from);
+            const monthsDiff = endDate.diff(startDate, 'month');
+            const labels = [];
+            for (let i = 1; i <= monthsDiff; i++) {
+                const month = startDate.add(i, 'month').format('M');
+                const monthName = monthNames[month - 1];
+                labels.push(monthName);
+            }
+            const newValues = [];
+            const returnValues = [];
+            Object.values(response.patients).forEach(e=>{
+                newValues.push(e.new)
+                returnValues.push(e.returned)
+            })
+            const appointmentsStats = canvasRef.current.getContext("2d")
+            console.log(canvasRef.current,'ref')
+            Chart.register(...registerables)
+            appointmentChartRef.current = new Chart(appointmentsStats, {
+                type: "bar",
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: "New",
+                            data: newValues,
+                            stack: "Stack 0",
+                            backgroundColor: ["#6DAF56"],
+                            borderColor: ["white"],
+                            borderSkipped: false,
+                            borderWidth: 2,
+                            borderRadius: {
+                                topRight: 222,
+                                topLeft: 222,
+                                bottomLeft: 222,
+                                bottomRight: 222,
                             },
-                            stepSize: 10,
-                            showLabelBackdrop: false,
-                            position: "left",
-                            padding: 40,
+                            type: "bar",
+                            hidden: false,
                         },
-                        min: 0,
+                        {
+                            label: "Returned",
+                            data: returnValues,
+                            stack: "Stack 0",
+                            backgroundColor: ["#BF539E"],
+                            borderColor: ["white"],
+                            borderSkipped: false,
+                            borderWidth: 2,
+                            borderRadius: {
+                                topRight: 222,
+                                topLeft: 222,
+                                bottomLeft: 222,
+                                bottomRight: 222,
+                            },
+                            type: "bar",
+                            hidden: false,
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barThickness: 13,
+                    layout: {
+                        padding: {
+                            left: -30,
+                        },
                     },
-                    x: {
-                        grid: {
-                            drawBorde: false,
-                            display: false,
-                            borderColor: "rgba(99, 93, 107, 0.05)",
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                drawBorder: false,
+                                borderDash: [4, 2],
+                                color: "rgba(99, 93, 107, 0.2)",
+                            },
+                            stacked: true,
+                            ticks: {
+                                color: "rgba(66, 57, 77, 0.5)",
+                                font: {
+                                    size: "14",
+                                    weight: "700",
+                                },
+                                stepSize: 10,
+                                showLabelBackdrop: false,
+                                position: "left",
+                                padding: 40,
+                            },
+                            min: 0,
                         },
-                        ticks: {
-                            color: "rgba(66, 57, 77, 1)",
-                            font: {
-                                size: "14",
-                                weight: "700",
+                        x: {
+                            grid: {
+                                drawBorde: false,
+                                display: false,
+                                borderColor: "rgba(99, 93, 107, 0.05)",
+                            },
+                            ticks: {
+                                color: "rgba(66, 57, 77, 1)",
+                                font: {
+                                    size: "14",
+                                    weight: "700",
+                                },
                             },
                         },
                     },
-                },
-                elements: {
-                    bar: {
-                        borderSkipped: "middle",
+                    elements: {
+                        bar: {
+                            borderSkipped: "middle",
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            labels: false,
+                        },
+                        tooltip: true,
                     },
                 },
-                plugins: {
-                    legend: {
-                        labels: false,
-                    },
-                    tooltip: true,
-                },
-            },
-        });
+            });
+            setLoading(false)
+        })
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
-    },[])
+    },[date])
 
 
-    return<div className={'chart_incomes_div'}>
-            <PatientChartHeader />
-            <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
+    const onRadioChange = (e) => {
+        switch (e.target.value) {
+            case 'year':
+                setDate((prevState) => ({
+                    from: dayjs(prevState.to).add(-12,'months').format('YYYY-MM-DD'),
+                    to: prevState.to,
+                    period: 12
+                }))
+                break;
+            case 'half':
+                setDate((prevState) => ({
+                    from: dayjs(prevState.to).add(-6,'months').format('YYYY-MM-DD'),
+                    to: prevState.to,
+                    period: 6
+                }))
+                break;
+            default:
+                setDate((prevState) => ({
+                    from: dayjs(prevState.to).add(-12,'months').format('YYYY-MM-DD'),
+                    to: prevState.to,
+                    period: 12
+                }))
+
+        }
+    }
+
+
+    const onNextYear = () => {
+        setDate((prevState)=>({
+            to:dayjs(prevState.to).add(date.period, 'month').format('YYYY-MM-DD'),
+            from:dayjs(prevState.from).add(date.period, 'month').format('YYYY-MM-DD'),
+            period: prevState.period
+        }))
+
+
+    }
+
+    const onBackYear = () => {
+        setDate((prevState)=>({
+            to:dayjs(prevState.to).add(-date.period, 'month').format('YYYY-MM-DD'),
+            from:dayjs(prevState.from).add(-date.period, 'month').format('YYYY-MM-DD'),
+            period: prevState.period
+        }))
+
+    }
+
+
+    return<Spin spinning={loading}>
+    <div className={'chart_incomes_div'}>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
+            <Space style={{fontSize:24, fontWeight:600}}>
+                {t("Patients")}
+                {['New', 'Returned'].map((itemKey,key)=><Space  key={key} className={`withDot WD-color2-${key}`}>{itemKey}</Space>)}
+            </Space>
+            <div>
+                <Space>
+                    <Radio.Group onChange={onRadioChange} defaultValue="year" size="large">
+                        <Radio.Button value="year">{t("12 Month")}</Radio.Button>
+                        <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
+                    </Radio.Group>
+                    <Button disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><LeftOutlined /></Button>
+                    <Button disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><RightOutlined /></Button>
+                </Space>
+            </div>
+        </div>
+        <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
 
     </div>
+    </Spin>
 }
 export default ClinicOwnerPatientsChart
 

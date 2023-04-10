@@ -59,7 +59,7 @@ function DoctorReworkedStatusesChart({data}) {
             plugins: [counterforGreenDoughnut],
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
     },[])
 

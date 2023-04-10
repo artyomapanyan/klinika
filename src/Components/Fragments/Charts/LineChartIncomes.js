@@ -1,185 +1,266 @@
-import React, {useEffect, useRef} from "react";
-import {Chart,registerables} from "chart.js";
+import React, {useEffect, useRef, useState} from "react";
+import {Chart, registerables} from "chart.js";
 import IncomeChannelChartHead from "../../Dashboard/ClinicsOwner/Fragments/IncomeChannelChartHead";
+import {postResource} from "../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import dayjs from "dayjs";
+import {Button, Radio, Space, Spin} from "antd";
+import {t} from "i18next";
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 
 function LineChartIncomes() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
+    let token = useSelector((state) => state.auth.token);
+    let ownerClinics = useSelector((state) => state?.owner);
 
-    useEffect(()=>{
-        const appointmentsStats = canvasRef.current.getContext("2d")
-        Chart.register(...registerables)
-        appointmentChartRef.current = new Chart(appointmentsStats, {
-            type: "bar",
-            data: {
-                labels: [
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec",
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                ],
-                datasets: [
-                    {
-                        label: "Clinic name",
-                        data: [
-                            60000, 20000, 65000, 59000, 21000, 23000, 63000, 25000, 20500,
-                            20000, 25000, 50000,
-                        ],
-                        stack: "Clinic name",
-                        backgroundColor: "#F7BE93",
-                        borderColor: ["white"],
-                        borderSkipped: false,
-                        borderWidth: 2,
-                        borderRadius: 5,
-                        type: "bar",
-                    },
-                    {
-                        label: "Jeddah Clinic",
-                        data: [
-                            58000, 84000, 30000, 22000, 50900, 20000, 13000, 70000, 33500,
-                            51000, 12000, 10000,
-                        ],
-                        stack: "Jeddah Clinic",
-                        backgroundColor: "#D477B0",
-                        borderColor: ["white"],
-                        borderSkipped: false,
-                        borderWidth: 2,
-                        borderRadius: 5,
-                        type: "bar",
-                    },
-                    {
-                        label: "Total",
-                        data: [
-                            110000, 40000, 50000, 42000, 80900, 90000, 21000, 70000, 50500,
-                            71000, 52000, 31000,
-                        ],
-                        stack: "Total",
-                        backgroundColor: "#774D9D",
-                        borderColor: ["white"],
-                        borderSkipped: false,
-                        borderWidth: 2,
-                        borderRadius: 5,
-                        type: "bar",
-                    },
-                ],
-            },
+    const [loading, setLoading] = useState(true);
 
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                barThickness: 14,
-                layout: {
-                    padding: {
-                        left: -20,
-                    },
+
+    const [date, setDate] = useState({
+        year: dayjs().format('YYYY'),
+        month: ownerClinics?.month_key,
+        period: 12
+    });
+
+    const [startAndDate, setStartAndDate] = useState(dayjs());
+
+
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    const endDate = startAndDate;
+    const startDate = dayjs(startAndDate).add(-date.period, 'month');
+
+
+    const monthsDiff = endDate.diff(startDate, 'month');
+
+    const labels = [];
+
+    for (let i = 1; i <= monthsDiff; i++) {
+        const month = startDate.add(i, 'month').format('M');
+        const monthName = monthNames[month - 1];
+        labels.push(monthName);
+    }
+
+    labels.length = date.period
+
+
+    useEffect(() => {
+        postResource('ClinicOwner', 'PeriodIncomes', token, '', date).then((response) => {
+            const totalData =[];
+            let a = response?.map((el) =>{
+                let data = Object.values(el.month_incomes).map((el) => Object.values(el)).flat();
+                data.forEach((e,key)=>{
+                    totalData[key] = (totalData[key]??0)+e
+                })
+                return {
+                    label: el.clinic,
+                    data,
+                    stack: el.clinic,
+                    backgroundColor: "#F7BE93",
+                    borderColor: ["white"],
+                    borderSkipped: false,
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    type: "bar",
+                }
+            })
+
+
+            const appointmentsStats = canvasRef.current.getContext("2d")
+            Chart.register(...registerables)
+            appointmentChartRef.current = new Chart(appointmentsStats, {
+                type: "bar",
+                data: {
+                    labels,
+                    datasets: [
+                        ...a,
+                        ...(a.length>1? [{
+                            label: "Total",
+                            data: totalData,
+                            stack: "Total",
+                            backgroundColor: "#774D9D",
+                            borderColor: ["white"],
+                            borderSkipped: false,
+                            borderWidth: 2,
+                            borderRadius: 5,
+                            type: "bar",
+                        }]:[]),
+                    ],
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            drawBorder: false,
-                            borderDash: [4, 2],
-                            color: "rgba(99, 93, 107, 0.2)",
-                        },
-                        stacked: true,
-                        ticks: {
-                            color: "rgba(66, 57, 77, 0.5)",
-                            font: {
-                                size: "14",
-                                weight: "700",
-                            },
-                            padding: 40,
-                            stepSize: 20000,
-                            showLabelBackdrop: false,
-                            callback: function (label) {
-                                return label / 1000 + "k";
-                            },
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "1k = 1000",
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    barThickness: 14,
+                    layout: {
+                        padding: {
+                            left: -20,
                         },
                     },
-                    x: {
-                        grid: {
-                            drawBorde: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false,
+                                borderDash: [4, 2],
+                                color: "rgba(99, 93, 107, 0.2)",
+                            },
+                            stacked: true,
+                            ticks: {
+                                color: "rgba(66, 57, 77, 0.5)",
+                                font: {
+                                    size: "14",
+                                    weight: "700",
+                                },
+                                padding: 40,
+                                stepSize: 20000,
+                                showLabelBackdrop: false,
+                                callback: function (label) {
+                                    return label / 1000 + "k";
+                                },
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "1k = 1000",
+                            },
+                        },
+                        x: {
+                            grid: {
+                                drawBorde: false,
+                                display: false,
+                                borderColor: "white",
+                            },
+                            ticks: {
+                                color: "rgba(66, 57, 77, 1)",
+                                font: {
+                                    size: "14",
+                                    weight: "700",
+                                },
+                            },
+                        },
+                    },
+                    elements: {
+                        bar: {
+                            borderSkipped: "middle",
+                        },
+                    },
+                    plugins: {
+                        legend: {
                             display: false,
-                            borderColor: "white",
                         },
-                        ticks: {
-                            color: "rgba(66, 57, 77, 1)",
-                            font: {
-                                size: "14",
+                        plugins: {},
+                        tooltip: {
+                            shadowOffsetX: 3,
+                            shadowOffsetY: 3,
+                            shadowBlur: 10,
+                            shadowColor: "rgba(0, 0, 0, 0.5)",
+                            // callbacks: {
+                            //   label: function (context) {
+                            //     return context.dataset.data.map((item) => item + "$ ");
+                            //   },
+                            //   //     afterLabel: function(tooltipItem, data) {
+                            //   //     var dataset = data['datasets'][0];
+                            //   //     return '(' + dataset + '$)';
+                            //   //     },
+                            // },
+                            backgroundColor: "white",
+                            padding: 16,
+                            usePointStyle: true,
+                            titleColor: "rgba(0, 0, 0, 0.5)",
+                            titleFont: {
+                                size: "16",
                                 weight: "700",
                             },
+                            bodyColor: "black",
+                            bodyFont: {
+                                size: 12,
+                                weight: 700,
+                            },
+                            // borderWidth: "1",
+                            // borderColor: "rgb(119,77,157)",
+                            caretPadding: 7,
                         },
                     },
                 },
-                elements: {
-                    bar: {
-                        borderSkipped: "middle",
-                    },
-                },
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    plugins: {},
-                    tooltip: {
-                        shadowOffsetX: 3,
-                        shadowOffsetY: 3,
-                        shadowBlur: 10,
-                        shadowColor: "rgba(0, 0, 0, 0.5)",
-                        // callbacks: {
-                        //   label: function (context) {
-                        //     return context.dataset.data.map((item) => item + "$ ");
-                        //   },
-                        //   //     afterLabel: function(tooltipItem, data) {
-                        //   //     var dataset = data['datasets'][0];
-                        //   //     return '(' + dataset + '$)';
-                        //   //     },
-                        // },
-                        backgroundColor: "white",
-                        padding: 16,
-                        usePointStyle: true,
-                        titleColor: "rgba(0, 0, 0, 0.5)",
-                        titleFont: {
-                            size: "16",
-                            weight: "700",
-                        },
-                        bodyColor: "black",
-                        bodyFont: {
-                            size: 12,
-                            weight: 700,
-                        },
-                        // borderWidth: "1",
-                        // borderColor: "rgb(119,77,157)",
-                        caretPadding: 7,
-                    },
-                },
-            },
+            });
+            setLoading(false)
+
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
-    },[])
 
 
+    }, [date, startAndDate])
 
-    return(
-        <div className={'chart_incomes_div'}>
-            <IncomeChannelChartHead />
-            <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
-        </div>
+    const onRadioChange = (e) => {
+        switch (e.target.value) {
+            case 'year':
+                setDate((prevState) => ({
+                    year: dayjs(prevState.year).format('YYYY'),
+                    month: prevState.month,
+                    period: 12
+                }))
+                break;
+            case 'half':
+                setDate((prevState) => ({
+                    year: dayjs(prevState.year).format('YYYY'),
+                    month: prevState.month,
+                    period: 6
+                }))
+                break;
+            default:
+                setDate((prevState) => ({
+                    year: dayjs(prevState.year).format('YYYY'),
+                    month: prevState.month,
+                    period: 12
+                }))
+
+        }
+    }
+
+    const onNextYear = () => {
+        setStartAndDate(dayjs(startAndDate).add(+date.period, 'month'))
+
+    }
+
+    const onBackYear = () => {
+        setStartAndDate(dayjs(startAndDate).add(-date.period, 'month'))
+
+    }
+
+
+    return (
+        <Spin spinning={loading}>
+            <div className={'chart_incomes_div'}>
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", padding: 30}}>
+                    <Space style={{fontSize: 24, fontWeight: 600}}>
+                        {t("Incomes")}
+                        {['Jeddah Clinic', 'Clinic name', 'Total'].map((itemKey, key) => <Space key={key}
+                                                                                                className={`withDot WD-color1-${key}`}>{itemKey}</Space>)}
+                    </Space>
+                    <div>
+                        <Space>
+                            <Radio.Group onChange={onRadioChange} defaultValue="year" size="large">
+                                <Radio.Button value="year">{t("12 Month")}</Radio.Button>
+                                <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
+                            </Radio.Group>
+                            <Button disabled={startAndDate <= dayjs().add(-36, 'month').format('YYYY-MM-DD')}
+                                    onClick={onBackYear}><LeftOutlined/></Button>
+                            <Button disabled={startAndDate >= dayjs().add(-12, 'month')}
+                                    onClick={onNextYear}><RightOutlined/></Button>
+                        </Space>
+                    </div>
+                </div>
+                <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
+            </div>
+        </Spin>
     )
 }
+
 export default LineChartIncomes;

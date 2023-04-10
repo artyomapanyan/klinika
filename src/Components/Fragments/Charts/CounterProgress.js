@@ -2,8 +2,9 @@ import {Space, Spin} from "antd";
 import arrowGreen from "../../../dist/icons/arrow-green.svg";
 import {t} from "i18next";
 import {useSelector} from "react-redux";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {postResource} from "../../Functions/api_calls";
+import arrowRed from "../../../dist/icons/arrow-red.svg";
 
 function CounterProgress() {
     let token = useSelector((state) => state.auth.token);
@@ -21,6 +22,7 @@ function CounterProgress() {
 
     }, [ownerClinics])
 
+
     return(
         <Spin spinning={loading}>
             <Space>
@@ -29,8 +31,15 @@ function CounterProgress() {
                         {data?.incomes} K
                     </div>
                     <div style={{color:"#6DAF56"}}>
-                        <img alt={'icons'} src={arrowGreen}/>
-                        11% / + 12287 $
+                        {
+                            data?.incomes >= data?.incomes_prev_month ? <div style={{color:"#6DAF56"}}>
+                                <img alt={'icons'} src={arrowGreen}/>
+                                {`${data?.percentage}% / + ${data?.incomes - data?.incomes_prev_month}`}
+                            </div> : <div style={{color:"rgba(207, 83, 62, 1)"}}>
+                                <img alt={'icons'} src={arrowRed}/>
+                                {`${data?.percentage}% / - ${data?.incomes_prev_month - data?.incomes}`}
+                            </div>
+                        }
                     </div>
                 </Space>
                 <Space></Space>

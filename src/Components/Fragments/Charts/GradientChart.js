@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Chart,registerables} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import GradientChartApp from "../../Dashboard/ClinicsOwner/Fragments/GradientChartApp";
 import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
@@ -15,82 +15,76 @@ function GradientChart() {
     let token = useSelector((state) => state.auth.token);
     let ownerClinics = useSelector((state) => state?.owner);
 
+
+
+    const [prevYearState, setPrevYearState] = useState(false)
     const [loading, setLoading] = useState(true)
-    const [data,setData] = useState([]);
-    const [radioState,setRadioState] = useState();
+    const [data, setData] = useState([]);
+    const [radioState, setRadioState] = useState();
+
+    const [date, setDate] = useState({
+        from: dayjs().add(-12, 'month').format('YYYY-MM-DD'),
+        to: dayjs().format('YYYY-MM-DD'),
+
+    });
 
 
-    // const [dateFrom,setDateFrom] = useState(dayjs().add(-12,'month').format('YYYY-MM-DD'));
-     const [dateTo,setDateTo] = useState(dayjs().format('YYYY-MM-DD'));
+//
+    const startDate = dayjs('2022-05-01', 'YYYY-MM-DD');
+    const endDate = dayjs('2022-12-31', 'YYYY-MM-DD');
 
-    let dateFrom = '';
+// Создайте объект с месяцами
+    const months = {};
 
-    switch (radioState) {
-        case 'year':
-            dateFrom = dayjs().add(-12,'month').format('YYYY-MM-DD')
-            break;
-        case 'half':
-            dateFrom = dayjs().add(-6,'month').format('YYYY-MM-DD')
-            break;
-        case 'month':
-            dateFrom = dayjs().add(-1,'month').format('YYYY-MM-DD')
-            break;
-        default:
-            dateFrom = dayjs().add(-12,'month').format('YYYY-MM-DD')
+// Итерируйтесь по месяцам между начальной и конечной датами
+    for (let date = startDate; date.isBefore(endDate); date = date.add(1, 'month')) {
+        const monthName = date.format('YYYY-MM');
+        const monthNumber = 0 ;
+        months[monthName] = monthNumber;
     }
-
 
 
     useEffect(() => {
 
 
-        postResource('ClinicOwner','PeriodAppointments', token,  ownerClinics?.id, {from: dateFrom, to: dateTo}).then((response) => {
-            console.log(response,'resposegr')
-            setData(response)
-            setData(Object.values(response?.incomes).map((el) => {
-                return Object.values(el)
-            }))
-            setLoading(false)
-        });
+        postResource('ClinicOwner', 'PeriodAppointments', token, ownerClinics?.id, date).then((response) => {
+            console.log(response)
+            let prevYear = Object.values(response?.incomes?.prev_year)
+            let growth = Object.values(response?.incomes?.growth)
+            let canceled = Object.values(response?.incomes[3])
+            let closed = Object.values(response?.incomes[2])
+            console.log(prevYear,growth,canceled,closed)
 
 
-        const dayjs = require('dayjs');
-        const monthNames = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
 
-        const startDate = dayjs(dateFrom);
-        const endDate = dayjs(dateTo);
+            const startDate = dayjs(date.from);
+            const endDate = dayjs(date.to);
 
-        const monthsDiff = endDate.diff(startDate, 'month');
+            const monthsDiff = endDate.diff(startDate, 'month');
 
-        const labels = [];
+            const labels = [];
 
-        for (let i = 0; i <= monthsDiff; i++) {
-            const month = startDate.add(i, 'month').format('M');
-            const monthName = monthNames[month - 1];
-            labels.push(monthName);
-        }
-
-
-console.log(data)
-
-        const previousData = [
-            0, 54, 130, 100, 122, 380, 220, 355, 117, 352, 40,
-        ];
-        const approvedData = [
-            24, 114, 200, -10, 120, 250, 513, 117, 209, 520, 120, 110,
-        ];
+            for (let i = 1; i <= monthsDiff; i++) {
+                const month = startDate.add(i, 'month').format('M');
+                const monthName = monthNames[month - 1];
+                labels.push(monthName);
+            }
 
 
-            let maxValue = Math.max(...previousData);
-            let maxValueIndex = previousData.indexOf(maxValue);
-            const canceledData = [10, 30, 20, -80, 20, 30, 50, 80, 50, 20, 10, 5];
+
+
+
+
+            let maxValue = Math.max(...prevYear);
+            let maxValueIndex = prevYear.indexOf(maxValue);
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
 
-            let gradientGrey = appointmentsStats.createLinearGradient(0, 500, 0, 50);
+            let gradientGrey = appointmentsStats.createLinearGradient(0, 300, 0, 50);
             let gradient = appointmentsStats.createLinearGradient(0, 400, 0, 10);
             gradient.addColorStop(0, "rgba(191, 83, 158, 0.05)");
             gradient.addColorStop(1, "rgba(191, 83, 158, 1)");
@@ -101,8 +95,8 @@ console.log(data)
                 beforeDraw(chart) {
                     const {
                         ctx,
-                        chartArea: { top,height },
-                        scales: { x },
+                        chartArea: {top, height},
+                        scales: {x},
                     } = chart;
                     ctx.save();
                     ctx.setLineDash([2, 2]);
@@ -123,7 +117,7 @@ console.log(data)
                     datasets: [
                         {
                             label: "Canceled",
-                            data: canceledData,
+                            data: canceled,
                             backgroundColor: gradientGrey,
                             fill: "start",
                             borderColor: "white",
@@ -137,7 +131,7 @@ console.log(data)
                         },
                         {
                             label: "Approved",
-                            data: approvedData,
+                            data: growth,
                             backgroundColor: gradient,
                             fill: "start",
                             borderColor: ["rgba(191, 83, 158, 1)"],
@@ -147,10 +141,13 @@ console.log(data)
                             pointBorderColor: "white",
                             pointStyle: "circle",
                             pointRadius: 5,
+                            pointBackgroundColor: function (context) {
+                                return context.raw > 0 ? "#6DAF56" : "#CF533E";
+                            },
                         },
                         {
                             label: "Previous",
-                            data: previousData,
+                            data: prevYearState ? prevYear : [],
                             borderColor: ["rgba(119, 77, 157, 1)"],
                             backgroundColor: "transparent",
                             borderSkipped: false,
@@ -239,48 +236,102 @@ console.log(data)
                 },
                 plugins: [verticalLine],
             });
-            return () => {
-                appointmentChartRef.current.destroy()
-            }
+            setLoading(false)
+        });
+
+
+        return () => {
+            appointmentChartRef?.current?.destroy()
+        }
 
 
 
-    }, [ownerClinics.id, radioState])
+    }, [ownerClinics.id, radioState, date, prevYearState])
 
 
     const onBackYear = () => {
+        if (date?.to === dayjs(date.from).add(+12, 'month').format('YYYY-MM-DD')) {
+            setDate((prevState) => ({
+                from: dayjs(prevState.from).add(-12, 'month').format('YYYY-MM-DD'),
+                to: dayjs(prevState.to).add(-12, 'month').format('YYYY-MM-DD')
+            }))
+        } else {
+            setDate((prevState) => ({
+                from: dayjs(prevState.from).add(-6, 'month').format('YYYY-MM-DD'),
+                to: dayjs(prevState.to).add(-6, 'month').format('YYYY-MM-DD')
+            }))
+        }
 
     }
 
+
+
     const onNextYear = () => {
+        if(date?.to === dayjs(date.from).add(+12, 'month').format('YYYY-MM-DD')) {
+            setDate((prevState) => ({
+                from: dayjs(prevState.from).add(+12, 'month').format('YYYY-MM-DD'),
+                to: dayjs(prevState.to).add(+12, 'month').format('YYYY-MM-DD')
+            }))
+        } else {
+            setDate((prevState) => ({
+                from: dayjs(prevState.from).add(+6, 'month').format('YYYY-MM-DD'),
+                to: dayjs(prevState.to).add(+6, 'month').format('YYYY-MM-DD')
+            }))
+        }
 
     }
     const switchChange = (checked) => {
         console.log(`switch to ${checked}`);
+        setPrevYearState(checked)
     };
 
     const onChange = (e) => {
-        setRadioState(e.target.value)
+        switch (e.target.value) {
+            case 'year':
+                setDate((prevState) => ({
+                    from: dayjs(prevState.to).add(-12, 'month').format('YYYY-MM-DD'),
+                    to: prevState.to
+                }))
+                break;
+            case 'half':
+                setDate((prevState) => ({
+                    from: dayjs(prevState.to).add(-6, 'month').format('YYYY-MM-DD'),
+                    to: prevState.to
+                }))
+                break;
+            case 'month':
+                setDate((prevState) => ({
+                    from: dayjs(prevState.to).add(-1, 'month').format('YYYY-MM-DD'),
+                    to: prevState.to
+                }))
+                break;
+            default:
+                setDate((prevState) => ({
+                    from: dayjs(prevState.to).add(-12, 'month').format('YYYY-MM-DD'),
+                    to: prevState.to
+                }))
+
+        }
     }
 
-    return(
+    return (
         <Spin spinning={loading}>
             <div className={'gradient_chart_big_div'}>
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
-                    <div className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", padding: 30}}>
+                    <div className={'app_clinic'} style={{fontSize: 24, fontWeight: 600}}>
                         Appointments:
                     </div>
                     <div>
                         <Space>
-                            <Switch defaultChecked onChange={switchChange} />
+                            <Switch defaultChecked onChange={switchChange}/>
                             {t("Previous year")}
                             <Radio.Group onChange={onChange} defaultValue="year" size="large">
                                 <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                                 <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
-                                <Radio.Button value="month">{t(" Month ")}</Radio.Button>
+                                {/*<Radio.Button value="month">{t(" Month ")}</Radio.Button>*/}
                             </Radio.Group>
-                            <Button onClick={onBackYear}><LeftOutlined /></Button>
-                            <Button  onClick={onNextYear}><RightOutlined /></Button>
+                            <Button disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><LeftOutlined/></Button>
+                            <Button disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><RightOutlined/></Button>
                         </Space>
                     </div>
                 </div>

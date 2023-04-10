@@ -105,7 +105,7 @@ function PatientGenderChart() {
                 plugins: [shadowPlugin, counterforIncomeChannel],
             });
             return () => {
-                appointmentChartRef.current.destroy()
+                appointmentChartRef?.current?.destroy()
             }
 
         });

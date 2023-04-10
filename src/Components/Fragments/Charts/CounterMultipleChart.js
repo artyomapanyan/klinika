@@ -42,7 +42,7 @@ function CounterMultipleChart({data}) {
             },
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
     },[])
     return(

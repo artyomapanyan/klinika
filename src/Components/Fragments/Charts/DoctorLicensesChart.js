@@ -24,7 +24,6 @@ function DoctorLicensesChart() {
     useEffect(()=>{
 
         postResource('ClinicOwner', 'ClinicLicenses', token, '', ).then((response) => {
-
             setLoading(false)
 
             setData({
@@ -115,7 +114,7 @@ function DoctorLicensesChart() {
             plugins: [shadowPlugin, counterforIncomeChannel],
         });
         return () => {
-            appointmentChartRef.current.destroy()
+            appointmentChartRef?.current?.destroy()
         }
         })
     },[])
@@ -125,7 +124,7 @@ function DoctorLicensesChart() {
         <div className={'patient_gender_div'}>
             <canvas ref={canvasRef} className="chart_income_channel"></canvas>
             <div>
-                <h1 className={'h1'}><div>Doctors'</div><div>licenses</div> </h1>
+                <h1 className={'h1'}><div>Clinics</div><div>licenses</div> </h1>
                 <Space direction={'vertical'}>
                     {Object.keys(data).map((itemKey,key)=><div key={key} className={`doctor_licenses_chart WD-color-${key}`}><span>{itemKey}</span> <span style={{fontWeight:600}}>{data[itemKey]}</span> </div>)}
                 </Space>

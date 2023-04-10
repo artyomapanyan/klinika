@@ -4,19 +4,26 @@ import { Space, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { postResource } from '../../Functions/api_calls';
 import Resource from '../../../store/Resources';
+import dayjs from "dayjs";
 
 function IncomeChannelsChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null);
-
+    let ownerClinics = useSelector((state) => state?.owner);
     let token = useSelector((state) => state.auth.token);
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
     let dispatch = useDispatch()
 
+    const [date, setDate] = useState({
+        year: dayjs().format('YYYY'),
+        month: ownerClinics?.month_key,
+        period: 12
+    })
+
     useEffect (() => {
-        postResource ('ClinicOwner', 'IncomeChannels', token, '', { year: '2023', month: '03', period: '20' })
-        .then ((response) => {
+        postResource ('ClinicOwner', 'IncomeChannels', token, '', date).then ((response) => {
+
             setLoading(false)
             const percentages = []
             Object.keys(response).map((key) => {percentages.push(response[key].percentage)})
@@ -112,7 +119,7 @@ function IncomeChannelsChart() {
                     className={`withDot WD-color-${i}`}
                   >
                       <span>{Resource.incomeChannelsLabels[i]} </span>
-                      <span>{data[key].percentage} %</span>
+                      <span className={`withPercentage color-${i}`}>{data[key].percentage} %</span>
                   </div>
                 )}
             </Space>
