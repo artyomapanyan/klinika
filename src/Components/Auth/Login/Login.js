@@ -1,5 +1,5 @@
 import {Button, Carousel, Checkbox, Form} from "antd";
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
 import {useDispatch} from "react-redux";
@@ -36,6 +36,11 @@ function Login() {
         carouselRef.current.prev()
         setRolesState([])
     }
+    useEffect(()=>{
+        dispatch({
+            type: 'LOGOUT'
+        })
+    },[])
     const handleLogin = (values) => {
         setLoading({
             [values.role_id ?? 'save']: true
