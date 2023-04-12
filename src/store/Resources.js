@@ -41,11 +41,11 @@ const Resource = {
     ],
     Status1: [
         {
-            key: '2',
+            key: '1',
             label: 'Active'
         },
         {
-            key: '3',
+            key: '2',
             label: 'Inactive'
         },
     ],
@@ -101,6 +101,20 @@ const Resource = {
         {
             key: '3',
             label: 'Fixed'
+        },
+    ],
+    StatusReports1: [
+        {
+            id: 1,
+            name: 'New'
+        },
+        {
+            id: 2,
+            name: 'Rejected'
+        },
+        {
+            id: 3,
+            name: 'Fixed'
         },
     ],
     PaymentMethodKeys: [

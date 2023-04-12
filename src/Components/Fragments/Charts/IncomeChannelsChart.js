@@ -51,7 +51,7 @@ function IncomeChannelsChart() {
                     ctx.fillText(
                       percentages[0] + "%",
                       width / 2,
-                      top + height / 2 - 10
+                      top + height / 2 - 15
                     );
                     ctx.restore();
 
@@ -61,11 +61,11 @@ function IncomeChannelsChart() {
                     ctx.fillText(
                       percentages[1] + "%",
                       width / 2,
-                      top + height / 2 + 22
+                      top + height / 2 + 15
                     );
 
                     ctx.strokeStyle = "rgba(225, 220, 231, 1)";
-                    ctx.strokeRect(width / 2 - 45, height / 2 + 25, width / 2 - 50, 1);
+                    ctx.strokeRect(width / 2 - 35, height / 2 + 20, width / 2 - 40, 1);
                     ctx.restore();
                 },
             };
@@ -109,10 +109,10 @@ function IncomeChannelsChart() {
 
     return(
       <Spin spinning={loading}>
-        <div className={'channel_incomes_div'}>
-            <h1 className={'h1'}>Income channels</h1>
+        <div className={'channel_incomes_big_div'}>
+            <h1 className={'h1'} style={{marginTop:-28}}>Income channels</h1>
             <canvas ref={canvasRef} className="chart_income_channel"></canvas>
-            <Space direction={'vertical'}>
+            <Space direction={'vertical'} >
                 {Object.keys(data).map((key, i) =>
                   <div
                     key={key}

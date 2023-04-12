@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 import {Button, Radio, Space, Spin} from "antd";
 import {t} from "i18next";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import arrow_prev from "../../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../../dist/icons/arrow-next.svg";
 
 function LineChartIncomes() {
     let canvasRef = useRef();
@@ -28,8 +30,8 @@ function LineChartIncomes() {
 
 
     const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
 
     const endDate = startAndDate;
@@ -237,8 +239,8 @@ function LineChartIncomes() {
 
     return (
         <Spin spinning={loading}>
-            <div className={'chart_incomes_div'}>
-                <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", padding: 30}}>
+            <div className={'gradient_chart_big_div'}>
+                <div className={'gradient_chart_inn_big_div'}>
                     <Space style={{fontSize: 24, fontWeight: 600}}>
                         {t("Incomes")}
                         {['Jeddah Clinic', 'Clinic name', 'Total'].map((itemKey, key) => <Space key={key}
@@ -246,18 +248,20 @@ function LineChartIncomes() {
                     </Space>
                     <div>
                         <Space>
-                            <Radio.Group onChange={onRadioChange} defaultValue="year" size="large">
+                            <Radio.Group onChange={onRadioChange} defaultValue="year" className={'radio_grup_charts'}>
                                 <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                                 <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                             </Radio.Group>
-                            <Button disabled={startAndDate <= dayjs().add(-36, 'month').format('YYYY-MM-DD')}
-                                    onClick={onBackYear}><LeftOutlined/></Button>
-                            <Button disabled={startAndDate >= dayjs().add(-12, 'month')}
-                                    onClick={onNextYear}><RightOutlined/></Button>
+                            <Button className={'chart_button'} disabled={startAndDate <= dayjs().add(-36, 'month').format('YYYY-MM-DD')}
+                                    onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                            <Button className={'chart_button'} disabled={startAndDate >= dayjs().add(-12, 'month')}
+                                    onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                         </Space>
                     </div>
                 </div>
-                <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
+                <div className={'chart_div_outh'}>
+                    <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
+                </div>
             </div>
         </Spin>
     )

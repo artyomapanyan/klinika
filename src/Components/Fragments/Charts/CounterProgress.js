@@ -10,7 +10,11 @@ function CounterProgress() {
     let token = useSelector((state) => state.auth.token);
     let ownerClinics = useSelector((state) => state?.owner);
     const [loading, setLoading] = useState(true);
-    const [data,setData] = useState([]);
+    const [data,setData] = useState({
+        incomes:0,
+        percentage:0,
+        incomes_prev_month:0,
+    });
 
     let date = new Date().getFullYear().toString()
 
@@ -25,8 +29,8 @@ function CounterProgress() {
 
     return(
         <Spin spinning={loading}>
-            <Space>
-                <Space direction={'vertical'}>
+            <Space >
+                <Space direction={'vertical'} className={'progress_big_div'}>
                     <div className={'clinic_owner_big_text'}>
                         {data?.incomes} K
                     </div>

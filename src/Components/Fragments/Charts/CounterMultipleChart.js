@@ -46,8 +46,8 @@ function CounterMultipleChart({data}) {
         }
     },[])
     return(
-        <Space style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-            <div  style={{height:92,width:92}}>
+        <Space className={'round_charts_big_div'}>
+            <div  style={{height:93,width:93}}>
                 <canvas ref={canvasRef}></canvas>
             </div>
             <Space></Space>

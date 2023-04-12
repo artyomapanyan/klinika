@@ -39,6 +39,7 @@ function BugReportTopic() {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
                     setData(response)
+                    navigate(resourceLinks['BugReport'])
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -46,7 +47,7 @@ function BugReportTopic() {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks['BugReport'] + response.id)
+                    navigate(resourceLinks['BugReport'])
                 }
 
             }).finally(() => {

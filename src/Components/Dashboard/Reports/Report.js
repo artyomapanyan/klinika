@@ -33,17 +33,17 @@ function Report() {
             ...values
         }))
         if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
+            updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+
                 }
             }).finally(() => {
                 setSaveLoading(false)
             })
         } else {
-            createResource(resource, values, token).then((response) => {
+            createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+
                 }
 
             }).finally(() => {
@@ -59,7 +59,7 @@ function Report() {
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Area - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Report`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Request - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Request`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -69,19 +69,24 @@ function Report() {
                 className={'add_create_form'}
             >
                 <div className={'add_edit_content'}>
-                    <FormInput inputProps={{mode:'multiple'}} label={t('Types')} name={'type'} inputType={'resourceSelect'}
+                    {/*<FormInput inputProps={{mode:'multiple'}} label={t('Types')} name={'type'} inputType={'resourceSelect'}*/}
+                    {/*           rules={[{required: true}]}*/}
+
+
+                    {/*           resource={'Taxonomy'}*/}
+                    {/*           resourceParams={{type:Resources.TaxonomyTypes.REPORT_TOPIC}}*/}
+                    {/*/>*/}
+                    <FormInput label={t('Types')} name={'type'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
-                               initialValue={data?.report_topic?.map(e=>e.id)}
-                               initialData={data?.report_topic??[]}
-                               resource={'Taxonomy'}
-                               resourceParams={{type:Resources.TaxonomyTypes.REPORT_TOPIC}}
+                               initialData={Resources.StatusReports1}
                     />
 
                     <FormInput label={t('Topic')} name={'topic_id'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
-                               initialValue={data?.owner?.id}
-                               initialData={data?.owner ? [data.owner]:[]}
-                               resource={'Taxonomy'}/>
+                               resource={'Taxonomy'}
+                               resourceParams={{type:Resources.TaxonomyTypes.REPORT_TOPIC}}
+                    />
+
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                     <FileManager text1={'Gallery'}
                                  text2={'Download files'}

@@ -69,7 +69,7 @@ function ClinicOwnerHeade() {
             <div>
                 <select onChange={handleChange} defaultValue={ownerClinics.month_key??currentMonth} className={'owner_month_select'}>
                     {monthNames.map((month, index) => (
-                        <option key={index} value={index}>{month}</option>
+                        <option className={'own_select_options'} key={index} value={index}>{month}</option>
                     ))}
                 </select>
             </div>

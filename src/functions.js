@@ -77,7 +77,8 @@ export function notificate(data,status) {
                 description: data.message,
                 placement: "bottomRight"
             })
-        }else {
+        }
+        else {
             notification.error({
                 message: "Notification",
                 description: data.message,

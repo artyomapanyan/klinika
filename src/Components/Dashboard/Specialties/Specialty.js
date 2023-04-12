@@ -40,6 +40,7 @@ function Specialty() {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
                     setData(response)
+                    navigate(resourceLinks['Specialty'])
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -47,7 +48,7 @@ function Specialty() {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks['Specialty'] + response.id)
+                    navigate(resourceLinks['Specialty'])
                 }
 
             }).finally(() => {
@@ -83,9 +84,9 @@ const res = 'Specialty';
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                     <FileManager text1={'Click or drag file to this area to upload'}
                                  text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
-                                 name={'icon'}
+                                 name={'cover'}
                                  uploadIcon={<InboxOutlined/>}
-                                 initialFileList={[data.icon]} limit={1} formRef={formRef} type={'drag'}/>
+                                 initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>

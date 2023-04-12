@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {Button, Form, notification, Upload} from "antd";
 
-function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type, text1, text2, uploadIcon}) {
+function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type, text1, text2, uploadIcon, uploadEvent, setUploadEvent}) {
     const [fileList, setFileList] = useState(initialFileList.filter(e => e))
     const [deletedFiles, setDeletedFiles] = useState([])
     useEffect(()=>{
@@ -44,6 +44,7 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
     }
     return <div>
         <Form.Item name={name} initialValue={4234} getValueFromEvent={(event) =>{
+            setUploadEvent(event)
             return event.fileList.map(e=>e.originFileObj).filter(e=>e)
         }}>
             {type==='drag'?<Upload.Dragger

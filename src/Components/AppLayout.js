@@ -283,8 +283,10 @@ function AppLayout(){
             <div className={'side-menu'}>
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
                        onMouseEnter={toggleCollapsed1}
-                       onMouseLeave={!btnCollapsed ? toggleCollapsed : toggleCollapsed1}>
-                    <DashboardMenu mouseCollapsed={mouseCollapsed} fixCollapse={fixCollapse}/>
+                       onMouseLeave={!btnCollapsed ? toggleCollapsed : toggleCollapsed1}
+                       trigger={null} collapsible
+                >
+                    <DashboardMenu mode="inline" theme="dark" defaultSelectedKeys={['1']} mouseCollapsed={mouseCollapsed} fixCollapse={fixCollapse}/>
                 </Sider>
 
             </div>

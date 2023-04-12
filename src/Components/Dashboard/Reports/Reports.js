@@ -38,7 +38,7 @@ function Reports() {
                     title:t('Type'),
                     key:'type',
                     render: (e, record) => {
-                        return <ColorSelect items={Resource.StatusReports} initialValue={e.toString()} record={record} resource={'Report'} name={'status'}/>
+                        return <ColorSelect items={Resource.StatusReports} initialValue={e.toString()} record={record} resource={'Report'} name={'type'}/>
                     }
 
                },

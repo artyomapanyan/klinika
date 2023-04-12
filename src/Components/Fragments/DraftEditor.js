@@ -1,42 +1,37 @@
-import React, { Component } from 'react';
-import { EditorState ,ContentState,convertFromHTML} from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
+import React, { useState } from 'react';
+import { EditorState} from 'draft-js';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
+import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-class DraftEditor extends Component {
-    constructor(props) {
-        super(props);
-        let editorState = EditorState.createEmpty()
-        if(this.props.initialValue){
-            editorState = EditorState.createWithContent( ContentState.createFromBlockArray(
-                convertFromHTML(this.props.initialValue)
-            ))
-        }
-        this.state = {
-            editorState,
-        };
-    }
 
-    onEditorStateChange = (editorState) => {
-        this.setState({
-            editorState,
-        });
-        this.props.formRef.current.setFieldsValue({
-            [this.props.name]:editorState.convertToRaw()
-        })
+const DraftEditor = () => {
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const [contentState, setContentState] = useState(null);
 
+    const handleContentStateChange = (contentState) => {
+        setContentState(draftToHtml(contentState));
     };
 
-    render() {
-        const { editorState } = this.state;
-        return (
+    const handleEditorStateChange = (editorState) => {
+        setEditorState(editorState);
+    };
+
+    return (
+        <div>
             <Editor
                 editorState={editorState}
-                wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
-                onEditorStateChange={this.onEditorStateChange}
+                toolbarClassName="editor-toolbar"
+                wrapperClassName="editor-wrapper"
+                editorClassName="editor"
+                onEditorStateChange={handleEditorStateChange}
+                onContentStateChange={handleContentStateChange}
+                spellCheck
             />
-        )
-    }
-}
+
+        </div>
+    );
+};
+
 export default DraftEditor

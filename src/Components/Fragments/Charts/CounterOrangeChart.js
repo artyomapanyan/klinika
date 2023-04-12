@@ -14,7 +14,7 @@ function CounterOrangeChart() {
     let appointmentChartRef = useRef(null)
 
     let date = new Date().getFullYear().toString()
-    const [data,setData] = useState([]);
+    const [data,setData] = useState([0,0]);
     const [responseState,setResponseState] = useState({});
 
     useEffect(() => {
@@ -79,7 +79,7 @@ function CounterOrangeChart() {
 
     return(
         <Spin spinning={loading}>
-            <Space style={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+            <Space className={'round_charts_big_div'}>
                 <div  style={{height:92,width:92}}>
                     <canvas ref={canvasRef}></canvas>
                 </div>

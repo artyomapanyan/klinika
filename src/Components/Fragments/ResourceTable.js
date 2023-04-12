@@ -172,14 +172,13 @@ function ResourceTable({resource, tableColumns,
                         </Tooltip> : null
                     }
                     {
-                        exportButton ? <Tooltip title="prompt text">
-                            <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
-                        </Tooltip> : null
+                        exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
+                        : null
                     }
 
-                    <Tooltip title="prompt text">
+
                         <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button>
-                    </Tooltip>
+
                 </div>
             </Col>
 

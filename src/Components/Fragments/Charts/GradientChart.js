@@ -7,6 +7,8 @@ import {Button, Dropdown, Radio, Space, Spin, Switch} from "antd";
 import {t} from "i18next";
 import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
+import arrow_prev from "../../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../../dist/icons/arrow-next.svg";
 
 function GradientChart() {
     let canvasRef = useRef();
@@ -16,7 +18,7 @@ function GradientChart() {
     let ownerClinics = useSelector((state) => state?.owner);
 
 
-
+    const [items, setItems] = useState([]);
     const [prevYearState, setPrevYearState] = useState(false)
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([]);
@@ -43,7 +45,23 @@ function GradientChart() {
         months[monthName] = monthNumber;
     }
 
+    useEffect(() => {
+        postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
+            if(response) {
+                response.clinics.forEach((el,key) => {
 
+                    return setItems([
+                        {
+                            label: el?.name,
+                            key: el?.id
+                        }
+                    ])
+                })
+            }
+        })
+    }, [])
+
+console.log(items, 'iiiiiiiiiii')
     useEffect(() => {
 
 
@@ -57,8 +75,8 @@ function GradientChart() {
 
 
             const monthNames = [
-                'January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
             ];
 
             const startDate = dayjs(date.from);
@@ -314,28 +332,53 @@ function GradientChart() {
         }
     }
 
+    const onClick = ({key}) => {
+        console.log(key)
+
+    };
+
     return (
         <Spin spinning={loading}>
             <div className={'gradient_chart_big_div'}>
-                <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", padding: 30}}>
+                <div className={'gradient_chart_inn_big_div'}>
                     <div className={'app_clinic'} style={{fontSize: 24, fontWeight: 600}}>
-                        Appointments:
+                        Appointments: <Dropdown
+                        menu={{
+                            items,
+                            onClick,
+                        }}
+                        trigger={['click']}
+                        className={'own_gr_chart_drop'}
+                    >
+                        <Space direction={'horizontal'} style={{cursor:"pointer"}}>
+                            <div className={'all_clinic_dr'}>{t('All Clinics')}</div>
+                            <div><DownOutlined /></div>
+                        </Space>
+
+                    </Dropdown>
                     </div>
                     <div>
                         <Space>
-                            <Switch defaultChecked onChange={switchChange}/>
-                            {t("Previous year")}
-                            <Radio.Group onChange={onChange} defaultValue="year" size="large">
+
+                                <Switch defaultChecked onChange={switchChange}/>
+                            <span style={{marginRight: 20}}>
+                                {t("Previous year")}
+                            </span>
+
+                            <Radio.Group onChange={onChange} defaultValue="year"  className={'radio_grup_charts'}>
                                 <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                                 <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                                 {/*<Radio.Button value="month">{t(" Month ")}</Radio.Button>*/}
                             </Radio.Group>
-                            <Button disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><LeftOutlined/></Button>
-                            <Button disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><RightOutlined/></Button>
+                            <Button className={'chart_button'} disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                            <Button className={'chart_button'} disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                         </Space>
                     </div>
                 </div>
-                <canvas ref={canvasRef} className="chart"></canvas>
+                <div className={'chart_div_outh'}>
+                    <canvas ref={canvasRef} className="chart"></canvas>
+                </div>
+
             </div>
         </Spin>
 

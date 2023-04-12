@@ -23,11 +23,13 @@ axios.interceptors.response.use(response => {
 }, error => {
 
     notificate(error?.response?.data)
-    if(error?.response.status===401){
-        setTimeout(()=>document.location.href='/login',2000)
-    }
+     if(error?.response.status===401){
+         setTimeout(()=>document.location.href='/login',2000)
+     }
     return error
 })
+
+
 root.render(
     <BrowserRouter>
         <Provider store={store}>

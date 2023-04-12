@@ -13,8 +13,11 @@ function CounterGreenChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-    const [data,setData] = useState([]);
-    const [responseState,setResponseState] = useState({});
+    const [data,setData] = useState([5,0]);
+    const [responseState,setResponseState] = useState({
+        clinic:'',
+        avg_rating:0
+    });
 
     useEffect(() => {
         postResource('ClinicOwner','OwnerClinicRating', token,  ownerClinics?.id, ).then((response) => {
@@ -80,7 +83,7 @@ function CounterGreenChart() {
 
     return(
         <Spin spinning={loading}>
-            <Space style={{display:"flex", alignItems:"center"}}>
+            <Space className={'round_charts_big_div'}>
                 <div  style={{height:92,width:92}}>
                     <canvas ref={canvasRef}></canvas>
                 </div>

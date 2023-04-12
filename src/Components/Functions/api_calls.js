@@ -233,7 +233,7 @@ export const postResource = (resource,param,token,id=null,params)=>{
         data:params
     }:{params}),
         headers: {
-            'Authorization': token+'ss',
+            'Authorization': token,
         }
     })
 }
