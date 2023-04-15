@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './fonts/roboto_stylesheet.css';
+
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/reset.css';
 import configureStore from './store/configureStore';

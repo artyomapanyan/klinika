@@ -32,6 +32,10 @@ function Reports() {
                     title:t('details'),
                     key:'description',
                     translatable:true,
+                    render: (e, record) => {
+                        console.log(record)
+                        return record?.description !== "undefined" ? record?.description : ''
+                    }
                 },
                {
                     dataIndex:'type',

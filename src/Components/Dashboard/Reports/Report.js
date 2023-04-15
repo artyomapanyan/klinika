@@ -92,7 +92,7 @@ function Report() {
                                  text2={'Download files'}
                                  name={'gallery'}
                                  uploadIcon={<InboxOutlined/>}
-                                 initialFileList={[data?.gallery]} limit={5} formRef={formRef} type={'drag'}/>
+                                 initialFileList={[data?.gallery]} limit={10} formRef={formRef} type={'drag'}/>
                 </div>
 
 

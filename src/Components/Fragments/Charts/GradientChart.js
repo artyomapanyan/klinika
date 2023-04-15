@@ -23,6 +23,9 @@ function GradientChart() {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([]);
     const [radioState, setRadioState] = useState();
+    const [idClinic, setIdClinic] = useState('');
+    const [maxPrevYear, setMaxPrevYear] = useState();
+
 
     const [date, setDate] = useState({
         from: dayjs().add(-12, 'month').format('YYYY-MM-DD'),
@@ -48,32 +51,31 @@ function GradientChart() {
     useEffect(() => {
         postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
             if(response) {
-                response.clinics.forEach((el,key) => {
-
-                    return setItems([
-                        {
+                setItems(response.clinics.map((el) => {
+                    return {
                             label: el?.name,
                             key: el?.id
                         }
-                    ])
-                })
+
+                }))
             }
         })
-    }, [])
+    }, [idClinic])
 
-console.log(items, 'iiiiiiiiiii')
+
     useEffect(() => {
+        setLoading(true)
 
+        postResource('ClinicOwner', 'PeriodAppointments', token, idClinic ? idClinic : ownerClinics?.id, date).then((response) => {
 
-        postResource('ClinicOwner', 'PeriodAppointments', token, ownerClinics?.id, date).then((response) => {
-            console.log(response)
             let prevYear = Object.values(response?.incomes?.prev_year)
+
             let growth = Object.values(response?.incomes?.growth)
             let canceled = Object.values(response?.incomes[3])
             let closed = Object.values(response?.incomes[2])
-            console.log(prevYear,growth,canceled,closed)
 
-
+            let a = Math.max(...prevYear);
+            let bb = [10, 19, 25, 10, 15, 2];
             const monthNames = [
                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -97,17 +99,17 @@ console.log(items, 'iiiiiiiiiii')
 
 
 
-            let maxValue = Math.max(...prevYear);
-            let maxValueIndex = prevYear.indexOf(maxValue);
+            let maxValue = Math.max(...growth);
+            let maxValueIndex = growth.indexOf(maxValue);
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
 
-            let gradientGrey = appointmentsStats.createLinearGradient(0, 300, 0, 50);
+            let gradientGrey = appointmentsStats.createLinearGradient(0, 400, 0, 100);
             let gradient = appointmentsStats.createLinearGradient(0, 400, 0, 10);
             gradient.addColorStop(0, "rgba(191, 83, 158, 0.05)");
             gradient.addColorStop(1, "rgba(191, 83, 158, 1)");
             gradientGrey.addColorStop(0, "rgba(217, 217, 217, 0)");
-            gradientGrey.addColorStop(1, "rgba(217, 217, 217, 1)");
+            gradientGrey.addColorStop(1, "rgb(185, 186, 189)");
             const verticalLine = {
                 id: "verticalLine",
                 beforeDraw(chart) {
@@ -143,13 +145,16 @@ console.log(items, 'iiiiiiiiiii')
                             borderRadius: 222,
                             type: "line",
                             pointBorderColor: "#C1BEC4",
-                            pointStyle: "circle",
                             pointBackgroundColor: "#C1BEC4",
                             pointRadius: 1,
+                            pointStyle:function (context) {
+                                return Math.max(...prevYear) == Math.max(...prevYear) ? true : false;
+                            },
+
                         },
                         {
-                            label: "Approved",
-                            data: growth,
+                            label: "Closed",
+                            data: closed,
                             backgroundColor: gradient,
                             fill: "start",
                             borderColor: ["rgba(191, 83, 158, 1)"],
@@ -165,22 +170,61 @@ console.log(items, 'iiiiiiiiiii')
                         },
                         {
                             label: "Previous",
-                            data: prevYearState ? prevYear : [],
+                            data:prevYear,
+                            //prevYearState,
                             borderColor: ["rgba(119, 77, 157, 1)"],
                             backgroundColor: "transparent",
-                            borderSkipped: false,
-                            borderWidth: 2,
-                            borderRadius: 222,
+                            fill: "start",
+                            borderWidth: 3,
+                            pointStyle:function (context) {
+
+                                return context.raw == Math.max(...prevYear) ? true : false;
+                            },
+
+
                             type: "line",
-                            pointBorderColor: "#774D9D",
-                            pointBackgroundColor: "#774D9D",
-                            pointRadius: 3,
+
+
+                        },
+                        {
+                            label: "aaaaa",
+                            data: closed.map(el => el+10),
+                            borderColor: ["rgba(119, 77, 157, 1)"],
+                            backgroundColor: "transparent",
+                            fill: "start",
+                            borderWidth: 3,
+                            pointBorderColor: "#a7f897",
+                            pointStyle: "s",
+                            type: "line",
+
+
                         },
                     ],
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    // "animation": {
+                    //     "duration": 1,
+                    //     "onComplete": function() {
+                    //         var chartInstance = this.chart,
+                    //             ctx = chartInstance.ctx;
+                    //
+                    //         //ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    //         ctx.textAlign = 'center';
+                    //         ctx.textBaseline = 'bottom';
+                    //         for(let i = 0; i<10; i++){
+                    //             ctx.fillText(i, i*10, 50);
+                    //         }
+                    //         /*this.data.datasets.forEach(function(dataset, i) {
+                    //             var meta = chartInstance.controller.getDatasetMeta(i);
+                    //             meta.data.forEach(function(bar, index) {
+                    //                 var data = dataset.data[index];
+                    //                 ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                    //             });
+                    //         });*/
+                    //     }
+                    // },
                     layout: {
                         padding: {
                             left: -30,
@@ -264,7 +308,9 @@ console.log(items, 'iiiiiiiiiii')
 
 
 
-    }, [ownerClinics.id, radioState, date, prevYearState])
+    }, [ownerClinics.id, radioState, date, prevYearState, idClinic])
+
+
 
 
     const onBackYear = () => {
@@ -299,7 +345,6 @@ console.log(items, 'iiiiiiiiiii')
 
     }
     const switchChange = (checked) => {
-        console.log(`switch to ${checked}`);
         setPrevYearState(checked)
     };
 
@@ -317,12 +362,6 @@ console.log(items, 'iiiiiiiiiii')
                     to: prevState.to
                 }))
                 break;
-            case 'month':
-                setDate((prevState) => ({
-                    from: dayjs(prevState.to).add(-1, 'month').format('YYYY-MM-DD'),
-                    to: prevState.to
-                }))
-                break;
             default:
                 setDate((prevState) => ({
                     from: dayjs(prevState.to).add(-12, 'month').format('YYYY-MM-DD'),
@@ -333,7 +372,7 @@ console.log(items, 'iiiiiiiiiii')
     }
 
     const onClick = ({key}) => {
-        console.log(key)
+        setIdClinic(key)
 
     };
 
@@ -341,8 +380,8 @@ console.log(items, 'iiiiiiiiiii')
         <Spin spinning={loading}>
             <div className={'gradient_chart_big_div'}>
                 <div className={'gradient_chart_inn_big_div'}>
-                    <div className={'app_clinic'} style={{fontSize: 24, fontWeight: 600}}>
-                        Appointments: <Dropdown
+                    <div className={'app_clinic'}>
+                       <span>Appointments:</span>  <Dropdown
                         menu={{
                             items,
                             onClick,
@@ -351,7 +390,7 @@ console.log(items, 'iiiiiiiiiii')
                         className={'own_gr_chart_drop'}
                     >
                         <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                            <div className={'all_clinic_dr'}>{t('All Clinics')}</div>
+                            <div className={'all_clinic_dr'}>{items.find((e)=>e.key==idClinic)?.label??t('All Clinics')}</div>
                             <div><DownOutlined /></div>
                         </Space>
 
@@ -361,7 +400,7 @@ console.log(items, 'iiiiiiiiiii')
                         <Space>
 
                                 <Switch defaultChecked onChange={switchChange}/>
-                            <span style={{marginRight: 20}}>
+                            <span className={'gradient_szitch_text'}>
                                 {t("Previous year")}
                             </span>
 

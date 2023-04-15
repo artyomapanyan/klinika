@@ -20,7 +20,8 @@ function FormInput({
                        initialFocused = false,
                        inputNumberStyle,
                        resourceData,
-                       handleMapItems
+                       handleMapItems,
+                       maxLength
 
                    }) {
     if (inputType === 'date') {
@@ -43,7 +44,7 @@ function FormInput({
         const isRequired= rules?.find(e=>e.required)
         switch (inputType) {
             case 'password':
-                return <CInput isRequired={isRequired} label={label} inputProps={inputProps} type={'password'}/>
+                return <CInput maxLength={maxLength} isRequired={isRequired} label={label} inputProps={inputProps} type={'password'}/>
             case 'date':
                 return <DatePicker   {...inputProps}
                                      format={'DD-MM-YYYY'}
@@ -57,7 +58,7 @@ function FormInput({
             case 'textArea':
                 return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps} type={'textArea'}/>
             case 'number':
-                return <CInput isRequired={isRequired} label={label} inputProps={inputProps} type={'number'}/>
+                return <CInput maxLength={maxLength} isRequired={isRequired} label={label} inputProps={inputProps} type={'number'}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
@@ -82,7 +83,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput inputDisabled={inputDisabled} isRequired={isRequired} label={label} inputProps={inputProps}/>
+                return <CInput maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label} inputProps={inputProps}/>
         }
     }
     let isDate = inputType==='date';

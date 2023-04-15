@@ -20,7 +20,8 @@ function CounterGreenChart() {
     });
 
     useEffect(() => {
-        postResource('ClinicOwner','OwnerClinicRating', token,  ownerClinics?.id, ).then((response) => {
+        setLoading(true)
+        postResource('ClinicOwner','OwnerClinicRating', token,  ownerClinics?.id ).then((response) => {
             setResponseState(response)
             let arr = []
             arr.push(+((+response?.avg_rating).toFixed(1)));
@@ -40,7 +41,7 @@ function CounterGreenChart() {
                 chartArea: { top, width, height },
             } = chart;
             ctx.save();
-            ctx.font = "700 22px Roboto Bold";
+            ctx.font = "700 22px Roboto";
             ctx.textAlign = "center";
             ctx.fillStyle = "#6DAF56";
             ctx.fillText(chart.config.data.datasets[0].data[1], width / 2, top + height / 2);
@@ -92,8 +93,8 @@ function CounterGreenChart() {
                     <div className={'chart_counter_bold_text'}>
                         {responseState?.clinic}
                     </div>
-                 {/*   <div>{dayjs().month(ownerClinics?.month_key).format('MMM')}</div>*/}
-                    <div>clinic rating {responseState?.avg_rating}</div>
+                    <div className={'avg_montly'}> Avg. monthly</div>
+                    <div className={'avg_montly'}>clinic rating {responseState?.avg_rating}</div>
                 </Space>
             </Space>
         </Spin>

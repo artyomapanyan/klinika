@@ -27,8 +27,8 @@ function ClinicOwnerPatientsChart(){
         setLoading(true)
         postResource('ClinicOwner', 'NewPatients', token, ownerClinics?.id, date).then((response) => {
             const monthNames = [
-                'January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
             ];
             const endDate = dayjs(date.to);
             const startDate = dayjs(date.from);
@@ -46,13 +46,25 @@ function ClinicOwnerPatientsChart(){
                 returnValues.push(e.returned)
             })
             const appointmentsStats = canvasRef.current.getContext("2d")
-            console.log(canvasRef.current,'ref')
             Chart.register(...registerables)
+            let gradient = appointmentsStats.createLinearGradient(0, 400, 0, 10);
+            gradient.addColorStop(0, "#6DAF5627");
             appointmentChartRef.current = new Chart(appointmentsStats, {
-                type: "bar",
+                type: 'line',
                 data: {
                     labels,
                     datasets: [
+
+                        {
+                            label: "Approved",
+                            data: newValues,
+                            backgroundColor: gradient,
+                            fill: "start",
+                            borderWidth: 0,
+                            borderRadius: 222,
+                            type: "line",
+                            borderColor: 'green'
+                        },
                         {
                             label: "New",
                             data: newValues,
@@ -70,6 +82,7 @@ function ClinicOwnerPatientsChart(){
                             type: "bar",
                             hidden: false,
                         },
+
                         {
                             label: "Returned",
                             data: returnValues,
@@ -153,7 +166,7 @@ function ClinicOwnerPatientsChart(){
         return () => {
             appointmentChartRef?.current?.destroy()
         }
-    },[date])
+    },[date, ownerClinics])
 
 
     const onRadioChange = (e) => {
@@ -206,9 +219,9 @@ function ClinicOwnerPatientsChart(){
     return<Spin spinning={loading}>
     <div className={'gradient_chart_big_div'}>
         <div className={'gradient_chart_inn_big_div'}>
-            <Space style={{fontSize:24, fontWeight:600}}>
+            <Space className={'owner_patient_text'} >
                 {t("Patients")}
-                {['New', 'Returned'].map((itemKey,key)=><Space  key={key} className={`withDot WD-color2-${key}`}>{itemKey}</Space>)}
+                {['New', 'Returned'].map((itemKey,key)=><Space  key={key} className={`withDot WD-color2-${key}`}><span className={'color_text_charts'}>{itemKey}</span></Space>)}
             </Space>
             <div>
                 <Space>

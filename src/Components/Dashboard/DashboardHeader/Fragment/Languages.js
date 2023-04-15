@@ -43,7 +43,7 @@ function Languages() {
     };
 
     return(
-        <div style={{paddingLeft: 10, cursor:'pointer'}}>
+        <div style={{paddingLeft: 10,paddingRight:10, cursor:'pointer'}}>
             {/*<Select*/}
             {/*    defaultValue={current_locale}*/}
             {/*    style={{width: 120, borderRadius:15}}*/}

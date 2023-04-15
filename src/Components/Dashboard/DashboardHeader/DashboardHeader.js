@@ -34,7 +34,7 @@ function DashboardHeader() {
         <Col lg={14} md={24}>
             {handleReturnHeaderPart()}
         </Col>
-        <Col lg={10} md={24} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", padding:'15px 40px'}} className={'lng_select'}>
+        <Col lg={10} md={24} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", padding:'15px 36px'}} className={'lng_select'}>
             <HeaderAccount />
 
         </Col>

@@ -59,7 +59,7 @@ function PaymentMethod() {
         setChangeValuesState(changed)
     }
 
-    console.log(uploadEvent, 'dddd')
+
 
     return(
         <div>

@@ -52,6 +52,7 @@ function LineChartIncomes() {
 
 
     useEffect(() => {
+        setLoading(true)
         postResource('ClinicOwner', 'PeriodIncomes', token, '', date).then((response) => {
             const totalData =[];
             let a = response?.map((el) =>{

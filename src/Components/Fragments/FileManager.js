@@ -44,7 +44,6 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
     }
     return <div>
         <Form.Item name={name} initialValue={4234} getValueFromEvent={(event) =>{
-            setUploadEvent(event)
             return event.fileList.map(e=>e.originFileObj).filter(e=>e)
         }}>
             {type==='drag'?<Upload.Dragger

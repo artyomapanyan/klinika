@@ -55,7 +55,7 @@ function CounterMultipleChart({data}) {
                 <div className={'chart_counter_bold_text'}>
                     Fact/Plan load
                 </div>
-                {Object.keys(data).map((itemKey,key)=><div key={key} className={`withDot WD-color-${key}`}>{itemKey} {data[itemKey]} %</div>)}
+                {Object.keys(data).map((itemKey,key)=><div key={key} className={`withDot_fact WD-color-${key}`}><span className={'plan_load_jaddah'}>{itemKey}</span> <span className={'fact_percent'}>{data[itemKey]} %</span> </div>)}
 
             </Space>
         </Space>

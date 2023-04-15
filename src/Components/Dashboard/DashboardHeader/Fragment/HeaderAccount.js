@@ -83,8 +83,6 @@ function HeaderAccount() {
                                         }
                                     </div>
                                 }
-
-
                         </div>
 
                 }
@@ -94,20 +92,24 @@ function HeaderAccount() {
                 }
 
 
-                {<Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/>{t("Report")}</Space></Button>}
-                    <Divider type={"vertical"} style={{height: 32, margin:16}} />
+                {<Button type="link" className="header_report"><Space><img alt={'icons'} src={alert}/><span className={'report_text'}>{t("Report")}</span></Space></Button>}
+                    <Divider type={"vertical"} style={{height: 32}} />
 
 
                 <Dropdown dropdownRender={()=><Card className={"head_account_dropdown"}><HeaderAccountDropdown /></Card>} placement="bottomRight" trigger={['click']}>
                     <Button type={"link"} className={'head_user_db'}  >
-                        <Space>
+                        <div className={'avatar_big_div'}>
                             <Avatar size={'large'} className="header_avatar">A</Avatar>
-                            <div >{user?.first} {user?.last}</div>
-                            <img alt={'icons'} src={arrowDownPurple}/>
-                        </Space>
+                            <div style={{marginLeft: 8}} >
+                                <div className={'first_name'}>{user?.first}</div>
+                                <div className={'last_name'}>{user?.last}</div>
+                            </div>
+                            <div style={{marginLeft: 15, display:'flex'}}><img alt={'icons'} src={arrowDownPurple}/></div>
+
+                        </div>
                     </Button>
                 </Dropdown>
-                <Divider type={'vertical'} style={{height: 32, margin:16}} />
+                <Divider type={'vertical'} style={{height: 32}} />
                 <Languages />
 
 

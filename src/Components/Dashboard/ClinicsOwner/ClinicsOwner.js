@@ -18,7 +18,7 @@ import Preloader from '../../Preloader';
 function ClinicsOwner() {
      let ownerClinics = useSelector((state) => state?.owner);
 
-     const [multipleData,setMultipleData] = useState({'Jeddahclinic':67.3,
+     const [multipleData,setMultipleData] = useState({'Jeddah clinic':67.3,
                                                                'Clinic name':87.3,});
 
 
@@ -26,23 +26,23 @@ function ClinicsOwner() {
     return(
         <div style={{marginBottom: 100}}>
             {!ownerClinics?.id || !ownerClinics?.month_key?<Preloader/>:<div style={{margin:'10px 20px'}} className={'clinics_owner'}>
-                <Row gutter={[16,16]}>
-                    <Col  lg={5} md={12} sm={24} xs={24} >
+                <Row gutter={[19,19]}>
+                    <Col  lg={6} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
                             <CounterGreenChart />
                         </div>
                     </Col>
-                    <Col lg={5} md={12} sm={24} xs={24}>
+                    <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             <CounterOrangeChart />
                         </div>
                     </Col>
-                    <Col lg={7} md={12} sm={24} xs={24}>
+                    <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             <CounterProgress  />
                         </div>
                     </Col>
-                    <Col lg={7} md={12} sm={24} xs={24}>
+                    <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             <CounterMultipleChart  data={multipleData}/>
                         </div>

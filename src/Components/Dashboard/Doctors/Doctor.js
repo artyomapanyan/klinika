@@ -117,11 +117,7 @@ function Doctor() {
                         </Col>
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
-                            <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.status}
-                                       initialData={Resources.Status}
-                            />
+                            
                             <div style={{display: 'flex', "column-gap": 10}}>
                                 <div style={{width: '20%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}

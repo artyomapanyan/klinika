@@ -18,6 +18,7 @@ function CounterOrangeChart() {
     const [responseState,setResponseState] = useState({});
 
     useEffect(() => {
+        setLoading(true)
         postResource('ClinicOwner','OwnerClinicMontlyRating', token,  ownerClinics?.id, {year:date, month: ownerClinics?.month_key}).then((response) => {
             setResponseState(response)
             let arr = []
@@ -38,7 +39,7 @@ function CounterOrangeChart() {
                 chartArea: { top, width, height },
             } = chart;
             ctx.save();
-            ctx.font = "700 22px Roboto Bold";
+            ctx.font = "700 22px Roboto";
             ctx.textAlign = "center";
             ctx.fillStyle = "rgba(245, 163, 72, 1)";
             ctx.fillText(chart.config.data.datasets[0].data[1], width / 2, top + height / 2);
@@ -53,6 +54,7 @@ function CounterOrangeChart() {
     },[data])
 
     useEffect(()=>{
+
         Chart.register(...registerables)
         appointmentChartRef.current = new Chart(canvasRef.current.getContext("2d"), {
             type: "doughnut",
@@ -88,8 +90,8 @@ function CounterOrangeChart() {
                     <div className={'chart_counter_bold_text'}>
                         {responseState?.clinic}
                     </div>
-                    <div> Avg. monthly {dayjs().month(ownerClinics?.month_key).format('MMM')}</div>
-                    <div>clinic rating {responseState?.avg_rating}</div>
+                    <div className={'avg_montly'}> Avg. monthly</div>
+                    <div className={'avg_montly'}>clinic rating {responseState?.avg_rating}</div>
                 </Space>
             </Space>
         </Spin>

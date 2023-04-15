@@ -11,6 +11,7 @@ import FormInput from "../../../Fragments/FormInput";
 import Resources from "../../../../store/Resources";
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import CancelComponent from "../../../Fragments/CancelComponent";
+import dayjs from "dayjs";
 
 const resource = 'User';
 
@@ -51,6 +52,14 @@ function User() {
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
     }
+
+    const handleMapItems = (item,name)=>{
+        name = item.phone_code?`(${item.phone_code}) `:null
+        item.id = item.phone_code
+        return [name,item]
+    }
+
+
     return(
         <div>
             {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing User - ${data?.first}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new User`)}</h3>}
@@ -68,20 +77,40 @@ function User() {
                     <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
                     <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
                     <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'}  />
-                    <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[{required: true}]} />
+                    <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[
+                        {required: true},
+                        {
+                            validator:(rule,value)=>{
+                                if(dayjs().diff(value,'year')<18){
+                                    return Promise.reject('min age 18')
+                                }
+                                return Promise.resolve();
+                            }
+                        }
+                    ]} />
                     <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                initialValue={data?.gender}
                                initialData={Resources?.Gender}
                     />
-                    <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
+                    <FormInput label={t('Nationality number')} name={'nationality_number'} maxLength={9} initialValue={data?.nationality_number} rules={[{required: true}]} />
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}
                                initialData={Resources.Status}
                     />
-                    <FormInput label={t('Phone country code')} name={'phone_country_code'} initialValue={data?.phone_country_code} />
-                    <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                    <div style={{display:"flex"}}>
+                        <div style={{width:'25%'}}>
+                            <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.phone_country_code}
+                                       handleMapItems={handleMapItems}
+                                       resource={'Country'}/>
+                        </div>
+                        <div style={{width:'100%', marginLeft:10}}>
+                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                        </div>
+                    </div>
                     <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.roles?.map(e=>e.id)}

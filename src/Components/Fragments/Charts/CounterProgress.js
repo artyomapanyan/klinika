@@ -48,7 +48,7 @@ function CounterProgress() {
                 </Space>
                 <Space></Space>
                 <Space direction={'vertical'}>
-                    <div>
+                    <div className={'avg_montly'}>
                         {t("Current month")}
                     </div>
                     <div className={'chart_counter_bold_text'}>
