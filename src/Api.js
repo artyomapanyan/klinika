@@ -290,6 +290,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/manager/appointment-statuses/`,
                 method: 'GET',
             },
+            DoctorWorkload: {
+                url: `${endpoint}${version}/dashboard/manager/doctors-workload/`,
+                method: 'GET',
+            },
         },
     },
     {

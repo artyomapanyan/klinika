@@ -10,6 +10,7 @@ import ClinicManagerDoctorsLicensesTable from "./Fragments/ClinicManagerDoctorsL
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
+import dayjs from "dayjs";
 
 
 
@@ -17,15 +18,14 @@ function ClinicManager() {
     let ownerClinics = useSelector((state) => state?.owner);
 
     const [purpleData,setPurpleData] = useState([25,75]);
-    const [progressData1,setProgressData1] = useState(64.4);
+
     const [statusesData,setStatusesData] = useState([70,40, 20, 10]);
-    const [progressData2,setProgressData2] = useState(16.4);
+
 
     const handleAddCount = ()=>{
         setStatusesData((prevState)=>[(+prevState[0]+1).toFixed(1),(+prevState[1]-1).toFixed(1), (+prevState[1]-1).toFixed(1), (+prevState[1]-1).toFixed(1)])
         setPurpleData((prevState)=>[(+prevState[0]+0.1).toFixed(1),(+prevState[1]-0.1).toFixed(1)])
-        setProgressData1((prevState)=>(+prevState+0.1).toFixed(1))
-        setProgressData2((prevState)=>(+prevState+0.1).toFixed(1))
+
 
     }
     return(

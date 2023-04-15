@@ -4,7 +4,7 @@ import {Button} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse";
 
-function ClicicManagerCalendarCollapse() {
+function ClicicManagerCalendarCollapse({item}) {
     const [btnCollapsed, setBtnCollapsed] = useState(false);
 
     const openCollapse = () => {
@@ -13,83 +13,28 @@ function ClicicManagerCalendarCollapse() {
 
     return(
         <>
-            <tr className="appointmentsProgressTable__shownRow">
+            <tr>
                 <td>
                     <Button className="appointmentsBranch" onClick={openCollapse} >
-                        <span>Pediatrics</span>
+                        <span>{item?.speciality}</span>
                         <DownOutlined/>
                     </Button>
                 </td>
-                <td>
-                    <div className="progress progressPurple">
+                {Object.keys(item?.availability??{}).map(key=>    <td>
+                    <div className="progress progressPurple" key={key}>
                         <div className="progress-bar progressPurple__inside"
                              role="progressbar"
-                             style={{width: '85%'}} aria-valuenow="85" aria-valuemin="0"
+                             style={{width: item.availability[key]+'%'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
                              aria-valuemax="100">
                         </div>
-                        <div className="progressText">85%</div>
+                        <div className="progressText">{item.availability[key]}%</div>
                     </div>
-                </td>
-                <td>
-                    <div className="progress progressPurple">
-                        <div className="progress-bar progressPurple__inside"
-                             role="progressbar"
-                             style={{width: '85%',}} aria-valuenow="85" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                        <div className="progressText">85%</div>
-                    </div>
-                </td>
-                <td>
-                    <div className="progress progressPurple">
-                        <div className="progress-bar progressPurple__inside"
-                             role="progressbar"
-                             style={{width: '15%'}} aria-valuenow="15" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                        <div className="progressText">15%</div>
-                    </div>
-                </td>
-                <td>
-                    <div className="progress progressPurple ">
-                        <div className="progressInactive"></div>
-                    </div>
-                </td>
-                <td>
-                    <div className="progress progressPurple">
-                        <div className="progress-bar progressPurple__inside"
-                             role="progressbar"
-                             style={{width: '58%'}} aria-valuenow="58" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                        <div className="progressText">58%</div>
-                    </div>
-                </td>
-                <td>
-                    <div className="progress progressPurple">
-                        <div className="progress-bar progressPurple__inside"
-                             role="progressbar"
-                             style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                        <div className="progressText">25%</div>
-                    </div>
-                </td>
-                <td>
-                    <div className="progress progressPurple">
-                        <div className="progress-bar progressPurple__inside"
-                             role="progressbar"
-                             style={{width: '0'}} aria-valuenow="85" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                        <div className="progressText">0%</div>
-                    </div>
-                </td>
+                </td>)}
             </tr>
 
 
             {
-                btnCollapsed ? <ClinicManagerCalendarInnCollapse /> : null
+                btnCollapsed ? Object.values(item?.doctors??{}).map(doctor=><ClinicManagerCalendarInnCollapse docItem={doctor} />) : null
             }
 
 
