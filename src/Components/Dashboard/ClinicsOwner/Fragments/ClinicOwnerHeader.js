@@ -14,51 +14,51 @@ function ClinicOwnerHeader({noClinicSelect = false}) {
     const [itemsMonth, setItemsMonth] = useState([
         {
             label: "January",
-            key: '0'
+            key: 0
         },
         {
             label: 'February',
-            key: '1'
+            key: 1
         },
         {
             label: 'March',
-            key: '2'
+            key: 2
         },
         {
             label: 'April',
-            key: '3'
+            key: 3
         },
         {
             label: 'May',
-            key: '4'
+            key: 4
         },
         {
             label: 'June',
-            key: '5'
+            key: 5
         },
         {
             label: 'July',
-            key: '6'
+            key: 6
         },
         {
             label: 'August',
-            key: '7'
+            key: 7
         },
         {
             label: 'September',
-            key: '8'
+            key: 8
         },
         {
             label: 'October',
-            key: '9'
+            key: 9
         },
         {
             label: 'November',
-            key: '10'
+            key: 10
         },
         {
             label: 'December',
-            key: '11'
+            key: 11
         },
     ]);
 
@@ -123,12 +123,6 @@ console.log(ownerClinics, itemsMonth)
         <div className={'clinic_owner_header'}>
             <div style={{margin:"40px 24px", fontSize:40, fontWeight:400}}>Dashboard</div>
             <div>
-                {/*<select onChange={handleChange} defaultValue={ownerClinics.month_key??currentMonth} className={'owner_month_select'}>*/}
-                {/*    {monthNames.map((month, index) => (*/}
-                {/*        <option className={'own_select_options'} key={index} value={index}>{month}</option>*/}
-                {/*    ))}*/}
-                {/*</select>*/}
-
                 <Dropdown
                     menu={{
                         items:itemsMonth,
@@ -138,7 +132,7 @@ console.log(ownerClinics, itemsMonth)
                     className={'own_head_clinics'}
                 >
                     <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                        <div style={{ fontWeight: 400, fontSize:18}}>{itemsMonth.find(e=>e.month_key==ownerClinics.key)?.label??dayjs().format('MMM')}</div>
+                        <div style={{ fontWeight: 400, fontSize:18}}>{itemsMonth.find(e=>e.key==ownerClinics.month_key)?.label??dayjs().format('MMM')}</div>
                         <div style={{marginLeft: 10}} > <img alt={'arrow_black'} src={arrow_black}/></div>
                     </Space>
 

@@ -5,6 +5,7 @@ import arrowRed from "../../../dist/icons/arrow-red.svg";
 import {t} from "i18next";
 
 function ClinicManagerProgressCount({data}) {
+
     return(
         <Space>
             <Space direction={'vertical'}>

@@ -32,7 +32,6 @@ function ClinicManager() {
                     <Col  lg={6} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
                             <ClinicManagerProgressCount data={progressData1} />
-
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
