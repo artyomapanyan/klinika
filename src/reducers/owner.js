@@ -11,7 +11,7 @@ export default function owner(state = {
     }
     if(action.type === 'CLEAR_OWNER_DATA'){
         return {
-
+            month_key: dayjs().month()
         }
     }
 

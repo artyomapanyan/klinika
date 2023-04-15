@@ -1,4 +1,6 @@
 import {notification} from "antd";
+import Resources from "./store/Resources";
+import dayjs from "dayjs";
 export function paramsToObject(entries) {
     const result = {}
     for(const [key, value] of entries) { // each 'entry' is a [key, value] tupple
@@ -13,7 +15,10 @@ export function clearObject(obj){
         }
     })
 }
+export function GMBK(key){
+    return Resources.Months.find(e=>e.key==key)?.label??dayjs().format('MMM')
 
+}
 export function makeUnique(data,key){
         let uniqueKeys = [];
         let uniqueData = [];

@@ -8,10 +8,14 @@ import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointment
 import ClinicManagerConfirmation from "./Fragments/ClinicManagerConfirmation/ClinicManagerConfirmation";
 import ClinicManagerDoctorsLicensesTable from "./Fragments/ClinicManagerDoctorsLicensesTable/ClinicManagerDoctorsLicensesTable";
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
+import Preloader from "../../Preloader";
+import {useSelector} from "react-redux";
 
 
 
 function ClinicManager() {
+    let ownerClinics = useSelector((state) => state?.owner);
+
     const [purpleData,setPurpleData] = useState([25,75]);
     const [progressData1,setProgressData1] = useState(64.4);
     const [statusesData,setStatusesData] = useState([70,40, 20, 10]);
@@ -26,12 +30,12 @@ function ClinicManager() {
     }
     return(
         <div>
-            <div style={{margin:20}} className={'clinics_owner'}>
+            {!ownerClinics?.month_key?<Preloader/>:<div style={{margin:20}} className={'clinics_owner'}>
                 <Button onClick={handleAddCount}>increment</Button>
                 <Row gutter={[16,16]}>
                     <Col  lg={6} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
-                            <ClinicManagerProgressCount data={progressData1} />
+                            <ClinicManagerProgressCount dataKey={'MonthlyAppointments'}/>
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
@@ -46,7 +50,7 @@ function ClinicManager() {
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <ClinicManagerProgressCount data={progressData2} />
+                            <ClinicManagerProgressCount dataKey={'MonthlyTelehealths'}/>
                         </div>
                     </Col>
                 </Row>
@@ -67,7 +71,7 @@ function ClinicManager() {
                 <div>
                     <ClinicFeedback />
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }

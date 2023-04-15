@@ -507,6 +507,56 @@ const Resource = {
             label: '23:59',
         },
     ],
+    Months:[
+        {
+            label: "January",
+            key: 0
+        },
+        {
+            label: 'February',
+            key: 1
+        },
+        {
+            label: 'March',
+            key: 2
+        },
+        {
+            label: 'April',
+            key: 3
+        },
+        {
+            label: 'May',
+            key: 4
+        },
+        {
+            label: 'June',
+            key: 5
+        },
+        {
+            label: 'July',
+            key: 6
+        },
+        {
+            label: 'August',
+            key: 7
+        },
+        {
+            label: 'September',
+            key: 8
+        },
+        {
+            label: 'October',
+            key: 9
+        },
+        {
+            label: 'November',
+            key: 10
+        },
+        {
+            label: 'December',
+            key: 11
+        },
+    ],
     Days:['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     TaxonomyTypes: {
         POST_CATEGORY: 1,

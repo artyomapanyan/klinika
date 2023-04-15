@@ -1,10 +1,12 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Chart,registerables} from "chart.js";
-import {Space} from "antd";
+import {Space, Spin} from "antd";
+import {postResource} from "../../Functions/api_calls";
 
 function CounterPurpleChart({data}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
+    const [loading,setLoading] = useState(true);
 
     const counterforGreenDoughnut = {
         id: "counter",
@@ -55,16 +57,19 @@ function CounterPurpleChart({data}) {
     },[])
 
     return(
-        <Space style={{display:"flex", alignItems:"center"}}>
-            <div  style={{height:92,width:92}}>
-                <canvas ref={canvasRef}></canvas>
-            </div>
-            <Space></Space>
-            <Space direction={'vertical'}>
-                <div>Patients </div>
-                <div>satisfaction</div>
+        <Spin spinning={loading}>
+            <Space style={{display:"flex", alignItems:"center"}}>
+                <div  style={{height:92,width:92}}>
+                    <canvas ref={canvasRef}></canvas>
+                </div>
+                <Space></Space>
+                <Space direction={'vertical'}>
+                    <div>Patients </div>
+                    <div>satisfaction</div>
+                </Space>
             </Space>
-        </Space>
+        </Spin>
+
     )
 }
 export default CounterPurpleChart;
