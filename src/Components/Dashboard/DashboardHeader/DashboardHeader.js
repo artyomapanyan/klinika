@@ -5,7 +5,7 @@ import HeaderAccount from "./Fragment/HeaderAccount";
 import {DownOutlined, LeftOutlined} from "@ant-design/icons";
 import {useLocation} from "react-router";
 import {t} from "i18next";
-import ClinicOwnerHeade from "../ClinicsOwner/Fragments/ClinicOwnerHeade";
+import ClinicOwnerHeader from "../ClinicsOwner/Fragments/ClinicOwnerHeader";
 
 
 
@@ -16,7 +16,9 @@ function DashboardHeader() {
     const handleReturnHeaderPart = ()=>{
         switch (true){
             case pathname.includes('/clinics-owner'):
-                return <ClinicOwnerHeade />
+                return <ClinicOwnerHeader />
+            case pathname.includes('/clinic-manager'):
+                return <ClinicOwnerHeader noClinicSelect={true} />
             case pathname.includes('/patients'):
                 return   <div>
                     <Button style={{margin:"40px 24px", height:45, width:45}}><LeftOutlined /></Button>

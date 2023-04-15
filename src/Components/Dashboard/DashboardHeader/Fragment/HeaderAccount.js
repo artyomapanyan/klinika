@@ -112,8 +112,6 @@ function HeaderAccount() {
                 <Divider type={'vertical'} style={{height: 32}} />
                 <Languages />
 
-
-
             </Space>
         </div>
     )

@@ -8,7 +8,7 @@ import arrow_black from "../../../../dist/icons/arrow-black.svg";
 import dayjs from "dayjs";
 import checkout from "../../../../dist/icons/checkout.svg";
 const currentMonth = new Date().getMonth();
-function ClinicOwnerHeade() {
+function ClinicOwnerHeader({noClinicSelect = false}) {
     let token = useSelector((state) => state.auth.token);
     const [items, setItems] = useState([]);
     const [itemsMonth, setItemsMonth] = useState([
@@ -144,7 +144,7 @@ console.log(ownerClinics, itemsMonth)
 
                 </Dropdown>
             </div>
-            <div>
+            {!noClinicSelect&&<div>
                 <Dropdown
                     menu={{
                         items:items,
@@ -159,8 +159,8 @@ console.log(ownerClinics, itemsMonth)
                     </Space>
 
                 </Dropdown>
-            </div>
+            </div>}
         </div>
     )
 }
-export default ClinicOwnerHeade;
+export default ClinicOwnerHeader;
