@@ -97,7 +97,7 @@ useEffect(() => {
         postResource('ClinicDoctorWorkingHours','single', token, data?.doctor_id, {service:data?.service_type}).then(responses => {
             const res = responses?.working_hours
             let day = [];
-            let a = Object.values(res)?.map((el, i) => {
+          Object.values(res)?.map((el, i) => {
                 return el.filter((el1) => el1.is_day_off ===true)
             }).map((el, i) => {
                 if (el.length > 0) {
