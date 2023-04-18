@@ -9,6 +9,8 @@ import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import 'chartjs-plugin-style';
 
 function GradientChart() {
     let canvasRef = useRef();
@@ -19,7 +21,7 @@ function GradientChart() {
 
 
     const [items, setItems] = useState([]);
-    const [prevYearState, setPrevYearState] = useState(false)
+    const [prevYearState, setPrevYearState] = useState(true)
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([]);
     const [radioState, setRadioState] = useState();
@@ -34,7 +36,8 @@ function GradientChart() {
     });
 
 
-//
+
+
     const startDate = dayjs('2022-05-01', 'YYYY-MM-DD');
     const endDate = dayjs('2022-12-31', 'YYYY-MM-DD');
 
@@ -146,15 +149,16 @@ function GradientChart() {
                             type: "line",
                             pointBorderColor: "#C1BEC4",
                             pointBackgroundColor: "#C1BEC4",
+                            color: '#C1BEC4',
                             pointRadius: 1,
                             pointStyle:function (context) {
                                 return Math.max(...prevYear) == Math.max(...prevYear) ? true : false;
                             },
-
                         },
                         {
                             label: "Closed",
                             data: closed,
+
                             backgroundColor: gradient,
                             fill: "start",
                             borderColor: ["rgba(191, 83, 158, 1)"],
@@ -164,67 +168,52 @@ function GradientChart() {
                             pointBorderColor: "white",
                             pointStyle: "circle",
                             pointRadius: 5,
+                            color: ["rgba(191, 83, 158, 1)"],
                             pointBackgroundColor: function (context) {
                                 return context.raw > 0 ? "#6DAF56" : "#CF533E";
                             },
                         },
                         {
-                            label: "Previous",
+                            label: " In previous year",
                             data:prevYear,
-                            //prevYearState,
-                            borderColor: ["rgba(119, 77, 157, 1)"],
+                            borderSkipped: true,
+                            borderColor: ["rgb(97,60,133)"],
+                            pointBackgroundColor:["rgb(97,60,133)"],
+                            color: ["rgb(97,60,133)"],
                             backgroundColor: "transparent",
                             fill: "start",
-                            borderWidth: 3,
+                            showLine: true,
+                            borderWidth: prevYearState ? 3 : 0,
                             pointStyle:function (context) {
-
                                 return context.raw == Math.max(...prevYear) ? true : false;
                             },
-
-
                             type: "line",
 
 
                         },
                         {
-                            label: "aaaaa",
-                            data: closed.map(el => el+10),
-                            borderColor: ["rgba(119, 77, 157, 1)"],
-                            backgroundColor: "transparent",
-                            fill: "start",
-                            borderWidth: 3,
-                            pointBorderColor: "#a7f897",
-                            pointStyle: "s",
+                            label: "Growth",
+                            data: closed,
+                            borderWidth: 0,
+                            borderRadius: 222,
                             type: "line",
-
-
+                            pointStyle: "circle",
+                            pointRadius: 5,
+                            color: '#6DAF56',
+                            additionalKey:'%',
                         },
+
                     ],
                 },
                 options: {
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+
                     responsive: true,
                     maintainAspectRatio: false,
-                    // "animation": {
-                    //     "duration": 1,
-                    //     "onComplete": function() {
-                    //         var chartInstance = this.chart,
-                    //             ctx = chartInstance.ctx;
-                    //
-                    //         //ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                    //         ctx.textAlign = 'center';
-                    //         ctx.textBaseline = 'bottom';
-                    //         for(let i = 0; i<10; i++){
-                    //             ctx.fillText(i, i*10, 50);
-                    //         }
-                    //         /*this.data.datasets.forEach(function(dataset, i) {
-                    //             var meta = chartInstance.controller.getDatasetMeta(i);
-                    //             meta.data.forEach(function(bar, index) {
-                    //                 var data = dataset.data[index];
-                    //                 ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                    //             });
-                    //         });*/
-                    //     }
-                    // },
+
                     layout: {
                         padding: {
                             left: -30,
@@ -266,6 +255,71 @@ function GradientChart() {
                         },
                     },
                     plugins: {
+
+                        tooltip: {
+                            borderWidth: "3",
+                            borderColor: "#e3e3e320",
+                            // callbacks: {
+                            //   label: function (context) {
+                            //     return context.dataset.data.map((item) => item + "$ ");
+                            //   },
+                            //   //     afterLabel: function(tooltipItem, data) {
+                            //   //     var dataset = data['datasets'][0];
+                            //   //     return '(' + dataset + '$)';
+                            //   //     },
+                            // },
+                            backgroundColor: "white",
+                            padding: 16,
+                            titleColor: "rgba(0, 0, 0, 0.5)",
+                            titleFont: {
+                                size: "16",
+                                weight: "700",
+                            },
+                            bodyColor: "black",
+                            bodyFont: {
+                                size: 12,
+                                weight: 700,
+                                fontFamily: 'Roboto'
+                            },
+                            // borderWidth: "1",
+                            // borderColor: "rgb(119,77,157)",
+                            caretPadding: 7,
+
+                            callbacks: {
+                                labelTextColor: function(context) {
+                                    return '#000000';
+                                },
+
+                                // afterLabel:function (context){
+                                //   return['\n']
+                                // },
+                                labelColor: function(context) {
+                                    return {
+                                        backgroundColor: context.dataset.color,
+                                        borderWidth:'none',
+                                        borderColor:  '#ffffff',
+                                        borderRadius: 5,
+
+                                    };
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+
+
+                                    if (context.parsed.y !== null) {
+                                        if (context.dataset.label === 'Growth') {
+                                            label = '   ' + growth[context.parsed.x]  +(context.dataset.additionalKey??'') + '   ' + label ;
+                                        }else{
+                                            label = '   ' + context.parsed.y + '   ' + label;
+                                        }
+
+                                    }
+                                    return label;
+                                }
+
+                            }
+
+                        },
                         legend: {
                             display: false,
                             labels:{
@@ -280,23 +334,26 @@ function GradientChart() {
                         },
                         datalabels: {
                             anchor: "top",
-                            align: "right",
+                            align: "top",
                             color: "#a09ca6",
                             font: {
                                 weight: "bold",
                                 size: 12,
                             },
                             padding: {
-                                bottom: 54,
+                                bottom: 40,
                                 left: 30,
                             },
+                            formatter: function(value, context) {
+                                return "+" + growth[context.dataIndex]+'%';
+                            },
                             display: function (context) {
-                                return context.dataset.label === "Approved";
+                                return context.dataset.label === "Closed";
                             },
                         },
                     },
                 },
-                plugins: [verticalLine],
+                plugins: [verticalLine,ChartDataLabels],
             });
             setLoading(false)
         });

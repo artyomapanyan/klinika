@@ -59,7 +59,8 @@ function TopServices() {
                             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between",  width:'100%'}}><span>{el?.service}</span> <span style={{fontWeight:700}}>$ {el?.incomes}</span></div>
                             <Progress percent={el?.percentage}
                                       strokeColor={color[key]}
-                                      style={{width:'109%'}}
+                                      showInfo={false}
+                                      style={{width:'100%'}}
                                       strokeLinecap={'round'}
                                       strokeWidth={'13px'}
                                       format={()=>{

@@ -19,7 +19,6 @@ function Coupons() {
                     dataIndex:'name',
                     key:'name',
                     sorter:true,
-                    translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {

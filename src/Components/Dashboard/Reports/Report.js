@@ -1,7 +1,6 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Popconfirm, Space} from "antd";
 import React, {useRef, useState} from "react";
@@ -9,8 +8,9 @@ import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import CancelComponent from "../../Fragments/CancelComponent";
 import {InboxOutlined} from "@ant-design/icons";
-import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
+import FileManager from "../../Fragments/FileManager";
+import resourceLinks from "../../ResourceLinks";
 
 const resource = 'Report';
 
@@ -35,6 +35,7 @@ function Report() {
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
+                    navigate(resourceLinks[resource])
 
                 }
             }).finally(() => {
@@ -43,7 +44,7 @@ function Report() {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-
+                    navigate(resourceLinks[resource])
                 }
 
             }).finally(() => {
@@ -92,7 +93,7 @@ function Report() {
                                  text2={'Download files'}
                                  name={'gallery'}
                                  uploadIcon={<InboxOutlined/>}
-                                 initialFileList={[data?.gallery]} limit={10} formRef={formRef} type={'drag'}/>
+                                 initialFileList={[data?.gallery]} limit={5} formRef={formRef} type={'drag'}/>
                 </div>
 
 

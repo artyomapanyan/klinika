@@ -36,13 +36,14 @@ function Coupon() {
 
     const onFinish = (values) => {
         setSaveLoading(true)
-        values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
-        values.discount_by_percentage = switchState
+        values.expired_at = values?.expired_at?.format('DD-MM-YYYY')
+        values.discount_by_percentage ? values.discount_by_percentage = false : values.discount_by_percentage = switchState
 
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
+        console.log(values)
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -106,17 +107,17 @@ function Coupon() {
                                 {
                                     switchState ? <Row style={{paddingTop:10}}>
                                         <Col lg={1} className={'percentable'}>
-                                            <PercentageOutlined style={{fontSize:20, }}/>
-                                        </Col>
-                                        <Col lg={23}>
-                                            <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount by percentage')}  name={'discount_by_percentage'} inputType={'number'} initialValue={data?.discount_by_percentage} rules={[{required: true}]}/>
-                                        </Col>
-                                    </Row> : <Row style={{paddingTop:10}}>
-                                        <Col lg={1} className={'percentable'}>
                                             <div style={{fontWeight:600}}>SAR</div>
                                         </Col>
                                         <Col lg={23}>
                                             <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount amount')} name={'discount_amount'} inputType={'number'} initialValue={data?.discount_amount} rules={[{required: true}]} />
+                                        </Col>
+                                    </Row> : <Row style={{paddingTop:10}}>
+                                        <Col lg={1} className={'percentable'}>
+                                            <PercentageOutlined style={{fontSize:20, }}/>
+                                        </Col>
+                                        <Col lg={23}>
+                                            <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount by percentage')}  name={'discount_by_percentage'} inputType={'number'} initialValue={data?.discount_by_percentage} rules={[{required: true}]}/>
                                         </Col>
                                     </Row>
                                 }

@@ -6,6 +6,7 @@ import DateParser from "../../Fragments/DateParser";
 import TableEditable from "../../Fragments/TableEditable";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
+import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 
 const resource = 'PaymentMethod'
 function PaymentMethods() {
@@ -26,7 +27,8 @@ function PaymentMethods() {
                                title: t('Title'),
                                key: 'title',
                                translatable: true,
-                               shouldCellUpdate: (record, prevRecord) => record.key !== prevRecord.key,
+                               sorter:true,
+                               filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                        },
                            {
                            dataIndex: ['status'],

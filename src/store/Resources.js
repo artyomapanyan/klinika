@@ -41,11 +41,11 @@ const Resource = {
     ],
     Status1: [
         {
-            key: '1',
+            key: '2',
             label: 'Active'
         },
         {
-            key: '2',
+            key: '3',
             label: 'Inactive'
         },
     ],

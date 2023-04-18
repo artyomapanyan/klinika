@@ -13,7 +13,7 @@ import i18n from "i18next";
 
 function App() {
     let languageState = useSelector((state) => state?.app?.current_locale??'');
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState(true);
     let dispatch = useDispatch()
     axios.defaults.headers.common['Accept-Language'] = languageState?.includes('en')?'en':'ar'
     useEffect(()=>{

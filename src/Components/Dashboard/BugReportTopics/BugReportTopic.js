@@ -10,7 +10,7 @@ import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 
@@ -81,9 +81,10 @@ function BugReportTopic() {
                     />
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                     <FileManager text1={'Logo'}
-                                 text2={''}
-                                 name={'icon'}
-                                 initialFileList={[data.icon]} limit={1} formRef={formRef} type={'drag'}/>
+                                 text2={'Download files'}
+                                 uploadIcon={<InboxOutlined/>}
+                                 name={'cover'}
+                                 initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>

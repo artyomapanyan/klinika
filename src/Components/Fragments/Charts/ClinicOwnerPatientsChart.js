@@ -63,7 +63,8 @@ function ClinicOwnerPatientsChart(){
                             borderWidth: 0,
                             borderRadius: 222,
                             type: "line",
-                            borderColor: 'green'
+                            borderColor: '#ffffff',
+                            pointBorderWidth: 0
                         },
                         {
                             label: "New",
@@ -99,10 +100,27 @@ function ClinicOwnerPatientsChart(){
                             },
                             type: "bar",
                             hidden: false,
+
                         },
                     ],
                 },
                 options: {
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+
+                    tooltips: {
+                        bevelWidth: 3,
+                        bevelHighlightColor: 'rgba(255, 255, 255, 0.75)',
+                        bevelShadowColor: 'rgba(0, 0, 0, 0.5)',
+                        shadowOffsetX: 3,
+                        shadowOffsetY: 3,
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    },
+
+
                     responsive: true,
                     maintainAspectRatio: false,
                     barThickness: 13,
@@ -155,9 +173,62 @@ function ClinicOwnerPatientsChart(){
                     },
                     plugins: {
                         legend: {
-                            labels: false,
+                            display: false,
                         },
-                        tooltip: true,
+                        plugins: {},
+                        tooltip: {
+                            borderWidth: "3",
+                            borderColor: "#e3e3e320",
+                            // callbacks: {
+                            //   label: function (context) {
+                            //     return context.dataset.data.map((item) => item + "$ ");
+                            //   },
+                            //   //     afterLabel: function(tooltipItem, data) {
+                            //   //     var dataset = data['datasets'][0];
+                            //   //     return '(' + dataset + '$)';
+                            //   //     },
+                            // },
+                            backgroundColor: "white",
+                            padding: 16,
+                            usePointStyle: true,
+                            titleColor: "rgba(0, 0, 0, 0.5)",
+                            titleFont: {
+                                size: "16",
+                                weight: "700",
+                            },
+                            bodyColor: "black",
+                            bodyFont: {
+                                size: 12,
+                                weight: 700,
+                                fontFamily: 'Roboto'
+                            },
+                            // borderWidth: "1",
+                            // borderColor: "rgb(119,77,157)",
+                            caretPadding: 7,
+
+                            callbacks: {
+
+
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    console.log(context.parsed, 'lab')
+
+                                    if (context.parsed.y !== null) {
+
+                                        if (context.dataset.label === 'Approved') {
+
+                                            label = '';
+                                        } else {
+                                            label = ' ' + context.parsed.y + ' ' + label;
+                                        }
+
+                                    }
+                                    return label;
+                                }
+
+                            }
+
+                        },
                     },
                 },
             });

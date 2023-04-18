@@ -9,6 +9,7 @@ import {t} from "i18next";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
+import 'chartjs-plugin-style';
 
 function LineChartIncomes() {
     let canvasRef = useRef();
@@ -82,7 +83,7 @@ function LineChartIncomes() {
                     labels,
                     datasets: [
                         ...a,
-                        ...(a.length>1? [{
+                        ...(a.length>0? [{
                             label: "Total",
                             data: totalData,
                             stack: "Total",
@@ -97,6 +98,10 @@ function LineChartIncomes() {
                 },
 
                 options: {
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
                     responsive: true,
                     maintainAspectRatio: false,
                     barThickness: 14,
@@ -156,20 +161,22 @@ function LineChartIncomes() {
                         legend: {
                             display: false,
                         },
-                        plugins: {},
-                        tooltip: {
+                        plugins: {
                             shadowOffsetX: 3,
                             shadowOffsetY: 3,
                             shadowBlur: 10,
                             shadowColor: "rgba(0, 0, 0, 0.5)",
+                        },
+                        tooltip: {
+
                             // callbacks: {
                             //   label: function (context) {
                             //     return context.dataset.data.map((item) => item + "$ ");
                             //   },
-                            //   //     afterLabel: function(tooltipItem, data) {
-                            //   //     var dataset = data['datasets'][0];
-                            //   //     return '(' + dataset + '$)';
-                            //   //     },
+                            //       afterLabel: function(tooltipItem, data) {
+                            //       var dataset = data['datasets'][0];
+                            //       return '(' + dataset + '$)';
+                            //       },
                             // },
                             backgroundColor: "white",
                             padding: 16,
@@ -183,10 +190,33 @@ function LineChartIncomes() {
                             bodyFont: {
                                 size: 12,
                                 weight: 700,
+                                fontFamily: 'Roboto'
                             },
-                            // borderWidth: "1",
-                            // borderColor: "rgb(119,77,157)",
+                              borderWidth: "3",
+                              borderColor: "#e3e3e320",
                             caretPadding: 7,
+                            callbacks: {
+
+
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    console.log(context.parsed, 'lab')
+
+                                    if (context.parsed.y !== null) {
+
+                                        if (context.dataset.label === 'Approved') {
+
+                                            label = '';
+                                        } else {
+                                            label = ' ' + context.parsed.y + '$' + ' ' + label;
+                                        }
+
+                                    }
+                                    return label;
+                                }
+
+                            }
+
                         },
                     },
                 },

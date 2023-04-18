@@ -4,6 +4,7 @@ import {Button, Form, notification, Upload} from "antd";
 function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type, text1, text2, uploadIcon, uploadEvent, setUploadEvent}) {
     const [fileList, setFileList] = useState(initialFileList.filter(e => e))
     const [deletedFiles, setDeletedFiles] = useState([])
+
     useEffect(()=>{
         formRef.current.setFieldsValue({
             [name]:[]
@@ -42,21 +43,35 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
     },
     customRequest:(e) => e.onSuccess("ok")
     }
-    return <div>
-        <Form.Item name={name} initialValue={4234} getValueFromEvent={(event) =>{
+    return <div style={{height:'100%', position:'relative'}}>
+        <div style={{height:'100%', position:'relative'}}>
+            <div style={{ width: '100%'}}>
+        <Form.Item name={name} initialValue={[initialFileList]} getValueFromEvent={(event) =>{
             return event.fileList.map(e=>e.originFileObj).filter(e=>e)
         }}>
-            {type==='drag'?<Upload.Dragger
-                {...fileInputProps}
-            >
-                <p className="ant-upload-drag-icon">
-                    {uploadIcon}
-                </p>
-                <p className="ant-upload-text">{text1}</p>
-                <p className="ant-upload-hint">{text2}</p>
-            </Upload.Dragger>:<Upload   {...fileInputProps}><Button>ADdd</Button></Upload>}
+
+                    {type==='drag'?<Upload.Dragger
+                        style={{width:'100%'}}
+                        {...fileInputProps}
+                    >
+                        <p className="ant-upload-drag-icon">
+                            {uploadIcon}
+                        </p>
+                        <p className="ant-upload-text">{text1}</p>
+                        <p className="ant-upload-hint">{text2}</p>
+                    </Upload.Dragger>:<Upload   {...fileInputProps}><Button>Add</Button></Upload>}
+
+
         </Form.Item>
+                <div style={{width:'100%', height:'69%',top:0,left:0, backgroundColor: '#00000005', position:"absolute",  zIndex:fileList.length>=limit?99:-1, borderRadius: 12}}>
+
+
+                </div>
+            </div>
+
+        </div>
         <Form.Item name={`${name}_deleted`} hidden={true} />
+
     </div>
 }
 

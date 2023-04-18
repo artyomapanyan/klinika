@@ -16,7 +16,7 @@ function Posts() {
                 {
                     title:t('Name'),
                     dataIndex:'title',
-                    key:'Posts',
+                    key:'title',
                     sorter:true,
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,

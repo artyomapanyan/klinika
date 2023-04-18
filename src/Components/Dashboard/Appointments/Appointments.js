@@ -115,7 +115,6 @@ function Appointments() {
                         dataIndex:["clinic", "name"],
                         title:t('Clinic'),
                         key:'clinic',
-                        translatable:true,
                         sorter:true,
 
                     },
