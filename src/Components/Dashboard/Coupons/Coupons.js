@@ -25,12 +25,15 @@ function Coupons() {
                     dataIndex:'discount_amount',
                     title:t('Discount amount'),
                     key:'discount_amount',
-                    render:(e, record)=><div>{record?.discount_amount}%</div>
+                    render:(e, record)=><div>{record?.discount_amount}</div>
                 },
                 {
                     dataIndex:'max_usable_count',
                     title:t('Max usable count'),
                     key:'max_usable_count',
+                    render:(e, record)=>{
+                        console.log(record, 'tokos')
+                    }
                 },
                 {
                     dataIndex:'money_redeemed_so_far',

@@ -67,7 +67,6 @@ function Offer() {
      setChangeValuesState(changed)
  }
 
- console.log(changeValuesState,'data')
 
     return(
         <div >
@@ -93,12 +92,30 @@ function Offer() {
                             <FormInput label={t('New price')} name={'new_price'} initialValue={data?.new_price} rules={[{required: true}]} />
                             <FormInput label={t('Begins at')} name={'begins_at'} initialValue={data?.begins_at} inputType={'date'} rules={[
                                 {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if (formRef?.current.getFieldValue()?.expired_at) {
+                                            if(formRef?.current.getFieldValue()?.expired_at < formRef?.current.getFieldValue()?.begins_at) {
+                                                return Promise.reject('Begins at cannot be greater than expired at')
+                                            }
+                                        }
 
+                                        return Promise.resolve();
+                                    }
+                                }
                             ]} />
 
                             <FormInput label={t('Expired at')} name={'expired_at'} initialValue={data?.expired_at} inputType={'date'} rules={[
                                 {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if(formRef?.current.getFieldValue()?.expired_at < formRef?.current.getFieldValue()?.begins_at) {
+                                            return Promise.reject('Expired at cannot be greater than begins at')
+                                        }
 
+                                        return Promise.resolve();
+                                    }
+                                }
                             ]} />
                             <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
