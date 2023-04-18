@@ -28,6 +28,41 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
 
 
     }
+
+    console.log(value, 'vvv')
+
+    let colors = [
+        {
+            key: 0,
+            name: '#c9c953'
+        },
+        {
+            key: 1,
+            name: '#5ab5ed'
+        },
+        {
+            key: 2,
+            name: '#ce4e99'
+        },
+        {
+            key: 3,
+            name: '#a7a8a7'
+        },
+        {
+            key: 4,
+            name: '#9f70e6'
+        },
+        {
+            key: 5,
+            name: '#579651'
+        },
+        {
+            key: 6,
+            name: '#b04b3f'
+        },
+    ]
+
+
     return<Dropdown
         menu={{
             onClick,
@@ -35,7 +70,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
         }}
         trigger={['click']}
     >
-        <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor:value === '3' ? "#a7a8a7" : "#ce4e99", padding:10, borderRadius:30, width:150, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+        <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor: `${colors.find(el => (el.key == value))?.name}`, padding:10, borderRadius:30, width:150, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
             <div style={{color:"#FFFFFF", fontWeight:700}}>{items.find(e=>e.key===value)?.label}</div>
             <div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
         </Space>

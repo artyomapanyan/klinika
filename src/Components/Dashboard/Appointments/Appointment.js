@@ -216,7 +216,17 @@ useEffect(() => {
                                         </Col>
                                         <Col lg={12} className="gutter-row">
 
-                                            <FormInput label={t('Date of Birth')} name={'dob'}  inputType={'date'} rules={[{required: true}]} />
+                                            <FormInput label={t('Date of Birth')} name={'dob'}  inputType={'date'} rules={[
+                                                {required: true},
+                                                {
+                                                    validator:(rule,value)=>{
+                                                        if(dayjs().diff(value,'year')<18){
+                                                            return Promise.reject('min age 18')
+                                                        }
+                                                        return Promise.resolve();
+                                                    }
+                                                }
+                                            ]} />
                                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'} initialData={Resources?.Gender} rules={[{required: true}]}/>
                                             <FormInput  label={t('Nationality Number')} name={["nationality_number"]} rules={[{required: true}]}/>
                                             <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}

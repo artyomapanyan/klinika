@@ -13,6 +13,7 @@ import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
+import dayjs from "dayjs";
 
 const resource = 'Doctor';
 
@@ -95,7 +96,17 @@ function Doctor() {
                     <Row>
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
-                            <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[{required: true}]} />
+                            <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if(dayjs().diff(value,'year')<18){
+                                            return Promise.reject('min age 18')
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]} />
 
                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                        initialValue={data?.gender}
