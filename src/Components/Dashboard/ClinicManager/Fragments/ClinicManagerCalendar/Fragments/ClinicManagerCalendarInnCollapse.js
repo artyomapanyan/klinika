@@ -2,8 +2,8 @@ import {Avatar, Modal} from "antd";
 import React, {useState} from "react";
 import CalendarInnCollapseModal from "./CalendarInnCollapseModal";
 
-function ClinicManagerCalendarInnCollapse({docItem}) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+function ClinicManagerCalendarInnCollapse({docItem,specialty,clinicID,speciality_id}) {
+    const [selectedDate, setSelectedDate] = useState(false);
 
 
     return (
@@ -20,7 +20,7 @@ function ClinicManagerCalendarInnCollapse({docItem}) {
             </td>
             {
                 Object.keys(docItem?.availability??{}).map((key) => {
-                    return <td className="hiddenTableRow__col" onClick={() => setIsModalOpen(true)}>
+                    return <td className="hiddenTableRow__col" onClick={() => setSelectedDate(key)}>
 
                         <div className="progress progressGreen">
                             <div className="progress-bar progressGreen__inside"
@@ -33,8 +33,8 @@ function ClinicManagerCalendarInnCollapse({docItem}) {
                     </td>
                 })
             }
-            <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} width={'400px'} footer={null}>
-                <CalendarInnCollapseModal/>
+            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
+                <CalendarInnCollapseModal docItem={docItem} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id}selectedDate={selectedDate}/>
             </Modal>
         </tr>
     )
