@@ -275,6 +275,28 @@ let api = {
         },
     },
     {
+        url: 'dashboard/manager/',
+        resource: 'ClinicManager',
+        custom: {
+            MonthlyAppointments: {
+                url: `${endpoint}${version}/dashboard/manager/monthly-appointments/`,
+                method: 'GET',
+            },
+            MonthlyTelehealths: {
+                url: `${endpoint}${version}/dashboard/manager/appointment-telehealths/`,
+                method: 'GET',
+            },
+            Statuses: {
+                url: `${endpoint}${version}/dashboard/manager/appointment-statuses/`,
+                method: 'GET',
+            },
+            DoctorWorkload: {
+                url: `${endpoint}${version}/dashboard/manager/doctors-workload/`,
+                method: 'GET',
+            },
+        },
+    },
+    {
         url: 'dashboard/owner/clinics',
         resource: 'ClinicOwnerClinics',
     },

@@ -3,7 +3,10 @@ import {t} from "i18next";
 import { LeftOutlined, RightOutlined} from "@ant-design/icons";
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-function ClinicManagerCalendarHead() {
+import {GMBK} from "../../../../../../functions";
+import {useState} from "react";
+function ClinicManagerCalendarHead({date,setDate}) {
+
 
     dayjs.extend(customParseFormat);
     const weekFormat = 'MM/DD';
@@ -16,7 +19,12 @@ function ClinicManagerCalendarHead() {
 
     let data = ['Specialty Load', 'Day off', 'HCP Load', 'Holidays/Weekend']
 
-
+    const handleSwitchWeek = (val)=>{
+        setDate((prevState)=>{
+            const newStart = prevState[0].add(val,'week')
+            return [newStart.startOf('week'),newStart.endOf('week')]
+        })
+    }
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
@@ -25,11 +33,10 @@ function ClinicManagerCalendarHead() {
             </Space>
             <div>
                 <Space>
-
-                    <Button>July</Button>
-                    <Button><LeftOutlined /></Button>
-                    <DatePicker defaultValue={dayjs()} format={customWeekStartEndFormat} picker="week" />
-                    <Button><RightOutlined /></Button>
+                    <Button>{GMBK(date[0].month())}</Button>
+                    <Button onClick={()=>handleSwitchWeek(-1)}><LeftOutlined /></Button>
+                    <DatePicker value={date[0]} defaultValue={dayjs()} onChange={e=>setDate([dayjs(e).startOf('week'),dayjs(e).endOf('week')])} format={customWeekStartEndFormat} picker="week" />
+                    <Button onClick={()=>handleSwitchWeek(1)}><RightOutlined /></Button>
                 </Space>
             </div>
         </div>
