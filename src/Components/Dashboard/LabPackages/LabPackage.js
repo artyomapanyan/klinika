@@ -85,7 +85,8 @@ function LabPackage() {
                                rules={[{required: true}]}
                                initialValue={data?.categories?.map(e=>e.id)??[]}
                                initialData={data?.categories??[]}
-                               resource={'Category'}
+                               resource={'Taxonomy'}
+                               resourceParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
                     />
 
                     <FormInput inputProps={{mode:'multiple'}} label={t('Lab tests')} name={'lab_tests'} inputType={'resourceSelect'}
@@ -97,7 +98,7 @@ function LabPackage() {
                     />
 
                     <FileManager text1={'Click or drag file to this area to upload'}
-                                 text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                                 text2={'Download file'}
                                  name={'cover'}
                                  uploadIcon={<InboxOutlined/>}
                                  initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>

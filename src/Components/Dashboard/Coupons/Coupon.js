@@ -36,13 +36,14 @@ function Coupon() {
 
     const onFinish = (values) => {
         setSaveLoading(true)
-        values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
-        values.discount_by_percentage = switchState
+        values.expired_at = values?.expired_at?.format('DD-MM-YYYY')
+        values.discount_by_percentage ? values.discount_by_percentage = true : values.discount_by_percentage = false
 
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
+        console.log(values)
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -99,31 +100,57 @@ function Coupon() {
                             <div>
                                 <div style={{padding:25}}>
                                     Fixed amount {"   "}
-                                    <Switch defaultChecked={switchState} onChange={onChange}  /> {"   "}
+                                    <Switch defaultChecked={switchState} onChange={onChange} name={'Discount by percentage'} /> {"   "}
                                     Percentage
                                 </div>
-
                                 {
                                     switchState ? <Row style={{paddingTop:10}}>
-                                        <Col lg={1} className={'percentable'}>
-                                            <PercentageOutlined style={{fontSize:20, }}/>
-                                        </Col>
-                                        <Col lg={23}>
-                                            <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount by percentage')}  name={'discount_by_percentage'} inputType={'number'} initialValue={data?.discount_by_percentage} rules={[{required: true}]}/>
-                                        </Col>
-                                    </Row> : <Row style={{paddingTop:10}}>
-                                        <Col lg={1} className={'percentable'}>
-                                            <div style={{fontWeight:600}}>SAR</div>
-                                        </Col>
-                                        <Col lg={23}>
-                                            <FormInput inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount amount')} name={'discount_amount'} inputType={'number'} initialValue={data?.discount_amount} rules={[{required: true}]} />
-                                        </Col>
-                                    </Row>
+                                            <Col lg={1} className={'percentable'}>
+                                                <PercentageOutlined style={{fontSize:20, }}/>
+                                            </Col>
+                                            <Col lg={23}>
+                                                <FormInput max={100} min={0} inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount by percentage')}  name={'discount_amount'} inputType={'number'}  />
+                                            </Col>
+                                        </Row> :
+                                        <Row style={{paddingTop:10}}>
+                                            <Col lg={1} className={'percentable'}>
+                                                <div style={{fontWeight:600}}>SAR</div>
+                                            </Col>
+                                            <Col lg={23}>
+                                                <FormInput  inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount amount')} name={'discount_amount'} inputType={'number'} initialValue={data?.discount_amount} rules={[{required: true}]} />
+                                            </Col>
+                                        </Row>
                                 }
 
+
+
                             </div>
-                            <FormInput inputNumberStyle={{width:'100%'}} label={t('Min total value allowed')} name={'min_total_value_allowed'} inputType={'number'} initialValue={data?.min_total_value_allowed} rules={[{required: true}]}/>
-                            <FormInput inputNumberStyle={{width:'100%'}} label={t('Max allowed discount amount')} name={'max_allowed_discount_amount'} inputType={'number'} initialValue={data?.max_allowed_discount_amount} rules={[{required: true}]}/>
+                            <FormInput inputNumberStyle={{width:'100%'}} label={t('Min total value allowed')} name={'min_total_value_allowed'} inputType={'number'} initialValue={data?.min_total_value_allowed} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if (formRef?.current.getFieldValue()?.max_allowed_discount_amount) {
+                                            if(formRef?.current.getFieldValue()?.max_allowed_discount_amount < formRef?.current.getFieldValue()?.min_total_value_allowed) {
+                                                return Promise.reject('Begins at cannot be greater than expired at')
+                                            }
+                                        }
+
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
+                            <FormInput inputNumberStyle={{width:'100%'}} label={t('Max allowed discount amount')} name={'max_allowed_discount_amount'} inputType={'number'} initialValue={data?.max_allowed_discount_amount} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if(formRef?.current.getFieldValue()?.max_allowed_discount_amount < formRef?.current.getFieldValue()?.min_total_value_allowed) {
+                                            return Promise.reject('Expired at cannot be greater than begins at')
+                                        }
+
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
                         </Col>
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Expired at')} name={'expired_at'} initialValue={data?.expired_at} inputType={'date'} rules={[{required: true}]} />

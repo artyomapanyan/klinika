@@ -3,6 +3,7 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import DateParser from "../../Fragments/DateParser";
+import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 
 function BugReportTopics() {
     return(
@@ -22,6 +23,8 @@ function BugReportTopics() {
                     title:t('Title'),
                     key:'title',
                     translatable:true,
+                    sorter:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
                     dataIndex:['created_at','iso_string'],

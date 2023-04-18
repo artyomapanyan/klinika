@@ -27,6 +27,7 @@ function NursingTask() {
     const [changeValuesState, setChangeValuesState] = useState({})
 
 
+console.log(formRef?.current?.setFieldsValue())
     const onFinish = (values) => {
         setSaveLoading(true)
         setData((prevState)=>({
@@ -56,6 +57,7 @@ function NursingTask() {
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
     }
+
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Nursing Task - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Nursing Task`)}</h3>}

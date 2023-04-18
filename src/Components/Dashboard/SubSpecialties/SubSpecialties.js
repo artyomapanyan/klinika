@@ -23,6 +23,7 @@ function SubSpecialties() {
                                    key:'title',
                                    translatable:true,
                                    sorter:true,
+
                                },
                                {
                                    dataIndex:['created_at','iso_string'],

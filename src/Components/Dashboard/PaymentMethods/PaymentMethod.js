@@ -1,4 +1,3 @@
-
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
@@ -26,7 +25,6 @@ function PaymentMethod() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
-    const [uploadEvent, setUploadEvent] = useState([])
 
 
 
@@ -36,6 +34,7 @@ function PaymentMethod() {
             ...prevState,
             ...values
         }))
+
         if (params.id) {
             updateResource(resource, params.id, values, token,true).then(response => {
                 if(response?.id){
@@ -59,7 +58,7 @@ function PaymentMethod() {
         setChangeValuesState(changed)
     }
 
-
+console.log(data)
 
     return(
         <div>
@@ -89,16 +88,11 @@ function PaymentMethod() {
                             />
                         </Col>
                         <Col lg={6} className="gutter-row">
-                            {/*<div style={{height: '100%', width:'100%', zIndex: -1}}>*/}
                                 <FileManager text1={'Logo'}
                                              text2={'Click or drag file to this area to upload'}
                                              uploadIcon={<InboxOutlined/>}
                                              name={'logo'}
-                                             initialFileList={[data.logo]} limit={1} formRef={formRef} type={'drag'} uploadEvent={uploadEvent} setUploadEvent={setUploadEvent}/>
-                            {/*</div>*/}
-                            {/*<div className={'dddddddddd'} style={{height: '100%', width:'100%', position:"relative", zIndex: 1, backgroundColor: 'red', }}>*/}
-
-                            {/*</div>*/}
+                                             initialFileList={[data.logo]} limit={1} formRef={formRef} type={'drag'}/>
 
                         </Col>
                     </Row>

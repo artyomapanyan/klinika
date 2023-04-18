@@ -1,37 +1,44 @@
-import React, { useState } from 'react';
-import { EditorState} from 'draft-js';
+import React, { Component } from 'react';
+import { EditorState ,ContentState,convertFromHTML,convertToRaw} from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftToHtml from "draftjs-to-html";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 
+class DraftEditor extends Component {
+    constructor(props) {
+        super(props);
+        let editorState = EditorState.createEmpty()
+        if(this.props.initialValue){
+            const contentBlock = htmlToDraft(this.props.initialValue);
+            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+            editorState = EditorState.createWithContent(contentState);
+        }
+        this.state = {
+            editorState,
+        };
+    }
 
-const DraftEditor = () => {
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const [contentState, setContentState] = useState(null);
+    onEditorStateChange = (editorState) => {
+        this.setState({
+            editorState,
+        });
+        this.props.formRef.current.setFieldsValue({
+            [this.props.name]:draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        })
 
-    const handleContentStateChange = (contentState) => {
-        setContentState(draftToHtml(contentState));
     };
 
-    const handleEditorStateChange = (editorState) => {
-        setEditorState(editorState);
-    };
-
-    return (
-        <div>
+    render() {
+        const { editorState } = this.state;
+        return (
             <Editor
                 editorState={editorState}
-                toolbarClassName="editor-toolbar"
-                wrapperClassName="editor-wrapper"
-                editorClassName="editor"
-                onEditorStateChange={handleEditorStateChange}
-                onContentStateChange={handleContentStateChange}
-                spellCheck
+                wrapperClassName="demo-wrapper"
+                editorClassName="demo-editor"
+                onEditorStateChange={this.onEditorStateChange}
             />
-
-        </div>
-    );
-};
-
+        )
+    }
+}
 export default DraftEditor

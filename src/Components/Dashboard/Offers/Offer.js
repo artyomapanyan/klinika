@@ -13,6 +13,7 @@ import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
+import dayjs from "dayjs";
 
 const resource = 'Offer';
 
@@ -66,9 +67,10 @@ function Offer() {
      setChangeValuesState(changed)
  }
 
+
     return(
         <div >
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new Offer`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -80,7 +82,7 @@ function Offer() {
                 <div className={'add_edit_content'}>
                     <FormInput label={t('title')} name={'title'} initialValue={data?.title} rules={[{required: true}]} />
                     <Form.Item name={'content'} label={t('content')}>
-                        <DraftEditor initialValue={data?.content} formRef={formRef} name={'description'} />
+                        <DraftEditor initialValue={data?.content} formRef={formRef} name={'content'} />
                     </Form.Item>
                 </div>
                 <div className={'add_edit_content'}>
@@ -88,8 +90,33 @@ function Offer() {
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Old price ')} name={'old_price'} initialValue={data?.old_price} rules={[{required: true}]} />
                             <FormInput label={t('New price')} name={'new_price'} initialValue={data?.new_price} rules={[{required: true}]} />
-                            <FormInput label={t('Begins at')} name={'begins_at'} initialValue={data?.begins_at} inputType={'date'} rules={[{required: true}]} />
-                            <FormInput label={t('Expired at')} name={'expired_at'} initialValue={data?.expired_at} inputType={'date'} rules={[{required: true}]} />
+                            <FormInput label={t('Begins at')} name={'begins_at'} initialValue={data?.begins_at} inputType={'date'} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if (formRef?.current.getFieldValue()?.expired_at) {
+                                            if(formRef?.current.getFieldValue()?.expired_at < formRef?.current.getFieldValue()?.begins_at) {
+                                                return Promise.reject('Begins at cannot be greater than expired at')
+                                            }
+                                        }
+
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]} />
+
+                            <FormInput label={t('Expired at')} name={'expired_at'} initialValue={data?.expired_at} inputType={'date'} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if(formRef?.current.getFieldValue()?.expired_at < formRef?.current.getFieldValue()?.begins_at) {
+                                            return Promise.reject('Expired at cannot be greater than begins at')
+                                        }
+
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]} />
                             <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.status}
