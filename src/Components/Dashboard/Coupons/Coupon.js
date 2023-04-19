@@ -124,6 +124,7 @@ function Coupon() {
 
 
 
+
                             </div>
                             <FormInput inputNumberStyle={{width:'100%'}} label={t('Min total value allowed')} name={'min_total_value_allowed'} inputType={'number'} initialValue={data?.min_total_value_allowed} rules={[
                                 {required: true},

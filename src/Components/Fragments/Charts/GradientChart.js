@@ -257,7 +257,7 @@ function GradientChart() {
                     plugins: {
 
                         tooltip: {
-                            borderWidth: "3",
+                            borderWidth: "5",
                             borderColor: "#e3e3e320",
                             // callbacks: {
                             //   label: function (context) {
