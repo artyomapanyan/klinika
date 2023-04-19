@@ -49,18 +49,15 @@ import Users from "./Dashboard/User/Users/Users";
 import User from "./Dashboard/User/Users/User";
 import Posts from "./Dashboard/Posts/Posts";
 import Post from "./Dashboard/Posts/Post";
-import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import Translations from "./Dashboard/Translations/Translations";
 import Preferences from "./Dashboard/Preferences/Preferences";
-import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
+
 import Clinics from "./Dashboard/Clinics/Clinics";
 import Clinic from "./Dashboard/Clinics/Clinic";
 import Offers from "./Dashboard/Offers/Offers";
 import Offer from "./Dashboard/Offers/Offer";
 import Coupons from "./Dashboard/Coupons/Coupons";
 import Coupon from "./Dashboard/Coupons/Coupon";
-import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
-import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
 import Laboratory from "./Dashboard/Laboratory/Laboratory";
 import LabPackageCategory from "./Dashboard/LabPackagesCategory/LabPackageCategory";
 import LabTestCategories from "./Dashboard/LabTestCategories/LabTestCategories";
@@ -279,6 +276,10 @@ function AppLayout(){
 
 
     ]
+    const ClinicsOwner = React.lazy(() => import("./Dashboard/ClinicsOwner/ClinicsOwner"));
+    const ClinicManager = React.lazy(() => import("./Dashboard/ClinicManager/ClinicManager"));
+    const DoctorReworked = React.lazy(() => import("./Dashboard/DoctorReworked/DoctorReworked"));
+    const SuperAdmin = React.lazy(() => import("./Dashboard/SuperAdmin/SuperAdmin"));
     return <Layout className={'main-container'}>
             <div className={'side-menu'}>
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
