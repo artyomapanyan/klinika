@@ -9,6 +9,7 @@ import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
 import FormInput from "../../../../../Fragments/FormInput";
+import {t} from "i18next";
 
 function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speciality_id}) {
 
@@ -34,8 +35,8 @@ function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speci
         setSize('large');
     }
  const searchByNumber = (name,item)=>{
-
      name = <>{item.phone_number}{" "}{item.email}</>
+     console.log(item)
      return [name, item]
 
 
@@ -63,16 +64,17 @@ function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speci
                 </Space>
             </div>
             <div style={{padding: 10, marginTop:20}}>
-                <FormInput label={'Select Patient (Search By phone number)'} name={'patient_id'}
+                <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            resourceParams={{test: 1}}
                            searchConfigs={{minLength: 4}}
-                           inputProps={{
-                               notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button type={'secondary'} style={{border:"none"}} onClick={openDrawer}>Create new</Button> </div>
-                           }}
                            initialValue={null}
-                           handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
+                           inputProps={{
+                               notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
+                           }}
+                           initialData={[]}
+                           handleMapItems={(item, name, patientData) => searchByNumber(item, name)}
                            customSearchKey={'phone_number'}
                            resource={'User'}/>
 

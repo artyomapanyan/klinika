@@ -54,7 +54,10 @@ function ResourceSelectPaginated({
         let [newName, newItem,searchData] = handleMapItems(item, name,data)
         name = newName;
         item = newItem
-          item.searchData = searchData;
+          if(typeof item==='object'){
+              item.searchData = searchData;
+          }
+
       }
 
 
@@ -85,9 +88,11 @@ function ResourceSelectPaginated({
         if(searchConfigs.minLength){
             if(e.length<searchConfigs.minLength){
                 setIsInitedState(false)
+            }else{
+                setIsInitedState(true)
             }
         }
-        setIsInitedState(true)
+
 
     if (resource) {
       if (timeout.current) {
@@ -113,6 +118,7 @@ function ResourceSelectPaginated({
     onPopupScroll={handleScroll}
     onSearch={handleSearch}
     showSearch
+    notFoundContent={notFoundContent??null}
 
     allowClear={!disableClear}
     options={options}
@@ -123,10 +129,7 @@ function ResourceSelectPaginated({
 
     {loading ?
       <Select.Option value={999} style={{textAlign: 'center'}}
-                     name={params[customSearchKey??'name']}><Spin/></Select.Option> : itemOptions.length===0 && params[customSearchKey??'name']?.length?<Select.Option value={params[customSearchKey??'name']} style={{textAlign: 'center'}}
-                                                                                                                            name={params[customSearchKey??'name']}>
-            {notFoundContent}
-        </Select.Option>:null}
+                     name={params[customSearchKey??'name']}><Spin/></Select.Option> :null}
 
   </Select>;
 
