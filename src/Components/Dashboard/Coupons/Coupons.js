@@ -31,9 +31,6 @@ function Coupons() {
                     dataIndex:'max_usable_count',
                     title:t('Max usable count'),
                     key:'max_usable_count',
-                    render:(e, record)=>{
-                        console.log(record, 'tokos')
-                    }
                 },
                 {
                     dataIndex:'money_redeemed_so_far',

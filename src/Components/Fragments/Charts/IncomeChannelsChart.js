@@ -147,7 +147,8 @@ function IncomeChannelsChart() {
                 <canvas ref={canvasRef} className="chart_income_channel"></canvas>
                 <table cellPadding={7}  border={0} style={{width:'100%', margin: 15}} >
                     {Object.keys(data).map((key, i) =>
-                            <tr key={i}>
+                        <tbody key={i}>
+                            <tr >
                                 <td>
                                     <div
                                         key={key}
@@ -163,7 +164,7 @@ function IncomeChannelsChart() {
                                     <div className={`withPercentage color-${i}`}>{data[key].percentage} %</div>
                                 </td>
                             </tr>
-
+                        </tbody>
                     )}
                 </table>
 

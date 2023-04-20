@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Collapse, Form, DatePicker, Row, Col} from "antd";
+import React, {useState} from "react";
+import {Button, Collapse, Form, DatePicker, Row, Col, Modal} from "antd";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import ResourceTable from "../../Fragments/ResourceTable";
@@ -11,82 +11,52 @@ import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../../ResourceLinks";
+import {CanceledContent} from "./StatusModalForms/CanceledContent";
+import {FinishedContent} from "./StatusModalForms/FinishedContent";
+import {RascheduledContent} from "./StatusModalForms/RascheduledContent";
+import {postResource} from "../../Functions/api_calls";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
 const resource = 'Appointment';
 function Appointments() {
     const navigate = useNavigate();
+    const [modal,setModal] = useState(false)
+
+
+    const onStatusChange = (key,record)=>{
+        setModal({
+            id:record.id,
+            key
+        })
+
+    }
 
     const onFinish = (values) => {
-        console.log('Success:', values);
-    };
+            console.log(values)
+        postResource('','','',modal.id,{
+            status:modal.key,
+            ...values
+        })
+    }
 
-    const onChange = (key) => {
-        console.log(key);
-    };
-
+    const onCancel = () => {
+        setModal(null)
+    }
 
     return(
         <div >
-            {/*<div className={'add_edit_content'}>*/}
-            {/*    <Collapse defaultActiveKey={[]} onChange={onChange}>*/}
-            {/*        <Panel header="Filter" key="1">*/}
-            {/*            <Form*/}
-            {/*                onFinish={onFinish}*/}
-            {/*                name={"filter"}*/}
-            {/*            >*/}
-            {/*                <Row>*/}
-
-            {/*                    <Form.Item >*/}
-            {/*                        <CInput label={'valodik'}/>*/}
-            {/*                    </Form.Item>*/}
-            {/*                    <Col lg={8} className="gutter-row">*/}
-            {/*                        <Form.Item name={'date'}>*/}
-            {/*                            <RangePicker size={'large'} />*/}
-            {/*                        </Form.Item>*/}
-            {/*                    </Col>*/}
-            {/*                    <Col lg={8} className="gutter-row">*/}
-            {/*                        <FormInput label={t('Doctor')} name={'doctor_id'} inputType={'resourceSelect'}*/}
-            {/*                                   initialValue={null}*/}
-            {/*                                   initialData={[]}*/}
-            {/*                                   resource={'Doctor'}/>*/}
-            {/*                    </Col>*/}
-            {/*                    <Col lg={8} className="gutter-row">*/}
-            {/*                        <FormInput label={t('Clinic')} name={'clinic_id'} inputType={'resourceSelect'}*/}
-            {/*                                   initialValue={null}*/}
-            {/*                                   initialData={[]}*/}
-            {/*                                   resource={'Clinic'}/>*/}
-            {/*                    </Col>*/}
-            {/*                </Row>*/}
-            {/*                <Row>*/}
-            {/*                    <Col lg={12} className="gutter-row">*/}
-            {/*                        <FormInput label={t('Service')} name={'service_id'} inputType={'resourceSelect'}*/}
-            {/*                                   initialValue={null}*/}
-            {/*                                   initialData={[]}*/}
-            {/*                                   resource={'Service'}/>*/}
-            {/*                    </Col>*/}
-            {/*                    <Col lg={12} className="gutter-row">*/}
-            {/*                        <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}*/}
-            {/*                                   initialValue={null}*/}
-            {/*                                   initialData={[]}*/}
-            {/*                                   resource={'Taxonomy'}/>*/}
-            {/*                    </Col>*/}
-            {/*                </Row>*/}
-
-            {/*                <div>*/}
-            {/*                    <Button type={'primary'} htmlType="submit">Filter</Button>*/}
-            {/*                </div>*/}
-            {/*            </Form>*/}
-
-            {/*        </Panel>*/}
-
-            {/*    </Collapse>*/}
-            {/*</div>*/}
-
-
-
             <div>
+                <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
+                    <Form onFinish={onFinish} >
+                        {
+                            modal?.key === '3' ? <CanceledContent onCancel={onCancel} /> : modal?.key === '2' ? <FinishedContent onCancel={onCancel} /> :
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent onCancel={onCancel} /> : null
+                        }
+
+                    </Form>
+                </Modal>
+
                 <ResourceTable resource={resource}
                                customActions={{
                                    edit:(record)=>{
@@ -138,7 +108,7 @@ function Appointments() {
                        title:t('Status'),
                        key:'status',
                         render: (e, record) => {
-                            return <ColorSelect items={Resource.StatusAppointments} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                            return <ColorSelect items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
                         }
 
                        },

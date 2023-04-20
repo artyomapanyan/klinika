@@ -27,7 +27,7 @@ function NursingTask() {
     const [changeValuesState, setChangeValuesState] = useState({})
 
 
-console.log(formRef?.current?.setFieldsValue())
+
     const onFinish = (values) => {
         setSaveLoading(true)
         setData((prevState)=>({

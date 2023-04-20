@@ -43,7 +43,6 @@ function Coupon() {
             ...prevState,
             ...values
         }))
-        console.log(values)
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){

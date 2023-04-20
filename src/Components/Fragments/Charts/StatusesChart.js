@@ -50,7 +50,6 @@ function StatusesChart() {
                     );
                 },
             };
-            console.log(Object.values(response.appointments))
             Chart.register(...registerables)
             appointmentChartRef.current = new Chart(canvasRef.current.getContext("2d"), {
                 type: "doughnut",

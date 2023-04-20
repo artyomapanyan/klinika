@@ -13,7 +13,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
 
     const onClick = (e) => {
         if(onChange) {
-            onChange(e.key)
+            onChange(e.key,record)
         }else{
             setValue(e.key)
             setLoading(true)
@@ -28,8 +28,6 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
 
 
     }
-
-    console.log(value, 'vvv')
 
     let colors = [
         {

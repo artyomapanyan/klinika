@@ -26,7 +26,7 @@ axios.interceptors.response.use(response => {
 
     notificate(error?.response?.data)
      if(error?.response.status===401){
-         setTimeout(()=>document.location.href='/login',2000)
+         setTimeout(()=>document.location.href='/login',1000)
      }
     return error
 })

@@ -58,7 +58,7 @@ function PaymentMethod() {
         setChangeValuesState(changed)
     }
 
-console.log(data)
+
 
     return(
         <div>

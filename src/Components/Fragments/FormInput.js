@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {DatePicker, Form} from "antd";
 import ResourceSelectPaginated from "./ResourceSelectPaginated";
 import dayjs from "dayjs";
@@ -10,15 +10,17 @@ const NoForm = ['resourceSelect'];
 
 function FormInput({
                        name, label, rules, initialValue, inputProps = {},
+                       customSearchKey,
                        resourceSelectStyle,
+                       searchConfigs,
                        inputDisabled,
                        disabled,
+                       extra,
                        options,
                        disabledDate,
                        inputType, initialData = [],
                        resource, resourceParams = {},
                        initialFocused = false,
-                       inputNumberStyle,
                        resourceData,
                        handleMapItems,
                        maxLength,
@@ -39,14 +41,16 @@ function FormInput({
         }
 
     }
+    useEffect(()=>setValue(initialValue),[initialValue])
     const [focused, setFocused] = useState(initialFocused);
     const [value, setValue] = useState(initialValue);
 
     const handleReturnInput = () => {
-        const isRequired= rules?.find(e=>e.required)
+        const isRequired = rules?.find(e => e.required)
         switch (inputType) {
             case 'password':
-                return <CInput maxLength={maxLength} isRequired={isRequired} label={label} inputProps={inputProps} type={'password'}/>
+                return <CInput maxLength={maxLength} isRequired={isRequired} label={label} inputProps={inputProps}
+                               inputDisabled={inputDisabled} type={'password'}/>
             case 'date':
                 return <DatePicker   {...inputProps}
                                      format={'DD-MM-YYYY'}
@@ -54,21 +58,27 @@ function FormInput({
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
                                      onChange={e => setValue(e)}
+                                     disabled={inputDisabled}
                                      disabledDate={disabledDate}
                                      style={{width: '100%', height: 48}}
                 />
             case 'textArea':
-                return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps} type={'textArea'}/>
+                return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps}
+                                   inputDisabled={inputDisabled} type={'textArea'}/>
             case 'number':
-                return <CInput maxLength={maxLength} isRequired={isRequired} label={label} inputProps={inputProps} type={'number'} min={min} max={max}/>
+                return <CInput maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
+                               inputProps={inputProps} type={'number'} min={min} max={max}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
                                                 options={options}
+                                                extra={extra}
                                                 disabled={disabled}
+                                                searchConfigs={searchConfigs}
                                                 resourceParams={resourceParams}
+                                                customSearchKey={customSearchKey}
                                                 initialValue={initialValue}
-                                                formItemClass={`input-placeholder ${focused || value ? 'input-focused' : ''}`}
+                                                formItemClass={`input-placeholder ${focused || value || value===0 ? 'input-focused' : ''}`}
                                                 resource={resource} initialData={initialData}
                                                 resourceData={resourceData}
                                                 handleMapItems={handleMapItems}
@@ -85,19 +95,21 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label} inputProps={inputProps}/>
+                return <CInput maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
+                               inputProps={inputProps}/>
         }
     }
-    let isDate = inputType==='date';
-    let flyPlaceholder = isDate&&(focused || (Array.isArray(value) ? value.length : value))
+    let isDate = inputType === 'date';
+    let flyPlaceholder = isDate && (focused || (Array.isArray(value) ? value.length : value))
 
 
     return (
         <div>
             {NoForm.includes(inputType) ? handleReturnInput() : <Form.Item initialValue={initialValue}
                                                                            preserve={false}
+                                                                           extra={extra}
                                                                            className={`input-placeholder ${flyPlaceholder ? 'input-focused' : ''}`}
-                                                                           label={isDate?label:null}
+                                                                           label={isDate ? label : null}
                                                                            name={name}
                                                                            rules={rules}>
                 {handleReturnInput()}

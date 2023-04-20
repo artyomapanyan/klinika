@@ -36,7 +36,6 @@ function Offers() {
                     title:t('Price'),
                     key:'price',
                     render:(e, record)=>{
-                        console.log(record)
                         return <div>
                             <div style={{width: 60,position:"absolute", borderBottom: '1px solid #635D6B', height:11}}></div>
                             <div style={{color:'#635D6B'}}>{record?.old_price} <span style={{fontSize:10}}>SAR</span></div>

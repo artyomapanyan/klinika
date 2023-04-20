@@ -28,7 +28,6 @@ function InvoiceItems() {
                     dataIndex:'price',
                     title:t('Price'),
                     key:'price',
-                    render:(e, record)=>console.log(record)
                 },
                 {
                     dataIndex:'tax_percentage',

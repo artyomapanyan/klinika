@@ -18,7 +18,7 @@ function Laboratory() {
     return(
         <div style={{marginTop: -30}}>
             <div className={'lab_radio_btn'}>
-                <Radio.Group onChange={onChange} value={getLab ? getLab : 'packages'} size="large">
+                <Radio.Group onChange={onChange}  size="large">
                     <Radio.Button  value="tests_category">{t("Tests Categories")}</Radio.Button>
                     <Radio.Button  value="tests">{t("Tests")}</Radio.Button>
                     <Radio.Button  value="packages_category">{t("Packages Categories")}</Radio.Button>

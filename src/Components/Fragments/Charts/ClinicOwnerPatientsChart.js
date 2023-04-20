@@ -211,7 +211,6 @@ function ClinicOwnerPatientsChart(){
 
                                 label: function(context) {
                                     let label = context.dataset.label || '';
-                                    console.log(context.parsed, 'lab')
 
                                     if (context.parsed.y !== null) {
 

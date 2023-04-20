@@ -31,11 +31,11 @@ const Resource = {
     ],
     Gender: [
         {
-            id: 1,
+            id: 0,
             name: 'Male'
         },
         {
-            id: 2,
+            id: 1,
             name: 'Female'
         },
     ],
@@ -59,6 +59,101 @@ const Resource = {
             name: 'Inactive'
         },
     ],
+    StatusWays: {
+        0: [
+            {
+                key: '0',
+                label: 'New'
+            },
+            {
+                key: '1',
+                label: 'Confirmed'
+            },
+            {
+                key: '2',
+                label: 'Finished'
+            },
+            {
+                key: '3',
+                label: 'Cancelled'
+            },
+        ],
+        1: [
+            {
+                key: '1',
+                label: 'Confirmed'
+            },
+            {
+                key: '2',
+                label: 'Finished'
+            },
+            {
+                key: '3',
+                label: 'Cancelled'
+            },
+            {
+                key: '4',
+                label: 'Rescheduled'
+            },
+            {
+                key: '5',
+                label: 'Absent'
+            },
+        ],
+        2: [
+            {
+                key: '2',
+                label: 'Finished'
+            },
+            {
+                key: '6',
+                label: 'Follow up'
+            }
+        ],
+        4: [
+            {
+                key: '2',
+                label: 'Finished'
+            },
+            {
+                key: '3',
+                label: 'Cancelled'
+            },
+            {
+                key: '4',
+                label: 'Rescheduled'
+            },
+            {
+                key: '5',
+                label: 'Absent'
+            },
+        ],
+        3: [{
+            key: '3',
+            label: 'Cancelled'
+        },],
+        5: [{
+            key: '5',
+            label: 'Absent'
+        },],
+        7: [
+            {
+                key: '7',
+                label: 'Revoked'
+            },
+        ],
+        6: [
+            {
+                key: '2',
+                label: 'Finished'
+            },
+            {
+                key: '6',
+                label: 'Follow up'
+            }
+        ],
+    },
+
     StatusAppointments: [
         {
             key: '0',
@@ -87,6 +182,9 @@ const Resource = {
         {
             key: '6',
             label: 'Follow up'
+        }, {
+            key: '7',
+            label: 'Revoked'
         },
     ],
     StatusReports: [
@@ -507,7 +605,7 @@ const Resource = {
             label: '23:59',
         },
     ],
-    Months:[
+    Months: [
         {
             label: "January",
             key: 0
@@ -557,7 +655,7 @@ const Resource = {
             key: 11
         },
     ],
-    Days:['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    Days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     TaxonomyTypes: {
         POST_CATEGORY: 1,
         POST_TAG: 2,

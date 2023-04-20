@@ -8,15 +8,18 @@ function ResourceSelectPaginated({
                                    resource = null,
                                    name,
                                    options,
+                                     searchConfigs={},
                                    label,
                                    rules,
                                    inputProps = {},
                                    formItemClass,
+                                     extra,
                                    resourceParams = {},
                                    initialValue = null,
                                    disableClear = false,
                                    updateLoading = false,
                                    resourceSelectStyle,
+                                     customSearchKey,
                                    resourceData,
                                    disabled,
                                    handleMapItems = null
@@ -48,7 +51,7 @@ function ResourceSelectPaginated({
             name = `${item.doctor.first} ${item.doctor.last}`
         }
       if (handleMapItems) {
-        let [newName, newItem] = handleMapItems(item, name)
+        let [newName, newItem] = handleMapItems(item, name,data)
         name = newName;
         item = newItem
       }
@@ -78,6 +81,11 @@ function ResourceSelectPaginated({
     }
   }
   const handleSearch = (e) => {
+        if(searchConfigs.minLenght){
+            if(e.length<searchConfigs.minLenght){
+                return;
+            }
+        }
     if (resource) {
       if (timeout.current) {
         clearTimeout(timeout.current)
@@ -85,7 +93,7 @@ function ResourceSelectPaginated({
       timeout.current = setTimeout(() => {
         setLocalData([])
         setParams({
-          page: 1, name: e
+          page: 1, [customSearchKey??'name']: e
         })
       }, 500)
     }
@@ -110,12 +118,13 @@ function ResourceSelectPaginated({
     {itemOptions}
     {loading ?
       <Select.Option value={999} style={{textAlign: 'center'}}
-                     name={params.name}><Spin/></Select.Option> : null}
+                     name={params[customSearchKey??'name']}><Spin/></Select.Option> : null}
 
   </Select>;
 
 
   return name ? <Form.Item
+    extra={extra}
     className={formItemClass}
     label={label}
     name={name}

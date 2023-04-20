@@ -101,7 +101,6 @@ export const useGetResourceSingle = (resource,id,additionals={},filterResponse =
     const [addData,setAddData] = useState({})
     let token = useSelector((state) => state.auth.token);
     useEffect(()=>{
-        console.log(id,token,resource)
         setLoading(true)
         let dataResources  =Object.keys(additionals);
         Promise.all([
@@ -121,7 +120,6 @@ export const useGetResourceSingle = (resource,id,additionals={},filterResponse =
                 }
             }))
         ]).then(responses=>{
-            console.log(responses,2)
             let response = responses[0]
             if(response?.id){
                 if(filterResponse){
