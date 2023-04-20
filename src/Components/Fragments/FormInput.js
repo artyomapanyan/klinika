@@ -41,7 +41,15 @@ function FormInput({
         }
 
     }
-    useEffect(()=>setValue(initialValue),[initialValue])
+    useEffect(()=>{
+       if(dayjs.isDayjs(initialValue) && dayjs.isDayjs(value) ){
+           if(initialValue.format('DD-MM-YYYY')!==value?.format('DD-MM-YYYY')){
+               setValue(initialValue)
+           }
+       }else{
+           setValue(initialValue)
+       }
+    },[initialValue])
     const [focused, setFocused] = useState(initialFocused);
     const [value, setValue] = useState(initialValue);
 

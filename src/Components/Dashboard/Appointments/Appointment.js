@@ -212,7 +212,8 @@ function Appointment() {
 
         fetchedUsers.current = patientData
         name = <>{item.phone_number}{" "}{item.email}</>
-        return [name, item]
+        let searchData = item.phone_number+item.email;
+        return [name, item,searchData]
 
 
     }
@@ -242,6 +243,10 @@ function Appointment() {
                                                resourceParams={{test: 1}}
                                                searchConfigs={{minLength: 4}}
                                                initialValue={null}
+                                               inputProps={{
+
+                                                   notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
+                                               }}
                                                extra={<div style={{marginTop:10}}>Or <Button size={'large'} onClick={()=>{
 
                                                    formRef.current.resetFields(['patient_id','first'])

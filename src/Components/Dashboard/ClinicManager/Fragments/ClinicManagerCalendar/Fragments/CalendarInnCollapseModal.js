@@ -1,4 +1,4 @@
-import {AutoComplete, Avatar, Button, Drawer, Space, Tag} from "antd";
+import { Avatar, Button, Drawer, Space, Tag} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import ClinicManagerCalendarDrawerSmall from "./ClinicManagerCalendarDrawerSmall";
@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+
+import FormInput from "../../../../../Fragments/FormInput";
 
 function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speciality_id}) {
 
@@ -17,9 +19,7 @@ function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speci
     const [size, setSize] = useState();
     const [times,setTimes] = useState([]);
     let token = useSelector((state) => state.auth.token);
-    let time = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00']
     useEffect(()=>{
-        //todo hardcoded
         postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic','single', token, docItem?.doctor.id + "/" +clinicID, {service:'clinic_visit', date:selectedDate}).then(response=>{
             setTimes(response.flat())
         })
@@ -33,16 +33,13 @@ function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speci
         setOpen(true);
         setSize('large');
     }
+ const searchByNumber = (name,item)=>{
 
-    const options = [
-        {
-            value: <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button type={'secondary'} style={{border:"none"}} onClick={openDrawer}>Create new</Button> </div>,
-        },
-        {
-            value: "dddd"
-        }
-        ]
+     name = <>{item.phone_number}{" "}{item.email}</>
+     return [name, item]
 
+
+ }
     return(
         <div>
             <Space>
@@ -66,14 +63,19 @@ function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speci
                 </Space>
             </div>
             <div style={{padding: 10, marginTop:20}}>
-                <AutoComplete
-                    style={{width:'100%'}}
-                    options={options}
-                    placeholder="try to type `b`"
-                    filterOption={(inputValue, option) =>
-                        option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                    }
-                />
+                <FormInput label={'Select Patient (Search By phone number)'} name={'patient_id'}
+                           inputType={'resourceSelect'}
+                           rules={[{required: true}]}
+                           resourceParams={{test: 1}}
+                           searchConfigs={{minLength: 4}}
+                           inputProps={{
+                               notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button type={'secondary'} style={{border:"none"}} onClick={openDrawer}>Create new</Button> </div>
+                           }}
+                           initialValue={null}
+                           handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
+                           customSearchKey={'phone_number'}
+                           resource={'User'}/>
+
             </div>
             <Drawer size={size}  title="Add Appointment" placement="right" onClose={()=>setOpen(false)} open={open}>
                 {

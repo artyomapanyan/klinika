@@ -18,7 +18,7 @@ function ResourceSelectPaginated({
                                    initialValue = null,
                                    disableClear = false,
                                    updateLoading = false,
-                                   resourceSelectStyle,
+                                   notFoundContent=null,
                                      customSearchKey,
                                    resourceData,
                                    disabled,
@@ -45,19 +45,20 @@ function ResourceSelectPaginated({
     return data.map((item, key) => {
       let name = item.name ?? item.title
       if (resource === 'User' || resource === 'Doctor') {
-        name = `${item.first} ${item.last}`
+        name = `${item.first} ${item.last} ${item.phone_number}`
       }
         if (resource === 'ClinicDoctor') {
             name = `${item.doctor.first} ${item.doctor.last}`
         }
       if (handleMapItems) {
-        let [newName, newItem] = handleMapItems(item, name,data)
+        let [newName, newItem,searchData] = handleMapItems(item, name,data)
         name = newName;
         item = newItem
+          item.searchData = searchData;
       }
 
 
-      return name ? <Select.Option key={key} value={item.id} name={name}>{name}</Select.Option> : null
+      return name ? <Select.Option key={key} value={item.id} name={item.searchData??name}>{name}</Select.Option> : null
     })
   }
   useEffect(() => {
@@ -81,11 +82,13 @@ function ResourceSelectPaginated({
     }
   }
   const handleSearch = (e) => {
-        if(searchConfigs.minLenght){
-            if(e.length<searchConfigs.minLenght){
-                return;
+        if(searchConfigs.minLength){
+            if(e.length<searchConfigs.minLength){
+                setIsInitedState(false)
             }
         }
+        setIsInitedState(true)
+
     if (resource) {
       if (timeout.current) {
         clearTimeout(timeout.current)
@@ -110,15 +113,20 @@ function ResourceSelectPaginated({
     onPopupScroll={handleScroll}
     onSearch={handleSearch}
     showSearch
+
     allowClear={!disableClear}
     options={options}
     optionFilterProp={'name'}
-    onDropdownVisibleChange={() => !isInitedState ? setIsInitedState(true) : null}
+    onDropdownVisibleChange={() => !isInitedState && !searchConfigs.minLength ? setIsInitedState(true) : params[customSearchKey??'name']?.length>=searchConfigs.minLength?setIsInitedState(true):null}
   >
     {itemOptions}
+
     {loading ?
       <Select.Option value={999} style={{textAlign: 'center'}}
-                     name={params[customSearchKey??'name']}><Spin/></Select.Option> : null}
+                     name={params[customSearchKey??'name']}><Spin/></Select.Option> : itemOptions.length===0 && params[customSearchKey??'name']?.length?<Select.Option value={params[customSearchKey??'name']} style={{textAlign: 'center'}}
+                                                                                                                            name={params[customSearchKey??'name']}>
+            {notFoundContent}
+        </Select.Option>:null}
 
   </Select>;
 

@@ -72,6 +72,10 @@ import InvoiceItems from "./Dashboard/Invoices/InvoiceItems/InvoiceItems";
 import InvoiceItem from "./Dashboard/Invoices/InvoiceItems/InvoiceItem";
 import Reports from "./Dashboard/Reports/Reports";
 import Report from "./Dashboard/Reports/Report";
+import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
+import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
+import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
+import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
 
 
 
@@ -276,10 +280,7 @@ function AppLayout(){
 
 
     ]
-    const ClinicsOwner = React.lazy(() => import("./Dashboard/ClinicsOwner/ClinicsOwner"));
-    const ClinicManager = React.lazy(() => import("./Dashboard/ClinicManager/ClinicManager"));
-    const DoctorReworked = React.lazy(() => import("./Dashboard/DoctorReworked/DoctorReworked"));
-    const SuperAdmin = React.lazy(() => import("./Dashboard/SuperAdmin/SuperAdmin"));
+
     return <Layout className={'main-container'}>
             <div className={'side-menu'}>
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
