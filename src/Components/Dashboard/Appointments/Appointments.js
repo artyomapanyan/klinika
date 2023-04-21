@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Button, Collapse, Form, DatePicker, Row, Col, Modal} from "antd";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
@@ -9,19 +9,25 @@ import {CheckCircleOutlined} from "@ant-design/icons";
 import CInput from "../../Fragments/Inputs/CInput";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
-import {useNavigate} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import ResourceLinks from "../../ResourceLinks";
 import {CanceledContent} from "./StatusModalForms/CanceledContent";
 import {FinishedContent} from "./StatusModalForms/FinishedContent";
 import {RascheduledContent} from "./StatusModalForms/RascheduledContent";
-import {postResource} from "../../Functions/api_calls";
+import {postResource, useGetResourceSingle} from "../../Functions/api_calls";
+import {useSelector} from "react-redux";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
 const resource = 'Appointment';
 function Appointments() {
     const navigate = useNavigate();
+    let token = useSelector((state) => state.auth.token);
+
     const [modal,setModal] = useState(false)
+    const [loading,setLoading] = useState(false)
+    const [recorddata,setRecordData] = useState(false)
+    const [date,setDate] = useState(false)
 
 
     const onStatusChange = (key,record)=>{
@@ -29,14 +35,23 @@ function Appointments() {
             id:record.id,
             key
         })
-
+        setRecordData(record)
     }
 
     const onFinish = (values) => {
-            console.log(values)
-        postResource('','','',modal.id,{
+        setLoading(true)
+        if (values?.booked_at) {
+            values.booked_at = values.booked_at.format('YYYY-MM-DD') + values.appointment_time
+        }
+
+        setLoading(true)
+        postResource('Appointment','single', token, modal.id, {
             status:modal.key,
             ...values
+        }).then((response) => {
+
+            setModal(null)
+            setLoading(false)
         })
     }
 
@@ -44,14 +59,26 @@ function Appointments() {
         setModal(null)
     }
 
+    const handleValuesChange = (changed,all)=>{
+        if(changed.booked_at) {
+            setDate((prevDate)=>({
+                ...prevDate,
+                ...changed
+            }))
+        }
+
+    }
+
     return(
         <div >
             <div>
                 <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
-                    <Form onFinish={onFinish} >
+                    <Form onFinish={onFinish}
+                          onValuesChange={handleValuesChange}
+                    >
                         {
                             modal?.key === '3' ? <CanceledContent onCancel={onCancel} /> : modal?.key === '2' ? <FinishedContent onCancel={onCancel} /> :
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent onCancel={onCancel} /> : null
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent recorddata={recorddata} onCancel={onCancel} date={date} /> : null
                         }
 
                     </Form>

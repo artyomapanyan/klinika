@@ -26,7 +26,7 @@ function ShowAppointment() {
         });
     };
 
-
+console.log(data)
     const handleExportPDF =()=>{
         axios.request({
             url: api[resource].exportExcel.url,
@@ -125,10 +125,10 @@ function ShowAppointment() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>f</td>
-                                    <td>g</td>
-                                    <td>g</td>
-                                    <td><Button size={'small'} style={{background:'red'}}><FilePdfOutlined style={{color: "#ffffff"}}/></Button></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    {/*<td><Button size={'small'} style={{background:'red'}}><FilePdfOutlined style={{color: "#ffffff"}}/></Button></td>*/}
                                 </tr>
                                 </tbody>
                             </table>

@@ -10,15 +10,16 @@ import {useSearchParams} from "react-router-dom";
 function Laboratory() {
     let [searchParams, setSearchParams] = useSearchParams();
 
+    const [page,setPage] = useState('')
     const onChange = (e) => {
         setSearchParams({lab:e.target.value})
+        setPage(e.target.value)
     }
-    let getLab = searchParams.get('lab')
 
     return(
         <div style={{marginTop: -30}}>
             <div className={'lab_radio_btn'}>
-                <Radio.Group onChange={onChange}  size="large">
+                <Radio.Group onChange={onChange}  value={page} size="large">
                     <Radio.Button  value="tests_category">{t("Tests Categories")}</Radio.Button>
                     <Radio.Button  value="tests">{t("Tests")}</Radio.Button>
                     <Radio.Button  value="packages_category">{t("Packages Categories")}</Radio.Button>
@@ -30,7 +31,7 @@ function Laboratory() {
 
 
             {
-                getLab === "tests" ? <LabTests getLab={getLab} /> : getLab === "packages" ? <LabPackages /> : getLab === "tests_category" ? <LabTestCategories/> : getLab === "packages_category" ? <LabPackagesCategories /> : <LabPackages />
+                page === "tests" ? <LabTests getLab={page} /> : page === "packages" ? <LabPackages /> : page === "tests_category" ? <LabTestCategories/> : page === "packages_category" ? <LabPackagesCategories /> : <LabPackages />
             }
         </div>
     )

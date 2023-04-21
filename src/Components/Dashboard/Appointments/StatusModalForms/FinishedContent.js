@@ -10,7 +10,7 @@ export function FinishedContent({onCancel}){
         />
 
         <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'}/>
-        <FormInput label={t('Prescriptions')} name={'Prescriptions'} inputType={'textArea'}/>
+        <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'}/>
         <div style={{display: 'flex', gap: 5}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
             <Button size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>

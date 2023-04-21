@@ -76,6 +76,7 @@ import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
 import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
+import OwnerClinics from "./Dashboard/OwnerClinics/OwnerClinics";
 
 
 
@@ -275,6 +276,12 @@ function AppLayout(){
             resource:'Report',
             //singleComp:<Report/>,
             indexComp:<Reports/>
+        },
+        {
+            url:'owner-clinics',
+            resource:'OwnerClinic',
+            //singleComp:<Report/>,
+            indexComp:<OwnerClinics/>
         },
 
 

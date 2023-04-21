@@ -69,7 +69,7 @@ function LabTest() {
                     <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>
 
                     <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
-                               rules={[{required: true}]}
+                              // rules={[{required: true}]}
                                initialValue={data?.categories?.map(e=>e.id)??[]}
                                initialData={data?.categories??[]}
                                resource={'Category'}

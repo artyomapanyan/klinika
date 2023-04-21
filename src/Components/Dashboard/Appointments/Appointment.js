@@ -245,16 +245,16 @@ function Appointment() {
                                                initialValue={null}
                                                inputProps={{
 
-                                                   notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
+                                                   notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button onClick={()=>{
+                                                            formRef.current.resetFields(['patient_id','first'])
+                                                            setData((prevState)=>({
+                                                                ...prevState,
+                                                                patient_id:0
+                                                            }))
+                                                        }}
+                                                        type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
                                                }}
-                                               extra={<div style={{marginTop:10}}>Or <Button size={'large'} onClick={()=>{
 
-                                                   formRef.current.resetFields(['patient_id','first'])
-                                                   setData((prevState)=>({
-                                                       ...prevState,
-                                                       patient_id:0
-                                                   }))
-                                               }} type={'primary'}>Create new one</Button></div>}
                                                initialData={[]}
                                                handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                                customSearchKey={'phone_number'}
@@ -512,14 +512,14 @@ function Appointment() {
                                             <FormInput label={t('Description')} name={'description'}
                                                        inputType={'textArea'} initialValue={data?.description}/>
                                         </div>
-                                        <div className="gutter-row">
-                                            <FileManager text1={'Select or drag files'}
-                                                         text2={'+'}
-                                                         name={'gallery'}
-                                                         uploadIcon={<InboxOutlined/>}
-                                                         initialFileList={[data?.gallery]} limit={5} formRef={formRef}
-                                                         type={'drag'}/>
-                                        </div>
+                                        {/*<div className="gutter-row">*/}
+                                        {/*    <FileManager text1={'Select or drag files'}*/}
+                                        {/*                 text2={'+'}*/}
+                                        {/*                 name={'gallery'}*/}
+                                        {/*                 uploadIcon={<InboxOutlined/>}*/}
+                                        {/*                 initialFileList={[data?.gallery]} limit={5} formRef={formRef}*/}
+                                        {/*                 type={'drag'}/>*/}
+                                        {/*</div>*/}
                                         <FormInput label={t('Folder id')} name={'folder_id'}
                                                    rules={[{required: false}]}/>
 
