@@ -1,6 +1,6 @@
-import { Avatar, Button, Drawer, Space, Tag} from "antd";
+import {Avatar, Button, Drawer, Form, Space, Radio, notification} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import ClinicManagerCalendarDrawerSmall from "./ClinicManagerCalendarDrawerSmall";
 import ClinicManagerCalendarDrawerLarge from "./ClinicManagerCalendarDrawerLarge";
 import dayjs from "dayjs";
@@ -10,78 +10,134 @@ import {useSelector} from "react-redux";
 
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
+import Preloader from "../../../../../Preloader";
 
-function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speciality_id}) {
+function CalendarInnCollapseModal({docItem, specialty, selectedDate, clinicID, speciality_id}) {
 
     const {doctor} = docItem;
-
-
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [finishLoading, setFinishLoading] = useState(false);
     const [size, setSize] = useState();
-    const [times,setTimes] = useState([]);
+    const [times, setTimes] = useState([]);
+    const [data, setData] = useState({});
+    const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
-    useEffect(()=>{
-        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic','single', token, docItem?.doctor.id + "/" +clinicID, {service:'clinic_visit', date:selectedDate}).then(response=>{
+    useEffect(() => {
+        setLoading(true)
+        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
+            service: 'clinic_visit',
+            date: selectedDate
+        }).then(response => {
+            setLoading(false)
             setTimes(response.flat())
         })
-    },[selectedDate,docItem])
+    }, [selectedDate, docItem])
     const openDrawer = () => {
-        setOpen(true);
-        setSize('default');
+        formRef.current.validateFields(['hour']).then(e => {
+
+            setOpen(true);
+            setSize('default');
+
+        })
+
+
     }
 
     const openLargeDrawer = () => {
         setOpen(true);
         setSize('large');
     }
- const searchByNumber = (name,item)=>{
-     name = <>{item.phone_number}{" "}{item.email}</>
-     console.log(item)
-     return [name, item]
+    const searchByNumber = (item, name) => {
+        name = <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px'}}>
+            <div>{item.first} {item.last}</div>
+            <div>+{item.phone_country_code}{item.phone_number}</div>
+        </div>
+        let searchData = item.phone_number + item.email;
+        return [name, item, searchData]
+    }
+    const handleCreateAppointment = (values, additional) => {
+        setFinishLoading(true)
+        postResource('Appointment', 'create', token, '', {
+            ...values,
+            ...(additional ?? {}),
+            ...data,
+            speciality_id,
+            doctor_id: doctor.id,
+            date: dayjs(selectedDate).format("YYYY-MM-DD")
 
+        }).then(e => {
+            setFinishLoading(false)
+        })
 
- }
-    return(
+    }
+    return (
         <div>
-            <Space>
-                <h1 className={'h1'} >{dayjs(selectedDate).format('DD MMMM')}</h1>
-                <h1 style={{fontSize:28, fontWeight:200}}>{Resources.Days[dayjs(selectedDate).day()]}</h1>
-            </Space>
-            <div>
-                {
-                    times.map((el) => {
-                        return <Tag color="#dee0df" size={'large'} style={{fontSize:17, fontWeight:550, color:"black", marginTop:20}}>{el}</Tag>
-                    })
-                }
-            </div>
-            <div style={{padding: 10, marginTop:20}}>
-                <Space >
-                    <Avatar size={50} src={doctor?.avatar?.src} icon={<UserOutlined />} />
-                    <div style={{display:"block"}}>
-                        <h3 className={'h1'}>{doctor.first} {doctor.last}</h3>
-                        <div>{specialty}</div>
-                    </div>
+            <Form ref={formRef} onValuesChange={(e, v) => setData(v)} onFinish={handleCreateAppointment}>
+                <Space>
+                    <h1 className={'h1'}>{dayjs(selectedDate).format('DD MMMM')}</h1>
+                    <h1 style={{fontSize: 28, fontWeight: 200}}>{Resources.Days[dayjs(selectedDate).day()]}</h1>
                 </Space>
-            </div>
-            <div style={{padding: 10, marginTop:20}}>
-                <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
-                           inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           resourceParams={{test: 1}}
-                           searchConfigs={{minLength: 4}}
-                           initialValue={null}
-                           inputProps={{
-                               notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
-                           }}
-                           initialData={[]}
-                           handleMapItems={(item, name, patientData) => searchByNumber(item, name)}
-                           customSearchKey={'phone_number'}
-                           resource={'User'}/>
+                <div>
+                    {loading ? <Preloader/> : <Form.Item name={'time'} rules={[
+                        {
+                            required: true
+                        }
+                    ]
+                    }>
+                        <Radio.Group
+                            className={'hours-select'}
+                            options={times.map(e => ({
+                                label: e,
+                                value: e
+                            }))}
+                            optionType="button"
+                            buttonStyle="solid"
+                        />
+                    </Form.Item>}
+                </div>
+                <div style={{padding: 10, marginTop: 20}}>
+                    <Space>
+                        <Avatar size={50} src={doctor?.avatar?.src} icon={<UserOutlined/>}/>
+                        <div style={{display: "block"}}>
+                            <h3 className={'h1'}>{doctor.first} {doctor.last}</h3>
+                            <div>{specialty}</div>
+                        </div>
+                    </Space>
+                </div>
+                <div style={{marginTop: 20}}>
+                    <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
+                               inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               resourceParams={{test: 1}}
+                               searchConfigs={{minLength: 4}}
+                               initialValue={null}
+                               inputProps={{
+                                   notFoundContent: <div
+                                       style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                                       <div>Not found</div>
+                                       <Button type={'secondary'} style={{border: "none"}} onClick={openDrawer}>Create
+                                           new</Button></div>
+                               }}
+                               initialData={[]}
+                               handleMapItems={(item, name, patientData) => searchByNumber(item, name)}
+                               customSearchKey={'name_or_phone'}
+                               resource={'User'}/>
 
-            </div>
-            <Drawer size={size}  title="Add Appointment" placement="right" onClose={()=>setOpen(false)} open={open}>
+                </div>
+                {data?.patient_id && data?.time && <Button type={'primary'} htmlType={'submit'}
+                                                           loading={finishLoading}
+                                                           style={{width: '100%', height: '44px'}}>{t("Book")}</Button>}
+            </Form>
+            <Drawer size={size} title="Add Appointment" placement="right" onClose={() => setOpen(false)} open={open}>
                 {
-                    size==="default"?<ClinicManagerCalendarDrawerSmall openLargeDrawer={openLargeDrawer}/> :<ClinicManagerCalendarDrawerLarge openDrawer={openDrawer}/>
+                    size === "default" ?
+                        <ClinicManagerCalendarDrawerSmall data={data} doctor={doctor} specialty={specialty}
+                                                          handleCreateAppointment={handleCreateAppointment}
+                                                          openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
+                        <ClinicManagerCalendarDrawerLarge data={data} doctor={doctor} specialty={specialty}
+                                                          handleCreateAppointment={handleCreateAppointment}
+                                                          setOpen={setOpen} openDrawer={openDrawer}/>
                 }
 
 
@@ -90,4 +146,5 @@ function CalendarInnCollapseModal({docItem,specialty,selectedDate,clinicID,speci
         </div>
     )
 }
+
 export default CalendarInnCollapseModal;
