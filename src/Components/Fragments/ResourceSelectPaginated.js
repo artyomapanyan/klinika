@@ -113,6 +113,7 @@ function ResourceSelectPaginated({
   const SelectItem = <Select
     {...inputProps}
       disabled={disabled}
+    filterOption={false}
 
     loading={loading || updateLoading}
     onPopupScroll={handleScroll}
@@ -128,7 +129,7 @@ function ResourceSelectPaginated({
     {itemOptions}
 
     {loading ?
-      <Select.Option value={999} style={{textAlign: 'center'}}
+      <Select.Option disabled={true} value={999} style={{textAlign: 'center'}}
                      name={params[customSearchKey??'name']}><Spin/></Select.Option> :null}
 
   </Select>;

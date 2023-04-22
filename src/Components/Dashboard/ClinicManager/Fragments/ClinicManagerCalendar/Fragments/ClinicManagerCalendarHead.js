@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {GMBK} from "../../../../../../functions";
 import {useState} from "react";
-function ClinicManagerCalendarHead({date,setDate}) {
+function ClinicManagerCalendarHead({date,setDate,hideData}) {
 
 
     dayjs.extend(customParseFormat);
@@ -29,7 +29,7 @@ function ClinicManagerCalendarHead({date,setDate}) {
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
                 {t("Apointments")}
-                {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
+                {!hideData && data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
             </Space>
             <div>
                 <Space>

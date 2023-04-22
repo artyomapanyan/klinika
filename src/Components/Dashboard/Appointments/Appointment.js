@@ -239,7 +239,6 @@ function Appointment() {
                                 <div className="gutter-row">
                                     <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                                inputType={'resourceSelect'}
-                                               rules={[{required: true}]}
                                                resourceParams={{test: 1}}
                                                searchConfigs={{minLength: 4}}
                                                initialValue={null}
