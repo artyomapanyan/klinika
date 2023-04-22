@@ -11,6 +11,7 @@ import {
     DollarOutlined, InsertRowLeftOutlined
 } from "@ant-design/icons";
 import dash4 from "../../../dist/icons/frame4.svg";
+import Clinic_icon from "../../../dist/icons/Clinic_icon.svg";
 import dash1 from "../../../dist/icons/frame1.svg";
 import dash2 from "../../../dist/icons/frame2.svg";
 import dash3 from "../../../dist/icons/frame3.svg";
@@ -218,8 +219,8 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             ]
         },
         {
-            key: 'owner-clinics',
-            icon: <InsertRowLeftOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+            key: 'clinics',
+            icon: <img alt={'Clinic_icon'} src={Clinic_icon}/>,
             label: `Clinics`,
 
         },

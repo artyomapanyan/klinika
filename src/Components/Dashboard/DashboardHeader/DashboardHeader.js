@@ -32,13 +32,13 @@ function DashboardHeader() {
 
     }
 
+
     return <Row>
         <Col lg={14} md={24}>
             {handleReturnHeaderPart()}
         </Col>
-        <Col lg={10} md={24} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", padding:'15px 36px'}} className={'lng_select'}>
-            <HeaderAccount />
-
+        <Col lg={10} md={24} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", padding:pathname.includes('clinics') ? 0 :'15px 36px'}} className={'lng_select'}>
+            {pathname.includes('clinics')  ? <div></div> : <HeaderAccount />}
         </Col>
     </Row>
 }

@@ -142,7 +142,7 @@ function Appointment() {
 
 
     const onFinish = (values) => {
-        values.dob = values.dob.format('YYYY-MM-DD')
+        values.dob = values.patient.dob.format('YYYY-MM-DD')
         values.booked_at = values.booked_at.format('YYYY-MM-DD')
         setSaveLoading(true)
         setData((prevState) => ({
@@ -179,17 +179,20 @@ function Appointment() {
         if (e.patient_id) {
             const foundUser = fetchedUsers.current?.find(i => i.id === e?.patient_id);
             formRef.current?.setFieldsValue({
-                first: foundUser?.first,
-                last: foundUser?.last,
-                phone_country_code: foundUser?.phone_country_code,
-                phone_number: foundUser?.phone_number,
-                email: foundUser?.email,
-                country_id: foundUser?.country_id,
-                dob: dayjs(foundUser.dob),
-                gender: foundUser?.gender,
-                nationality_number: foundUser?.nationality_number,
-                status: foundUser?.status,
-                bio: foundUser?.bio
+                patient:{
+                    first: foundUser?.first,
+                    last: foundUser?.last,
+                    phone_country_code: foundUser?.phone_country_code,
+                    phone_number: foundUser?.phone_number,
+                    email: foundUser?.email,
+                    country_id: foundUser?.country_id,
+                    dob: dayjs(foundUser.dob),
+                    gender: foundUser?.gender,
+                    nationality_number: foundUser?.nationality_number,
+                    status: foundUser?.status,
+                    bio: foundUser?.bio
+                }
+
 
 
             })
@@ -239,7 +242,7 @@ function Appointment() {
                                 <div className="gutter-row">
                                     <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                                inputType={'resourceSelect'}
-                                               rules={[{required: true}]}
+                                               //rules={[{required: true}]}
                                                resourceParams={{test: 1}}
                                                searchConfigs={{minLength: 4}}
                                                initialValue={null}
@@ -269,17 +272,19 @@ function Appointment() {
                                         <div>
                                             <Row>
                                                 <Col lg={6} className="gutter-row">
-                                                    <FormInput label={t('Country Code')} name={'phone_country_code'}
+                                                    <FormInput label={t('Country Code')} name={['patient','phone_country_code']}
                                                                inputType={'resourceSelect'}
                                                                rules={[{required: true}]}
-                                                               initialValue={formRef.current.getFieldValue('phone_country_code')}
+                                                               initialValue={formRef.current.getFieldValue(['patient','phone_country_code'])}
                                                                handleMapItems={handleMapItems}
                                                                disabled={data?.patient_id}
                                                                resource={'Country'}/>
                                                 </Col>
                                                 <Col lg={18} className="gutter-row">
                                                     <FormInput label={t('Phone number')}
-                                                               inputDisabled={data?.patient_id} name={'phone_number'}
+                                                               inputDisabled={data?.patient_id}
+                                                               name={['patient','phone_number']}
+
 
                                                                rules={[{required: true}]}/>
                                                 </Col>
@@ -287,38 +292,38 @@ function Appointment() {
                                             <Row>
                                                 <Col lg={12} className="gutter-row">
                                                     <FormInput label={t('First Name')} inputDisabled={data?.patient_id}
-                                                               name={'first'}
+                                                               name={['patient','first']}
 
                                                                rules={[{required: true}]}/>
                                                     <FormInput label={t('Last Name')} inputDisabled={data?.patient_id}
-                                                               name={'last'}
+                                                               name={['patient','last']}
 
                                                                rules={[{required: true}]}/>
                                                     <FormInput label={t('Email')} inputDisabled={data?.patient_id}
-                                                               name={'email'}
+                                                               name={['patient','email']}
 
                                                                rules={[{required: true}]}/>
                                                     <FormInput label={'Password'} inputDisabled={data?.patient_id}
-                                                               name={'password'} initialValue={''}
+                                                               name={['patient','password']} initialValue={''}
                                                                rules={[{required: !data?.patient_id}]}/>
 
                                                     <FormInput label={'Password Confirmation'}
                                                                inputDisabled={data?.patient_id} initialValue={''}
-                                                               name={'password_confirmation'}
+                                                               name={['patient','password_confirmation']}
                                                                rules={[{required: !data?.patient_id}]}/>
 
-                                                    <FormInput label={t('Country')} name={'country_id'}
+                                                    <FormInput label={t('Country')} name={['patient','country_id']}
                                                                inputType={'resourceSelect'}
-                                                               initialValue={formRef.current.getFieldValue('country_id')}
+                                                               initialValue={formRef.current.getFieldValue(['patient','country_id'])}
                                                                rules={[{required: !data?.patient_id}]}
                                                                disabled={data?.patient_id}
                                                                resource={'Country'}/>
                                                 </Col>
                                                 <Col lg={12} className="gutter-row">
 
-                                                    <FormInput label={t('Date of Birth')} name={'dob'}
+                                                    <FormInput label={t('Date of Birth')} name={['patient','dob']}
                                                                inputDisabled={data?.patient_id}
-                                                               initialValue={formRef.current.getFieldValue('dob')}
+                                                               initialValue={formRef.current.getFieldValue(['patient','dob'])}
                                                                inputType={'date'} rules={[
                                                         {required: !data?.patient_id},
                                                         // {
@@ -330,26 +335,26 @@ function Appointment() {
                                                         //     }
                                                         // }
                                                     ]}/>
-                                                    <FormInput label={t('Gender')} name={'gender'}
+                                                    <FormInput label={t('Gender')} name={['patient','gender']}
                                                                disabled={data?.patient_id}
                                                                inputType={'resourceSelect'}
-                                                               initialValue={formRef.current.getFieldValue('gender')}
+                                                               initialValue={formRef.current.getFieldValue(['patient','gender'])}
                                                                initialData={Resources?.Gender}
                                                                rules={[{required: !data?.patient_id}]}/>
 
                                                     <FormInput label={t('Nationality Number')}
                                                                inputDisabled={data?.patient_id}
-                                                               name={["nationality_number"]}
+                                                               name={['patient',"nationality_number"]}
                                                                rules={[{required: !data?.patient_id}]}/>
 
                                                     <FormInput label={t('Status')} disabled={data?.patient_id}
-                                                               name={'status'} inputType={'resourceSelect'}
+                                                               name={['patient','status']} inputType={'resourceSelect'}
                                                                rules={[{required: !data?.patient_id}]}
-                                                               initialValue={formRef.current.getFieldValue('status')}
+                                                               initialValue={formRef.current.getFieldValue(['patient','status'])}
                                                                initialData={Resources.Status}
                                                     />
                                                     <FormInput label={t('Bio')} inputDisabled={data?.patient_id}
-                                                               name={'bio'} inputType={'textArea'}
+                                                               name={['patient','bio']} inputType={'textArea'}
                                                     />
                                                 </Col>
                                             </Row>

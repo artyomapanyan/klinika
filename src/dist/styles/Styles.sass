@@ -437,20 +437,19 @@ body
 .Clinic_tab_conteiner
   display: flex
   flex-direction: row
-  justify-content: space-between
+  padding-left: 52px
 
-  margin: 20px
-  padding-top: 10px
+
 
   .tab_item_container
     cursor: pointer
-    padding-left: 25px
     padding-right: 25px
     display: flex
     flex-direction: column
-    justify-content: center
     align-items: center
-    width: 100%
+    padding-left: 40px
+
+
 
     &.tab_active
       .clinic_tab_below
@@ -461,18 +460,14 @@ body
         border-color: #ce4e99
 
     .clinic_tab_item
-      display: flex
-      flex-direction: row
-      justify-content: center
-      align-items: center
-      border: 1px solid #FFFFFF
+      border: 2px solid #FFFFFF
       border-radius: 8px 8px 0 0
       border-top: none
       border-right: none
       border-left: none
-      width: 100%
-      font-style: normal
-      font-weight: 600
+
+      font-family: Inter
+      font-weight: 400
       padding: 7px
       font-size: 18px
       line-height: 22px

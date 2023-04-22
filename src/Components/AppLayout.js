@@ -226,7 +226,7 @@ function AppLayout(){
             url:'clinics',
             resource:'Clinic',
             singleComp:<Clinic/>,
-            indexComp:<Clinics/>,
+            indexComp:<OwnerClinics/>,
             showComp:<ShowClinic/>
         },
         {
@@ -277,12 +277,7 @@ function AppLayout(){
             //singleComp:<Report/>,
             indexComp:<Reports/>
         },
-        {
-            url:'owner-clinics',
-            resource:'OwnerClinic',
-            //singleComp:<Report/>,
-            indexComp:<OwnerClinics/>
-        },
+
 
 
 
@@ -318,6 +313,7 @@ function AppLayout(){
 
                         )}
 
+                    <Route path={'owner-clinics'} element={<OwnerClinics />}/>
                     <Route path={'Reports/new'} element={<Report />}/>
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'clinics-owner'} element={<ClinicsOwner />}/>

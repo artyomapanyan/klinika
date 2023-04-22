@@ -24,7 +24,9 @@ function ResourceTable({resource, tableColumns,
                            eyeShow=false,
                            customActions,
                            buttonAdd = true,
-                            customTableButton
+                           showHeader=true,
+                            customTableButton,
+
                        }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
@@ -195,6 +197,7 @@ function ResourceTable({resource, tableColumns,
                         pageSize: data.pagination.pageSize,
                         showSizeChanger:true
                     }}
+                    showHeader={showHeader}
                     onChange={handleTableChange}
                     dataSource={data?.items}
                     rowKey={e => e.id}
