@@ -78,14 +78,15 @@ function MyMapComponent({data,formRef}) {
 
             <Row gutter={[20]}>
                 <Col lg={6}>
-                    <FormInput label={t('Area')} name={'areas'} inputType={'resourceSelect'}
+                    <FormInput label={t('Area')} name={'area'} inputType={'resourceSelect'}
                                initialValue={data?.location?.region?.country?.id}
+                               initialData={data?.location?.region?.country?[data?.location?.region?.country]:[]}
                                resource={'Country'} />
                 </Col>
                 <Col lg={6}>
-                    <FormInput label={t('City')} name={'citys'} inputType={'resourceSelect'}
-                               initialValue={data?.citys?.map(e=>e.id)}
-                               initialData={data?.citys??[]}
+                    <FormInput label={t('City')} name={'city'} inputType={'resourceSelect'}
+                               initialValue={data?.location?.city?.id}
+                               initialData={data?.location?.city?[data?.location?.city]:[]}
                                resource={'City'} />
                 </Col>
                 <Col lg={12}>
