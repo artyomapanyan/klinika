@@ -43,7 +43,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
     useEffect(()=>{
 
         Promise.all([
-            postResource('Clinic','single',token,params.id),
             postResource('InsuranceCompany','list',token,'',{
                 per_page: 5000
             })
