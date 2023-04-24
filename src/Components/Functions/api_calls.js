@@ -95,21 +95,26 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
 
     return {loadingState,dataState, addData}
 }
-export const useGetResourceSingle = (resource,id,additionals={},filterResponse = null)=>{
+export const useGetResourceSingle = (resource,id,additionals={},filterResponse = null,lang=axios.defaults.headers.common['Accept-Language'])=>{
     const [loading, setLoading] = useState(true)
     const [data,setData] = useState({})
     const [addData,setAddData] = useState({})
+
     let token = useSelector((state) => state.auth.token);
+
     useEffect(()=>{
         setLoading(true)
+        const headers = {
+            'Authorization': token,
+           'common':{'Accept-Language':lang}
+        };
         let dataResources  =Object.keys(additionals);
         Promise.all([
             id?axios.request({
                 url:api[resource].single.url+id,
                 method:api[resource].single.method,
-                headers: {
-                    'Authorization': token,
-                }
+                headers: headers
+
             }):{},
             ...dataResources.map(resourceKey=>axios.request({
                 url:api[resourceKey].list.url,
@@ -142,7 +147,7 @@ export const useGetResourceSingle = (resource,id,additionals={},filterResponse =
             })
         })
 
-    }, [resource,id,token])
+    }, [resource,id,token,lang])
 
     const loadingState = {
         loading,

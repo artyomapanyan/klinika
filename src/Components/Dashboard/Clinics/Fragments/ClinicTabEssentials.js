@@ -15,6 +15,8 @@ import React from "react";
 import MyMapComponent from "./MapComponent";
 import {Autocomplete} from "@react-google-maps/api";
 import CancelComponent from "../../../Fragments/CancelComponent";
+import ClinicImages from "./Essentials/ClinicImages";
+import ClinicGallery from "./Essentials/ClinicGallery";
 const CheckboxGroup = Checkbox.Group;
 
 
@@ -25,7 +27,7 @@ const resource = 'Clinic';
 
 
 
-function ClinicTabEssentials({loadingState, dataState}) {
+function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -169,6 +171,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         setCheckAll(e.target.checked);
     };
 
+
     return(
         <div >
             {/*{data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}*/}
@@ -181,16 +184,16 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 <div className={'clinic_line'} >
                 </div>
                 <div style={{margin:'44px 90px'}}>
-                    <Row >
+                    <Row gap={[10,10]} >
                         <Col lg={10}>
                             <div>
                                 <div className={'clinic_ess_info_div'}>
                                     <div className={'Clinic_essentials_info_text'}>Main information</div>
                                     <div>Language</div>
                                     <div>
-                                        <Radio.Group size={'large'} defaultValue="year"  className={'radio_grup_clinic_lng'}>
-                                            <Radio.Button value="year">{t("Arabic")}</Radio.Button>
-                                            <Radio.Button value="half">{t("English")}</Radio.Button>
+                                        <Radio.Group size={'large'} value={lang}  className={'radio_grup_clinic_lng'} onChange={handleLangChange}>
+                                            <Radio.Button value="ar">{t("Arabic")}</Radio.Button>
+                                            <Radio.Button value="en">{t("English")}</Radio.Button>
                                         </Radio.Group>
                                     </div>
                                 </div>
@@ -201,6 +204,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
 
                         </Col>
                         <Col lg={14}>
+                            <ClinicImages formRef={formRef}/>
 
                         </Col>
                     </Row>
@@ -267,6 +271,9 @@ function ClinicTabEssentials({loadingState, dataState}) {
 
                     <div style={{marginTop: 50}}>
                         <MyMapComponent formRef={formRef} data={data}/>
+                    </div>
+                    <div>
+                        <ClinicGallery/>
                     </div>
                 </div>
 

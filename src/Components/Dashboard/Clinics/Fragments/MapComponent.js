@@ -8,7 +8,7 @@ import FormInput from "../../../Fragments/FormInput";
 function MyMapComponent({data,formRef}) {
     const googleRef = useRef();
     const [autocomplete, setAutocomplete] = useState()
-    const [initialPosition,setInitialPosition] = useState({ lat: +data.latitude, lng: +data.longitude })
+    const [initialPosition,setInitialPosition] = useState({ lat: +data?.location?.latitude, lng: +data?.location?.longitude })
     const [marker,setMarker] = useState()
     const [map,setMap] = useState()
 
