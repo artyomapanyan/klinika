@@ -84,6 +84,7 @@ function MyMapComponent({data,formRef}) {
                                resource={'Country'} />
                 </Col>
                 <Col lg={6}>
+
                     <FormInput label={t('City')} name={'city'} inputType={'resourceSelect'}
                                initialValue={data?.location?.city?.id}
                                initialData={data?.location?.city?[data?.location?.city]:[]}

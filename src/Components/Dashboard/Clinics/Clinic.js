@@ -16,6 +16,7 @@ import {Button} from "antd";
 import Arrow_back_black from "../../../dist/icons/Arrow_back_black.png";
 import {MoreOutlined} from "@ant-design/icons";
 import resourceLinks from "../../ResourceLinks";
+import Preloader from "../../Preloader";
 
 
 const resource = "Clinic"
@@ -27,6 +28,7 @@ function Clinic() {
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
 
+    const  {loading,setLoading} = loadingState
 
     useEffect(()=>{
         setTab(searchParams.get('tab')??'essentials')
@@ -52,7 +54,7 @@ const handleChange = (e)=>{
 
             </div>
 
-                <ClinicTabBars onChange={handleChange} activeKey={tab}>
+            {loading?<Preloader/>:<ClinicTabBars onChange={handleChange} activeKey={tab}>
                     <items key={'essentials'} tab={'Essentials'} >
                         <ClinicTabEssentials loadingState={loadingState} dataState={dataState}/>
                     </items>
@@ -74,7 +76,7 @@ const handleChange = (e)=>{
                     {dataState.data.has_nursing_service && <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing/>
                     </items>}
-                </ClinicTabBars>
+                </ClinicTabBars>}
           </div>
     )
 }

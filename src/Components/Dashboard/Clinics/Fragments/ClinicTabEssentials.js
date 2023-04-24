@@ -32,8 +32,11 @@ function ClinicTabEssentials({loadingState, dataState}) {
 
     let token = useSelector((state) => state.auth.token);
     const {data, setData} = dataState;
-    const {loading, setLoading} = loadingState
+
     const [saveLoading, setSaveLoading] = useState(false)
+    const [loading, setLoading] = useState({
+        insurance:true
+    })
     const [changeValuesState, setChangeValuesState] = useState({})
     const [insuranceCompany, setInsuranceCompany] = useState([])
 
@@ -47,10 +50,11 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 per_page: 5000
             })
         ]).then(responses=>{
-            setLoading(true)
+            setLoading({
+            })
             setInsuranceCompany(responses[0].items.map((el)=> ({ label:el.name,value:el.id})))
 
-            setLoading(false)
+
         })
     }, [])
 
@@ -168,7 +172,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
     return(
         <div >
             {/*{data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}*/}
-            {loading ? <Preloader/> : <Form
+          <Form
                 onValuesChange={handleValuesChange}
                 onFinish={onFinish}
                 layout="vertical"
@@ -248,13 +252,13 @@ function ClinicTabEssentials({loadingState, dataState}) {
                         <div>
                             Insurance companies
                         </div>
-                        <div className={'checkbox-groups'}>
+                        {loading?.insurance?<Preloader/>: <div className={'checkbox-groups'}>
                             <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
                                 Check all
                             </Checkbox>
                             <CheckboxGroup  value={checkedList} options={insuranceCompany} onChange={onChange} />
 
-                        </div>
+                        </div>}
 
 
                     </div>
@@ -270,7 +274,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                     <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
                 </Space>
-            </Form>}
+            </Form>
         </div>
     )
 }
