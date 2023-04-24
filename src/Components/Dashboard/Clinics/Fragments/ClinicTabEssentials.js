@@ -35,7 +35,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
-    const [plainOptions, setInsuranceCompany] = useState([])
+    const [insuranceCompany, setInsuranceCompany] = useState([])
 
 
 
@@ -48,7 +48,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
             })
         ]).then(responses=>{
             setLoading(true)
-            setInsuranceCompany(responses[1].items.map((el)=> {return el.name}))
+            setInsuranceCompany(responses[0].items.map((el)=> ({ label:el.name,value:el.id})))
 
             setLoading(false)
         })
@@ -156,11 +156,11 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const [checkAll, setCheckAll] = useState(false);
     const onChange = (list) => {
         setCheckedList(list);
-        setIndeterminate(!!list.length && list.length < plainOptions.length);
-        setCheckAll(list.length === plainOptions.length);
+        setIndeterminate(!!list.length && list.length < insuranceCompany.length);
+        setCheckAll(list.length === insuranceCompany.length);
     };
     const onCheckAllChange = (e) => {
-        setCheckedList(e.target.checked ? plainOptions : []);
+        setCheckedList(e.target.checked ? insuranceCompany : []);
         setIndeterminate(false);
         setCheckAll(e.target.checked);
     };
@@ -254,7 +254,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                             </Checkbox>
                             <CheckboxGroup style={{
                                 width: '100%',
-                            }}  value={checkedList} onChange={onChange} >
+                            }}  value={checkedList} options={insuranceCompany} onChange={onChange} >
 
                             </CheckboxGroup>
                         </div>
