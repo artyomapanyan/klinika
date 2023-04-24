@@ -74,36 +74,42 @@ function MyMapComponent({data,formRef}) {
             //language={this.props.state.Intl.locale}
             libraries={['places']}
         >
-        <Row gutter={[16, 16]}>
+        <div>
 
-            <Col lg={14} className="gutter-row">
-                {/*<FormInput label={t('Area')} name={'areas'} inputType={'resourceSelect'}*/}
-                {/*           initialValue={data?.areas?.map(e=>e.id)}*/}
-                {/*           initialData={data?.areas??[]}*/}
-                {/*           resource={'Country'} />*/}
-                {/*<FormInput label={t('City')} name={'citys'} inputType={'resourceSelect'}*/}
-                {/*           initialValue={data?.citys?.map(e=>e.id)}*/}
-                {/*           initialData={data?.citys??[]}*/}
-                {/*           resource={'City'} />*/}
-                <Form.Item label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} >
-                    <Input style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>
-                </Form.Item>
-                <Form.Item label={t('Longitude')}  name={'longitude'} initialValue={data?.longitude}>
-                    <Input style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>
-                </Form.Item>
-                <Autocomplete
-                    onLoad={onLoad}
-                    onPlaceChanged={onPlaceChanged}
-                >
-                    <Form.Item name={'address'} label={'Address'}>
-                        <Input  style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}} />
-                    </Form.Item>
-                </Autocomplete>
-            </Col>
-            <Col lg={10} className="gutter-row">
+            <Row gutter={[20]}>
+                <Col lg={6}>
+                    <FormInput label={t('Area')} name={'areas'} inputType={'resourceSelect'}
+                               initialValue={data?.areas?.map(e=>e.id)}
+                               initialData={data?.areas??[]}
+                               resource={'Country'} />
+                </Col>
+                <Col lg={6}>
+                    <FormInput label={t('City')} name={'citys'} inputType={'resourceSelect'}
+                               initialValue={data?.citys?.map(e=>e.id)}
+                               initialData={data?.citys??[]}
+                               resource={'City'} />
+                </Col>
+                <Col lg={12}>
+                    <Autocomplete
+                        onLoad={onLoad}
+                        onPlaceChanged={onPlaceChanged}
+                    >
+                        <Form.Item name={'address'}>
+                            <Input  style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}} />
+                        </Form.Item>
+                    </Autocomplete>
+                </Col>
 
 
+                {/*<Form.Item label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} >*/}
+                {/*    <Input style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>*/}
+                {/*</Form.Item>*/}
+                {/*<Form.Item label={t('Longitude')}  name={'longitude'} initialValue={data?.longitude}>*/}
+                {/*    <Input style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>*/}
+                {/*</Form.Item>*/}
 
+            </Row>
+            <div>
                     <GoogleMap
                         ref={googleRef}
                         id="position-map"
@@ -128,8 +134,8 @@ function MyMapComponent({data,formRef}) {
                         />
                     </GoogleMap>
 
-            </Col>
-        </Row>
+            </div>
+        </div>
         </LoadScript>
     )
 

@@ -1,10 +1,10 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {useRef, useState} from "react";
-import {createResource, updateResource} from "../../../Functions/api_calls";
+import {useEffect, useRef, useState} from "react";
+import {createResource, postResource, updateResource} from "../../../Functions/api_calls";
 import resourceLinks from "../../../ResourceLinks";
-import {AutoComplete, Button, Col, Form, Input, Popconfirm, Radio, Row, Space, Switch} from "antd";
+import {AutoComplete, Button, Checkbox, Col, Form, Input, Popconfirm, Radio, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -15,6 +15,7 @@ import React from "react";
 import MyMapComponent from "./MapComponent";
 import {Autocomplete} from "@react-google-maps/api";
 import CancelComponent from "../../../Fragments/CancelComponent";
+const CheckboxGroup = Checkbox.Group;
 
 
 
@@ -34,6 +35,25 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [plainOptions, setInsuranceCompany] = useState([])
+
+
+
+
+    useEffect(()=>{
+
+        Promise.all([
+            postResource('Clinic','single',token,params.id),
+            postResource('InsuranceCompany','list',token,'',{
+                per_page: 5000
+            })
+        ]).then(responses=>{
+            setLoading(true)
+            setInsuranceCompany(responses[1].items.map((el)=> {return el.name}))
+
+            setLoading(false)
+        })
+    }, [])
 
     const onFinish = (values) => {
 
@@ -48,40 +68,40 @@ function ClinicTabEssentials({loadingState, dataState}) {
         values.has_physical_therapy_home_visit_service = values.has_physical_therapy_home_visit_service === true
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
-        if(values.has_clinic_visit_service) {
-            values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
-            values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
-            values.service_settings.clinic_visit.enable_vat_calculation = values.service_settings.clinic_visit.enable_vat_calculation === true
-        }
-        if(values.has_home_visit_service){
-            values.service_settings.home_visit.has_insurance_company = values.service_settings.home_visit.has_insurance_company === true
-            values.service_settings.home_visit.enable_vat_calculation = values.service_settings.home_visit.enable_vat_calculation === true
-        }
-
-        if(values.has_laboratory_clinic_visit_service) {
-            values.service_settings.laboratory_clinic_visit.has_insurance_company = values.service_settings.laboratory_clinic_visit.has_insurance_company === true
-            values.service_settings.laboratory_clinic_visit.enable_vat_calculation = values.service_settings.laboratory_clinic_visit.enable_vat_calculation === true
-        }
-        if(values.has_laboratory_home_visit_service) {
-            values.service_settings.laboratory_home_visit.has_insurance_company = values.service_settings.laboratory_home_visit.has_insurance_company === true
-            values.service_settings.laboratory_home_visit.enable_vat_calculation = values.service_settings.laboratory_home_visit.enable_vat_calculation === true
-        }
-        if(values.has_nursing_service) {
-            values.service_settings.nursing.has_insurance_company = values.service_settings.nursing.has_insurance_company === true
-            values.service_settings.nursing.enable_vat_calculation = values.service_settings.nursing.enable_vat_calculation === true
-        }
-        if(values.has_physical_therapy_clinic_visit_service) {
-            values.service_settings.physical_therapy_clinic_visit.has_insurance_company = values.service_settings.physical_therapy_clinic_visit.has_insurance_company === true
-            values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation = values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation === true
-        }
-        if(values.has_physical_therapy_home_visit_service) {
-            values.service_settings.physical_therapy_home_visit.has_insurance_company = values.service_settings.physical_therapy_home_visit.has_insurance_company === true
-            values.service_settings.physical_therapy_home_visit.enable_vat_calculation = values.service_settings.physical_therapy_home_visit.enable_vat_calculation === true
-        }
-        if(values.has_telehealth_service) {
-            values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
-            values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
-        }
+        // if(values.has_clinic_visit_service) {
+        //     values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
+        //     values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
+        //     values.service_settings.clinic_visit.enable_vat_calculation = values.service_settings.clinic_visit.enable_vat_calculation === true
+        // }
+        // if(values.has_home_visit_service){
+        //     values.service_settings.home_visit.has_insurance_company = values.service_settings.home_visit.has_insurance_company === true
+        //     values.service_settings.home_visit.enable_vat_calculation = values.service_settings.home_visit.enable_vat_calculation === true
+        // }
+        //
+        // if(values.has_laboratory_clinic_visit_service) {
+        //     values.service_settings.laboratory_clinic_visit.has_insurance_company = values.service_settings.laboratory_clinic_visit.has_insurance_company === true
+        //     values.service_settings.laboratory_clinic_visit.enable_vat_calculation = values.service_settings.laboratory_clinic_visit.enable_vat_calculation === true
+        // }
+        // if(values.has_laboratory_home_visit_service) {
+        //     values.service_settings.laboratory_home_visit.has_insurance_company = values.service_settings.laboratory_home_visit.has_insurance_company === true
+        //     values.service_settings.laboratory_home_visit.enable_vat_calculation = values.service_settings.laboratory_home_visit.enable_vat_calculation === true
+        // }
+        // if(values.has_nursing_service) {
+        //     values.service_settings.nursing.has_insurance_company = values.service_settings.nursing.has_insurance_company === true
+        //     values.service_settings.nursing.enable_vat_calculation = values.service_settings.nursing.enable_vat_calculation === true
+        // }
+        // if(values.has_physical_therapy_clinic_visit_service) {
+        //     values.service_settings.physical_therapy_clinic_visit.has_insurance_company = values.service_settings.physical_therapy_clinic_visit.has_insurance_company === true
+        //     values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation = values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation === true
+        // }
+        // if(values.has_physical_therapy_home_visit_service) {
+        //     values.service_settings.physical_therapy_home_visit.has_insurance_company = values.service_settings.physical_therapy_home_visit.has_insurance_company === true
+        //     values.service_settings.physical_therapy_home_visit.enable_vat_calculation = values.service_settings.physical_therapy_home_visit.enable_vat_calculation === true
+        // }
+        // if(values.has_telehealth_service) {
+        //     values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
+        //     values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
+        // }
 
 
         setData((prevState)=>({
@@ -130,6 +150,22 @@ function ClinicTabEssentials({loadingState, dataState}) {
     }
 
 
+
+    const defaultCheckedList = [];
+    const [checkedList, setCheckedList] = useState(defaultCheckedList);
+    const [indeterminate, setIndeterminate] = useState(true);
+    const [checkAll, setCheckAll] = useState(false);
+    const onChange = (list) => {
+        setCheckedList(list);
+        setIndeterminate(!!list.length && list.length < plainOptions.length);
+        setCheckAll(list.length === plainOptions.length);
+    };
+    const onCheckAllChange = (e) => {
+        setCheckedList(e.target.checked ? plainOptions : []);
+        setIndeterminate(false);
+        setCheckAll(e.target.checked);
+    };
+
     return(
         <div >
             {/*{data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}*/}
@@ -166,421 +202,488 @@ function ClinicTabEssentials({loadingState, dataState}) {
                         </Col>
                     </Row>
                     <div className={'clinic_line'}></div>
-                    <div className={'add_edit_content'}>
-                        <Row>
-                            <Col lg={12} className="gutter-row">
-                                <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
-                                <div style={{display:"flex"}}>
-                                    <div style={{width:'35%'}}>
-                                        <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
-                                                   rules={[{required: true}]}
-                                                   initialValue={data?.phone_country_code}
-                                                   handleMapItems={handleMapItems}
-                                                   resource={'Country'}/>
-                                    </div>
-                                    <div style={{width:'100%', marginLeft:10}}>
-                                        <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
-                                    </div>
+
+
+                    <div>
+                    <div className={'general_info_text'}>General</div>
+                    <Row gutter={[60]}>
+                        <Col lg={14}>
+                            <div className={'general_inputs'}>
+                                <div style={{width: '100%'}}>
+                                    <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
                                 </div>
-                                <FormInput label={t('License Number')} name={'license_number'} initialValue={data?.license_number} rules={[{required: true}]} />
-                                <FormInput label={t('License number expired at')} name={'license_number_expired_at'} initialValue={data?.license_number_expired_at} inputType={'date'} rules={[{required: true}]} />
-                                <FormInput label={t('Website')} name={'website'} initialValue={data?.website} />
+                                <div  style={{width: '100%'}}>
+                                    <FormInput label={t('Website')} name={'website'} initialValue={data?.website} />
+                                </div>
 
-                            </Col>
-                            <Col lg={12} className="gutter-row">
 
-                                <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                                           rules={[{required: true}]}
-                                           initialValue={data?.status}
-                                           initialData={Resources.Status}
-                                />
-                                <FormInput label={t('Owner')} name={'owner_id'} inputType={'resourceSelect'}
-                                           rules={[{required: true}]}
-                                           initialValue={data?.owner?.id}
-                                           initialData={data?.owner ? [data.owner]:[]}
-                                           resource={'User'}/>
+                            </div>
+                            <div className={'language_div'}>
                                 <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                            rules={[{required: true}]}
                                            initialValue={data?.languages?.map(e=>e.id)}
                                            initialData={data?.languages??[]}
                                            resource={'Country'}
                                 />
-                                <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}
-                                           rules={[{required: true}]}
-                                           initialValue={data?.insurance_companies?.map(e=>e.id)}
-                                           initialData={data?.insurance_companies??[]}
-                                           resource={'InsuranceCompany'}
-                                           resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
-                                />
+                            </div>
 
-                            </Col>
+                        </Col>
+                        <Col lg={10}>
+                            <div className={'general_inputs'}>
+                                <div style={{width:'100%'}}>
+                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={data?.phone_country_code}
+                                               handleMapItems={handleMapItems}
+                                               resource={'Country'}/>
+                                </div>
+                                <div style={{width:'100%'}}>
+                                    <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                                </div>
+                            </div>
+                        </Col>
+
+
+                    </Row>
+
+                        <div>
+                            Insurance companies
+                        </div>
+                        <div>
+                            <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+                                Check all
+                            </Checkbox>
+                            <CheckboxGroup style={{
+                                width: '100%',
+                            }}  value={checkedList} onChange={onChange} >
+
+                            </CheckboxGroup>
+                        </div>
+                        {/*<FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}*/}
+                        {/*           rules={[{required: true}]}*/}
+                        {/*           initialValue={data?.insurance_companies?.map(e=>e.id)}*/}
+                        {/*           initialData={data?.insurance_companies??[]}*/}
+                        {/*           resource={'InsuranceCompany'}*/}
+                        {/*           resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}*/}
+                        {/*/>*/}
+
+
+                        <Row>
+                            {/*<Col lg={12} className="gutter-row">*/}
+                            {/*    <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />*/}
+                            {/*    <div style={{display:"flex"}}>*/}
+                            {/*        <div style={{width:'35%'}}>*/}
+                            {/*            <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}*/}
+                            {/*                       rules={[{required: true}]}*/}
+                            {/*                       initialValue={data?.phone_country_code}*/}
+                            {/*                       handleMapItems={handleMapItems}*/}
+                            {/*                       resource={'Country'}/>*/}
+                            {/*        </div>*/}
+                            {/*        <div style={{width:'100%', marginLeft:10}}>*/}
+                            {/*            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*    <FormInput label={t('License Number')} name={'license_number'} initialValue={data?.license_number} rules={[{required: true}]} />*/}
+                            {/*    <FormInput label={t('License number expired at')} name={'license_number_expired_at'} initialValue={data?.license_number_expired_at} inputType={'date'} rules={[{required: true}]} />*/}
+                            {/*    <FormInput label={t('Website')} name={'website'} initialValue={data?.website} />*/}
+
+                            {/*</Col>*/}
+                            {/*<Col lg={12} className="gutter-row">*/}
+
+                            {/*    <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}*/}
+                            {/*               rules={[{required: true}]}*/}
+                            {/*               initialValue={data?.status}*/}
+                            {/*               initialData={Resources.Status}*/}
+                            {/*    />*/}
+                            {/*    <FormInput label={t('Owner')} name={'owner_id'} inputType={'resourceSelect'}*/}
+                            {/*               rules={[{required: true}]}*/}
+                            {/*               initialValue={data?.owner?.id}*/}
+                            {/*               initialData={data?.owner ? [data.owner]:[]}*/}
+                            {/*               resource={'User'}/>*/}
+                            {/*    <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}*/}
+                            {/*               rules={[{required: true}]}*/}
+                            {/*               initialValue={data?.languages?.map(e=>e.id)}*/}
+                            {/*               initialData={data?.languages??[]}*/}
+                            {/*               resource={'Country'}*/}
+                            {/*    />*/}
+                            {/*    <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}*/}
+                            {/*               rules={[{required: true}]}*/}
+                            {/*               initialValue={data?.insurance_companies?.map(e=>e.id)}*/}
+                            {/*               initialData={data?.insurance_companies??[]}*/}
+                            {/*               resource={'InsuranceCompany'}*/}
+                            {/*               resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}*/}
+                            {/*    />*/}
+
+                            {/*</Col>*/}
                         </Row>
                     </div>
-                    <div className={'add_edit_content'}>
 
+                    <div className={'clinic_line'}></div>
 
+                    <div style={{marginTop: 50}}>
                         <MyMapComponent formRef={formRef} data={data}/>
-
-
                     </div>
 
-                    <div className={'add_edit_content'}>
-                        <Row gutter={[16, 16]}>
-                            <Col lg={12} className="gutter-row">
-                                <Form.Item
-                                    label={t(`Clinic Visit`)}
-                                    name="has_clinic_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_clinic_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
-                                {
-                                    data?.has_clinic_visit_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","clinic_visit","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.clinic_visit?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*<div className={'add_edit_content'}>*/}
+                    {/*    <Row gutter={[16, 16]}>*/}
+                    {/*        <Col lg={12} className="gutter-row">*/}
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Clinic Visit`)}*/}
+                    {/*                name="has_clinic_visit_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_clinic_visit_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_clinic_visit_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","clinic_visit","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.clinic_visit?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","clinic_visit","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.clinic_visit?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
-                                        <div style={{width:200}}>
-                                            <FormInput  label={t('Duration')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>
-                                        </div>
-                                    </div> : <div></div>
-                                }
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","clinic_visit","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.clinic_visit?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div style={{width:200}}>*/}
+                    {/*                        <FormInput  label={t('Duration')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>*/}
+                    {/*                    </div>*/}
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
 
-                                <Form.Item
-                                    label={t(`Telehealth`)}
-                                    name="has_telehealth_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_telehealth_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} title={'dsad'} />
-                                </Form.Item>
-                                {
-                                    data?.has_telehealth_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","telehealth","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.telehealth?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Telehealth`)}*/}
+                    {/*                name="has_telehealth_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_telehealth_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} title={'dsad'} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_telehealth_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","telehealth","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.telehealth?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","telehealth","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.telehealth?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
-                                        <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
-                                            <FormInput  label={t('Duration')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>
-                                        </div>
-                                    </div> : <div></div>
-                                }
-                                <Form.Item
-                                    label={t(`Home Visit`)}
-                                    name="has_home_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_home_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
-                                {
-                                    data?.has_home_visit_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","home_visit","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.home_visit?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","telehealth","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.telehealth?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div style={{width:200}}>*/}
+                    {/*                        <FormInput  label={t('Service Fee')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>*/}
+                    {/*                        <FormInput  label={t('Duration')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>*/}
+                    {/*                    </div>*/}
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Home Visit`)}*/}
+                    {/*                name="has_home_visit_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_home_visit_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_home_visit_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","home_visit","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.home_visit?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","home_visit","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.home_visit?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
-                                        <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
-                                            <FormInput  label={t('Duration')} name={["service_settings","home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.duration}/>
-                                        </div>
-                                    </div> : <div></div>
-                                }
-                                <Form.Item
-                                    label={t(`Laboratory Home Visit`)}
-                                    name="has_laboratory_home_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_laboratory_home_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
-                                {
-                                    data?.has_laboratory_home_visit_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","laboratory_home_visit","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.laboratory_home_visit?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","home_visit","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.home_visit?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div style={{width:200}}>*/}
+                    {/*                        <FormInput  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>*/}
+                    {/*                        <FormInput  label={t('Duration')} name={["service_settings","home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.duration}/>*/}
+                    {/*                    </div>*/}
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Laboratory Home Visit`)}*/}
+                    {/*                name="has_laboratory_home_visit_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_laboratory_home_visit_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_laboratory_home_visit_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","laboratory_home_visit","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.laboratory_home_visit?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","laboratory_home_visit","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.laboratory_home_visit?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
-                                        <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
-                                        </div>
-                                    </div> : <div></div>
-                                }
-                            </Col>
-                            <Col lg={12} className="gutter-row">
-                                <Form.Item
-                                    label={t(`Laboratory Clinic Visit`)}
-                                    name="has_laboratory_clinic_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_laboratory_clinic_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
-                                {
-                                    data?.has_laboratory_clinic_visit_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","laboratory_clinic_visit","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.laboratory_clinic_visit?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","laboratory_home_visit","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.laboratory_home_visit?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div style={{width:200}}>*/}
+                    {/*                        <FormInput  label={t('Service Fee')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>*/}
+                    {/*                    </div>*/}
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
+                    {/*        </Col>*/}
+                    {/*        <Col lg={12} className="gutter-row">*/}
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Laboratory Clinic Visit`)}*/}
+                    {/*                name="has_laboratory_clinic_visit_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_laboratory_clinic_visit_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_laboratory_clinic_visit_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","laboratory_clinic_visit","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.laboratory_clinic_visit?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","laboratory_clinic_visit","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.laboratory_clinic_visit?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","laboratory_clinic_visit","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.laboratory_clinic_visit?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
 
-                                    </div> : <div></div>
-                                }
-                                <Form.Item
-                                    label={t(`Nursing`)}
-                                    name="has_nursing_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_nursing_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
-                                {
-                                    data?.has_nursing_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","nursing","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.nursing?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Nursing`)}*/}
+                    {/*                name="has_nursing_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_nursing_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_nursing_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","nursing","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.nursing?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","nursing","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.nursing?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
-                                        <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
-                                        </div>
-                                    </div> : <div></div>
-                                }
-                                <Form.Item
-                                    label={t(`Physical Therapy Home Visit`)}
-                                    name="has_physical_therapy_home_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_physical_therapy_home_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
-                                {
-                                    data?.has_physical_therapy_home_visit_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","physical_therapy_home_visit","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.physical_therapy_home_visit?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","nursing","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.nursing?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div style={{width:200}}>*/}
+                    {/*                        <FormInput  label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>*/}
+                    {/*                    </div>*/}
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Physical Therapy Home Visit`)}*/}
+                    {/*                name="has_physical_therapy_home_visit_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_physical_therapy_home_visit_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_physical_therapy_home_visit_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","physical_therapy_home_visit","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.physical_therapy_home_visit?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","physical_therapy_home_visit","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.physical_therapy_home_visit?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
-                                        <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
-                                            <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.duration}/>
-                                        </div>
-                                    </div> : <div></div>
-                                }
-                                <Form.Item
-                                    label={t(`Physical Therapy Clinic Visit`)}
-                                    name="has_physical_therapy_clinic_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_physical_therapy_clinic_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
-                                {
-                                    data?.has_physical_therapy_clinic_visit_service ? <div style={{marginLeft:60}}>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Allows insurance companies`)}
-                                                name={["service_settings","physical_therapy_clinic_visit","has_insurance_company"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.physical_therapy_clinic_visit?.has_insurance_company}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","physical_therapy_home_visit","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.physical_therapy_home_visit?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div style={{width:200}}>*/}
+                    {/*                        <FormInput  label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>*/}
+                    {/*                        <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.duration}/>*/}
+                    {/*                    </div>*/}
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
+                    {/*            <Form.Item*/}
+                    {/*                label={t(`Physical Therapy Clinic Visit`)}*/}
+                    {/*                name="has_physical_therapy_clinic_visit_service"*/}
+                    {/*                className={'right-label'}*/}
+                    {/*                style={{fontSize:20, fontWeight:600}}*/}
+                    {/*                valuePropName="checked"*/}
+                    {/*                initialValue={data?.has_physical_therapy_clinic_visit_service}*/}
+                    {/*            >*/}
+                    {/*                <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*            </Form.Item>*/}
+                    {/*            {*/}
+                    {/*                data?.has_physical_therapy_clinic_visit_service ? <div style={{marginLeft:60}}>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Allows insurance companies`)}*/}
+                    {/*                            name={["service_settings","physical_therapy_clinic_visit","has_insurance_company"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.physical_therapy_clinic_visit?.has_insurance_company}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
 
-                                        </div>
-                                        <div>
-                                            <Form.Item
-                                                label={t(`Enable vat calculation`)}
-                                                name={["service_settings","physical_therapy_clinic_visit","enable_vat_calculation"]}
-                                                className={'right-label'}
-                                                valuePropName="checked"
-                                                initialValue={data?.service_settings?.physical_therapy_clinic_visit?.enable_vat_calculation}
-                                            >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                            </Form.Item>
-                                        </div>
-                                        <div style={{width:200}}>
-                                            <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>
-                                        </div>
-                                    </div> : <div></div>
-                                }
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className={'add_edit_content'}>
-                        <Row gutter={[16, 16]}>
-                            <Col lg={12} className="gutter-row">
-                                <FileManager text1={'Logo'}
-                                             text2={'Download the file'}
-                                             name={'logo'}
-                                             uploadIcon={<InboxOutlined/>}
-                                             initialFileList={[data?.logo]} limit={1} formRef={formRef} type={'drag'}/>
-                            </Col>
-                            <Col lg={12} className="gutter-row">
-                                <FileManager text1={'Cover Pic'}
-                                             text2={'Download the file'}
-                                             name={'cover'}
-                                             uploadIcon={<InboxOutlined/>}
-                                             initialFileList={[data?.cover]} limit={1} formRef={formRef} type={'drag'}/>
-                            </Col>
-                        </Row>
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <Form.Item*/}
+                    {/*                            label={t(`Enable vat calculation`)}*/}
+                    {/*                            name={["service_settings","physical_therapy_clinic_visit","enable_vat_calculation"]}*/}
+                    {/*                            className={'right-label'}*/}
+                    {/*                            valuePropName="checked"*/}
+                    {/*                            initialValue={data?.service_settings?.physical_therapy_clinic_visit?.enable_vat_calculation}*/}
+                    {/*                        >*/}
+                    {/*                            <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />*/}
+                    {/*                        </Form.Item>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div style={{width:200}}>*/}
+                    {/*                        <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>*/}
+                    {/*                    </div>*/}
+                    {/*                </div> : <div></div>*/}
+                    {/*            }*/}
+                    {/*        </Col>*/}
+                    {/*    </Row>*/}
+                    {/*</div>*/}
 
 
-                        <FileManager text1={'Gallery'}
-                                     text2={'Download files'}
-                                     name={'gallery'}
-                                     uploadIcon={<InboxOutlined/>}
-                                     initialFileList={[data?.gallery]} limit={5} formRef={formRef} type={'drag'}/>
+
+                    {/*<div className={'add_edit_content'}>*/}
+                    {/*    <Row gutter={[16, 16]}>*/}
+                    {/*        <Col lg={12} className="gutter-row">*/}
+                    {/*            <FileManager text1={'Logo'}*/}
+                    {/*                         text2={'Download the file'}*/}
+                    {/*                         name={'logo'}*/}
+                    {/*                         uploadIcon={<InboxOutlined/>}*/}
+                    {/*                         initialFileList={[data?.logo]} limit={1} formRef={formRef} type={'drag'}/>*/}
+                    {/*        </Col>*/}
+                    {/*        <Col lg={12} className="gutter-row">*/}
+                    {/*            <FileManager text1={'Cover Pic'}*/}
+                    {/*                         text2={'Download the file'}*/}
+                    {/*                         name={'cover'}*/}
+                    {/*                         uploadIcon={<InboxOutlined/>}*/}
+                    {/*                         initialFileList={[data?.cover]} limit={1} formRef={formRef} type={'drag'}/>*/}
+                    {/*        </Col>*/}
+                    {/*    </Row>*/}
 
 
-                    </div>
+                    {/*    <FileManager text1={'Gallery'}*/}
+                    {/*                 text2={'Download files'}*/}
+                    {/*                 name={'gallery'}*/}
+                    {/*                 uploadIcon={<InboxOutlined/>}*/}
+                    {/*                 initialFileList={[data?.gallery]} limit={5} formRef={formRef} type={'drag'}/>*/}
+
+
+                    {/*</div>*/}
                 </div>
 
                 <Space className={'create_apdate_btns'}>

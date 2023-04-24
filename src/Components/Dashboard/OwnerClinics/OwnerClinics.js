@@ -57,25 +57,25 @@ function OwnerClinics({resourceLink=null,}) {
                         }
                     },
                     {
-                        title: t('Clinic'),
-                        dataIndex: 'Clinic',
-                        key: 'Clinic',
+                        title: t('HCPs'),
+                        dataIndex: 'HCPs',
+                        key: 'HCPs',
                         render:()=>{
                             return<div className={'icon_text_div'}><img alt={'HCPs_icon'} src={HCPs_icon}/> <span className={'owner_clinic_table_texts'}>HCPs: 12</span></div>
                         }
                     },
                     {
-                        title: t('Clinic'),
-                        dataIndex: 'Clinic',
-                        key: 'Clinic',
+                        title: t('Nurses'),
+                        dataIndex: 'Nurses',
+                        key: 'Nurses',
                         render:()=>{
                             return<div className={'icon_text_div'}><img alt={'Nurses_icon'} src={Nurses_icon}/> <span className={'owner_clinic_table_texts'}>Nurses: 4</span></div>
                         }
                     },
                     {
-                        title: t('Clinic'),
-                        dataIndex: 'Clinic',
-                        key: 'Clinic',
+                        title: t('Other'),
+                        dataIndex: 'Other',
+                        key: 'Other',
                         render:()=>{
                             return<div className={'icon_text_div'}><img alt={'Other_icon'} src={Other_icon}/> <span className={'owner_clinic_table_texts'}>Other: 2</span></div>
                         }
