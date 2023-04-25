@@ -1,4 +1,3 @@
-
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useEffect, useRef, useState} from "react";
@@ -17,17 +16,14 @@ import {Autocomplete} from "@react-google-maps/api";
 import CancelComponent from "../../../Fragments/CancelComponent";
 import ClinicImages from "./Essentials/ClinicImages";
 import ClinicGallery from "./Essentials/ClinicGallery";
+
 const CheckboxGroup = Checkbox.Group;
-
-
-
 
 
 const resource = 'Clinic';
 
 
-
-function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
+function ClinicTabEssentials({loadingState, dataState, handleLangChange, lang}) {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -37,24 +33,21 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
 
     const [saveLoading, setSaveLoading] = useState(false)
     const [loading, setLoading] = useState({
-        insurance:true
+        insurance: true
     })
     const [changeValuesState, setChangeValuesState] = useState({})
     const [insuranceCompany, setInsuranceCompany] = useState([])
 
 
-
-
-    useEffect(()=>{
+    useEffect(() => {
 
         Promise.all([
-            postResource('InsuranceCompany','list',token,'',{
+            postResource('InsuranceCompany', 'list', token, '', {
                 per_page: 5000
             })
-        ]).then(responses=>{
-            setLoading({
-            })
-            setInsuranceCompany(responses[0].items.map((el)=> ({ label:el.name,value:el.id})))
+        ]).then(responses => {
+            setLoading({})
+            setInsuranceCompany(responses[0].items.map((el) => ({label: el.name, value: el.id})))
 
 
         })
@@ -109,7 +102,7 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
         // }
 
 
-        setData((prevState)=>({
+        setData((prevState) => ({
             ...prevState,
             ...values
         }))
@@ -117,7 +110,7 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
-                if(response?.id){
+                if (response?.id) {
                     navigate(resourceLinks[resource])
                 }
             }).finally(() => {
@@ -134,8 +127,8 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
         }
     }
 
-    const handleValuesChange = (e)=>{
-        setData((prevState)=>({
+    const handleValuesChange = (e) => {
+        setData((prevState) => ({
             ...prevState,
             ...e
         }))
@@ -148,12 +141,11 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
     //         })
     //
     // },[])
-    const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) `:null
+    const handleMapItems = (item, name) => {
+        name = item.phone_code ? `(${item.phone_code}) ` : null
         item.id = item.phone_code
-        return [name,item]
+        return [name, item]
     }
-
 
 
     const defaultCheckedList = [];
@@ -172,33 +164,36 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
     };
 
 
-    return(
-        <div >
+    return (
+        <div>
             {/*{data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}*/}
-          <Form
+            <Form
                 onValuesChange={handleValuesChange}
                 onFinish={onFinish}
                 layout="vertical"
                 ref={formRef}
             >
-                <div className={'clinic_line'} >
+                <div className={'clinic_line'}>
                 </div>
-                <div style={{margin:'44px 90px'}}>
-                    <Row gap={[10,10]} >
+                <div style={{margin: '44px 90px'}}>
+                    <Row gap={[10, 10]}>
                         <Col lg={10}>
                             <div>
                                 <div className={'clinic_ess_info_div'}>
                                     <div className={'Clinic_essentials_info_text'}>Main information</div>
                                     <div>Language</div>
                                     <div>
-                                        <Radio.Group size={'large'} value={lang}  className={'radio_grup_clinic_lng'} onChange={handleLangChange}>
+                                        <Radio.Group size={'large'} value={lang} className={'radio_grup_clinic_lng'}
+                                                     onChange={handleLangChange}>
                                             <Radio.Button value="ar">{t("Arabic")}</Radio.Button>
                                             <Radio.Button value="en">{t("English")}</Radio.Button>
                                         </Radio.Group>
                                     </div>
                                 </div>
-                                <FormInput label={t('Clinic Name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
-                                <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                                <FormInput label={t('Clinic Name')} name={'name'} initialValue={data?.name}
+                                           rules={[{required: true}]}/>
+                                <FormInput label={t('Description')} name={'description'} inputType={'textArea'}
+                                           initialValue={data?.description}/>
                             </div>
 
 
@@ -212,55 +207,59 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
 
 
                     <div>
-                    <div className={'general_info_text'}>General</div>
-                    <Row gutter={[60]}>
-                        <Col lg={14}>
-                            <div className={'general_inputs'}>
-                                <div style={{width: '100%'}}>
-                                    <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                        <div className={'general_info_text'}>General</div>
+                        <Row gutter={[60]}>
+                            <Col lg={14}>
+                                <div className={'general_inputs'}>
+                                    <div style={{width: '100%'}}>
+                                        <FormInput label={t('Email')} name={'email'} initialValue={data?.email}
+                                                   rules={[{required: true}]}/>
+                                    </div>
+                                    <div style={{width: '100%'}}>
+                                        <FormInput label={t('Website')} name={'website'} initialValue={data?.website}/>
+                                    </div>
+
+
                                 </div>
-                                <div  style={{width: '100%'}}>
-                                    <FormInput label={t('Website')} name={'website'} initialValue={data?.website} />
-                                </div>
-
-
-                            </div>
-                            <div className={'language_div'}>
-                                <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
-                                           rules={[{required: true}]}
-                                           initialValue={data?.languages?.map(e=>e.id)}
-                                           initialData={data?.languages??[]}
-                                           resource={'Country'}
-                                />
-                            </div>
-
-                        </Col>
-                        <Col lg={10}>
-                            <div className={'general_inputs'}>
-                                <div style={{width:'100%'}}>
-                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                <div className={'language_div'}>
+                                    <FormInput inputProps={{mode: 'multiple'}} label={t('languages')} name={'languages'}
+                                               inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={data?.phone_country_code}
-                                               handleMapItems={handleMapItems}
-                                               resource={'Country'}/>
+                                               initialValue={data?.languages?.map(e => e.id)}
+                                               initialData={data?.languages ?? []}
+                                               resource={'Country'}
+                                    />
                                 </div>
-                                <div style={{width:'100%'}}>
-                                    <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+
+                            </Col>
+                            <Col lg={10}>
+                                <div className={'general_inputs'}>
+                                    <div style={{width: '100%'}}>
+                                        <FormInput label={t('Country Code  ')} name={'phone_country_code'}
+                                                   inputType={'resourceSelect'}
+                                                   rules={[{required: true}]}
+                                                   initialValue={data?.phone_country_code}
+                                                   handleMapItems={handleMapItems}
+                                                   resource={'Country'}/>
+                                    </div>
+                                    <div style={{width: '100%'}}>
+                                        <FormInput label={t('Phone number')} name={'phone_number'}
+                                                   initialValue={data?.phone_number}/>
+                                    </div>
                                 </div>
-                            </div>
-                        </Col>
+                            </Col>
 
 
-                    </Row>
+                        </Row>
 
                         <div>
                             Insurance companies
                         </div>
-                        {loading?.insurance?<Preloader/>: <div className={'checkbox-groups'}>
+                        {loading?.insurance ? <Preloader/> : <div className={'checkbox-groups'}>
                             <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
                                 Check all
                             </Checkbox>
-                            <CheckboxGroup  value={checkedList} options={insuranceCompany} onChange={onChange} />
+                            <CheckboxGroup value={checkedList} options={insuranceCompany} onChange={onChange}/>
 
                         </div>}
 
@@ -285,4 +284,5 @@ function ClinicTabEssentials({loadingState, dataState,handleLangChange,lang}) {
         </div>
     )
 }
+
 export default ClinicTabEssentials;
