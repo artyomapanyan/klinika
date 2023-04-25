@@ -218,12 +218,12 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 },
             ]
         },
-        {
-            key: 'clinics',
-            icon: <img alt={'Clinic_icon'} src={Clinic_icon}/>,
-            label: `Clinics`,
-
-        },
+        // {
+        //     key: 'clinics',
+        //     icon: <img alt={'Clinic_icon'} src={Clinic_icon}/>,
+        //     label: `Clinics`,
+        //
+        // },
 
 
         {

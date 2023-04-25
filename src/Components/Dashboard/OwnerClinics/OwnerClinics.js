@@ -45,10 +45,10 @@ function OwnerClinics({resourceLink=null,}) {
                             setRecord(record)
                             return <div style={{cursor:"pointer"}} onClick={(record)=>onResourceEdit(record)} className={'avatar_div'}>
                                 <Space >
-                                    <Avatar shape="square" size={90} className={'owner_clinic_avatar'} style={{width: 120}} icon={<UserOutlined />} />
+                                    <Avatar src={<img src={record?.cover?.url} alt="avatar" />}  hape="square" size={90} className={'owner_clinic_avatar'} style={{width: 120}} icon={<UserOutlined />} />
                                     <div style={{display:"block"}}>
                                         <div className={'text_name_clinic'}>{record?.name}</div>
-                                        <div className={'text_address'}>Ar Rihab, Diriyah 13717, Saudi Arabia</div>
+                                        <div className={'text_address'}>{record?.location?.address1}</div>
                                     </div>
 
                                 </Space>
@@ -60,7 +60,8 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('HCPs'),
                         dataIndex: 'HCPs',
                         key: 'HCPs',
-                        render:()=>{
+                        render:(e, record)=>{
+                            console.log(record)
                             return<div className={'icon_text_div'}><img alt={'HCPs_icon'} src={HCPs_icon}/> <span className={'owner_clinic_table_texts'}>HCPs: 12</span></div>
                         }
                     },
@@ -68,31 +69,31 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('Nurses'),
                         dataIndex: 'Nurses',
                         key: 'Nurses',
-                        render:()=>{
-                            return<div className={'icon_text_div'}><img alt={'Nurses_icon'} src={Nurses_icon}/> <span className={'owner_clinic_table_texts'}>Nurses: 4</span></div>
+                        render:(e, record)=>{
+                            return<div className={'icon_text_div'}><img alt={'Nurses_icon'} src={Nurses_icon}/> <span className={'owner_clinic_table_texts'}>Doctors: {record?.doctors_count}</span></div>
                         }
                     },
                     {
                         title: t('Other'),
                         dataIndex: 'Other',
                         key: 'Other',
-                        render:()=>{
-                            return<div className={'icon_text_div'}><img alt={'Other_icon'} src={Other_icon}/> <span className={'owner_clinic_table_texts'}>Other: 2</span></div>
+                        render:(e, record)=>{
+                            return<div className={'icon_text_div'}><img alt={'Other_icon'} src={Other_icon}/> <span className={'owner_clinic_table_texts'}>Other: 0</span></div>
                         }
                     },
                     {
                         title: t('Date'),
                         dataIndex: 'Date',
                         key: 'Date',
-                        render:()=>{
-                            return<div className={'icon_text_div'}> <img alt={'Offers_icon'} src={Offers_icon}/> <span className={'owner_clinic_table_texts'}>Offers: 11</span></div>
+                        render:(e, record)=>{
+                            return<div className={'icon_text_div'}> <img alt={'Offers_icon'} src={Offers_icon}/> <span className={'owner_clinic_table_texts'}>Offers: {record?.offers_count}</span></div>
                         }
                     },
                     {
                         title: t('Status'),
                         dataIndex: 'Status',
                         key: 'Status',
-                        render:()=>{
+                        render:(e, record)=>{
                             return<div className={'icon_text_div'}><img alt={'Active_icon'} src={Active_icon}/> <span style={{color:'#4FB873'}} className={'owner_clinic_table_texts'}>Active</span></div>
                         }
                     },

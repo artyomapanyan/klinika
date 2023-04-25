@@ -38,7 +38,7 @@ function Clinics() {
                 {
                     dataIndex:['status'],
                     title:t('Status'),
-                    key:'category',
+                    key:'status',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
                     render:(e,record)=><ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },

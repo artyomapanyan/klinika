@@ -305,6 +305,20 @@ let api = {
         resource: 'ApproveClinicDoctor',
 
     },
+    {
+        url: 'dashboard/doctor',
+        resource: 'DoctorReworked',
+        custom: {
+            MonthlyAppointments: {
+                url: `${endpoint}${version}/dashboard/doctor/monthly-appointments/`,
+                method: 'GET',
+            },
+            TelehealeAppointment: {
+                url: `${endpoint}${version}/dashboard/doctor/appointment-telehealths/`,
+                method: 'GET',
+            },
+        },
+    },
 
     ].forEach(item => {
         if (!item.type) {

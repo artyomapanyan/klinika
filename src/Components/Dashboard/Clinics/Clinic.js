@@ -1,3 +1,5 @@
+
+
 import React, {useEffect, useState} from "react";
 import ClinicTabEssentials from "./Fragments/ClinicTabEssentials";
 import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
@@ -79,15 +81,14 @@ function Clinic() {
                     <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit/>
                     </items>}
-                {dataState.data.has_laboratory_clinic_visit_service || dataState.data.has_laboratory_home_visit_service ?
                     <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
-                        <Laboratory/>
-                    </items> : null}
-                {dataState.data.has_nursing_service && <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
-                    <Nursing/>
-                </items>}
-            </ClinicTabBars>}
-        </div>
+                        <Laboratory />
+                    </items>
+                    {dataState.data.has_nursing_service && <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
+                        <Nursing/>
+                    </items>}
+                </ClinicTabBars>}
+          </div>
     )
 }
 

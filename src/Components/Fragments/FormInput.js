@@ -25,7 +25,9 @@ function FormInput({
                        handleMapItems,
                        maxLength,
                        min,
-                       max
+                       max,
+                       className,
+                       onChange
 
                    }) {
     if (inputType === 'date') {
@@ -74,7 +76,7 @@ function FormInput({
                 return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps}
                                    inputDisabled={inputDisabled} type={'textArea'}/>
             case 'number':
-                return <CInput maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
+                return <CInput className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
                                inputProps={inputProps} type={'number'} min={min} max={max}/>
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
@@ -103,7 +105,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
+                return <CInput onChange={onChange} className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
                                inputProps={inputProps}/>
         }
     }
