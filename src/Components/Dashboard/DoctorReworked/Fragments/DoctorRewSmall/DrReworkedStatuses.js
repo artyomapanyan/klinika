@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from "react";
-import {Chart,registerables} from "chart.js";
-import {Space, Spin} from "antd";
-import {postResource} from "../../Functions/api_calls";
-import dayjs from "dayjs";
 import {useSelector} from "react-redux";
+import {postResource} from "../../../../Functions/api_calls";
+import dayjs from "dayjs";
+import {Chart, registerables} from "chart.js";
+import {Space, Spin} from "antd";
 
-function StatusesChart() {
+function DrReworkedStatuses() {
     let canvasRef = useRef();
     const token = useSelector((state) => state.auth.token);
     const [data,setData] = useState({});
@@ -19,7 +19,7 @@ function StatusesChart() {
 
     useEffect(()=>{
         setLoading(true)
-        postResource('ClinicManager','Statuses', token,  '',{
+        postResource('DoctorReworked','AppointmentStatuses', token,  '',{
             month:ownerClinics.month_key,
             year:dayjs().format('YYYY')
         } ).then((response) => {
@@ -57,7 +57,7 @@ function StatusesChart() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: ["#BF539E", "#774D9D", "#6DAF56", "#FFD850"],
+                            backgroundColor: ["#6DAF56","#BF539E", "#87828E",  "#FFD850"],
                             weight: 0.5,
                             data: Object.values(response.appointments),
                             spacing: 0,
@@ -102,4 +102,4 @@ function StatusesChart() {
 
     )
 }
-export default StatusesChart;
+export default DrReworkedStatuses;

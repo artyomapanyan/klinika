@@ -317,6 +317,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/doctor/appointment-telehealths/`,
                 method: 'GET',
             },
+            AppointmentStatuses: {
+                url: `${endpoint}${version}/dashboard/doctor/appointment-statuses/`,
+                method: 'GET',
+            },
         },
     },
 

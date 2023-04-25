@@ -12,6 +12,7 @@ import AppointmentStats from "../../Fragments/Charts/AppointmentStats";
 import MonthStatistics from "../../Fragments/Charts/MonthStatistics";
 import DoctorRewProgress from "./Fragments/DoctorRewSmall/DoctorRewProgress";
 import TelehealtCount from "./Fragments/DoctorRewSmall/TelehealtCount";
+import DrReworkedStatuses from "./Fragments/DoctorRewSmall/DrReworkedStatuses";
 
 
 
@@ -48,6 +49,7 @@ function DoctorReworked() {
                     <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             {/*<StatusesChart data={statusesData}/>*/}
+                            <DrReworkedStatuses />
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>
