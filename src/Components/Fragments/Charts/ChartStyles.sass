@@ -437,18 +437,19 @@
   flex-direction: column
   align-items: center
   justify-content: center
-
-.week_date_div:hover
-  cursor: pointer
-  width: 45px
-  border-radius: 12px
-  background-color: #d381b9
-  margin: 3px
-  display: flex
-  flex-direction: column
-  align-items: center
-  justify-content: center
-  border: 1px solid #FFFFFF77
+  &:hover
+    cursor: pointer
+    width: 45px
+    border-radius: 12px
+    background-color: #d381b9
+    margin: 3px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    border: 1px solid #FFFFFF77
+  &.selected
+    background: red !important
 .big_date_div
   display: flex
   margin: -5px 5px
@@ -466,6 +467,7 @@
   font-family: Inter
 
 .next_btn
+  height: 79px
   width: 35px
   border-radius: 12px
   background-color: #d381b982
