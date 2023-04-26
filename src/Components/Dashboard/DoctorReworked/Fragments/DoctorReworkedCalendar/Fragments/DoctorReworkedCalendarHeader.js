@@ -13,18 +13,18 @@ function DoctorReworkedCalendarHeader() {
         setOpen(false);
     };
 
-    let data = ['Jeddah Clinic', 'Clinic name', 'Total']
+    let data = ['New', 'Confirmed', 'Cancelled', 'Rescheduled']
     return(
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:30}}>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", }}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
-                {t("Incomes")}
-                {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
+                {t("Appointments")}
+                {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-colorCalendar-${key}`}>{itemKey}</Space>)}
             </Space>
             <div>
                 <Space>
                     <Button type={'primary'} onClick={showDrawer}>+ Add entry</Button>
                 </Space>
-                <Drawer title="Add Appointment" placement="right" onClose={onClose} open={open}>
+                <Drawer width={405} title="Add Appointment" placement="right" onClose={onClose} open={open}>
                     <DoctorReworkedCalendarDrawer />
                 </Drawer>
             </div>

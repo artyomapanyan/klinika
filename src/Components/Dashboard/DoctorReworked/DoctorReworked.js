@@ -13,6 +13,7 @@ import MonthStatistics from "../../Fragments/Charts/MonthStatistics";
 import DoctorRewProgress from "./Fragments/DoctorRewSmall/DoctorRewProgress";
 import TelehealtCount from "./Fragments/DoctorRewSmall/TelehealtCount";
 import DrReworkedStatuses from "./Fragments/DoctorRewSmall/DrReworkedStatuses";
+import PatientSetisfactionChart from "./Fragments/DoctorRewSmall/PatientSetisfactionChart";
 
 
 
@@ -44,6 +45,7 @@ function DoctorReworked() {
                     <Col lg={6} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             {/*<CounterPurpleChart data={purpleData} />*/}
+                            <PatientSetisfactionChart />
                         </div>
                     </Col>
                     <Col lg={6} md={12} sm={24} xs={24}>

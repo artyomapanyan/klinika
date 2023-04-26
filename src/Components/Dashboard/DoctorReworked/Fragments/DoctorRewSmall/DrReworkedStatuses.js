@@ -28,7 +28,7 @@ function DrReworkedStatuses() {
                     response.appointments[k] = 0
                 }
             })
-            console.log(response, 'rrrrrrrrr')
+            console.log(Object.values(response.appointments), 'rrrrrrrrr')
 
             setData(response.appointments??{})
 
@@ -59,7 +59,8 @@ function DrReworkedStatuses() {
                         {
                             backgroundColor: ["#6DAF56","#BF539E", "#87828E",  "#FFD850"],
                             weight: 0.5,
-                            data: Object.values(response.appointments),
+                            data: [1,1,3,5],
+                                //Object.values(response.appointments),
                             spacing: 0,
                             borderWidth: 0,
                         },
@@ -84,17 +85,17 @@ function DrReworkedStatuses() {
 
     return(
         <Spin spinning={loading}>
-            <Space style={{display:"flex", alignItems:"center"}}>
+            <Space className={'round_charts_big_div'}>
                 <div  style={{height:92,width:92}}>
                     <canvas ref={canvasRef}></canvas>
                 </div>
-                <Space></Space>
+
                 <Space direction={'vertical'}>
-                    <div className={'chart_counter_bold_text'}>
+                    <div style={{marginLeft: 15}} className={'chart_counter_bold_text'}>
                         Statuses
                     </div>
                     <div>
-                        {Object.keys(data).map((key)=>data[key] || data[key]==0?<Space  key={key} className={`withDot WD-color-${key}`}>{text[key]}{data[key]}</Space>:null)}
+                        {Object.keys(data).map((key)=>data[key] || data[key]==0?<Space  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></Space>:null)}
                     </div>
                 </Space>
             </Space>

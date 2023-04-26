@@ -1,54 +1,64 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import 'devextreme/dist/css/dx.light.css';
 import Scheduler, {Resource} from 'devextreme-react/scheduler';
 import DoctorReworkedCalendarHeader from "./Fragments/DoctorReworkedCalendarHeader";
+import CalendarDataCell from "./Fragments/CalendarDataCell";
+import {postResource} from "../../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import dayjs from "dayjs";
+import Preloader from "../../../../Preloader";
 
 
 
 function DoctorReworkedCalendar() {
+    let token = useSelector((state) => state.auth.token);
 
-    const appointments = [
+    const [date, setDate] = useState({
+        from: dayjs().add(-12, 'month').format('YYYY-MM-DD'),
+        to: dayjs().format('YYYY-MM-DD'),
+    })
 
-     {
-        text: 'Website Re-Design Plan',
-        startDate: new Date(2019, 4, 22, 9, 30),
-        endDate: new Date(2019, 4, 22, 11, 30),
-        roomId: [1],
-    }, {
-        text: 'Book Flights to San Fran for Sales Trip',
-        startDate: new Date(2019, 4, 22, 12, 0),
-        endDate: new Date(2019, 4, 22, 13, 0),
-            roomId: [2],
-    }, {
-        text: 'Install New Router in Dev Room',
-        startDate: new Date(2019, 4, 23, 10, 30),
-        endDate: new Date(2019, 4, 23, 11, 30),
-            roomId: [3],
-    },
-    {
-         text: 'Website Re-Design Plan',
-         startDate: new Date(2019, 4, 23, 11, 30),
-         endDate: new Date(2019, 4, 23, 13, 30),
-        roomId: [1],
-    },
-    {
-         text: 'Book Flights to San Fran for Sales Trip',
-         startDate: new Date(2019, 4, 24, 10, 0),
-         endDate: new Date(2019, 4, 24, 11, 30),
-        roomId: [4],
-    },
-    {
-         text: 'Install New Router in Dev Room',
-         startDate: new Date(2019, 4, 24, 14, 30),
-         endDate: new Date(2019, 4, 24, 15, 30),
-        roomId: [5],
-    },
-  ];
+    const [loading, setLoading] = useState(false);
+    const [appointments, setAppointments] = useState([]);
+
+
+
+
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
+            console.log(response,'res')
+            let data = Object.values(response.calendar).flat().map(e=>({
+                text: 'Website Re-Design Planfffffffffffffffffff',
+                startDate: new Date(e.booked_at.iso_string),
+                endDate: new Date(e.booked_to.iso_string),
+                roomId: [1],
+
+                ...e
+            }));
+            setAppointments(data)
+            setLoading(false)
+        })
+    }, [])
+
+
+
+  //   const a = [
+  //    {
+  //      text: 'Website Re-Design Plan',
+  //      startDate: new Date('2022-06-22T12:30:00+04:00'),
+  //      endDate: new Date('2022-06-22T13:30:00+04:00'),
+  //       roomId: [1],
+  //   },
+  // ];
+
+
     const resourcesData = [
         {
             text: 'Room 101',
             id: 1,
-            color: '#774D9D',
+            color: '#43285d',
         }, {
             text: 'Room 102',
             id: 2,
@@ -74,36 +84,42 @@ function DoctorReworkedCalendar() {
     return(
         <div className={'dr_reworked_not'}>
             <DoctorReworkedCalendarHeader />
-            <div>
-                <Scheduler
-                    dataSource={appointments}
-                    height={500}
-                    defaultCurrentDate={new Date(2019, 4, 22)}
-                    startDayHour={9}
-                    endDayHour={19}
-                    views={
-                        [{
-                            type: 'day',
-                            name: '3 Days',
-                            intervalCount: 3,
-                        }, 'week']
-                    }
-                    editing={{
-                        allowAdding: true,
-                        allowDeleting: true,
-                        allowUpdating: true,
-                        allowResizing: true,
-                        allowDragging: true,
-                    }}
-                    showAllDayPanel={false}
 
-                >
-                    <Resource
-                        dataSource={resourcesData}
-                        fieldExpr="roomId"
-                        label="Room"
-                    />
-                </Scheduler>
+            <div className={'dr_reworked_calendar_div'}>
+                {
+                    loading ? <Preloader /> : <Scheduler
+                        dataSource={appointments}
+                        height={500}
+                        defaultCurrentDate={new Date()}
+
+                        appointmentRender={(e)=> <CalendarDataCell data={e}/>}
+                        views={
+                            [{
+                                type: 'day',
+                                name: '3 Days',
+                                intervalCount: 3,
+                            }, 'week']
+                        }
+                        editing={{
+                            allowAdding: false,
+                            allowDeleting: false,
+                            allowUpdating: false,
+                            allowResizing: false,
+                            allowDragging: false,
+                            allowTimeZoneEditing: false,
+                        }}
+                        onAppointmentClick={(e)=> e.cancel = true}
+                        onAppointmentDblClick={(e)=> e.cancel = true}
+                        onCellClick={(e)=> e.cancel = true}
+                        onAppointmentTooltipShowing={(e)=> e.cancel = true}
+                        onAppointmentFormOpening={e=>e.cancel=true}
+                        showAllDayPanel={false}
+
+                    >
+
+                    </Scheduler>
+                }
+
 
                 </div>
 

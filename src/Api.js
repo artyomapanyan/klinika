@@ -321,8 +321,13 @@ let api = {
                 url: `${endpoint}${version}/dashboard/doctor/appointment-statuses/`,
                 method: 'GET',
             },
+            DoctorCalendar: {
+                url: `${endpoint}${version}/dashboard/doctor/calendar/`,
+                method: 'GET',
+            },
         },
     },
+
 
     ].forEach(item => {
         if (!item.type) {
