@@ -4,7 +4,7 @@ import {Button} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse";
 
-function ClicicManagerCalendarCollapse({item,clinicID}) {
+function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
     const [btnCollapsed, setBtnCollapsed] = useState(false);
 
     const openCollapse = () => {
@@ -32,7 +32,7 @@ function ClicicManagerCalendarCollapse({item,clinicID}) {
                 </td>)}
             </tr>
             {
-                btnCollapsed ? Object.values(item?.doctors??{}).map(doctor=><ClinicManagerCalendarInnCollapse clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
+                btnCollapsed ? Object.values(item?.doctors??{}).map(doctor=><ClinicManagerCalendarInnCollapse setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
             }
         </>
 

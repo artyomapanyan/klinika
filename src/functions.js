@@ -15,6 +15,50 @@ export function clearObject(obj){
         }
     })
 }
+export function getServiceTypes(services){
+    return [
+        {
+            service: services?.has_telehealth_service,
+            id: 'telehealth',
+            name: "Telehealth",
+        },
+        {
+            service: services?.has_clinic_visit_service,
+            id: 'clinic_visit',
+            name: 'Clinic Visit',
+        },
+        {
+            service: services?.has_home_visit_service,
+            id: 'home_visit',
+            name: 'Home Visit',
+        },
+        {
+            service: services?.has_physical_therapy_home_visit_service,
+            id: 'physical_therapy_home_visit',
+            name: 'Physical Therapy Home Visit',
+        },
+        {
+            service: services?.has_physical_therapy_clinic_visit_service,
+            id: 'physical_therapy_clinic_visit',
+            name: 'Physical Therapy Clinic Visit',
+        },
+        {
+            service: services?.has_laboratory_home_visit_service,
+            id: 'laboratory_home_visit',
+            name: 'Laboratory Home Visit'
+        },
+        {
+            service: services?.has_nursing_service,
+            id: 'nursing',
+            name: 'Nursing'
+        },
+        {
+            service: services?.has_laboratory_clinic_visit_service,
+            id: 'laboratory_clinic_visit',
+            name: 'Laboratory Clinic Visit'
+        }
+    ].filter(el => el.service === true)
+}
 export function GMBK(key){
     return Resources.Months.find(e=>e.key==key)?.label??dayjs().format('MMM')
 

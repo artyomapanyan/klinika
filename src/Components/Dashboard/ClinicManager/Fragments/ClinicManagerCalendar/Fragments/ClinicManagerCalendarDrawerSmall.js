@@ -3,6 +3,7 @@ import {Avatar, Button, Form, Space, Tag} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
+import {Resources} from "devextreme-react/gantt";
 
 
 function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment}) {
@@ -58,6 +59,10 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                             <FormInput label={t('Phone number')} name={'phone_number'}/>
                         </div>
                     </div>
+                    <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
+                               initialData={Resources?.Gender}
+                    />
+                    <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
                     <div>
                         <Button style={{width: '100%'}} size={'large'} type={'primary'}
                                 htmlType="submit">{t("Save")}</Button>

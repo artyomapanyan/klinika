@@ -11,8 +11,9 @@ import {useSelector} from "react-redux";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
 import Preloader from "../../../../../Preloader";
+import {getServiceTypes} from "../../../../../../functions";
 
-function CalendarInnCollapseModal({docItem, specialty, selectedDate, clinicID, speciality_id}) {
+function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate}) {
 
     const {doctor} = docItem;
     const [open, setOpen] = useState(false);
@@ -24,21 +25,23 @@ function CalendarInnCollapseModal({docItem, specialty, selectedDate, clinicID, s
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     useEffect(() => {
-        setLoading(true)
-        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
-            service: 'clinic_visit',
-            date: selectedDate
-        }).then(response => {
-            setLoading(false)
-            setTimes(response.flat())
-        })
-    }, [selectedDate, docItem])
+
+        if(data.service_type){
+            setLoading(true)
+            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
+                service: data.service_type,
+                date: selectedDate
+            }).then(response => {
+                setLoading(false)
+                setTimes(response.flat())
+            })
+        }
+
+    }, [selectedDate, docItem,data.service_type])
     const openDrawer = () => {
         formRef.current.validateFields(['hour']).then(e => {
-
             setOpen(true);
             setSize('default');
-
         })
 
 
@@ -58,16 +61,25 @@ function CalendarInnCollapseModal({docItem, specialty, selectedDate, clinicID, s
     }
     const handleCreateAppointment = (values, additional) => {
         setFinishLoading(true)
+
         postResource('Appointment', 'create', token, '', {
             ...values,
             ...(additional ?? {}),
             ...data,
             speciality_id,
+            clinic_id: clinicID,
             doctor_id: doctor.id,
-            date: dayjs(selectedDate).format("YYYY-MM-DD")
+            booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm')
 
         }).then(e => {
-            setFinishLoading(false)
+            if(e.id){
+                setOpen(false)
+                setSize(false)
+                setFinishLoading(false)
+                setSelectedDate(false)
+                setDate((prevState)=>prevState)
+            }
+
         })
 
     }
@@ -106,10 +118,15 @@ function CalendarInnCollapseModal({docItem, specialty, selectedDate, clinicID, s
                     </Space>
                 </div>
                 <div style={{marginTop: 20}}>
+
+                    <FormInput label={t('Service Type')} name={'service_type'}
+                               inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={null}
+                               initialData={getServiceTypes(clinic.services)}/>
                     <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                inputType={'resourceSelect'}
                                rules={[{required: true}]}
-                               resourceParams={{test: 1}}
                                searchConfigs={{minLength: 4}}
                                initialValue={null}
                                inputProps={{

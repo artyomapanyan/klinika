@@ -2,7 +2,7 @@ import {Avatar, Modal} from "antd";
 import React, {useState} from "react";
 import CalendarInnCollapseModal from "./CalendarInnCollapseModal";
 
-function ClinicManagerCalendarInnCollapse({docItem,specialty,clinicID,speciality_id}) {
+function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic}) {
     const [selectedDate, setSelectedDate] = useState(false);
 
 
@@ -34,7 +34,7 @@ function ClinicManagerCalendarInnCollapse({docItem,specialty,clinicID,speciality
                 })
             }
             <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
-                <CalendarInnCollapseModal docItem={docItem} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id}selectedDate={selectedDate}/>
+                {selectedDate&&<CalendarInnCollapseModal setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/>}
             </Modal>
         </tr>
     )

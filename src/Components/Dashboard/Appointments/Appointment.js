@@ -243,7 +243,6 @@ function Appointment() {
                                     <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                                inputType={'resourceSelect'}
                                                //rules={[{required: true}]}
-                                               resourceParams={{test: 1}}
                                                searchConfigs={{minLength: 4}}
                                                initialValue={null}
                                                inputProps={{
@@ -370,7 +369,6 @@ function Appointment() {
                                                 <FormInput label={t('Clinic')} name={'clinic_id'}
                                                            inputType={'resourceSelect'}
                                                            rules={[{required: true}]}
-                                                           resourceParams={{test: 1}}
                                                            initialValue={null}
                                                            initialData={[]}
                                                            resource={'Clinic'}/>
@@ -507,27 +505,11 @@ function Appointment() {
                                                            initialData={[]}
                                                            resource={'Offer'}/>
                                             </Col>
-                                            <Col lg={12} className="gutter-row">
-                                                <FormInput label={t('File Number')} name={'file_number'}
-                                                           rules={[{required: false}]}/>
-                                            </Col>
-
                                         </Row>
                                         <div className="gutter-row">
                                             <FormInput label={t('Description')} name={'description'}
                                                        inputType={'textArea'} initialValue={data?.description}/>
                                         </div>
-                                        {/*<div className="gutter-row">*/}
-                                        {/*    <FileManager text1={'Select or drag files'}*/}
-                                        {/*                 text2={'+'}*/}
-                                        {/*                 name={'gallery'}*/}
-                                        {/*                 uploadIcon={<InboxOutlined/>}*/}
-                                        {/*                 initialFileList={[data?.gallery]} limit={5} formRef={formRef}*/}
-                                        {/*                 type={'drag'}/>*/}
-                                        {/*</div>*/}
-                                        <FormInput label={t('Folder id')} name={'folder_id'}
-                                                   rules={[{required: false}]}/>
-
                                     </div>
                                 </div> : <div></div>
                             }

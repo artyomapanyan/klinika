@@ -24,8 +24,10 @@ function ClinicManagerCalendar() {
             to: date[1].format('YYYY-MM-DD')
         }).then((response) => {
             setData({
-                clinic_id:response.clinic_id,
-                workload:Object.values(response.workload)})
+                clinic_id:response.clinic.id,
+                clinic:response.clinic,
+                workload:Object.values(response.workload)
+            })
             setLoading(false)
 
         })
@@ -85,7 +87,7 @@ function ClinicManagerCalendar() {
                                                     </td>
                                                 })}
                                             </tr>
-                                            {filteredData?.slice(0,showCount)?.map(item => <ClicicManagerCalendarCollapse clinicID={data.clinic_id} item={item}/>)}
+                                            {filteredData?.slice(0,showCount)?.map(item => <ClicicManagerCalendarCollapse setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
                                         </table>
                                         {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>Load More</Button>:null}
                                     </div>
