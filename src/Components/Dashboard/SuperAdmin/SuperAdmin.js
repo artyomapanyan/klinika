@@ -10,7 +10,7 @@ import CounterProgress from "../../Fragments/Charts/CounterProgress";
 import ClinicOwnerPatientsChart from "../../Fragments/Charts/ClinicOwnerPatientsChart";
 import IncomeChannelsChart from "../../Fragments/Charts/IncomeChannelsChart";
 import GradientChart from "../../Fragments/Charts/GradientChart";
-import MonthStatistics from "../../Fragments/Charts/MonthStatistics";
+import MonthStatistics from "../../Fragments/Charts/MonthStatistics/MonthStatistics";
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import SuperAdminIncomesChart from "../../Fragments/Charts/SuperAdminIncomesChart";
 import SuperAdminProfitableTable from "./SuperAdminProfitableTable/SuperAdminProfitableTable";

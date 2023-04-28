@@ -9,7 +9,7 @@ import StatusesChart from "../../Fragments/Charts/StatusesChart";
 import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import DoctorReworkedCalendar from "./Fragments/DoctorReworkedCalendar/DoctorReworkedCalendar";
 import AppointmentStats from "../../Fragments/Charts/AppointmentStats";
-import MonthStatistics from "../../Fragments/Charts/MonthStatistics";
+import MonthStatistics from "../../Fragments/Charts/MonthStatistics/MonthStatistics";
 import DoctorRewProgress from "./Fragments/DoctorRewSmall/DoctorRewProgress";
 import TelehealtCount from "./Fragments/DoctorRewSmall/TelehealtCount";
 import DrReworkedStatuses from "./Fragments/DoctorRewSmall/DrReworkedStatuses";
