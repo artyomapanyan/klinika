@@ -2,7 +2,6 @@
 
 import React, {useEffect, useState} from "react";
 import ClinicTabEssentials from "./Fragments/ClinicTabEssentials";
-import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
 import ClinicWorkingHours from "./Fragments/ClinicWorkingHours/ClinicWorkingHours";
 import {useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
@@ -18,6 +17,7 @@ import {MoreOutlined} from "@ant-design/icons";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
+import SecondClinicTabManageDoctors from './Fragments/SecondClinicTabManageDoctors';
 
 
 const resource = "Clinic"
@@ -68,7 +68,7 @@ function Clinic() {
                                          handleLangChange={handleLangChange}/>
                 </items>
                 {params.id && <items key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
-                    <ClinicTabManageDoctors loadingState={loadingState}/>
+                    <SecondClinicTabManageDoctors loadingState={loadingState} />
                 </items>}
                 {params.id && <items key={'working'} tab={'Working Hours'}>
                     <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>

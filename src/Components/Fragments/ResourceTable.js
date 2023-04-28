@@ -12,22 +12,23 @@ import {clearObject, paramsToObject} from "../../functions";
 import axios from "axios";
 import api from "../../Api";
 
-function ResourceTable({resource, tableColumns,
-                           title,tableParams={},
-                           resourceLink=null,
-                           hideActions=false,
-                           exportButton = true,
-                           except={},
-                           handleTableBelowData,
-                           getAll=false,
-                           noHeader=false,
-                           eyeShow=false,
-                           customActions,
-                           buttonAdd = true,
-                           showHeader=true,
-                            customTableButton,
-
-                       }) {
+function ResourceTable ({
+    resource, tableColumns,
+    title, tableParams = {},
+    resourceLink = null,
+    hideActions = false,
+    exportButton = true,
+    except = {},
+    handleTableBelowData,
+    getAll = false,
+    noHeader = false,
+    eyeShow = false,
+    customActions,
+    buttonAdd = true,
+    showHeader = true,
+    editBtnStyle = {},
+    customTableButton,
+}) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
@@ -114,7 +115,14 @@ function ResourceTable({resource, tableColumns,
             dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
 
                     {!except.edit ? <Tooltip title="Update">
-                    <Button onClick={() => onResourceEdit(record)} size={'small'}><EditOutlined/></Button>
+                    <Button
+                      type={editBtnStyle ? editBtnStyle.type : {}}
+                      onClick={() => onResourceEdit(record)}
+                      size={editBtnStyle?.size ? editBtnStyle?.size : 'small'}
+                      style={editBtnStyle?.btnStyle ? editBtnStyle.btnStyle : {}}
+                    >
+                        <EditOutlined style={editBtnStyle?.iconStyle ? editBtnStyle?.iconStyle : {}}/>
+                    </Button>
                 </Tooltip> :  <div></div>}
                 {!except.delete&&<Tooltip title="Delete">
                     <Popconfirm
@@ -141,7 +149,6 @@ function ResourceTable({resource, tableColumns,
     const onAddNew = () => {
         navigate(ResourceLinks[resourceLink??resource] + 'new')
     }
-
 
     const handleExportExcel =()=>{
         axios.request({
