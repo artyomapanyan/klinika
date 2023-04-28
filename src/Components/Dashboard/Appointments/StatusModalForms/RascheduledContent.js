@@ -16,7 +16,7 @@ export function RascheduledContent({onCancel, recorddata, date}){
 
 
 
-console.log(recorddata,date?.booked_at?.format('DD-MM-YYYY'), 'dad')
+// console.log(recorddata,date?.booked_at?.format('DD-MM-YYYY'), 'dad')
     // useEffect(() => {
     //     if (data?.appointment_date) {
     //         postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {

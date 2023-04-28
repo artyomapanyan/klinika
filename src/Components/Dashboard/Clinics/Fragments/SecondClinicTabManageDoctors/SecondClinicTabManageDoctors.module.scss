@@ -1,0 +1,74 @@
+.root {
+  margin-top: 50px;
+
+  .card {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+
+    .avatar {
+      border-radius: 12px;
+    }
+
+    .titleGroup {
+      margin-left: 10px;
+
+      .title {
+        font-weight: 700;
+        font-size: 20px;
+      }
+      .subtitle {
+        color: #774D9D;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .rightCol {
+    .weekDays {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .day {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-right: 30px;
+
+        .dayTitle {
+          font-size: 15px;
+          margin: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    .otherInfoGroup {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 10px;
+
+      .otherInfoGroupItem {
+        margin: 10px 30px 0 0;
+        position: relative;
+
+        .line {
+          position: absolute;
+          right: -17px;
+          top: 1px;
+          content: "";
+          width: 1px;
+          height: 20px;
+          background-color: #E1E2E9;
+        }
+      }
+    }
+  }
+}
+
+
+

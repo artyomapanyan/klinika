@@ -45,7 +45,7 @@ function ResourceSelectPaginated({
         setLocalData(initialData)
     },[initialData])
   const handleGenerateOptions = (data) => {
-        console.log(data,name)
+        // console.log(data,name)
 
     return data.map((item, key) => {
       let name = item.name ?? item.title
