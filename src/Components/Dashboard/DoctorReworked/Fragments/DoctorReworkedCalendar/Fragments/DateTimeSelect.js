@@ -1,24 +1,32 @@
 import React, {useState} from 'react'
 import arrow_right_white from "../../../../../../dist/icons/arrow_right_white.png";
 import dayjs from "dayjs";
-import {Button} from "antd";
+import {Button, Form, Radio} from "antd";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import {t} from "i18next";
 import {GMBK} from "../../../../../../functions";
 import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
+import {useSelector} from "react-redux";
 
-function DateTimeSelect() {
+function DateTimeSelect({bookedAtState, setBookedAtState, drFormRef}) {
+    let token = useSelector((state) => state.auth.token);
+    const authRedux = useSelector((state) => state?.auth);
+
     const [startDate, setStartDate] = useState(dayjs())
     const [date, setDate] = useState(null)
     const [time, setTime] = useState(null)
     const [timeLoading, setTimeLoading] = useState(false)
     const [availableTimes, setAvailableTimes] = useState([])
+    const [timesIndex, setTimesIndex] = useState(0)
+
+
     const handleChangeMonth = (count) => {
         setStartDate((prevState) => prevState.add(count, 'month'))
+
     }
     const handleChangeDay = (count) => {
-        if (startDate.add(count, 'month') < dayjs()) {
+        if (startDate.add(count, 'day') < dayjs()) {
             setStartDate(dayjs())
         } else {
             setStartDate((prevState) => prevState.add(count, 'day'))
@@ -26,15 +34,32 @@ function DateTimeSelect() {
 
     }
 
+    console.log(drFormRef)
 
     const onDateClick = (e) => {
         setDate(e)
         setTimeLoading(true)
+        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, 75 + "/" + 34, {
+            service: 'telehealth',
+            date: dayjs(e).format('YYYY-MM-DD')
+        }).then((response) => {
+            setTimesIndex(0)
+            setAvailableTimes(response.flat())
+        })
+        setBookedAtState(dayjs(e).format('YYYY-MM-DD'))
+
         ///postResource('')
         //setAvailableTimes(response)
         //setTimeLoading(false)
 
     }
+    const handleChangeTime = (count) => {
+        if (timesIndex + count < 0 || timesIndex + count >= availableTimes.length) {
+            return setTimesIndex(0)
+        }
+        setTimesIndex(prevState => prevState + count)
+    }
+
 
     return <div className={'drawer_cal_bog_div'}>
         <div className={'drawer_cal_top_div'}>
@@ -53,14 +78,11 @@ function DateTimeSelect() {
             <div>
                 <div>
                     <div className={'big_date_div'}>
-                        <Button className={'next_btn'} disabled={startDate == dayjs()}
-                                onClick={() => handleChangeDay(-5)}>
-                            <img alt={'arrow_right_white'} src={arrow_right_white}/>
-                        </Button>
-                        {[...[...Array(5).keys()]].map((e, key) => {
-                            return <div key={key} className={`week_date_div ${date.format('DD-MM-YYYY')===startDate.add(key, 'day').format('DD-MM-YYYY')?'selected':''}`}
+                        {[...[...Array(6).keys()]].map((e, key) => {
+                            return <div key={key}
+                                        className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                         onClick={() => onDateClick(startDate.add(key, 'day'))}>
-                                <div className={'date_div_in_map'}>
+                                <div className={'date_div_in_map'} style={{fontWeight: 400}}>
                                     {Resources.Days[startDate.add(key, 'day').day()]}
                                 </div>
                                 <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
@@ -69,9 +91,24 @@ function DateTimeSelect() {
                                 </div>
                             </div>
                         })}
-                        <Button className={'next_btn'} onClick={() => handleChangeDay(5)}>
-                            <img alt={'arrow_right_white'} src={arrow_right_white}/>
-                        </Button>
+                        {
+                            startDate.format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY') ?
+                                <Button className={'next_btn'} onClick={() => handleChangeDay(6)}>
+                                    <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                </Button> : <div>
+                                    <Button className={'Next_btn_small'} disabled={startDate == dayjs()}
+                                            onClick={() => handleChangeDay(-6)}>
+                                        <img style={{transform: 'rotateY(180deg)'}} alt={'arrow_right_white'}
+                                             src={arrow_right_white}/>
+                                    </Button>
+                                    <Button className={'Next_btn_small'} onClick={() => handleChangeDay(6)}>
+                                        <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                    </Button>
+                                </div>
+                        }
+                        {/*<Button className={'next_btn'} onClick={() => handleChangeDay(6)}>*/}
+                        {/*    <img alt={'arrow_right_white'} src={arrow_right_white}/>*/}
+                        {/*</Button>*/}
                     </div>
                 </div>
             </div>
@@ -79,9 +116,29 @@ function DateTimeSelect() {
 
 
         <div className={'drawer_cal_bottom_div'}>
-            <div className={'drawer_cal_head_div'}>
+            <div className={'drawer_cal_foot_div'}>
                 <div className={'top_div_title'}>
                     Select Time
+                </div>
+                <div className={'big_time_div'}>
+                    <Form.Item name={'booked_time'}>
+                        <Radio.Group
+                            className={'hours_select'}
+                            options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
+                                return {
+                                    label: e,
+                                    value: e
+                                }
+                            })}
+                            optionType="button"
+                            buttonStyle="solid"
+
+                        />
+                    </Form.Item>
+                    <Button className={'next_btn_time'} onClick={() => handleChangeTime(8)}>
+                        <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                    </Button>
+
                 </div>
             </div>
         </div>

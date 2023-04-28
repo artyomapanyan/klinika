@@ -126,7 +126,7 @@ function LineChartIncomes() {
                                     weight: "700",
                                 },
                                 padding: 40,
-                                stepSize: 20000,
+                                stepSize: 20,
                                 showLabelBackdrop: false,
                                 callback: function (label) {
                                     return label / 1000 + "k";

@@ -3,12 +3,14 @@ import {Avatar, Button, Form, Space, Tag} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
-import {Resources} from "devextreme-react/gantt";
+import Resources from "../../../../../../store/Resources";
+
 
 
 function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment}) {
 
     const onFinish = (values) => {
+        console.log(values)
         handleCreateAppointment(data,{
             patient:values
         })
@@ -20,7 +22,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
     }
     return (
         <div>
-            <div style={{padding: 10, marginTop: 20}}>
+            <div style={{padding: 1, marginTop: 1}}>
                 <Space>
                     <Avatar size={50} icon={<UserOutlined/>}/>
                     <div style={{display: "block"}}>
@@ -29,15 +31,16 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     </div>
                 </Space>
                 <Tag color="#ce4e99" size={'large'} style={{
-                    fontSize: 17,
-                    fontWeight: 550,
-                    marginTop: 20,
-                    marginLeft: 50,
-                    padding: 6,
-                    borderRadius: 10
+                    fontSize: 14,
+                    fontFamily: 'Inter',
+                    fontWeight: 600,
+                    marginTop: 10,
+                    marginLeft: 5,
+                    padding: '6px 10px',
+                    borderRadius: 12
                 }}>{data?.time}</Tag>
             </div>
-            <div>
+            <div style={{marginTop: 10,}}>
                 <Form
                     name="edit"
                     onFinish={onFinish}
@@ -63,6 +66,10 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                                initialData={Resources?.Gender}
                     />
                     <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
+                    <FormInput label={t('Country')} name={'country'}
+                               inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               resource={'Country'}/>
                     <div>
                         <Button style={{width: '100%'}} size={'large'} type={'primary'}
                                 htmlType="submit">{t("Save")}</Button>

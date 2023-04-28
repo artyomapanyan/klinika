@@ -325,6 +325,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/doctor/calendar/`,
                 method: 'GET',
             },
+            PeriodAppointmentStats: {
+                url: `${endpoint}${version}/dashboard/doctor/period-appointment-stats/`,
+                method: 'GET',
+            },
         },
     },
 
