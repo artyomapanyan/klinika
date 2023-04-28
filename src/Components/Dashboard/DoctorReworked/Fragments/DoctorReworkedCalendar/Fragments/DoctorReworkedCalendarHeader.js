@@ -16,7 +16,7 @@ function DoctorReworkedCalendarHeader() {
     let data = ['New', 'Confirmed', 'Cancelled', 'Rescheduled']
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", }}>
-            <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
+            <Space className={'app_clinic'}>
                 {t("Appointments")}
                 {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-colorCalendar-${key}`}>{itemKey}</Space>)}
             </Space>
@@ -24,7 +24,7 @@ function DoctorReworkedCalendarHeader() {
                 <Space>
                     <Button type={'primary'} onClick={showDrawer}>+ Add entry</Button>
                 </Space>
-                <Drawer width={405} title="Add Appointment" placement="right" onClose={onClose} open={open}>
+                <Drawer width={411} title="Add Appointment" placement="right" onClose={onClose} open={open}>
                     <DoctorReworkedCalendarDrawer />
                 </Drawer>
             </div>

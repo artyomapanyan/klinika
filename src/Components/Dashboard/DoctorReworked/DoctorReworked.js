@@ -69,18 +69,23 @@ function DoctorReworked() {
                         <DoctorReworkedNotifications />
                     </Col>
                 </Row>
-                <Row gutter={[16, 16]}>
-                    <Col lg={18}>
+                <Row>
+                    <Col lg={24}>
                         <AppointmentStats />
                     </Col>
-                    <Col lg={6} >
-                        <MonthStatistics />
-                    </Col>
                 </Row>
+                {/*<Row gutter={[16, 16]}>*/}
+                {/*    <Col lg={18}>*/}
+                {/*        <AppointmentStats />*/}
+                {/*    </Col>*/}
+                {/*    <Col lg={6} >*/}
+                {/*        <MonthStatistics />*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
 
             </div>
             <div>
-                <ClinicFeedback />
+                {/*<ClinicFeedback />*/}
             </div>
 
 

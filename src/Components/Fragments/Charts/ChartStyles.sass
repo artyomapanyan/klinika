@@ -132,7 +132,7 @@
   overflow: auto
   padding: 30px
   margin-top: 50px
-  max-height: 650px
+  max-height: 613px
   border-radius: 15px
   box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
   background-color: #FFFFFF
@@ -429,34 +429,33 @@
 
 .week_date_div
   cursor: pointer
-  width: 45px
+  width: 40px
   border-radius: 12px
   background-color: #d381b9
-  margin: 4px
+  margin: 0px 5px
   display: flex
+  flex: 1 1 auto
   flex-direction: column
   align-items: center
   justify-content: center
-  &:hover
+  &.selected
+    background: #F5A348 !important
+.week_date_div:hover
+
     cursor: pointer
-    width: 45px
+    width: 40px
     border-radius: 12px
     background-color: #d381b9
-    margin: 3px
+    margin: 0px 5px
     display: flex
     flex-direction: column
     align-items: center
     justify-content: center
     border: 1px solid #FFFFFF77
-  &.selected
-    background: red !important
 .big_date_div
   display: flex
-  margin: -5px 5px
-
-
+  padding: 1px 10px
 .date_div_in_map
-  margin: 0 12px
   display: flex
   align-items: center
   justify-content: center
@@ -467,27 +466,52 @@
   font-family: Inter
 
 .next_btn
-  height: 79px
-  width: 35px
+  height: 80px
+  width: 33px
   border-radius: 12px
   background-color: #d381b982
-  margin: 5px
+  margin: 3px 3px
   display: flex
   flex-direction: column
   align-items: center
   justify-content: center
   cursor: pointer
+  border: 1px solid #d381b982
 .next_btn:hover
-  width: 35px
+  width: 33px
   border-radius: 12px
   background-color: #d381b982
-  margin: 5px
+  margin: 3px 3px
   display: flex
   flex-direction: column
   align-items: center
   justify-content: center
   cursor: pointer
-  border: 1px solid #FFFFFF77
+  border: 1px solid #FFFFFF77 !important
+.Next_btn_small
+  height: 37px
+  width: 33px
+  border-radius: 12px
+  background-color: #d381b982
+  margin: 4px 3px
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  cursor: pointer
+  border: 1px solid #d381b982
+  &:hover
+    width: 33px
+    border-radius: 12px
+    background-color: #d381b982
+    margin: 4px 3px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    border: 1px solid #FFFFFF77 !important
+
 .btn_add_entry
   font-family: Roboto
   font-size: 16px
@@ -503,6 +527,113 @@
   width: 100%
   background-color: #F4F4F4
   height: 45px
+.hours_select
+  label
+    max-width: 63px
+    padding-left: 14px
+    padding-top: 2px
+    height: 33px
+    margin: 5px 4px
+    background-color: #ffffff10
+    border-radius: 12px !important
+    border-inline-start-width: 1px !important
+    border: none !important
+    color: #FFFFFF
+    font-size: 14px
+    font-weight: 600
+    font-family: Roboto
+    &:hover
+      background-color: #ffffff30
+      color: #FFFFFF
+    &::before
+      content: none !important
+.big_time_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  margin-top: 15px
+  .ant-col
+    margin: auto
+.drawer_cal_foot_div
+  padding: 20px 12px
+
+
+
+.dx-scheduler-header-row
+  th
+    color: #000000
+    font-weight: 700
+    font-size: 16px
+    font-family: Roboto
+    border-bottom: 2px solid #000000
+
+.dr_reworked_app_states_chart_head
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+.switches_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  .switc_div
+    margin-left: 50px
+.table_normal_text
+  font-size: 14px
+  font-family: Roboto
+  font-weight: 400
+.table_bold_text
+  font-size: 14px
+  font-family: Roboto
+  font-weight: 700
+.chart_clinic_manager_date_picker
+  border: none
+  background-color: #F5F6FA
+  font-weight: 400
+  font-size: 14px
+  font-family: Roboto
+  padding: 6px
+  border-radius: 8px
+.clinic_man_month_btn
+  border-radius: 8px
+  border: 2px solid #774D9D
+  color: #774D9D
+  background-color: #FFFFFF
+  font-weight: 700
+  font-family: Roboto
+  font-size: 14px
+  padding: 5px
+.app_stats_date_div
+  padding: 0 10px
+  font-size: 14px
+  font-family: Roboto
+  font-weight: 400
+.next_btn_time
+  height: 80px
+  width: 30px
+  border-radius: 12px
+  background-color: #ffffff10
+  margin-top: -23px
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  cursor: pointer
+  border: 1px solid #774D9D10
+.next_btn_time:hover
+  width: 30px
+  border-radius: 12px
+  background-color: #ffffff30
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  cursor: pointer
+  border: 1px solid #FFFFFF77 !important
+
+
+
+
 .dx-scheduler-appointment
   border: initial !important
   box-shadow: initial !important
