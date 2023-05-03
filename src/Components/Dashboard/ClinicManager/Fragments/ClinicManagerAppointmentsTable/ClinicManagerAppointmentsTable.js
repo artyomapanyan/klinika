@@ -74,7 +74,7 @@ function ClinicManagerAppointmentsTable() {
         <div className={'table_conteiner'}>
             <div style={{paddingBottom: 30}}>
 
-                <ClinicManagerCalendarHead hideData={true} date={dateWeek} setDate={setDateWeek}/>
+                <ClinicManagerCalendarHead  hideData={true} date={dateWeek} setDate={setDateWeek} showMonth={true}/>
 
 
                 <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
@@ -92,6 +92,10 @@ function ClinicManagerAppointmentsTable() {
 
             </div>
             <ResourceTable
+                tableSFilters={{
+                    from:dateWeek[0].format('YYYY-MM-DD'),
+                    to:dateWeek[1].format('YYYY-MM-DD'),
+                }}
                 noHeader={true}
                 hideActions={true}
                 resource={'Appointment'}

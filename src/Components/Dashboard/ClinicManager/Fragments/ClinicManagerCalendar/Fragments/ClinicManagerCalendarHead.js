@@ -7,7 +7,7 @@ import {GMBK} from "../../../../../../functions";
 import React, {useState} from "react";
 import arrow_next from "../../../../../../dist/icons/arrow-next.svg";
 import arrow_prev from "../../../../../../dist/icons/arrow-prev.svg";
-function ClinicManagerCalendarHead({date,setDate,hideData}) {
+function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false}) {
 
 
     dayjs.extend(customParseFormat);
@@ -35,7 +35,10 @@ function ClinicManagerCalendarHead({date,setDate,hideData}) {
             </Space>
             <div>
                 <Space>
-                    <div className={'clinic_man_month_btn'}>{GMBK(date[0].month())}</div>
+                    {
+                        !showMonth ? <div className={'clinic_man_month_btn'}>{GMBK(date[0].month())}</div> : <div></div>
+                    }
+
                     <Button className={'chart_button'} onClick={()=>handleSwitchWeek(-1)}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
                     <DatePicker  className={'chart_clinic_manager_date_picker'} value={date[0]} defaultValue={dayjs()} onChange={e=>setDate([dayjs(e).startOf('week'),dayjs(e).endOf('week')])} format={customWeekStartEndFormat} picker="week" />
                     <Button className={'chart_button'} onClick={()=>handleSwitchWeek(1)}><img src={arrow_next} alt={'arrow_next'}/></Button>

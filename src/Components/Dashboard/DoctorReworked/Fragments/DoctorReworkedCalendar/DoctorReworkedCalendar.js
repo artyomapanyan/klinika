@@ -15,7 +15,7 @@ function DoctorReworkedCalendar() {
 
     const [date, setDate] = useState({
         from: dayjs().format('YYYY-MM-DD'),
-        to: dayjs().add(3, 'day').tz('').format('YYYY-MM-DD'),
+        to: dayjs().add(3, 'day').format('YYYY-MM-DD'),
     })
     const [view, setView] = useState('3 Days')
 

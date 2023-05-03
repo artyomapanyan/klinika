@@ -111,7 +111,7 @@ function ResourceSelectPaginated({
         setParams({
           page: 1, [customSearchKey??'name']: e
         })
-      }, 500)
+      }, 850)
     }
 
   }

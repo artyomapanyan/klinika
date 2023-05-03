@@ -12,6 +12,7 @@ import Preloader from "../../../../Preloader";
 
 const count = 6;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
+
 function DoctorReworkedNotifications() {
     let token = useSelector((state) => state.auth.token);
 
@@ -19,17 +20,16 @@ function DoctorReworkedNotifications() {
     const [loadind, setLoading] = useState(false);
 
 
-
     useEffect(() => {
         setLoading(true)
-        postResource('DoctorReworked', 'Notifications', token, '', ).then((response) => {
+        postResource('DoctorReworked', 'Notifications', token, '',).then((response) => {
             setData(response)
             setLoading(false)
         })
     }, [])
 
     const onMarkAlAsRead = () => {
-        postResource('Notifications', 'MarkAllAsRead', token, '', ).then((response) => {
+        postResource('Notifications', 'MarkAllAsRead', token, '',).then((response) => {
 
         })
     }
@@ -94,24 +94,28 @@ function DoctorReworkedNotifications() {
 
     console.log(data)
 
-    return(
+    return (
         <div className={'dr_reworked_calendar'} style={{height: 613}}>
-            <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
                 <h1 className={'h1'}>Notifications</h1>
                 <div onClick={onMarkAlAsRead} className={'notification_tag'}>Mark all as read</div>
             </div>
             <div className={'notification_content_btn_div'}>
 
                 {
-                    loadind ? <Preloader /> : data?.notifications?.map((el, key) => {
+                    loadind ? <Preloader/> : data?.notifications?.map((el, key) => {
                         return <div key={key}>
                             <div className={'dashed_lini'}></div>
 
-                            <div  className={'dr_rew_notifications'}>
+                            <div className={'dr_rew_notifications'}>
                                 <div>
                                     {
-                                        el?.data?.icon === "calendar-check" ? <img src={checked_calendar_icon} alt={'checked_calendar_icon'}/> : el?.data?.icon === "yellow_calendar" ? <img src={yellow_calendar} alt={'yellow_calendar'}/> :
-                                            el?.data?.icon === "map_icon" ? <img src={map_icon} alt={'map_icon'}/> :  el?.data?.icon === "message_icon" ? <img src={message_icon} alt={'message_icon'}/> : <div></div>
+                                        el?.data?.icon === "calendar-check" ? <img src={checked_calendar_icon}
+                                                                                   alt={'checked_calendar_icon'}/> : el?.data?.icon === "yellow_calendar" ?
+                                            <img src={yellow_calendar} alt={'yellow_calendar'}/> :
+                                            el?.data?.icon === "map_icon" ? <img src={map_icon}
+                                                                                 alt={'map_icon'}/> : el?.data?.icon === "message_icon" ?
+                                                <img src={message_icon} alt={'message_icon'}/> : <div></div>
                                     }
 
 
@@ -119,7 +123,8 @@ function DoctorReworkedNotifications() {
                                 <div className={'dr_rew_notifications_texts_div'}>
                                     <div className={'dr_rew_notifications_title'}>{el.data.title}</div>
                                     <div className={'dr_rew_notifications_content'}>{el.data.description}</div>
-                                    <div className={'dr_rew_notifications_date'}>{dayjs(el.created_at.iso_string).format('DD MMMM YYYY')}</div>
+                                    <div
+                                        className={'dr_rew_notifications_date'}>{dayjs(el.created_at.iso_string).format('DD MMMM YYYY')}</div>
                                 </div>
                             </div>
 
@@ -128,12 +133,15 @@ function DoctorReworkedNotifications() {
 
                 }
                 <div className={'dashed_lini'}></div>
-                <div className={'dddddd'} >
-                    <Button className={'notification_button'}><span className={'notification_button_text'}>Show all notifications</span> <span className={'notification_button_text_count'}>{data?.unread_notifications_count}</span></Button>
+                <div>
+                    <Button className={'notification_button'}><span className={'notification_button_text'}>Show all notifications</span>
+                        <span
+                            className={'notification_button_text_count'}>{data?.unread_notifications_count}</span></Button>
                 </div>
             </div>
 
         </div>
     )
 }
+
 export default DoctorReworkedNotifications;
