@@ -14,7 +14,8 @@ function DoctorReworkedCalendar() {
     let token = useSelector((state) => state.auth.token);
 
     const [date, setDate] = useState({
-        from: dayjs().add(-3, 'day').format('YYYY-MM-DD'), to: dayjs().format('YYYY-MM-DD'),
+        from: dayjs().format('YYYY-MM-DD'),
+        to: dayjs().add(3, 'day').tz('').format('YYYY-MM-DD'),
     })
     const [view, setView] = useState('3 Days')
 
@@ -25,13 +26,16 @@ function DoctorReworkedCalendar() {
     useEffect(() => {
         setLoading(true)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
-            let data = Object.values(response.calendar).flat().map(e => ({
-                text: e.service_type,
-                startDate: new Date(e.booked_at.iso_string),
-                endDate: new Date(e.booked_to.iso_string),
-                content:e.service_name,
-                roomId: [1], ...e
-            }));
+            let data = Object.values(response.calendar).flat().map(e =>{
+                console.log( new Date(e.booked_at.iso_string),e.booked_at.iso_string)
+                return {
+                    text: 'status-' + e.status,
+                    startDate: new Date(e.booked_at.iso_string),
+                    endDate: new Date(e.booked_to.iso_string),
+                    content: e.service_name,
+                    ...e
+                }
+            });
             setAppointments(data)
             setLoading(false)
         })
@@ -39,7 +43,7 @@ function DoctorReworkedCalendar() {
 
 
     return (<div className={'dr_reworked_not'}>
-            <DoctorReworkedCalendarHeader/>
+            <DoctorReworkedCalendarHeader setDate={setDate}/>
 
             <div className={'dr_reworked_calendar_div'}>
                 <Spin spinning={loading}> <Scheduler

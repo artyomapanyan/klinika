@@ -16,7 +16,7 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
             <tr>
                 <td>
                     <Button className="appointmentsBranch" onClick={openCollapse} >
-                        <span>{item?.speciality}</span>
+                        <span className={'cl_manager_collapse_specialty'}>{item?.speciality}</span>
                         <DownOutlined/>
                     </Button>
                 </td>
@@ -32,7 +32,7 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
                 </td>)}
             </tr>
             {
-                btnCollapsed ? Object.values(item?.doctors??{}).map(doctor=><ClinicManagerCalendarInnCollapse setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
+                btnCollapsed ? Object.values(item?.doctors??{}).map((doctor, key)=><ClinicManagerCalendarInnCollapse key={key} setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
             }
         </>
 

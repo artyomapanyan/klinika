@@ -36,25 +36,25 @@ function DoctorReworked() {
             <div style={{margin:20}} className={'clinics_owner'}>
                 {/*<Button onClick={handleAddCount}>increment</Button>*/}
                 <Row gutter={[16,16]}>
-                    <Col  lg={6} md={12} sm={24} xs={24} >
+                    <Col  lg={8} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
                             {/*<ClinicManagerProgressCount data={progressData1} />*/}
                             <DoctorRewProgress />
                         </div>
                     </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
-                        <div className="gutter_row">
-                            {/*<CounterPurpleChart data={purpleData} />*/}
-                            <PatientSetisfactionChart />
-                        </div>
-                    </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
+                    {/*<Col lg={6} md={12} sm={24} xs={24}>*/}
+                    {/*    <div className="gutter_row">*/}
+                    {/*        /!*<CounterPurpleChart data={purpleData} />*!/*/}
+                    {/*        /!*<PatientSetisfactionChart />*!/*/}
+                    {/*    </div>*/}
+                    {/*</Col>*/}
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             {/*<StatusesChart data={statusesData}/>*/}
                             <DrReworkedStatuses />
                         </div>
                     </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             {/*<ClinicManagerProgressCount data={progressData2} />*/}
                             <TelehealtCount />

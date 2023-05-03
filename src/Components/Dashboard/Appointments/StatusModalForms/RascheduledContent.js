@@ -1,13 +1,15 @@
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button, Result} from "antd";
 import dayjs from "dayjs";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-export function RascheduledContent({onCancel, recorddata, date}){
+export function RascheduledContent({onCancel, modal}){
     let token = useSelector((state) => state.auth.token);
+    const [date,setDate] = useState(null);
+    const [availableTimes,setAvailableTimesState] = useState([]);
 
 
     const disabledDate = (current) => {
@@ -16,29 +18,48 @@ export function RascheduledContent({onCancel, recorddata, date}){
 
 
 
-// console.log(recorddata,date?.booked_at?.format('DD-MM-YYYY'), 'dad')
-    // useEffect(() => {
-    //     if (data?.appointment_date) {
-    //         postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {
-    //             service: data?.service_type,
-    //             date: data?.appointment_date.format('YYYY-MM-DD')
-    //         }).then((responce) => {
-    //
-    //             setAvailableTimesState(responce.map((el) => {
-    //                 return {
-    //                     label: 'Break Time',
-    //                     options: el.map((el1) => {
-    //                         return {
-    //                             lebel: el1,
-    //                             value: el1
-    //                         }
-    //                     })
-    //                 }
-    //             }))
-    //         })
-    //     }
-    //
-    // }, [data?.booked_at, data?.doctor_id])
+
+   useEffect(() => {
+       console.log(modal)
+       if (date && modal?.doctor?.id) {
+           postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
+               service: modal?.service_type,
+               date: date.format('YYYY-MM-DD')
+           }).then((responce) => {
+               console.log(responce, 'ttttt')
+               setAvailableTimesState(responce.map((el) => {
+                   return {
+                       label: 'Break Time',
+                       options: el.map((el1) => {
+                           return {
+                               lebel: el1,
+                               value: el1
+                           }
+                       })
+                   }
+               }))
+           })
+       }else if(date && !modal?.doctor?.id){
+           postResource('Clinic', 'AvailableTimes', token, modal?.clinic?.id, {
+               service: modal?.service_type,
+               date: date.format('YYYY-MM-DD')
+           }).then((res) => {
+               console.log(res, 'rrr')
+               setAvailableTimesState(res.map((el) => {
+                   return {
+                       label: 'Break Time',
+                       options: el.map((el1) => {
+                           return {
+                               lebel: el1,
+                               value: el1
+                           }
+                       })
+                   }
+               }))
+           })
+       }
+
+   }, [date])
 
 
     return<div>
@@ -47,6 +68,7 @@ export function RascheduledContent({onCancel, recorddata, date}){
             <div style={{width: '50%'}}>
                 <FormInput label={t('Appointment date')}
                            disabledDate={disabledDate}
+                           inputProps={{onChange:e=>setDate(e)}}
                            name={'booked_at'}
                            inputType={'date'}
                            rules={[{required: true}]}
@@ -56,6 +78,7 @@ export function RascheduledContent({onCancel, recorddata, date}){
                 <FormInput label={t('Appointment time')}
                            name={'appointment_time'}
                            inputType={'resourceSelect'}
+                           options={availableTimes}
                            initialData={[]}
                 />
             </div>

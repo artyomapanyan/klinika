@@ -65,7 +65,7 @@ function HeaderAccount() {
 
             <Space  className="header-properties small-gap">
                 {
-                    PermCheck('Doctor:viewAny')? <Dropdown  dropdownRender={()=>{
+                    PermCheck(!'Doctor:viewAny')? <Dropdown  dropdownRender={()=>{
                         return <div className={'approve_drop_div'}>
 
                                 {

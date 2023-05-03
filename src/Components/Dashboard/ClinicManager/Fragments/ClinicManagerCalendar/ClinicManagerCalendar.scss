@@ -74,13 +74,15 @@
   padding: 14px 4px;
   &__content {
     background-color: #f5f6fa;
-    padding: 11px 0;
+    padding: 12px 0;
     border-radius: 12px;
     width: 144px;
     text-align: center;
     &__text {
       font-size: 18px;
       color: black;
+      font-family: Inter;
+      font-weight: 700;
       &--light {
         color: rgba(0, 0, 0, 0.5);
         text-transform: uppercase;

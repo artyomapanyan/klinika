@@ -49,29 +49,31 @@ function Laboratory() {
 
 
     return(
-        <div  style={{margin:'44px 90px'}}>
-            <div>
-                <Collapse
-                    bordered={false}
-                    defaultActiveKey={['1']}
-                    expandIconPosition={'end'}
-                    expandIcon={(panelProps) =><div>{panelProps.isActive ?
-                        <div><img alt={'icons'} src={arrowUpPurple}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :
-                        <div><img alt={'icons'} src={arrowDownPurple}/> <span className={'patient_collapse_icon'}>Expend</span></div>}</div>}
-                >
-                    <Panel className={'collapse_panel'} expandTextPosition={'end'} header="PatientCardAppointment Details" key="1">
-                        <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
-                    </Panel>
-                </Collapse>
+        <div   >
+            <div className={'add_edit_content'}>
+                {/*<Collapse*/}
+                {/*    bordered={false}*/}
+                {/*    defaultActiveKey={['1']}*/}
+                {/*    expandIconPosition={'end'}*/}
+                {/*    expandIcon={(panelProps) =><div>{panelProps.isActive ?*/}
+                {/*        <div><img alt={'icons'} src={arrowUpPurple}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :*/}
+                {/*        <div><img alt={'icons'} src={arrowDownPurple}/> <span className={'patient_collapse_icon'}>Expend</span></div>}</div>}*/}
+                {/*>*/}
+                {/*    <Panel className={'collapse_panel'} expandTextPosition={'end'} header="PatientCardAppointment Details" key="1">*/}
+                {/*        <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>*/}
+                {/*    </Panel>*/}
+                {/*</Collapse>*/}
+
+                <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
 
 
             </div>
             <div className={'clinic_line'}></div>
 
             <div>
-                <NewLaboratoryTests />
-                {/*<LaboratoryTestsTable />*/}
-                {/*<LabPackagesTable />*/}
+                {/*<NewLaboratoryTests />*/}
+                <LaboratoryTestsTable />
+                <LabPackagesTable />
             </div>
 
 

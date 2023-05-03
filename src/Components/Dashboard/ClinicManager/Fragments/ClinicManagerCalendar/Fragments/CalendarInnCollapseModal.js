@@ -84,68 +84,82 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     }
     return (
-        <div>
-            <Form ref={formRef} onValuesChange={(e, v) => setData(v)} onFinish={handleCreateAppointment}>
-                <Space>
-                    <h1 className={'h1'}>{dayjs(selectedDate).format('DD MMMM')}</h1>
-                    <h1 style={{fontSize: 28, fontWeight: 200}}>{Resources.Days[dayjs(selectedDate).day()]}</h1>
-                </Space>
-                <div>
-                    {loading ? <Preloader/> : <Form.Item name={'time'} rules={[
-                        {
-                            required: true
-                        }
-                    ]
-                    }>
-                        <Radio.Group
-                            className={'hours-select'}
-                            options={times.map(e => ({
-                                label: e,
-                                value: e
-                            }))}
-                            optionType="button"
-                            buttonStyle="solid"
-                        />
-                    </Form.Item>}
-                </div>
-                <div style={{padding: 10, marginTop: 20}}>
-                    <Space>
-                        <Avatar size={50} src={doctor?.avatar?.src} icon={<UserOutlined/>}/>
-                        <div style={{display: "block"}}>
-                            <h3 className={'h1'}>{doctor.first} {doctor.last}</h3>
-                            <div>{specialty}</div>
-                        </div>
+        <div className={'clinic_manager_modal_big_div'}>
+            {
+                !selectedDate ? <Preloader/> : <Form ref={formRef} onValuesChange={(e, v) => setData(v)} onFinish={handleCreateAppointment}>
+                    <Space >
+                        <h1 className={'cl_manager_calendar_modal_head'}>{dayjs(selectedDate).format('DD MMMM')}</h1>
+                        <h1 style={{fontSize: 24, fontWeight: 300}}>{Resources.Days[dayjs(selectedDate).day()]}</h1>
                     </Space>
-                </div>
-                <div style={{marginTop: 20}}>
+                    <div>
+                        {loading ? <Preloader/> : <Form.Item name={'time'} rules={[
+                            {
+                                required: true
+                            }
+                        ]
+                        }>
+                            <Radio.Group
+                                className={'hours_select_cl_manager_modal'}
+                                options={times.map(e => ({
+                                    label: e,
+                                    value: e
+                                }))}
+                                optionType="button"
+                                buttonStyle="solid"
+                            />
+                        </Form.Item>}
+                    </div>
+                    <div >
+                        <Space>
+                            <Avatar size={56} src={doctor?.avatar?.src} icon={<UserOutlined/>}/>
+                            <div style={{display: "block"}}>
+                                <div className={'cl_manager_modal_dr_name'}>{doctor.first} {doctor.last}</div>
+                                <div className={'cl_manager_modal_stecialty_name'}>{specialty}</div>
+                            </div>
+                        </Space>
+                    </div>
+                    <div  style={{marginTop: 20}}>
 
-                    <FormInput label={t('Service Type')} name={'service_type'}
-                               inputType={'resourceSelect'}
-                               rules={[{required: true}]}
-                               initialValue={null}
-                               initialData={getServiceTypes(clinic.services)}/>
-                    <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
-                               inputType={'resourceSelect'}
-                               rules={[{required: true}]}
-                               searchConfigs={{minLength: 4}}
-                               initialValue={null}
-                               inputProps={{
-                                   notFoundContent: <div
-                                       style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                                       <div>Not found</div>
-                                       <Button type={'secondary'} style={{border: "none"}} onClick={openDrawer}>Create
-                                           new</Button></div>
-                               }}
-                               initialData={[]}
-                               handleMapItems={(item, name, patientData) => searchByNumber(item, name)}
-                               customSearchKey={'name_or_phone'}
-                               resource={'User'}/>
+                        <FormInput label={t('Service Type')} name={'service_type'}
+                                   inputType={'resourceSelect'}
+                                   rules={[{required: true}]}
+                                   initialValue={null}
+                                   initialData={getServiceTypes(clinic.services)}/>
+                        <FormInput label={t('Specialties')} name={'specialty_id'}
+                                   inputType={'resourceSelect'}
+                                   rules={[{required: true}]}
+                                   initialValue={null}
+                                   initialData={[]}
+                                   resource={'Taxonomy'}
+                                   resourceParams={{
+                                       type: Resources.TaxonomyTypes.SPECIALTY,
+                                       has_parent: 0
+                                   }}
+                        />
+                        <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
+                                   inputType={'resourceSelect'}
+                                   rules={[{required: true}]}
+                                   searchConfigs={{minLength: 4}}
+                                   initialValue={null}
+                                   inputProps={{
+                                       notFoundContent: <div
+                                           style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                                           <div>Not found</div>
+                                           <Button type={'secondary'} style={{border: "none"}} onClick={openDrawer}>Create
+                                               new</Button></div>
+                                   }}
+                                   initialData={[]}
+                                   handleMapItems={(item, name, patientData) => searchByNumber(item, name)}
+                                   customSearchKey={'name_or_phone'}
+                                   resource={'User'}/>
 
-                </div>
-                {data?.patient_id && data?.time && <Button type={'primary'} htmlType={'submit'}
-                                                           loading={finishLoading}
-                                                           style={{width: '100%', height: '44px'}}>{t("Book")}</Button>}
-            </Form>
+                    </div>
+                    {data?.patient_id && data?.time && <Button type={'primary'} htmlType={'submit'}
+                                                               loading={finishLoading}
+                                                               style={{width: '100%', height: '44px'}}>{t("Book")}</Button>}
+                </Form>
+            }
+
             <Drawer size={size} title="Add Appointment" placement="right" onClose={() => setOpen(false)} open={open}>
                 {
                     size === "default" ?

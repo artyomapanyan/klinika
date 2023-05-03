@@ -22,39 +22,36 @@ function AppointmentStats(){
         to: dayjs().format('YYYY-MM-DD'),
     });
 
-    console.log(date, 'date')
+
 
     useEffect(()=>{
 
         postResource('DoctorReworked', 'PeriodAppointmentStats', token, '', date).then((response) => {
+            let dates = Object.keys(response?.incomes).map(el => el.slice(5).replace('-', '/')).sort()
+            let data = {
+                2:[],
+                3:[],
+                4:[]
+            }
+            Object.values(response.incomes).forEach(item=>{
+                item[2] = item[2]??0;
+                item[3] = item[3]??0;
+                item[4] = item[4]??0;
+                Object.keys(item).forEach(itemKey=>{
+                    data[itemKey].push(item[itemKey])
+                })
 
-console.log(response)
-
+            })
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
             appointmentChartRef.current = new Chart(appointmentsStats, {
                 type: "bar",
                 data: {
-                    labels: [
-                        "11/01",
-                        "12/04",
-                        "13/04",
-                        "14/04",
-                        "15/04",
-                        "16/04",
-                        "17/04",
-                        "18/04",
-                        "19/04",
-                        "20/04",
-                        "21/04",
-                        "22/04",
-                        "23/04",
-                        "24/04",
-                    ],
+                    labels: dates,
                     datasets: [
                         {
                             label: "Finished",
-                            data: [40, 70, 7, 62, 45, 39, 13, 7, 20, 35, 42, 10, 5, 20],
+                            data: data[2],
                             stack: "Stack 0",
                             backgroundColor: ["#6DAF56"],
                             borderColor: ["white"],
@@ -70,8 +67,8 @@ console.log(response)
                             hidden: false,
                         },
                         {
-                            label: "Rescheduled",
-                            data: [20, 15, 0, 38, 15, 22, 15, 22, 5, 17, 30, 41, 50, 32],
+                            label: "Canceled",
+                            data:  data[3],
                             stack: "Stack 0",
                             backgroundColor: ["#F5A348"],
                             borderColor: ["white"],
@@ -87,8 +84,8 @@ console.log(response)
                             hidden: false,
                         },
                         {
-                            label: "Canceled",
-                            data: [10, 0, 75, 0, 15, 32, 26, 22, 15, 7, 10, 14, 30, 12],
+                            label: "Rescheduled",
+                            data:  data[4],
                             stack: "Stack 0",
                             backgroundColor: ["rgba(99, 93, 107, 0.4)"],
                             borderColor: ["white"],
@@ -186,7 +183,7 @@ console.log(response)
         return () => {
             appointmentChartRef?.current?.destroy()
         }
-    },[])
+    },[date])
     const handleShowHide = (key,e)=>{
         let appointmentChart = appointmentChartRef.current;
         appointmentChart.config.data.datasets[key].hidden = !e

@@ -26,16 +26,15 @@ function Appointments() {
 
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
-    const [recorddata,setRecordData] = useState(false)
     const [date,setDate] = useState(false)
 
 
     const onStatusChange = (key,record)=>{
         setModal({
-            id:record.id,
+           ...record,
             key
         })
-        setRecordData(record)
+
     }
 
     const onFinish = (values) => {
@@ -43,6 +42,7 @@ function Appointments() {
         if (values?.booked_at) {
             values.booked_at = values.booked_at.format('YYYY-MM-DD') + values.appointment_time
         }
+
 
         setLoading(true)
         postResource('Appointment','single', token, modal.id, {
@@ -78,7 +78,7 @@ function Appointments() {
                     >
                         {
                             modal?.key === '3' ? <CanceledContent onCancel={onCancel} /> : modal?.key === '2' ? <FinishedContent onCancel={onCancel} /> :
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent recorddata={recorddata} onCancel={onCancel} date={date} /> : null
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent modal={modal} onCancel={onCancel} date={date} /> : null
                         }
 
                     </Form>

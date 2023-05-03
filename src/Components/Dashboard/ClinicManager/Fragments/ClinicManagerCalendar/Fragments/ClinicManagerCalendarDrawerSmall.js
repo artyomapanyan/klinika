@@ -4,6 +4,7 @@ import {UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
 import Resources from "../../../../../../store/Resources";
+import dayjs from "dayjs";
 
 
 
@@ -12,7 +13,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
     const onFinish = (values) => {
         console.log(values)
         handleCreateAppointment(data,{
-            patient:values
+            patient:values,
         })
     }
     const handleMapItems = (item, name) => {
@@ -59,17 +60,43 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                             />
                         </div>
                         <div style={{marginLeft: 20, width: '100%'}}>
-                            <FormInput label={t('Phone number')} name={'phone_number'}/>
+                            <FormInput label={t('Phone number')} name={'phone_number'} maxLength={9} rules={[
+                                {required: true},
+                            ]}/>
                         </div>
                     </div>
                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                initialData={Resources?.Gender}
                     />
-                    <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
-                    <FormInput label={t('Country')} name={'country'}
+                    <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[
+                        {required: true},
+                        {
+                            validator:(rule,value)=>{
+                                if(value?.length < 10){
+                                    return Promise.reject('min length 10')
+                                }
+                                return Promise.resolve();
+                            }
+                        }
+
+                    ]} />
+                    <FormInput label={t('Country')} name={'country_id'}
                                inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                resource={'Country'}/>
+                    <FormInput label={t('Date of Birth')} name={'dob'}
+                               inputDisabled={data?.patient_id}
+                               inputType={'date'} rules={[
+                        {required: !data?.patient_id},
+                        {
+                            validator:(rule,value)=>{
+                                if(dayjs().diff(value,'year')<18){
+                                    return Promise.reject('min age 18')
+                                }
+                                return Promise.resolve();
+                            }
+                        }
+                    ]}/>
                     <div>
                         <Button style={{width: '100%'}} size={'large'} type={'primary'}
                                 htmlType="submit">{t("Save")}</Button>

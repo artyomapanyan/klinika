@@ -4,7 +4,7 @@ import {DownOutlined} from "@ant-design/icons";
 import {postResource} from "../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function ColorSelect({items=[],initialValue,onChange=null, resource, record,name}){
+function ColorSelect({items=[],initialValue,onChange=null, resource, record,name, height=false}){
     let token = useSelector((state) => state?.auth?.token);
 
     const [value,setValue] = useState(initialValue);
@@ -68,7 +68,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
         }}
         trigger={['click']}
     >
-        <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor: `${colors.find(el => (el.key == value))?.name}`, padding:10, borderRadius:30, width:150, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+        <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor: `${colors.find(el => (el.key == value))?.name}`, padding:10, borderRadius:30, height: height ? 28 : null,  width: 143 , display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
             <div style={{color:"#FFFFFF", fontWeight:700}}>{items.find(e=>e.key===value)?.label}</div>
             <div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
         </Space>

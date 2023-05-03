@@ -117,6 +117,10 @@ let api = {
                 url: `${endpoint}${version}/clinics/working-hours/`,
                 method: 'GET',
             },
+            AvailableTimes:{
+                url: `${endpoint}${version}/clinic/available-times/`,
+                method: 'GET',
+            },
         }
     },
 
@@ -329,7 +333,27 @@ let api = {
                 url: `${endpoint}${version}/dashboard/doctor/period-appointment-stats/`,
                 method: 'GET',
             },
+            TotalEntries: {
+                url: `${endpoint}${version}/dashboard/doctor/total-entries/`,
+                method: 'GET',
+            },
+            Notifications: {
+                url: `${endpoint}${version}/dashboard/doctor/notifications/`,
+                method: 'GET',
+            },
         },
+    },
+    {
+        url: 'auth/profile/notifications/',
+        resource: 'Notifications',
+        custom: {
+            MarkAllAsRead: {
+                url: `${endpoint}${version}/auth/profile/notifications/mark-all-as-read/`,
+                method: 'GET',
+            },
+
+        },
+
     },
 
 

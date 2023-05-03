@@ -67,7 +67,12 @@ function FormInput({
                                      placeholder={' '}
                                      onFocus={() => setFocused(true)}
                                      onBlur={() => setFocused(false)}
-                                     onChange={e => setValue(e)}
+                                     onChange={e =>{
+                                         if (inputProps.onChange) {
+                                             inputProps.onChange(e)
+                                         }
+                                         setValue(e)
+                                     }}
                                      disabled={inputDisabled}
                                      disabledDate={disabledDate}
                                      style={{width: '100%', height: 48}}

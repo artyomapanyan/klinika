@@ -4,6 +4,7 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
 function ResourceSelectPaginated({
+                                     updateInitials=false,
                                    initialData = [],
                                    resource = null,
                                    name,
@@ -42,7 +43,9 @@ function ResourceSelectPaginated({
 
     },[resourceParams])
     useEffect(()=>{
-        setLocalData(initialData)
+        if(initialData.length>1){
+            setLocalData(initialData)
+        }
     },[initialData])
   const handleGenerateOptions = (data) => {
         // console.log(data,name)

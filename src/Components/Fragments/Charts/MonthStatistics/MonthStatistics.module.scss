@@ -8,6 +8,13 @@
   display: grid;
   grid-template-columns: 50% auto;
   grid-gap: 10px;
+  .title {
+    font-weight: 700;
+    font-size: 24px;
+    font-family: Roboto;
+    width: 200%;
+    margin-left: 15px;
+  }
 
   .itemGroup {
     display: flex;
@@ -15,32 +22,36 @@
     align-items: center;
     position: relative;
 
+
     .numbers {
       font-weight: 700;
       font-size: 32px;
       margin: 30px;
+
     }
 
     .text {
       font-weight: 700;
-      color: #635D6B;
+      color: #42394D;
+      font-size: 14px;
+      font-family: Inter;
     }
 
     .rightLine {
       position: absolute;
       right: -4px;
-      top: calc(50% - 40px);
+      top: calc(60% - 37px);
       width: 1px;
-      height: 80%;
+      height: 78%;
       background-color: #42394D;
       opacity: .2;
     }
 
     .bottonLine {
       position: absolute;
-      left: calc(50% - 65px);
+      margin: 0 20px;
       bottom: calc(50% - 80px);
-      width: 78%;
+      width: 77%;
       height: 1px;
       background-color: #42394D;
       opacity: .2;

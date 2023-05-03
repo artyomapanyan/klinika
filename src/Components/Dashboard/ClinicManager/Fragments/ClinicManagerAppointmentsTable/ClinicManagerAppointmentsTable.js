@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Table} from "antd";
+import {Button, Form, Modal, Table} from "antd";
 import {RightOutlined} from "@ant-design/icons";
 import ColorSelect from "../../../../Fragments/ColorSelect";
 import ClinicManagerAppointmentsTableHead from "./Fregment/ClinicManagerAppointmentsTableHead";
@@ -12,104 +12,84 @@ import Active_icon from "../../../../../dist/icons/Active_icon.png";
 import commentIcon from "../../../../../dist/icons/commentIcon.svg";
 import phoneIcon from "../../../../../dist/icons/phoneIcon.svg";
 import Resource from "../../../../../store/Resources";
+import {CanceledContent} from "../../../Appointments/StatusModalForms/CanceledContent";
+import {FinishedContent} from "../../../Appointments/StatusModalForms/FinishedContent";
+import {RascheduledContent} from "../../../Appointments/StatusModalForms/RascheduledContent";
+import {useSelector} from "react-redux";
+import {postResource} from "../../../../Functions/api_calls";
 
 
 function ClinicManagerAppointmentsTable() {
-    const [date, setDate] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
+    let token = useSelector((state) => state.auth.token);
+
+    const [dateWeek, setDateWeek] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
+
+    const [modal,setModal] = useState(false)
+    const [loading,setLoading] = useState(false)
+    const [date,setDate] = useState(false)
 
 
-    const dataSource = [
-        {
-            patient: 'Merrill Kervin',
-            phone: '+966568499214',
-            doctor: 'Doctor Name',
-            specialty: 'Specialty',
-            date: '10.07.22',
-            time: '10:00 AM',
-            price: '1357.5 SAR',
-            offer: <img alt={'icons'} src={checkmarkGreen}/>,
-            actions: <img alt={'icons'} src={printIcon}/>,
-            status: '',
-            modal: '',
+    const onStatusChange = (key,record)=>{
+        setModal({
+            ...record,
+            key
+        })
 
-        }, {
-            patient: 'Merrill Kervin',
-            phone: '+966568499214',
-            doctor: 'Doctor Name',
-            specialty: 'Specialty',
-            date: '10.07.22',
-            time: '10:00 AM',
-            price: '1357.5 SAR',
-            offer: <img alt={'icons'} src={checkmarkGreen}/>,
-            actions: <img alt={'icons'} src={printIcon}/>,
-            status: '',
-            modal: '',
-        },
-        {
-            patient: 'Merrill Kervin',
-            phone: '+966568499214',
-            doctor: 'Doctor Name',
-            specialty: 'Specialty',
-            date: '10.07.22',
-            time: '10:00 AM',
-            price: '1357.5 SAR',
-            offer: <img alt={'icons'} src={checkmarkGreen}/>,
-            actions: <img alt={'icons'} src={printIcon}/>,
-            status: '',
-            modal: '',
-        },
-        {
-            patient: 'Merrill Kervin',
-            phone: '+966568499214',
-            doctor: 'Doctor Name',
-            specialty: 'Specialty',
-            date: '10.07.22',
-            time: '10:00 AM',
-            price: '1357.5 SAR',
-            offer: <img alt={'icons'} src={checkmarkGreen}/>,
-            actions: <img alt={'icons'} src={printIcon}/>,
-            status: '',
-            modal: '',
-        },
-        {
-            patient: 'Merrill Kervin',
-            phone: '+966568499214',
-            doctor: 'Doctor Name',
-            specialty: 'Specialty',
-            date: '10.07.22',
-            time: '10:00 AM',
-            price: '1357.5 SAR',
-            offer: <img alt={'icons'} src={checkmarkGreen}/>,
-            actions: <img alt={'icons'} src={printIcon}/>,
-            status: '',
-            modal: '',
-        },
+    }
+
+    const onFinish = (values) => {
+        setLoading(true)
+        if (values?.booked_at) {
+            values.booked_at = values.booked_at.format('YYYY-MM-DD') + values.appointment_time
+        }
 
 
-    ];
+        setLoading(true)
+        postResource('Appointment','single', token, modal.id, {
+            status:modal.key,
+            ...values
+        }).then((response) => {
 
-    const items = [
-        {
-            label: 'New',
-            key: '1',
-        },
-        {
-            label: 'Rescheduled',
-            key: '2',
-        },
-        {
-            label: 'Finished',
-            key: '3',
-        },
+            setModal(null)
+            setLoading(false)
+        })
+    }
 
-    ];
+    const onCancel = () => {
+        setModal(null)
+    }
+
+    const handleValuesChange = (changed,all)=>{
+        if(changed.booked_at) {
+            setDate((prevDate)=>({
+                ...prevDate,
+                ...changed
+            }))
+        }
+
+    }
 
 
     return (
         <div className={'table_conteiner'}>
             <div style={{paddingBottom: 30}}>
 
-                <ClinicManagerCalendarHead hideData={true} date={date} setDate={setDate}/>
+                <ClinicManagerCalendarHead hideData={true} date={dateWeek} setDate={setDateWeek}/>
+
+
+                <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
+                    <Form onFinish={onFinish}
+                          onValuesChange={handleValuesChange}
+                    >
+                        {
+                            modal?.key === '3' ? <CanceledContent onCancel={onCancel} /> : modal?.key === '2' ? <FinishedContent onCancel={onCancel} /> :
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent modal={modal} onCancel={onCancel} date={date} /> : null
+                        }
+
+                    </Form>
+                </Modal>
+
+
             </div>
             <ResourceTable
                 noHeader={true}
@@ -121,14 +101,14 @@ function ClinicManagerAppointmentsTable() {
                     title: 'Patient',
                     dataIndex: 'patient',
                     key: 'patient',
-                    render: (e, record) => <div style={{fontWeight: 700, fontSize: 17}}>{record?.name}</div>
+                    render: (e, record) => <div style={{fontWeight: 700, fontSize: 14, fontFamily: 'Roboto'}}>{record?.patient?.first} {record?.patient?.last}</div>
                 },
                     {
                         title: 'Phone',
                         dataIndex: 'phone',
                         key: 'phone',
                         render:(e, record) => {
-                            console.log(record)
+                            return <div>{record?.patient?.phone_number}</div>
                         }
                     },
                     {
@@ -181,14 +161,15 @@ function ClinicManagerAppointmentsTable() {
                         dataIndex: 'actions',
                         key: 'actions',
                         render: (e, record) => {
-                            return record.status == 3 ? <img alt={'icons'} src={printIcon}/> : <div><img alt={'phoneIcon'} src={phoneIcon}/><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></div>
+                            console.log(record?.patient?.phone_number)
+                            return record.status == 2 ? <img alt={'icons'} src={printIcon}/> : record.status == 3 ? <div></div> : <div><a href={`tel:${record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`sms:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
                         }
                     },
                     {
                         title: 'Status',
                         dataIndex: 'status',
                         key: 'status',
-                        render: (e, record) => <ColorSelect items={items} initialValue={record?.status.toString()} record={record} resource={'Appointment'} name={'status'}/>
+                        render: (e, record) => <ColorSelect height={true} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={'Appointment'} onChange={onStatusChange} name={'status'}/>
                     },
                     {
                         title: '',

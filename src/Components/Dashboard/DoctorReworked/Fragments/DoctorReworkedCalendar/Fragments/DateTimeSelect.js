@@ -9,7 +9,7 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({bookedAtState, setBookedAtState, drFormRef}) {
+function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 
@@ -33,13 +33,13 @@ function DateTimeSelect({bookedAtState, setBookedAtState, drFormRef}) {
         }
 
     }
+    console.log(authRedux, 'red')
 
-    console.log(drFormRef)
-
+    let clinicId = authRedux?.clinics?.find(e=>e?.id===formData?.clinic_id)?.id
     const onDateClick = (e) => {
         setDate(e)
         setTimeLoading(true)
-        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, 75 + "/" + 34, {
+        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + clinicId, {
             service: 'telehealth',
             date: dayjs(e).format('YYYY-MM-DD')
         }).then((response) => {

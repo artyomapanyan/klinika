@@ -19,19 +19,7 @@ function Cities() {
                     title: t('Doctor'),
                     dataIndex: 'name',
                     key: 'name',
-                    render:()=>{
-                        return <div className={'avatar_div'}>
-                            <Space >
-                                <Avatar shape="square" size={90} style={{width: 120, borderRadius: 12}} icon={<UserOutlined />} />
-                                <div style={{display:"block"}}>
-                                    <div className={'text_name_clinic'}>Diriyah Hospital</div>
-                                    <div className={'text_address'}>Ar Rihab, Diriyah 13717, Saudi Arabia</div>
-                                </div>
 
-                            </Space>
-
-                        </div>
-                    }
                 },
                 {
                     title:t('City'),

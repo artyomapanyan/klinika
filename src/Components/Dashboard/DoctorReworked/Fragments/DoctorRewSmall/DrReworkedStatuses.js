@@ -57,10 +57,9 @@ function DrReworkedStatuses() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: ["#6DAF56","#BF539E", "#87828E",  "#FFD850"],
+                            backgroundColor: ["#BF539E","#6DAF56", "#87828E",  "#FFD850"],
                             weight: 0.5,
-                            data: [1,1,3,5],
-                                //Object.values(response.appointments),
+                            data: Object.values(response.appointments),
                             spacing: 0,
                             borderWidth: 0,
                         },

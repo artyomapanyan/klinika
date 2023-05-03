@@ -13,9 +13,9 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
             <td className="hiddenTableRow__col">
                 <div className="hiddenTableRow__col-item">
                     <div className="circleImageHolder">
-                        <Avatar size={45}  src={docItem.doctor.avatar?.url}/>
+                        <Avatar size={36}  src={docItem.doctor.avatar?.url}/>
                     </div>
-                    <p>{docItem?.doctor?.first} {docItem?.doctor?.last}</p>
+                    <p className={'cl_manager_calendar_dr_name'}>{docItem?.doctor?.first} {docItem?.doctor?.last}</p>
                 </div>
             </td>
             {
@@ -33,8 +33,8 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                     </td>
                 })
             }
-            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
-                {selectedDate&&<CalendarInnCollapseModal setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/>}
+            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'384px'} footer={null}>
+                {selectedDate ? <CalendarInnCollapseModal key={selectedDate} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
         </tr>
     )

@@ -2,16 +2,22 @@ import {Avatar, Button, Col, Form, Row, Space, Tag} from "antd";
 import {LeftOutlined, UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import Resources from "../../../../../../store/Resources";
+import dayjs from "dayjs";
 
 
 function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment}) {
     const formRef = useRef();
+
+    const [loading, setLoading] = useState(false)
+
     const onFinish = (values) => {
+        setLoading(true)
         handleCreateAppointment(data,{
             patient:values
         })
+        setLoading(false)
     }
     const handleMapItems = (item, name) => {
         name = item.phone_code ? `${item.phone_code} ` : null
@@ -53,24 +59,25 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                     />
                                 </div>
                                 <div style={{marginLeft:20, width:'100%'}}>
-                                    <FormInput label={t('Phone number')} name={'phone_number'} />
+                                    <FormInput maxLength={9} label={t('Phone number')} name={'phone_number'} />
                                 </div>
                             </div>
                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                        initialData={Resources?.Gender}
                             />
+
                              {/*   <FileManager text1={'Insurance Card Front'}
                                              text2={'upload image'}
                                              uploadIcon={<img alt={'icons'} src={addimage}/>}
                                              name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>*/}
                             <div>
-                                <Button style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                                <Button loading={loading} style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                             </div>
                         </Form>
                     </div>
                 </Col>
                 <Col lg={12}>
-                    <div align={'right'} style={{marginTop:40}}>
+                    <div align={'right'} style={{marginTop:47}}>
                         <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} /> Back to short form</Button>
                     </div>
                     <div style={{marginTop:22}}>
@@ -79,18 +86,48 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             onFinish={onFinish}
                             layout="vertical"
                         >
-                            <FormInput label={t('Address')}   rules={[{required: true}]} />
-                            <FormInput label={t('Date of Birth')} inputType={'date'} rules={[{required: true}]} />
-                            <FormInput label={t('Natoinality')} />
+                            {/*<FormInput label={t('Address')} name={'address'}  rules={[{required: true}]} />*/}
+                            <FormInput label={t('Country')} name={'country_id'}
+                                       inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       resource={'Country'}/>
+                            <FormInput label={t('Date of Birth')} inputType={'date'} name={'dob'} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if(dayjs().diff(value,'year')<18){
+                                            return Promise.reject('min age 18')
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]} />
+                            <FormInput label={t('Nationality number')} name={'nationality_number'} rules={[
+                                {required: true},
+                                // {
+                                //     validator:(rule,value)=>{
+                                //         if(value?.length < 10){
+                                //             return Promise.reject('min length 10')
+                                //         }
+                                //         return Promise.resolve();
+                                //     }
+                                // }
+
+                            ]} />
                             <FormInput label={t('Identification number')} />
-                            <FormInput label={t('Insurance company')} />
+                            <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialData={data?.insurance_companies??[]}
+                                       resource={'InsuranceCompany'}
+                                       resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
+                            />
                             {/*<FileManager text1={'Insurance Card Back'}
                                          text2={'upload image'}
                                          uploadIcon={<img alt={'icons'} src={addimage}/>}
                                          name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>*/}
 
                             <div >
-                                <Button style={{width:'100%',}} size={'large'}  type={'secondary'} onClick={()=>setOpen(false)} htmlType="submit">{t('Cancel')}</Button>
+                                <Button loading={loading} style={{width:'100%',}} size={'large'}  type={'secondary'} onClick={()=>setOpen(false)} htmlType="submit">{t('Cancel')}</Button>
                             </div>
 
                         </Form>

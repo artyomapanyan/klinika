@@ -4,6 +4,9 @@ import {t} from "i18next";
 import React from "react";
 
 export function FinishedContent({onCancel}){
+
+
+
     return<div>
         <Result
             title="Your notes for the patient"

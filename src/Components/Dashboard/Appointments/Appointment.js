@@ -37,6 +37,8 @@ function Appointment() {
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
     const [availableDateState, setAvailableDateState] = useState([])
+
+    const [clinicAvailableTimeState, setClinicAvailableTimeState] = useState([])
     const [changeValuesState, setChangeValuesState] = useState({})
 
     const fetchedUsers = useRef([]);
@@ -118,10 +120,11 @@ function Appointment() {
 
 
     useEffect(() => {
-        if (data?.appointment_date) {
+
+        if(data?.booked_at  && data?.doctor_id ){
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {
                 service: data?.service_type,
-                date: data?.appointment_date.format('YYYY-MM-DD')
+                date: data?.booked_at?.format('YYYY-MM-DD')
             }).then((responce) => {
 
                 setAvailableTimesState(responce.map((el) => {
@@ -137,19 +140,43 @@ function Appointment() {
                 }))
             })
         }
+        if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(data?.service_type)) {
+            postResource('Clinic', 'AvailableTimes', token, data?.clinic_id, {
+                date: data?.booked_at?.format('YYYY-MM-DD'),
+                service: data?.service_type,
+            }).then((res) => {
+                setAvailableTimesState(res.map((el) => {
+                    return {
+                        label: 'Break Time',
+                        options: el.map((el1) => {
+                            return {
+                                lebel: el1,
+                                value: el1
+                            }
+                        })
+                    }
+                }))
+            })
+        }
+
+
+
 
     }, [data?.booked_at, data?.doctor_id])
 
 
-    const onFinish = (values) => {
-        values.dob = values.patient.dob.format('YYYY-MM-DD')
-        values.booked_at = values.booked_at.format('YYYY-MM-DD')
-        setSaveLoading(true)
-        setData((prevState) => ({
-            ...prevState,
-            ...values
-        }))
 
+
+    const onFinish = (values) => {
+        if(values.patient_id){
+            delete values.patient;
+            delete values.dob
+        } else {
+            values.dob = values.patient.dob.format('YYYY-MM-DD')
+        }
+
+        values.booked_at = values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
+        setSaveLoading(true)
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if (response?.id) {
@@ -172,6 +199,7 @@ function Appointment() {
 
 
     const handleValuesChange = (e, v) => {
+
         setData((prevState) => ({
             ...prevState,
             ...e
@@ -283,6 +311,7 @@ function Appointment() {
                                                     <FormInput label={t('Phone number')}
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient','phone_number']}
+                                                               maxLength={9}
 
 
                                                                rules={[{required: true}]}/>
@@ -325,14 +354,14 @@ function Appointment() {
                                                                initialValue={formRef.current.getFieldValue(['patient','dob'])}
                                                                inputType={'date'} rules={[
                                                         {required: !data?.patient_id},
-                                                        // {
-                                                        //     validator:(rule,value)=>{
-                                                        //         if(dayjs().diff(value,'year')<18){
-                                                        //             return Promise.reject('min age 18')
-                                                        //         }
-                                                        //         return Promise.resolve();
-                                                        //     }
-                                                        // }
+                                                        {
+                                                            validator:(rule,value)=>{
+                                                                if(dayjs().diff(value,'year')<18){
+                                                                    return Promise.reject('min age 18')
+                                                                }
+                                                                return Promise.resolve();
+                                                            }
+                                                        }
                                                     ]}/>
                                                     <FormInput label={t('Gender')} name={['patient','gender']}
                                                                disabled={data?.patient_id}
@@ -344,7 +373,17 @@ function Appointment() {
                                                     <FormInput label={t('Nationality Number')}
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient',"nationality_number"]}
-                                                               rules={[{required: !data?.patient_id}]}/>
+                                                               rules={[
+                                                                   {required: !data?.patient_id},
+                                                                   {
+                                                                       validator:(rule,value)=>{
+                                                                           if(value?.length < 10){
+                                                                               return Promise.reject('min length 10')
+                                                                           }
+                                                                           return Promise.resolve();
+                                                                       }
+                                                                   }
+                                                               ]}/>
 
                                                     <FormInput label={t('Status')} disabled={data?.patient_id}
                                                                name={['patient','status']} inputType={'resourceSelect'}

@@ -32,20 +32,22 @@ function ClinicManagerProgressCount({dataKey}) {
 
     return (<Spin spinning={loading}>
             <Space>
-                <Space direction={'vertical'}>
+                <Space direction={'vertical'} className={'dr_progress_big_div'}>
                     <div className={'clinic_owner_big_text'}>
                         {data.count}
                     </div>
                     <div style={{color: data.percent_change > 0 ? "#6DAF56" : "rgba(207, 83, 62, 1)"}}>
-                        <img alt={'icons'} src={data.percent_change > 0 ? arrowGreen : arrowRed}/> {data.percent_change?.toFixed(2)}%
+                        <img alt={'icons'} src={data.percent_change > 0 ? arrowGreen : arrowRed}/> <span style={{fontWeight: 700}}>{data.percent_change?.toFixed(1)}%</span>
                     </div>
                 </Space>
                 <Space></Space>
                 <Space direction={'vertical'}>
-                    <div>
-                        {t("Total "+GMBK(ownerClinics.month_key)+"’s")}
+                    <div className={'avg_montly'}>
+                        <span>{t("Total ")}</span>
+                        <span style={{fontWeight: 700}}>{t(GMBK(ownerClinics.month_key)+"’s")}</span>
+
                     </div>
-                    <div className={'chart_counter_bold_text'}>
+                    <div className={'dr_counter_text'}>
                         {t("appointments")}
                     </div>
                 </Space>
