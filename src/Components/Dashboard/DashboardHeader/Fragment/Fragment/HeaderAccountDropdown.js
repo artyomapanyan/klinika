@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button} from "antd";
 import "./HeaderAccountDropdown.sass"
 import checkout from "../../../../../dist/icons/checkout.svg";
@@ -34,20 +34,30 @@ function HeaderAccountDropdown() {
                 type: 'AUTH',
                 payload: response
             })
-            // switch (response.selected_role.key){
-            //     case 'clinic-manager':
-            //         return navigate('/dashboard/clinic-manager')
-            //     case 'clinic-owner':
-            //         return navigate('/dashboard/clinics-owner')
-            //     case 'doctor':
-            //         return navigate('/dashboard/doctor-reworked')
-            //
-            //     default:
-            //         return  navigate('/dashboard')
-            //
-            // }
+
         })
     }
+
+    useEffect(() => {
+        postResource('Auth','switchRole', auth.token,null,{role_id:el.id}).then((response)=>{
+            dispatch({
+                type: 'AUTH',
+                payload: response
+            })
+            switch (response.selected_role.key){
+                case 'clinic-manager':
+                    return navigate('/dashboard/clinic-manager')
+                case 'clinic-owner':
+                    return navigate('/dashboard/clinics-owner')
+                case 'doctor':
+                    return navigate('/dashboard/doctor-reworked')
+
+                default:
+                    return  navigate('/dashboard')
+
+            }
+        })
+    }, [response.selected_role.key])
 
 
 
