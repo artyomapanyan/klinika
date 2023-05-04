@@ -46,7 +46,7 @@ function Coupon() {
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -54,7 +54,7 @@ function Coupon() {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)

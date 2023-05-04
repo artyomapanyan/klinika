@@ -181,6 +181,12 @@ let api = {
     {
         url: 'appointments',
         resource: 'Appointment',
+        // custom: {
+        //     AppointmentStatus:{
+        //         url: `${endpoint}${version}/appointments/`,
+        //         method: 'POST',
+        //     },
+        // }
     },
     {
         url: 'public/offers',
@@ -394,6 +400,10 @@ let api = {
                 },
                 updateField: {
                     url: `${endpoint}${version}/${item.url}/update-field/`,
+                    method: 'POST',
+                },
+                appointmentStatus: {
+                    url: `${endpoint}${version}/${item.url}/`,
                     method: 'POST',
                 },
                 ...item.custom

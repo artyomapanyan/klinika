@@ -35,7 +35,7 @@ function Report() {
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
 
                 }
             }).finally(() => {
@@ -44,7 +44,7 @@ function Report() {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
 
             }).finally(() => {

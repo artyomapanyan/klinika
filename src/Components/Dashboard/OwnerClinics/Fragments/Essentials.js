@@ -93,7 +93,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -101,7 +101,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)

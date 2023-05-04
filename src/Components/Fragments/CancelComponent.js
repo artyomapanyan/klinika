@@ -11,12 +11,12 @@ function CancelComponent({changeValuesState, resource}) {
             {
                 Object.keys(changeValuesState).length > 0 ? <Popconfirm
                     title={t("your changes will not be saved")}
-                    onConfirm={() => navigate(resourceLinks[resource]) }
+                    onConfirm={() => navigate(-1) }
                     okText={t("Yes")}
                     cancelText={t("No")}
                     icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
                     <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                </Popconfirm> : <Button onClick={() => navigate(resourceLinks[resource])} size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                </Popconfirm> : <Button onClick={() => navigate(-1)} size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
             }
         </div>
     )

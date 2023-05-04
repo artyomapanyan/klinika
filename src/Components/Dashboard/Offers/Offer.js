@@ -42,7 +42,7 @@ function Offer() {
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -50,7 +50,7 @@ function Offer() {
         } else {
             createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)

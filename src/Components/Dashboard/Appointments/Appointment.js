@@ -180,7 +180,7 @@ function Appointment() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -188,7 +188,7 @@ function Appointment() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
 
             }).finally(() => {

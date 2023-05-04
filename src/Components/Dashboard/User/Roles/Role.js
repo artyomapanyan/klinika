@@ -39,7 +39,7 @@ function Role() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
             }).finally(() => {
                 setLoading(false)
@@ -47,7 +47,7 @@ function Role() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks[resource])
+                    navigate(-1)
                 }
 
             }).finally(() => {

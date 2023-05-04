@@ -40,12 +40,12 @@ function Appointments() {
     const onFinish = (values) => {
         setLoading(true)
         if (values?.booked_at) {
-            values.booked_at = values.booked_at.format('YYYY-MM-DD') + values.appointment_time
+            values.booked_at = values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
         }
 
 
         setLoading(true)
-        postResource('Appointment','single', token, modal.id, {
+        postResource('Appointment','appointmentStatus', token, `${modal.id}/switch-status`, {
             status:modal.key,
             ...values
         }).then((response) => {
