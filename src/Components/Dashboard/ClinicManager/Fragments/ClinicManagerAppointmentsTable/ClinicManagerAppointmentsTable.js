@@ -92,10 +92,10 @@ function ClinicManagerAppointmentsTable() {
 
             </div>
             <ResourceTable
-                tableSFilters={{
+               /* tableSFilters={{
                     from:dateWeek[0].format('YYYY-MM-DD'),
                     to:dateWeek[1].format('YYYY-MM-DD'),
-                }}
+                }}*/
                 noHeader={true}
                 hideActions={true}
                 resource={'Appointment'}

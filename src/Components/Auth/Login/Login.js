@@ -63,7 +63,20 @@ function Login() {
                             type: 'AUTH',
                             payload: response
                         })
-                        navigate('/dashboard')
+                        switch (response.selected_role.key){
+                            case 'clinic-manager':
+                                return navigate('/dashboard/clinic-manager')
+                            case 'clinic-owner':
+                                return navigate('/dashboard/clinics-owner')
+                            case 'doctor':
+                                return navigate('/dashboard/doctor-reworked')
+
+                            default:
+                                return  navigate('/dashboard')
+
+                        }
+                        return  navigate('/dashboard')
+
                     }
                 }
             }).finally(() => {
