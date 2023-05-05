@@ -39,6 +39,11 @@ function CounterMultipleChart({data}) {
             responsive: true,
             options: {
                 cutout: "45%",
+                plugins: {
+                    tooltip: {
+                        enabled: false,
+                    },
+                },
             },
         });
         return () => {

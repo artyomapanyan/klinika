@@ -16,6 +16,7 @@ import {FinishedContent} from "./StatusModalForms/FinishedContent";
 import {RascheduledContent} from "./StatusModalForms/RascheduledContent";
 import {postResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import Preloader from "../../Preloader";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
@@ -42,9 +43,6 @@ function Appointments() {
         if (values?.booked_at) {
             values.booked_at = values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
         }
-
-
-        setLoading(true)
         postResource('Appointment','appointmentStatus', token, `${modal.id}/switch-status`, {
             status:modal.key,
             ...values
@@ -77,14 +75,15 @@ function Appointments() {
                           onValuesChange={handleValuesChange}
                     >
                         {
-                            modal?.key === '3' ? <CanceledContent onCancel={onCancel} /> : modal?.key === '2' ? <FinishedContent onCancel={onCancel} /> :
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent modal={modal} onCancel={onCancel} date={date} /> : null
+                            modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
+                                modal?.key === '2' ? <FinishedContent loading={loading}  onCancel={onCancel} /> :
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> : null
                         }
 
                     </Form>
                 </Modal>
 
-                <ResourceTable resource={resource}
+                {loading?<Preloader/>:<ResourceTable resource={resource}
                                customActions={{
                                    edit:(record)=>{
                                        navigate(`${ResourceLinks[resource] + record.id}`)
@@ -135,11 +134,11 @@ function Appointments() {
                        title:t('Status'),
                        key:'status',
                         render: (e, record) => {
-                            return <ColorSelect items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
+                            return <ColorSelect appointmentloading={loading} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
                         }
 
                        },
-                ]} title={t('Appointments')}/>
+                ]} title={t('Appointments')}/>}
             </div>
         </div>
     )

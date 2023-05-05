@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-export function RascheduledContent({onCancel, modal}){
+export function RascheduledContent({onCancel, modal, loading}){
     let token = useSelector((state) => state.auth.token);
     const [date,setDate] = useState(null);
     const [availableTimes,setAvailableTimesState] = useState([]);
@@ -87,7 +87,7 @@ export function RascheduledContent({onCancel, modal}){
 
         <div style={{display: 'flex', gap: 3}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
-            <Button size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
+            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
         </div>
 
     </div>

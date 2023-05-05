@@ -31,6 +31,12 @@ function IncomeChannelsChart() {
                 percentages.push(response[key].percentage)
             })
 
+            const count = []
+            Object.keys(response).map((key) => {
+                count.push(response[key].count)
+            })
+            console.log(response)
+
             const shadowPlugin = {
                 beforeDraw: (chart) => {
                     const {ctx} = chart;
@@ -50,7 +56,7 @@ function IncomeChannelsChart() {
                     ctx.save();
                     ctx.font = "700 24px Roboto";
                     ctx.textAlign = "center";
-                    ctx.fillStyle = "#BF539E";
+                    ctx.fillStyle = "#6DAF56";
                     ctx.fillText(
                         percentages[0] + "%",
                         width / 2,
@@ -89,7 +95,7 @@ function IncomeChannelsChart() {
                     ctx.restore();
                     ctx.font = "700 18px Roboto";
                     ctx.textAlign = "center";
-                    ctx.fillStyle = "#6DAF56";
+                    ctx.fillStyle = "#BF539E";
                     ctx.fillText(
                         percentages[1] + "%",
                         width / 2,
@@ -152,13 +158,13 @@ function IncomeChannelsChart() {
                                 <td>
                                     <div
                                         key={key}
-                                        className={`withDot WD-color-${i}`}
+                                        className={`withDot WD-color-incom-channels-${i}`}
                                     >
                                         <span>{Resource.incomeChannelsLabels[i]} </span>
                                     </div>
                                 </td>
                                 <td style={{width:'20%', fontWeight: 700}}>
-                                    {(data[key].percentage * 10).toFixed()}
+                                    {data[key].count}
                                 </td>
                                 <td style={{textAlign:'right'}}>
                                     <div className={`withPercentage color-${i}`}>{data[key].percentage} %</div>

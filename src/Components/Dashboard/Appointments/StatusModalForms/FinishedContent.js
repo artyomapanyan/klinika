@@ -3,7 +3,7 @@ import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import React from "react";
 
-export function FinishedContent({onCancel}){
+export function FinishedContent({onCancel, loading}){
 
 
 
@@ -16,7 +16,7 @@ export function FinishedContent({onCancel}){
         <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'}/>
         <div style={{display: 'flex', gap: 5}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
-            <Button size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
+            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
         </div>
 
     </div>
