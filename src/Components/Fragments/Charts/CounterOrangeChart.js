@@ -71,6 +71,11 @@ function CounterOrangeChart() {
             },
             options: {
                 cutout: "75%",
+                plugins: {
+                    tooltip: {
+                        enabled: false,
+                    },
+                },
             },
             plugins: [counterforOrangeDoughnut],
         });
