@@ -72,9 +72,9 @@ function ClinicManagerAppointmentsTable() {
 
     return (
         <div className={'table_conteiner'}>
-            <div style={{paddingBottom: 30}}>
+            <div style={{paddingBottom: 60}}>
 
-                <ClinicManagerCalendarHead  hideData={true} date={dateWeek} setDate={setDateWeek} showMonth={true}/>
+
 
 
                 <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
@@ -92,10 +92,11 @@ function ClinicManagerAppointmentsTable() {
 
             </div>
             <ResourceTable
-               /* tableSFilters={{
-                    from:dateWeek[0].format('YYYY-MM-DD'),
-                    to:dateWeek[1].format('YYYY-MM-DD'),
-                }}*/
+                customHeader={(props)=> <ClinicManagerCalendarHead getDates={(dates)=>props.setParams((prevState)=>({
+                    ...prevState,
+                    from:dates[0].format('YYYY-MM-DD'),
+                    to:dates[1].format('YYYY-MM-DD'),
+                }))}  hideData={true} date={dateWeek} setDate={setDateWeek} showMonth={true}/>}
                 noHeader={true}
                 hideActions={true}
                 resource={'Appointment'}

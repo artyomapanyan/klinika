@@ -29,6 +29,7 @@ function ResourceTable ({
     editBtnStyle = {},
     tableSFilters,
     customTableButton,
+    customHeader=null
 }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
@@ -187,6 +188,12 @@ function ResourceTable ({
 
 
     return (<Content className={'layout-conatiner'}>
+        {customHeader?<Row>
+            <Col lg={24}>{customHeader({
+                setParams,
+                params
+            })}</Col>
+        </Row>:null}
         {!noHeader&&<Row className={'resource-header'}>
             <Col lg={11}>
                 <div style={{display:'flex', gap: 4}}>
