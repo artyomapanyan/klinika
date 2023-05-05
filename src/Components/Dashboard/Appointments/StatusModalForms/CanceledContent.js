@@ -3,7 +3,7 @@ import FormInput from "../../../Fragments/FormInput";
 import React from "react";
 import {Button, Result} from "antd";
 
-export function CanceledContent({onCancel}){
+export function CanceledContent({onCancel, loading}){
     return<div>
         <Result
             status="error"
@@ -14,8 +14,8 @@ export function CanceledContent({onCancel}){
 
             <FormInput label={t('Reason')} name={'cancellation_reason'} inputType={'textArea'}/>
             <div style={{display: 'flex', gap: 5}} >
-                <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
-                <Button size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
+                <Button  size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
+                <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
             </div>
 
     </div>
