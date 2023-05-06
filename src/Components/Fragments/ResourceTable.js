@@ -60,19 +60,22 @@ function ResourceTable ({
 
     }
     useEffect(()=>{
-        setParams((prevState)=>({
-            ...prevState,
-            ...(tableSFilters??{})
-        }))
-        clearObject(params)
-        setSearchParams({
-            ...params,
-            ...(tableSFilters??{})
-        })
-        setParams({
-            ...params,
-            ...(tableSFilters??{})
-        })
+        if(Object.keys(tableSFilters).length){
+            setParams((prevState)=>({
+                ...prevState,
+                ...(tableSFilters??{})
+            }))
+            clearObject(params)
+            setSearchParams({
+                ...params,
+                ...(tableSFilters??{})
+            })
+            setParams({
+                ...params,
+                ...(tableSFilters??{})
+            })
+        }
+
     },[tableSFilters])
     const {setLoading, loading} = loadingState;
     const {setData, data} = dataState

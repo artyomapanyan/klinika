@@ -14,7 +14,6 @@ const resource = 'Clinic'
 
 function ClinicTabManageDoctors() {
     const params = useParams();
-    const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
 
     const [isModalOpen, setIsModalOpen] = useState(false);

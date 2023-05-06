@@ -17,14 +17,13 @@ import {MoreOutlined} from "@ant-design/icons";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
-import SecondClinicTabManageDoctors from './Fragments/SecondClinicTabManageDoctors';
+//import SecondClinicTabManageDoctors from './Fragments/SecondClinicTabManageDoctors';
 import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
 
 
 const resource = "Clinic"
 
 function Clinic() {
-    const navigate = useNavigate();
     const params = useParams();
     let locale = useSelector((state) => state?.app?.current_locale);
     const [lang, setLang] = useState(locale)
@@ -45,6 +44,7 @@ function Clinic() {
     const handleLangChange = (e) => {
         setLang(e.target.value)
     }
+    console.log(loading)
 
     return (
         <div >
