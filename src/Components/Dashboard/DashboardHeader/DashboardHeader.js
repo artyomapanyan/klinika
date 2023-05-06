@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button, Col, Dropdown, Row, Space} from "antd";
 import "../../../dist/styles/Styles.sass"
 import HeaderAccount from "./Fragment/HeaderAccount";
@@ -13,6 +13,14 @@ import DoctorReworked from "../DoctorReworked/DoctorReworked";
 
 function DashboardHeader() {
     const {pathname} = useLocation()
+    const [loading,setLoading] = useState(true);
+    useEffect(()=>{
+        setTimeout(()=>{
+            setLoading(false)
+        },50)
+
+    },[])
+
 
     const handleReturnHeaderPart = ()=>{
         switch (true){
@@ -38,7 +46,7 @@ function DashboardHeader() {
 
     return <Row>
         <Col lg={14} md={24}>
-            {handleReturnHeaderPart()}
+            {loading?null:handleReturnHeaderPart()}
         </Col>
         <Col lg={10} md={24} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", padding:pathname==='clinics' ? 0 :'15px 36px'}} className={'lng_select'}>
             {pathname==='clinics'  ? <div></div> : <HeaderAccount />}

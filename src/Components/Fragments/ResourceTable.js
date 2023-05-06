@@ -60,7 +60,7 @@ function ResourceTable ({
 
     }
     useEffect(()=>{
-        if(Object.keys(tableSFilters).length){
+        if(tableSFilters && Object.keys(tableSFilters).length){
             setParams((prevState)=>({
                 ...prevState,
                 ...(tableSFilters??{})

@@ -316,10 +316,10 @@ function AppLayout(){
                     {/*<Route path={'owner-clinics'} element={<OwnerClinics />}/>*/}
                     <Route path={'Reports/new'} element={<Report />}/>
                     <Route path={'patients'} element={<Patient />}/>
-                    <Route path={'clinics-owner'} element={<ClinicsOwner />}/>
-                    <Route path={'clinic-manager'} element={<ClinicManager />}/>
-                    <Route path={'doctor-reworked'} element={<DoctorReworked />}/>
-                    <Route path={'super-admin'} element={<SuperAdmin />}/>
+                    <Route path={'clinics-owner'} element={<AuthCheck roleKey={'clinic-owner'} ><ClinicsOwner /></AuthCheck>}/>
+                    <Route path={'clinic-manager'} element={<AuthCheck roleKey={'clinic-manager'} ><ClinicManager /></AuthCheck>}/>
+                    <Route path={'doctor-reworked'} element={<AuthCheck roleKey={'doctor'} ><DoctorReworked /></AuthCheck>}/>
+                    <Route path={'super-admin'} element={<AuthCheck roleKey={'super'} ><SuperAdmin /></AuthCheck>}/>
 
 
                 </Routes>
