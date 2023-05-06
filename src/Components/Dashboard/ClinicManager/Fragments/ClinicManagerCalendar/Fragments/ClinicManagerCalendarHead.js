@@ -7,7 +7,7 @@ import {GMBK} from "../../../../../../functions";
 import React, {useState} from "react";
 import arrow_next from "../../../../../../dist/icons/arrow-next.svg";
 import arrow_prev from "../../../../../../dist/icons/arrow-prev.svg";
-function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false}) {
+function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDates}) {
 
 
     dayjs.extend(customParseFormat);
@@ -24,6 +24,9 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false}) {
     const handleSwitchWeek = (val)=>{
         setDate((prevState)=>{
             const newStart = prevState[0].add(val,'week')
+            if(getDates){
+                getDates([newStart.startOf('week'),newStart.endOf('week')])
+            }
             return [newStart.startOf('week'),newStart.endOf('week')]
         })
     }
