@@ -165,7 +165,7 @@ function ClinicManagerAppointmentsTable() {
                         dataIndex: 'actions',
                         key: 'actions',
                         render: (e, record) => {
-                            console.log(record)
+
                             return record.status == 2 ? <img alt={'icons'} src={printIcon}/> : record.status == 3 ? <div></div> : <div><a href={`tel:${record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`sms:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
                         }
                     },

@@ -28,9 +28,12 @@ function DrReworkedStatuses() {
                     response.appointments[k] = 0
                 }
             })
-            console.log(Object.values(response.appointments), 'rrrrrrrrr')
+            let resApps = response.appointments
+
 
             setData(response.appointments??{})
+
+
 
             setLoading(false)
             const counterforGreenDoughnut = {
@@ -57,9 +60,9 @@ function DrReworkedStatuses() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: ["#BF539E","#6DAF56", "#87828E",  "#FFD850"],
+                            backgroundColor: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? ['#F5F6FA'] : ["#BF539E","#6DAF56", "#87828E",  "#FFD850"],
                             weight: 0.5,
-                            data: Object.values(response.appointments),
+                            data: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? [1,0,0,0] : Object.values(data),
                             spacing: 0,
                             borderWidth: 0,
                         },

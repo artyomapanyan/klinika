@@ -7,6 +7,7 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
 
 
     return (
+        <tbody>
         <tr id="hidden_row1" className="hide">
 
 
@@ -19,8 +20,8 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                 </div>
             </td>
             {
-                Object.keys(docItem?.availability??{}).map((key) => {
-                    return <td className="hiddenTableRow__col" onClick={() => setSelectedDate(key)}>
+                Object.keys(docItem?.availability??{}).map((key,id) => {
+                    return <td key={key} className="hiddenTableRow__col" onClick={() => setSelectedDate(key)}>
 
                         <div className="progress progressGreen">
                             <div className="progress-bar progressGreen__inside"
@@ -37,6 +38,8 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                 {selectedDate ? <CalendarInnCollapseModal key={selectedDate} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
         </tr>
+        </tbody>
+
     )
 }
 

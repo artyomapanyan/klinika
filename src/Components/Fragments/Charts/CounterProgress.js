@@ -36,6 +36,9 @@ function CounterProgress() {
                     </div>
                     <div style={{color:"#6DAF56"}}>
                         {
+                            data?.incomes == 0 && data?.percentage == 0 ? <div style={{color:"#a4a2a2", fontWeight: 600}}>
+                                    0%
+                                </div>:
                             data?.incomes >= data?.incomes_prev_month ? <div style={{color:"#6DAF56"}}>
                                 <img alt={'icons'} src={arrowGreen}/>
                                 {`${data?.percentage}% / + ${data?.incomes - data?.incomes_prev_month}`}

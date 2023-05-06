@@ -13,6 +13,7 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
 
     return(
         <>
+            <tbody>
             <tr>
                 <td>
                     <Button className="appointmentsBranch" onClick={openCollapse} >
@@ -20,8 +21,8 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
                         <DownOutlined/>
                     </Button>
                 </td>
-                {Object.keys(item?.availability??{}).map(key=>    <td>
-                    <div className="progress progressPurple" key={key}>
+                {Object.keys(item?.availability??{}).map(key=>    <td key={key}>
+                    <div className="progress progressPurple" >
                         <div className="progress-bar progressPurple__inside"
                              role="progressbar"
                              style={{width: item.availability[key]+'%'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
@@ -31,6 +32,8 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
                     </div>
                 </td>)}
             </tr>
+            </tbody>
+
             {
                 btnCollapsed ? Object.values(item?.doctors??{}).map((doctor, key)=><ClinicManagerCalendarInnCollapse key={key} setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
             }

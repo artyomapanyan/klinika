@@ -28,7 +28,9 @@ function StatusesChart() {
                     response.appointments[k] = 0
                 }
             })
-            console.log(response, 'rrrrrrrrr')
+
+            let resApps = response.appointments
+
 
             setData(response.appointments??{})
 
@@ -57,9 +59,9 @@ function StatusesChart() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: ["#BF539E", "#774D9D", "#6DAF56", "#FFD850"],
+                            backgroundColor: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? ['#F5F6FA'] :  ["#BF539E", "#774D9D", "#6DAF56", "#FFD850"],
                             weight: 0.5,
-                            data: Object.values(response.appointments),
+                            data: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? [1,0,0,0] :  Object.values(response.appointments),
                             spacing: 0,
                             borderWidth: 0,
                         },
@@ -94,7 +96,7 @@ function StatusesChart() {
                         Statuses
                     </div>
                     <div>
-                        {Object.keys(data).map((key)=>data[key] || data[key]==0?<Space  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></Space>:null)}
+                        {Object.keys(data).map((key)=>data[key] || data[key]==0?<Space  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatusesManager-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></Space>:null)}
                     </div>
                 </Space>
             </Space>

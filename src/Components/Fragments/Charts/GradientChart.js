@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import annotations from 'chartjs-plugin-annotation';
 import 'chartjs-plugin-style';
 
 function GradientChart() {
@@ -26,7 +27,6 @@ function GradientChart() {
     const [data, setData] = useState([]);
     const [radioState, setRadioState] = useState();
     const [idClinic, setIdClinic] = useState('');
-    const [maxPrevYear, setMaxPrevYear] = useState();
 
 
     const [date, setDate] = useState({
@@ -77,8 +77,57 @@ function GradientChart() {
             let canceled = Object.values(response?.incomes[3])
             let closed = Object.values(response?.incomes[2])
 
-            let a = Math.max(...prevYear);
-            let bb = [10, 19, 25, 10, 15, 2];
+
+            // let hasData = false;
+            // [...prevYear,...growth,...canceled,...closed].forEach((el) => {
+            //     if(el !== 0){
+            //         hasData = true;
+            //     }
+            // })
+            //
+            // let aaa = [0,0,0,0,0,0,0,];
+            // let bbbb = [0,0,0,0,0,0,0,];
+            // let cccc = [0,0,0,0,0,0,0,];
+            //
+            // [...aaa,...bbbb,...cccc].forEach((el) => {
+            //     if(el !== 0){
+            //         hasData = true;
+            //     }
+            // })
+            //
+            // console.log(hasData)
+
+
+             let isNull = [];
+            prevYear.forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+            growth.forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+            canceled.forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+            closed.forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+
+
             const monthNames = [
                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -116,28 +165,58 @@ function GradientChart() {
             const verticalLine = {
                 id: "verticalLine",
                 beforeDraw(chart) {
-                    const {
-                        ctx,
-                        chartArea: {top, height},
-                        scales: {x},
-                    } = chart;
-                    ctx.save();
-                    ctx.setLineDash([2, 2]);
-                    ctx.strokeStyle = "#635D6B";
-                    ctx.strokeRect(
-                        x.getPixelForValue(maxValueIndex),
-                        top - 20,
-                        0,
-                        height + 20
-                    );
-                    ctx.restore();
+                    if(isNull.length === 0) {
+                        const {
+                            ctx,
+
+                        } = chart;
+                        ctx.save();
+
+
+
+                    } else {
+                        const {
+                            ctx,
+                            chartArea: {top, height},
+                            scales: {x},
+                        } = chart;
+                        ctx.save();
+                        ctx.setLineDash([2, 2]);
+                        ctx.strokeStyle = "#635D6B";
+                        ctx.strokeRect(
+                            x.getPixelForValue(maxValueIndex),
+                            top - 20,
+                            0,
+                            height + 20
+                        );
+                        ctx.restore();
+                    }
+
                 },
             };
+
+            const noData = {
+                id: "no-data-text",
+                beforeDraw(chart) {
+                    const {
+                        ctx,
+                        chartArea: {height, width},
+                        scales: {x},
+                    } = chart;
+
+                    ctx.save();
+                    ctx.fillText(isNull.length === 0 ? "Ther aren't any information yet." : '',width/2,height/2, 500);
+                    ctx.restore();
+
+                },
+            }
+
+
             appointmentChartRef.current = new Chart(appointmentsStats, {
                 type: "line",
                 data: {
                     labels,
-                    datasets: [
+                    datasets: isNull.length === 0 ? [] :[
                         {
                             label: "Canceled",
                             data: canceled,
@@ -256,6 +335,7 @@ function GradientChart() {
                     },
                     plugins: {
 
+
                         tooltip: {
                             borderWidth: "4",
                             borderColor: "#e3e3e320",
@@ -353,7 +433,7 @@ function GradientChart() {
                         },
                     },
                 },
-                plugins: [verticalLine,ChartDataLabels],
+                plugins: [verticalLine, ChartDataLabels, noData],
             });
             setLoading(false)
         });

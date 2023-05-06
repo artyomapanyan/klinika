@@ -67,24 +67,27 @@ function ClinicManagerCalendar() {
                                 <div className="card-body">
                                     <div className="scrollXHide">
                                         <table className="w-100">
-                                            <tr className="d-flex align-items-center justify-content-between w-100">
-                                                <td>
-                                                    <div className="input-group md-form form-sm pl-0 mr-3 searchInput">
-                                                        <Input className={'search_input_clinic_man'}
-                                                               onChange={(e)=>setSearch(e.target.value)}
-                                                               value={search}
-                                                               aria-label="Search" prefix={<SearchOutlined size={30}/>}/>
-                                                    </div>
-                                                </td>
-                                                {[...Array(7).keys()].map(e => {
-                                                    return <td className="appointmentsDate">
-                                                        <div className="appointmentsDate__content">
-                                                            <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>
-                                                            <span style={{marginLeft: 5, fontSize: 18}} className="ppointmentsDate__content__text appointmentsDate__content__text--light">{Resources.Days[e]}</span>
+                                            <tbody>
+                                                <tr className="d-flex align-items-center justify-content-between w-100">
+                                                    <td>
+                                                        <div className="input-group md-form form-sm pl-0 mr-3 searchInput">
+                                                            <Input className={'search_input_clinic_man'}
+                                                                   onChange={(e)=>setSearch(e.target.value)}
+                                                                   value={search}
+                                                                   aria-label="Search" prefix={<SearchOutlined size={30}/>}/>
                                                         </div>
                                                     </td>
-                                                })}
-                                            </tr>
+                                                    {[...Array(7).keys()].map((e, key) => {
+                                                        return <td key={e} className="appointmentsDate">
+                                                            <div className="appointmentsDate__content">
+                                                                <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>
+                                                                <span style={{marginLeft: 5, fontSize: 18}} className="ppointmentsDate__content__text appointmentsDate__content__text--light">{Resources.Days[e]}</span>
+                                                            </div>
+                                                        </td>
+                                                    })}
+                                                </tr>
+                                            </tbody>
+
                                             {filteredData?.slice(0,showCount)?.map((item, key) => <ClicicManagerCalendarCollapse key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
                                         </table>
                                         {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>Load More</Button>:null}

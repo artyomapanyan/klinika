@@ -55,7 +55,6 @@ function CounterGreenChart() {
     },[data])
 
 
-
     useEffect(()=>{
         Chart.register(...registerables)
         appointmentChartRef.current = new Chart(canvasRef.current.getContext("2d"), {

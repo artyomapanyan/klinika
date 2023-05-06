@@ -12,7 +12,7 @@ import Preloader from "../../../../Preloader";
 
 const resource = 'Clinic'
 
-function ClinicTabManageDoctors({loadingState}) {
+function ClinicTabManageDoctors() {
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
@@ -65,7 +65,7 @@ function ClinicTabManageDoctors({loadingState}) {
                 <ManageDoctorsModal isModalOpen={isModalOpen} onCreate={onCreate}/>
             </div >
             <div className={'add_edit_content'}>
-                <ClinicApprovedDoctors loadingState={loadingState}/>
+                <ClinicApprovedDoctors />
             </div>
             
         </div>

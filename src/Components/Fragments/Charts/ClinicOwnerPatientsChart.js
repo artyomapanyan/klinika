@@ -45,6 +45,39 @@ function ClinicOwnerPatientsChart(){
                 newValues.push(e.new)
                 returnValues.push(e.returned)
             })
+
+
+            let isNull = [];
+            newValues.forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+            returnValues.forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+
+            const noData = {
+                id: "no-data-text",
+                beforeDraw(chart) {
+                    const {
+                        ctx,
+                        chartArea: {height, width},
+                        scales: {x},
+                    } = chart;
+
+                    ctx.save();
+                    ctx.fillText(isNull.length === 0 ? "Ther aren't any information yet." : '' ,width/2,height/2, 500);
+                    ctx.restore();
+
+                },
+            }
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
             let gradient = appointmentsStats.createLinearGradient(0, 400, 0, 10);
@@ -53,7 +86,7 @@ function ClinicOwnerPatientsChart(){
                 type: 'line',
                 data: {
                     labels,
-                    datasets: [
+                    datasets: isNull.length === 0 ? [] : [
 
                         {
                             label: "Approved",
@@ -230,6 +263,7 @@ function ClinicOwnerPatientsChart(){
                         },
                     },
                 },
+                plugins: [noData],
             });
             setLoading(false)
         })

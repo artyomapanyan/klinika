@@ -61,7 +61,7 @@ function OwnerClinics({resourceLink=null,}) {
                         dataIndex: 'HCPs',
                         key: 'HCPs',
                         render:(e, record)=>{
-                            console.log(record)
+
                             return<div className={'icon_text_div'}><img alt={'HCPs_icon'} src={HCPs_icon}/> <span className={'owner_clinic_table_texts'}>HCPs: 12</span></div>
                         }
                     },

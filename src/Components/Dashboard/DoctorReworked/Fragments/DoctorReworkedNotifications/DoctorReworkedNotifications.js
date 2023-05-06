@@ -92,7 +92,7 @@ function DoctorReworkedNotifications() {
     //     // },
     // ]
 
-    console.log(data)
+
 
     return (
         <div className={'dr_reworked_calendar'} style={{height: 613}}>

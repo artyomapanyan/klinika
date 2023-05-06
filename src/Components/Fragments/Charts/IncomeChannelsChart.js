@@ -35,7 +35,7 @@ function IncomeChannelsChart() {
             Object.keys(response).map((key) => {
                 count.push(response[key].count)
             })
-            console.log(response)
+
 
             const shadowPlugin = {
                 beforeDraw: (chart) => {
@@ -114,9 +114,9 @@ function IncomeChannelsChart() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: ["#774D9D", "#BF539E", "#6DAF56"],
+                            backgroundColor: response?.form_app?.count == 0 && response?.form_app?.percentage == 0 && response?.form_offer?.count == 0 && response?.form_offer?.percentage == 0 && response?.total?.count == 0 && response?.total?.percentage == 0 ? '#ffffff' : ["#774D9D", "#BF539E", "#6DAF56"],
                             weight: 0.5,
-                            data: percentages,
+                            data: response?.form_app?.count == 0 && response?.form_app?.percentage == 0 && response?.form_offer?.count == 0 && response?.form_offer?.percentage == 0 && response?.total?.count == 0 && response?.total?.percentage == 0 ? [1,0,0] : percentages,
                             spacing: -8,
                             borderWidth: 0,
                         },

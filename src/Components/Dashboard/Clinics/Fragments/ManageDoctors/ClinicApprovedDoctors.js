@@ -7,9 +7,9 @@ import DoctorsHoursModal from "./DoctorsHoursModal";
 import Preloader from "../../../../Preloader";
 
 
-function ClinicApprovedDoctors({loadingState}) {
+function ClinicApprovedDoctors() {
     const params = useParams();
-    const {loading, setLoading} = loadingState;
+
     const [isModalOpen, setIsModalOpen] = useState({});
 
     const showModal = (id,type,keys ) => {
@@ -34,7 +34,7 @@ function ClinicApprovedDoctors({loadingState}) {
     return(
         <div>
             <h1 className={'h1'}>{t(`Manage Approved Doctors`)}</h1>
-            {loading ? <Preloader/> : <ResourceTable
+           <ResourceTable
 
                     noHeader={true}
                     except={{
@@ -107,10 +107,9 @@ function ClinicApprovedDoctors({loadingState}) {
                     ]}
 
 
-                />}
-
+                />
             <Modal title="Worcing Houer" width={"65%"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
-                {isModalOpen?.id ? <DoctorsHoursModal loadingState={loadingState} id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} />:null}
+                {isModalOpen?.id ? <DoctorsHoursModal  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} />:null}
             </Modal>
         </div>
     )

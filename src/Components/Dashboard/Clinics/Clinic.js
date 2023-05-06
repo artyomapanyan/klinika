@@ -69,7 +69,7 @@ function Clinic() {
                                          handleLangChange={handleLangChange}/>
                 </items>
                 {params.id && <items key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
-                    <ClinicTabManageDoctors loadingState={loadingState} />
+                    <ClinicTabManageDoctors  />
                 </items>}
                 {params.id && <items key={'working'} tab={'Working Hours'}>
                     <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>

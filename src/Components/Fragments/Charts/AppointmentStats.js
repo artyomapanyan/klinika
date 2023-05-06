@@ -25,7 +25,7 @@ function AppointmentStats(){
 
 
     useEffect(()=>{
-
+        setLoading(true)
         postResource('DoctorReworked', 'PeriodAppointmentStats', token, '', date).then((response) => {
             let dates = Object.keys(response?.incomes).map(el => el.slice(5).replace('-', '/')).sort()
             let data = {
@@ -33,6 +33,7 @@ function AppointmentStats(){
                 3:[],
                 4:[]
             }
+
             Object.values(response.incomes).forEach(item=>{
                 item[2] = item[2]??0;
                 item[3] = item[3]??0;

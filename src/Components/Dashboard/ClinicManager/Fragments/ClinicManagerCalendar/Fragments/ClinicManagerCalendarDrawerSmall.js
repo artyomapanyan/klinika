@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment}) {
 
     const onFinish = (values) => {
-        console.log(values)
+
         handleCreateAppointment(data,{
             patient:values,
         })

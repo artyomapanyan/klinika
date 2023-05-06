@@ -20,13 +20,13 @@ export function RascheduledContent({onCancel, modal, loading}){
 
 
    useEffect(() => {
-       console.log(modal)
+
        if (date && modal?.doctor?.id) {
            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
            }).then((responce) => {
-               console.log(responce, 'ttttt')
+
                setAvailableTimesState(responce.map((el) => {
                    return {
                        label: 'Break Time',
@@ -44,7 +44,7 @@ export function RascheduledContent({onCancel, modal, loading}){
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
            }).then((res) => {
-               console.log(res, 'rrr')
+
                setAvailableTimesState(res.map((el) => {
                    return {
                        label: 'Break Time',

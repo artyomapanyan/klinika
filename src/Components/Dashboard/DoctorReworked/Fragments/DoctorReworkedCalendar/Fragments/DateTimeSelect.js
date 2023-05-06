@@ -33,7 +33,7 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
         }
 
     }
-    console.log(authRedux, 'red')
+
 
     let clinicId = authRedux?.clinics?.find(e=>e?.id===formData?.clinic_id)?.id
     const onDateClick = (e) => {

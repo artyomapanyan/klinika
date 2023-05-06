@@ -10,6 +10,7 @@ import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
 import 'chartjs-plugin-style';
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 function LineChartIncomes() {
     let canvasRef = useRef();
@@ -74,6 +75,23 @@ function LineChartIncomes() {
                 }
             })
 
+
+
+            const noData = {
+                id: "no-data-text",
+                beforeDraw(chart) {
+                    const {
+                        ctx,
+                        chartArea: {height, width},
+                        scales: {x},
+                    } = chart;
+
+                    ctx.save();
+                    ctx.fillText("Ther aren't any information yet." ,width/2,height/2, 500);
+                    ctx.restore();
+
+                },
+            }
 
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
@@ -219,6 +237,7 @@ function LineChartIncomes() {
                         },
                     },
                 },
+                plugins: [noData],
             });
             setLoading(false)
 

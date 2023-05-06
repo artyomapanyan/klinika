@@ -24,14 +24,14 @@ function HeaderAccount() {
     const [loading, setLoading] = useState(false)
 
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     postResource('ApproveClinicDoctor','single', token, ``, ).then((response) => {
-    //         setApprove(response)
-    //         setLoading(false)
-    //         console.log(response)
-    //     });
-    // }, [elem])
+  useEffect(() => {
+      setLoading(true)
+      postResource('ApproveClinicDoctor','single', token, ``, ).then((response) => {
+          setApprove(response)
+          setLoading(false)
+          console.log(response)
+      });
+  }, [elem])
 
     const onOk = (el, key) => {
         setElem(el)
