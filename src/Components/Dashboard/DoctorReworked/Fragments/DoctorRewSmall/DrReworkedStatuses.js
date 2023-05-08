@@ -61,7 +61,7 @@ function DrReworkedStatuses() {
                         {
                             backgroundColor: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? ['#F5F6FA'] : ["#BF539E","#6DAF56", "#87828E",  "#FFD850"],
                             weight: 0.5,
-                            data: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? [1,0,0,0] : Object.values(data),
+                            data: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? [1,0,0,0] : Object.values(resApps),
                             spacing: 0,
                             borderWidth: 0,
                         },
