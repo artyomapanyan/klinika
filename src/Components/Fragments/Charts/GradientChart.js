@@ -10,7 +10,6 @@ import dayjs from "dayjs";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import annotations from 'chartjs-plugin-annotation';
 import 'chartjs-plugin-style';
 
 function GradientChart() {
