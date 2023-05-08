@@ -13,13 +13,8 @@ import DoctorReworked from "../DoctorReworked/DoctorReworked";
 
 function DashboardHeader() {
     const {pathname} = useLocation()
-    const [loading,setLoading] = useState(true);
-    useEffect(()=>{
-        setTimeout(()=>{
-            setLoading(false)
-        },50)
+    const [loading,setLoading] = useState(false);
 
-    },[])
 
 
     const handleReturnHeaderPart = ()=>{

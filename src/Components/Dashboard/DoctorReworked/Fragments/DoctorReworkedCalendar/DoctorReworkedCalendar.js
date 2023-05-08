@@ -27,7 +27,6 @@ function DoctorReworkedCalendar() {
         setLoading(true)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
             let data = Object.values(response.calendar).flat().map(e =>{
-                console.log( new Date(e.booked_at.iso_string),e.booked_at.iso_string)
                 return {
                     text: 'status-' + e.status,
                     startDate: new Date(e.booked_at.iso_string),

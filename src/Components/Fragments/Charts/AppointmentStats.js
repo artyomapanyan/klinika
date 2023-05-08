@@ -43,13 +43,55 @@ function AppointmentStats(){
                 })
 
             })
+
+            let isNull = [];
+            data[2].forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+            data[3].forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+            data[4].forEach((el) => {
+                if(el !== 0){
+                    return isNull.push(el)
+                }
+
+            })
+
+
+
+            const noData = {
+                id: "no-data-text",
+                beforeDraw(chart) {
+                    const {
+                        ctx,
+                        chartArea: {height, width},
+                        scales: {x},
+                    } = chart;
+
+                    ctx.save();
+                    ctx.fillText(isNull.length === 0 ? "Ther aren't any information yet." : '' ,width/2,height/1.5, 500);
+                    ctx.restore();
+
+                },
+            }
+
+
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
             appointmentChartRef.current = new Chart(appointmentsStats, {
                 type: "bar",
                 data: {
                     labels: dates,
-                    datasets: [
+                    datasets: isNull.length === 0 ? [] : [
                         {
                             label: "Finished",
                             data: data[2],
@@ -135,7 +177,7 @@ function AppointmentStats(){
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: 20,
+                                stepSize: 5,
                                 showLabelBackdrop: false,
                                 position: "left",
                                 padding: 40,
@@ -173,6 +215,7 @@ function AppointmentStats(){
                         tooltip: false,
                     },
                 },
+                plugins: [noData],
 
             });
             setLoading(false)

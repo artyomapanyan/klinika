@@ -77,6 +77,8 @@ function LineChartIncomes() {
 
 
 
+
+
             const noData = {
                 id: "no-data-text",
                 beforeDraw(chart) {
@@ -87,7 +89,7 @@ function LineChartIncomes() {
                     } = chart;
 
                     ctx.save();
-                    ctx.fillText("Ther aren't any information yet." ,width/2,height/2, 500);
+                    ctx.fillText(a.length === 0 ? "Ther aren't any information yet." : '' ,width/2,height/1.5, 500);
                     ctx.restore();
 
                 },
@@ -99,7 +101,7 @@ function LineChartIncomes() {
                 type: "bar",
                 data: {
                     labels,
-                    datasets: [
+                    datasets: a.length === 0 ? [] : [
                         ...a,
                         ...(a.length>0? [{
                             label: "Total",
@@ -144,7 +146,7 @@ function LineChartIncomes() {
                                     weight: "700",
                                 },
                                 padding: 40,
-                                stepSize: 20,
+                                stepSize: 500,
                                 showLabelBackdrop: false,
                                 callback: function (label) {
                                     return label / 1000 + "k";

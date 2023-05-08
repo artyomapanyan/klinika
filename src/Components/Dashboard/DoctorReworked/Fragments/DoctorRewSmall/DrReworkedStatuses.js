@@ -34,7 +34,6 @@ function DrReworkedStatuses() {
             setData(response.appointments??{})
 
 
-
             setLoading(false)
             const counterforGreenDoughnut = {
                 id: "counter",
@@ -69,11 +68,15 @@ function DrReworkedStatuses() {
                     ],
                 },
                 options: {
+                    accessibility: {
+                        enabled: false
+                    },
                     cutout: "75%",
                     plugins: {
                         tooltip: {
                             enabled: false,
                         },
+
                     },
                 },
                 plugins: [counterforGreenDoughnut],
