@@ -120,7 +120,7 @@ function Country() {
 
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
+                    <CancelComponent changeValuesState={changeValuesState} />
                 </Space>
             </Form>}
         </div>

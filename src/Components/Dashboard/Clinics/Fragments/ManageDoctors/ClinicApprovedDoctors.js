@@ -49,7 +49,10 @@ function ClinicApprovedDoctors() {
                             dataIndex: 'id',
                             title: 'Doctor id',
                             key: 'plid',
-                            render:(e, record)=>  <div  style={{padding:2}}>{record.doctor.first} {record.doctor.last}</div>
+                            render:(e, record)=> {
+                                console.log(record)
+                                return <div  style={{padding:2}}>{record.doctor.first} {record.doctor.last}</div>
+                            }
                         },
                         {
                             dataIndex: ['doctor'],

@@ -1,52 +1,54 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from "react";
 import {Chart, registerables} from "chart.js";
-import {Space, Spin} from 'antd';
-import {useDispatch, useSelector} from 'react-redux';
-import {postResource} from '../../Functions/api_calls';
-import Resource from '../../../store/Resources';
-import dayjs from "dayjs";
+import {Space, Spin} from "antd";
+import {postResource} from "../../../Functions/api_calls";
+import {useSelector} from "react-redux";
 
-function IncomeChannelsChart() {
+function SuperAdminClinicLicenseChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null);
-    let ownerClinics = useSelector((state) => state?.owner);
+
     let token = useSelector((state) => state.auth.token);
-    const [data, setData] = useState({});
+    let ownerClinics = useSelector((state) => state?.owner);
+
     const [loading, setLoading] = useState(true);
-    let dispatch = useDispatch()
 
-    const [date, setDate] = useState({
-        year: dayjs().format('YYYY'),
-        month: ownerClinics?.month_key,
-        period: 12
-    })
+    const [data, setData] = useState(true);
 
-    useEffect(() => {
+
+
+
+
+
+
+    useEffect(()=>{
         setLoading(true)
-        postResource('ClinicOwner', 'IncomeChannels', token, '', date).then((response) => {
-
+        postResource('SuperAdmin', 'SuperAdminclinicLicenses', token, '', ).then((response) => {
             setLoading(false)
-            const percentages = [50,50]
-            // Object.keys(response).map((key) => {
-            //     percentages.push(response[key].percentage)
-            // })
 
-
-            const count = []
-            Object.keys(response).map((key) => {
-                count.push(response[key].count)
+            setData({
+                'Actual': response?.actual?.count,
+                'Expire soon': response?.expire_soon?.count,
+                'Expired': response?.expired?.count
             })
 
+            const incomeChannelData = [
+                response?.actual?.percentage,
+                response?.expire_soon?.percentage,
+                response?.expired?.percentage,
+            ]
 
             const shadowPlugin = {
                 beforeDraw: (chart) => {
-                    const {ctx} = chart;
+                    const { ctx } = chart;
                     ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
                     ctx.shadowBlur = 10;
                     ctx.shadowOffsetX = 3;
                     ctx.shadowOffsetY = 3;
                 },
             };
+
+
             const counterforIncomeChannel = {
                 id: "counter",
                 afterDraw(chart) {
@@ -59,7 +61,7 @@ function IncomeChannelsChart() {
                     ctx.textAlign = "center";
                     ctx.fillStyle = "#6DAF56";
                     ctx.fillText(
-                        percentages[0] + "%",
+                        incomeChannelData[0] + "%",
                         width / 2,
                         top + height / 2 - 15
                     );
@@ -96,18 +98,22 @@ function IncomeChannelsChart() {
                     ctx.restore();
                     ctx.font = "700 18px Roboto";
                     ctx.textAlign = "center";
-                    ctx.fillStyle = "#BF539E";
+                    ctx.fillStyle = "#F5A348";
                     ctx.fillText(
-                        percentages[1] + "%",
+                        incomeChannelData[1] + "%",
                         width / 2,
                         top + height / 2 + 15
                     );
 
                     ctx.strokeStyle = "rgba(225, 220, 231, 1)";
-                    ctx.strokeRect(width / 3, height / 2 + 20, width / 3, 1);
+                    ctx.strokeRect(width / 2.6, height / 2 + 10, width / 4.5, 1);
                     ctx.restore();
                 },
             };
+
+
+
+
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
             appointmentChartRef.current = new Chart(appointmentsStats, {
@@ -115,9 +121,9 @@ function IncomeChannelsChart() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: response?.form_app?.count == 0 && response?.form_app?.percentage == 0 && response?.form_offer?.count == 0 && response?.form_offer?.percentage == 0 && response?.total?.count == 0 && response?.total?.percentage == 0 ? ['#ffffff'] : ["#BF539E", "#6DAF56"],
+                            backgroundColor: ["#6DAF56", "#F5A348", "#CF533E"],
                             weight: 0.5,
-                            data: response?.form_app?.count == 0 && response?.form_offer?.count == 0  && response?.total?.count == 0 ? [1,0,0] : percentages,
+                            data: incomeChannelData,
                             spacing: -8,
                             borderWidth: 0,
                         },
@@ -132,52 +138,31 @@ function IncomeChannelsChart() {
                     },
                     layout: {
                         padding: {
-                            top: 10,
-                            bottom: 10,
                         },
                     },
                 },
                 plugins: [shadowPlugin, counterforIncomeChannel],
             });
-            setData(response);
-        });
-        return () => {
-            appointmentChartRef?.current?.destroy()
-        }
-    }, [ownerClinics]);
+            return () => {
+                appointmentChartRef?.current?.destroy()
+            }
+        })
+    },[])
 
 
-    return (
+
+    return(
         <Spin spinning={loading}>
-            <div className={'owner_channel_incomes_big_div'}>
-                <h1 className={'h1'} style={{marginTop: 25}}>Income channels</h1>
-                <canvas id='IncomeChannelsChart' ref={canvasRef} className="owner_chart_income_channel"></canvas>
-                <table cellPadding={7}  border={0} style={{width:'100%', margin: 15}} >
-                    {Object.keys(data).map((key, i) =>
-                        <tbody key={i}>
-                            <tr >
-                                <td>
-                                    <div
-                                        key={key}
-                                        className={`withDot WD-color-incom-channels-${i}`}
-                                    >
-                                        <span>{Resource.incomeChannelsLabels[i]} </span>
-                                    </div>
-                                </td>
-                                <td style={{width:'20%', fontWeight: 700}}>
-                                    {data[key].count}
-                                </td>
-                                <td style={{textAlign:'right'}}>
-                                    <div className={`withPercentage color-${i}`}>{data[key].percentage} %</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    )}
-                </table>
-
+            <div className={'patient_gender_div'}>
+                <canvas id='SuperAdminClinicLicenseChart' ref={canvasRef} className="chart_income_channel"></canvas>
+                <div>
+                    <h1 className={'h1'}><div>Clinics licenses</div> </h1>
+                    <Space direction={'vertical'}>
+                        {Object.keys(data).map((itemKey,key)=><div key={key} className={`doctor_licenses_chart WD-color-${key}`}><span>{itemKey}</span> <span style={{fontWeight:600}}>{data[itemKey]}</span> </div>)}
+                    </Space>
+                </div>
             </div>
         </Spin>
     )
 }
-
-export default IncomeChannelsChart;
+export default SuperAdminClinicLicenseChart;

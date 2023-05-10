@@ -88,7 +88,7 @@ function CounterOrangeChart() {
         <Spin spinning={loading}>
             <Space className={'round_charts_big_div'}>
                 <div  style={{height:92,width:92}}>
-                    <canvas ref={canvasRef}></canvas>
+                    <canvas id='CounterOrangeChart' ref={canvasRef}></canvas>
                 </div>
                 <Space></Space>
                 <Space direction={'vertical'}>

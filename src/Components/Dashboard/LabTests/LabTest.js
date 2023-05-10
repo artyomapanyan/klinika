@@ -33,7 +33,7 @@ function LabTest() {
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
-                    navigate(`${resourceLinks[resource]}?lab=tests`)
+                    navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)
@@ -41,7 +41,7 @@ function LabTest() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(`${resourceLinks[resource]}?lab=tests`)
+                    navigate(-1)
                 }
 
             }).finally(() => {
@@ -85,12 +85,12 @@ function LabTest() {
                     {
                         Object.keys(changeValuesState).length > 0 ? <Popconfirm
                             title={t("your changes will not be saved")}
-                            onConfirm={() => navigate(`${resourceLinks[res]}?lab=tests`)}
+                            onConfirm={() => navigate(-1)}
                             okText={t("Yes")}
                             cancelText={t("No")}
                             icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                            <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                        </Popconfirm> : <Button onClick={() => navigate(`${resourceLinks[res]}?lab=tests`)} size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                            <Button size={'large'} type={'secondary'} >{t('Cancel')}</Button>
+                        </Popconfirm> : <Button onClick={() => navigate(-1)} size={'large'} type={'secondary'} >{t('Cancel')}</Button>
                     }
 
                 </Space>

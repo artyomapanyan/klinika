@@ -44,7 +44,7 @@ function Clinic() {
     const handleLangChange = (e) => {
         setLang(e.target.value)
     }
-    console.log(loading)
+
 
     return (
         <div >

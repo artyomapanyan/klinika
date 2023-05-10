@@ -1,19 +1,16 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Chart, registerables} from "chart.js";
-import GradientChartApp from "../../Dashboard/ClinicsOwner/Fragments/GradientChartApp";
 import {useSelector} from "react-redux";
-import {postResource} from "../../Functions/api_calls";
+import dayjs from "dayjs";
+import {postResource} from "../../../Functions/api_calls";
+import {Chart, registerables} from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import {Button, Dropdown, Radio, Space, Spin, Switch} from "antd";
 import {t} from "i18next";
-import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
-import dayjs from "dayjs";
-import arrow_prev from "../../../dist/icons/arrow-prev.svg";
-import arrow_next from "../../../dist/icons/arrow-next.svg";
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import {DownOutlined} from "@ant-design/icons";
+import arrow_prev from "../../../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../../../dist/icons/arrow-next.svg";
 
-import 'chartjs-plugin-style';
-
-function GradientChart() {
+function SuperAdminGradientChart() {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
@@ -51,54 +48,36 @@ function GradientChart() {
         months[monthName] = monthNumber;
     }
 
-    useEffect(() => {
-        postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
-            if(response) {
-                setItems(response.clinics.map((el) => {
-                    return {
-                            label: el?.name,
-                            key: el?.id
-                        }
-
-                }))
-            }
-        })
-    }, [idClinic])
+    // useEffect(() => {
+    //     postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
+    //         if(response) {
+    //             setItems(response.clinics.map((el) => {
+    //                 return {
+    //                     label: el?.name,
+    //                     key: el?.id
+    //                 }
+    //
+    //             }))
+    //         }
+    //     })
+    // }, [idClinic])
 
 
     useEffect(() => {
         setLoading(true)
 
-        postResource('ClinicOwner', 'PeriodAppointments', token, idClinic ? idClinic : ownerClinics?.id, date).then((response) => {
+        postResource('SuperAdmin', 'PeriodAppointments', token, null, date).then((response) => {
 
-            let prevYear = Object.values(response?.incomes?.prev_year)
+            let prevYear = Object.values(response?.appointments?.prev_year)
 
-            let growth = Object.values(response?.incomes?.growth)
-            let canceled = Object.values(response?.incomes[3])
-            let closed = Object.values(response?.incomes[2])
-
-
-            // let hasData = false;
-            // [...prevYear,...growth,...canceled,...closed].forEach((el) => {
-            //     if(el !== 0){
-            //         hasData = true;
-            //     }
-            // })
-            //
-            // let aaa = [0,0,0,0,0,0,0,];
-            // let bbbb = [0,0,0,0,0,0,0,];
-            // let cccc = [0,0,0,0,0,0,0,];
-            //
-            // [...aaa,...bbbb,...cccc].forEach((el) => {
-            //     if(el !== 0){
-            //         hasData = true;
-            //     }
-            // })
-            //
-            // console.log(hasData)
+            let growth = Object.values(response?.appointments?.growth)
+            let canceled = Object.values(response?.appointments[3])
+            let closed = Object.values(response?.appointments[2])
 
 
-             let isNull = [];
+
+
+            let isNull = [];
             prevYear.forEach((el) => {
                 if(el !== 0){
                     return isNull.push(el)
@@ -339,15 +318,6 @@ function GradientChart() {
                         tooltip: {
                             borderWidth: "4",
                             borderColor: "#e3e3e320",
-                            // callbacks: {
-                            //   label: function (context) {
-                            //     return context.dataset.data.map((item) => item + "$ ");
-                            //   },
-                            //   //     afterLabel: function(tooltipItem, data) {
-                            //   //     var dataset = data['datasets'][0];
-                            //   //     return '(' + dataset + '$)';
-                            //   //     },
-                            // },
                             backgroundColor: "white",
                             padding: 16,
                             titleColor: "rgba(0, 0, 0, 0.5)",
@@ -515,28 +485,28 @@ function GradientChart() {
 
     return (
         <Spin spinning={loading}>
-            <div className={'gradient_chart_big_div'}>
+            <div className={'superAdmin_gradient_chart_big_div'}>
                 <div className={'gradient_chart_inn_big_div'}>
                     <div className={'app_clinic'}>
-                       <span>Appointments:</span>  <Dropdown
+                        <span>Appointments:</span>  <Dropdown
                         menu={{
                             items,
                             onClick,
                         }}
                         trigger={['click']}
                         className={'own_gr_chart_drop'}
-                    >
+                        >
                         <Space direction={'horizontal'} style={{cursor:"pointer"}}>
                             <div className={'all_clinic_dr'}>{items.find((e)=>e.key==idClinic)?.label??t('All Clinics')}</div>
                             <div><DownOutlined /></div>
                         </Space>
 
-                    </Dropdown>
+                     </Dropdown>
                     </div>
                     <div>
                         <Space>
 
-                                <Switch defaultChecked onChange={switchChange}/>
+                            <Switch defaultChecked onChange={switchChange}/>
                             <span className={'gradient_szitch_text'}>
                                 {t("Previous year")}
                             </span>
@@ -551,8 +521,8 @@ function GradientChart() {
                         </Space>
                     </div>
                 </div>
-                <div className={'chart_div_outh'}>
-                    <canvas id='GradientChart' ref={canvasRef} className="chart"></canvas>
+                <div className={'superAdmin_chart_div_outh'}>
+                    <canvas id='SuperAdminGradientChart' ref={canvasRef} className="chart"></canvas>
                 </div>
 
             </div>
@@ -560,4 +530,4 @@ function GradientChart() {
 
     )
 }
-export default GradientChart;
+export default SuperAdminGradientChart;

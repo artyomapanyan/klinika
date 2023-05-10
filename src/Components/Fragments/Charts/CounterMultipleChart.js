@@ -53,7 +53,7 @@ function CounterMultipleChart({data}) {
     return(
         <Space className={'round_charts_big_div'}>
             <div  style={{height:93,width:93}}>
-                <canvas ref={canvasRef}></canvas>
+                <canvas id='CounterMultipleChart' ref={canvasRef}></canvas>
             </div>
             <Space></Space>
             <Space direction={'vertical'}>

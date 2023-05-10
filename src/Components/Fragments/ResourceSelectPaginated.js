@@ -43,7 +43,7 @@ function ResourceSelectPaginated({
 
     },[resourceParams])
     useEffect(()=>{
-        if(initialData.length>1){
+        if(initialData.length>20){
             setLocalData(initialData)
         }
     },[initialData])

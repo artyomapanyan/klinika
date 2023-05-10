@@ -21,9 +21,9 @@ function DashboardHeader() {
         switch (true){
             case pathname.includes('/clinics-owner'):
                 return <ClinicOwnerHeader />
-            case pathname.includes('/clinic-manager'):
-                return <ClinicOwnerHeader noClinicSelect={true} />
             case pathname.includes('/doctor-reworked'):
+            case pathname.includes('/clinic-manager'):
+            case pathname.includes('/admin'):
                 return <ClinicOwnerHeader noClinicSelect={true} />
             case pathname.includes('/patients'):
                 return   <div>

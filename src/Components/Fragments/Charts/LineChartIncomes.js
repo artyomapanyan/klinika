@@ -311,7 +311,7 @@ function LineChartIncomes() {
                     </div>
                 </div>
                 <div className={'chart_div_outh'}>
-                    <canvas ref={canvasRef} className="chart" id="appointmentsChart"></canvas>
+                    <canvas ref={canvasRef} className="chart" id="LineChartIncomes"></canvas>
                 </div>
             </div>
         </Spin>

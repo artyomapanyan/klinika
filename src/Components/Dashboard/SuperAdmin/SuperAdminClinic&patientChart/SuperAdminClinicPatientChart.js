@@ -1,16 +1,14 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {Chart,registerables} from "chart.js";
-import IncomeChannelChartHead from "../../Dashboard/ClinicsOwner/Fragments/IncomeChannelChartHead";
-import PatientChartHeader from "../../Dashboard/ClinicsOwner/Fragments/PatientChartHeader";
-import dayjs from "dayjs";
+import React, {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
+import dayjs from "dayjs";
+import {postResource} from "../../../Functions/api_calls";
+import {Chart, registerables} from "chart.js";
 import {Button, Radio, Space, Spin} from "antd";
 import {t} from "i18next";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
-import {postResource} from "../../Functions/api_calls";
-import arrow_next from "../../../dist/icons/arrow-next.svg";
-import arrow_prev from "../../../dist/icons/arrow-prev.svg";
-function ClinicOwnerPatientsChart(){
+import arrow_prev from "../../../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../../../dist/icons/arrow-next.svg";
+
+function SuperAdminClinicPatientChart(){
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
     let token = useSelector((state) => state.auth.token);
@@ -25,7 +23,9 @@ function ClinicOwnerPatientsChart(){
 
     useEffect(()=>{
         setLoading(true)
-        postResource('ClinicOwner', 'NewPatients', token, ownerClinics?.id, date).then((response) => {
+        postResource('SuperAdmin', 'SuperAdminConfirmedClinic', token, null, date).then((response) => {
+
+
             const monthNames = [
                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -41,9 +41,9 @@ function ClinicOwnerPatientsChart(){
             }
             const newValues = [];
             const returnValues = [];
-            Object.values(response.patients).forEach(e=>{
-                newValues.push(e.new)
-                returnValues.push(e.returned)
+            Object.values(response.clinics).forEach(e=>{
+                newValues.push(e.active)
+                returnValues.push(e.inactive)
             })
 
 
@@ -121,7 +121,7 @@ function ClinicOwnerPatientsChart(){
                             label: "Returned",
                             data: returnValues,
                             stack: "Stack 0",
-                            backgroundColor: ["#BF539E"],
+                            backgroundColor: ["#9e9ba1"],
                             borderColor: ["white"],
                             borderSkipped: false,
                             borderWidth: 2,
@@ -177,7 +177,7 @@ function ClinicOwnerPatientsChart(){
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: 50,
+                                stepSize: 10,
                                 showLabelBackdrop: false,
                                 position: "left",
                                 padding: 40,
@@ -321,29 +321,28 @@ function ClinicOwnerPatientsChart(){
 
 
     return<Spin spinning={loading}>
-    <div className={'gradient_chart_big_div'}>
-        <div className={'gradient_chart_inn_big_div'}>
-            <Space className={'owner_patient_text'} >
-                {t("Patients")}
-                {['New', 'Returned'].map((itemKey,key)=><Space  key={key} className={`withDot WD-color2-${key}`}><span className={'color_text_charts'}>{itemKey}</span></Space>)}
-            </Space>
-            <div>
-                <Space>
-                    <Radio.Group onChange={onRadioChange} defaultValue="year" className={'radio_grup_charts'}>
-                        <Radio.Button value="year">{t("12 Month")}</Radio.Button>
-                        <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
-                    </Radio.Group>
-                    <Button className={'chart_button'} disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                    <Button className={'chart_button'} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+        <div className={'gradient_chart_big_div'}>
+            <div className={'gradient_chart_inn_big_div'}>
+                <Space className={'owner_patient_text'} >
+                    {t("Clinics")}
+                    {['Rejected', 'Approved'].map((itemKey,key)=><Space  key={key} className={`withDot WD-colorAdminclinicPatient-${key}`}><span className={'color_text_charts'}>{itemKey}</span></Space>)}
                 </Space>
+                <div>
+                    <Space>
+                        <Radio.Group onChange={onRadioChange} defaultValue="year" className={'radio_grup_charts'}>
+                            <Radio.Button value="year">{t("12 Month")}</Radio.Button>
+                            <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
+                        </Radio.Group>
+                        <Button className={'chart_button'}  disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                        <Button className={'chart_button'} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                    </Space>
+                </div>
             </div>
-        </div>
-        <div className={'chart_div_outh'}>
-            <canvas ref={canvasRef} className="chart" id="ClinicOwnerPatientsChart"></canvas>
-        </div>
+            <div className={'chart_div_outh'}>
+                <canvas ref={canvasRef} className="chart" id="SuperAdminClinicPatientChart"></canvas>
+            </div>
 
-    </div>
+        </div>
     </Spin>
 }
-export default ClinicOwnerPatientsChart
-
+export default SuperAdminClinicPatientChart

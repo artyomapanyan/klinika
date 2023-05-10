@@ -250,6 +250,7 @@ function Appointment() {
     }
 
 
+
     return (
         <div>
             <h3 className={'create_apdate_btns'}>{t(`Add new Appointment`)}</h3>
@@ -273,6 +274,7 @@ function Appointment() {
                                                //rules={[{required: true}]}
                                                searchConfigs={{minLength: 4}}
                                                initialValue={null}
+
                                                inputProps={{
 
                                                    notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button onClick={()=>{

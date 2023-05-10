@@ -345,6 +345,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
             ...prevState,
             ...values
         }))
+console.log(values, 'values')
 
 
         if (params.id) {
@@ -385,7 +386,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         item.id = item.phone_code
         return [name,item]
     }
-
+console.log(data)
 
     return(
         <div >
@@ -413,7 +414,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                                resource={'Country'}/>
                                 </div>
                                 <div style={{width:'100%', marginLeft:10}}>
-                                    <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                                    <FormInput maxLength={9} label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
                                 </div>
                             </div>
                             <FormInput label={t('License Number')} name={'license_number'} initialValue={data?.license_number} rules={[{required: true}]} />
@@ -433,6 +434,12 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                        initialValue={data?.owner?.id}
                                        initialData={data?.owner ? [data.owner]:[]}
                                        resource={'User'}/>
+                            <FormInput inputProps={{mode:'multiple'}} label={t('Manager')} name={'managers'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.managers?.map(e=>e.id)}
+                                       initialData={data?.managers ??[]}
+                                       resource={'User'}
+                            />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
@@ -817,7 +824,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
+                    <CancelComponent changeValuesState={changeValuesState} />
                 </Space>
             </Form>}
         </div>

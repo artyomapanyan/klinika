@@ -15,8 +15,8 @@ function CancelComponent({changeValuesState, resource}) {
                     okText={t("Yes")}
                     cancelText={t("No")}
                     icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                    <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-                </Popconfirm> : <Button onClick={() => navigate(-1)} size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
+                    <Button size={'large'} type={'secondary'} >{t('Cancel')}</Button>
+                </Popconfirm> : <Button onClick={() => navigate(-1)} size={'large'} type={'secondary'} >{t('Cancel')}</Button>
             }
         </div>
     )

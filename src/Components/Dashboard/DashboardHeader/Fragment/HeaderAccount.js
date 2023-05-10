@@ -29,7 +29,6 @@ function HeaderAccount() {
       postResource('ApproveClinicDoctor','single', token, ``, ).then((response) => {
           setApprove(response)
           setLoading(false)
-          console.log(response)
       });
   }, [elem])
 

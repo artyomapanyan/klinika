@@ -80,6 +80,21 @@
   &.WD-color1-2::before
     background-color: #774D9D
 
+  &.WD-colorSuperAdmin-incomes-0::before
+    background-color: #D477B0
+  &.WD-colorSuperAdmin-incomes-1::before
+    background-color: #774D9D
+
+  &.WD-colorAdminclinicPatient-0::before
+    background-color: #9e9ba1
+  &.WD-colorAdminclinicPatient-1::before
+    background-color: #6DAF56
+
+  &.WD-colorPatientGenger-0::before
+    background-color: #774D9D
+  &.WD-colorPatientGenger-1::before
+    background-color: #D477B0
+
 
 
   &.WD-color-incom-channels-0::before
@@ -140,6 +155,16 @@
   margin-top: 50px
   max-height: 650px
   box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+.superAdmin_gradient_chart_big_div
+  padding-bottom: 15px
+  background-color: #FFFFFF
+  border-radius: 22px
+  margin-top: 50px
+  max-height: 750px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+
 .chart
   max-width: 100%
   height: 400px
@@ -185,8 +210,14 @@
   align-items: center
 .chart_income_channel
   margin-top: -10px
+  max-height: 75%
+  max-width: 60%
+
+.owner_chart_income_channel
+  margin-top: -10px
   max-height: 60%
   max-width: 60%
+
 .clinic_own_table_prog
   width: 150px
 .incomes_table_head
@@ -203,13 +234,12 @@
   padding: 24px
 .patient_gender_div
   border-radius: 15px
-  height: 350px
+  height: 300px
   box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
   background-color: #FFFFFF
   margin-top: 50px
   display: flex
   flex-direction: row
-  justify-content: center
   align-items: center
 
 .result_component
@@ -315,6 +345,12 @@
   height: 350px
   padding-right: 16px
   padding-left: 15px
+
+.superAdmin_chart_div_outh
+  height: 432px
+  padding-right: 16px
+  padding-left: 15px
+
 .channel_incomes_big_div
   border-radius: 22px
   height: 418px
@@ -326,6 +362,17 @@
   justify-content: center
   align-items: center
 
+.owner_channel_incomes_big_div
+
+  border-radius: 22px
+  height: 418px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+  background-color: #FFFFFF
+  margin-top: 50px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
 
 .radio_grup_charts
   display: flex
@@ -356,8 +403,11 @@
     background-color: #fffbfb
     border-radius: 10px
 .chart_button
-  border: none
   background-color: #F5F6FA
+  border: 1px solid #F5F6FA
+.ant-btn-default:disabled
+ border: none
+
 .own_gr_chart_drop
   border: none
   margin-left: 20px
