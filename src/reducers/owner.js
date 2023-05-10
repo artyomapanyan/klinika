@@ -3,17 +3,21 @@ export default function owner(state = {
     month_key: dayjs().month()
 }, action){
 
+    if(action.type==='AUTH'){
+        return {
+            ...state,
+            month_key: dayjs().month(),
+            id:action.payload.clinics?.find(e=>e.id).id
+
+        }
+    }
     if(action.type === 'OWNER_DATA'){
         return {
             ...state,
             ...action.payload
         }
     }
-    if(action.type === 'CLEAR_OWNER_DATA'){
-        return {
-            month_key: dayjs().month()
-        }
-    }
+
 
     return state;
 }

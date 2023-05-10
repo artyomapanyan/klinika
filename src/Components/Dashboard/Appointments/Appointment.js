@@ -199,7 +199,6 @@ function Appointment() {
 
 
     const handleValuesChange = (e, v) => {
-
         setData((prevState) => ({
             ...prevState,
             ...e
@@ -240,7 +239,7 @@ function Appointment() {
 
 
     const searchByNumber = (item, name, patientData) => {
-
+console.log(item)
         fetchedUsers.current = patientData
         name = <>{item.phone_number}{" "}{item.email}</>
         let searchData = item.phone_number+item.email;

@@ -75,10 +75,10 @@ function SuperAdmin() {
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={18}>
-                        {/*<SuperAdminGradientChart />*/}
+                        <SuperAdminGradientChart />
                     </Col>
                     <Col lg={6} >
-                        {/*<SuperAdminPlatformStats />*/}
+                        <SuperAdminPlatformStats />
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
@@ -86,7 +86,7 @@ function SuperAdmin() {
                         {/*<IncomesVsConversRate data={incomeVsConvertData}/>*/}
                     </Col>
                     <Col lg={16}>
-                        {/*<SuperAdminIncomesChart />*/}
+                        <SuperAdminIncomesChart />
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>

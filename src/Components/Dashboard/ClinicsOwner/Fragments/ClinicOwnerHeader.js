@@ -22,6 +22,7 @@ function ClinicOwnerHeader({noClinicSelect = false}) {
     useEffect(() => {
         if(!noClinicSelect){
             postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
+                console.log(response)
                 if(response) {
                     setItems(response.clinics.map((el,key) => {
                         if(key===0){
