@@ -350,6 +350,49 @@ let api = {
         },
     },
     {
+        url: 'dashboard/admin',
+        resource: 'SuperAdmin',
+        custom: {
+            AdminTotalClinic: {
+                url: `${endpoint}${version}/dashboard/admin/total-clinics/`,
+                method: 'GET',
+            },
+            MontlyIncomes: {
+                url: `${endpoint}${version}/dashboard/admin/monthly-incomes/`,
+                method: 'GET',
+            },
+            SuperAdminClinicsStatuses: {
+                url: `${endpoint}${version}/dashboard/admin/clinic-statuses`,
+                method: 'GET',
+            },
+            SuperAdminConfirmedClinic: {
+                url: `${endpoint}${version}/dashboard/admin/confirmed-clinics`,
+                method: 'GET',
+            },
+            PeriodAppointments: {
+                url: `${endpoint}${version}/dashboard/admin/period-appointments`,
+                method: 'GET',
+            },
+            SuperAdminPlatform: {
+                url: `${endpoint}${version}/dashboard/admin/platform-stats`,
+                method: 'GET',
+            },
+            SuperAdminIncomes: {
+                url: `${endpoint}${version}/dashboard/admin/period-incomes`,
+                method: 'GET',
+            },
+            SuperAdminGender: {
+                url: `${endpoint}${version}/dashboard/admin/patient-genders`,
+                method: 'GET',
+            },
+            SuperAdminclinicLicenses: {
+                url: `${endpoint}${version}/dashboard/admin/clinic-licenses`,
+                method: 'GET',
+            },
+
+        },
+    },
+    {
         url: 'auth/profile/notifications/',
         resource: 'Notifications',
         custom: {

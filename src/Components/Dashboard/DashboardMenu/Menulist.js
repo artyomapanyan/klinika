@@ -134,7 +134,7 @@ export default {
     ],
     'super': [
         {
-            key: 'super-admin',
+            key: 'admin',
             icon: <img alt={'icons'} src={dash1}/>,
             label: 'Dashboard',
         },
@@ -536,7 +536,7 @@ export default {
             label: 'Doctor reworked',
         },
         {
-            key: 'super-admin',
+            key: 'admin',
             icon: <img alt={'icons'} src={dash3}/>,
             label: 'Super admin',
         },

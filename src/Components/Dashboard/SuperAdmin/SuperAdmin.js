@@ -21,161 +21,97 @@ import SuperAdminPlatformIssues from "./SuperAdminPlatformIssues/SuperAdminPlatf
 import IncomesVsConversRate from "./IncomesVsConversRate/IncomesVsConversRate";
 import { postResource } from '../../Functions/api_calls';
 import { useSelector } from 'react-redux';
+import SuperAdminRegisteredClinics from "./SuperAdminHeadCharts/SuperAdminRegisteredClinics";
+import SuperAdminCurrentMonth from "./SuperAdminHeadCharts/SuperAdminCurrentMonth";
+import SuperAdminClinicsStatuses from "./SuperAdminHeadCharts/SuperAdminClinicsStatuses";
+import SuperAdminClinicPatientChart from "./SuperAdminClinic&patientChart/SuperAdminClinicPatientChart";
+import SuperAdminGradientChart from "./SuperAdminGradientChart/SuperAdminGradientChart";
+import SuperAdminPlatformStats from "./SuperAdminPlatformStats/SuperAdminPlatformStats";
+import SuperAdminGenderChart from "./superAdminGenderChart/SuperAdminGenderChart";
+import SuperAdminClinicLicenseChart from "./SuperAdminClinicLicenseChart/SuperAdminClinicLicenseChart";
 
 
 
 
 
 function SuperAdmin() {
-    const [purpleData,setPurpleData] = useState([25,75]);
-    const [progressData1,setProgressData1] = useState(64.4);
-    const [statusesData,setStatusesData] = useState([70,40, 20, 10]);
-    const [progressData2,setProgressData2] = useState(16.4);
-    const [patientGenderData,setPatientGenderData] = useState({'Female': 1236,
-        'Male':864,});
-    const [doctorLicensesData,setDoctorLicensesData] = useState({'Actual': 1236,
-        'Expire soon':785,
-        'Expired':864});
-    const [issuesData,setIssuesData] = useState({
-        web: {
-            'active': 3,
-            'solved':3,
-            name:'web'
-            },
-        mobile: {
-            'active': 1,
-            'solved':9,
-            name:'mobile'
-        }
-        });
-    const [incomeVsConvertData,setIncomeVsConvertData] = useState({
-            jan: {
-                month: "Jan",
-                income: 16576,
-                offer_sold: 920,
-                views: 9.8,
-                conversation_rate: 9.38,
-            },
-            feb: {
-                month: "Feb",
-                income: 4978,
-                offer_sold: 256,
-                views: 4.7,
-                conversation_rate: 5.38,
-            },
-            mar: {
-                month: "Mar",
-                income: 24565,
-                offer_sold: 1058,
-                views: 18.3,
-                conversation_rate: 5.69,
-            },
-            apr: {
-                month: "Apr",
-                income: 1069,
-                offer_sold: 10,
-                views: 2.8,
-                conversation_rate: 0.68,
-            },
-    });
-
-    const handleAddCount = ()=> {
-        setStatusesData((prevState) => [(+prevState[0] + 1).toFixed(1), (+prevState[1] - 1).toFixed(1), (+prevState[1] - 1).toFixed(1), (+prevState[1] - 1).toFixed(1)])
-        setPurpleData((prevState) => [(+prevState[0] + 0.1).toFixed(1), (+prevState[1] - 0.1).toFixed(1)])
-        setProgressData1((prevState) => (+prevState + 0.1).toFixed(1))
-        setProgressData2((prevState) => (+prevState + 0.1).toFixed(1))
-        setPatientGenderData((prevState)=> {
-            let newObj = {}
-            Object.keys(prevState).map((key)=>{
-                newObj[key] =  (+prevState[key]+1).toFixed(1);
-            })
-            return newObj
-        })
-        setDoctorLicensesData((prevState)=> {
-            let newObj = {}
-            Object.keys(prevState).map((key)=>{
-                newObj[key] =  (+prevState[key]+1).toFixed(1);
-            })
-            return newObj
-        })
-    }
+    window.addEventListener("error", (e) => console.error(e))
 
     return(
         <div>
             <div style={{margin:20}} className={'clinics_owner'}>
-                <Button onClick={handleAddCount}>increment</Button>
                 <Row gutter={[16,16]}>
-                    <Col  lg={6} md={12} sm={24} xs={24} >
+                    <Col  lg={8} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
-                            {
-                                //<ClinicManagerProgressCount data={progressData1}/>
-                            }
+                            <SuperAdminRegisteredClinics />
                         </div>
                     </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
+                    {/*<Col lg={6} md={12} sm={24} xs={24}>*/}
+                    {/*    <div className="gutter_row">*/}
+                    {/*        {*/}
+                    {/*            //<CounterGreenChart data={purpleData} />*/}
+                    {/*        }*/}
+                    {/*        </div>*/}
+                    {/*</Col>*/}
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            {
-                                //<CounterGreenChart data={purpleData} />
-                            }
-                            </div>
-                    </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
-                        <div className="gutter_row">
-                            <StatusesChart data={statusesData}/>
+                            <SuperAdminClinicsStatuses/>
                         </div>
+
                     </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <CounterProgress data={progressData2} />
+                            <SuperAdminCurrentMonth />
                         </div>
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={18}>
-                        <ClinicOwnerPatientsChart />
+                        <SuperAdminClinicPatientChart />
                     </Col>
                     <Col lg={6} >
-                        <IncomeChannelsChart />
+                        {/*<IncomeChannelsChart />*/}
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={18}>
-                        <GradientChart />
+                        {/*<SuperAdminGradientChart />*/}
                     </Col>
                     <Col lg={6} >
-                        <MonthStatistics />
+                        {/*<SuperAdminPlatformStats />*/}
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={8}>
-                        <IncomesVsConversRate data={incomeVsConvertData}/>
+                        {/*<IncomesVsConversRate data={incomeVsConvertData}/>*/}
                     </Col>
                     <Col lg={16}>
-                        <SuperAdminIncomesChart />
+                        {/*<SuperAdminIncomesChart />*/}
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={12}>
-                        <SuperAdminProfitableTable />
+                        {/*<SuperAdminProfitableTable />*/}
                     </Col>
                     <Col lg={12}>
-                        <SuperAdminUnprofitableTable />
+                        {/*<SuperAdminUnprofitableTable />*/}
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
-                    <Col lg={8}>
-                        <PatientGenderChart data={patientGenderData} />
+                    <Col lg={8} md={12} sm={24} xs={24}>
+                        {/*<SuperAdminGenderChart />*/}
                     </Col>
-                    <Col lg={8}>
-                        <DoctorLicensesChart data={doctorLicensesData}/>
+                    <Col lg={8} md={12} sm={24} xs={24}>
+                        {/*<SuperAdminClinicLicenseChart/>*/}
+                        {/*<DoctorLicensesChart data={doctorLicensesData}/>*/}
                     </Col>
-                    <Col lg={8}>
-                        <SuperAdminPlatformIssues data={issuesData}/>
+                    <Col lg={8} md={12} sm={24} xs={24}>
+                        {/*<SuperAdminPlatformIssues data={issuesData}/>*/}
                     </Col>
                 </Row>
             </div>
             <div>
-                <ClinicFeedback />
+                {/*<ClinicFeedback />*/}
             </div>
         </div>
     )
