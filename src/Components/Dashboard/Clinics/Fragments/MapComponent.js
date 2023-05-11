@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {GoogleMap, LoadScript, Marker, Autocomplete} from "@react-google-maps/api";
 import {AutoComplete, Col, Form, Input, Row} from "antd";
 import {t} from "i18next";
@@ -11,6 +11,9 @@ function MyMapComponent({data,formRef}) {
     const [initialPosition,setInitialPosition] = useState({ lat: +data?.location?.latitude, lng: +data?.location?.longitude })
     const [marker,setMarker] = useState()
     const [map,setMap] = useState()
+    const [mapData,setMapData] = useState({
+
+    })
 
     const onLoadMap = (map) => {
         setMap(map);
@@ -57,15 +60,43 @@ function MyMapComponent({data,formRef}) {
         if (autocomplete !== null) {
             map.setCenter(autocomplete.getPlace().geometry.location);
             marker.setPosition(autocomplete.getPlace().geometry.location);
-            onSetMarkerPosition(autocomplete.getPlace().geometry.location);
+            //onSetMarkerPosition(autocomplete.getPlace().geometry.location);
         } else {
-            // console.log('Autocomplete is not loaded yet!')
+
         }
     }
+    useEffect(()=>{
+        if( mapData.country){
+            let geocoder =  new window.google.maps.Geocoder();
+             console.log( mapData,1)
+
+            geocoder.geocode( { 'address':  [mapData.country,mapData.area,mapData.city].filter(e=>e).join(' ')}, function(results, status) {
+                console.log( mapData.country,2)
+                if (status == window.google.maps.GeocoderStatus.OK) {
+                    formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
+                    formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
+                    marker.setPosition(results[0].geometry.location)
+                    map.setCenter(results[0].geometry.location);
+                   // onSetMarkerPosition(autocomplete.getPlace().results[0].geometry.location);
+
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+
+
+    },[mapData])
+    useEffect(()=>{
+
+
+
+    },[])
 
     const apiKey = 'AIzaSyD9MbMz7FESa79v-nntPfcxJHYTw8Am1S4'
 
     const uluru = { lat: 24.845909101072877, lng: 39.569421557617204 }
+
 
     return(
         <LoadScript
@@ -78,19 +109,61 @@ function MyMapComponent({data,formRef}) {
 
             <Row gutter={[20]}>
                 <Col lg={6}>
-                    <FormInput label={t('Area')} name={'area'} inputType={'resourceSelect'}
+                    <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.region?.country?.id}
+                               inputProps={{
+                                   onChange:(e,data)=> {
+                                       formRef?.current?.setFieldsValue({
+                                           region_id:null,
+                                           city_id:null
+                                       })
+                                       setMapData((prevState) => ({
+                                           ...prevState,
+                                           country: data.find(u => u.id === e).name
+                                       }))
+                                   }
+                               }}
                                initialData={data?.location?.region?.country?[data?.location?.region?.country]:[]}
                                resource={'Country'} />
                 </Col>
                 <Col lg={6}>
+                    <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
+                               initialValue={data?.location?.region?.id}
+                               resourceParams={{
+                                   country:formRef?.current?.getFieldValue('country_id')
+                               }}
+                               inputProps={{
+                                   onChange:(e,data)=> {
+                                       formRef?.current?.setFieldsValue({
+                                           city:null
+                                       })
+                                       setMapData((prevState) => ({
+                                           ...prevState,
+                                           area: data.find(u => u.id === e).name
+                                       }))
+                                   }
+                               }}
+                               initialData={data?.location?.region ? [data?.location?.region]:[]}
+                               resource={'Region'} />
+                </Col>
+                <Col lg={6}>
+                    <Form.Item hidden={true} name={'latitude'} initialValue={data?.location?.lat}></Form.Item>
 
-                    <FormInput label={t('City')} name={'city'} inputType={'resourceSelect'}
+                    <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.city?.id}
+                               resourceParams={{
+                                   region:formRef?.current?.getFieldValue('region_id')
+                               }}
+                               inputProps={{
+                                   onChange:(e,data)=>setMapData((prevState)=>({
+                                       ...prevState,
+                                       city:data.find(u=>u.id===e).name
+                                   }))
+                               }}
                                initialData={data?.location?.city?[data?.location?.city]:[]}
                                resource={'City'} />
                 </Col>
-                <Col lg={12}>
+                <Col lg={6}>
                     <Autocomplete
                         onLoad={onLoad}
                         onPlaceChanged={onPlaceChanged}

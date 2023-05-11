@@ -77,7 +77,8 @@ function Appointments() {
                         {
                             modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
                                 modal?.key === '2' ? <FinishedContent loading={loading}  onCancel={onCancel} /> :
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> : null
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
+                                    modal?.key === '1' ? onFinish()  : null
                         }
 
                     </Form>
@@ -89,7 +90,7 @@ function Appointments() {
                                        navigate(`${ResourceLinks[resource] + record.id}`)
                                    }
                                }}
-                               eyeShow={true}
+                               eyeShow={false}
                                except={{edit: true}}
                                tableColumns={[
                     {

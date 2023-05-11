@@ -37,6 +37,7 @@ function ResourceSelectPaginated({
 
     useEffect(()=>{
         if(JSON.stringify(resourceParams)!==JSON.stringify(params)){
+            setLocalData([])
             setParams(resourceParams)
         }
 
@@ -120,6 +121,7 @@ function ResourceSelectPaginated({
 
   const SelectItem = <Select
     {...inputProps}
+      onChange={(e)=>inputProps.onChange(e,localData)}
       disabled={disabled}
     filterOption={false}
 

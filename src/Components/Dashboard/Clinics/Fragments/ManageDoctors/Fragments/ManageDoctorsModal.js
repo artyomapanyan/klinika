@@ -12,7 +12,7 @@ function ManageDoctorsModal({isModalOpen,onCreate}) {
         formRef.current.submit();
     }
     return(
-        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={()=>onCreate()} okText={t("Save")} >
+        <Modal title="Add new doctor" open={isModalOpen} onOk={handleOk} onCancel={()=>onCreate()} okText={t("Save")} >
             <Spin spinning={isModalOpen===1}>
                 <Form
                     name="edit"

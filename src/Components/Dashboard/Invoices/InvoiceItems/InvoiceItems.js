@@ -4,12 +4,15 @@ import {t} from "i18next";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import ResourceTable from "../../../Fragments/ResourceTable";
 import DateParser from "../../../Fragments/DateParser";
+import PermCheck from "../../../Fragments/PermCheck";
 
 
 function InvoiceItems() {
     return(
         <div>
-            <ResourceTable resource={'InvoiceItem'} tableColumns={[
+            <ResourceTable resource={'InvoiceItem'}
+
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

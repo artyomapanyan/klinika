@@ -99,10 +99,10 @@ function FormInput({
                                                 handleMapItems={handleMapItems}
                                                 inputProps={{
                                                     onFocus: () => setFocused(true),
-                                                    onChange: e => {
+                                                    onChange: (e,data) => {
                                                         setValue(e)
                                                         if (inputProps.onChange) {
-                                                            inputProps.onChange(e)
+                                                            inputProps.onChange(e,data)
                                                         }
                                                     },
                                                     onBlur: () => setFocused(false),

@@ -21,6 +21,7 @@ function HeaderAccount() {
 
     const [approve, setApprove] = useState([])
     const [elem, setElem] = useState([])
+    const [authOpen, setAuthOpen] = useState(false)
     const [loading, setLoading] = useState(false)
 
 
@@ -95,7 +96,7 @@ function HeaderAccount() {
                     <Divider type={"vertical"} style={{height: 32}} />
 
 
-                <Dropdown dropdownRender={()=><Card className={"head_account_dropdown"}><HeaderAccountDropdown /></Card>} placement="bottomRight" trigger={['click']}>
+                <Dropdown onOpenChange={e=>setAuthOpen(e)} open={authOpen} dropdownRender={()=><Card className={"head_account_dropdown"}><HeaderAccountDropdown setAuthOpen={setAuthOpen} /></Card>} placement="bottomRight" trigger={['click']}>
                     <Button type={"link"} className={'head_user_db'}  >
                         <div className={'avatar_big_div'}>
                             <Avatar size={'large'} className="header_avatar">A</Avatar>

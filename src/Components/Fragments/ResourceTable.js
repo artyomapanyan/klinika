@@ -11,6 +11,7 @@ import {useSearchParams} from "react-router-dom";
 import {clearObject, paramsToObject} from "../../functions";
 import axios from "axios";
 import api from "../../Api";
+import PermCheck from "./PermCheck";
 
 function ResourceTable ({
     resource, tableColumns,
@@ -200,12 +201,10 @@ function ResourceTable ({
         {!noHeader&&<Row className={'resource-header'}>
             <Col lg={11}>
                 <div style={{display:'flex', gap: 4}}>
-                    <Typography.Title level={4}>{t(title)}:</Typography.Title>
-                    {
-                        buttonAdd ? <Tooltip title="Add new entry">
+                    <div className={'recource_table_title'}>{t(title)}:</div>
+                    {PermCheck(`${resource}:create`)?<Tooltip title="Add new entry">
                             <Button style={{marginLeft:10}} className={'resource_table_btn'} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
-                        </Tooltip> : null
-                    }
+                    </Tooltip>:<div></div>}
                     {
                         exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
                         : null

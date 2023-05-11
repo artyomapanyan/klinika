@@ -82,9 +82,9 @@ function Clinic() {
                     <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit/>
                     </items>}
-                    <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                {dataState.data.has_laboratory_clinic_visit_service &&   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
                         <Laboratory />
-                    </items>
+                    </items> }
                     {dataState.data.has_nursing_service && <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing/>
                     </items>}
