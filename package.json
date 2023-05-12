@@ -50,6 +50,7 @@
   "scripts": {
     "start": "env-cmd -f .env.local react-scripts start",
     "build": "env-cmd -f .env.local react-scripts build",
+    "build:prod": "export NODE_OPTIONS=--max_old_space_size=4096 && env-cmd -f .env.prod react-scripts build",
     "build:dev": "export NODE_OPTIONS=--max_old_space_size=4096 && env-cmd -f .env.development react-scripts build",
     "start:dev": "env-cmd -f .env.development react-scripts start",
     "test": "react-scripts test",
