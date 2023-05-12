@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import arrow_right_white from "../../../../../../dist/icons/arrow_right_white.png";
 import dayjs from "dayjs";
-import {Button, Form, Radio} from "antd";
+import {Button, Form, Radio, Spin} from "antd";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import {t} from "i18next";
 import {GMBK} from "../../../../../../functions";
 import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import Preloader from "../../../../../Preloader";
 
 function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
     let token = useSelector((state) => state.auth.token);
@@ -15,10 +16,11 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
 
     const [startDate, setStartDate] = useState(dayjs())
     const [date, setDate] = useState(null)
-    const [time, setTime] = useState(null)
+
     const [timeLoading, setTimeLoading] = useState(false)
     const [availableTimes, setAvailableTimes] = useState([])
     const [timesIndex, setTimesIndex] = useState(0)
+    const [isClicked, setIsClicked] = useState(false)
 
 
     const handleChangeMonth = (count) => {
@@ -45,8 +47,11 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
         }).then((response) => {
             setTimesIndex(0)
             setAvailableTimes(response.flat())
+            setTimeLoading(false)
+
         })
         setBookedAtState(dayjs(e).format('YYYY-MM-DD'))
+        setIsClicked(true)
 
         ///postResource('')
         //setAvailableTimes(response)
@@ -78,7 +83,7 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
             <div>
                 <div>
                     <div className={'big_date_div'}>
-                        {[...[...Array(6).keys()]].map((e, key) => {
+                        { [...[...Array(6).keys()]].map((e, key) => {
                             return <div key={key}
                                         className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                         onClick={() => onDateClick(startDate.add(key, 'day'))}>
@@ -114,34 +119,39 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
             </div>
         </div>
 
+        <Spin spinning={timeLoading}>
+            <div className={'drawer_cal_bottom_div'}>
+                <div className={'drawer_cal_foot_div'}>
+                    <div className={'top_div_title'}>
+                        Select Time
+                    </div>
+                    <div align={'center'} className={'big_time_div'}>
+                        {
+                            availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>No available times</div> : <div></div> : <Form.Item name={'booked_time'}>
+                                <Radio.Group
+                                    className={'hours_select'}
+                                    options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
+                                        return {
+                                            label: e,
+                                            value: e
+                                        }
+                                    })}
+                                    optionType="button"
+                                    buttonStyle="solid"
 
-        <div className={'drawer_cal_bottom_div'}>
-            <div className={'drawer_cal_foot_div'}>
-                <div className={'top_div_title'}>
-                    Select Time
-                </div>
-                <div className={'big_time_div'}>
-                    <Form.Item name={'booked_time'}>
-                        <Radio.Group
-                            className={'hours_select'}
-                            options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
-                                return {
-                                    label: e,
-                                    value: e
-                                }
-                            })}
-                            optionType="button"
-                            buttonStyle="solid"
+                                />
+                            </Form.Item>
+                        }
 
-                        />
-                    </Form.Item>
-                    <Button className={'next_btn_time'} onClick={() => handleChangeTime(8)}>
-                        <img alt={'arrow_right_white'} src={arrow_right_white}/>
-                    </Button>
+                        <Button className={'next_btn_time'} onClick={() => handleChangeTime(8)}>
+                            <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                        </Button>
 
+                    </div>
                 </div>
             </div>
-        </div>
+        </Spin>
+
     </div>
 }
 

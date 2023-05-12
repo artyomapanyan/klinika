@@ -17,6 +17,7 @@ import {RascheduledContent} from "./StatusModalForms/RascheduledContent";
 import {postResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Preloader from "../../Preloader";
+import dayjs from "dayjs";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
@@ -128,7 +129,12 @@ function Appointments() {
                         dataIndex:['created_at','iso_string'],
                         title:t('Appointment Date'),
                         key:'date',
-                        render:i=><DateParser date={i}/>
+                        render:(i, record)=> {
+                            console.log(record, i)
+                            return (
+                               dayjs(record?.booked_at?.iso_string).format('DD-MM-YYYY HH:mm')
+                            )
+                        }
                     },
                     {
                        dataIndex:'status',
