@@ -24,5 +24,5 @@ deploy:
     - apt-get update -y
     - apt-get install -y rsync
     - npm install
-    - npm run build:dev
+    - if [ "$CI_COMMIT_BRANCH" = "main" ]; then npm run build:prod; else npm run build:dev; fi
     - if [ "$CI_COMMIT_BRANCH" = "main" ]; then rsync -avz --del ./build/ $SSH_DEST_MAIN; else rsync -avz --del ./build/ $SSH_DEST_STAGING; fi
