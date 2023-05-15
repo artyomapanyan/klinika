@@ -205,7 +205,7 @@ function GradientChart() {
                     } = chart;
 
                     ctx.save();
-                    ctx.fillText(isNull.length === 0 ? "Ther aren't any information yet." : '',width/2,height/1.5, 500);
+                    ctx.fillText(isNull.length === 0 ? "Ther aren't any information yet." : '',width/2,height/1.41, 500);
                     ctx.restore();
 
                 },
@@ -312,7 +312,7 @@ function GradientChart() {
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: 50,
+                                stepSize: isNull.length === 0 ? 0.2 : 50,
                                 showLabelBackdrop: false,
                                 padding: 40,
                             },

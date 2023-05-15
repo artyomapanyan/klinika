@@ -26,7 +26,6 @@ export function RascheduledContent({onCancel, modal, loading}){
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
            }).then((responce) => {
-
                setAvailableTimesState(responce.map((el) => {
                    return {
                        label: 'Break Time',

@@ -22,7 +22,6 @@ function ClinicOwnerHeader({noClinicSelect = false}) {
     useEffect(() => {
         if(!noClinicSelect){
             postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
-                console.log(response)
                 if(response) {
                     setItems(response.clinics.map((el,key) => {
                         if(key===0){
@@ -78,10 +77,10 @@ function ClinicOwnerHeader({noClinicSelect = false}) {
                     trigger={['click']}
                     className={'own_head_clinics'}
                 >
-                    <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                        <div style={{ fontWeight: 400, fontSize:18}}>{Months.find(e=>e.key==ownerClinics.month_key)?.label??dayjs().format('MMM')}</div>
-                        <div style={{marginLeft: 10}} > <img alt={'arrow_black'} src={arrow_black}/></div>
-                    </Space>
+                    <div className={'dashboard_head_dropdown'} style={{cursor:"pointer"}}>
+                        <div style={{ fontWeight: 400, fontSize:20}}>{Months.find(e=>e.key==ownerClinics.month_key)?.label??dayjs().format('MMM')}</div>
+                        <div style={{marginLeft: 20}} > <img alt={'arrow_black'} src={arrow_black}/></div>
+                    </div>
 
                 </Dropdown>
             </div>
@@ -94,10 +93,10 @@ function ClinicOwnerHeader({noClinicSelect = false}) {
                     trigger={['click']}
                     className={'own_head_clinics'}
                 >
-                    <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                        <div style={{ fontWeight: 400, fontSize:18}}>{items.find((e)=>e.key==ownerClinics.id)?.label??t('All Clinics')}</div>
-                        <div style={{marginLeft: 10}}> <img alt={'arrow_black'} src={arrow_black}/></div>
-                    </Space>
+                    <div className={'dashboard_head_dropdown'} style={{cursor:"pointer"}}>
+                        <div style={{ fontWeight: 400, fontSize:20}}>{items.find((e)=>e.key==ownerClinics.id)?.label??t('All Clinics')}</div>
+                        <div style={{marginLeft: 20}}> <img alt={'arrow_black'} src={arrow_black}/></div>
+                    </div>
 
                 </Dropdown>
             </div>}

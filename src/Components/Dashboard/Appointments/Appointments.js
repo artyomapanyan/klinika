@@ -30,6 +30,8 @@ function Appointments() {
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
+    const [recordId,setRecordId] = useState({})
+
 
 
     const onStatusChange = (key,record)=>{
@@ -39,6 +41,8 @@ function Appointments() {
         })
 
     }
+
+
 
     const onFinish = (values) => {
         setLoading(true)
@@ -134,7 +138,6 @@ function Appointments() {
                         title:t('Appointment Date'),
                         key:'date',
                         render:(i, record)=> {
-                            console.log(record, i)
                             return (
                                dayjs(record?.booked_at?.iso_string).utc().format('DD-MM-YYYY HH:mm')
                             )
