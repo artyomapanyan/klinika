@@ -39,18 +39,18 @@ function ClinicManagerCalendar() {
             if(!search?.length){
                 return e
             }
-            if(!e.doctors){
+            if(!e.speciality){
                 return null
             }
-            let doctors = Object.values(e.doctors).filter(doc=>{
-                return (doc.doctor.first+' ' +doc.doctor.last).toLowerCase().includes(search.toLowerCase())
+            let speciality = [e.speciality].filter(doc=>{
+                return doc.toLowerCase().includes(search.toLowerCase())
             })
-            if(doctors.length===0){
+            if(speciality.length===0){
                 return null
             }
             return {
                 ...e,
-                doctors:doctors
+                speciality:speciality
             }
         }).filter(e=>e)
 

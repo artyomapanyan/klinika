@@ -8,28 +8,42 @@ import 'antd/dist/reset.css';
 import configureStore from './store/configureStore';
 import "./i18n";
 import axios from "axios";
-import {notificate} from "./functions";
+import {handleFormatDates, notificate} from "./functions";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import App from "./App";
+import dayjs from "dayjs";
 const {persistor, store} = configureStore();
-
+var utc = require('dayjs/plugin/utc')
+dayjs.extend(utc)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 axios.defaults.withCredentials = true;
+/*axios.interceptors.request.use((request) => {
+if(request?.data){
+    let data = JSON.parse(request?.data)
+  console.log(handleFormatDates(data))
+}
 
-axios.interceptors.response.use(response => {
+
+    return request
+})*/
+axios.interceptors.response.use((response) => {
     notificate(response?.data, response?.status)
-    return response?.data?.data??response?.data
+    let data = response?.data?.data??response?.data;
+    data = handleFormatDates(data)
+
+    return data
 }, error => {
 
     notificate(error?.response?.data)
-     if(error?.response.status===401){
+     if(error?.response?.status===401){
          setTimeout(()=>document.location.href='/login',1000)
      }
     return error
 })
+
 
 
 root.render(

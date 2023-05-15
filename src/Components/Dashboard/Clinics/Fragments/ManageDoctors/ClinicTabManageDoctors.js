@@ -48,7 +48,10 @@ function ClinicTabManageDoctors() {
                 {loading ? <Preloader/> : <ResourceTable
                     noHeader={true}
                     except={{edit: true}}
-                    tableParams={{clinic: params.id}}
+                    tableParams={{
+                        clinic: params.id,
+                        is_approved: 0
+                    }}
                     resource={'ClinicDoctor'}
                     tableColumns={[
                         {

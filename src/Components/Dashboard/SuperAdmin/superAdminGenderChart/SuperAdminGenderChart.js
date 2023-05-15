@@ -167,7 +167,7 @@ function SuperAdminGenderChart() {
                     </h1>
                     <Space  direction={'vertical'}>
                         {Object.keys(data).map((itemKey, key) => {
-                            return<div key={key} className={`withDot WD-colorPatientGenger-${key}`}>
+                            return<div key={key} className={`doctor_licenses_chart WD-colorPatientGenger-${key}`}>
                                 <span>{itemKey}</span> <span style={{fontWeight: 600}}>{data[itemKey]}</span></div>
                         })}
                     </Space>

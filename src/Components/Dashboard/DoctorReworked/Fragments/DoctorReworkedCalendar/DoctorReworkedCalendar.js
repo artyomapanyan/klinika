@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import 'devextreme/dist/css/dx.light.css';
-import Scheduler, {Resource} from 'devextreme-react/scheduler';
+import Scheduler from 'devextreme-react/scheduler';
 import DoctorReworkedCalendarHeader from "./Fragments/DoctorReworkedCalendarHeader";
 import CalendarDataCell from "./Fragments/CalendarDataCell";
 import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
-import Preloader from "../../../../Preloader";
+
 import {Spin} from "antd";
+
 
 
 function DoctorReworkedCalendar() {
@@ -27,10 +28,11 @@ function DoctorReworkedCalendar() {
         setLoading(true)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
             let data = Object.values(response.calendar).flat().map(e =>{
+                console.log(e.booked_at.iso_string,'kkk', dayjs(e.booked_at.iso_string).format())
                 return {
                     text: 'status-' + e.status,
-                    startDate: new Date(e.booked_at.iso_string),
-                    endDate: new Date(e.booked_to.iso_string),
+                    startDate: dayjs(e.booked_at.iso_string).utc().format(),
+                    endDate: dayjs(e.booked_to.iso_string).utc().format(),
                     content: e.service_name,
                     ...e
                 }
@@ -45,13 +47,15 @@ function DoctorReworkedCalendar() {
             <DoctorReworkedCalendarHeader setDate={setDate}/>
 
             <div className={'dr_reworked_calendar_div'}>
-                <Spin spinning={loading}> <Scheduler
+                <Spin spinning={loading}>
+                    <Scheduler
                     dataSource={appointments}
                     height={500}
+
                     currentView={view}
                     onCurrentDateChange={(e) => {
                         setDate(prevState => {
-                            const currentDate = dayjs(e);
+                            const currentDate = dayjs(e).utc();
                             return {
                                 from: currentDate.add(-10, 'day').format('YYYY-MM-DD'),
                                 to: currentDate.add(10, 'day').format('YYYY-MM-DD')

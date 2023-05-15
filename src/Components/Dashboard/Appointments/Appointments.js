@@ -18,6 +18,7 @@ import {postResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Preloader from "../../Preloader";
 import dayjs from "dayjs";
+import {Confirmed} from "./StatusModalForms/Confirmed";
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
@@ -79,7 +80,10 @@ function Appointments() {
                             modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
                                 modal?.key === '2' ? <FinishedContent loading={loading}  onCancel={onCancel} /> :
                                 modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
-                                    modal?.key === '1' ? onFinish()  : null
+                                modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                modal?.key === '7' ? <Confirmed loading={loading} onCancel={onCancel}/>  : null
                         }
 
                     </Form>
@@ -132,7 +136,7 @@ function Appointments() {
                         render:(i, record)=> {
                             console.log(record, i)
                             return (
-                               dayjs(record?.booked_at?.iso_string).format('DD-MM-YYYY HH:mm')
+                               dayjs(record?.booked_at?.iso_string).utc().format('DD-MM-YYYY HH:mm')
                             )
                         }
                     },

@@ -27,6 +27,12 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
 
     return(
         <div>
+            <Form
+                name="edit"
+                onFinish={onFinish}
+                layout="vertical"
+                ref={formRef}
+            >
             <Row gutter={[15, 15]}>
                 <Col lg={12}>
                     <div style={{padding: 10, marginTop:20, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
@@ -40,12 +46,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                         <Tag color="#ce4e99" size={'large'} style={{fontSize:17, fontWeight:550, marginTop:20,  padding:6, borderRadius:10}}>{data.time}</Tag>
                     </div>
                     <div>
-                        <Form
-                            name="edit"
-                            onFinish={onFinish}
-                            layout="vertical"
-                            ref={formRef}
-                        >
+
                             <FormInput label={t('First name')} name={'first'}   rules={[{required: true}]} />
                             <FormInput label={t('Last name')} name={'last'} rules={[{required: true}]} />
                             <FormInput label={t('Email')} name={'email'} rules={[{required: true}]} />
@@ -73,19 +74,15 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             <div>
                                 <Button loading={loading} style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                             </div>
-                        </Form>
+
                     </div>
                 </Col>
                 <Col lg={12}>
-                    <div align={'right'} style={{marginTop:47}}>
+                    <div align={'right'} style={{marginTop:67}}>
                         <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} /> Back to short form</Button>
                     </div>
                     <div style={{marginTop:22}}>
-                        <Form
-                            name="edit"
-                            onFinish={onFinish}
-                            layout="vertical"
-                        >
+
                             {/*<FormInput label={t('Address')} name={'address'}  rules={[{required: true}]} />*/}
                             <FormInput label={t('Country')} name={'country_id'}
                                        inputType={'resourceSelect'}
@@ -104,14 +101,14 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             ]} />
                             <FormInput label={t('Nationality number')} name={'nationality_number'} rules={[
                                 {required: true},
-                                // {
-                                //     validator:(rule,value)=>{
-                                //         if(value?.length < 10){
-                                //             return Promise.reject('min length 10')
-                                //         }
-                                //         return Promise.resolve();
-                                //     }
-                                // }
+                                {
+                                    validator:(rule,value)=>{
+                                        if(value?.length < 10){
+                                            return Promise.reject('min length 10')
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
 
                             ]} />
                             <FormInput label={t('Identification number')} />
@@ -127,14 +124,15 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                          name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>*/}
 
                             <div >
-                                <Button loading={loading} style={{width:'100%',}} size={'large'}  type={'secondary'} onClick={()=>setOpen(false)} htmlType="submit">{t('Cancel')}</Button>
+                                <Button loading={loading} style={{width:'100%',}} size={'large'}  type={'secondary'} onClick={()=>setOpen(false)} >{t('Cancel')}</Button>
                             </div>
 
-                        </Form>
+
                     </div>
 
                 </Col>
             </Row>
+        </Form>
 
         </div>
     )

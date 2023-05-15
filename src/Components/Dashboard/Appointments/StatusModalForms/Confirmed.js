@@ -1,0 +1,21 @@
+import {Button, Result} from "antd";
+
+import {t} from "i18next";
+import React from "react";
+
+export function Confirmed({onCancel, loading}){
+
+
+
+    return<div>
+        <Result
+            title={t('Ar you changed status')}
+        />
+
+        <div style={{display: 'flex', gap: 5}} >
+            <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
+            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
+        </div>
+
+    </div>
+}

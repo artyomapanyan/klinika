@@ -10,7 +10,7 @@ import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Preloader from "../../../../../Preloader";
 
-function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
+function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeState}) {
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 
@@ -42,7 +42,7 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData}) {
         setDate(e)
         setTimeLoading(true)
         postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + clinicId, {
-            service: 'telehealth',
+            service: serviceTypeState?.service_type,
             date: dayjs(e).format('YYYY-MM-DD')
         }).then((response) => {
             setTimesIndex(0)

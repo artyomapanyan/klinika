@@ -285,6 +285,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
+    let reduxInfo = useSelector((state) => state);
 
     let token = useSelector((state) => state.auth.token);
     const {data, setData} = dataState;
@@ -345,7 +346,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
             ...prevState,
             ...values
         }))
-console.log(values, 'values')
 
 
         if (params.id) {
@@ -386,7 +386,7 @@ console.log(values, 'values')
         item.id = item.phone_code
         return [name,item]
     }
-console.log(data)
+console.log(reduxInfo)
 
     return(
         <div >
@@ -430,14 +430,17 @@ console.log(data)
                                        initialData={Resources.Status}
                             />
                             <FormInput label={t('Owner')} name={'owner_id'} inputType={'resourceSelect'}
+                                       disabled={reduxInfo?.auth?.selected_role?.key === 'clinic-owner'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.owner?.id}
-                                       initialData={data?.owner ? [data.owner]:[]}
+                                       initialValue={reduxInfo?.auth?.selected_role?.key === 'clinic-owner' ? reduxInfo?.auth?.user?.id : data?.owner?.id}
+                                       initialData={reduxInfo?.auth?.selected_role?.key === 'clinic-owner' ? reduxInfo?.auth?.user ? [reduxInfo?.auth?.user]:[] : data?.owner ? [data?.owner] : []}
+                                       customSearchKey={'name_or_phone'}
                                        resource={'User'}/>
                             <FormInput inputProps={{mode:'multiple'}} label={t('Manager')} name={'managers'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.managers?.map(e=>e.id)}
                                        initialData={data?.managers ??[]}
+                                       customSearchKey={'name_or_phone'}
                                        resource={'User'}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}

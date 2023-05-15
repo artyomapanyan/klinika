@@ -41,7 +41,8 @@ function ClinicApprovedDoctors() {
                         edit: true
                     }}
                     tableParams={{
-                        clinic: params.id
+                        clinic: params.id,
+                        is_approved: 1
                     }}
                     resource={'ClinicDoctor'}
                     tableColumns={[
@@ -111,7 +112,7 @@ function ClinicApprovedDoctors() {
 
 
                 />
-            <Modal title="Worcing Houer" width={"65%"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
+            <Modal title="Working Hours" width={"65%"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
                 {isModalOpen?.id ? <DoctorsHoursModal  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} />:null}
             </Modal>
         </div>

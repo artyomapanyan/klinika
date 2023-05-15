@@ -28,7 +28,7 @@ function CalendarDataCell({data}) {
                         {data.appointmentData?.patient?.first} {data.appointmentData?.patient?.last}
                     </div>
                     <div className={'appointment_time'} style={{color: data.appointmentData.status == 3 || data.appointmentData.status == 4 ? '#42394D' : '#ffffff'}}>
-                        {dayjs(data.appointmentData.booked_at.iso_string).format('HH:mm A')} - {dayjs(data.appointmentData.booked_to.iso_string).format('HH:mm A')}
+                        {dayjs(data.appointmentData.booked_at.iso_string).utc().format('HH:mm A')} - {dayjs(data.appointmentData.booked_to.iso_string).utc().format('HH:mm A')}
                     </div>
                     <div className={'status'} style={{color: data.appointmentData.status == 3 || data.appointmentData.status == 4 ? '#42394D' : '#ffffff'}}>
                         {data.appointmentData.service_name}

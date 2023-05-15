@@ -239,7 +239,7 @@ function Appointment() {
 
 
     const searchByNumber = (item, name, patientData) => {
-console.log(item)
+
         fetchedUsers.current = patientData
         name = <>{item.phone_number}{" "}{item.email}</>
         let searchData = item.phone_number+item.email;
@@ -288,7 +288,7 @@ console.log(item)
 
                                                initialData={[]}
                                                handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
-                                               customSearchKey={'phone_number'}
+                                               customSearchKey={'name_or_phone'}
                                                resource={'User'}/>
                                 </div>
 

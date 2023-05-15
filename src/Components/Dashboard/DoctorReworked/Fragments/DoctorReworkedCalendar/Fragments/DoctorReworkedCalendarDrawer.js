@@ -20,6 +20,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const [bookedAtState, setBookedAtState] = useState('');
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({});
+    const [serviceTypeState, setServiceTypeState] = useState({});
 
     let drFormRef = formRef?.current?.getFieldValue()
 
@@ -27,6 +28,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
         setLoading(true)
         values.doctor_id = authRedux?.user?.id
         values.booked_at = bookedAtState+' '+values.booked_time;
+
         createResource('Appointment', values, token).then((response) => {
             if (response?.id) {
                 setOpen(false)
@@ -50,9 +52,12 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                 onFinish={onNewAppointment}
                 ref={formRef}
                 onValuesChange={(e)=>{
+
                   if(e.clinic_id){
                       setFormData(e)
-                }
+                } if(e.service_type){
+                      setServiceTypeState(e)
+                    }
                 }}
 
             >
@@ -89,7 +94,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            }}
                 />
 
-                <DateTimeSelect setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} formData={formData}/>
+                <DateTimeSelect setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} formData={formData} serviceTypeState={serviceTypeState}/>
 
                 <div style={{paddingTop:20}}>
                     <Button loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
