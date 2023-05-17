@@ -29,6 +29,7 @@ function FormInput({
                        className,
                        onChange
 
+
                    }) {
     if (inputType === 'date') {
         if (initialValue?.iso_string) {

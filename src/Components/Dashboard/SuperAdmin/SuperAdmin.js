@@ -66,12 +66,12 @@ function SuperAdmin() {
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
-                    <Col lg={18}>
+                    <Col lg={24}>
                         <SuperAdminClinicPatientChart />
                     </Col>
-                    <Col lg={6} >
-                        {/*<IncomeChannelsChart />*/}
-                    </Col>
+                    {/*<Col lg={6} >*/}
+                    {/*    <IncomeChannelsChart />*/}
+                    {/*</Col>*/}
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={18}>
@@ -82,31 +82,32 @@ function SuperAdmin() {
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
-                    <Col lg={8}>
-                        {/*<IncomesVsConversRate data={incomeVsConvertData}/>*/}
-                    </Col>
-                    <Col lg={16}>
+                    {/*<Col lg={8}>*/}
+                    {/*    <IncomesVsConversRate data={incomeVsConvertData}/>*/}
+                    {/*</Col>*/}
+                    <Col lg={24}>
                         <SuperAdminIncomesChart />
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={12}>
-                        {/*<SuperAdminProfitableTable />*/}
+                        <SuperAdminProfitableTable />
                     </Col>
                     <Col lg={12}>
+                        <SuperAdminProfitableTable />
                         {/*<SuperAdminUnprofitableTable />*/}
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
-                    <Col lg={8} md={12} sm={24} xs={24}>
+                    <Col lg={12} md={12} sm={24} xs={24}>
                         <SuperAdminGenderChart />
                     </Col>
-                    <Col lg={8} md={12} sm={24} xs={24}>
+                    <Col lg={12} md={12} sm={24} xs={24}>
                         <SuperAdminClinicLicenseChart/>
                     </Col>
-                    <Col lg={8} md={12} sm={24} xs={24}>
-                        {/*<SuperAdminPlatformIssues data={issuesData}/>*/}
-                    </Col>
+                    {/*<Col lg={8} md={12} sm={24} xs={24}>*/}
+                    {/*    <SuperAdminPlatformIssues data={issuesData}/>*/}
+                    {/*</Col>*/}
                 </Row>
             </div>
             <div>

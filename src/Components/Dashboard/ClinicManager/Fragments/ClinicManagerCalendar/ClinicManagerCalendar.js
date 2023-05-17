@@ -16,6 +16,7 @@ function ClinicManagerCalendar() {
     const [showCount,setShowCount] = useState(10);
     const [search,setSearch] = useState('');
 
+
     let token = useSelector((state) => state.auth.token);
     useEffect(() => {
         setLoading(true)
@@ -33,6 +34,7 @@ function ClinicManagerCalendar() {
         })
 
     }, [date])
+
 
     const filteredData = useMemo(()=>{
         return [...data.workload].map(e=>{
@@ -66,7 +68,7 @@ function ClinicManagerCalendar() {
                             <div className="col-12 card mb-4 cardStyle">
                                 <div className="card-body">
                                     <div className="scrollXHide">
-                                        <table className="w-100">
+                                        <table className="w-100" style={{marginTop: -10}}>
                                             <tbody>
                                                 <tr className="d-flex align-items-center justify-content-between w-100">
                                                     <td>
@@ -78,8 +80,8 @@ function ClinicManagerCalendar() {
                                                         </div>
                                                     </td>
                                                     {[...Array(7).keys()].map((e, key) => {
-                                                        return <td key={e} className="appointmentsDate">
-                                                            <div className="appointmentsDate__content">
+                                                        return <td key={e} className="appointmentsDate" style={{height: 48}}>
+                                                            <div className="appointmentsDate__content" style={{height: 48, paddingTop: 14}}>
                                                                 <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>
                                                                 <span style={{marginLeft: 5, fontSize: 18}} className="ppointmentsDate__content__text appointmentsDate__content__text--light">{Resources.Days[e]}</span>
                                                             </div>

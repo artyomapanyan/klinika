@@ -40,20 +40,23 @@ function HeaderAccountDropdown({setAuthOpen}) {
             })
             setAuthOpen(false)
             setLoading(false)
-            switch (response.selected_role.key){
-                case 'clinic-manager':
-                    return navigate('/dashboard/clinic-manager')
-                case 'clinic-owner':
-                    return navigate('/dashboard/clinics-owner')
-                case 'doctor':
-                    return navigate('/dashboard/doctor-reworked')
-                case 'super':
-                    return navigate('/dashboard/admin')
+            setTimeout(() => {
+                switch (response.selected_role.key){
+                    case 'clinic-manager':
+                        return navigate('/dashboard/clinic-manager')
+                    case 'clinic-owner':
+                        return navigate('/dashboard/clinics-owner')
+                    case 'doctor':
+                        return navigate('/dashboard/doctor-reworked')
+                    case 'super':
+                        return navigate('/dashboard/admin')
 
-                default:
-                    return  navigate('/dashboard')
+                    default:
+                        return  navigate('/dashboard')
 
-            }
+                }
+            }, 500)
+
 
 
         })

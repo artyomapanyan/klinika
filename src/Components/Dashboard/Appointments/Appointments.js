@@ -94,6 +94,10 @@ function Appointments() {
                 </Modal>
 
                 {loading?<Preloader/>:<ResourceTable resource={resource}
+                               tableParams={{
+                                   order_by: 'booked_at',
+                                   order: 'desc'
+                }}
                                customActions={{
                                    edit:(record)=>{
                                        navigate(`${ResourceLinks[resource] + record.id}`)
@@ -134,14 +138,13 @@ function Appointments() {
                     },
 
                     {
-                        dataIndex:['created_at','iso_string'],
+                        dataIndex:['booked_at','iso_string'],
                         title:t('Appointment Date'),
-                        key:'date',
-                        render:(i, record)=> {
-                            return (
-                               dayjs(record?.booked_at?.iso_string).utc().format('DD-MM-YYYY HH:mm')
-                            )
-                        }
+                        key:'booked_at',
+                        sorter:true,
+                        defaultSortOrder:'descend',
+                        render:(i )=> dayjs(i).utc().format('DD-MM-YYYY HH:mm')
+
                     },
                     {
                        dataIndex:'status',

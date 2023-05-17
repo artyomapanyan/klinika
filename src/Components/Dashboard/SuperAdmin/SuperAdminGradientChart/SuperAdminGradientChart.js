@@ -504,7 +504,7 @@ function SuperAdminGradientChart() {
                      </Dropdown>
                     </div>
                     <div>
-                        <Space>
+                        <Space className={'arrow_button'}>
 
                             <Switch defaultChecked onChange={switchChange}/>
                             <span className={'gradient_szitch_text'}>
@@ -516,8 +516,8 @@ function SuperAdminGradientChart() {
                                 <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                                 {/*<Radio.Button value="month">{t(" Month ")}</Radio.Button>*/}
                             </Radio.Group>
-                            <Button className={'chart_button'} disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                            <Button className={'chart_button'} disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                         </Space>
                     </div>
                 </div>

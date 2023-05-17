@@ -28,7 +28,7 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
                              style={{width: item.availability[key]+'%'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
                              aria-valuemax="100">
                         </div>
-                        <div className="progressText">{item.availability[key]}%</div>
+                        <div className="progressText">{item.availability[key].toFixed()}%</div>
                     </div>
                 </td>)}
             </tr>

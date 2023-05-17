@@ -33,7 +33,7 @@ function DoctorRewProgress() {
 
     return (<Spin spinning={loading}>
             <Space>
-                <Space direction={'vertical'} className={'dr_progress_big_div'}>
+                <Space direction={'vertical'} className={'progress_big_div'}>
                     <div className={'clinic_owner_big_text'}>
                         {data.count}
                     </div>
@@ -45,7 +45,7 @@ function DoctorRewProgress() {
                     </div>
                 </Space>
 
-                <Space direction={'vertical'}>
+                <Space direction={'vertical'} style={{marginLeft: 17}}>
                     <div className={'avg_montly'}>
                         <span>{t("Total ")}</span>
                         <span style={{fontWeight: 700}}>{t(GMBK(drReworked.month_key)+"’s")}</span>

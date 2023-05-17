@@ -32,28 +32,41 @@ function ClinicManagerProgressCount({dataKey}) {
 
     return (<Spin spinning={loading}>
             <Space>
-                <Space direction={'vertical'} className={'dr_progress_big_div'}>
+                <Space direction={'vertical'} className={'progress_big_div'}>
                     <div className={'clinic_owner_big_text'}>
                         {data.count}
                     </div>
-                    <div style={{color: data.percent_change > 0 ? "#6DAF56" : data.percent_change == 0 ? '#a4a2a2' : "rgba(207, 83, 62, 1)"}}>
+                    <div style={{color: data.percent_change > 0 ? "#6DAF56" : data.percent_change == 0 ? '#a4a2a2' : "rgba(207, 83, 62, 1)", marginLeft:2}}>
                         {
                             data.percent_change !== 0 ? <img alt={'icons'} src={data.percent_change > 0 ? arrowGreen : arrowRed}/> : <div></div>
                         }
                         <span style={{fontWeight: 700, marginLeft: 5}}>{data.percent_change?.toFixed(1)}%</span>
                     </div>
                 </Space>
-                <Space></Space>
-                <Space direction={'vertical'}>
-                    <div className={'avg_montly'}>
-                        <span>{t("Total ")}</span>
-                        <span style={{fontWeight: 700}}>{t(GMBK(ownerClinics.month_key)+"’s")}</span>
+                {
+                    dataKey === 'MonthlyTelehealths' ?
+                    <Space direction={'vertical'} style={{marginLeft: 17}}>
+                        <div className={'dr_counter_text'}>
+                            {t("Telehealth")}
+                        </div>
+                        <div className={'avg_montly'}>
+                            <span>{t("Calls in ")}</span>
+                            <span style={{fontWeight: 700}}>{t(GMBK(ownerClinics.month_key))}</span>
 
-                    </div>
-                    <div className={'dr_counter_text'}>
-                        {t("appointments")}
-                    </div>
-                </Space>
+                        </div>
+                    </Space> : <Space direction={'vertical'} style={{marginLeft: 17}}>
+                            <div className={'avg_montly'}>
+                                <span>{t("Total ")}</span>
+                                <span style={{fontWeight: 700}}>{t(GMBK(ownerClinics.month_key)+"’s")}</span>
+
+                            </div>
+                            <div className={'dr_counter_text'}>
+                                {t("appointments")}
+                            </div>
+                        </Space>
+
+                }
+
             </Space>
         </Spin>
     )

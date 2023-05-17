@@ -32,9 +32,9 @@ function CounterProgress() {
             <Space >
                 <Space direction={'vertical'} className={'progress_big_div'}>
                     <div className={'clinic_owner_big_text'}>
-                        {data?.incomes} K
+                        {data?.incomes}K
                     </div>
-                    <div style={{color:"#6DAF56"}}>
+                    <div style={{color:"#6DAF56", marginLeft:4}}>
                         {
                             data?.incomes == 0 && data?.percentage == 0 ? <div style={{color:"#a4a2a2", fontWeight: 600}}>
                                     0%
@@ -49,8 +49,8 @@ function CounterProgress() {
                         }
                     </div>
                 </Space>
-                <Space></Space>
-                <Space direction={'vertical'}>
+
+                <Space direction={'vertical'} style={{marginLeft: 17}}>
                     <div className={'avg_montly'}>
                         {t("Current month")}
                     </div>

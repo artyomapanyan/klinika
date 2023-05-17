@@ -328,13 +328,13 @@ function SuperAdminClinicPatientChart(){
                     {['Rejected', 'Approved'].map((itemKey,key)=><Space  key={key} className={`withDot WD-colorAdminclinicPatient-${key}`}><span className={'color_text_charts'}>{itemKey}</span></Space>)}
                 </Space>
                 <div>
-                    <Space>
+                    <Space className={'arrow_button'}>
                         <Radio.Group onChange={onRadioChange} defaultValue="year" className={'radio_grup_charts'}>
                             <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                             <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                         </Radio.Group>
-                        <Button className={'chart_button'}  disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                        <Button className={'chart_button'} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                        <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                        <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                     </Space>
                 </div>
             </div>

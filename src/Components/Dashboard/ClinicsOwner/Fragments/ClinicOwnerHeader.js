@@ -10,6 +10,7 @@ import Resources from '../../../../store/Resources'
 const currentMonth = new Date().getMonth()
 function ClinicOwnerHeader({ noClinicSelect = false }) {
 	let token = useSelector(state => state.auth.token)
+	let reduxInfo = useSelector((state) => state?.auth?.clinics);
 	const [items, setItems] = useState([])
 
 	let dispatch = useDispatch()
@@ -17,10 +18,10 @@ function ClinicOwnerHeader({ noClinicSelect = false }) {
 
 	useEffect(() => {
 		if (!noClinicSelect) {
-			postResource('ClinicOwnerClinics', 'list', token, '').then(response => {
-				if (response) {
+
+				if (reduxInfo) {
 					setItems(
-						response.clinics.map((el, key) => {
+						reduxInfo.map((el, key) => {
 							if (key === 0) {
 								dispatch({
 									type: 'OWNER_DATA',
@@ -37,7 +38,7 @@ function ClinicOwnerHeader({ noClinicSelect = false }) {
 						})
 					)
 				}
-			})
+
 		}
 	}, [])
 

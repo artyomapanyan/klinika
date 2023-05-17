@@ -1,11 +1,12 @@
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import {Button, DatePicker, Space} from "antd";
 import {t} from "i18next";
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {GMBK} from "../../../../../../functions";
-import React from "react";
-import arrow_next from "../../../../../../dist/icons/arrow-next.svg";
 import arrow_prev from "../../../../../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../../../../../dist/icons/arrow-next.svg";
+import React from "react";
+
 function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDates}) {
 
 
@@ -30,11 +31,11 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
         })
     }
     return(
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:24}}>
-            <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
-                {t("Appointments :")}
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", paddingTop:45}}>
+            <div className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
+                {t("Appointments ")}
                 {!hideData && data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-clinic-man-calendar-${key}`}>{itemKey}</Space>)}
-            </Space>
+            </div>
             <div>
                 <Space className={'arrow_button'}>
                     {
@@ -42,7 +43,10 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
                     }
 
                     <Button className={'chart_button'} style={{paddingTop: 1}} onClick={()=>handleSwitchWeek(-1)}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                    <DatePicker suffixIcon={null} allowClear={false}  className={'chart_clinic_manager_date_picker'} value={date[0]} defaultValue={dayjs()} onChange={e=>setDate([dayjs(e).startOf('week'),dayjs(e).endOf('week')])} format={customWeekStartEndFormat} picker="week" />
+                    <DatePicker  suffixIcon={null} showNow={false} allowClear={false}  className={'chart_clinic_manager_date_picker'} value={date[0]} defaultValue={dayjs()} onChange={e=>{
+                        getDates([dayjs(e).startOf('week'),dayjs(e).endOf('week')])
+                        setDate([dayjs(e).startOf('week'),dayjs(e).endOf('week')])
+                    }} format={customWeekStartEndFormat} picker="week" />
                     <Button className={'chart_button'} style={{paddingTop: 1}} onClick={()=>handleSwitchWeek(1)}><img src={arrow_next} alt={'arrow_next'}/></Button>
                 </Space>
             </div>

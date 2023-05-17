@@ -27,26 +27,26 @@ function ClinicsOwner() {
         <div style={{marginBottom: 100}}>
             {!ownerClinics?.id || !ownerClinics?.month_key?<Preloader/>:<div style={{margin:'10px 20px'}} className={'clinics_owner'}>
                 <Row gutter={[19,19]}>
-                    <Col  lg={6} md={12} sm={24} xs={24} >
+                    <Col  lg={8} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
                             <CounterGreenChart />
                         </div>
                     </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             <CounterOrangeChart />
                         </div>
                     </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
                             <CounterProgress  />
                         </div>
                     </Col>
-                    <Col lg={6} md={12} sm={24} xs={24}>
-                        <div className="gutter_row">
-                            <CounterMultipleChart  data={multipleData}/>
-                        </div>
-                    </Col>
+                    {/*<Col lg={6} md={12} sm={24} xs={24}>*/}
+                    {/*    <div className="gutter_row">*/}
+                    {/*        <CounterMultipleChart  data={multipleData}/>*/}
+                    {/*    </div>*/}
+                    {/*</Col>*/}
                 </Row>
                 <div>
                     <GradientChart />

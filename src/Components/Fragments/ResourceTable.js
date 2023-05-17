@@ -25,17 +25,21 @@ function ResourceTable ({
     noHeader = false,
     eyeShow = false,
     customActions,
+    initialParams = {},
     buttonAdd = true,
     showHeader = true,
     editBtnStyle = {},
     tableSFilters,
     customTableButton,
-    customHeader=null
+    customHeader=null,
+    resourceTablemarginTop=false,
+    noData= false
 }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
        ...tableParams,
+        ...initialParams,
         ...(getAll?{per_page:9999}:{})
 })
     let token = useSelector((state) => state?.auth?.token);
@@ -47,7 +51,8 @@ function ResourceTable ({
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params,false,false,false,getAll)
     const handleTableChange = (pagination, filters, sorter) => {
-        let params = {
+        let data = {
+            ...params,
             ...filters,
             ...tableParams,
             order_by: sorter.order?sorter?.column?.translatable ? `${sorter.columnKey}->${lngs}` : sorter.columnKey:null,
@@ -55,9 +60,9 @@ function ResourceTable ({
             page: pagination.current,
             per_page: pagination.pageSize
         }
-        clearObject(params)
-        setSearchParams(params)
-        setParams(params)
+        clearObject(data)
+        setSearchParams(data)
+        setParams(data)
 
     }
     useEffect(()=>{
@@ -217,10 +222,10 @@ function ResourceTable ({
             </Col>
 
         </Row>}
-        <Row style={{marginTop:42}}>
+        <Row style={{marginTop: resourceTablemarginTop ? 10 : 42}}>
             <Col lg={24}>
                 <Form>
-                <Table
+                    {noData && data?.items?.length===0 && !loading?noData():<Table
                     columns={columns}
                     loading={loading}
                     pagination={{
@@ -234,7 +239,7 @@ function ResourceTable ({
                     dataSource={data?.items}
                     rowKey={e => e.id}
                     size={'small'}
-                />
+                />}
                 </Form>
                 {customTableButton?<Button loading={loading} type={'primary'} size={'large'} style={{margin:20}} icon={customTableButton.icon} onClick={()=>customTableButton.onClick()}>{customTableButton.title}</Button>:null}
             </Col>

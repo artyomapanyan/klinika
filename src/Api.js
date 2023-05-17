@@ -389,6 +389,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/admin/clinic-licenses`,
                 method: 'GET',
             },
+            ProfitableTable: {
+                url: `${endpoint}${version}/dashboard/admin/profitable-clinics`,
+                method: 'GET',
+            },
 
         },
     },

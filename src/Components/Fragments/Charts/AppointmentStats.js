@@ -177,7 +177,7 @@ function AppointmentStats(){
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: 5,
+                                stepSize: isNull.length === 0 ? 0.2 : 5,
                                 showLabelBackdrop: false,
                                 position: "left",
                                 padding: 40,
@@ -262,16 +262,16 @@ function AppointmentStats(){
                 <div className={'switches_div'}>
 
                     <div className={'switc_div'}>
-                        <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} style={{background:'#a7a8a7'}} /><span style={{marginLeft: 15}}>Canceled</span>
+                        <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} style={{background:'#635D6B'}} /><span className={'text_switch'}>Canceled</span>
                     </div>
                     <div className={'switc_div'}>
-                        <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} style={{background:'#F5A348'}} /> <span style={{marginLeft: 15}}>Rescheduled</span>
+                        <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} style={{background:'#F5A348'}} /> <span className={'text_switch'}>Rescheduled</span>
                     </div>
                     <div className={'switc_div'}>
-                        <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} style={{background:'#60a428'}} /> <span style={{marginLeft: 15}}>Finished</span>
+                        <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} style={{background:'#60a428'}} /> <span className={'text_switch'}>Finished</span>
                     </div>
 
-                    <Space style={{marginLeft:50}}>
+                    <Space style={{marginLeft:50}} className={'arrow_button'}>
                         <Button className={'chart_button'}
                                 onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
                         <div className={'app_stats_date_div'}>

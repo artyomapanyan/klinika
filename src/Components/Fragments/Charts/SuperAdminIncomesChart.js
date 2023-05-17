@@ -323,14 +323,14 @@ function SuperAdminIncomesChart() {
                                                                                                     className={`withDot WD-colorSuperAdmin-incomes-${key}`}>{itemKey}</Space>)}
                         </Space>
                         <div>
-                            <Space>
+                            <Space className={'arrow_button'}>
                                 <Radio.Group onChange={onRadioChange} defaultValue="year" className={'radio_grup_charts'}>
                                     <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                                     <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                                 </Radio.Group>
-                                <Button className={'chart_button'} disabled={date.from <= dayjs().add(-4, 'year').format('YYYY-MM-DD')}
+                                <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.from <= dayjs().add(-4, 'year').format('YYYY-MM-DD')}
                                         onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                                <Button className={'chart_button'} disabled={date.to >= dayjs().format('YYYY-MM-DD')}
+                                <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.to >= dayjs().format('YYYY-MM-DD')}
                                         onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                             </Space>
                         </div>

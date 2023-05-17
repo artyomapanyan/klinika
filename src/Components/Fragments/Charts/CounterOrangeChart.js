@@ -90,8 +90,8 @@ function CounterOrangeChart() {
                 <div  style={{height:92,width:92}}>
                     <canvas id='CounterOrangeChart' ref={canvasRef}></canvas>
                 </div>
-                <Space></Space>
-                <Space direction={'vertical'}>
+
+                <Space direction={'vertical'} style={{marginLeft: 11}}>
                     <div className={'chart_counter_bold_text'}>
                         {responseState?.clinic}
                     </div>

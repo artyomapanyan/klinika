@@ -73,7 +73,7 @@ function ClinicOwnerPatientsChart(){
                     } = chart;
 
                     ctx.save();
-                    ctx.fillText(isNull.length === 0 ? "Ther aren't any information yet." : '' ,width/2,height/1.5, 500);
+                    ctx.fillText(isNull.length === 0 ? "Ther aren't any information yet." : '' ,width/2,height/1.41, 500);
                     ctx.restore();
 
                 },
@@ -177,7 +177,7 @@ function ClinicOwnerPatientsChart(){
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: 50,
+                                stepSize: isNull.length === 0 ? 0.2 : 50,
                                 showLabelBackdrop: false,
                                 position: "left",
                                 padding: 40,
@@ -328,13 +328,13 @@ function ClinicOwnerPatientsChart(){
                 {['New', 'Returned'].map((itemKey,key)=><Space  key={key} className={`withDot WD-color2-${key}`}><span className={'color_text_charts'}>{itemKey}</span></Space>)}
             </Space>
             <div>
-                <Space>
+                <Space className={'arrow_button'}>
                     <Radio.Group onChange={onRadioChange} defaultValue="year" className={'radio_grup_charts'}>
                         <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                         <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                     </Radio.Group>
-                    <Button className={'chart_button'} disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                    <Button className={'chart_button'} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                    <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                    <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                 </Space>
             </div>
         </div>

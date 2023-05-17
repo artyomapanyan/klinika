@@ -9,6 +9,7 @@ import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
+import arrow_dark_purple_bottom from "../../../dist/icons/arrow_dark_purple_bottom.png";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import 'chartjs-plugin-style';
@@ -77,25 +78,9 @@ function GradientChart() {
             let canceled = Object.values(response?.incomes[3])
             let closed = Object.values(response?.incomes[2])
 
+            let years = Object.keys(response?.incomes?.growth).map(e=>dayjs(e).year())
+            console.log(years)
 
-            // let hasData = false;
-            // [...prevYear,...growth,...canceled,...closed].forEach((el) => {
-            //     if(el !== 0){
-            //         hasData = true;
-            //     }
-            // })
-            //
-            // let aaa = [0,0,0,0,0,0,0,];
-            // let bbbb = [0,0,0,0,0,0,0,];
-            // let cccc = [0,0,0,0,0,0,0,];
-            //
-            // [...aaa,...bbbb,...cccc].forEach((el) => {
-            //     if(el !== 0){
-            //         hasData = true;
-            //     }
-            // })
-            //
-            // console.log(hasData)
 
 
              let isNull = [];
@@ -216,8 +201,10 @@ function GradientChart() {
                 type: "line",
                 data: {
                     labels,
+                    years,
                     datasets: isNull.length === 0 ? [] :[
                         {
+
                             label: "Canceled",
                             data: canceled,
                             backgroundColor: gradientGrey,
@@ -237,7 +224,6 @@ function GradientChart() {
                         {
                             label: "Closed",
                             data: closed,
-
                             backgroundColor: gradient,
                             fill: "start",
                             borderColor: ["rgba(191, 83, 158, 1)"],
@@ -312,7 +298,7 @@ function GradientChart() {
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: isNull.length === 0 ? 0.2 : 50,
+                                stepSize: isNull.length === 0 ? 0.2 : 40,
                                 showLabelBackdrop: false,
                                 padding: 40,
                             },
@@ -337,17 +323,10 @@ function GradientChart() {
 
 
                         tooltip: {
+
                             borderWidth: "4",
                             borderColor: "#e3e3e320",
-                            // callbacks: {
-                            //   label: function (context) {
-                            //     return context.dataset.data.map((item) => item + "$ ");
-                            //   },
-                            //   //     afterLabel: function(tooltipItem, data) {
-                            //   //     var dataset = data['datasets'][0];
-                            //   //     return '(' + dataset + '$)';
-                            //   //     },
-                            // },
+
                             backgroundColor: "white",
                             padding: 16,
                             titleColor: "rgba(0, 0, 0, 0.5)",
@@ -361,18 +340,14 @@ function GradientChart() {
                                 weight: 700,
                                 fontFamily: 'Roboto'
                             },
-                            // borderWidth: "1",
-                            // borderColor: "rgb(119,77,157)",
+
                             caretPadding: 7,
 
                             callbacks: {
+                                title:(e)=>e[0].chart.config.data.years[e[0].dataIndex+1],
                                 labelTextColor: function(context) {
                                     return '#000000';
                                 },
-
-                                // afterLabel:function (context){
-                                //   return['\n']
-                                // },
                                 labelColor: function(context) {
                                     return {
                                         backgroundColor: context.dataset.color,
@@ -384,7 +359,7 @@ function GradientChart() {
                                 },
                                 label: function(context) {
                                     let label = context.dataset.label || '';
-
+                                    console.log(context)
 
                                     if (context.parsed.y !== null) {
                                         if (context.dataset.label === 'Growth') {
@@ -395,8 +370,7 @@ function GradientChart() {
 
                                     }
                                     return label;
-                                }
-
+                                },
                             }
 
                         },
@@ -528,15 +502,15 @@ function GradientChart() {
                     >
                         <Space direction={'horizontal'} style={{cursor:"pointer"}}>
                             <div className={'all_clinic_dr'}>{items.find((e)=>e.key==idClinic)?.label??t('All Clinics')}</div>
-                            <div><DownOutlined /></div>
+                            <div style={{marginLeft: 17}}><img alt={'arrow_dark_purple_bottom'} src={arrow_dark_purple_bottom}/></div>
                         </Space>
 
                     </Dropdown>
                     </div>
                     <div>
-                        <Space>
+                        <Space className={'arrow_button'} >
 
-                                <Switch defaultChecked onChange={switchChange}/>
+                            <Switch className={'app_switch'} style={{backgroundColor: '#774D9D', width: 40}} defaultChecked onChange={switchChange}/>
                             <span className={'gradient_szitch_text'}>
                                 {t("Previous year")}
                             </span>
@@ -546,8 +520,8 @@ function GradientChart() {
                                 <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                                 {/*<Radio.Button value="month">{t(" Month ")}</Radio.Button>*/}
                             </Radio.Group>
-                            <Button className={'chart_button'} disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                            <Button className={'chart_button'} disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                         </Space>
                     </div>
                 </div>

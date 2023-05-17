@@ -28,6 +28,7 @@ function StatusesChart() {
                     response.appointments[k] = 0
                 }
             })
+            console.log(response)
 
             let resApps = response.appointments
 
@@ -59,7 +60,7 @@ function StatusesChart() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? ['#F5F6FA'] :  ["#BF539E", "#774D9D", "#6DAF56", "#FFD850"],
+                            backgroundColor: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? ['#F5F6FA'] :  ["#BF539E", "#7b7b88", "#6DAF56", "#FFD850"],
                             weight: 0.5,
                             data: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? [1,0,0,0] :  Object.values(response.appointments),
                             spacing: 0,

@@ -29,6 +29,9 @@ function LineChartIncomes() {
     });
 
     const [startAndDate, setStartAndDate] = useState(dayjs());
+    const [nullData, setNullData] = useState([]);
+
+
 
 
     const monthNames = [
@@ -62,6 +65,7 @@ function LineChartIncomes() {
                 data.forEach((e,key)=>{
                     totalData[key] = (totalData[key]??0)+e
                 })
+                setNullData(data)
                 return {
                     label: el.clinic,
                     data,
@@ -75,7 +79,7 @@ function LineChartIncomes() {
                 }
             })
 
-
+console.log(nullData)
 
 
 
@@ -89,7 +93,7 @@ function LineChartIncomes() {
                     } = chart;
 
                     ctx.save();
-                    ctx.fillText(a.length === 0 ? "Ther aren't any information yet." : '' ,width/2,height/1.5, 500);
+                    ctx.fillText(a.length === 0 ? "Ther aren't any information yet." : '' ,width/2,height/1.41, 500);
                     ctx.restore();
 
                 },
@@ -184,7 +188,7 @@ function LineChartIncomes() {
                         plugins: {
                             shadowOffsetX: 3,
                             shadowOffsetY: 3,
-                            shadowBlur: 10,
+                            shadowBlur: a.length === 0 ? 0.2 : 10,
                             shadowColor: "rgba(0, 0, 0, 0.5)",
                         },
                         tooltip: {
@@ -278,14 +282,24 @@ function LineChartIncomes() {
     }
 
     const onNextYear = () => {
-        setStartAndDate(dayjs(startAndDate).add(+date.period, 'month'))
+        setDate((prevState)=>({
+            year:dayjs(prevState.year).add(date.period, 'month').format('YYYY'),
+            month:prevState?.month,
+            period: prevState.period
+        }))
 
     }
 
     const onBackYear = () => {
-        setStartAndDate(dayjs(startAndDate).add(-date.period, 'month'))
+
+        setDate((prevState)=>({
+            year:dayjs(prevState.year).add(-date.period, 'month').format('YYYY'),
+            month:prevState?.month,
+            period: prevState.period
+        }))
 
     }
+
 
 
     return (
@@ -298,14 +312,14 @@ function LineChartIncomes() {
                                                                                                 className={`withDot WD-color1-${key}`}>{itemKey}</Space>)}
                     </Space>
                     <div>
-                        <Space>
+                        <Space className={'arrow_button'}>
                             <Radio.Group onChange={onRadioChange} defaultValue="year" className={'radio_grup_charts'}>
                                 <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                                 <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                             </Radio.Group>
-                            <Button className={'chart_button'} disabled={startAndDate <= dayjs().add(-36, 'month').format('YYYY-MM-DD')}
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.year <= dayjs().add(-4, 'year').format('YYYY')}
                                     onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                            <Button className={'chart_button'} disabled={startAndDate >= dayjs().add(-12, 'month')}
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.year >= dayjs().format('YYYY')}
                                     onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
                         </Space>
                     </div>

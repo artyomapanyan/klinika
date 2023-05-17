@@ -1,11 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {t} from "i18next";
 import {Avatar, Button, Divider, Radio, Space, Table} from "antd";
 import {LeftOutlined, RightOutlined, AlibabaOutlined} from "@ant-design/icons";
-import starRed from "../../../../dist/icons/star-red.svg";
+import gold_star from "../../../../dist/icons/gold_star.png";
+import arrow_prev from "../../../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../../../dist/icons/arrow-next.svg";
+import {postResource} from "../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import dayjs from "dayjs";
 
 
 function SuperAdminProfitableTable() {
+    let token = useSelector((state) => state.auth.token);
+    let ownerClinics = useSelector((state) => state?.owner);
+
+    const [date, setDate] = useState({
+        year: dayjs().format('YYYY'),
+        month: ownerClinics?.month_key,
+        sort: 'asc'
+
+    });
+
+    useEffect(() => {
+        postResource('SuperAdmin', 'ProfitableTable', token, '', date).then((response) => {
+
+        })
+    }, [])
 
     const dataSource = [
         {
@@ -43,14 +63,14 @@ function SuperAdminProfitableTable() {
             dataIndex: 'task_For',
             key: 'task_for',
             render:()=><div>
-                <Space >
-                    <Avatar size={50} icon={<AlibabaOutlined />} />
-                    <div style={{display:"block"}}>
-                        <h3 className={'h1'}>Chiropractic Care</h3>
-                        <div className={'clinic_fid_patient_name'}>2.7 <img alt={'icons'} src={starRed}/> <span style={{fontWeight:300, marginLeft:10}}>Jeddah</span> </div>
+                <div className={'profitable_table_clinic_div'}>
+                    <Avatar size={64} icon={<AlibabaOutlined />} />
+                    <div style={{display:"block", marginLeft: 24}}>
+                        <div className={'profitable_table_bold_text'}>Chiropractic Care</div>
+                        <div className={'clinic_fid_patient_name'}>2.7 <img alt={'gold_star'} src={gold_star}/> <span className={'profitable_table_small_text'}>Jeddah</span> </div>
                     </div>
 
-                </Space>
+                </div>
             </div>
         },
         {
@@ -72,22 +92,19 @@ function SuperAdminProfitableTable() {
     ];
 
     return (
-        <div className={'chart_incomes_div'}>
+        <div className={'profitable_table_big_div'}>
             <div className={'incomes_table_head'}>
                 <h1 className={'h1'}>Profitable Clinics</h1>
                 <Space>
-                    <Radio.Group defaultValue="year" size="large">
-                        <Radio.Button value="year">{t("12 Month")}</Radio.Button>
-                        <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
-                        <Radio.Button value="month">{t(" Month ")}</Radio.Button>
-                    </Radio.Group>
-                    <Button><LeftOutlined /></Button>
-                    <Button><RightOutlined /></Button>
+                    <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                    <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_next} alt={'arrow_next'}/></Button>
                 </Space>
 
             </div>
-            <Divider/>
-            <Table size={'small'} dataSource={dataSource} columns={columns} pagination={false} />
+            <div className={'profitable_clinic_div'}>
+                <Table size={'small'} dataSource={dataSource} columns={columns} pagination={false} />
+            </div>
+
         </div>
     );
 }

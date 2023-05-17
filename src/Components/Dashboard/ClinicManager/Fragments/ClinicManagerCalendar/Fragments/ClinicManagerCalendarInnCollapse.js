@@ -1,9 +1,12 @@
 import {Avatar, Modal} from "antd";
 import React, {useState} from "react";
 import CalendarInnCollapseModal from "./CalendarInnCollapseModal";
+import dayjs from "dayjs";
 
 function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic}) {
     const [selectedDate, setSelectedDate] = useState(false);
+    let thisDate = dayjs().format('YYYY-MM-DD')
+    console.log(thisDate, 'this')
 
 
     return (
@@ -21,9 +24,10 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
             </td>
             {
                 Object.keys(docItem?.availability??{}).map((key,id) => {
-                    return <td key={key} className="hiddenTableRow__col" onClick={() => setSelectedDate(key)}>
+                    console.log(key,'key')
+                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key ? null : () => setSelectedDate(key)}>
 
-                        <div className="progress progressGreen">
+                        <div className="progress progressGreen" style={{cursor: thisDate > key ? "" : 'pointer'}}>
                             <div className="progress-bar progressGreen__inside"
                                  role="progressbar" style={{width: docItem.availability[key]+'%'}}
                                  aria-valuenow="85" aria-valuemin="0"

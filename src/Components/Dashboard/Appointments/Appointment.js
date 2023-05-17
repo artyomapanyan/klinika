@@ -26,6 +26,7 @@ const resource = 'Appointment';
 function Appointment() {
     const params = useParams();
     const navigate = useNavigate();
+    let reduxInfo = useSelector((state) => state);
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -248,7 +249,7 @@ function Appointment() {
 
     }
 
-
+console.log(serviceTypeState, 'ffffff')
 
     return (
         <div>
@@ -409,9 +410,11 @@ function Appointment() {
                                                 <FormInput label={t('Clinic')} name={'clinic_id'}
                                                            inputType={'resourceSelect'}
                                                            rules={[{required: true}]}
-                                                           initialValue={null}
-                                                           initialData={[]}
-                                                           resource={'Clinic'}/>
+
+                                                           //initialValue={reduxInfo?.auth?.selected_role?.key === 'clinic-manager' ? reduxInfo?.auth?.clinics[0].id : null}
+                                                           initialData={reduxInfo?.auth?.clinics}
+                                                           resource={reduxInfo?.auth?.selected_role?.key === 'clinic-manager' ? null : 'Clinic'}
+                                                           />
                                             </Col>
                                             {
                                                 data?.clinic_id ? <Col lg={24} className="gutter-row">
@@ -537,15 +540,15 @@ function Appointment() {
                                                 }
                                             </Col>
                                         </Row>
-                                        <Row>
-                                            <Col lg={12} className="gutter-row">
-                                                <FormInput label={t('Offer (Optional)')} name={'offer_id'}
-                                                           inputType={'resourceSelect'}
-                                                           initialValue={null}
-                                                           initialData={[]}
-                                                           resource={'Offer'}/>
-                                            </Col>
-                                        </Row>
+                                        {/*<Row>*/}
+                                        {/*    <Col lg={12} className="gutter-row">*/}
+                                        {/*        <FormInput label={t('Offer (Optional)')} name={'offer_id'}*/}
+                                        {/*                   inputType={'resourceSelect'}*/}
+                                        {/*                   initialValue={null}*/}
+                                        {/*                   initialData={[]}*/}
+                                        {/*                   resource={'Offer'}/>*/}
+                                        {/*    </Col>*/}
+                                        {/*</Row>*/}
                                         <div className="gutter-row">
                                             <FormInput label={t('Description')} name={'description'}
                                                        inputType={'textArea'} initialValue={data?.description}/>
