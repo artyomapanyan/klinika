@@ -79,7 +79,7 @@ function ClinicManagerCalendar() {
                                                                    aria-label="Search" prefix={<SearchOutlined size={30}/>}/>
                                                         </div>
                                                     </td>
-                                                    {[...Array(7).keys()].map((e, key) => {
+                                                    {[...Array(7).keys()].map((e) => {
                                                         return <td key={e} className="appointmentsDate" style={{height: 48}}>
                                                             <div className="appointmentsDate__content" style={{height: 48, paddingTop: 14}}>
                                                                 <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>

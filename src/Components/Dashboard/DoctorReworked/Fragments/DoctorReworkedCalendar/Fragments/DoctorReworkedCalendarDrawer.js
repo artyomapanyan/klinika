@@ -17,9 +17,6 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({});
     const [serviceTypeState, setServiceTypeState] = useState({});
-
-    let drFormRef = formRef?.current?.getFieldValue()
-
     const onNewAppointment = (values) => {
         setLoading(true)
         values.doctor_id = authRedux?.user?.id

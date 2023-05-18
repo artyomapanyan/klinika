@@ -4,7 +4,6 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
 function ResourceSelectPaginated({
-                                     updateInitials=false,
                                    initialData = [],
                                    resource = null,
                                    name,

@@ -16,8 +16,6 @@ import Preloader from "../../Preloader";
 import dayjs from "dayjs";
 import {Confirmed} from "./StatusModalForms/Confirmed";
 
-const { RangePicker } = DatePicker;
-const { Panel } = Collapse;
 const resource = 'Appointment';
 function Appointments() {
     const navigate = useNavigate();
@@ -26,7 +24,7 @@ function Appointments() {
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
-    const [recordId,setRecordId] = useState({})
+
 
 
 
@@ -48,7 +46,7 @@ function Appointments() {
         postResource('Appointment','appointmentStatus', token, `${modal.id}/switch-status`, {
             status:modal.key,
             ...values
-        }).then((response) => {
+        }).then(() => {
 
             setModal(null)
             setLoading(false)
@@ -59,7 +57,7 @@ function Appointments() {
         setModal(null)
     }
 
-    const handleValuesChange = (changed,all)=>{
+    const handleValuesChange = (changed)=>{
         if(changed.booked_at) {
             setDate((prevDate)=>({
                 ...prevDate,

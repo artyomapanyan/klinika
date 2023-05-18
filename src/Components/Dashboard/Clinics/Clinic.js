@@ -27,7 +27,7 @@ function Clinic() {
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const {loading, setLoading} = loadingState
+    const {loading} = loadingState
 
     useEffect(() => {
         setTab(searchParams.get('tab') ?? 'essentials')

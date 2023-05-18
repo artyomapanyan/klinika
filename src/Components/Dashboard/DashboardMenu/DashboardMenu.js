@@ -11,7 +11,6 @@ import {useSelector} from "react-redux";
 import Menulist from "./Menulist";
 
 function DashboardMenu({mouseCollapsed,fixCollapse}){
-    const {t} = useTranslation();
     const navigate = useNavigate();
     let {pathname} = useLocation();
     const permissions = useSelector(state=>state.auth.user.permissions);

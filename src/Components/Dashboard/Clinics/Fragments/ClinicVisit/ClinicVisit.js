@@ -9,9 +9,7 @@ import {useNavigate, useParams} from "react-router";
 const resource = "Clinic";
 function ClinicVisit() {
     let token = useSelector((state) => state.auth.token);
-    const navigate = useNavigate();
     const params = useParams();
-
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
 

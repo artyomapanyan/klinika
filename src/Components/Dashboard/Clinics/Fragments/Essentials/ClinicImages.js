@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Col, Row,Form} from "antd";
 
-function ClinicImages({coverInitial = false,formRef}) {
+function ClinicImages({formRef}) {
     const [cover, setCover] = useState({
         file: null,
         src: null

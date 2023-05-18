@@ -149,7 +149,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                                new</Button></div>
                                    }}
                                    initialData={[]}
-                                   handleMapItems={(item, name, patientData) => searchByNumber(item, name)}
+                                   handleMapItems={(item, name) => searchByNumber(item, name)}
                                    customSearchKey={'name_or_phone'}
                                    resource={'User'}/>
 

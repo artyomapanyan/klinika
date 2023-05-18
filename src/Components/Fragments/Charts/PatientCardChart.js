@@ -5,8 +5,7 @@ import PatientCatdChartHeader from "../../Dashboard/Patient/Tabs/OverviewItems/P
 Exporting(Highcharts);
 function PatientCardChart() {
     let canvasRef = useRef();
-    let appointmentChartRef = useRef(null)
-
+    useRef(null);
 
 
     useEffect(() => {

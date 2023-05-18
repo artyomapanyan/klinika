@@ -58,7 +58,7 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('HCPs'),
                         dataIndex: 'HCPs',
                         key: 'HCPs',
-                        render:(e, record)=>{
+                        render:()=>{
 
                             return<div className={'icon_text_div'}><img alt={'HCPs_icon'} src={HCPs_icon}/> <span className={'owner_clinic_table_texts'}>HCPs: 12</span></div>
                         }
@@ -75,7 +75,7 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('Other'),
                         dataIndex: 'Other',
                         key: 'Other',
-                        render:(e, record)=>{
+                        render:()=>{
                             return<div className={'icon_text_div'}><img alt={'Other_icon'} src={Other_icon}/> <span className={'owner_clinic_table_texts'}>Other: 0</span></div>
                         }
                     },
@@ -91,7 +91,7 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('Status'),
                         dataIndex: 'Status',
                         key: 'Status',
-                        render:(e, record)=>{
+                        render:()=>{
                             return<div className={'icon_text_div'}><img alt={'Active_icon'} src={Active_icon}/> <span style={{color:'#4FB873'}} className={'owner_clinic_table_texts'}>Active</span></div>
                         }
                     },

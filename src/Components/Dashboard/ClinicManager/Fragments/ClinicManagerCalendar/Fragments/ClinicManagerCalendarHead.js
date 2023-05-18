@@ -7,11 +7,7 @@ import React from "react";
 import arrow_next from "../../../../../../dist/icons/arrow-next.svg";
 import arrow_prev from "../../../../../../dist/icons/arrow-prev.svg";
 function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDates}) {
-
-
     dayjs.extend(customParseFormat);
-    const weekFormat = 'MM/DD';
-
     const customWeekStartEndFormat = (value) =>
         `${dayjs(value).startOf('week').format('DD MMM')} - ${dayjs(value)
             .endOf('week')

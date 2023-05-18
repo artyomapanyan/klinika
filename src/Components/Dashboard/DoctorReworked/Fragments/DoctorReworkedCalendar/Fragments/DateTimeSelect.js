@@ -9,7 +9,7 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeState}) {
+function DateTimeSelect({setBookedAtState, formData, serviceTypeState}) {
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 

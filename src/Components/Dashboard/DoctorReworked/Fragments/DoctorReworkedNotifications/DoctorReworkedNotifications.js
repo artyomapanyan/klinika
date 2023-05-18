@@ -10,7 +10,7 @@ import message_icon from "../../../../../dist/icons/message_icon.png";
 import Preloader from "../../../../Preloader";
 
 const count = 6;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
+
 
 function DoctorReworkedNotifications() {
     let token = useSelector((state) => state.auth.token);
@@ -28,7 +28,7 @@ function DoctorReworkedNotifications() {
     }, [])
 
     const onMarkAlAsRead = () => {
-        postResource('Notifications', 'MarkAllAsRead', token, '',).then((response) => {
+        postResource('Notifications', 'MarkAllAsRead', token, '',).then(() => {
 
         })
     }
