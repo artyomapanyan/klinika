@@ -2,7 +2,6 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {Button, Form, Popconfirm, Space} from "antd";
 import React, {useRef, useState} from "react";

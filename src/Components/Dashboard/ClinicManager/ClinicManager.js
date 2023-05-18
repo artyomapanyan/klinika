@@ -1,17 +1,11 @@
 import React, {useState} from "react";
-import {Button, Col, Row} from "antd";
-import CounterPurpleChart from "../../Fragments/Charts/CounterPurpleChart";
+import {Col, Row} from "antd";
 import StatusesChart from "../../Fragments/Charts/StatusesChart";
 import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";
 import ClinicManagerCalendar from "./Fragments/ClinicManagerCalendar/ClinicManagerCalendar";
 import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointmentsTable/ClinicManagerAppointmentsTable";
-import ClinicManagerConfirmation from "./Fragments/ClinicManagerConfirmation/ClinicManagerConfirmation";
-import ClinicManagerDoctorsLicensesTable from "./Fragments/ClinicManagerDoctorsLicensesTable/ClinicManagerDoctorsLicensesTable";
-import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
-import dayjs from "dayjs";
-
 
 
 function ClinicManager() {

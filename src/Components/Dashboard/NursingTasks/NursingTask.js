@@ -1,15 +1,13 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Form, Popconfirm, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import FormInput from "../../Fragments/FormInput";
 import DraftEditor from "../../Fragments/DraftEditor";
-import {QuestionCircleOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'NursingTask';

@@ -1,7 +1,7 @@
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
-import React, {useEffect, useRef, useState} from "react";
-import {Button, Result} from "antd";
+import React, {useEffect, useState} from "react";
+import {Button} from "antd";
 import dayjs from "dayjs";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";

@@ -6,7 +6,6 @@ import {Space, Spin} from "antd";
 import arrowGreen from "../../../../dist/icons/arrow-green.svg";
 import arrowRed from "../../../../dist/icons/arrow-red.svg";
 import {t} from "i18next";
-import {GMBK} from "../../../../functions";
 
 function SuperAdminRegisteredClinics() {
     const [loading, setLoading] = useState(true);

@@ -2,7 +2,7 @@ import React from "react";
 import {useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
-import {Avatar, Button, message, Space} from "antd";
+import {Avatar, message, Space} from "antd";
 import {CopyOutlined, FilePdfOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons";
 import axios from "axios";
 import api from "../../../../Api";

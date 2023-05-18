@@ -2,18 +2,15 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Checkbox, Col, Form, Popconfirm, Space} from "antd";
-import React, {useEffect, useRef, useState} from "react";
+import {Button, Checkbox, Col, Form, Space} from "antd";
+import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
-import {QuestionCircleOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
-import dayjs from "dayjs";
 
 const resource = 'Offer';
 

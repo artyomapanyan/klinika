@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import {Button, Col, Form, Popconfirm, Row, Select, Space, Switch} from "antd";
 import {t} from "i18next";
 
-import {CheckOutlined, CloseOutlined, DeleteOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import FormInput from "../FormInput";
 import resourceLinks from "../../ResourceLinks";

@@ -1,5 +1,3 @@
-import { Table } from 'antd';
-
 const ShowClinicHoursTab = ({  }) => {
   // const dataSource = [
   //   {

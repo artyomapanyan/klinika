@@ -1,4 +1,4 @@
-import {Avatar, Button, Drawer, Form, Space, Radio, notification} from "antd";
+import {Avatar, Button, Drawer, Form, Space, Radio} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import React, {useEffect, useRef, useState} from "react";
 import ClinicManagerCalendarDrawerSmall from "./ClinicManagerCalendarDrawerSmall";

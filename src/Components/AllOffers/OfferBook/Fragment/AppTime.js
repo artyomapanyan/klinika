@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {CalendarOutlined, CheckCircleOutlined, ClockCircleOutlined, UserOutlined} from "@ant-design/icons";
-import {Avatar, Button, Space} from "antd";
+import {CheckCircleOutlined, ClockCircleOutlined} from "@ant-design/icons";
+import {Button, Space} from "antd";
 import Slider from "react-slick";
 import {useSelector} from "react-redux";
 import {postResource} from "../../../Functions/api_calls";

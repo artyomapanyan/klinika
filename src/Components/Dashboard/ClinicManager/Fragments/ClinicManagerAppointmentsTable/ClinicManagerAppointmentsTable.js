@@ -1,8 +1,6 @@
 import React, {useState} from "react";
-import {Button, Form, Modal, Spin, Table} from "antd";
-import {RightOutlined} from "@ant-design/icons";
+import {Form, Modal, Spin} from "antd";
 import ColorSelect from "../../../../Fragments/ColorSelect";
-import ClinicManagerAppointmentsTableHead from "./Fregment/ClinicManagerAppointmentsTableHead";
 import arrow_next from "../../../../../dist/icons/arrow-next.svg";
 import printIcon from "../../../../../dist/icons/printIcon.svg";
 
@@ -16,7 +14,7 @@ import {CanceledContent} from "../../../Appointments/StatusModalForms/CanceledCo
 import {FinishedContent} from "../../../Appointments/StatusModalForms/FinishedContent";
 import {RascheduledContent} from "../../../Appointments/StatusModalForms/RascheduledContent";
 import {useSelector} from "react-redux";
-import {postResource, useGetResourceIndex} from "../../../../Functions/api_calls";
+import {postResource} from "../../../../Functions/api_calls";
 import {Confirmed} from "../../../Appointments/StatusModalForms/Confirmed";
 import {useNavigate} from "react-router";
 import Preloader from "../../../../Preloader";

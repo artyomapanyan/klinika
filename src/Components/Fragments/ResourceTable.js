@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
-import {Button, Col, Form, Popconfirm, Row, Space, Table, Typography, Tooltip} from "antd";
+import {Button, Col, Form, Popconfirm, Row, Space, Table, Tooltip} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
 import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";

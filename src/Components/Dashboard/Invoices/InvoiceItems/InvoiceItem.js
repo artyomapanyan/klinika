@@ -3,13 +3,11 @@ import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 
 
-import {Button, Form, Popconfirm, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import React, {useRef, useState} from "react";
 import {t} from "i18next";
 
-import {QuestionCircleOutlined} from "@ant-design/icons";
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
-import resourceLinks from "../../../ResourceLinks";
 import Preloader from "../../../Preloader";
 import FormInput from "../../../Fragments/FormInput";
 import CancelComponent from "../../../Fragments/CancelComponent";

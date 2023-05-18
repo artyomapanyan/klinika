@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Dropdown, Space } from 'antd'
+import { Dropdown } from 'antd'
 import { t } from 'i18next'
-import { postResource } from '../../../Functions/api_calls'
 import { useDispatch, useSelector } from 'react-redux'
 import arrow_black from '../../../../dist/icons/arrow-black.svg'
 import dayjs from 'dayjs'

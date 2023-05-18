@@ -4,7 +4,6 @@ import ResourceTable from "../../../../Fragments/ResourceTable";
 import {useParams} from "react-router";
 import {Button, Modal} from "antd";
 import DoctorsHoursModal from "./DoctorsHoursModal";
-import Preloader from "../../../../Preloader";
 
 
 function ClinicApprovedDoctors() {

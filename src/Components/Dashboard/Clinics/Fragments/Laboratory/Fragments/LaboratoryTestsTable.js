@@ -7,7 +7,6 @@ import {PlusOutlined} from "@ant-design/icons";
 import LabTestsModal from "./LabTestsModal";
 import Preloader from "../../../../../Preloader";
 import ResourceTable from "../../../../../Fragments/ResourceTable";
-import TableFilterElement from "../../../../../Fragments/TableFilterElements/TableFilterElement";
 
 function LaboratoryTestsTable() {
     const params = useParams();

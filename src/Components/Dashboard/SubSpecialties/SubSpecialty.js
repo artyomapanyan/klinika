@@ -1,5 +1,5 @@
 
-import {Button, Form, Popconfirm, Space} from 'antd';
+import {Button, Form, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import Preloader from "../../Preloader";
@@ -10,7 +10,7 @@ import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
-import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {InboxOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 

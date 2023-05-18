@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Radio} from "antd";
 import {t} from "i18next";
 import LabTests from "../LabTests/LabTests";

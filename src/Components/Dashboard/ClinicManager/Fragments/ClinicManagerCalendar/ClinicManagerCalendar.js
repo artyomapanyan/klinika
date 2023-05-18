@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import "./ClinicManagerCalendar.scss";
-import {Avatar, Button, Input, Spin} from "antd";
-import {SearchOutlined, DownOutlined} from "@ant-design/icons";
+import {Button, Input, Spin} from "antd";
+import {SearchOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarHead from "./Fragments/ClinicManagerCalendarHead";
 import ClicicManagerCalendarCollapse from "./Fragments/ClicicManagerCalendarCollapse";
 import dayjs from "dayjs";

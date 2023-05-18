@@ -8,8 +8,7 @@ import clinic_icon from "../../../dist/icons/clinic_icon.png";
 import {
     BugFilled,
     DiffOutlined,
-    DollarOutlined, HomeFilled,
-    NotificationOutlined,
+    DollarOutlined, NotificationOutlined,
     PercentageOutlined, ProfileOutlined,
     RedEnvelopeOutlined
 } from "@ant-design/icons";

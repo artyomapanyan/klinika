@@ -1,8 +1,7 @@
 import {useSelector} from "react-redux";
 import {useEffect, useRef, useState} from "react";
-import {postResource} from "../../../../Functions/api_calls";
 import {Chart, registerables} from "chart.js";
-import {Space, Spin} from "antd";
+import {Space} from "antd";
 
 function PatientSetisfactionChart() {
     let token = useSelector((state) => state.auth.token);

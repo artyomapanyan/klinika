@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Divider, List, notification, Tag} from "antd";
-import {Link} from "react-router-dom";
+import {Button} from "antd";
 import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";

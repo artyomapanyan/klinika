@@ -1,10 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
-import {CheckCircleOutlined, UserOutlined} from "@ant-design/icons";
-import {Button, Form, Input, InputNumber, Space} from "antd";
-import {postResource, useGetResourceIndex} from "../../../Functions/api_calls";
+import {CheckCircleOutlined} from "@ant-design/icons";
+import {Button, Form, Input, Space} from "antd";
+import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
-import axios from "axios";
-import api from "../../../../Api";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 

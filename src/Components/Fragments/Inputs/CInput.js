@@ -1,5 +1,5 @@
 import React from 'react';
-import {DatePicker, Form, Input} from "antd";
+import {Input} from "antd";
 
 
 function CInput({inputDisabled, value, onChange,label, inputProps,type,isRequired, maxLength=50, max, min, className}){

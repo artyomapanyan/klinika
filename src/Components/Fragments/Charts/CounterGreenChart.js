@@ -3,7 +3,6 @@ import {Chart,registerables} from "chart.js";
 import {Space, Spin} from "antd";
 import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
-import dayjs from "dayjs";
 
 function CounterGreenChart() {
     let token = useSelector((state) => state.auth.token);

@@ -3,18 +3,8 @@ import logo from "../../../dist/Img/logo.svg";
 import logoShort from "../../../dist/Img/Logo-short.svg";
 import {Button, Divider, Menu} from "antd";
 import {
-    MenuOutlined,
-    NotificationOutlined,
-    PercentageOutlined,
-    RedEnvelopeOutlined,
-    DiffOutlined,
-    DollarOutlined, InsertRowLeftOutlined
+    MenuOutlined
 } from "@ant-design/icons";
-import dash4 from "../../../dist/icons/frame4.svg";
-import Clinic_icon from "../../../dist/icons/Clinic_icon.svg";
-import dash1 from "../../../dist/icons/frame1.svg";
-import dash2 from "../../../dist/icons/frame2.svg";
-import dash3 from "../../../dist/icons/frame3.svg";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";

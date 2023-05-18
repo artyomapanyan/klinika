@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {CheckCircleOutlined, UserOutlined} from "@ant-design/icons";
 import {Avatar, Button, Space} from "antd";
 

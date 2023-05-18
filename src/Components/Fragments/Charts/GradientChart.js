@@ -1,11 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Chart, registerables} from "chart.js";
-import GradientChartApp from "../../Dashboard/ClinicsOwner/Fragments/GradientChartApp";
 import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
 import {Button, Dropdown, Radio, Space, Spin, Switch} from "antd";
 import {t} from "i18next";
-import {DownOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
 import dayjs from "dayjs";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";

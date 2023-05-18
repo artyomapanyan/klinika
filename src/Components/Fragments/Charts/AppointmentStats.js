@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Button, Radio, Space, Spin, Switch, Typography} from "antd";
+import {Button, Space, Spin, Switch} from "antd";
 import {Chart,registerables} from "chart.js";
-import {t} from "i18next";
 import dayjs from "dayjs";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";

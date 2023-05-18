@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, Popconfirm} from "antd";
 import {t} from "i18next";
-import resourceLinks from "../ResourceLinks";
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 function CancelComponent({changeValuesState, resource}) {

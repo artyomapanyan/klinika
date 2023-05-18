@@ -5,17 +5,13 @@ import {
     createResource,
     postResource,
     updateResource,
-    useGetResourceIndex,
     useGetResourceSingle
 } from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
-import {Button, Form, Space, Row, Col, Popconfirm} from "antd";
+import {Button, Form, Space, Row, Col} from "antd";
 import {t} from "i18next";
 import Preloader from "../../Preloader";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
-import FileManager from "../../Fragments/FileManager";
 import dayjs from 'dayjs';
 import CancelComponent from "../../Fragments/CancelComponent";
 

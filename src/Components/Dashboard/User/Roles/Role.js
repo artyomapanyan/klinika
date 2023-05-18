@@ -1,12 +1,11 @@
 import React, {useMemo, useRef, useState} from "react";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
-import {Button, Form, Popconfirm, Space, Tree} from "antd";
+import {Button, Form, Space, Tree} from "antd";
 import FormInput from "../../../Fragments/FormInput";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
-import resourceLinks from "../../../ResourceLinks";
 import CancelComponent from "../../../Fragments/CancelComponent";
 
 const resource = 'Role';

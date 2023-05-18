@@ -4,7 +4,7 @@ import {Button, Col, Divider, Radio, Result, Row} from "antd";
 import {t} from "i18next";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../../functions";
-import {postResource, useGetResourceIndex} from "../../Functions/api_calls";
+import {useGetResourceIndex} from "../../Functions/api_calls";
 import AuthHeader from "../../Auth/AuthHeader";
 import Preloader from "../../Preloader";
 import OffersPrices from "../Fragments/OffersPrices";

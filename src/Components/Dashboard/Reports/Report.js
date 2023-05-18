@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import Preloader from "../../Preloader";
-import {Button, Form, Popconfirm, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
@@ -10,7 +10,6 @@ import CancelComponent from "../../Fragments/CancelComponent";
 import {InboxOutlined} from "@ant-design/icons";
 import Resources from "../../../store/Resources";
 import FileManager from "../../Fragments/FileManager";
-import resourceLinks from "../../ResourceLinks";
 
 const resource = 'Report';
 

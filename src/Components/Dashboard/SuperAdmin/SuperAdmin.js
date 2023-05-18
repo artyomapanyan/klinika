@@ -1,26 +1,9 @@
-import {Button, Col, Row} from "antd";
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import {Col, Row} from "antd";
+import React from 'react';
 
 
-import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";
-import StatusesChart from "../../Fragments/Charts/StatusesChart";
-import CounterGreenChart from "../../Fragments/Charts/CounterGreenChart";
-import CounterProgress from "../../Fragments/Charts/CounterProgress";
-import ClinicOwnerPatientsChart from "../../Fragments/Charts/ClinicOwnerPatientsChart";
-import IncomeChannelsChart from "../../Fragments/Charts/IncomeChannelsChart";
-import GradientChart from "../../Fragments/Charts/GradientChart";
-import MonthStatistics from "../../Fragments/Charts/MonthStatistics/MonthStatistics";
-import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import SuperAdminIncomesChart from "../../Fragments/Charts/SuperAdminIncomesChart";
 import SuperAdminProfitableTable from "./SuperAdminProfitableTable/SuperAdminProfitableTable";
-import SuperAdminUnprofitableTable from "./SuperAdminUnprofitableTable/SuperAdminUnprofitableTable";
-import PatientGenderChart from "../../Fragments/Charts/PatientGenderChart";
-import DoctorLicensesChart from "../../Fragments/Charts/DoctorLicensesChart";
-import SuperAdminPlatformIssues from "./SuperAdminPlatformIssues/SuperAdminPlatformIssues";
-import IncomesVsConversRate from "./IncomesVsConversRate/IncomesVsConversRate";
-import { postResource } from '../../Functions/api_calls';
-import { useSelector } from 'react-redux';
 import SuperAdminRegisteredClinics from "./SuperAdminHeadCharts/SuperAdminRegisteredClinics";
 import SuperAdminCurrentMonth from "./SuperAdminHeadCharts/SuperAdminCurrentMonth";
 import SuperAdminClinicsStatuses from "./SuperAdminHeadCharts/SuperAdminClinicsStatuses";

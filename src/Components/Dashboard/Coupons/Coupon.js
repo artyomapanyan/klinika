@@ -2,15 +2,14 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Col, Form, Popconfirm, Space, Switch} from "antd";
+import {Button, Col, Form, Space, Switch} from "antd";
 import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import {Row} from "antd/lib";
 import Resources from "../../../store/Resources";
-import {PercentageOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {PercentageOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'Coupon';

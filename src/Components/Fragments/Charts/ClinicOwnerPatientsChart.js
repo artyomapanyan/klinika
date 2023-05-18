@@ -1,12 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {Chart,registerables} from "chart.js";
-import IncomeChannelChartHead from "../../Dashboard/ClinicsOwner/Fragments/IncomeChannelChartHead";
-import PatientChartHeader from "../../Dashboard/ClinicsOwner/Fragments/PatientChartHeader";
 import dayjs from "dayjs";
 import {useSelector} from "react-redux";
 import {Button, Radio, Space, Spin} from "antd";
 import {t} from "i18next";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import {postResource} from "../../Functions/api_calls";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
