@@ -59,6 +59,10 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
             key: 6,
             name: '#b04b3f'
         },
+        {
+            key: 7,
+            name: '#b04b3f'
+        },
     ]
 
 

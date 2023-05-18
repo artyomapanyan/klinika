@@ -91,7 +91,7 @@ function Appointments() {
                                        navigate(`${ResourceLinks[resource] + record.id}`)
                                    }
                                }}
-                               eyeShow={false}
+                               eyeShow={true}
                                except={{edit: true}}
                                tableColumns={[
                     {

@@ -147,7 +147,8 @@ function MyMapComponent({data,formRef}) {
                                resource={'Region'} />
                 </Col>
                 <Col lg={6}>
-                    <Form.Item hidden={true} name={'latitude'} initialValue={data?.location?.lat}></Form.Item>
+                    <Form.Item hidden={true} name={'latitude'} initialValue={data?.location?.latitude}></Form.Item>
+                    <Form.Item hidden={true} name={'longitude'} initialValue={data?.location?.longitude}></Form.Item>
 
                     <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.city?.id}

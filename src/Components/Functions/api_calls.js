@@ -166,8 +166,9 @@ export const useGetResourceSingle = (resource,id,additionals={},filterResponse =
 }
 
 function hGOD(formData,name,object){
+    console.log(name,object)
     Object.keys(object).forEach(key=>{
-        if(typeof object[key]==='object'){
+        if(typeof object[key]==='object' && object[key]){
             hGOD(formData,name+'['+key+']',object[key])
         }else{
             formData.append(name+'['+key+']',object[key])
@@ -191,6 +192,7 @@ function handleGenerateFD(values,method){
             }else{
                 values[name] = values[name]===true?1:values[name]===false?0: values[name]
                 if(typeof values[name] === "object"){
+
                     hGOD(formData,name,values[name])
                 }else{
                     formData.append(name, values[name]);
