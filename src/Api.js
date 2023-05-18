@@ -149,6 +149,10 @@ let api = {
         resource: 'Coupon',
     },
     {
+        url: 'languages',
+        resource: 'Language',
+    },
+    {
         url: 'clinic-lab-tests',
         resource: 'ClinicLabTest',
     },
