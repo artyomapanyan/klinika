@@ -7,7 +7,7 @@ import {
     updateResource,
     useGetResourceSingle
 } from "../../Functions/api_calls";
-import {Button, Form, Space, Row, Col} from "antd";
+import {Button, Form, Space, Row, Col, Spin} from "antd";
 import {t} from "i18next";
 import Preloader from "../../Preloader";
 import FormInput from "../../Fragments/FormInput";
@@ -29,6 +29,7 @@ function Appointment() {
     const {loading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [load, setLoad] = useState(false)
+    const [timesLoading,setTimesLoading] = useState(false)
 
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
@@ -98,6 +99,7 @@ function Appointment() {
 
     useEffect(() => {
         if (data?.doctor_id && data?.clinic_id) {
+            setTimesLoading(true)
             postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id+'/'+data?.clinic_id, {service: data?.service_type}).then(responses => {
                 const res = responses?.working_hours
                 let day = [];
@@ -109,7 +111,7 @@ function Appointment() {
                     }
                 })
                 setAvailableDateState(day)
-
+                setTimesLoading(false)
             })
         }
     }, [data?.doctor_id,data?.clinic_id])
@@ -118,6 +120,7 @@ function Appointment() {
     useEffect(() => {
 
         if(data?.booked_at  && data?.doctor_id ){
+            setTimesLoading(true)
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {
                 service: data?.service_type,
                 date: data?.booked_at?.format('YYYY-MM-DD')
@@ -134,6 +137,7 @@ function Appointment() {
                         })
                     }
                 }))
+                setTimesLoading(false)
             })
         }
         if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(data?.service_type)) {
@@ -523,12 +527,12 @@ function Appointment() {
                                             </Col>
                                             <Col lg={12} className="gutter-row">
                                                 {
-                                                    data?.booked_at ? <FormInput label={t('Appointment time')}
+                                                    data?.booked_at ?<Spin spinning={timesLoading}> <FormInput label={t('Appointment time')}
                                                                                         name={'appointment_time'}
                                                                                         inputType={'resourceSelect'}
                                                                                         options={availableTimeState}
                                                                                         initialData={[]}
-                                                    /> : <div></div>
+                                                    /></Spin> : <div></div>
                                                 }
                                             </Col>
                                         </Row>
