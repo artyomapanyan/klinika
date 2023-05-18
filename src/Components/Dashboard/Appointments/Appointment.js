@@ -5,13 +5,17 @@ import {
     createResource,
     postResource,
     updateResource,
+    useGetResourceIndex,
     useGetResourceSingle
 } from "../../Functions/api_calls";
-import {Button, Form, Space, Row, Col} from "antd";
+import resourceLinks from "../../ResourceLinks";
+import {Button, Form, Space, Row, Col, Popconfirm} from "antd";
 import {t} from "i18next";
 import Preloader from "../../Preloader";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
+import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import FileManager from "../../Fragments/FileManager";
 import dayjs from 'dayjs';
 import CancelComponent from "../../Fragments/CancelComponent";
 
@@ -22,7 +26,6 @@ const resource = 'Appointment';
 function Appointment() {
     const params = useParams();
     const navigate = useNavigate();
-    let reduxInfo = useSelector((state) => state);
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -236,7 +239,6 @@ function Appointment() {
 
 
     const searchByNumber = (item, name, patientData) => {
-
         fetchedUsers.current = patientData
         name = <>{item.phone_number}{" "}{item.email}</>
         let searchData = item.phone_number+item.email;
@@ -245,7 +247,7 @@ function Appointment() {
 
     }
 
-console.log(serviceTypeState, 'ffffff')
+
 
     return (
         <div>
@@ -285,7 +287,7 @@ console.log(serviceTypeState, 'ffffff')
 
                                                initialData={[]}
                                                handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
-                                               customSearchKey={'name_or_phone'}
+                                               customSearchKey={'phone_number'}
                                                resource={'User'}/>
                                 </div>
 
@@ -406,11 +408,9 @@ console.log(serviceTypeState, 'ffffff')
                                                 <FormInput label={t('Clinic')} name={'clinic_id'}
                                                            inputType={'resourceSelect'}
                                                            rules={[{required: true}]}
-
-                                                           //initialValue={reduxInfo?.auth?.selected_role?.key === 'clinic-manager' ? reduxInfo?.auth?.clinics[0].id : null}
-                                                           initialData={reduxInfo?.auth?.clinics}
-                                                           resource={reduxInfo?.auth?.selected_role?.key === 'clinic-manager' ? null : 'Clinic'}
-                                                           />
+                                                           initialValue={null}
+                                                           initialData={[]}
+                                                           resource={'Clinic'}/>
                                             </Col>
                                             {
                                                 data?.clinic_id ? <Col lg={24} className="gutter-row">
@@ -536,15 +536,15 @@ console.log(serviceTypeState, 'ffffff')
                                                 }
                                             </Col>
                                         </Row>
-                                        {/*<Row>*/}
-                                        {/*    <Col lg={12} className="gutter-row">*/}
-                                        {/*        <FormInput label={t('Offer (Optional)')} name={'offer_id'}*/}
-                                        {/*                   inputType={'resourceSelect'}*/}
-                                        {/*                   initialValue={null}*/}
-                                        {/*                   initialData={[]}*/}
-                                        {/*                   resource={'Offer'}/>*/}
-                                        {/*    </Col>*/}
-                                        {/*</Row>*/}
+                                        <Row>
+                                            <Col lg={12} className="gutter-row">
+                                                <FormInput label={t('Offer (Optional)')} name={'offer_id'}
+                                                           inputType={'resourceSelect'}
+                                                           initialValue={null}
+                                                           initialData={[]}
+                                                           resource={'Offer'}/>
+                                            </Col>
+                                        </Row>
                                         <div className="gutter-row">
                                             <FormInput label={t('Description')} name={'description'}
                                                        inputType={'textArea'} initialValue={data?.description}/>

@@ -61,15 +61,16 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
         },
         {
             key: 7,
-            name: '#472964'
+            name: '#b04b3f'
         },
     ]
+
 
     return(
     <Dropdown
             menu={{
                 onClick,
-                items: items.filter((el) => el.key !== value)
+                items
 
             }}
             disabled={items.length < 2}
@@ -79,8 +80,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
             <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor: `${colors.find(el => (el.key == value))?.name}`, padding:10, fontSize:14,  borderRadius:30, height: height ? 28 : null,  width: 143 , display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                 <div style={{color:"#FFFFFF", fontWeight:700}}>{items.find(e=>e.key===value)?.label}</div>
                 {
-
-                    items.length < 2 ? <div></div> : <div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
+                    items.length < 2 ? <div></div> :<div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
                 }
 
             </Space>
