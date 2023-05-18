@@ -97,8 +97,8 @@ function Appointment() {
 
 
     useEffect(() => {
-        if (data?.doctor_id) {
-            postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id, {service: data?.service_type}).then(responses => {
+        if (data?.doctor_id && data?.clinic_id) {
+            postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id+'/'+data?.clinic_id, {service: data?.service_type}).then(responses => {
                 const res = responses?.working_hours
                 let day = [];
                 Object.values(res)?.map((el, i) => {
@@ -112,7 +112,7 @@ function Appointment() {
 
             })
         }
-    }, [data?.doctor_id])
+    }, [data?.doctor_id,data?.clinic_id])
 
 
     useEffect(() => {
@@ -405,7 +405,7 @@ function Appointment() {
                                                            inputType={'resourceSelect'}
                                                            rules={[{required: true}]}
                                                            initialValue={null}
-                                                           initialData={[]}
+                                                           initialData={[data?.clinic].filter(e=>e)}
                                                            resource={'Clinic'}/>
                                             </Col>
                                             {

@@ -219,6 +219,10 @@ let api = {
         resource: 'PublicClinicDoctorWorkingHours',
     },
     {
+        url: 'clinic-doctors/working-hours-by-doctor-and-clinic',
+        resource: 'ClinicDoctorWorkingHours',
+    },
+    {
         url: 'public/clinic-doctors/available-times-by-doctor-and-clinic',
         resource: 'PublicClinicDoctorAvailableTimes',
     },
