@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Col, Row} from "antd";
 import StatusesChart from "../../Fragments/Charts/StatusesChart";
 import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";

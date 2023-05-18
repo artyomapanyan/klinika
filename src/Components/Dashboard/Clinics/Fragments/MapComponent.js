@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {GoogleMap, LoadScript, Marker, Autocomplete} from "@react-google-maps/api";
-import {AutoComplete, Col, Form, Input, Row} from "antd";
+import {Col, Form, Input, Row} from "antd";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
 import FormInput from "../../../Fragments/FormInput";

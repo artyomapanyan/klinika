@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 import {postResource, updateResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router";
+import {useParams} from "react-router";
 
 
 

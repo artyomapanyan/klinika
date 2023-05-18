@@ -5,7 +5,6 @@ import {Button, Divider, Menu} from "antd";
 import {
     MenuOutlined
 } from "@ant-design/icons";
-import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router";
 import {useSelector} from "react-redux";
 import Menulist from "./Menulist";

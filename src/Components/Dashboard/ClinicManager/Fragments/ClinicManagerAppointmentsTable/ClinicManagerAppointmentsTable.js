@@ -16,7 +16,6 @@ import {RascheduledContent} from "../../../Appointments/StatusModalForms/Rasched
 import {useSelector} from "react-redux";
 import {postResource} from "../../../../Functions/api_calls";
 import {Confirmed} from "../../../Appointments/StatusModalForms/Confirmed";
-import {useNavigate} from "react-router";
 import Preloader from "../../../../Preloader";
 import ClinicManagerTableHead from "./Fregment/ClinicManagerTableHead";
 

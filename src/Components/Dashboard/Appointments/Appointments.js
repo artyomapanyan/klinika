@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Collapse, Form, DatePicker, Modal} from "antd";
+import {Form, Modal} from "antd";
 import {t} from "i18next";
 import ResourceTable from "../../Fragments/ResourceTable";
 import {CheckCircleOutlined} from "@ant-design/icons";

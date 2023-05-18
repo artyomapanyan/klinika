@@ -3,7 +3,6 @@ import {Dropdown, Space} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import {postResource} from "../Functions/api_calls";
 import {useSelector} from "react-redux";
-import Preloader from "../Preloader";
 
 function ColorSelect({items=[],initialValue,onChange=null, resource, record,name, height=false}){
     let token = useSelector((state) => state?.auth?.token);
