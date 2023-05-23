@@ -1,5 +1,9 @@
 .root {
-  margin-top: 50px;
+  margin-top: 75px;
+  background-color: #ffffff;
+  margin-left: 80px;
+  margin-right: 80px;
+
 
   .card {
     display: flex;
@@ -15,12 +19,13 @@
 
       .title {
         font-weight: 700;
-        font-size: 20px;
+        font-size: 18px;
+        font-family: Inter;
       }
       .subtitle {
         color: #774D9D;
         font-weight: 400;
-        font-size: 16px;
+        font-size: 14px;
       }
     }
   }
@@ -68,6 +73,7 @@
       }
     }
   }
+
 }
 
 

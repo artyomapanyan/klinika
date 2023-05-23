@@ -21,6 +21,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({});
     const [serviceTypeState, setServiceTypeState] = useState({});
+    const [formState, setFormState] = useState({});
 
     let drFormRef = formRef?.current?.getFieldValue()
 
@@ -43,8 +44,12 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
         })
     }
 
+    const onCancel = () => {
+        setOpen(false)
+    }
 
 
+console.log(formState, 'fff')
 
     return(
         <div>
@@ -52,12 +57,30 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                 onFinish={onNewAppointment}
                 ref={formRef}
                 onValuesChange={(e)=>{
-
-                  if(e.clinic_id){
+                    if(e.patient_id){
+                        setFormState((prevState)=>({
+                            ...prevState,
+                            patient_id: e.patient_id
+                        }))
+                    } if (e.clinic_id){
                       setFormData(e)
-                } if(e.service_type){
+                      setFormState((prevState)=>({
+                          ...prevState,
+                          clinic: e.clinic_id
+                      }))
+                } if (e.service_type){
                       setServiceTypeState(e)
+                        setFormState((prevState)=>({
+                            ...prevState,
+                            service_type: e.service_type
+                        }))
+                    } if(e.specialty_id){
+                        setFormState((prevState)=>({
+                            ...prevState,
+                            specialty_id: e.specialty_id
+                        }))
                     }
+
                 }}
 
             >
@@ -94,13 +117,13 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            }}
                 />
 
-                <DateTimeSelect setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} formData={formData} serviceTypeState={serviceTypeState}/>
+                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} formData={formData} serviceTypeState={serviceTypeState}/>
 
                 <div style={{paddingTop:20}}>
                     <Button loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
                 </div>
                 <div style={{paddingTop:10}}>
-                    <Button className={'btn_cancel_drawer'} htmlType={'submit'}  type={'secondary'}>Cancel</Button>
+                    <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>Cancel</Button>
                 </div>
             </Form>
 

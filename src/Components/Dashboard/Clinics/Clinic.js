@@ -17,13 +17,14 @@ import {MoreOutlined} from "@ant-design/icons";
 import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
-//import SecondClinicTabManageDoctors from './Fragments/SecondClinicTabManageDoctors';
+import SecondClinicTabManageDoctors from './Fragments/SecondClinicTabManageDoctors';
 import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
 
 
 const resource = "Clinic"
 
 function Clinic() {
+    let navigate = useNavigate();
     const params = useParams();
     let locale = useSelector((state) => state?.app?.current_locale);
     const [lang, setLang] = useState(locale)
@@ -47,20 +48,20 @@ function Clinic() {
 
 
     return (
-        <div >
-            {/*<div className={'clinic_header_div'}>*/}
-            {/*    <div className={'clinic_header_left_div'}>*/}
-            {/*        <Button className={'clinic_back_btn'} onClick={() => navigate(resourceLinks[resource])}><img*/}
-            {/*            alt={'Arrow_back_black'} src={Arrow_back_black}/></Button>*/}
-            {/*        <span style={{fontSize: 24, fontWeight: 700}}>Patient Card</span>*/}
-            {/*    </div>*/}
-            {/*    <div className={'clinic_header_right_div'}>*/}
-            {/*        <Button className={'add_btn'} size={'large'} type={'primary'}>Add new</Button>*/}
-            {/*        <Button className={'add_btn'} size={'large'} type={'secondary'}>Add new</Button>*/}
-            {/*        <MoreOutlined style={{fontSize: 28}}/>*/}
-            {/*    </div>*/}
+        <div style={{backgroundColor: '#ffffff'}} className={'clinic_tab_big_div'}>
+            <div className={'clinic_header_div'}>
+                <div className={'clinic_header_left_div'}>
+                    <Button className={'clinic_back_btn'} onClick={() => navigate(resourceLinks[resource])}><img
+                        alt={'Arrow_back_black'} src={Arrow_back_black}/></Button>
+                    <span style={{fontSize: 24, fontWeight: 700}}>Clinic name</span>
+                </div>
+                <div className={'clinic_header_right_div'}>
+                    <Button className={'add_btn'} size={'large'} type={'primary'}>Save changes</Button>
+                    <Button className={'add_btn'} size={'large'} type={'secondary'}>Cancel</Button>
+                    <MoreOutlined style={{fontSize: 28}}/>
+                </div>
 
-            {/*</div>*/}
+            </div>
 
             {loading ? <Preloader/> : <ClinicTabBars onChange={handleChange} activeKey={tab}>
                 <items key={'essentials'} tab={'Essentials'}>
@@ -69,7 +70,8 @@ function Clinic() {
                                          handleLangChange={handleLangChange}/>
                 </items>
                 {params.id && <items key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
-                    <ClinicTabManageDoctors  />
+                    <SecondClinicTabManageDoctors  />
+                    {/*<ClinicTabManageDoctors/>*/}
                 </items>}
                 {params.id && <items key={'working'} tab={'Working Hours'}>
                     <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>

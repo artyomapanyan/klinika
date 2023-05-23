@@ -10,6 +10,7 @@ function ResourceSelectPaginated({
                                    name,
                                    options,
                                      searchConfigs={},
+                                     suffixIcon,
                                    label,
                                    rules,
                                    inputProps = {},
@@ -130,6 +131,7 @@ function ResourceSelectPaginated({
     onSearch={handleSearch}
     showSearch
     notFoundContent={notFoundContent??null}
+    suffixIcon={suffixIcon}
 
     allowClear={!disableClear}
     options={options}

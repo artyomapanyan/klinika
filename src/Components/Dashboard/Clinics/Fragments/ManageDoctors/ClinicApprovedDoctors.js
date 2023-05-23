@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {t} from "i18next";
 import ResourceTable from "../../../../Fragments/ResourceTable";
 import {useParams} from "react-router";
-import {Button, Modal} from "antd";
+import {Button, Form, Modal} from "antd";
 import DoctorsHoursModal from "./DoctorsHoursModal";
 import Preloader from "../../../../Preloader";
 
@@ -35,6 +35,11 @@ function ClinicApprovedDoctors() {
         <div>
             <h1 className={'h1'}>{t(`Manage Approved Doctors`)}</h1>
            <ResourceTable
+               customHeader={({setParams})=><Form onValuesChange={(e,v)=>setParams(v)}>
+
+
+
+               </Form>}
 
                     noHeader={true}
                     except={{
@@ -51,7 +56,7 @@ function ClinicApprovedDoctors() {
                             title: 'Doctor id',
                             key: 'plid',
                             render:(e, record)=> {
-                                console.log(record)
+                                console.log(record, 'dddddddddddd')
                                 return <div  style={{padding:2}}>{record.doctor.first} {record.doctor.last}</div>
                             }
                         },

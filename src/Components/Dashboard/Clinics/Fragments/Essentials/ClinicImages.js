@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Col, Row,Form} from "antd";
+import delete_icon from "../../../../../dist/icons/delete_icon.png";
 
 function ClinicImages({coverInitial = false,formRef}) {
     const [cover, setCover] = useState({
@@ -57,34 +58,44 @@ function ClinicImages({coverInitial = false,formRef}) {
 
 
     }
-    return <Row className={'clinic-images-container'} gutter={[10,10]}>
-        <Col lg={14}>
+    return <Row className={'clinic-images-container'} gutter={[10,38]}>
+        <Col lg={9}>
             <Form.Item name={'logo'} hidden={true}> </Form.Item>
             <Form.Item name={'cover'} hidden={true}></Form.Item>
             <input type={'file'} onChange={(e)=>handleFileUploaded(e,'c')} id={'upload-btn-cv'}/>
             <label htmlFor="upload-btn-cv">
-                <div style={{width: '400px', height: '150px', backgroundImage: "url('" + cover.src + "')"}}
-                     className={'im-bg'}>
-                    {cover.src ? <div className={'delete-button'} onClick={(e)=>handleDeleteClick(e,'c')}></div> : null}
+                <div style={{width: '320px', height: '120px', padding: 16, backgroundImage: "url('" + cover.src + "')"}} className={'im-bg'}>
+                    {cover.src ? <div className={'delete-button'} onClick={(e)=>handleDeleteClick(e,'c')}><img alt={'delete_icon'} src={delete_icon}/></div> : null}
+                    {
+                        cover.src ? <div></div> : <div className={'inn_image_div'}>COVER IMAGE</div>
+                    }
+
                 </div>
             </label>
         </Col>
-        <Col lg={10}>
-            <h1>Clinic page cover image</h1>
-            <div>Pleas upload</div>
+        <Col lg={15}>
+            <h1 className={'cover_upload_bold_text'}>Clinic page cover image</h1>
+            <div className={'upload_small_text'}>Please upload an image of your logo in good quality 1200x300px with safe areas</div>
         </Col>
-        <Col lg={6}>
+        <Col lg={4}>
             <input type={'file'} onChange={(e)=>handleFileUploaded(e,'l')} id={'upload-btn-lg'}/>
             <label htmlFor="upload-btn-lg">
-                <div style={{width: '120px', height: '80px', backgroundImage: "url('" + logo.src + "')"}}
-                     className={'im-bg'}>
-                    {logo.src ? <div className={'delete-button'} onClick={(e)=>handleDeleteClick(e,'v')}></div> : null}
+                <div style={{width: '120px', height: '120px',padding: 16, backgroundImage: "url('" + logo.src + "')"}} className={'im-bg'}>
+
+                    {logo.src ? <div className={'delete-button'} onClick={(e)=>handleDeleteClick(e,'v')}><img alt={'delete_icon'} src={delete_icon}/></div> : null}
+                    {
+                        logo.src ? <div></div> : <div>
+                            <div className={'inn_logo_div'}>LOGOTYPE</div>
+                            <div align={'center'} className={'bottom_text_logo_div'}>SAFE AREA</div>
+                        </div>
+                    }
+
                 </div>
             </label>
         </Col>
-        <Col lg={18}>
-            <h1>Clinic logo</h1>
-            <div>Please upload</div>
+        <Col lg={20}>
+            <h1 className={'cover_upload_bold_text'}>Clinic logo</h1>
+            <div className={'upload_small_text'} style={{width: 240}}>Please upload an image of your logo in good quality 500x500px with safe areas</div>
         </Col>
     </Row>
 }

@@ -9,6 +9,7 @@ import arrowUpPurple from "../../../../../dist/icons/arrow-up-purple.svg";
 import arrowDownPurple from "../../../../../dist/icons/arrowDownPurple.svg";
 import {Collapse} from "antd";
 import NewLaboratoryTests from "./Fragments/NewLaboratoryTests";
+import NewLaboratoryPackages from "./Fragments/NewLaboratoryPackages";
 const { Panel } = Collapse;
 
 const resource = "Clinic";
@@ -49,7 +50,7 @@ function Laboratory() {
 
 
     return(
-        <div   >
+        <div  style={{background: "#ffffff", padding: '10px 80px'}} >
             <div className={'add_edit_content'}>
                 {/*<Collapse*/}
                 {/*    bordered={false}*/}
@@ -71,9 +72,10 @@ function Laboratory() {
             <div className={'clinic_line'}></div>
 
             <div>
-                {/*<NewLaboratoryTests />*/}
-                <LaboratoryTestsTable />
-                <LabPackagesTable />
+                <NewLaboratoryTests />
+                <NewLaboratoryPackages/>
+                {/*<LaboratoryTestsTable />*/}
+                {/*<LabPackagesTable />*/}
             </div>
 
 

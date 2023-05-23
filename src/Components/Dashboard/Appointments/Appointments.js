@@ -94,6 +94,7 @@ function Appointments() {
                 </Modal>
 
                 {loading?<Preloader/>:<ResourceTable resource={resource}
+                               eyeShow={true}
                                tableParams={{
                                    order_by: 'booked_at',
                                    order: 'desc'
@@ -103,7 +104,7 @@ function Appointments() {
                                        navigate(`${ResourceLinks[resource] + record.id}`)
                                    }
                                }}
-                               eyeShow={false}
+
                                except={{edit: true}}
                                tableColumns={[
                     {

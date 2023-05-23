@@ -4,6 +4,9 @@ $primaryColor: #ce4e99
 body
   div
     font-family: 'Inter' !important
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-form-vertical .ant-form-item-label>label
+    height: auto !important
+
 
 .ant-menu-submenu-popup
   display: none !important
@@ -804,43 +807,111 @@ body
 .ant-select-multiple .ant-select-selection-overflow
   max-height: initial
 .checkbox-groups
+  margin-top: 34px
   width: 100%
+
   .ant-checkbox-group
     display: flex
     gap: 10px
     flex-wrap: wrap
+
+
     .ant-checkbox-wrapper
       margin-inline-start: initial !important
 
 
 .clinic-images-container,.clinic-gallery
-  padding: 20px
+  padding-left: 56px
+  padding-top: 73px
+  display: flex
+  .cover_upload_bold_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 18px
+  .upload_small_text
+    font-size: 14px
+    font-weight: 400
+    font-family: Inter
+
+
   input
     display: none !important
+
+
   .im-bg
     cursor: pointer
     position: relative
     border-radius: 15px
-    background: grey
+    background: #F5F5F8
     background-size: contain
     background-repeat: no-repeat
     background-position: center
+
+    .inn_logo_div
+      border: 1px dashed #BF539E
+      height: 88px
+      width: 88px
+      border-radius: 4px
+      font-family: Inter
+      font-size: 16px
+      font-weight: 700
+      display: flex
+      align-items: center
+    .bottom_text_logo_div
+      font-size: 10px
+      font-weight: 400
+      font-family: Inter
+      color: #BF539E
+    .inn_image_div
+      border: 1px dashed #BF539E
+      height: 88px
+      width: 288px
+      border-radius: 4px
+      font-family: Inter
+      font-size: 16px
+      font-weight: 700
+      display: flex
+      align-items: center
+      justify-content: center
+
     .delete-button
       z-index: 21
       position: absolute
-      right: 10px
-      top: 10px
+      right: 4px
+      top: 4px
       height: 40px
       width: 40px
-      background: red
+      background: #FFFFFF
+      border-radius: 12px
+      display: flex
+      align-items: center
+      justify-content: center
+
+
 .clinic-gallery
+  flex-direction: column
+  padding-left: 0
+  padding-top: 24px
   .images-cnt
+
     display: flex
-    gap: 25px
+    gap: 24px
+    flex-wrap: wrap
   .upload-btn
-    height: 250px
-    width: 120px
-    background: red
+    height: 240px
+    width: 274px
+    background-color: #F5F5F8
+    border-radius: 12px
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+  .photos_head_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 24px
+
+
 
 
 .clinic_manager_res_table table
@@ -910,3 +981,4 @@ body
     padding: 8px !important
   :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-thead >tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
     width: 0
+

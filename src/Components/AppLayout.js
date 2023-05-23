@@ -277,6 +277,12 @@ function AppLayout(){
             //singleComp:<Report/>,
             indexComp:<Reports/>
         },
+        // {
+        //     url:'reports',
+        //     resource:'Report',
+        //     //singleComp:<Report/>,
+        //     indexComp:<Reports/>
+        // },
 
 
 
