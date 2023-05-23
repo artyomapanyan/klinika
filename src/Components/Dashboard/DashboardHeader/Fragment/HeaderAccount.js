@@ -9,8 +9,7 @@ import { useSelector } from 'react-redux'
 import { t } from 'i18next'
 import Languages from './Languages'
 import PermCheck from '../../../Fragments/PermCheck'
-import { createResource, postResource } from '../../../Functions/api_calls'
-import resourceLinks from '../../../ResourceLinks'
+import { postResource } from '../../../Functions/api_calls'
 import Preloader from '../../../Preloader'
 
 function HeaderAccount() {

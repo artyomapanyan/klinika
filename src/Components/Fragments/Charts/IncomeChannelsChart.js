@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Chart, registerables} from "chart.js";
-import {Space, Spin} from 'antd';
+import {Spin} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import {postResource} from '../../Functions/api_calls';
 import Resource from '../../../store/Resources';

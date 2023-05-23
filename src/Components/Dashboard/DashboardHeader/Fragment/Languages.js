@@ -1,8 +1,7 @@
-import {Dropdown, Select, Space} from "antd";
+import {Dropdown, Space} from "antd";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {changeLanguage} from "i18next";
-import {DownOutlined} from "@ant-design/icons";
 import Eglend from "../../../../dist/Img/Eglend.png";
 import Arabia from "../../../../dist/Img/Arabia.png";
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Col, Row,Form} from "antd";
 import delete_icon from "../../../../../dist/icons/delete_icon.png";
 
-function ClinicImages({coverInitial = false,formRef}) {
+function ClinicImages({formRef}) {
     const [cover, setCover] = useState({
         file: null,
         src: null

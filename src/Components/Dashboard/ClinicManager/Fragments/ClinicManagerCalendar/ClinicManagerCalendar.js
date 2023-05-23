@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import "./ClinicManagerCalendar.scss";
-import {Avatar, Button, Input, Spin} from "antd";
-import {SearchOutlined, DownOutlined} from "@ant-design/icons";
+import {Button, Input, Spin} from "antd";
+import {SearchOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarHead from "./Fragments/ClinicManagerCalendarHead";
 import ClicicManagerCalendarCollapse from "./Fragments/ClicicManagerCalendarCollapse";
 import dayjs from "dayjs";
@@ -79,7 +79,7 @@ function ClinicManagerCalendar() {
                                                                    aria-label="Search" prefix={<SearchOutlined size={30}/>}/>
                                                         </div>
                                                     </td>
-                                                    {[...Array(7).keys()].map((e, key) => {
+                                                    {[...Array(7).keys()].map((e) => {
                                                         return <td key={e} className="appointmentsDate" style={{height: 48}}>
                                                             <div className="appointmentsDate__content" style={{height: 48, paddingTop: 14}}>
                                                                 <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>

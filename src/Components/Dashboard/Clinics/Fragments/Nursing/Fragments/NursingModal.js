@@ -12,7 +12,7 @@ function NursingModal({isModalOpen,onCreate,nursingState, loading,handleClose}) 
     }
 
     return(
-        <Modal title="Add New Package" open={isModalOpen} onOk={handleOk} onCancel={()=>handleClose(false)} okText={t("Save")} >
+        <Modal title="Add New Nursing Task" open={isModalOpen} onOk={handleOk} onCancel={()=>handleClose(false)} okText={t("Save")} >
             <Spin spinning={loading}>
                 {isModalOpen?<Form
                     key={isModalOpen?.id+(new Date())}

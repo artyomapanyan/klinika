@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {Chart,registerables} from "chart.js";
 import {Space, Spin} from "antd";
-import {postResource} from "../../Functions/api_calls";
 
 function CounterPurpleChart({data}) {
     let canvasRef = useRef();

@@ -1,9 +1,6 @@
 import React, {useState} from "react";
 import {CheckCircleOutlined} from "@ant-design/icons";
-import {Button, Input, InputNumber, Space} from "antd";
-import {t} from "i18next";
-import Resources from "../../../../store/Resources";
-import FormInput from "../../../Fragments/FormInput";
+import {Button, Space} from "antd";
 import Radio from "antd/lib/radio/radio";
 
 

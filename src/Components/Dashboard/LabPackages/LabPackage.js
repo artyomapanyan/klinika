@@ -2,7 +2,6 @@ import {t} from "i18next";
 import Preloader from "../../Preloader";
 import {Button, Form, Popconfirm, Space} from "antd";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import FormInput from "../../Fragments/FormInput";
@@ -11,7 +10,6 @@ import FileManager from "../../Fragments/FileManager";
 import Resources from "../../../store/Resources";
 import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import DraftEditor from "../../Fragments/DraftEditor";
-import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'LabPackage';
 

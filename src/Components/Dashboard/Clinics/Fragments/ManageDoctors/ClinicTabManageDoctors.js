@@ -1,16 +1,14 @@
-import React, {useState, useRef} from "react";
+import React, {useState} from "react";
 import {t} from "i18next";
-import {Button, Space} from "antd";
+import {Button} from "antd";
 import ResourceTable from "../../../../Fragments/ResourceTable";
-import {useNavigate, useParams} from "react-router";
+import {useParams} from "react-router";
 import {createResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import ClinicApprovedDoctors from "./ClinicApprovedDoctors";
-import resourceLinks from "../../../../ResourceLinks";
 import ManageDoctorsModal from "./Fragments/ManageDoctorsModal";
 import Preloader from "../../../../Preloader";
 
-const resource = 'Clinic'
 
 function ClinicTabManageDoctors() {
     const params = useParams();

@@ -6,7 +6,6 @@ import {createResource, postResource, updateResource} from "../../../../../Funct
 import {PlusOutlined} from "@ant-design/icons";
 import Preloader from "../../../../../Preloader";
 import ResourceTable from "../../../../../Fragments/ResourceTable";
-import TableFilterElement from "../../../../../Fragments/TableFilterElements/TableFilterElement";
 import LabPackageModal from "./LabPackageModal";
 
 

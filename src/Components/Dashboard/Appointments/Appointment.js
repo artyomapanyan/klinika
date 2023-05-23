@@ -5,17 +5,13 @@ import {
     createResource,
     postResource,
     updateResource,
-    useGetResourceIndex,
     useGetResourceSingle
 } from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
-import {Button, Form, Space, Row, Col, Popconfirm} from "antd";
+import {Button, Form, Space, Row, Col, Spin} from "antd";
 import {t} from "i18next";
 import Preloader from "../../Preloader";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
-import FileManager from "../../Fragments/FileManager";
 import dayjs from 'dayjs';
 import CancelComponent from "../../Fragments/CancelComponent";
 
@@ -26,24 +22,24 @@ const resource = 'Appointment';
 function Appointment() {
     const params = useParams();
     const navigate = useNavigate();
-    let reduxInfo = useSelector((state) => state);
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
-    const {loading, setLoading} = loadingState
+    const {loading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [load, setLoad] = useState(false)
+    const [timesLoading,setTimesLoading] = useState(false)
 
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
     const [availableDateState, setAvailableDateState] = useState([])
 
-    const [clinicAvailableTimeState, setClinicAvailableTimeState] = useState([])
+
     const [changeValuesState, setChangeValuesState] = useState({})
 
     const fetchedUsers = useRef([]);
-    const phoneNumber = useRef();
+
 
 
     useEffect(() => {
@@ -102,8 +98,9 @@ function Appointment() {
 
 
     useEffect(() => {
-        if (data?.doctor_id) {
-            postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id, {service: data?.service_type}).then(responses => {
+        if (data?.doctor_id && data?.clinic_id) {
+            setTimesLoading(true)
+            postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id+'/'+data?.clinic_id, {service: data?.service_type}).then(responses => {
                 const res = responses?.working_hours
                 let day = [];
                 Object.values(res)?.map((el, i) => {
@@ -114,15 +111,16 @@ function Appointment() {
                     }
                 })
                 setAvailableDateState(day)
-
+                setTimesLoading(false)
             })
         }
-    }, [data?.doctor_id])
+    }, [data?.doctor_id,data?.clinic_id])
 
 
     useEffect(() => {
 
         if(data?.booked_at  && data?.doctor_id ){
+            setTimesLoading(true)
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {
                 service: data?.service_type,
                 date: data?.booked_at?.format('YYYY-MM-DD')
@@ -139,6 +137,7 @@ function Appointment() {
                         })
                     }
                 }))
+                setTimesLoading(false)
             })
         }
         if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(data?.service_type)) {
@@ -240,7 +239,6 @@ function Appointment() {
 
 
     const searchByNumber = (item, name, patientData) => {
-
         fetchedUsers.current = patientData
         name = <>{item.phone_number}{" "}{item.email}</>
         let searchData = item.phone_number+item.email;
@@ -249,7 +247,7 @@ function Appointment() {
 
     }
 
-console.log(serviceTypeState, 'ffffff')
+
 
     return (
         <div>
@@ -289,7 +287,7 @@ console.log(serviceTypeState, 'ffffff')
 
                                                initialData={[]}
                                                handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
-                                               customSearchKey={'name_or_phone'}
+                                               customSearchKey={'phone_number'}
                                                resource={'User'}/>
                                 </div>
 
@@ -410,11 +408,9 @@ console.log(serviceTypeState, 'ffffff')
                                                 <FormInput label={t('Clinic')} name={'clinic_id'}
                                                            inputType={'resourceSelect'}
                                                            rules={[{required: true}]}
-
-                                                           //initialValue={reduxInfo?.auth?.selected_role?.key === 'clinic-manager' ? reduxInfo?.auth?.clinics[0].id : null}
-                                                           initialData={reduxInfo?.auth?.clinics}
-                                                           resource={reduxInfo?.auth?.selected_role?.key === 'clinic-manager' ? null : 'Clinic'}
-                                                           />
+                                                           initialValue={null}
+                                                           initialData={[data?.clinic].filter(e=>e)}
+                                                           resource={'Clinic'}/>
                                             </Col>
                                             {
                                                 data?.clinic_id ? <Col lg={24} className="gutter-row">
@@ -462,6 +458,7 @@ console.log(serviceTypeState, 'ffffff')
                                                                                specialty: data.specialty_id,
                                                                                clinic: data.clinic_id
                                                                            }}
+                                                                           customSearchKey={'name'}
                                                                            initialValue={null}
                                                                            resource={'ClinicDoctor'}
                                                                            initialData={[]}/>
@@ -531,24 +528,24 @@ console.log(serviceTypeState, 'ffffff')
                                             </Col>
                                             <Col lg={12} className="gutter-row">
                                                 {
-                                                    data?.booked_at ? <FormInput label={t('Appointment time')}
+                                                    data?.booked_at ?<Spin spinning={timesLoading}> <FormInput label={t('Appointment time')}
                                                                                         name={'appointment_time'}
                                                                                         inputType={'resourceSelect'}
                                                                                         options={availableTimeState}
                                                                                         initialData={[]}
-                                                    /> : <div></div>
+                                                    /></Spin> : <div></div>
                                                 }
                                             </Col>
                                         </Row>
-                                        {/*<Row>*/}
-                                        {/*    <Col lg={12} className="gutter-row">*/}
-                                        {/*        <FormInput label={t('Offer (Optional)')} name={'offer_id'}*/}
-                                        {/*                   inputType={'resourceSelect'}*/}
-                                        {/*                   initialValue={null}*/}
-                                        {/*                   initialData={[]}*/}
-                                        {/*                   resource={'Offer'}/>*/}
-                                        {/*    </Col>*/}
-                                        {/*</Row>*/}
+                                        <Row>
+                                            <Col lg={12} className="gutter-row">
+                                                <FormInput label={t('Offer (Optional)')} name={'offer_id'}
+                                                           inputType={'resourceSelect'}
+                                                           initialValue={null}
+                                                           initialData={[]}
+                                                           resource={'Offer'}/>
+                                            </Col>
+                                        </Row>
                                         <div className="gutter-row">
                                             <FormInput label={t('Description')} name={'description'}
                                                        inputType={'textArea'} initialValue={data?.description}/>

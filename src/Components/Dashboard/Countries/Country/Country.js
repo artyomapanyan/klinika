@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
-import {Button, Col, Form, Popconfirm, Row, Space} from 'antd';
+import {Button, Col, Form, Row, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import Preloader from "../../../Preloader";
 import {useSelector} from "react-redux";
-import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import "../../../../dist/styles/Styles.sass";
-import {QuestionCircleOutlined} from "@ant-design/icons";
 import CancelComponent from "../../../Fragments/CancelComponent";
 
 const resource = 'Country';

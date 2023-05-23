@@ -1,22 +1,18 @@
 import {useSelector} from "react-redux";
 import {useEffect, useRef, useState} from "react";
-import {postResource} from "../../../../Functions/api_calls";
 import {Chart, registerables} from "chart.js";
-import {Space, Spin} from "antd";
+import {Space} from "antd";
 
 function PatientSetisfactionChart() {
-    let token = useSelector((state) => state.auth.token);
-    let ownerClinics = useSelector((state) => state?.owner);
-    const [loading, setLoading] = useState(true);
+    useSelector((state) => state.auth.token);
+    useSelector((state) => state?.owner);
+
 
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-    const [data,setData] = useState([5,0]);
-    const [responseState,setResponseState] = useState({
-        clinic:'',
-        avg_rating:0
-    });
+    const [data] = useState([5,0]);
+
 
     // useEffect(() => {
     //     setLoading(true)

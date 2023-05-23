@@ -9,7 +9,6 @@ function DoctorLicensesChart() {
     let appointmentChartRef = useRef(null);
 
     let token = useSelector((state) => state.auth.token);
-    let ownerClinics = useSelector((state) => state?.owner);
 
     const [loading, setLoading] = useState(true);
 

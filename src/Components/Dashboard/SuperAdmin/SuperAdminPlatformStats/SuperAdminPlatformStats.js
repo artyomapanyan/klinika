@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import {postResource} from "../../../Functions/api_calls";
 import Preloader from "../../../Preloader";
 import styles from "../../../Fragments/Charts/MonthStatistics/MonthStatistics.module.scss";
-import dayjs from "dayjs";
 
 function SuperAdminPlatformStats () {
     let token = useSelector((state) => state.auth.token);

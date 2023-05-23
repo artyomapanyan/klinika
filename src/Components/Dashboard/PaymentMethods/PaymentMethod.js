@@ -1,15 +1,14 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Col, Form, Popconfirm, Row, Space} from "antd";
+import {Button, Col, Form, Row, Space} from "antd";
 import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
 import FileManager from "../../Fragments/FileManager";
-import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {InboxOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 
@@ -22,7 +21,7 @@ function PaymentMethod() {
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
-    const {loading, setLoading} = loadingState
+    const {loading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
 

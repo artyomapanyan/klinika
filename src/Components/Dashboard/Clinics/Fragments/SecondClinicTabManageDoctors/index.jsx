@@ -12,7 +12,7 @@ import Resources from "../../../../../store/Resources";
 import FormInput from "../../../../Fragments/FormInput";
 import suffix_select_icon from "../../../../../dist/icons/suffix_select_icon.png";
 
-const resource = 'Clinic';
+const resource = 'ClinicDoctor';
 const SecondClinicTabManageDoctors = ({ loadingState, resourceLink = null }) => {
   const [ record, setRecord ] = useState ({});
     const params = useParams();
@@ -54,22 +54,20 @@ const SecondClinicTabManageDoctors = ({ loadingState, resourceLink = null }) => 
                            }}
                 />
               </Col>
-              <Col lg={4}>
+              <Col lg={8}>
                 <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
                            initialData={Resources.Status}
                 />
               </Col>
-              <Col lg={3} align={'center'}>
+              <Col lg={2} align={'center'}>
                 <div onClick={()=>onReset(params)}  className={'reset_filter_div'} style={{width:90}}>
                   Reset filter
                 </div>
               </Col>
 
-              <Col lg={3} align={'right'}>
-                <Button className={'btn_add_doctor'} onClick={onAddNew} type={'primary'}>Add doctors</Button>
-              </Col>
+
 
             </Row>
 
@@ -79,12 +77,12 @@ const SecondClinicTabManageDoctors = ({ loadingState, resourceLink = null }) => 
           </Form>}
 
         title={t ('Cities')}
-        resource={'Clinic'}
+        resource={'ClinicDoctor'}
         except={{ edit: false, delete: true }}
-        // tableParams={{
-        //     clinic: params.id,
-        //     is_approved: 1
-        // }}
+        tableParams={{
+            clinic: params.id,
+            is_approved: 1
+        }}
         editBtnStyle={{
           type: "default",
           size: "large",
@@ -119,8 +117,7 @@ const SecondClinicTabManageDoctors = ({ loadingState, resourceLink = null }) => 
                   />
                   <div className={styles.titleGroup}>
                     <div className={styles.title}>
-                      Salem Doctor
-                      {/*{record?.doctor?.first}{record?.doctor?.last}*/}
+                      {record?.doctor?.first}{record?.doctor?.last}
                     </div>
                     <div className={styles.subtitle}>Specialty</div>
                   </div>

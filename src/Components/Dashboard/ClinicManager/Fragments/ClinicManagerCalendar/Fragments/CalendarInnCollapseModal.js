@@ -1,4 +1,4 @@
-import {Avatar, Button, Drawer, Form, Space, Radio, notification} from "antd";
+import {Avatar, Button, Drawer, Form, Space, Radio} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import React, {useEffect, useRef, useState} from "react";
 import ClinicManagerCalendarDrawerSmall from "./ClinicManagerCalendarDrawerSmall";
@@ -149,7 +149,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                                new</Button></div>
                                    }}
                                    initialData={[]}
-                                   handleMapItems={(item, name, patientData) => searchByNumber(item, name)}
+                                   handleMapItems={(item, name) => searchByNumber(item, name)}
                                    customSearchKey={'name_or_phone'}
                                    resource={'User'}/>
 

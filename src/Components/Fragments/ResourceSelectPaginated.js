@@ -4,7 +4,6 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
 function ResourceSelectPaginated({
-                                     updateInitials=false,
                                    initialData = [],
                                    resource = null,
                                    name,
@@ -55,7 +54,7 @@ function ResourceSelectPaginated({
     return data.map((item, key) => {
       let name = item.name ?? item.title
       if (resource === 'User' || resource === 'Doctor') {
-        name = `${item.first} ${item.last} ${item.phone_number}`
+        name = `${item.first} ${item.last} ${item?.phone_number??''}`
       }
         if (resource === 'ClinicDoctor') {
             name = `${item.doctor.first} ${item.doctor.last}`
@@ -110,9 +109,11 @@ function ResourceSelectPaginated({
       }
       timeout.current = setTimeout(() => {
         setLocalData([])
-        setParams({
-          page: 1, [customSearchKey??'name']: e
-        })
+        setParams((prevState)=>({
+            ...prevState,
+          page: 1, [customSearchKey??'name']: e,
+
+        }))
       }, 850)
     }
 

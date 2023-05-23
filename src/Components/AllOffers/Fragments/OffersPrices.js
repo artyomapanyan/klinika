@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {Button, Col, Dropdown, Input, Row, Slider, Space} from "antd";
 import {DownOutlined, FunnelPlotOutlined, InsertRowRightOutlined, SearchOutlined} from "@ant-design/icons";
-import {t} from "i18next";
 
-function OffersPrices({clinics, setParams, params, data, setResetState, resetState, filterClinic}) {
+
+function OffersPrices({clinics, setParams, params,  setResetState}) {
     const [lowHighState, setLowHighState] = useState(false)
 
     const items = clinics?.map((el) => {

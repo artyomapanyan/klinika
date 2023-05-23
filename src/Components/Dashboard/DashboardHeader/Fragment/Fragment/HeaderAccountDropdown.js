@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Button, Spin} from "antd";
 import "./HeaderAccountDropdown.sass"
 import checkout from "../../../../../dist/icons/checkout.svg";
@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {t} from "i18next";
 import {postResource} from "../../../../Functions/api_calls";
-import Preloader from "../../../../Preloader";
+
 function HeaderAccountDropdown({setAuthOpen}) {
     const auth = useSelector(state => state.auth)
     const dispatch = useDispatch()

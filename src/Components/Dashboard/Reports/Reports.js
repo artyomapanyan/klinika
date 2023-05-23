@@ -6,7 +6,6 @@ import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import React from "react";
 
-let resource='Report'
 function Reports() {
     return (
         <div>

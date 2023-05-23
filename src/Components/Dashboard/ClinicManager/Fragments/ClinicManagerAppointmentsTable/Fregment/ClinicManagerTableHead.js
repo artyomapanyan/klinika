@@ -11,7 +11,6 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
 
 
     dayjs.extend(customParseFormat);
-    const weekFormat = 'MM/DD';
 
     const customWeekStartEndFormat = (value) =>
         `${dayjs(value).startOf('week').format('DD MMM')} - ${dayjs(value)

@@ -1,27 +1,21 @@
-import React, {useRef, useState} from "react";
-import {Button, Collapse, Form, DatePicker, Row, Col, Modal} from "antd";
+import React, {useState} from "react";
+import {Form, Modal} from "antd";
 import {t} from "i18next";
-import FormInput from "../../Fragments/FormInput";
 import ResourceTable from "../../Fragments/ResourceTable";
-import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
-import DateParser from "../../Fragments/DateParser";
 import {CheckCircleOutlined} from "@ant-design/icons";
-import CInput from "../../Fragments/Inputs/CInput";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
-import {useNavigate, useParams} from "react-router";
+import {useNavigate} from "react-router";
 import ResourceLinks from "../../ResourceLinks";
 import {CanceledContent} from "./StatusModalForms/CanceledContent";
 import {FinishedContent} from "./StatusModalForms/FinishedContent";
 import {RascheduledContent} from "./StatusModalForms/RascheduledContent";
-import {postResource, useGetResourceSingle} from "../../Functions/api_calls";
+import {postResource} from "../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Preloader from "../../Preloader";
 import dayjs from "dayjs";
 import {Confirmed} from "./StatusModalForms/Confirmed";
 
-const { RangePicker } = DatePicker;
-const { Panel } = Collapse;
 const resource = 'Appointment';
 function Appointments() {
     const navigate = useNavigate();
@@ -30,7 +24,7 @@ function Appointments() {
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
-    const [recordId,setRecordId] = useState({})
+
 
 
 
@@ -52,7 +46,7 @@ function Appointments() {
         postResource('Appointment','appointmentStatus', token, `${modal.id}/switch-status`, {
             status:modal.key,
             ...values
-        }).then((response) => {
+        }).then(() => {
 
             setModal(null)
             setLoading(false)
@@ -63,7 +57,7 @@ function Appointments() {
         setModal(null)
     }
 
-    const handleValuesChange = (changed,all)=>{
+    const handleValuesChange = (changed)=>{
         if(changed.booked_at) {
             setDate((prevDate)=>({
                 ...prevDate,

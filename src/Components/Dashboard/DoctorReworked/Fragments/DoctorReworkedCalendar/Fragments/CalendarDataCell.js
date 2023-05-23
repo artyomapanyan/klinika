@@ -1,8 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
 
-import foto_icon from "../../../../../../dist/icons/foto_icon.png";
-import delete_icon from "../../../../../../dist/icons/delete_icon.png";
 import walking_man_icon from "../../../../../../dist/icons/walking_man_icon.png";
 import walking_man_black from "../../../../../../dist/icons/walking_man_black.png";
 import {InstagramOutlined} from "@ant-design/icons";

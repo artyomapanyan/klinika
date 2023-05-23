@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Divider, List, notification, Tag} from "antd";
-import {Link} from "react-router-dom";
+import {Button} from "antd";
 import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
@@ -11,7 +10,7 @@ import message_icon from "../../../../../dist/icons/message_icon.png";
 import Preloader from "../../../../Preloader";
 
 const count = 6;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
+
 
 function DoctorReworkedNotifications() {
     let token = useSelector((state) => state.auth.token);
@@ -29,7 +28,7 @@ function DoctorReworkedNotifications() {
     }, [])
 
     const onMarkAlAsRead = () => {
-        postResource('Notifications', 'MarkAllAsRead', token, '',).then((response) => {
+        postResource('Notifications', 'MarkAllAsRead', token, '',).then(() => {
 
         })
     }

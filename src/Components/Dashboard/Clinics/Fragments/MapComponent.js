@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {GoogleMap, LoadScript, Marker, Autocomplete} from "@react-google-maps/api";
-import {AutoComplete, Col, Form, Input, Row} from "antd";
+import {Col, Form, Input, Row} from "antd";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
 import FormInput from "../../../Fragments/FormInput";
@@ -8,7 +8,7 @@ import FormInput from "../../../Fragments/FormInput";
 function MyMapComponent({data,formRef}) {
     const googleRef = useRef();
     const [autocomplete, setAutocomplete] = useState()
-    const [initialPosition,setInitialPosition] = useState({ lat: +data?.latitude, lng: +data?.longitude })
+    const [initialPosition,setInitialPosition] = useState({ lat: +data?.location?.latitude, lng: +data?.location?.longitude })
     const [marker,setMarker] = useState()
     const [map,setMap] = useState()
     const [mapData,setMapData] = useState({
@@ -97,7 +97,7 @@ function MyMapComponent({data,formRef}) {
 
     const uluru = { lat: 24.845909101072877, lng: 39.569421557617204 }
 
-console.log(data, 'ddddddd')
+
     return(
         <LoadScript
             id="script-loader"
@@ -147,7 +147,8 @@ console.log(data, 'ddddddd')
                                resource={'Region'} />
                 </Col>
                 <Col lg={6}>
-
+                    <Form.Item hidden={true} name={'latitude'} initialValue={data?.location?.latitude}></Form.Item>
+                    <Form.Item hidden={true} name={'longitude'} initialValue={data?.location?.longitude}></Form.Item>
 
                     <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.city?.id}
@@ -168,16 +169,11 @@ console.log(data, 'ddddddd')
                         onLoad={onLoad}
                         onPlaceChanged={onPlaceChanged}
                     >
-                        <Form.Item name={'address'} initialValue={data?.address1}>
+                        <Form.Item name={'address'}>
                             <Input  style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}} />
                         </Form.Item>
                     </Autocomplete>
                 </Col>
-                {/*<FormInput label={'latitude'} name={'latitude'} initialValue={data?.latitude}/>*/}
-                {/*<FormInput label={'langitude'} name={'longitude'} initialValue={data?.longitude}/>*/}
-
-                <Form.Item hidden={true} name={'latitude'} initialValue={data?.latitude}></Form.Item>
-                <Form.Item hidden={true}  name={'longitude'} initialValue={data?.longitude}></Form.Item>
 
 
                 {/*<Form.Item label={t('Latitude')} name={'latitude'} initialValue={data?.latitude} >*/}

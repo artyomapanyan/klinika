@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {t} from "i18next";
-import {Avatar, Button, Divider, Radio, Space, Table} from "antd";
-import {LeftOutlined, RightOutlined, AlibabaOutlined} from "@ant-design/icons";
+import {Avatar, Button, Space, Table} from "antd";
+import {AlibabaOutlined} from "@ant-design/icons";
 import gold_star from "../../../../dist/icons/gold_star.png";
 import arrow_prev from "../../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../../dist/icons/arrow-next.svg";

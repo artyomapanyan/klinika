@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {t} from "i18next";
-import {Avatar, Button, Space, Table, Tag} from "antd";
+import {Avatar, Button, Space} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import './ClinicOwnerStyles/ClinicOwnerStyles.sass'
 import HCPs_icon from "../../../dist/icons/HCPs_icon.svg";
@@ -8,8 +8,6 @@ import Nurses_icon from "../../../dist/icons/Nurses_icon.png";
 import Other_icon from "../../../dist/icons/Others_icon.png";
 import Offers_icon from "../../../dist/icons/Offers_icon.png";
 import Active_icon from "../../../dist/icons/Active_icon.png";
-import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
-import DateParser from "../../Fragments/DateParser";
 import ResourceTable from "../../Fragments/ResourceTable";
 import ResourceLinks from "../../ResourceLinks";
 import {useNavigate} from "react-router";
@@ -60,7 +58,7 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('HCPs'),
                         dataIndex: 'HCPs',
                         key: 'HCPs',
-                        render:(e, record)=>{
+                        render:()=>{
 
                             return<div className={'icon_text_div'}><img alt={'HCPs_icon'} src={HCPs_icon}/> <span className={'owner_clinic_table_texts'}>HCPs: 12</span></div>
                         }
@@ -77,7 +75,7 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('Other'),
                         dataIndex: 'Other',
                         key: 'Other',
-                        render:(e, record)=>{
+                        render:()=>{
                             return<div className={'icon_text_div'}><img alt={'Other_icon'} src={Other_icon}/> <span className={'owner_clinic_table_texts'}>Other: 0</span></div>
                         }
                     },
@@ -93,7 +91,7 @@ function OwnerClinics({resourceLink=null,}) {
                         title: t('Status'),
                         dataIndex: 'Status',
                         key: 'Status',
-                        render:(e, record)=>{
+                        render:()=>{
                             return<div className={'icon_text_div'}><img alt={'Active_icon'} src={Active_icon}/> <span style={{color:'#4FB873'}} className={'owner_clinic_table_texts'}>Active</span></div>
                         }
                     },

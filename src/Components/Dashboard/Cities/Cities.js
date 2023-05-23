@@ -3,8 +3,7 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
-import {Avatar, Space} from "antd";
-import {UserOutlined} from "@ant-design/icons";
+
 function Cities() {
     return(
         <div>

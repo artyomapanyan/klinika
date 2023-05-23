@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Button, Radio, Space, Spin, Switch, Typography} from "antd";
+import {Button, Space, Spin, Switch} from "antd";
 import {Chart,registerables} from "chart.js";
-import {t} from "i18next";
 import dayjs from "dayjs";
 import arrow_prev from "../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../dist/icons/arrow-next.svg";
@@ -13,9 +12,8 @@ function AppointmentStats(){
     let appointmentChartRef = useRef(null)
     let token = useSelector((state) => state.auth.token);
     const [loading, setLoading] = useState(true)
-    let ownerClinics = useSelector((state) => state?.owner);
 
-    const [startAndDate, setStartAndDate] = useState(dayjs());
+
 
     const [date, setDate] = useState({
         from: dayjs().add(-14, 'days').format('YYYY-MM-DD'),
@@ -233,9 +231,6 @@ function AppointmentStats(){
         appointmentChart.config.data.datasets[key].hidden = !e
         appointmentChart.update()
     }
-
-
-   let period = 14;
 
     const onNextYear = () => {
         setDate((prevState)=>({

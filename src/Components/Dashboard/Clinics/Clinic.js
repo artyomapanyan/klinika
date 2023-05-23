@@ -11,14 +11,15 @@ import Laboratory from "./Fragments/Laboratory/Laboratory";
 import ClinicVisit from "./Fragments/ClinicVisit/ClinicVisit";
 import Nursing from "./Fragments/Nursing/Nursing";
 import ClinicTabBars from "./Fragments/ClinicTabBars";
-import {Button} from "antd";
-import Arrow_back_black from "../../../dist/icons/Arrow_back_black.png";
-import {MoreOutlined} from "@ant-design/icons";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
 import SecondClinicTabManageDoctors from './Fragments/SecondClinicTabManageDoctors';
 import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
+import {Button} from "antd";
+import {MoreOutlined} from "@ant-design/icons";
+import resourceLinks from "../../ResourceLinks";
+import Arrow_back_black from "../../../dist/icons/Arrow_back_black.png"
+import "../../Dashboard/OwnerClinics/ClinicOwnerStyles/ClinicOwnerStyles.sass"
 
 
 const resource = "Clinic"
@@ -32,7 +33,7 @@ function Clinic() {
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const {loading, setLoading} = loadingState
+    const {loading} = loadingState
 
     useEffect(() => {
         setTab(searchParams.get('tab') ?? 'essentials')

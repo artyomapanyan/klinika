@@ -1,14 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import {Button, Col, Dropdown, Row, Space} from "antd";
+import React, {useState} from 'react'
+import {Button, Col, Row} from "antd";
 import "../../../dist/styles/Styles.sass"
 import HeaderAccount from "./Fragment/HeaderAccount";
-import {DownOutlined, LeftOutlined} from "@ant-design/icons";
+import {LeftOutlined} from "@ant-design/icons";
 import {useLocation} from "react-router";
-import {t} from "i18next";
 import ClinicOwnerHeader from "../ClinicsOwner/Fragments/ClinicOwnerHeader";
-import DoctorReworked from "../DoctorReworked/DoctorReworked";
-
-
 
 
 function DashboardHeader() {

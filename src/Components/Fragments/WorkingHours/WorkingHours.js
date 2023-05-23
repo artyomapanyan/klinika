@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import {Button, Col, Form, Popconfirm, Row, Select, Space, Switch} from "antd";
 import {t} from "i18next";
 
-import {CheckOutlined, CloseOutlined, DeleteOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import FormInput from "../FormInput";
 import resourceLinks from "../../ResourceLinks";
@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, syncable, isDoctorHours, doctorData, handleCancel}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})

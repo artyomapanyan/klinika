@@ -1,8 +1,7 @@
-import {Button, Col, Row} from "antd";
-import React, {useEffect, useState} from 'react';
+import {Col, Row} from "antd";
+import React, {useState} from 'react';
 import CounterGreenChart from "../../Fragments/Charts/CounterGreenChart";
 import CounterOrangeChart from "../../Fragments/Charts/CounterOrangeChart";
-import CounterMultipleChart from "../../Fragments/Charts/CounterMultipleChart";
 import '../../Fragments/Charts/ChartStyles.sass'
 import GradientChart from "../../Fragments/Charts/GradientChart";
 import LineChartIncomes from "../../Fragments/Charts/LineChartIncomes";

@@ -1,5 +1,3 @@
-import { Avatar, Card, Typography } from 'antd';
-
 const ShowClinicDoctorsTab = ({ desc, companies }) => {
   // const { Paragraph, Text } = Typography;
   // const doctor = {

@@ -2,15 +2,14 @@
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
 import Preloader from "../../Preloader";
-import {Button, Col, Form, Popconfirm, Space, Switch} from "antd";
+import {Button, Col, Form, Space, Switch} from "antd";
 import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import {Row} from "antd/lib";
 import Resources from "../../../store/Resources";
-import {PercentageOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {PercentageOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 const resource = 'Coupon';
@@ -128,7 +127,7 @@ function Coupon() {
                             <FormInput inputNumberStyle={{width:'100%'}} label={t('Min total value allowed')} name={'min_total_value_allowed'} inputType={'number'} initialValue={data?.min_total_value_allowed} rules={[
                                 {required: true},
                                 {
-                                    validator:(rule,value)=>{
+                                    validator:()=>{
                                         if (formRef?.current.getFieldValue()?.max_allowed_discount_amount) {
                                             if(formRef?.current.getFieldValue()?.max_allowed_discount_amount < formRef?.current.getFieldValue()?.min_total_value_allowed) {
                                                 return Promise.reject('Begins at cannot be greater than expired at')
@@ -142,7 +141,7 @@ function Coupon() {
                             <FormInput inputNumberStyle={{width:'100%'}} label={t('Max allowed discount amount')} name={'max_allowed_discount_amount'} inputType={'number'} initialValue={data?.max_allowed_discount_amount} rules={[
                                 {required: true},
                                 {
-                                    validator:(rule,value)=>{
+                                    validator:()=>{
                                         if(formRef?.current.getFieldValue()?.max_allowed_discount_amount < formRef?.current.getFieldValue()?.min_total_value_allowed) {
                                             return Promise.reject('Expired at cannot be greater than begins at')
                                         }

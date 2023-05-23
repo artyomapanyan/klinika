@@ -2,7 +2,7 @@ import {Space, Spin} from "antd";
 import arrowGreen from "../../../dist/icons/arrow-green.svg";
 import {t} from "i18next";
 import {useSelector} from "react-redux";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {postResource} from "../../Functions/api_calls";
 import arrowRed from "../../../dist/icons/arrow-red.svg";
 

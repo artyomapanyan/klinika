@@ -1,7 +1,6 @@
 import React from "react";
-import {Button, Progress, Space, Tooltip} from 'antd';
+import {Space} from 'antd';
 import {t} from "i18next";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import FIssuesItem from "./Fragments/FIssuesItem";
 function SuperAdminPlatformIssues({data}) {
     let dataColor = ['Active', 'Solved']

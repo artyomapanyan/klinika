@@ -215,7 +215,6 @@ function ClinicTabEssentials({loadingState, dataState, handleLangChange, lang}) 
                                 <div className={'language_div'}>
                                     <FormInput inputProps={{mode: 'multiple'}} label={t('')} name={'languages'}
                                                suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Languages</span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
-
                                                inputType={'resourceSelect'}
                                                rules={[{required: true}]}
                                                initialValue={data?.languages?.map(e => e.id)}

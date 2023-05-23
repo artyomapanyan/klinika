@@ -1,13 +1,12 @@
-import React, {useEffect} from "react";
+import React from "react";
 import clinic1 from "../../../../dist/Img/clinic1.jpg";
-import {Avatar, Button, Divider, Rate, Space, Badge, Tag} from "antd";
-import {RightOutlined, UserOutlined} from "@ant-design/icons";
+import {Avatar, Divider, Rate, Space, Badge, Tag} from "antd";
+import {RightOutlined} from "@ant-design/icons";
 import "../../AllOffers.sass";
 import OfferBookDetails from "./OfferBookDetails";
-import {postResource, useGetResourceSingle} from "../../../Functions/api_calls";
+import {useGetResourceSingle} from "../../../Functions/api_calls";
 import {useParams} from "react-router";
 import BookAnAppointment from "./BookAnAppointment";
-import {useSelector} from "react-redux";
 
 function OfferBookContent() {
     const params = useParams();

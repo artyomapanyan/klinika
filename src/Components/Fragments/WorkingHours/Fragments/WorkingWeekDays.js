@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import {Button, Checkbox, Col, Form, Input, Row, Select, Space, Switch} from "antd";
+import {Button, Col, Form, Row, Select, Space, Switch} from "antd";
 import {t} from "i18next";
 import Resources from "../../../../store/Resources";
 

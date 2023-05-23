@@ -1,21 +1,13 @@
-import {Button, Col, Row} from "antd";
+import {Col, Row} from "antd";
 import React from 'react';
-import { useState } from 'react';
 
 import DoctorReworkedNotifications from "./Fragments/DoctorReworkedNotifications/DoctorReworkedNotifications";
-import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";
-import CounterPurpleChart from "../../Fragments/Charts/CounterPurpleChart";
-import StatusesChart from "../../Fragments/Charts/StatusesChart";
-import ClinicFeedback from "../ClinicsOwner/Fragments/ClinicFeedback";
 import DoctorReworkedCalendar from "./Fragments/DoctorReworkedCalendar/DoctorReworkedCalendar";
 import AppointmentStats from "../../Fragments/Charts/AppointmentStats";
 import MonthStatistics from "../../Fragments/Charts/MonthStatistics/MonthStatistics";
 import DoctorRewProgress from "./Fragments/DoctorRewSmall/DoctorRewProgress";
 import TelehealtCount from "./Fragments/DoctorRewSmall/TelehealtCount";
 import DrReworkedStatuses from "./Fragments/DoctorRewSmall/DrReworkedStatuses";
-import PatientSetisfactionChart from "./Fragments/DoctorRewSmall/PatientSetisfactionChart";
-
-
 
 
 function DoctorReworked() {
