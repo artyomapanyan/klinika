@@ -76,6 +76,7 @@ function FormInput({
                                          }
                                          setValue(e)
                                      }}
+                                     suffixIcon={suffixIcon}
                                      disabled={inputDisabled}
                                      disabledDate={disabledDate}
                                      style={{width: '100%', height: 48}}

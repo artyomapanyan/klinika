@@ -69,7 +69,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
     <Dropdown
             menu={{
                 onClick,
-                items
+                items: items.filter((el) => el.key !== value)
 
             }}
             disabled={items.length < 2}

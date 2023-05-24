@@ -41,8 +41,9 @@ const SecondClinicTabManageDoctors = ({ loadingState, resourceLink = null }) => 
           }}>
             <Row className={'manage_doc_filter_div'} gutter={24}>
               <Col lg={14}>
-                <FormInput label={t('Specialties')} name={'specialty_id'}
-                           suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Languages</span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
+                <FormInput label={t('')} name={'specialty_id'}
+                           inputProps={{mode: 'multiple'}}
+                           suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Specialties</span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
@@ -103,7 +104,6 @@ const SecondClinicTabManageDoctors = ({ loadingState, resourceLink = null }) => 
             dataIndex: 'id',
             key: 'plid',
             render: (e, record) => {
-                console.log(record, 'kkkkkkkk')
               return <div
                 onClick={onResourceEdit}
                 className={styles.card}
