@@ -8,8 +8,9 @@ import {GMBK} from "../../../../../../functions";
 import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import Preloader from "../../../../../Preloader";
 
-function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeState}) {
+function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeState, formState}) {
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 
@@ -82,7 +83,7 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeS
             <div>
                 <div>
                     <div className={'big_date_div'}>
-                        { [...[...Array(6).keys()]].map((e, key) => {
+                        { formState?.clinic && formState?.patient_id && formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
                             return <div key={key}
                                         className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                         onClick={() => onDateClick(startDate.add(key, 'day'))}>
@@ -94,7 +95,8 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeS
                                     {startDate.add(key, 'day').format('DD')}
                                 </div>
                             </div>
-                        })}
+                        }): <div></div>
+                        }
                         {
                             startDate.format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY') ?
                                 <Button className={'next_btn'} onClick={() => handleChangeDay(6)}>

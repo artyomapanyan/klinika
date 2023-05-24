@@ -26,7 +26,6 @@ function ResourceTable ({
     eyeShow = false,
     customActions,
     initialParams = {},
-    buttonAdd = true,
     showHeader = true,
     editBtnStyle = {},
     tableSFilters,

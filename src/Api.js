@@ -144,9 +144,15 @@ let api = {
         url: 'clinics/working-hours',
         resource: 'ClinicWorkingHours',
     },
+
     {
         url: 'coupons',
         resource: 'Coupon',
+    },
+
+    {
+        url: 'languages',
+        resource: 'Language',
     },
     {
         url: 'clinic-lab-tests',
@@ -176,6 +182,7 @@ let api = {
                 url: `${endpoint}${version}/clinic-doctors`,
                 method: 'POST',
             },
+
         }
     },
     {
@@ -217,6 +224,10 @@ let api = {
     {
         url: 'public/clinic-doctors/working-hours-by-doctor-and-clinic',
         resource: 'PublicClinicDoctorWorkingHours',
+    },
+    {
+        url: 'clinic-doctors/working-hours-by-doctor-and-clinic',
+        resource: 'ClinicDoctorWorkingHours',
     },
     {
         url: 'public/clinic-doctors/available-times-by-doctor-and-clinic',

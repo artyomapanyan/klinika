@@ -4,12 +4,12 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
 function ResourceSelectPaginated({
-                                     updateInitials=false,
                                    initialData = [],
                                    resource = null,
                                    name,
                                    options,
                                      searchConfigs={},
+                                     suffixIcon,
                                    label,
                                    rules,
                                    inputProps = {},
@@ -109,9 +109,11 @@ function ResourceSelectPaginated({
       }
       timeout.current = setTimeout(() => {
         setLocalData([])
-        setParams({
-          page: 1, [customSearchKey??'name']: e
-        })
+        setParams((prevState)=>({
+            ...prevState,
+          page: 1, [customSearchKey??'name']: e,
+
+        }))
       }, 850)
     }
 
@@ -130,6 +132,7 @@ function ResourceSelectPaginated({
     onSearch={handleSearch}
     showSearch
     notFoundContent={notFoundContent??null}
+    suffixIcon={suffixIcon}
 
     allowClear={!disableClear}
     options={options}

@@ -177,7 +177,7 @@ function SuperAdminClinicPatientChart(){
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: 10,
+                                stepSize: isNull.length === 0 ? 0.2 : 10,
                                 showLabelBackdrop: false,
                                 position: "left",
                                 padding: 40,

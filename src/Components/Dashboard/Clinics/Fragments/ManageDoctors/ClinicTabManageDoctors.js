@@ -9,7 +9,6 @@ import ClinicApprovedDoctors from "./ClinicApprovedDoctors";
 import ManageDoctorsModal from "./Fragments/ManageDoctorsModal";
 import Preloader from "../../../../Preloader";
 
-const resource = 'Clinic'
 
 function ClinicTabManageDoctors() {
     const params = useParams();

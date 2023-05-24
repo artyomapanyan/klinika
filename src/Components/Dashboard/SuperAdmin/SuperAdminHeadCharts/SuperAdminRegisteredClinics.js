@@ -38,7 +38,7 @@ function SuperAdminRegisteredClinics() {
 
     return (<Spin spinning={loading}>
             <Space>
-                <Space direction={'vertical'} className={'dr_progress_big_div'}>
+                <Space direction={'vertical'} className={'progress_big_div'}>
                     <div className={'clinic_owner_big_text'}>
                         {data.clinics}
                     </div>
@@ -52,7 +52,7 @@ function SuperAdminRegisteredClinics() {
                     </div>
                 </Space>
 
-                <Space direction={'vertical'}>
+                <Space direction={'vertical'} style={{marginLeft: 17}}>
                     <div className={'avg_montly'}>
                         <span>{t("Registered clinics")}, </span>
                         <span style={{fontWeight: 700, color: '#6DAF56'}}>{t(' new')}</span>

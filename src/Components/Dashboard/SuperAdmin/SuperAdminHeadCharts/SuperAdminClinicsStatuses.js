@@ -95,9 +95,15 @@ function SuperAdminClinicsStatuses() {
                     <div style={{marginLeft: 15}} className={'chart_counter_bold_text'}>
                        Clinics Statuses
                     </div>
-                    <div>
-                        {Object.keys(data).map((key)=>data[key] || data[key]==0?<Space  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></Space>:null)}
+                    <div style={{display:'flex'}}>
+                        <div>
+                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(0, 2)}
+                        </div>
+                        <div>
+                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(2)}
+                        </div>
                     </div>
+
                 </Space>
             </Space>
         </Spin>

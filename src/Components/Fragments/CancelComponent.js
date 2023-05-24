@@ -3,7 +3,7 @@ import {Button, Popconfirm} from "antd";
 import {t} from "i18next";
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
-function CancelComponent({changeValuesState, resource}) {
+function CancelComponent({changeValuesState}) {
     const navigate = useNavigate();
     return(
         <div>

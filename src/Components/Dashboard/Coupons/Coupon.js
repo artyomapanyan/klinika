@@ -127,7 +127,7 @@ function Coupon() {
                             <FormInput inputNumberStyle={{width:'100%'}} label={t('Min total value allowed')} name={'min_total_value_allowed'} inputType={'number'} initialValue={data?.min_total_value_allowed} rules={[
                                 {required: true},
                                 {
-                                    validator:(rule,value)=>{
+                                    validator:()=>{
                                         if (formRef?.current.getFieldValue()?.max_allowed_discount_amount) {
                                             if(formRef?.current.getFieldValue()?.max_allowed_discount_amount < formRef?.current.getFieldValue()?.min_total_value_allowed) {
                                                 return Promise.reject('Begins at cannot be greater than expired at')
@@ -141,7 +141,7 @@ function Coupon() {
                             <FormInput inputNumberStyle={{width:'100%'}} label={t('Max allowed discount amount')} name={'max_allowed_discount_amount'} inputType={'number'} initialValue={data?.max_allowed_discount_amount} rules={[
                                 {required: true},
                                 {
-                                    validator:(rule,value)=>{
+                                    validator:()=>{
                                         if(formRef?.current.getFieldValue()?.max_allowed_discount_amount < formRef?.current.getFieldValue()?.min_total_value_allowed) {
                                             return Promise.reject('Expired at cannot be greater than begins at')
                                         }

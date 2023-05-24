@@ -10,9 +10,12 @@ import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 
 
+
 function SuperAdminProfitableTable() {
     let token = useSelector((state) => state.auth.token);
     let ownerClinics = useSelector((state) => state?.owner);
+
+    const [data, setData] = useState([]);
 
     const [date, setDate] = useState({
         year: dayjs().format('YYYY'),
@@ -24,36 +27,12 @@ function SuperAdminProfitableTable() {
     useEffect(() => {
         postResource('SuperAdmin', 'ProfitableTable', token, '', date).then((response) => {
 
+            setData(Object.values(response))
+
         })
     }, [])
 
-    const dataSource = [
-        {
-            task_For: '1',
-            offers: 184,
-            orders: '1868',
-            income: '18874$',
-        },
-        {
-            task_For: '1',
-            offers: 263,
-            orders: '1868',
-            income: '18874$',
-        },
-        {
-            task_For: '1',
-            offers: 85,
-            orders: '11868',
-            income: '18874$',
-        },
-        {
-            task_For: '1',
-            offers: 32,
-            orders: '1868',
-            income: '18874$',
-        },
 
-    ];
 
 
 
@@ -62,31 +41,37 @@ function SuperAdminProfitableTable() {
             title: t(''),
             dataIndex: 'task_For',
             key: 'task_for',
-            render:()=><div>
-                <div className={'profitable_table_clinic_div'}>
-                    <Avatar size={64} icon={<AlibabaOutlined />} />
-                    <div style={{display:"block", marginLeft: 24}}>
-                        <div className={'profitable_table_bold_text'}>Chiropractic Care</div>
-                        <div className={'clinic_fid_patient_name'}>2.7 <img alt={'gold_star'} src={gold_star}/> <span className={'profitable_table_small_text'}>Jeddah</span> </div>
-                    </div>
+            render:(e, record)=>{
+                console.log(record, 'record')
+                return <div>
+                    <div className={'profitable_table_clinic_div'}>
+                        <Avatar size={64} icon={<AlibabaOutlined />} src={record?.clinic?.cover?.url} />
+                        <div style={{display:"block", marginLeft: 24}}>
+                            <div className={'profitable_table_bold_text'}>{record?.clinic?.name}</div>
+                            <div className={'clinic_fid_patient_name'}>2.7 <img alt={'gold_star'} src={gold_star}/> <span className={'profitable_table_small_text'}>{record?.clinic?.location?.address1}</span> </div>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
+            }
         },
         {
             title: 'Offers',
-            dataIndex: 'offers',
-            key: 'offers',
+            dataIndex: 'offers_count',
+            key: 'offers_count',
         },
         {
             title: 'Orders',
-            dataIndex: 'orders',
-            key: 'orders',
+            dataIndex: 'orders_count',
+            key: 'orders_count',
         },
         {
             title: 'Income',
             dataIndex: 'income',
             key: 'income',
+            render:(e, record) => {
+                return <div style={{fontSize: 16, fontFamily: 'Roboto', fontWeight: 700}}>{record?.orders_count}$</div>
+            }
 
         },
     ];
@@ -102,7 +87,7 @@ function SuperAdminProfitableTable() {
 
             </div>
             <div className={'profitable_clinic_div'}>
-                <Table size={'small'} dataSource={dataSource} columns={columns} pagination={false} />
+                <Table size={'small'} dataSource={data} columns={columns} pagination={false} />
             </div>
 
         </div>

@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, syncable, isDoctorHours, doctorData, handleCancel}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})

@@ -76,6 +76,7 @@ import ClinicManager from "./Dashboard/ClinicManager/ClinicManager";
 import ClinicsOwner from "./Dashboard/ClinicsOwner/ClinicsOwner";
 import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
 import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
+import ClinicDoctorUpdate from "./Dashboard/Clinics/Fragments/ManageDoctors/ClinicDoctorUpdate/ClinicDoctorUpdate";
 
 
 function AppLayout(){
@@ -275,6 +276,12 @@ function AppLayout(){
             //singleComp:<Report/>,
             indexComp:<Reports/>
         },
+        // {
+        //     url:'clinics/doctors',
+        //     resource:'ClinicDoctorUpdate',
+        //     singleComp:<ClinicDoctorUpdate/>,
+        //     indexComp:<Reports/>
+        // },
 
 
 
@@ -312,6 +319,7 @@ function AppLayout(){
                         )}
 
                     {/*<Route path={'owner-clinics'} element={<OwnerClinics />}/>*/}
+                    <Route path={'clinics/doctors/:id'} element={<ClinicDoctorUpdate />}/>
                     <Route path={'Reports/new'} element={<Report />}/>
                     <Route path={'patients'} element={<Patient />}/>
                     <Route path={'clinics-owner'} element={<AuthCheck roleKey={'clinic-owner'} ><ClinicsOwner /></AuthCheck>}/>

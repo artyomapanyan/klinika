@@ -23,7 +23,7 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                 </div>
             </td>
             {
-                Object.keys(docItem?.availability??{}).map((key,id) => {
+                Object.keys(docItem?.availability??{}).map((key) => {
                     console.log(key,'key')
                     return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key ? null : () => setSelectedDate(key)}>
 

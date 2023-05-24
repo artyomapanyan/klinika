@@ -1,17 +1,313 @@
+// import {useNavigate, useParams} from "react-router";
+// import {useSelector} from "react-redux";
+// import {useEffect, useRef, useState} from "react";
+// import {createResource, postResource, updateResource} from "../../../Functions/api_calls";
+// import resourceLinks from "../../../ResourceLinks";
+// import {
+//     AutoComplete,
+//     Button,
+//     Checkbox,
+//     Col,
+//     Divider,
+//     Form,
+//     Input,
+//     Popconfirm,
+//     Radio,
+//     Row,
+//     Select,
+//     Space,
+//     Switch
+// } from "antd";
+// import Resources from "../../../../store/Resources";
+// import FormInput from "../../../Fragments/FormInput";
+// import {t} from "i18next";
+// import FileManager from "../../../Fragments/FileManager";
+// import {CheckOutlined, CloseOutlined, InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+// import Preloader from "../../../Preloader";
+// import React from "react";
+// import MyMapComponent from "./MapComponent";
+// import {Autocomplete} from "@react-google-maps/api";
+// import CancelComponent from "../../../Fragments/CancelComponent";
+// import ClinicImages from "./Essentials/ClinicImages";
+// import ClinicGallery from "./Essentials/ClinicGallery";
+// import suffix_select_icon from "../../../../dist/icons/suffix_select_icon.png";
+//
+// const CheckboxGroup = Checkbox.Group;
+//
+//
+// const resource = 'Clinic';
+//
+//
+// function ClinicTabEssentials({loadingState, dataState, handleLangChange, lang}) {
+//     const params = useParams();
+//     const navigate = useNavigate();
+//     const formRef = useRef();
+//
+//     let token = useSelector((state) => state.auth.token);
+//     const {data, setData} = dataState;
+//
+//     const [saveLoading, setSaveLoading] = useState(false)
+//     const [loading, setLoading] = useState({
+//         insurance: true
+//     })
+//     const [changeValuesState, setChangeValuesState] = useState({})
+//     const [insuranceCompany, setInsuranceCompany] = useState([])
+//
+//
+//     useEffect(() => {
+//
+//         Promise.all([
+//             postResource('InsuranceCompany', 'list', token, '', {
+//                 per_page: 5000
+//             })
+//         ]).then(responses => {
+//             setLoading({})
+//             setInsuranceCompany(responses[0].items.map((el) => ({label: el.name, value: el.id})))
+//
+//
+//         })
+//     }, [])
+//
+//     const onFinish = (values) => {
+//
+//         setSaveLoading(true)
+//         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
+//         values.has_telehealth_service = values.has_telehealth_service === true
+//         values.has_home_visit_service = values.has_home_visit_service === true
+//         values.has_clinic_visit_service = values.has_clinic_visit_service === true
+//         values.has_laboratory_home_visit_service = values.has_laboratory_home_visit_service === true
+//         values.has_laboratory_clinic_visit_service = values.has_laboratory_clinic_visit_service === true
+//         values.has_nursing_service = values.has_nursing_service === true
+//         values.has_physical_therapy_home_visit_service = values.has_physical_therapy_home_visit_service === true
+//         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
+//
+//
+//         setData((prevState) => ({
+//             ...prevState,
+//             ...values
+//         }))
+//
+//
+//         if (params.id) {
+//             updateResource(resource, params.id, values, token, true).then(response => {
+//                 if (response?.id) {
+//                     navigate(resourceLinks[resource])
+//                 }
+//             }).finally(() => {
+//                 setSaveLoading(false)
+//             })
+//         } else {
+//             createResource(resource, values, token, true).then((response) => {
+//                 if (response?.id) {
+//                     navigate(resourceLinks[resource])
+//                 }
+//             }).finally(() => {
+//                 setSaveLoading(false)
+//             })
+//         }
+//     }
+//
+//     const handleValuesChange = (e) => {
+//         setData((prevState) => ({
+//             ...prevState,
+//             ...e
+//         }))
+//         setChangeValuesState(e)
+//     }
+//     // useEffect(()=>{
+//     //
+//     //         postResource('Country','list',token,null,{per_page:5000}).then(responses => {
+//     //             setCountryCode(responses)
+//     //         })
+//     //
+//     // },[])
+//     const handleMapItems = (item, name) => {
+//         name = item.phone_code ? `(${item.phone_code}) ` : null
+//         item.id = item.phone_code
+//         return [name, item]
+//     }
+//
+//     const initialCheckedInsuransCompany = data?.insurance_companies?.map(el => el?.id)
+//     let allInsuranceCompany = insuranceCompany?.map(el => el.value)
+//
+//
+//     const defaultCheckedList = Object.keys(data).length !== 0 ? initialCheckedInsuransCompany : [];
+//     const [checkedList, setCheckedList] = useState(defaultCheckedList);
+//
+//     const onChange = (list) => {
+//         setCheckedList(list);
+//
+//     };
+//
+//
+//     const onSelectAll = () => {
+//         setCheckedList( allInsuranceCompany);
+//
+//     }
+//     const onDeselectAll = () => {
+//         setCheckedList( []);
+//
+//     }
+//
+//
+//
+//
+//     return (
+//         <div style={{backgroundColor: "#ffffff"}}>
+//             {/*{data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}*/}
+//             <Form
+//                 onValuesChange={handleValuesChange}
+//                 onFinish={onFinish}
+//                 layout="vertical"
+//                 ref={formRef}
+//             >
+//                 <div className={'clinic_line'}>
+//                 </div>
+//                 <div style={{margin: '44px 90px'}}>
+//                     <Row gatter={[35, 20]}>
+//                         <Col lg={10}>
+//                             <div>
+//                                 <div className={'clinic_ess_info_div'}>
+//                                     <div className={'Clinic_essentials_info_text'}>Main information</div>
+//                                     <div>Language</div>
+//                                     <div>
+//                                         <Radio.Group size={'large'} value={lang} className={'radio_grup_clinic_lng'}
+//                                                      onChange={handleLangChange}>
+//                                             <Radio.Button value="ar">{t("Arabic")}</Radio.Button>
+//                                             <Radio.Button value="en">{t("English")}</Radio.Button>
+//                                         </Radio.Group>
+//                                     </div>
+//                                 </div>
+//                                 <FormInput label={t('Clinic Name')} name={'name'} initialValue={data?.name}
+//                                            rules={[{required: true}]}/>
+//                                 <FormInput label={t('Description')} name={'description'} inputType={'textArea'} textareaHeight={true}
+//                                            initialValue={data?.description}/>
+//                             </div>
+//
+//
+//                         </Col>
+//                         <Col lg={14}>
+//                             <div>
+//                                 <ClinicImages formRef={formRef}/>
+//                             </div>
+//
+//
+//                         </Col>
+//                     </Row>
+//                     <div className={'clinic_line'}></div>
+//
+//
+//                     <div>
+//                         <div className={'general_info_text'}>General</div>
+//                         <Row gutter={[60]} style={{marginTop: 24}}>
+//                             <Col lg={14}>
+//                                 <div className={'general_inputs'}>
+//                                     <div style={{width: '100%'}}>
+//                                         <FormInput label={t('Email')} name={'email'} initialValue={data?.email}
+//                                                    rules={[{required: true}]}/>
+//                                     </div>
+//                                     <div style={{width: '100%'}}>
+//                                         <FormInput label={t('Website')} name={'website'} initialValue={data?.website}/>
+//                                     </div>
+//
+//
+//                                 </div>
+//                                 <div className={'language_div'}>
+//                                     <FormInput inputProps={{mode: 'multiple'}} label={t('')} name={'languages'}
+//                                                suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Languages</span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
+//                                                inputType={'resourceSelect'}
+//                                                rules={[{required: true}]}
+//                                                initialValue={data?.languages?.map(e => e.id)}
+//                                                initialData={data?.languages ?? []}
+//                                                resource={'Country'}
+//                                     />
+//                                 </div>
+//
+//
+//
+//
+//                             </Col>
+//                             <Col lg={10}>
+//                                 <div className={'general_inputs'}>
+//                                     <div style={{width: '100%'}}>
+//                                         <FormInput label={t('Country Code  ')} name={'phone_country_code'}
+//                                                    inputType={'resourceSelect'}
+//                                                    rules={[{required: true}]}
+//                                                    initialValue={data?.phone_country_code}
+//                                                    handleMapItems={handleMapItems}
+//                                                    resource={'Country'}/>
+//                                     </div>
+//                                     <div style={{width: '100%'}}>
+//                                         <FormInput label={t('Phone number')} name={'phone_number'}
+//                                                    initialValue={data?.phone_number}/>
+//                                     </div>
+//                                 </div>
+//                             </Col>
+//
+//
+//                         </Row>
+//
+//                         <div className={'select_deselect_div'}>
+//                             <div className={'incurans_company_text'}>Insurance companies</div>
+//                             <div className={'select_show_text'} onClick={onSelectAll}>Select all</div>
+//                             <div className={'deselect_text'} onClick={onDeselectAll}>Deselect all</div>
+//                             <div className={'select_show_text'}>Show all</div>
+//                         </div>
+//                         {loading?.insurance ? <Preloader/> : <div className={'checkbox-groups'}>
+//                             <CheckboxGroup value={checkedList} options={insuranceCompany} onChange={onChange}/>
+//
+//                         </div>}
+//
+//
+//                     </div>
+//
+//                     <div style={{marginTop: 56}} className={'clinic_line'}></div>
+//                     <div className={'general_info_text'}>Address</div>
+//                     <div style={{marginTop: 24}}>
+//
+//                         <MyMapComponent formRef={formRef} data={data}/>
+//                     </div>
+//                     <div className={'general_info_text'}>Photos</div>
+//                     <div>
+//                         <ClinicGallery/>
+//                     </div>
+//                 </div>
+//
+//                 <Space className={'create_apdate_btns'}>
+//                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+//                     <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
+//                 </Space>
+//             </Form>
+//         </div>
+//     )
+// }
+//
+// export default ClinicTabEssentials;
+
+
+
+
+
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
-import {Button, Col, Form, Row, Space, Switch} from "antd";
+import resourceLinks from "../../../ResourceLinks";
+import {AutoComplete, Button, Col, Form, Input, Popconfirm, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import FileManager from "../../../Fragments/FileManager";
-import {CheckOutlined, CloseOutlined, InboxOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
 import React from "react";
 import MyMapComponent from "./MapComponent";
+import {Autocomplete} from "@react-google-maps/api";
 import CancelComponent from "../../../Fragments/CancelComponent";
+
+
+
+
 
 const resource = 'Clinic';
 

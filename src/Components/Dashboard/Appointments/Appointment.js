@@ -5,17 +5,13 @@ import {
     createResource,
     postResource,
     updateResource,
-    useGetResourceIndex,
     useGetResourceSingle
 } from "../../Functions/api_calls";
-import resourceLinks from "../../ResourceLinks";
-import {Button, Form, Space, Row, Col, Popconfirm} from "antd";
+import {Button, Form, Space, Row, Col, Spin} from "antd";
 import {t} from "i18next";
 import Preloader from "../../Preloader";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
-import {InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
-import FileManager from "../../Fragments/FileManager";
 import dayjs from 'dayjs';
 import CancelComponent from "../../Fragments/CancelComponent";
 
@@ -30,19 +26,20 @@ function Appointment() {
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
-    const {loading, setLoading} = loadingState
+    const {loading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [load, setLoad] = useState(false)
+    const [timesLoading,setTimesLoading] = useState(false)
 
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
     const [availableDateState, setAvailableDateState] = useState([])
 
-    const [clinicAvailableTimeState, setClinicAvailableTimeState] = useState([])
+
     const [changeValuesState, setChangeValuesState] = useState({})
 
     const fetchedUsers = useRef([]);
-    const phoneNumber = useRef();
+
 
 
     useEffect(() => {
@@ -101,8 +98,9 @@ function Appointment() {
 
 
     useEffect(() => {
-        if (data?.doctor_id) {
-            postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id, {service: data?.service_type}).then(responses => {
+        if (data?.doctor_id && data?.clinic_id) {
+            setTimesLoading(true)
+            postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id+'/'+data?.clinic_id, {service: data?.service_type}).then(responses => {
                 const res = responses?.working_hours
                 let day = [];
                 Object.values(res)?.map((el, i) => {
@@ -113,15 +111,16 @@ function Appointment() {
                     }
                 })
                 setAvailableDateState(day)
-
+                setTimesLoading(false)
             })
         }
-    }, [data?.doctor_id])
+    }, [data?.doctor_id,data?.clinic_id])
 
 
     useEffect(() => {
 
         if(data?.booked_at  && data?.doctor_id ){
+            setTimesLoading(true)
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {
                 service: data?.service_type,
                 date: data?.booked_at?.format('YYYY-MM-DD')
@@ -138,6 +137,7 @@ function Appointment() {
                         })
                     }
                 }))
+                setTimesLoading(false)
             })
         }
         if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(data?.service_type)) {
@@ -409,7 +409,7 @@ function Appointment() {
                                                            inputType={'resourceSelect'}
                                                            rules={[{required: true}]}
                                                            initialValue={null}
-                                                           initialData={[]}
+                                                           initialData={[data?.clinic].filter(e=>e)}
                                                            resource={'Clinic'}/>
                                             </Col>
                                             {
@@ -458,6 +458,7 @@ function Appointment() {
                                                                                specialty: data.specialty_id,
                                                                                clinic: data.clinic_id
                                                                            }}
+                                                                           customSearchKey={'name'}
                                                                            initialValue={null}
                                                                            resource={'ClinicDoctor'}
                                                                            initialData={[]}/>
@@ -527,12 +528,12 @@ function Appointment() {
                                             </Col>
                                             <Col lg={12} className="gutter-row">
                                                 {
-                                                    data?.booked_at ? <FormInput label={t('Appointment time')}
+                                                    data?.booked_at ?<Spin spinning={timesLoading}> <FormInput label={t('Appointment time')}
                                                                                         name={'appointment_time'}
                                                                                         inputType={'resourceSelect'}
                                                                                         options={availableTimeState}
                                                                                         initialData={[]}
-                                                    /> : <div></div>
+                                                    /></Spin> : <div></div>
                                                 }
                                             </Col>
                                         </Row>

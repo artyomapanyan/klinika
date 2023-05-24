@@ -1,16 +1,108 @@
-import React from 'react'
+import React, {useState} from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import {useNavigate} from "react-router";
+import {Avatar, Button, Space} from "antd";
+import {UserOutlined} from "@ant-design/icons";
+import HCPs_icon from "../../../dist/icons/HCPs_icon.svg";
+import Nurses_icon from "../../../dist/icons/Nurses_icon.png";
+import Other_icon from "../../../dist/icons/Others_icon.png";
+import Offers_icon from "../../../dist/icons/Offers_icon.png";
+import Active_icon from "../../../dist/icons/Active_icon.png";
+import ResourceLinks from "../../ResourceLinks";
+import ClinicStatusSelect from "./Fragments/ClinicStatusSelect";
 
 const resource='Clinic';
-function Clinics() {
-    const navigate = useNavigate()
+function Clinics({resourceLink=null,}) {
+    // let navigate = useNavigate();
+    //
+    // // const [record, setRecord] = useState({})
+    // const onAddNew = () => {
+    //     navigate(ResourceLinks[resourceLink??resource] + 'new')
+    // }
+    //
+    // const onResourceEdit = (record) => {
+    //     navigate(ResourceLinks[resourceLink??resource] + record.id)
+    //
+    // }
 
     return(
+        // <div className={'owner_clinics_big_div'}>
+        //     <div className={'own_clinic_head_div'}>
+        //         <span className={'header_text'}>Clinics</span>
+        //         <Button onClick={onAddNew} className={'add_btn'} size={'large'} type={'primary'}>Add new</Button>
+        //     </div>
+        //     <div className={'table_div'}>
+        //         <ResourceTable resource={'Clinic'} except={{edit: true, delete: true}} showHeader={false} noHeader={true} tableColumns={[
+        //             {
+        //                 title: t('Clinic'),
+        //                 dataIndex: 'name',
+        //                 key: 'name',
+        //                 render:(e, record)=>{
+        //                     //setRecord(record)
+        //                     console.log(record)
+        //                     return <div style={{cursor:"pointer"}} onClick={()=>onResourceEdit(record)} className={'avatar_div'}>
+        //                         <Space >
+        //                             <Avatar src={<img src={record?.cover?.url} alt="avatar" />}  hape="square" size={90} className={'owner_clinic_avatar'} style={{width: 120}} icon={<UserOutlined />} />
+        //                             <div style={{display:"block"}}>
+        //                                 <div className={'text_name_clinic'}>{record?.name}</div>
+        //                                 <div className={'text_address'}>{record?.location?.address1}</div>
+        //                             </div>
+        //
+        //                         </Space>
+        //
+        //                     </div>
+        //                 }
+        //             },
+        //             {
+        //                 title: t('HCPs'),
+        //                 dataIndex: 'HCPs',
+        //                 key: 'HCPs',
+        //                 render:(e, record)=>{
+        //
+        //                     return<div className={'icon_text_div'}><img alt={'HCPs_icon'} src={HCPs_icon}/> <span className={'owner_clinic_table_texts'}>HCPs: 12</span></div>
+        //                 }
+        //             },
+        //             {
+        //                 title: t('Nurses'),
+        //                 dataIndex: 'Nurses',
+        //                 key: 'Nurses',
+        //                 render:(e, record)=>{
+        //                     return<div className={'icon_text_div'}><img alt={'Nurses_icon'} src={Nurses_icon}/> <span className={'owner_clinic_table_texts'}>Doctors: {record?.doctors_count}</span></div>
+        //                 }
+        //             },
+        //             {
+        //                 title: t('Other'),
+        //                 dataIndex: 'Other',
+        //                 key: 'Other',
+        //                 render:(e, record)=>{
+        //                     return<div className={'icon_text_div'}><img alt={'Other_icon'} src={Other_icon}/> <span className={'owner_clinic_table_texts'}>Other: 0</span></div>
+        //                 }
+        //             },
+        //             {
+        //                 title: t('Date'),
+        //                 dataIndex: 'Date',
+        //                 key: 'Date',
+        //                 render:(e, record)=>{
+        //                     return<div className={'icon_text_div'}> <img alt={'Offers_icon'} src={Offers_icon}/> <span className={'owner_clinic_table_texts'}>Offers: {record?.offers_count}</span></div>
+        //                 }
+        //             },
+        //             {
+        //                 title: t('Status'),
+        //                 dataIndex: 'Status',
+        //                 key: 'Status',
+        //                 render:(e, record)=>{
+        //                     return <ClinicStatusSelect items={Resource.Status1} initialValue={record?.status.toString()}  record={record} resource={resource} name={'status'}/>
+        //                     //<div className={'icon_text_div'}><img alt={'Active_icon'} src={Active_icon}/> <span style={{color:'#4FB873'}} className={'owner_clinic_table_texts'}>Active</span></div>
+        //                 }
+        //             },
+        //         ]} title={t('Cities')}/>
+        //     </div>
+        //
+        // </div>
         <div>
             <ResourceTable resource={resource} eyeShow={true}
 

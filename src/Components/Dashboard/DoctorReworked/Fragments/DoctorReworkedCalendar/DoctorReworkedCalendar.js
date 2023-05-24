@@ -54,7 +54,7 @@ function DoctorReworkedCalendar() {
 
                     currentView={view}
                     onCurrentDateChange={(e) => {
-                        setDate(prevState => {
+                        setDate(() => {
                             const currentDate = dayjs(e).utc();
                             return {
                                 from: currentDate.add(-10, 'day').format('YYYY-MM-DD'),

@@ -27,7 +27,9 @@ function FormInput({
                        min,
                        max,
                        className,
-                       onChange
+                       onChange,
+                       textareaHeight=false,
+                       suffixIcon,
 
 
                    }) {
@@ -74,12 +76,13 @@ function FormInput({
                                          }
                                          setValue(e)
                                      }}
+                                     suffixIcon={suffixIcon}
                                      disabled={inputDisabled}
                                      disabledDate={disabledDate}
                                      style={{width: '100%', height: 48}}
                 />
             case 'textArea':
-                return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps}
+                return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps} textareaHeight={textareaHeight}
                                    inputDisabled={inputDisabled} type={'textArea'}/>
             case 'number':
                 return <CInput className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
@@ -87,6 +90,7 @@ function FormInput({
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
+                                                suffixIcon={suffixIcon}
                                                 options={options}
                                                 extra={extra}
                                                 disabled={disabled}

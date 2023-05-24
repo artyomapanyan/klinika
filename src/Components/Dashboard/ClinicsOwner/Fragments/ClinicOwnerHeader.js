@@ -8,7 +8,6 @@ import Resources from '../../../../store/Resources'
 
 const currentMonth = new Date().getMonth()
 function ClinicOwnerHeader({ noClinicSelect = false }) {
-	let token = useSelector(state => state.auth.token)
 	let reduxInfo = useSelector((state) => state?.auth?.clinics);
 	const [items, setItems] = useState([])
 

@@ -10,7 +10,7 @@ import Resources from "../../../../store/Resources";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function AppDate({setDataState, dataState, data, date, setDate}) {
+function AppDate({setDataState, dataState, data, setDate}) {
     let token = useSelector((state) => state.auth.token);
     const [dayOff, setDayOff] = useState([]);
 
@@ -20,7 +20,7 @@ function AppDate({setDataState, dataState, data, date, setDate}) {
 
                 const res = response?.working_hours
                 let day = [];
-                Object.values(res)?.map((el, i) => {
+                Object.values(res)?.map((el) => {
                     return el.filter((el1) => el1.is_day_off ===true)
                 }).map((el, i) => {
                     if (el.length > 0) {
@@ -99,7 +99,7 @@ function AppDate({setDataState, dataState, data, date, setDate}) {
                 </div> : dataState?.doctor_id || dataState?.date ? <div className={'date_carousel_div'}>
                     <div style={{position:'absolute', width:'98%'}}>
                         <Slider {...settings}>
-                            {[...Array(30).keys()].map((key, i)=>{
+                            {[...Array(30).keys()].map((key)=>{
                                 const date = currentDate.add(key,'day')
 
                                 return !dayOff.includes(date.day())? <div key={key} onClick={()=>onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>

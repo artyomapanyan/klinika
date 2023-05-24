@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react'
+import upload_photos_icon from "../../../../../dist/icons/upload_photos_icon.png";
+import delete_icon from "../../../../../dist/icons/delete_icon.png";
 
 function ClinicGallery({formRef}) {
     const [images, setImages] = useState([]);
@@ -38,16 +40,17 @@ function ClinicGallery({formRef}) {
 
     }
     return (<div className={'clinic-gallery'}>
-        <h1>Photos</h1>
+
         <div className={'images-cnt'}>
+
             <input type={'file'} id='gallery' onChange={handleFileUploaded}/>
             <label htmlFor="gallery">
                 <div className={'upload-btn'}>
-
+                    <img alt={'upload_photos_icon'} src={upload_photos_icon}/>
                 </div>
             </label>
-            {images.map((e,key)=>  <div style={{width: '120px', height: '80px', backgroundImage: "url('" + e.src + "')"}}
-                                        className={'im-bg'}>  {e.src ? <div className={'delete-button'} onClick={(e)=>handleDeleteClick(e,key)}></div> : null}</div>)}
+            {images.map((e,key)=>  <div style={{width: '274px', height: '240px', backgroundImage: "url('" + e.src + "')"}}
+                                        className={'im-bg'}>  {e.src ? <div className={'delete-button'} onClick={(e)=>handleDeleteClick(e,key)}><img alt={'delete_icon'} src={delete_icon}/></div> : null}</div>)}
 
         </div>
 

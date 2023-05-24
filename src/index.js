@@ -9,11 +9,11 @@ import configureStore from './store/configureStore';
 import "./i18n";
 import axios from "axios";
 import {handleFormatDates, notificate} from "./functions";
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from "react-redux";
-import {PersistGate} from "redux-persist/integration/react";
-import App from "./App";
 import dayjs from "dayjs";
+import App from "./App";
+import {PersistGate} from "redux-persist/integration/react";
+import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
 const {persistor, store} = configureStore();
 var utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)

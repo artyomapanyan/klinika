@@ -16,13 +16,11 @@ import {RascheduledContent} from "../../../Appointments/StatusModalForms/Rasched
 import {useSelector} from "react-redux";
 import {postResource} from "../../../../Functions/api_calls";
 import {Confirmed} from "../../../Appointments/StatusModalForms/Confirmed";
-import {useNavigate} from "react-router";
 import Preloader from "../../../../Preloader";
 import ClinicManagerTableHead from "./Fregment/ClinicManagerTableHead";
 
 
 function ClinicManagerAppointmentsTable() {
-    const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
 
     const [dateWeek, setDateWeek] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
@@ -47,7 +45,7 @@ function ClinicManagerAppointmentsTable() {
         postResource('Appointment','appointmentStatus', token, `${modal.id}/switch-status`, {
             status:modal.key,
             ...values
-        }).then((response) => {
+        }).then(() => {
 
             setModal(null)
             setLoading(false)
@@ -58,7 +56,7 @@ function ClinicManagerAppointmentsTable() {
         setModal(null)
     }
 
-    const handleValuesChange = (changed,all)=>{
+    const handleValuesChange = (changed)=>{
         if(changed.booked_at) {
             setDate((prevDate)=>({
                 ...prevDate,

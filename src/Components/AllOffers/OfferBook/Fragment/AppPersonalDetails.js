@@ -45,7 +45,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
 
     const onVerifyNumber = (values) => {
         setPhoneLoading(true)
-        postResource('PublicOffer', 'PhoneVerify', token, '', values).then((response) => {
+        postResource('PublicOffer', 'PhoneVerify', token, '', values).then(() => {
             setPhoneLoading(false)
             setVerifyState(1)
 
