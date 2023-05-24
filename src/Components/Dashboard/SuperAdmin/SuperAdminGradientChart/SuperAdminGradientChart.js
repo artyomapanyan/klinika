@@ -291,7 +291,7 @@ function SuperAdminGradientChart() {
                                     size: "14",
                                     weight: "700",
                                 },
-                                stepSize: 50,
+                                stepSize: isNull.length === 0 ? 0.2: 50,
                                 showLabelBackdrop: false,
                                 padding: 40,
                             },
