@@ -24,7 +24,12 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeS
 
 
     const handleChangeMonth = (count) => {
-        setStartDate((prevState) => prevState.add(count, 'month'))
+        if(startDate.add(count, 'month') < dayjs()){
+            setStartDate(dayjs())
+        }else{
+            setStartDate((prevState) => prevState.add(count, 'month'))
+        }
+
 
     }
     const handleChangeDay = (count) => {
@@ -73,7 +78,7 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeS
                     Pick Date
                 </div>
                 <div className={'next_prev_div'}>
-                    <Button className={'next_prev_btn'} disabled={startDate.add(-1, 'month') < dayjs()}
+                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== dayjs().format('DD-MM-YYYY')}
                             onClick={() => handleChangeMonth(-1)}><LeftOutlined style={{color: '#ffffff'}}/></Button>
                     <div className={'top_div_title'}>{t(GMBK(startDate.month()))}</div>
                     <Button className={'next_prev_btn'} onClick={() => handleChangeMonth(1)}><RightOutlined
