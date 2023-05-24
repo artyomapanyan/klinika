@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 
 
+
 function SuperAdminProfitableTable() {
     let token = useSelector((state) => state.auth.token);
     let ownerClinics = useSelector((state) => state?.owner);
@@ -44,7 +45,7 @@ function SuperAdminProfitableTable() {
                 console.log(record, 'record')
                 return <div>
                     <div className={'profitable_table_clinic_div'}>
-                        <Avatar size={64} icon={<AlibabaOutlined />} src={<img src={record?.clinic?.cover?.url} />} />
+                        <Avatar size={64} icon={<AlibabaOutlined />} src={record?.clinic?.cover?.url} />
                         <div style={{display:"block", marginLeft: 24}}>
                             <div className={'profitable_table_bold_text'}>{record?.clinic?.name}</div>
                             <div className={'clinic_fid_patient_name'}>2.7 <img alt={'gold_star'} src={gold_star}/> <span className={'profitable_table_small_text'}>{record?.clinic?.location?.address1}</span> </div>

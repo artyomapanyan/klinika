@@ -153,7 +153,7 @@ function SuperAdminIncomesChart() {
                                     weight: "700",
                                 },
                                 padding: 40,
-                                stepSize: 10,
+                                stepSize: isNull.length === 0 ? 0.2 :10,
                                 showLabelBackdrop: false,
                                 callback: function (label) {
                                     return label / 1000 + "k";
