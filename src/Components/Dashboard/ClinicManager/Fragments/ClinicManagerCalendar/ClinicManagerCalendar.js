@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Resources from "../../../../../store/Resources";
+import search_icon_black from "../../../../../dist/icons/search_icon_black.png"
 
 function ClinicManagerCalendar() {
     const [loading, setLoading] = useState(true)
@@ -76,7 +77,7 @@ function ClinicManagerCalendar() {
                                                             <Input className={'search_input_clinic_man'}
                                                                    onChange={(e)=>setSearch(e.target.value)}
                                                                    value={search}
-                                                                   aria-label="Search" prefix={<SearchOutlined size={30}/>}/>
+                                                                   aria-label="Search" prefix={<img src={search_icon_black} alt={'search_icon_black'} />}/>
                                                         </div>
                                                     </td>
                                                     {[...Array(7).keys()].map((e) => {

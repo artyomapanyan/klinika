@@ -72,10 +72,10 @@ function Laboratory() {
             <div className={'clinic_line'}></div>
 
             <div>
-                <NewLaboratoryTests />
-                <NewLaboratoryPackages/>
-                {/*<LaboratoryTestsTable />*/}
-                {/*<LabPackagesTable />*/}
+                {/*<NewLaboratoryTests />*/}
+                {/*<NewLaboratoryPackages/>*/}
+                <LaboratoryTestsTable />
+                <LabPackagesTable />
             </div>
 
 
