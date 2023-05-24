@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useNavigate, useParams} from 'react-router';
-import {Typography, Avatar, Progress, Space, Form, Divider, Button, Row, Col} from 'antd';
+import {Typography, Avatar, Progress, Space, Form, Divider, Row, Col} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { t } from 'i18next';
 

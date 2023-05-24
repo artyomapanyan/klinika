@@ -3,7 +3,6 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import DateParser from "../../Fragments/DateParser";
-import TableEditable from "../../Fragments/TableEditable";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";

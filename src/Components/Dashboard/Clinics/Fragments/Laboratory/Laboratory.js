@@ -5,11 +5,8 @@ import {useSelector} from "react-redux";
 import {useParams} from "react-router";
 import LaboratoryTestsTable from "./Fragments/LaboratoryTestsTable";
 import LabPackagesTable from "./Fragments/LabPackagesTable";
-import arrowUpPurple from "../../../../../dist/icons/arrow-up-purple.svg";
-import arrowDownPurple from "../../../../../dist/icons/arrowDownPurple.svg";
 import {Collapse} from "antd";
-import NewLaboratoryTests from "./Fragments/NewLaboratoryTests";
-import NewLaboratoryPackages from "./Fragments/NewLaboratoryPackages";
+
 const { Panel } = Collapse;
 
 const resource = "Clinic";

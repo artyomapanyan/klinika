@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 
 import {Spin} from "antd";
+import Resources from "../../../../../store/Resources";
 
 
 
@@ -28,9 +29,9 @@ function DoctorReworkedCalendar() {
         setLoading(true)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
             let data = Object.values(response.calendar).flat().map(e =>{
-                console.log(e.booked_at.iso_string,'kkk', dayjs(e.booked_at.iso_string).format())
+             console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
                 return {
-                    text: 'status-' + e.status,
+                    text: Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label ,
                     startDate: dayjs(e.booked_at.iso_string).utc().format(),
                     endDate: dayjs(e.booked_to.iso_string).utc().format(),
                     content: e.service_name,

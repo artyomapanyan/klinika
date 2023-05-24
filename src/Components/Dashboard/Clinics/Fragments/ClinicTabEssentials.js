@@ -292,17 +292,15 @@ import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
-import resourceLinks from "../../../ResourceLinks";
-import {AutoComplete, Button, Col, Form, Input, Popconfirm, Row, Space, Switch} from "antd";
+import {Button, Col, Form, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import FileManager from "../../../Fragments/FileManager";
-import {CheckOutlined, CloseOutlined, InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, InboxOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
 import React from "react";
 import MyMapComponent from "./MapComponent";
-import {Autocomplete} from "@react-google-maps/api";
 import CancelComponent from "../../../Fragments/CancelComponent";
 
 
