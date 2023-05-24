@@ -456,6 +456,10 @@ let api = {
                     url: `${endpoint}${version}/${item.url}/export`,
                     method: 'GET',
                 },
+                exportPdf: {
+                    url: `${endpoint}${version}/${item.url}`,
+                    method: 'GET',
+                },
                 updateField: {
                     url: `${endpoint}${version}/${item.url}/update-field/`,
                     method: 'POST',

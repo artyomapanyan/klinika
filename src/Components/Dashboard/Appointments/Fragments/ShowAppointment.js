@@ -26,7 +26,7 @@ function ShowAppointment() {
         });
     };
 
-    console.log(data, 'd')
+
     const handleExportPDF =()=>{
         axios.request({
             url: api[resource].exportExcel.url,

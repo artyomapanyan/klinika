@@ -18,8 +18,10 @@ import {postResource} from "../../../../Functions/api_calls";
 import {Confirmed} from "../../../Appointments/StatusModalForms/Confirmed";
 import Preloader from "../../../../Preloader";
 import ClinicManagerTableHead from "./Fregment/ClinicManagerTableHead";
+import axios from "axios";
+import api from "../../../../../Api";
 
-
+let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
     let token = useSelector((state) => state.auth.token);
 
@@ -64,6 +66,26 @@ function ClinicManagerAppointmentsTable() {
             }))
         }
 
+    }
+
+    const handleExportPDF =(record)=>{
+        console.log(record)
+        axios.request({
+            url: `${api[resource].exportPdf.url}/${record.id}/export-pdf`,
+            method: api[resource].exportPdf.method,
+            headers: {
+                'Authorization': token,
+            },
+            responseType: 'blob',
+
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', resource+'.pdf');
+            document.body.appendChild(link);
+            link.click();
+        });
     }
 
 
@@ -184,7 +206,7 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'actions',
                                 key: 'actions',
                                 render: (e, record) => {
-                                    return record.status == 2 ? <img alt={'icons'} src={printIcon}/> : record.status == 3 ? <div></div> : <div><a href={`tel:${record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`sms:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
+                                    return record.status == 2 ? <div style={{cursor:'pointer'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></div> : record.status == 3 ? <div></div> : <div><a href={`tel:${record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`sms:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
                                 }
                             },
                             {
