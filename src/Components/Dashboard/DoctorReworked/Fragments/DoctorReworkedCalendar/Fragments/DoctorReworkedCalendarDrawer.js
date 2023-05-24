@@ -2,15 +2,11 @@ import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
 import Resources from "../../../../../../store/Resources";
-import {Button, Form, Space, Tag} from "antd";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
-import dayjs from "dayjs";
-import arrow_right_white from "../../../../../../dist/icons/arrow_right_white.png";
+import {Button, Form} from "antd";
 import {useSelector} from "react-redux";
-import {getServiceTypes, GMBK} from "../../../../../../functions";
+import {getServiceTypes} from "../../../../../../functions";
 import DateTimeSelect from "./DateTimeSelect";
 import {createResource} from "../../../../../Functions/api_calls";
-import resourceLinks from "../../../../../ResourceLinks";
 
 function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const authRedux = useSelector((state) => state?.auth);

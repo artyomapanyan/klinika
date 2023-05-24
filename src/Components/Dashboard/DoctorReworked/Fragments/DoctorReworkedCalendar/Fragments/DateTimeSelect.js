@@ -8,7 +8,6 @@ import {GMBK} from "../../../../../../functions";
 import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
-import Preloader from "../../../../../Preloader";
 
 function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeState, formState}) {
     let token = useSelector((state) => state.auth.token);

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import delete_icon from "../../../../../../../dist/icons/delete_icon.png";
-import {Button, Col, Form, Input, Row} from "antd";
+import {Col, Input, Row} from "antd";
 
 function DoctorImageUpload({formRef}) {
 

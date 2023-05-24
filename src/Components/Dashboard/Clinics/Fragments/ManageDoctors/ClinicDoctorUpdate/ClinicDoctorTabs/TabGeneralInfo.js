@@ -6,7 +6,6 @@ import FormInput from "../../../../../../Fragments/FormInput";
 import dayjs from "dayjs";
 import calendar_black_icon from "../../../../../../../dist/icons/calendar_black_icon.png";
 import Resources from "../../../../../../../store/Resources";
-import DoctorImageUpload from "./DoctorImageUpload";
 
 function TabGeneralInfo({formRef}) {
     return(
