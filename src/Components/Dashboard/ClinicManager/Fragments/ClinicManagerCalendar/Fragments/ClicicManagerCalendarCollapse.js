@@ -3,6 +3,8 @@ import React, {useState} from "react";
 import {Button} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse";
+import gray_grid from "../../../../../../dist/icons/gray_grid.png";
+import arrowDownPurple from "../../../../../../dist/icons/arrowDownPurple.svg";
 
 function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
     const [btnCollapsed, setBtnCollapsed] = useState(false);
@@ -11,26 +13,34 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
         setBtnCollapsed(!btnCollapsed)
     }
 
+
+
     return(
         <>
             <tbody>
             <tr>
                 <td>
-                    <Button className="appointmentsBranch" onClick={openCollapse} >
+                    <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
                         <span className={'cl_manager_collapse_specialty'}>{item?.speciality}</span>
-                        <DownOutlined/>
+                        <img src={arrowDownPurple} alt={'arrowDownPurple'}/>
                     </Button>
                 </td>
-                {Object.keys(item?.availability??{}).map(key=>    <td key={key}>
-                    <div className="progress progressPurple" >
-                        <div className="progress-bar progressPurple__inside"
+                {Object.keys(item?.availability??{}).map(key=>   {
+
+                    return <td key={key} style={{paddingLeft:key===1?'20px':0}}>
+
+                    <div className={"progressPurple"} style={{background: item.availability[key] === null ? 'url('+gray_grid+')' : '#774d9d20'}}>
+                        <div className="progress-bar "
                              role="progressbar"
-                             style={{width: item.availability[key]+'%'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
+                             style={{width: item.availability[key]+'%', background: item.availability[key] === null ? 'url('+gray_grid+')' : '#774d9d'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
                              aria-valuemax="100">
                         </div>
-                        <div className="progressText">{item.availability[key].toFixed()}%</div>
+                        {
+                            item.availability[key] === null ? <div ></div> : <div className="progressText">{item.availability[key]?.toFixed()}%</div>
+                        }
+
                     </div>
-                </td>)}
+                </td>})}
             </tr>
             </tbody>
 

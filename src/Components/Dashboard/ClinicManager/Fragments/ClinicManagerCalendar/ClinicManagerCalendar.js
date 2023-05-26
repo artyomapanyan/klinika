@@ -58,6 +58,8 @@ function ClinicManagerCalendar() {
 
     },[search,data])
 
+
+
     return (
         <section className={'table_conteiner'}>
             <Spin spinning={loading}>
@@ -72,14 +74,14 @@ function ClinicManagerCalendar() {
                                             <tbody>
                                                 <tr className="d-flex align-items-center justify-content-between w-100">
                                                     <td>
-                                                        <div className="input-group md-form form-sm pl-0 mr-3 searchInput">
+                                                        <div className="input-group md-form form-sm pl-0 mr-3 searchInput" >
                                                             <Input className={'search_input_clinic_man'}
                                                                    onChange={(e)=>setSearch(e.target.value)}
                                                                    value={search}
                                                                    aria-label="Search" prefix={<img src={search_icon_black} alt={'search_icon_black'} />}/>
                                                         </div>
                                                     </td>
-                                                    {[...Array(7).keys()].map((e) => {
+                                                    {[...Array(7).keys()].map((e,k) => {
                                                         return <td key={e} className="appointmentsDate" style={{height: 48}}>
                                                             <div className="appointmentsDate__content" style={{height: 48, paddingTop: 14}}>
                                                                 <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>
