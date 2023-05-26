@@ -33,7 +33,7 @@ function Clinics({resourceLink=null,}) {
         //                 key: 'name',
         //                 render:(e, record)=>{
         //                     //setRecord(record)
-        //                     console.log(record)
+
         //                     return <div style={{cursor:"pointer"}} onClick={()=>onResourceEdit(record)} className={'avatar_div'}>
         //                         <Space >
         //                             <Avatar src={<img src={record?.cover?.url} alt="avatar" />}  hape="square" size={90} className={'owner_clinic_avatar'} style={{width: 120}} icon={<UserOutlined />} />

@@ -416,7 +416,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         item.id = item.phone_code
         return [name,item]
     }
-console.log(reduxInfo)
+
 
     return(
         <div >

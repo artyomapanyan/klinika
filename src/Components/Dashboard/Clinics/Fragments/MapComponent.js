@@ -67,10 +67,10 @@ function MyMapComponent({data,formRef}) {
     useEffect(()=>{
         if( mapData.country){
             let geocoder =  new window.google.maps.Geocoder();
-             console.log( mapData,1)
+
 
             geocoder.geocode( { 'address':  [mapData.country,mapData.area,mapData.city].filter(e=>e).join(' ')}, function(results, status) {
-                console.log( mapData.country,2)
+
                 if (status == window.google.maps.GeocoderStatus.OK) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())

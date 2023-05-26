@@ -76,7 +76,7 @@ function LineChartIncomes() {
                 }
             })
 
-console.log(nullData)
+
 
 
 

@@ -69,7 +69,6 @@ function ClinicManagerAppointmentsTable() {
     }
 
     const handleExportPDF =(record)=>{
-        console.log(record)
         axios.request({
             url: `${api[resource].exportPdf.url}/${record.id}/export-pdf`,
             method: api[resource].exportPdf.method,

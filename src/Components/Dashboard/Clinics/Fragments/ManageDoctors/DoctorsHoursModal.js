@@ -40,8 +40,9 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}) {
             ...prevState,
             ...prevValues?.working_hours
         }))
+
         if (params.id) {
-            updateResource('ClinicDoctorWorkingHours', id, values, token, ).then(response => {
+            updateResource('ClinicDoctorWorkingHoursTable', id, values, token, ).then(response => {
                 setData(response?.working_hours)
                 setDocData({
                     price:response?.clinic_doctor[keys[1]],

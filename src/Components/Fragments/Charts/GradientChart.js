@@ -348,7 +348,7 @@ function GradientChart() {
                                 },
                                 label: function(context) {
                                     let label = context.dataset.label || '';
-                                    console.log(context)
+
 
                                     if (context.parsed.y !== null) {
                                         if (context.dataset.label === 'Growth') {

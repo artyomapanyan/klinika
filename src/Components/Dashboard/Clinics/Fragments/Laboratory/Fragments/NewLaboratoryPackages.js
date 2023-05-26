@@ -48,7 +48,7 @@ function NewLaboratoryTests() {
 
     }
 
-    console.log(labTests, 'package')
+
 
 
     return(

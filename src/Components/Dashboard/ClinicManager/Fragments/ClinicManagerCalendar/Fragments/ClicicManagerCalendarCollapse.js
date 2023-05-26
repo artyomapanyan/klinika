@@ -25,9 +25,8 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
                         <img src={arrowDownPurple} alt={'arrowDownPurple'}/>
                     </Button>
                 </td>
-                {Object.keys(item?.availability??{}).map(key=>   {
-
-                    return <td key={key} style={{paddingLeft:key===1?'20px':0}}>
+                {Object.keys(item?.availability??{}).map((key, k)=>   {
+                    return <td key={key} style={{paddingLeft:k===0?'20px':0}}>
 
                     <div className={"progressPurple"} style={{background: item.availability[key] === null ? 'url('+gray_grid+')' : '#774d9d20'}}>
                         <div className="progress-bar "

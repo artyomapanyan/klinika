@@ -7,8 +7,6 @@ import gray_grid from "../../../../../../dist/icons/gray_grid.png";
 function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic}) {
     const [selectedDate, setSelectedDate] = useState(false);
     let thisDate = dayjs().format('YYYY-MM-DD')
-    console.log(thisDate, 'this')
-
 
     return (
         <tbody>
@@ -24,9 +22,9 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                 </div>
             </td>
             {
-                Object.keys(docItem?.availability??{}).map((key) => {
+                Object.keys(docItem?.availability??{}).map((key, k) => {
 
-                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key ? null : () => setSelectedDate(key)}>
+                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>
 
                         <div className="progress progressGreen" style={{cursor: thisDate > key ? "" : 'pointer', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
                             <div className="progress-bar progressGreen__inside"

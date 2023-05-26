@@ -42,7 +42,6 @@ function SuperAdminProfitableTable() {
             dataIndex: 'task_For',
             key: 'task_for',
             render:(e, record)=>{
-                console.log(record, 'record')
                 return <div>
                     <div className={'profitable_table_clinic_div'}>
                         <Avatar size={64} icon={<AlibabaOutlined />} src={record?.clinic?.cover?.url} />

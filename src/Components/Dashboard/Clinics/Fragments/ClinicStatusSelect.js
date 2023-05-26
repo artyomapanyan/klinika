@@ -42,7 +42,7 @@ function ClinicStatusSelect({items=[],initialValue,onChange=null, resource, reco
         },
 
     ]
-    console.log(value)
+
 
     return(
         <Dropdown

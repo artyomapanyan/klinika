@@ -45,7 +45,6 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     }
 
 
-console.log(formState, 'fff')
 
     return(
         <div>
