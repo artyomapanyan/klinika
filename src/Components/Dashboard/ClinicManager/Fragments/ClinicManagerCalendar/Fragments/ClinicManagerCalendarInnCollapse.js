@@ -34,7 +34,7 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                                  aria-valuemax="100">
                             </div>
                             {
-                                docItem.availability[key] === null ? <div></div> : <div className="progressText">{docItem.availability[key]}%</div>
+                                docItem.availability[key] === null ? <div></div> : <div className="progressText">{docItem.availability[key]?.toFixed()}%</div>
                             }
 
                         </div>

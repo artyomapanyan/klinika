@@ -15,11 +15,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
 
     const [bookedAtState, setBookedAtState] = useState('');
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({});
-    const [serviceTypeState, setServiceTypeState] = useState({});
     const [formState, setFormState] = useState({});
-
-    let drFormRef = formRef?.current?.getFieldValue()
 
     const onNewAppointment = (values) => {
         setLoading(true)
@@ -44,7 +40,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
         setOpen(false)
     }
 
-
+    console.log(formState?.booked_time)
 
     return(
         <div>
@@ -52,30 +48,10 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                 onFinish={onNewAppointment}
                 ref={formRef}
                 onValuesChange={(e)=>{
-                    if(e.patient_id){
-                        setFormState((prevState)=>({
-                            ...prevState,
-                            patient_id: e.patient_id
-                        }))
-                    } if (e.clinic_id){
-                      setFormData(e)
                       setFormState((prevState)=>({
                           ...prevState,
-                          clinic: e.clinic_id
+                          ...e
                       }))
-                } if (e.service_type){
-                      setServiceTypeState(e)
-                        setFormState((prevState)=>({
-                            ...prevState,
-                            service_type: e.service_type
-                        }))
-                    } if(e.specialty_id){
-                        setFormState((prevState)=>({
-                            ...prevState,
-                            specialty_id: e.specialty_id
-                        }))
-                    }
-
                 }}
 
             >
@@ -94,11 +70,11 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            initialValue={null}
                            initialData={authRedux?.clinics}
                 />
-                {formData.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
+                {formState.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
-                    initialData={getServiceTypes(authRedux?.clinics.find(e=>e.id===formData.clinic_id)?.services)}
+                    initialData={getServiceTypes(authRedux?.clinics.find(e=>e.id===formState.clinic_id)?.services)}
                 />:null}
                 <FormInput label={t('Specialties')} name={'specialty_id'}
                            inputType={'resourceSelect'}
@@ -112,10 +88,10 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            }}
                 />
 
-                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} formData={formData} serviceTypeState={serviceTypeState}/>
+                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} />
 
                 <div style={{paddingTop:20}}>
-                    <Button loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
+                    <Button disabled={!formState.booked_time} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
                 </div>
                 <div style={{paddingTop:10}}>
                     <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>Cancel</Button>

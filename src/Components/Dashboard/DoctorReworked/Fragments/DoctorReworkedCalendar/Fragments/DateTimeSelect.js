@@ -9,7 +9,7 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeState, formState}) {
+function DateTimeSelect({setBookedAtState, formState}) {
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 
@@ -41,12 +41,12 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeS
     }
 
 
-    let clinicId = authRedux?.clinics?.find(e=>e?.id===formData?.clinic_id)?.id
+    let clinicId = authRedux?.clinics?.find(e=>e?.id===formState?.clinic_id)?.id
     const onDateClick = (e) => {
         setDate(e)
         setTimeLoading(true)
         postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + clinicId, {
-            service: serviceTypeState?.service_type,
+            service: formState?.service_type,
             date: dayjs(e).format('YYYY-MM-DD')
         }).then((response) => {
             setTimesIndex(0)
@@ -87,7 +87,7 @@ function DateTimeSelect({bookedAtState, setBookedAtState, formData, serviceTypeS
             <div>
                 <div>
                     <div className={'big_date_div'}>
-                        { formState?.clinic && formState?.patient_id && formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
+                        { formState?.clinic_id && formState?.patient_id && formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
                             return <div key={key}
                                         className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                         onClick={() => onDateClick(startDate.add(key, 'day'))}>
