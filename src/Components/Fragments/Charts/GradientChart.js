@@ -62,7 +62,7 @@ function GradientChart() {
     useEffect(() => {
         setLoading(true)
 
-        postResource('ClinicOwner', 'PeriodAppointments', token, '', {...date,...(idClinic!=='all'?{clinic_id: idClinic}:{})}).then((response) => {
+        postResource('ClinicOwner', 'PeriodAppointments', token, '', {...date,...(idClinic!=='all'?{clinic: idClinic}:{})}).then((response) => {
 
             let prevYear = Object.values(response?.incomes?.prev_year)
 

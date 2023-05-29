@@ -29,7 +29,7 @@ function DoctorReworkedCalendar() {
         setLoading(true)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
             let data = Object.values(response.calendar).flat().map(e =>{
-             console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
+            // console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
                 return {
                     text: Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label ,
                     startDate: dayjs(e.booked_at.iso_string).utc().format(),

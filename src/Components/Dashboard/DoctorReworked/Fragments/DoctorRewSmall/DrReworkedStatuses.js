@@ -15,7 +15,7 @@ function DrReworkedStatuses() {
 
 
 
-    let text = [null,"Confirmed", 'Finished', "Cancelled", "Rescheduled"]
+    let text = ['new' ,"Confirmed", '', "Cancelled", "Rescheduled"]
 
     useEffect(()=>{
         setLoading(true)
@@ -23,12 +23,14 @@ function DrReworkedStatuses() {
             month:ownerClinics.month_key,
             year:dayjs().format('YYYY')
         } ).then((response) => {
-            text.forEach((e,k)=>{
-                if(!response.appointments[k] && e) {
-                    response.appointments[k] = 0
-                }
-            })
+            console.log(response)
+            // text.forEach((e,k)=>{
+            //     if(!response.appointments[k] && e) {
+            //         response.appointments[k] = 0
+            //     }
+            // })
             let resApps = response.appointments
+
 
 
             setData(response.appointments??{})
@@ -87,6 +89,8 @@ function DrReworkedStatuses() {
             appointmentChartRef?.current?.destroy()
         }
     },[ownerClinics.month_key])
+
+    console.log(data)
 
     return(
         <Spin spinning={loading}>
