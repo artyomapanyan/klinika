@@ -110,7 +110,7 @@ function HeaderAccount() {
 						<Button type='link' className='header_call_dropdown'>
 							<Space>
 								<img alt={'icons'} src={notification} />
-								32
+								{approve.length}
 							</Space>
 						</Button>
 					</Dropdown>
