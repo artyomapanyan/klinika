@@ -12,8 +12,8 @@ export function FinishedContent({onCancel, loading}){
             title="Your notes for the patient"
         />
 
-        <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'}/>
-        <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'}/>
+        <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'} rules={[{required: true}]}/>
+        <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'} rules={[{required: true}]}/>
         <div style={{display: 'flex', gap: 5}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
             <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>

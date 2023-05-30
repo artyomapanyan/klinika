@@ -116,8 +116,8 @@ function ClinicApprovedDoctors() {
 
 
                 />
-            <Modal title="Working Hours" width={"65%"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
-                {isModalOpen?.id ? <DoctorsHoursModal  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} />:null}
+            <Modal title="Working Hours" width={"750px"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
+                {isModalOpen?.id ? <DoctorsHoursModal  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} setIsModalOpen={setIsModalOpen} />:null}
             </Modal>
         </div>
     )

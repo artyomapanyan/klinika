@@ -14,7 +14,7 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
             .format('DD MMM')}`;
 
 
-    let data = ['Specialty Load', 'Day off', 'HCP Load', 'Holidays/Weekend']
+    let data = ['Specialty Load', 'HCP Load', 'Day off', 'Holidays/Weekend']
 
     const handleSwitchWeek = (val)=>{
         setDate((prevState)=>{

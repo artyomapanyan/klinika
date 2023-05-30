@@ -77,7 +77,7 @@ function SuperAdmin() {
                         <SuperAdminProfitableTable />
                     </Col>
                     <Col lg={12}>
-                        <SuperAdminProfitableTable />
+                        {/*<SuperAdminProfitableTable />*/}
                         {/*<SuperAdminUnprofitableTable />*/}
                     </Col>
                 </Row>

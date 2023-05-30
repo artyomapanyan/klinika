@@ -21,9 +21,10 @@ export function RascheduledContent({onCancel, modal, loading}){
 
 
    useEffect(() => {
-       setDateLoading(true)
+
 
        if (date && modal?.doctor?.id) {
+           setDateLoading(true)
            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
@@ -85,6 +86,7 @@ export function RascheduledContent({onCancel, modal, loading}){
                            name={'appointment_time'}
                            inputType={'resourceSelect'}
                            options={availableTimes}
+                           rules={[{required: true}]}
                            initialData={[]}
                 />
                 </Spin>
