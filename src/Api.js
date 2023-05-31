@@ -246,6 +246,10 @@ let api = {
         resource: 'InvoiceItem',
     },
     {
+        url: 'invoices',
+        resource: 'Invoice',
+    },
+    {
         url: 'public/thank-you',
         resource: 'PublicThankYouOffer',
     },

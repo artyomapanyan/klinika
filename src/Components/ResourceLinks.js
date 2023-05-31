@@ -42,6 +42,7 @@ const ResourceLins = {
     PublicClinicDoctorAvailableTimes:'/dashboard/public/clinic-doctors/available-times-by-doctor-and-clinic/',
     PublicAppointment:'/dashboard/public/appointments/store-from-offers/',
     InvoiceItem:'/dashboard/invoice-items/',
+    Invoice:'/dashboard/invoices/',
     Report:'/dashboard/reports/',
 
 }
