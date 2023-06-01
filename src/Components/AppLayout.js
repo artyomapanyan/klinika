@@ -78,6 +78,7 @@ import DoctorReworked from "./Dashboard/DoctorReworked/DoctorReworked";
 import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
 import ClinicDoctorUpdate from "./Dashboard/Clinics/Fragments/ManageDoctors/ClinicDoctorUpdate/ClinicDoctorUpdate";
 import Invoices from "./Dashboard/Invoices/Invoices/Invoices";
+import Invoice from "./Dashboard/Invoices/Invoices/Invoice";
 
 
 function AppLayout(){
@@ -272,17 +273,18 @@ function AppLayout(){
             indexComp:<InvoiceItems/>
         },
         {
+            url:'invoices',
+            resource:'Invoice',
+            singleComp:<Invoice/>,
+            indexComp:<Invoices/>
+        },
+        {
             url:'reports',
             resource:'Report',
             //singleComp:<Report/>,
             indexComp:<Reports/>
         },
-        {
-            url:'invoices',
-            resource:'Invoice',
-           // singleComp:<ClinicDoctorUpdate/>,
-            indexComp:<Invoices/>
-        },
+
 
 
 

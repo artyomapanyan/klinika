@@ -59,6 +59,16 @@ const Resource = {
             name: 'Inactive'
         },
     ],
+    StatusInvoices: [
+        {
+            key: '1',
+            label: 'New'
+        },
+        {
+            key: '2',
+            label: 'Payed'
+        },
+    ],
     AppointmentStatuses: [
           {
               key: '0',
