@@ -17,8 +17,9 @@ export function FinishedContent({onCancel, loading}){
             {required: true},
             {
                 validator:(rule,value)=>{
-                    if(value === ' '){
-                        return Promise.reject('Please enter prescriptions')
+                    value=value.trim();
+                    if(value.length==0){
+                        return Promise.reject('Please enter valid text')
                     }
                     return Promise.resolve();
                 }
@@ -28,8 +29,9 @@ export function FinishedContent({onCancel, loading}){
             {required: true},
             {
                 validator:(rule,value)=>{
-                    if(value === ' '){
-                        return Promise.reject('Please enter prescriptions')
+                    value=value.trim();
+                    if(value.length==0){
+                        return Promise.reject('Please enter valid text')
                     }
                     return Promise.resolve();
                 }

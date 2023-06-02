@@ -277,67 +277,83 @@ function Incoice() {
                 </div>
 
                 <div className={'add_edit_content'}>
-
                     {
-                        data?.appointment_id || data?.id ? <div>
-                            <div>
-                                {
-                                    Object.keys(data?.items??{})?.map((key) => {
-                                        return<div key={key} style={{display: 'flex', gap: 15, justifyContent: 'space-between', width:'100%'}}>
-                                            <div style={{width: '50%'}}>
-                                                <FormInput label={t('Invoice item')} name={['items',key,'item']} inputType={'resourceSelect'}
-                                                           rules={[{required: true}]}
-                                                           inputProps={{onChange:e=>handleInvoiceSelect(e,key)}}
+                        data?.primary === 1 ? <div className={'invoice_primary_inputs_div'}>
+                            <div style={{width:'100%'}}>
+                                <FormInput label={t('Lab or nursing cost')} name={'lab_or_nursing_cost'} inputDisabled={true} initialValue={data?.lab_or_nursing_cost}  />
+                                <FormInput label={t('Service fee')} name={'service_fee'} inputDisabled={true} initialValue={data?.service_fee}  />
+                                <FormInput label={t('Tax percentage')} name={'tax_percentage'} inputDisabled={true} initialValue={data?.tax_percentage}  />
+                                <FormInput label={t('Coupon discount amount')} name={'coupon_discount_amount'} inputDisabled={true} initialValue={data?.coupon_discount_amount}  />
+
+                            </div>
+                            <div style={{width:'100%'}}>
+                                <FormInput label={t('Diagnosis price')} name={'diagnosis_price'} inputDisabled={true} initialValue={data?.diagnosis_price}  />
+                                <FormInput label={t('Insurance percentage')} name={'insurance_percentage'} inputDisabled={true} initialValue={data?.insurance_percentage}  />
+                                <FormInput label={t('Vat')} name={'vat'} inputDisabled={true} initialValue={data?.vat}  />
+                            </div>
 
 
-                                                           resource={'InvoiceItem'}
-                                                />
-                                            </div>
-                                            <div style={{width: '50%', display: 'flex', gap: 15, }}>
-                                                <div >
-                                                    <FormInput  label={t('Quantity')} name={['items',key,'qnt']} inputType={'number'} initialValue={data?.items[key]?.qnt}/>
+
+
+
+
+
+                        </div> : <div>
+                            {
+                                data?.appointment_id || data?.id ? <div>
+                                    <div>
+                                        {
+                                            Object.keys(data?.items??{})?.map((key) => {
+                                                return<div key={key} style={{display: 'flex', gap: 15, justifyContent: 'space-between', width:'100%'}}>
+                                                    <div style={{width: '50%'}}>
+                                                        <FormInput label={t('Invoice item')} name={['items',key,'item']} inputType={'resourceSelect'}
+                                                                   rules={[{required: true}]}
+                                                                   inputProps={{onChange:e=>handleInvoiceSelect(e,key)}}
+
+
+                                                                   resource={'InvoiceItem'}
+                                                        />
+                                                    </div>
+                                                    <div style={{width: '50%', display: 'flex', gap: 15, }}>
+                                                        <div >
+                                                            <FormInput  label={t('Quantity')} name={['items',key,'qnt']} inputType={'number'} initialValue={data?.items[key]?.qnt}/>
+                                                        </div>
+                                                        <div >
+                                                            <FormInput  label={t('Price')} name={['items',key,'price']} inputType={'number'} initialValue={data?.items[key]?.price}/>
+                                                        </div>
+                                                        <div >
+                                                            <FormInput  label={t('Tax')} name={['items',key,'tax']} inputType={'number'} initialValue={data?.items[key]?.tax}/>
+                                                        </div>
+                                                        <div >
+                                                            <FormInput inputDisabled={true}  label={t('Amount  ')} name={['items',key,'amount']} inputType={'number'} initialValue={data?.items[key]?.amount}/>
+                                                        </div>
+                                                        <div >
+                                                            <Button style={{marginTop:8}} type={'primary'} size={'large'} onClick={()=>onDeleteItem(key)}>delete</Button>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-                                                <div >
-                                                    <FormInput  label={t('Price')} name={['items',key,'price']} inputType={'number'} initialValue={data?.items[key]?.price}/>
-                                                </div>
-                                                <div >
-                                                    <FormInput  label={t('Tax')} name={['items',key,'tax']} inputType={'number'} initialValue={data?.items[key]?.tax}/>
-                                                </div>
-                                                <div >
-                                                    <FormInput inputDisabled={true}  label={t('Amount  ')} name={['items',key,'amount']} inputType={'number'} initialValue={data?.items[key]?.amount}/>
-                                                </div>
-                                                <div >
-                                                    <Button style={{marginTop:8}} type={'primary'} size={'large'} onClick={()=>onDeleteItem(key)}>delete</Button>
-                                                </div>
+                                            })
+                                        }
+                                    </div>
+                                    <div className={'invoice_add_total_div'} >
+                                        <div>
+                                            <Button onClick={onAddItem}>+ Add another item</Button>
+                                        </div>
+                                        <div className={'invoice_total_div'}>
+                                            <div style={{marginTop: 15, width: 70}}> Total (sar)</div>
+                                            <div style={{width: '90%'}}>
+                                                <FormInput label={t('Sub Total')} name={'sub_total'} inputType={'number'} initialValue={data?.items} />
                                             </div>
 
                                         </div>
-                                    })
-                                }
-                            </div>
-                            <div className={'invoice_add_total_div'} >
-                                <div>
-                                    <Button onClick={onAddItem}>+ Add another item</Button>
-                                </div>
-                                <div className={'invoice_total_div'}>
-                                    <div style={{marginTop: 15, width: 70}}> Total (sar)</div>
-                                    <div style={{width: '90%'}}>
-                                        <FormInput label={t('Sub Total')} name={'sub_total'} inputType={'number'} initialValue={data?.items} />
                                     </div>
-
-                                </div>
-                            </div>
-                        </div> : <div className={'invoice_firsli_text_div'}>
+                                </div> : <div className={'invoice_firsli_text_div'}>
                                     Firstly please choose an appointment
-                                 </div>
+                                </div>
+                            }
+                        </div>
                     }
-
-
-
-
-
-
-
 
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
