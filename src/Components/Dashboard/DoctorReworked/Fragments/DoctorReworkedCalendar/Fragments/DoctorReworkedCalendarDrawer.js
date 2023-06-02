@@ -40,7 +40,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
         setOpen(false)
     }
 
-    console.log(formState?.booked_time)
+
 
     return(
         <div>

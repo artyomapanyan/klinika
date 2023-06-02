@@ -2,6 +2,7 @@ import {Button, Result} from "antd";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import React from "react";
+import dayjs from "dayjs";
 
 export function FinishedContent({onCancel, loading}){
 
@@ -12,8 +13,28 @@ export function FinishedContent({onCancel, loading}){
             title="Your notes for the patient"
         />
 
-        <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'} rules={[{required: true}]}/>
-        <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'} rules={[{required: true}]}/>
+        <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'} rules={[
+            {required: true},
+            {
+                validator:(rule,value)=>{
+                    if(value === ' '){
+                        return Promise.reject('Please enter prescriptions')
+                    }
+                    return Promise.resolve();
+                }
+            }
+        ]}/>
+        <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'} rules={[
+            {required: true},
+            {
+                validator:(rule,value)=>{
+                    if(value === ' '){
+                        return Promise.reject('Please enter prescriptions')
+                    }
+                    return Promise.resolve();
+                }
+            }
+        ]}/>
         <div style={{display: 'flex', gap: 5}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
             <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>

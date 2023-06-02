@@ -16,14 +16,16 @@ export function clearObject(obj){
     })
 }
 export function handleFormatDates(data,isReq=false){
+
     if(typeof data==='object'){
         Object.keys(data??{}).forEach(key=>{
-            if(key!=='uuid' && data[key] && dayjs(data[key],'YYYY-MM-DD').isValid() && !Number.isInteger(data[key]) && typeof data[key]==='string' && data[key].includes('-')){
+            if(!dayjs(data[key]).format('YYYY-MM-DD HH:mm').includes('Invalid') && key!=='uuid' && data[key] && dayjs(data[key],'YYYY-MM-DD').isValid() && !Number.isInteger(data[key]) && typeof data[key]==='string' && data[key].includes('-')){
                if(isReq){
                    data[key] = dayjs(data[key]).format('YYYY-MM-DD HH:mm')
                }else{
                    data[key] = dayjs(data[key]).utc(true).format('YYYY-MM-DD HH:mm')
                }
+
 
             }else if(typeof data[key]==='object'){
                 data[key] = handleFormatDates(data[key],isReq)

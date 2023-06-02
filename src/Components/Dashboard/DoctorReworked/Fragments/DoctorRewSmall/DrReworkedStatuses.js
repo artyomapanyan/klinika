@@ -23,7 +23,7 @@ function DrReworkedStatuses() {
             month:ownerClinics.month_key,
             year:dayjs().format('YYYY')
         } ).then((response) => {
-            console.log(response)
+
             // text.forEach((e,k)=>{
             //     if(!response.appointments[k] && e) {
             //         response.appointments[k] = 0
@@ -90,7 +90,7 @@ function DrReworkedStatuses() {
         }
     },[ownerClinics.month_key])
 
-    console.log(data)
+
 
     return(
         <Spin spinning={loading}>

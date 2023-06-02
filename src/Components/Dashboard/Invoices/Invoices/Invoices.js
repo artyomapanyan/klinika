@@ -14,6 +14,12 @@ function Invoices() {
 
                            tableColumns={[
                                {
+                                   dataIndex:'id',
+                                   title:t('Id'),
+                                   key:'id',
+
+                               },
+                               {
                                    dataIndex:['date','iso_string'],
                                    title:t('Date'),
                                    key:'date',
@@ -24,7 +30,7 @@ function Invoices() {
                                    dataIndex:'invoice_number',
                                    key:'invoice_number',
                                    render:(e, record)=> {
-                                       console.log(record)
+
                                        return record?.invoice_number
                                    }
                                },

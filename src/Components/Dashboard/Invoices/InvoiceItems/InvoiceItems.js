@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 
 function InvoiceItems() {
     let reduxInfo = useSelector((state) => state?.auth);
-    console.log(reduxInfo?.selected_role?.key)
+
     return(
         <div>
             <ResourceTable resource={'InvoiceItem'}
