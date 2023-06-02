@@ -6,7 +6,7 @@ deploy:
   image: node:14
   variables:
     SSH_DEST_STAGING: forge@159.65.124.162:/var/www/front.klinikatech.com/
-    SSH_DEST_MAIN: forge@159.65.117.211:/var/www/new.klinikatech.com/
+    SSH_DEST_MAIN: root@8.213.23.97:/var/www/new.klinikatech.com/
   when: manual
   only:
     - main
