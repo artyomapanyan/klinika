@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {t} from "i18next";
-import {Avatar, Button, Space, Table} from "antd";
+import {Avatar, Button, Space, Spin, Table} from "antd";
 import {AlibabaOutlined} from "@ant-design/icons";
 import gold_star from "../../../../dist/icons/gold_star.png";
 import arrow_prev from "../../../../dist/icons/arrow-prev.svg";
@@ -8,6 +8,7 @@ import arrow_next from "../../../../dist/icons/arrow-next.svg";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
+import Preloader from "../../../Preloader";
 
 
 
@@ -16,6 +17,7 @@ function SuperAdminProfitableTable() {
     let ownerClinics = useSelector((state) => state?.owner);
 
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const [date, setDate] = useState({
         year: dayjs().format('YYYY'),
@@ -25,9 +27,10 @@ function SuperAdminProfitableTable() {
     });
 
     useEffect(() => {
+        setLoading(true)
         postResource('SuperAdmin', 'ProfitableTable', token, '', date).then((response) => {
-
             setData(Object.values(response))
+            setLoading(false)
 
         })
     }, [])
@@ -40,10 +43,9 @@ function SuperAdminProfitableTable() {
         {
             title: t(''),
             dataIndex: 'task_For',
-            key: 'task_for',
+            key: 'task_For',
             render:(e, record)=>{
-                console.log(record, 'record')
-                return <div>
+                return <div >
                     <div className={'profitable_table_clinic_div'}>
                         <Avatar size={64} icon={<AlibabaOutlined />} src={record?.clinic?.cover?.url} />
                         <div style={{display:"block", marginLeft: 24}}>
@@ -70,7 +72,7 @@ function SuperAdminProfitableTable() {
             dataIndex: 'income',
             key: 'income',
             render:(e, record) => {
-                return <div style={{fontSize: 16, fontFamily: 'Roboto', fontWeight: 700}}>{record?.orders_count}$</div>
+                return <div  style={{fontSize: 16, fontFamily: 'Roboto', fontWeight: 700}}>{record?.orders_count}$</div>
             }
 
         },
@@ -78,17 +80,21 @@ function SuperAdminProfitableTable() {
 
     return (
         <div className={'profitable_table_big_div'}>
-            <div className={'incomes_table_head'}>
-                <h1 className={'h1'}>Profitable Clinics</h1>
-                <Space>
-                    <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                    <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_next} alt={'arrow_next'}/></Button>
-                </Space>
+            <Spin spinning={loading}>
+                    <div className={'incomes_table_head'}>
+                        <h1 className={'h1'}>Profitable Clinics</h1>
+                        <Space>
+                            <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                            <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_next} alt={'arrow_next'}/></Button>
+                        </Space>
 
-            </div>
-            <div className={'profitable_clinic_div'}>
-                <Table size={'small'} dataSource={data} columns={columns} pagination={false} />
-            </div>
+                    </div>
+                    <div className={'profitable_clinic_div'}>
+                        <Table size={'small'} dataSource={data} columns={columns} pagination={false}  />
+                    </div>
+                </Spin>
+
+
 
         </div>
     );

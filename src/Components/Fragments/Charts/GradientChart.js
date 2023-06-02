@@ -17,15 +17,23 @@ function GradientChart() {
     let appointmentChartRef = useRef(null)
 
     let token = useSelector((state) => state.auth.token);
+    let clinics =[{
+        id:'all',
+        name:'All Clinics'
+    },...useSelector((state) => state.auth.clinics)].map(e=>({
+        label:e.name,
+        key:e.id
+    }));
+
     let ownerClinics = useSelector((state) => state?.owner);
 
 
-    const [items, setItems] = useState([]);
+
     const [prevYearState, setPrevYearState] = useState(true)
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([]);
     const [radioState, setRadioState] = useState();
-    const [idClinic, setIdClinic] = useState('');
+    const [idClinic, setIdClinic] = useState('all');
 
 
     const [date, setDate] = useState({
@@ -50,35 +58,18 @@ function GradientChart() {
         months[monthName] = monthNumber;
     }
 
-    useEffect(() => {
-        postResource('ClinicOwnerClinics','list', token,  '', ).then((response) => {
-            if(response) {
-                setItems(response.clinics.map((el) => {
-                    return {
-                            label: el?.name,
-                            key: el?.id
-                        }
-
-                }))
-            }
-        })
-    }, [idClinic])
-
 
     useEffect(() => {
         setLoading(true)
 
-        postResource('ClinicOwner', 'PeriodAppointments', token, idClinic ? idClinic : ownerClinics?.id, date).then((response) => {
+        postResource('ClinicOwner', 'PeriodAppointments', token, '', {...date,...(idClinic!=='all'?{clinic: idClinic}:{})}).then((response) => {
 
             let prevYear = Object.values(response?.incomes?.prev_year)
 
             let growth = Object.values(response?.incomes?.growth)
             let canceled = Object.values(response?.incomes[3])
             let closed = Object.values(response?.incomes[2])
-
             let years = Object.keys(response?.incomes?.growth).map(e=>dayjs(e).year())
-            console.log(years)
-
 
 
              let isNull = [];
@@ -357,7 +348,7 @@ function GradientChart() {
                                 },
                                 label: function(context) {
                                     let label = context.dataset.label || '';
-                                    console.log(context)
+
 
                                     if (context.parsed.y !== null) {
                                         if (context.dataset.label === 'Growth') {
@@ -492,14 +483,14 @@ function GradientChart() {
                     <div className={'app_clinic'}>
                        <span>Appointments:</span>  <Dropdown
                         menu={{
-                            items,
+                            items:clinics.filter(e=>e.key!=idClinic),
                             onClick,
                         }}
                         trigger={['click']}
                         className={'own_gr_chart_drop'}
                     >
                         <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                            <div className={'all_clinic_dr'}>{items.find((e)=>e.key==idClinic)?.label??t('All Clinics')}</div>
+                            <div className={'all_clinic_dr'}>{clinics.find((e)=>e.key==idClinic)?.label}</div>
                             <div style={{marginLeft: 17}}><img alt={'arrow_dark_purple_bottom'} src={arrow_dark_purple_bottom}/></div>
                         </Space>
 

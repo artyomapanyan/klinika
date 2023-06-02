@@ -166,7 +166,7 @@ export const useGetResourceSingle = (resource,id,additionals={},filterResponse =
 }
 
 function hGOD(formData,name,object){
-    console.log(name,object)
+
     Object.keys(object).forEach(key=>{
         if(typeof object[key]==='object' && object[key]){
             hGOD(formData,name+'['+key+']',object[key])

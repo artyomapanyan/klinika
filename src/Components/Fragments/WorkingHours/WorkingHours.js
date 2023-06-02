@@ -110,7 +110,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
     ref={formRef}
   >
     <div>
-      {!isDoctorHours ? <div className={'home_visit_head'}>
+      {!isDoctorHours ? <div className={'home_visit_head'} >
         <h1 className={'h1'}>{t(`Working Hours`)}</h1>
         <Space>
           <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'}
@@ -141,11 +141,11 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
           return workingDay && <div key={iKey}>
 
             <Row>
-              <Col lg={3}>
+              <Col lg={5}>
                 <div style={{fontSize: 18, fontWeight: 600}}
                      className={'working_houre_margin'}>{workingDay[0]?.day}</div>
               </Col>
-              <Col lg={3}>
+              <Col lg={4}>
                 <div className={'working_houre_margin'}>
                   <Form.Item
                     label={t(``)}
@@ -157,7 +157,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                   </Form.Item>
                 </div>
               </Col>
-              <Col lg={18}>
+              <Col lg={15}>
                 {workingDay?.map((el, key) => {
                   let currentOptions = [...Resources.dateOptions]
                   if (key > 0 && workingDay?.length) {
@@ -236,14 +236,9 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
     <Space>
       <Button size={'large'} type={'primary'} htmlType="submit">{t('Save')}</Button>
-      <Popconfirm
-          title={t("Your hours will not be protected")}
-          onConfirm={modalId ? handleCancel : () => navigate(resourceLinks[res]) }
-          okText={t("Yes")}
-          cancelText={t("No")}
-          icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-        <Button size={'large'} type={'secondary'} htmlType="submit">{t('Cancel')}</Button>
-      </Popconfirm>
+
+        <Button size={'large'} type={'secondary'} onClick={modalId ? handleCancel : () => navigate(resourceLinks[res])} >{t('Cancel')}</Button>
+
     </Space>
   </Form>)
 }

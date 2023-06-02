@@ -59,6 +59,60 @@ const Resource = {
             name: 'Inactive'
         },
     ],
+    StatusInvoices: [
+        {
+            key: '1',
+            label: 'New'
+        },
+        {
+            key: '2',
+            label: 'Payed'
+        },
+    ],
+    StatusInvoices1: [
+        {
+            id: 1,
+            name: 'New'
+        },
+        {
+            id: 2,
+            name: 'Payed'
+        },
+    ],
+    AppointmentStatuses: [
+          {
+              key: '0',
+              label: 'New'
+          },
+          {
+              key: '1',
+              label: 'Confirmed'
+          },
+          {
+              key: '2',
+              label: 'Finished'
+          },
+          {
+              key: '3',
+              label: 'Cancelled'
+          },
+          {
+              key: '4',
+              label: 'Rescheduled'
+          },
+          {
+              key: '5',
+              label: 'Absent'
+          },
+          {
+              key: '6',
+              label: 'Follow up'
+          },
+          {
+              key: '7',
+              label: 'Revoked'
+          },
+      ],
     StatusWays: {
         0: [
             {

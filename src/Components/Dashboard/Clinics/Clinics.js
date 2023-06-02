@@ -1,19 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
-import {useNavigate} from "react-router";
-import {Avatar, Button, Space} from "antd";
-import {UserOutlined} from "@ant-design/icons";
-import HCPs_icon from "../../../dist/icons/HCPs_icon.svg";
-import Nurses_icon from "../../../dist/icons/Nurses_icon.png";
-import Other_icon from "../../../dist/icons/Others_icon.png";
-import Offers_icon from "../../../dist/icons/Offers_icon.png";
-import Active_icon from "../../../dist/icons/Active_icon.png";
-import ResourceLinks from "../../ResourceLinks";
-import ClinicStatusSelect from "./Fragments/ClinicStatusSelect";
 
 const resource='Clinic';
 function Clinics({resourceLink=null,}) {
@@ -43,7 +33,7 @@ function Clinics({resourceLink=null,}) {
         //                 key: 'name',
         //                 render:(e, record)=>{
         //                     //setRecord(record)
-        //                     console.log(record)
+
         //                     return <div style={{cursor:"pointer"}} onClick={()=>onResourceEdit(record)} className={'avatar_div'}>
         //                         <Space >
         //                             <Avatar src={<img src={record?.cover?.url} alt="avatar" />}  hape="square" size={90} className={'owner_clinic_avatar'} style={{width: 120}} icon={<UserOutlined />} />

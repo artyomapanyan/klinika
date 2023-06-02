@@ -13,12 +13,7 @@ import Nursing from "./Fragments/Nursing/Nursing";
 import ClinicTabBars from "./Fragments/ClinicTabBars";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
-import SecondClinicTabManageDoctors from './Fragments/SecondClinicTabManageDoctors';
 import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
-import {Button} from "antd";
-import {MoreOutlined} from "@ant-design/icons";
-import resourceLinks from "../../ResourceLinks";
-import Arrow_back_black from "../../../dist/icons/Arrow_back_black.png"
 import "../../Dashboard/OwnerClinics/ClinicOwnerStyles/ClinicOwnerStyles.sass"
 
 

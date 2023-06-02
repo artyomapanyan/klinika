@@ -292,17 +292,15 @@ import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
-import resourceLinks from "../../../ResourceLinks";
-import {AutoComplete, Button, Col, Form, Input, Popconfirm, Row, Space, Switch} from "antd";
+import {Button, Col, Form, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import FileManager from "../../../Fragments/FileManager";
-import {CheckOutlined, CloseOutlined, InboxOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, InboxOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
 import React from "react";
 import MyMapComponent from "./MapComponent";
-import {Autocomplete} from "@react-google-maps/api";
 import CancelComponent from "../../../Fragments/CancelComponent";
 
 
@@ -418,7 +416,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         item.id = item.phone_code
         return [name,item]
     }
-console.log(reduxInfo)
+
 
     return(
         <div >
@@ -451,7 +449,7 @@ console.log(reduxInfo)
                             </div>
                             <FormInput label={t('License Number')} name={'license_number'} initialValue={data?.license_number} rules={[{required: true}]} />
                             <FormInput label={t('License number expired at')} name={'license_number_expired_at'} initialValue={data?.license_number_expired_at} inputType={'date'} rules={[{required: true}]} />
-                            <FormInput label={t('Website')} name={'website'} initialValue={data?.website}  rules={[{required: true}]} />
+                            <FormInput label={t('Website')} name={'website'} initialValue={data?.website}  />
 
                         </Col>
                         <Col lg={12} className="gutter-row">

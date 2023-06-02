@@ -282,6 +282,12 @@ export default {
                     label:  t(`Invoice Items`),
                     permission:'InvoiceItem'
                 },
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoices',
+                    label:  t(`Invoices`),
+                    permission:'Invoice'
+                },
             ]
         },
         {

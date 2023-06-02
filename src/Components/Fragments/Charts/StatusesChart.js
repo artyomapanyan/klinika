@@ -28,7 +28,7 @@ function StatusesChart() {
                     response.appointments[k] = 0
                 }
             })
-            console.log(response)
+
 
             let resApps = response.appointments
 

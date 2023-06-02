@@ -9,7 +9,7 @@ import Preloader from "../../../../Preloader";
 
 
 const resource = "ClinicDoctor";
-function DoctorsHoursModal({id,type, handleCancel, keys=[]}) {
+function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     let token = useSelector((state) => state.auth.token);
     const params = useParams();
 
@@ -40,8 +40,9 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}) {
             ...prevState,
             ...prevValues?.working_hours
         }))
+
         if (params.id) {
-            updateResource('ClinicDoctorWorkingHours', id, values, token, ).then(response => {
+            updateResource('ClinicDoctorWorkingHoursTable', id, values, token, ).then(response => {
                 setData(response?.working_hours)
                 setDocData({
                     price:response?.clinic_doctor[keys[1]],
@@ -49,12 +50,15 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}) {
                 })
             }).finally(() => {
                 setLoading(false)
+                handleCancel()
+
             })
         }
+
     }
 
     return(
-        <div className={'add_edit_content'}>
+        <div className={'doctor_working_hours_conteiner'}>
             {loading?<Preloader/>:<WorkingHours handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} />}
         </div>
     )

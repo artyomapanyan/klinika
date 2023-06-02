@@ -1,9 +1,9 @@
 import React from "react";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
-import {Avatar, message, Space} from "antd";
-import {CopyOutlined, FilePdfOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons";
+import {Avatar, Button, message, Space} from "antd";
+import {CopyOutlined, FilePdfOutlined, LeftOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons";
 import axios from "axios";
 import api from "../../../../Api";
 import Preloader from "../../../Preloader";
@@ -11,6 +11,7 @@ import Preloader from "../../../Preloader";
 
 const resource = 'Appointment';
 function ShowAppointment() {
+    const navigate = useNavigate();
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -26,7 +27,7 @@ function ShowAppointment() {
         });
     };
 
-    console.log(data, 'd')
+
     const handleExportPDF =()=>{
         axios.request({
             url: api[resource].exportExcel.url,
@@ -46,8 +47,15 @@ function ShowAppointment() {
         });
     }
 
+    const onBack = () => {
+        navigate(-1)
+    }
+
     return(
-        <div>
+        <div style={{marginTop: -120}}>
+            <div>
+                <Button style={{margin:"40px 24px", height:45, width:45}} onClick={onBack}><LeftOutlined /></Button>
+            </div>
             {
                 loading ? <Preloader /> : <div>
                     <div className={'add_edit_content'} id={'show_header'}>

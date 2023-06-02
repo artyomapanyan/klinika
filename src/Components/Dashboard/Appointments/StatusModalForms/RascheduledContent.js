@@ -1,7 +1,7 @@
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import React, {useEffect, useState} from "react";
-import {Button} from "antd";
+import {Button, Spin} from "antd";
 import dayjs from "dayjs";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
@@ -10,6 +10,7 @@ export function RascheduledContent({onCancel, modal, loading}){
     let token = useSelector((state) => state.auth.token);
     const [date,setDate] = useState(null);
     const [availableTimes,setAvailableTimesState] = useState([]);
+    const [dateLoading,setDateLoading] = useState(false);
 
 
     const disabledDate = (current) => {
@@ -21,7 +22,9 @@ export function RascheduledContent({onCancel, modal, loading}){
 
    useEffect(() => {
 
+
        if (date && modal?.doctor?.id) {
+           setDateLoading(true)
            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
@@ -37,6 +40,7 @@ export function RascheduledContent({onCancel, modal, loading}){
                        })
                    }
                }))
+               setDateLoading(false)
            })
        }else if(date && !modal?.doctor?.id){
            postResource('Clinic', 'AvailableTimes', token, modal?.clinic?.id, {
@@ -55,6 +59,7 @@ export function RascheduledContent({onCancel, modal, loading}){
                        })
                    }
                }))
+               setDateLoading(false)
            })
        }
 
@@ -74,12 +79,17 @@ export function RascheduledContent({onCancel, modal, loading}){
                 />
             </div>
             <div style={{width: '50%'}}>
+                <Spin spinning={dateLoading}>
+
+
                 <FormInput label={t('Appointment time')}
                            name={'appointment_time'}
                            inputType={'resourceSelect'}
                            options={availableTimes}
+                           rules={[{required: true}]}
                            initialData={[]}
                 />
+                </Spin>
             </div>
         </div>
 

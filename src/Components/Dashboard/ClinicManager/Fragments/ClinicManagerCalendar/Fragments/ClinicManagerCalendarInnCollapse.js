@@ -2,12 +2,11 @@ import {Avatar, Modal} from "antd";
 import React, {useState} from "react";
 import CalendarInnCollapseModal from "./CalendarInnCollapseModal";
 import dayjs from "dayjs";
+import gray_grid from "../../../../../../dist/icons/gray_grid.png";
 
 function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic}) {
     const [selectedDate, setSelectedDate] = useState(false);
     let thisDate = dayjs().format('YYYY-MM-DD')
-    console.log(thisDate, 'this')
-
 
     return (
         <tbody>
@@ -23,17 +22,21 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                 </div>
             </td>
             {
-                Object.keys(docItem?.availability??{}).map((key) => {
-                    console.log(key,'key')
-                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key ? null : () => setSelectedDate(key)}>
+                Object.keys(docItem?.availability??{}).map((key, k) => {
 
-                        <div className="progress progressGreen" style={{cursor: thisDate > key ? "" : 'pointer'}}>
+                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>
+
+                        <div className="progress progressGreen" style={{cursor: thisDate > key ? "" : 'pointer', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
                             <div className="progress-bar progressGreen__inside"
-                                 role="progressbar" style={{width: docItem.availability[key]+'%'}}
+                                 role="progressbar"
+                                 style={{width: docItem.availability[key]+'%', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF56'}}
                                  aria-valuenow="85" aria-valuemin="0"
                                  aria-valuemax="100">
                             </div>
-                            <div className="progressText">{docItem.availability[key]}%</div>
+                            {
+                                docItem.availability[key] === null ? <div></div> : <div className="progressText">{docItem.availability[key]?.toFixed()}%</div>
+                            }
+
                         </div>
                     </td>
                 })

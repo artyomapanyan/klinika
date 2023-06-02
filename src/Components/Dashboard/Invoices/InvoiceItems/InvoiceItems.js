@@ -4,12 +4,16 @@ import {t} from "i18next";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import ResourceTable from "../../../Fragments/ResourceTable";
 import DateParser from "../../../Fragments/DateParser";
+import {useSelector} from "react-redux";
 
 
 function InvoiceItems() {
+    let reduxInfo = useSelector((state) => state?.auth);
+
     return(
         <div>
             <ResourceTable resource={'InvoiceItem'}
+                           except={{edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false}}
 
                            tableColumns={[
                 {

@@ -163,6 +163,10 @@ let api = {
         resource: 'ClinicDoctorWorkingHours',
     },
     {
+        url: 'clinic-doctors/working-hours',
+        resource: 'ClinicDoctorWorkingHoursTable',
+    },
+    {
         url: 'clinic-doctors/available-times',
         resource: 'ClinicDoctorAvailableTimes',
     },
@@ -240,6 +244,10 @@ let api = {
     {
         url: 'invoice-items',
         resource: 'InvoiceItem',
+    },
+    {
+        url: 'invoices',
+        resource: 'Invoice',
     },
     {
         url: 'public/thank-you',
@@ -454,6 +462,10 @@ let api = {
                 },
                 exportExcel: {
                     url: `${endpoint}${version}/${item.url}/export`,
+                    method: 'GET',
+                },
+                exportPdf: {
+                    url: `${endpoint}${version}/${item.url}`,
                     method: 'GET',
                 },
                 updateField: {

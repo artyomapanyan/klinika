@@ -71,6 +71,7 @@
   background-color: white;
 }
 .appointmentsDate {
+  margin-left: 20px !important;
   padding: 14px 4px;
   &__content {
     background-color: #f5f6fa;
@@ -103,6 +104,9 @@
     background-color: red;
   }
 }
+
+
+
 .hiddenTableRow {
   background-color: transparent;
   display: flex;
@@ -150,14 +154,14 @@
   transform: translate(-50%, -50%);
 }
 .input-group {
-  width: 240px !important;
+  width: 100% !important;
 }
 
-@media only screen and (max-width: 1200px) {
-  .input-group {
-    width: 180px !important;
-  }
-}
+//@media only screen and (max-width: 1200px) {
+//  .input-group {
+//    width: 180px !important;
+//  }
+//}
 .content {
   width: 100%;
   padding: 0 17px 0 90px;
@@ -171,7 +175,7 @@
   color: rgba(255, 255, 255, 0.15);
   text-align: center;
   white-space: nowrap;
-  background-color: #774d9d;
+  //background-color: #774d9d;
   transition: width .6s ease;
   height: 100%;
   border-radius: 8px;

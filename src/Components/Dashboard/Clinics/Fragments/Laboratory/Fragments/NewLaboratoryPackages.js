@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {t} from "i18next";
-import FormInput from "../../../../../Fragments/FormInput";
 import {Checkbox, Col, Divider, Row} from "antd";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Preloader from "../../../../../Preloader";
 import x_black from "../../../../../../dist/icons/x_black.png";
-import {SearchOutlined} from "@ant-design/icons";
 import dark_delete_icon from "../../../../../../dist/icons/dark_delete_icon.png";
 
 
@@ -51,7 +48,7 @@ function NewLaboratoryTests() {
 
     }
 
-    console.log(labTests, 'package')
+
 
 
     return(

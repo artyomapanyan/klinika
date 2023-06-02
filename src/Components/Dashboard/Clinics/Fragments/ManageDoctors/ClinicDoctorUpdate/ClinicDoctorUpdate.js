@@ -1,6 +1,5 @@
-import React, {useEffect, useRef} from "react";
-import {Button, Form} from "antd";
-import resourceLinks from "../../../../../ResourceLinks";
+import React, {useRef} from "react";
+import {Button} from "antd";
 import Arrow_back_black from "../../../../../../dist/icons/Arrow_back_black.png";
 import {MoreOutlined} from "@ant-design/icons";
 import ClinicTabBars from "../../ClinicTabBars";

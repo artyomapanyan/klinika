@@ -2,15 +2,11 @@ import React, {useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
 import Resources from "../../../../../../store/Resources";
-import {Button, Form, Space, Tag} from "antd";
-import {LeftOutlined, RightOutlined} from "@ant-design/icons";
-import dayjs from "dayjs";
-import arrow_right_white from "../../../../../../dist/icons/arrow_right_white.png";
+import {Button, Form} from "antd";
 import {useSelector} from "react-redux";
-import {getServiceTypes, GMBK} from "../../../../../../functions";
+import {getServiceTypes} from "../../../../../../functions";
 import DateTimeSelect from "./DateTimeSelect";
 import {createResource} from "../../../../../Functions/api_calls";
-import resourceLinks from "../../../../../ResourceLinks";
 
 function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const authRedux = useSelector((state) => state?.auth);
@@ -19,11 +15,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
 
     const [bookedAtState, setBookedAtState] = useState('');
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({});
-    const [serviceTypeState, setServiceTypeState] = useState({});
     const [formState, setFormState] = useState({});
-
-    let drFormRef = formRef?.current?.getFieldValue()
 
     const onNewAppointment = (values) => {
         setLoading(true)
@@ -49,7 +41,6 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     }
 
 
-console.log(formState, 'fff')
 
     return(
         <div>
@@ -57,30 +48,10 @@ console.log(formState, 'fff')
                 onFinish={onNewAppointment}
                 ref={formRef}
                 onValuesChange={(e)=>{
-                    if(e.patient_id){
-                        setFormState((prevState)=>({
-                            ...prevState,
-                            patient_id: e.patient_id
-                        }))
-                    } if (e.clinic_id){
-                      setFormData(e)
                       setFormState((prevState)=>({
                           ...prevState,
-                          clinic: e.clinic_id
+                          ...e
                       }))
-                } if (e.service_type){
-                      setServiceTypeState(e)
-                        setFormState((prevState)=>({
-                            ...prevState,
-                            service_type: e.service_type
-                        }))
-                    } if(e.specialty_id){
-                        setFormState((prevState)=>({
-                            ...prevState,
-                            specialty_id: e.specialty_id
-                        }))
-                    }
-
                 }}
 
             >
@@ -99,11 +70,11 @@ console.log(formState, 'fff')
                            initialValue={null}
                            initialData={authRedux?.clinics}
                 />
-                {formData.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
+                {formState.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
-                    initialData={getServiceTypes(authRedux?.clinics.find(e=>e.id===formData.clinic_id)?.services)}
+                    initialData={getServiceTypes(authRedux?.clinics.find(e=>e.id===formState.clinic_id)?.services)}
                 />:null}
                 <FormInput label={t('Specialties')} name={'specialty_id'}
                            inputType={'resourceSelect'}
@@ -117,10 +88,10 @@ console.log(formState, 'fff')
                            }}
                 />
 
-                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} formData={formData} serviceTypeState={serviceTypeState}/>
+                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} />
 
                 <div style={{paddingTop:20}}>
-                    <Button loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
+                    <Button disabled={!formState.booked_time} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
                 </div>
                 <div style={{paddingTop:10}}>
                     <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>Cancel</Button>

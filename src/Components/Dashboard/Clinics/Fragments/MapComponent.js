@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from "react";
 import {GoogleMap, LoadScript, Marker, Autocomplete} from "@react-google-maps/api";
 import {Col, Form, Input, Row} from "antd";
 import {t} from "i18next";
-import Preloader from "../../../Preloader";
 import FormInput from "../../../Fragments/FormInput";
 
 function MyMapComponent({data,formRef}) {
@@ -68,10 +67,10 @@ function MyMapComponent({data,formRef}) {
     useEffect(()=>{
         if( mapData.country){
             let geocoder =  new window.google.maps.Geocoder();
-             console.log( mapData,1)
+
 
             geocoder.geocode( { 'address':  [mapData.country,mapData.area,mapData.city].filter(e=>e).join(' ')}, function(results, status) {
-                console.log( mapData.country,2)
+
                 if (status == window.google.maps.GeocoderStatus.OK) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
