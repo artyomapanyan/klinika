@@ -304,7 +304,9 @@ function LineChartIncomes() {
             <div className={'gradient_chart_big_div'}>
                 <div className={'gradient_chart_inn_big_div'}>
                     <Space style={{fontSize: 24, fontWeight: 600}}>
-                        {t("Incomes")}
+                        <div>{t("Incomes")}</div>
+                        <div >{t("all clinics")}</div>
+
                         {['Jeddah Clinic', 'Clinic name', 'Total'].map((itemKey, key) => <Space key={key}
                                                                                                 className={`withDot WD-color1-${key}`}>{itemKey}</Space>)}
                     </Space>

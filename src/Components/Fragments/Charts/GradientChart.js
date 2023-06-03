@@ -29,7 +29,7 @@ function GradientChart() {
 
 
 
-    const [prevYearState, setPrevYearState] = useState(true)
+    const [prevYearState, setPrevYearState] = useState(false)
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([]);
     const [radioState, setRadioState] = useState();
@@ -44,14 +44,12 @@ function GradientChart() {
 
 
 
-
     const startDate = dayjs('2022-05-01', 'YYYY-MM-DD');
     const endDate = dayjs('2022-12-31', 'YYYY-MM-DD');
 
-// Создайте объект с месяцами
+
     const months = {};
 
-// Итерируйтесь по месяцам между начальной и конечной датами
     for (let date = startDate; date.isBefore(endDate); date = date.add(1, 'month')) {
         const monthName = date.format('YYYY-MM');
         const monthNumber = 0 ;
@@ -227,24 +225,24 @@ function GradientChart() {
                                 return context.raw > 0 ? "#6DAF56" : "#CF533E";
                             },
                         },
-                        {
-                            label: " In previous year",
-                            data:prevYear,
-                            borderSkipped: true,
-                            borderColor: ["rgb(97,60,133)"],
-                            pointBackgroundColor:["rgb(97,60,133)"],
-                            color: ["rgb(97,60,133)"],
-                            backgroundColor: "transparent",
-                            fill: "start",
-                            showLine: true,
-                            borderWidth: prevYearState ? 3 : 0,
-                            pointStyle:function (context) {
-                                return context.raw == Math.max(...prevYear) ? true : false;
-                            },
-                            type: "line",
-
-
-                        },
+                        // {
+                        //     label: " In previous year",
+                        //     data:prevYear,
+                        //     borderSkipped: true,
+                        //     borderColor: ["rgb(97,60,133)"],
+                        //     pointBackgroundColor:["rgb(97,60,133)"],
+                        //     color: ["rgb(97,60,133)"],
+                        //     backgroundColor: "transparent",
+                        //     fill: "start",
+                        //     showLine: true,
+                        //     borderWidth: prevYearState ? 3 : 0,
+                        //     pointStyle:function (context) {
+                        //         return context.raw == Math.max(...prevYear) ? true : false;
+                        //     },
+                        //     type: "line",
+                        //
+                        //
+                        // },
                         {
                             label: "Growth",
                             data: closed,
@@ -352,7 +350,7 @@ function GradientChart() {
 
                                     if (context.parsed.y !== null) {
                                         if (context.dataset.label === 'Growth') {
-                                            label = '   ' + growth[context.parsed.x]  +(context.dataset.additionalKey??'') + '   ' + label ;
+                                            label = '   ' + growth[context.parsed.x].toFixed()  +(context.dataset.additionalKey??'') + '   ' + label ;
                                         }else{
                                             label = '   ' + context.parsed.y + '   ' + label;
                                         }
@@ -388,7 +386,7 @@ function GradientChart() {
                                 left: 30,
                             },
                             formatter: function(value, context) {
-                                return "+" + growth[context.dataIndex]+'%';
+                                return "+" + growth[context.dataIndex].toFixed() +'%';
                             },
                             display: function (context) {
                                 return context.dataset.label === "Closed";
@@ -444,9 +442,9 @@ function GradientChart() {
         }
 
     }
-    const switchChange = (checked) => {
-        setPrevYearState(checked)
-    };
+    // const switchChange = (checked) => {
+    //     setPrevYearState(checked)
+    // };
 
     const onChange = (e) => {
         switch (e.target.value) {
@@ -481,28 +479,29 @@ function GradientChart() {
             <div className={'gradient_chart_big_div'}>
                 <div className={'gradient_chart_inn_big_div'}>
                     <div className={'app_clinic'}>
-                       <span>Appointments:</span>  <Dropdown
-                        menu={{
-                            items:clinics.filter(e=>e.key!=idClinic),
-                            onClick,
-                        }}
-                        trigger={['click']}
-                        className={'own_gr_chart_drop'}
-                    >
-                        <Space direction={'horizontal'} style={{cursor:"pointer"}}>
-                            <div className={'all_clinic_dr'}>{clinics.find((e)=>e.key==idClinic)?.label}</div>
-                            <div style={{marginLeft: 17}}><img alt={'arrow_dark_purple_bottom'} src={arrow_dark_purple_bottom}/></div>
-                        </Space>
+                       <span>Appointments</span>
+                    {/*    <Dropdown*/}
+                    {/*    menu={{*/}
+                    {/*        items:clinics.filter(e=>e.key!=idClinic),*/}
+                    {/*        onClick,*/}
+                    {/*    }}*/}
+                    {/*    trigger={['click']}*/}
+                    {/*    className={'own_gr_chart_drop'}*/}
+                    {/*>*/}
+                    {/*    <Space direction={'horizontal'} style={{cursor:"pointer"}}>*/}
+                    {/*        <div className={'all_clinic_dr'}>{clinics.find((e)=>e.key==idClinic)?.label}</div>*/}
+                    {/*        <div style={{marginLeft: 17}}><img alt={'arrow_dark_purple_bottom'} src={arrow_dark_purple_bottom}/></div>*/}
+                    {/*    </Space>*/}
 
-                    </Dropdown>
+                    {/*</Dropdown>*/}
                     </div>
                     <div>
                         <Space className={'arrow_button'} >
 
-                            <Switch className={'app_switch'} style={{backgroundColor: '#774D9D', width: 40}} defaultChecked onChange={switchChange}/>
-                            <span className={'gradient_szitch_text'}>
-                                {t("Previous year")}
-                            </span>
+                            {/*<Switch className={'app_switch'} style={{backgroundColor: '#774D9D', width: 40}} defaultChecked onChange={switchChange}/>*/}
+                            {/*<span className={'gradient_szitch_text'}>*/}
+                            {/*    {t("Previous year")}*/}
+                            {/*</span>*/}
 
                             <Radio.Group onChange={onChange} defaultValue="year"  className={'radio_grup_charts'}>
                                 <Radio.Button value="year">{t("12 Month")}</Radio.Button>
