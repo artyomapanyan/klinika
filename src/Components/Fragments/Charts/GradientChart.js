@@ -55,7 +55,7 @@ function GradientChart() {
         const monthNumber = 0 ;
         months[monthName] = monthNumber;
     }
-console.log(ownerClinics, 'jjj')
+
 
     useEffect(() => {
         setLoading(true)

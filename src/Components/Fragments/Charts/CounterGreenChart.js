@@ -3,33 +3,18 @@ import {Chart,registerables} from "chart.js";
 import {Space, Spin} from "antd";
 import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
+import Preloader from "../../Preloader";
 
-function CounterGreenChart() {
-    let token = useSelector((state) => state.auth.token);
-    let ownerClinics = useSelector((state) => state?.owner);
-    const [loading, setLoading] = useState(true);
-
+function CounterGreenChart({loading, data, responseState, el, setResponseState, ownerClinics}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-    const [data,setData] = useState([5,0]);
-    const [responseState,setResponseState] = useState({
-        clinic:'',
-        avg_rating:0
-    });
 
-    useEffect(() => {
-        setLoading(true)
-        postResource('ClinicOwner','OwnerClinicRating', token,  ownerClinics?.id ).then((response) => {
-            setResponseState(response)
-            let arr = []
-            arr.push(+((+response?.avg_rating).toFixed(1)));
-            arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
-            setData(arr)
-            setLoading(false)
-        });
 
-    }, [ownerClinics])
+    let arr = []
+    arr.push(+((+el?.avg_rating).toFixed(1)));
+    arr.unshift(+((5 - (+el?.avg_rating)).toFixed(1)))
+
 
 
     const counterforGreenDoughnut = {
@@ -47,11 +32,13 @@ function CounterGreenChart() {
         },
     };
     useEffect(()=>{
+
         if(appointmentChartRef?.current?.ctx){
-            appointmentChartRef.current.config.data.datasets[0].data = data
+            appointmentChartRef.current.config.data.datasets[0].data = arr
             appointmentChartRef.current.update()
+
         }
-    },[data])
+    },[arr])
 
 
     useEffect(()=>{
@@ -63,7 +50,7 @@ function CounterGreenChart() {
                     {
                         backgroundColor: ["#F5F6FA", "#6DAF56"],
                         weight: 0.5,
-                        data: data,
+                        data: [+((5 - (+el?.avg_rating)).toFixed(1)), +((+el?.avg_rating).toFixed(1))],
                         spacing: 0,
                         borderWidth: 0,
                     },
@@ -88,18 +75,19 @@ function CounterGreenChart() {
     return(
         <Spin spinning={loading}>
             <Space className={'round_charts_big_div'}>
-                <div  style={{height:92,width:92}}>
-                    <canvas id='CounterGreenChart' ref={canvasRef}></canvas>
-                </div>
-
-                <Space direction={'vertical'} style={{marginLeft: 11}}>
-                    <div className={'chart_counter_bold_text'}>
-                        {responseState?.clinic}
+                    <div  style={{height:92,width:92}}>
+                        <canvas id='CounterGreenChart' ref={canvasRef}></canvas>
                     </div>
-                    <div className={'avg_montly'}> Avg. monthly</div>
-                    <div className={'avg_montly'}>clinic rating {responseState?.avg_rating}</div>
+
+                    <Space direction={'vertical'} style={{marginLeft: 11}}>
+                        <div className={'chart_counter_bold_text'}>
+                            {el?.clinic}
+                        </div>
+                        <div className={'avg_montly'}> Avg. monthly</div>
+                        <div className={'avg_montly'}>clinic rating {el?.avg_rating}</div>
+                    </Space>
                 </Space>
-            </Space>
+
         </Spin>
 
     )

@@ -1,5 +1,5 @@
-import {Col, Row} from "antd";
-import React, {useState} from 'react';
+import {Col, Row, Spin} from "antd";
+import React, {useEffect, useRef, useState} from 'react';
 import CounterGreenChart from "../../Fragments/Charts/CounterGreenChart";
 import CounterOrangeChart from "../../Fragments/Charts/CounterOrangeChart";
 import '../../Fragments/Charts/ChartStyles.sass'
@@ -12,14 +12,68 @@ import TopServices from "../../Fragments/Charts/TopServices";
 
 import { useSelector } from 'react-redux';
 import Preloader from '../../Preloader';
+import {postResource} from "../../Functions/api_calls";
 
 
 function ClinicsOwner() {
-     let ownerClinics = useSelector((state) => state?.owner);
 
-     const [multipleData,setMultipleData] = useState({'Jeddah clinic':67.3,
-                                                               'Clinic name':87.3,});
+    let token = useSelector((state) => state.auth.token);
+    let ownerClinics = useSelector((state) => state?.owner);
+    const [loading, setLoading] = useState(true);
 
+
+    const [responseState,setResponseState] = useState([]);
+
+
+
+
+    const [responseOrange,setResponseOrange] = useState([]);
+    const [dateMontKey,setdateMontKey] = useState({
+        year: new Date().getFullYear().toString(),
+        month: ownerClinics?.month_key
+    });
+
+
+
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('ClinicOwner','OwnerClinicRating', token,  '', {...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {}) } ).then((response) => {
+            setLoading(true)
+            setResponseState(response)
+            // // let arr = []
+            // // arr.push(+((+response?.avg_rating).toFixed(1)));
+            // // arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
+            // let arr = []
+            // let arr2 = response?.map((el) => {
+            //     return arr.push(+((+el?.avg_rating).toFixed(1)))
+            //
+            // })
+            // let arr1 = response?.map((el) => {
+            //     return arr.unshift(+((5 - (+el?.avg_rating)).toFixed(1)))
+            // })
+            //
+            // setData(arr)
+            setLoading(false)
+        });
+
+    }, [ownerClinics])
+
+
+
+
+    useEffect(() => {
+
+        postResource('ClinicOwner','OwnerClinicMontlyRating', token,  '', {...dateMontKey, ...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
+            setResponseOrange(response)
+            // let arr = []
+            // arr.push(+((+response?.avg_rating).toFixed(1)));
+            // arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
+            // setData(arr)
+
+        });
+
+    }, [ownerClinics])
 
 
     return(
@@ -28,12 +82,36 @@ function ClinicsOwner() {
                 <Row gutter={[19,19]}>
                     <Col  lg={8} md={12} sm={24} xs={24} >
                         <div className="gutter_row">
-                            <CounterGreenChart />
+                            {
+                                loading ? <Preloader small={30}/> : <div style={{display: 'block', }}>
+                                    {
+                                        responseState?.map((el, key) => {
+                                            return <Spin spinning={loading} key={key}>
+                                                <CounterGreenChart key={key} el={el} loading={loading}   responseOrange={responseOrange} setResponseState={setResponseState} ownerClinics={ownerClinics}/>
+                                            </Spin>
+                                        })
+                                    }
+                                </div>
+                            }
+
+
+
+
                         </div>
                     </Col>
                     <Col lg={8} md={12} sm={24} xs={24}>
                         <div className="gutter_row">
-                            <CounterOrangeChart />
+                            {
+                                loading ? <Preloader small={30}/> : <div style={{display: 'block'}}>
+                                    {
+                                        responseState?.map((el, key) => {
+                                            return <CounterOrangeChart key={key} el={el} loading={loading}   responseState={responseState} setResponseState={setResponseState} ownerClinics={ownerClinics}/>
+                                        })
+                                    }
+                                </div>
+                            }
+
+
                         </div>
                     </Col>
                     <Col lg={8} md={12} sm={24} xs={24}>
