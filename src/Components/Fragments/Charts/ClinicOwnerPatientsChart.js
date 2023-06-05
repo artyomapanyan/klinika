@@ -22,7 +22,7 @@ function ClinicOwnerPatientsChart(){
 
     useEffect(()=>{
         setLoading(true)
-        postResource('ClinicOwner', 'NewPatients', token, ownerClinics?.id, date).then((response) => {
+        postResource('ClinicOwner', 'NewPatients', token, '', {...date,...(ownerClinics.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
             const monthNames = [
                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'

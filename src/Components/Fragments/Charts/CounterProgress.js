@@ -18,13 +18,19 @@ function CounterProgress() {
 
     let date = new Date().getFullYear().toString()
 
+    const [yearMonth,setYearMonth] = useState({
+        year: new Date().getFullYear().toString(),
+        month:  ownerClinics?.month_key
+    });
+
     useEffect(() => {
-        postResource('ClinicOwner','MonthlyIncomes', token,  ownerClinics?.id, {year: date, month: ownerClinics?.month_key}).then((response) => {
+        setLoading(true)
+        postResource('ClinicOwner','MonthlyIncomes', token,  '', {...yearMonth, ...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
             setData(response)
             setLoading(false)
         });
 
-    }, [ownerClinics])
+    }, [ownerClinics?.id])
 
 
     return(

@@ -19,9 +19,16 @@ function TopServices() {
 
     let date = new Date().getFullYear().toString()
 
+    const [yearMonth,setYearMonth] = useState({
+        year: new Date().getFullYear().toString(),
+        month:  ownerClinics?.month_key
+    });
+
+
+
     useEffect(() => {
         setLoading(true)
-        postResource('ClinicOwner','TopServices', token,  ownerClinics?.id, {year: date, month: ownerClinics?.month_key}).then((response) => {
+        postResource('ClinicOwner','TopServices', token,  '', {...yearMonth, ...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
             let values = Object.values(response);
             values = values.sort((a,b)=>{
                 return b.percentage-a.percentage

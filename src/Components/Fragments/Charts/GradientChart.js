@@ -55,12 +55,12 @@ function GradientChart() {
         const monthNumber = 0 ;
         months[monthName] = monthNumber;
     }
-
+console.log(ownerClinics, 'jjj')
 
     useEffect(() => {
         setLoading(true)
 
-        postResource('ClinicOwner', 'PeriodAppointments', token, '', {...date,...(idClinic!=='all'?{clinic: idClinic}:{})}).then((response) => {
+        postResource('ClinicOwner', 'PeriodAppointments', token, '', {...date,...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
 
             let prevYear = Object.values(response?.incomes?.prev_year)
 
