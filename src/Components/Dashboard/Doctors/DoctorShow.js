@@ -3,7 +3,7 @@ import React from "react";
 function DoctorShow() {
     return(
         <div>
-            sdfdfg
+            Doctor
         </div>
     )
 }

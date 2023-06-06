@@ -76,7 +76,7 @@ function HeaderAccount() {
 												approve?.map((el, key) => {
 													return (
 														<div key={key} className={'approve_drop_inn_div'}>
-															<div>{el?.clinic?.name}</div>
+															<div>Invite from {el?.clinic?.name}</div>
 															<div>
 																<Button
 																	onClick={() => onOk(el, key)}

@@ -12,7 +12,18 @@ export function CanceledContent({onCancel, loading}){
 
         />
 
-            <FormInput label={t('Reason')} name={'cancellation_reason'} inputType={'textArea'} rules={[{required: true}]}/>
+            <FormInput label={t('Reason')} name={'cancellation_reason'} inputType={'textArea'} rules={[
+                {required: true},
+                {
+                    validator:(rule,value)=>{
+                        value=value.trim();
+                        if(value.length==0){
+                            return Promise.reject('Please enter valid text')
+                        }
+                        return Promise.resolve();
+                    }
+                }
+            ]}/>
             <div style={{display: 'flex', gap: 5}} >
                 <Button  size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
                 <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>

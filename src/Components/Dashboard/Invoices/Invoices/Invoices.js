@@ -1,13 +1,38 @@
 import ResourceTable from "../../../Fragments/ResourceTable";
 import {t} from "i18next";
-import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import DateParser from "../../../Fragments/DateParser";
 import React from "react";
 import ColorSelect from "../../../Fragments/ColorSelect";
 import Resource from "../../../../store/Resources";
+import axios from "axios";
+import api from "../../../../Api";
+import {useSelector} from "react-redux";
+import {FilePdfFilled} from "@ant-design/icons";
 
 let resource = 'Invoice'
 function Invoices() {
+    let token = useSelector((state) => state.auth.token);
+
+
+    const handleExportPDF =(record)=>{
+        axios.request({
+            url: `${api[resource].exportPdf.url}/${record.id}/export-pdf`,
+            method: api[resource].exportPdf.method,
+            headers: {
+                'Authorization': token,
+            },
+            responseType: 'blob',
+
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', resource+'.pdf');
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
+
     return(
         <div>
             <ResourceTable resource={resource}
@@ -53,6 +78,14 @@ function Invoices() {
                                    key:'category',
                                    shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
                                    render:(e,record)=><ColorSelect items={Resource.StatusInvoices} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                               },
+                               {
+                                   title: 'pdf',
+                                   dataIndex: 'pdf',
+                                   key: 'pdf',
+                                   render: (e, record) => {
+                                       return <div style={{cursor:'pointer'}} onClick={()=>handleExportPDF(record)}><FilePdfFilled style={{color: 'red'}} /></div>
+                                   }
                                },
 
                            ]} title={t('Invoices')}/>

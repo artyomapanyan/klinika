@@ -1,33 +1,16 @@
 import {useEffect, useRef, useState} from "react";
 import {Chart,registerables} from "chart.js";
 import {Space, Spin} from "antd";
-import {useSelector} from "react-redux";
-import {postResource} from "../../Functions/api_calls";
 
-function CounterOrangeChart() {
-    let token = useSelector((state) => state.auth.token);
-    let ownerClinics = useSelector((state) => state?.owner);
-    const [loading, setLoading] = useState(true);
+
+function CounterOrangeChart({loading, data, responseOrange, el, ownerClinics}) {
 
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
-    let date = new Date().getFullYear().toString()
-    const [data,setData] = useState([0,0]);
-    const [responseState,setResponseState] = useState({});
-
-    useEffect(() => {
-        setLoading(true)
-        postResource('ClinicOwner','OwnerClinicMontlyRating', token,  ownerClinics?.id, {year:date, month: ownerClinics?.month_key}).then((response) => {
-            setResponseState(response)
-            let arr = []
-            arr.push(+((+response?.avg_rating).toFixed(1)));
-            arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
-            setData(arr)
-            setLoading(false)
-        });
-
-    }, [ownerClinics])
+    let arr = []
+    arr.push(+((+el?.avg_rating).toFixed(1)));
+    arr.unshift(+((5 - (+el?.avg_rating)).toFixed(1)))
 
 
     const counterforOrangeDoughnut = {
@@ -47,13 +30,12 @@ function CounterOrangeChart() {
 
     useEffect(()=>{
         if(appointmentChartRef?.current?.ctx){
-            appointmentChartRef.current.config.data.datasets[0].data = data
+            appointmentChartRef.current.config.data.datasets[0].data = arr
             appointmentChartRef.current.update()
         }
-    },[data])
+    },[arr])
 
     useEffect(()=>{
-
         Chart.register(...registerables)
         appointmentChartRef.current = new Chart(canvasRef.current.getContext("2d"), {
             type: "doughnut",
@@ -62,7 +44,7 @@ function CounterOrangeChart() {
                     {
                         backgroundColor: ["#F5F6FA", "#F5A348"],
                         weight: 0.5,
-                        data: data,
+                        data: [+((5 - (+el?.avg_rating)).toFixed(1)), +((+el?.avg_rating).toFixed(1))],
                         spacing: 0,
                         borderWidth: 0,
                     },
@@ -85,6 +67,7 @@ function CounterOrangeChart() {
 
     return(
         <Spin spinning={loading}>
+
             <Space className={'round_charts_big_div'}>
                 <div  style={{height:92,width:92}}>
                     <canvas id='CounterOrangeChart' ref={canvasRef}></canvas>
@@ -92,10 +75,10 @@ function CounterOrangeChart() {
 
                 <Space direction={'vertical'} style={{marginLeft: 11}}>
                     <div className={'chart_counter_bold_text'}>
-                        {responseState?.clinic}
+                        {el?.clinic}
                     </div>
-                    <div className={'avg_montly'}> Avg. monthly</div>
-                    <div className={'avg_montly'}>clinic rating {responseState?.avg_rating}</div>
+                    <div className={'avg_montly'}> Avg.</div>
+                    <div className={'avg_montly'}>clinic rating {el?.avg_rating}</div>
                 </Space>
             </Space>
         </Spin>

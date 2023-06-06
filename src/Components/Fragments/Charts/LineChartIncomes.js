@@ -17,6 +17,7 @@ function LineChartIncomes() {
     let ownerClinics = useSelector((state) => state?.owner);
 
     const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
 
 
     const [date, setDate] = useState({
@@ -25,19 +26,14 @@ function LineChartIncomes() {
         period: 12
     });
 
-    const [startAndDate, setStartAndDate] = useState(dayjs());
-    const [nullData, setNullData] = useState([]);
-
-
-
 
     const monthNames = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
 
-    const endDate = startAndDate;
-    const startDate = dayjs(startAndDate).add(-date.period, 'month');
+    const endDate = dayjs();
+    const startDate = endDate.add(-date.period, 'month');
 
 
     const monthsDiff = endDate.diff(startDate, 'month');
@@ -53,21 +49,48 @@ function LineChartIncomes() {
     labels.length = date.period
 
 
+    let color = [
+        {
+            key: 0,
+            name: '#D477B0'
+        },
+        {
+            key: 1,
+            name: '#F7BE93'
+        },
+        {
+            key: 2,
+            name: '#9f70e6'
+        },
+        {
+            key: 3,
+            name: '#6DAF56'
+        },
+        {
+            key: 4,
+            name: '#9e9ba1'
+        },
+        {
+            key: 5,
+            name: '#FFD850'
+        },
+    ]
+
     useEffect(() => {
         setLoading(true)
         postResource('ClinicOwner', 'PeriodIncomes', token, '', date).then((response) => {
+
             const totalData =[];
-            let a = response?.map((el) =>{
+            let a = response?.map((el, k) =>{
                 let data = Object.values(el.month_incomes).map((el) => Object.values(el)).flat();
                 data.forEach((e,key)=>{
                     totalData[key] = (totalData[key]??0)+e
                 })
-                setNullData(data)
                 return {
                     label: el.clinic,
                     data,
                     stack: el.clinic,
-                    backgroundColor: "#F7BE93",
+                    backgroundColor: color.find(el => (el.key == k))?.name,
                     borderColor: ["white"],
                     borderSkipped: false,
                     borderWidth: 2,
@@ -75,9 +98,7 @@ function LineChartIncomes() {
                     type: "bar",
                 }
             })
-
-
-
+            setData(a)
 
 
             const noData = {
@@ -96,6 +117,8 @@ function LineChartIncomes() {
                 },
             }
 
+           // let color = ['#D477B0', '#F7BE93', '#774D9D', '#6DAF56']
+
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
             appointmentChartRef.current = new Chart(appointmentsStats, {
@@ -104,17 +127,17 @@ function LineChartIncomes() {
                     labels,
                     datasets: a.length === 0 ? [] : [
                         ...a,
-                        ...(a.length>0? [{
+                        {
                             label: "Total",
                             data: totalData,
                             stack: "Total",
-                            backgroundColor: "#774D9D",
+                            backgroundColor: '#774D9D',
                             borderColor: ["white"],
                             borderSkipped: false,
                             borderWidth: 2,
                             borderRadius: 5,
                             type: "bar",
-                        }]:[]),
+                        },
                     ],
                 },
 
@@ -250,7 +273,7 @@ function LineChartIncomes() {
         }
 
 
-    }, [date, startAndDate])
+    }, [date])
 
     const onRadioChange = (e) => {
         switch (e.target.value) {
@@ -304,9 +327,10 @@ function LineChartIncomes() {
             <div className={'gradient_chart_big_div'}>
                 <div className={'gradient_chart_inn_big_div'}>
                     <Space style={{fontSize: 24, fontWeight: 600}}>
-                        {t("Incomes")}
-                        {['Jeddah Clinic', 'Clinic name', 'Total'].map((itemKey, key) => <Space key={key}
-                                                                                                className={`withDot WD-color1-${key}`}>{itemKey}</Space>)}
+                        <div>{t("Income (All clinics)")}</div>
+
+                        {data?.map((itemKey, key) => <Space key={key} className={`withDot WD-color1-${key}`}>{itemKey.label}</Space>)}
+                        <Space className={`withDot WD-colorTotal`}>Total</Space>
                     </Space>
                     <div>
                         <Space className={'arrow_button'}>

@@ -39,7 +39,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     }, [selectedDate, docItem,data.service_type])
     const openDrawer = () => {
-        formRef.current.validateFields(['hour']).then(e => {
+        formRef.current.validateFields(['time','service_type']).then(e => {
             setOpen(true);
             setSize('default');
         })
@@ -92,9 +92,9 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                         <h1 style={{fontSize: 24, fontWeight: 300}}>{Resources.Days[dayjs(selectedDate).day()]}</h1>
                     </Space>
                     <div>
-                        {loading ? <Preloader/> : <Form.Item name={'time'} rules={[
+                        {loading ? <Preloader/> : times.length?<Form.Item name={'time'} rules={[
                             {
-                                required: true
+                                required: true,
                             }
                         ]
                         }>
@@ -107,7 +107,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                 optionType="button"
                                 buttonStyle="solid"
                             />
-                        </Form.Item>}
+                        </Form.Item>:null}
                     </div>
                     <div >
                         <Space>
@@ -125,17 +125,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                    rules={[{required: true}]}
                                    initialValue={null}
                                    initialData={getServiceTypes(clinic.services)}/>
-                        <FormInput label={t('Specialties')} name={'specialty_id'}
-                                   inputType={'resourceSelect'}
-                                   rules={[{required: true}]}
-                                   initialValue={null}
-                                   initialData={[]}
-                                   resource={'Taxonomy'}
-                                   resourceParams={{
-                                       type: Resources.TaxonomyTypes.SPECIALTY,
-                                       has_parent: 0
-                                   }}
-                        />
+                        <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
+                       
                         <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                    inputType={'resourceSelect'}
                                    rules={[{required: true}]}
@@ -160,13 +151,13 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 </Form>
             }
 
-            <Drawer size={size} title="Add Appointment" placement="right" onClose={() => setOpen(false)} open={open}>
+            <Drawer size={size} title="Add User" placement="right" onClose={() => setOpen(false)} open={open}>
                 {
                     size === "default" ?
-                        <ClinicManagerCalendarDrawerSmall data={data} doctor={doctor} specialty={specialty}
+                        <ClinicManagerCalendarDrawerSmall setData={setData} data={data} doctor={doctor} specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
-                        <ClinicManagerCalendarDrawerLarge data={data} doctor={doctor} specialty={specialty}
+                        <ClinicManagerCalendarDrawerLarge setData={setData} data={data} doctor={doctor} specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           setOpen={setOpen} openDrawer={openDrawer}/>
                 }

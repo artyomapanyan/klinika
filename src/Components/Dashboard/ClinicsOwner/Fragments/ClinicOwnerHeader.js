@@ -14,28 +14,37 @@ function ClinicOwnerHeader({ noClinicSelect = false }) {
 	let dispatch = useDispatch()
 	let ownerClinics = useSelector(state => state?.owner)
 
+
+
 	useEffect(() => {
 		if (!noClinicSelect) {
 
 				if (reduxInfo) {
-					setItems(
-						reduxInfo.map((el, key) => {
-							if (key === 0) {
-								dispatch({
-									type: 'OWNER_DATA',
-									payload: {
-										id: el?.id,
-										month_key: currentMonth
-									}
-								})
-							}
-							return {
-								label: el?.name,
-								key: el?.id
-							}
-						})
-					)
+						let itm = [
+							{
+								key:'all',
+								label:'All Clinics'
+							},
+							...reduxInfo.map((el, key) => {
+								if (key === 0) {
+									dispatch({
+										type: 'OWNER_DATA',
+										payload: {
+											id: el?.id,
+											month_key: currentMonth
+										}
+									})
+								}
+								return {
+									label: el?.name,
+									key: el?.id
+								}
+							})
+						]
+
+					setItems(itm)
 				}
+
 
 		}
 	}, [])
@@ -57,6 +66,8 @@ function ClinicOwnerHeader({ noClinicSelect = false }) {
 			}
 		})
 	}
+
+	console.log(items, 'f')
 
 	const { Months } = Resources
 	return (

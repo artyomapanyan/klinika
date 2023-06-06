@@ -9,7 +9,7 @@ export function Confirmed({onCancel, loading}){
 
     return<div>
         <Result
-            title={t('Ar you changed status')}
+            title={t('Are you sure want to change status?')}
         />
 
         <div style={{display: 'flex', gap: 5}} >

@@ -19,30 +19,31 @@ function Incoice() {
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
 
-    const handleFilterResponse = (data,formRef)=>{
-    Object.keys(data.items).map((key)=>{
-            let currentItem = data.items[key];
+    const handleFilterResponse = (data,timeout = 80) => {
 
 
-        data.items[key].amount = currentItem.qnt*((+currentItem.price)+((+currentItem.price)/100*(+currentItem.tax)))
-            if(formRef){
-                formRef.current.setFieldValue(['items',key,'amount'], data.items[key].amount)
+        let total = 0;
+        if (Object.keys(data.items).length) {
 
 
-            }
-        })
+            Object.keys(data.items).map((key) => {
+                let currentItem = data.items[key];
+                data.items[key].amount = currentItem.qnt * ((+currentItem.price) + ((+currentItem.price) / 100 * (+currentItem.tax)))
+                total += data.items[key].amount;
+                if (formRef) {
+                    formRef?.current?.setFieldValue(['items', key, 'amount'], data.items[key].amount)
+                }
+            })
+            setTimeout(() => formRef?.current?.setFieldValue('sub_total',total ),timeout)
+
+        }
         return data
     }
-    const {loadingState, dataState} = useGetResourceSingle(resource, params.id,{},handleFilterResponse)
+    const {loadingState, dataState} = useGetResourceSingle(resource, params.id, {}, handleFilterResponse)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
-
-
-
-
-
 
 
     const fetchedUsers = useRef([]);
@@ -50,13 +51,13 @@ function Incoice() {
 
     const onFinish = (values) => {
         setSaveLoading(true)
-        setData((prevState)=>({
+        setData((prevState) => ({
             ...prevState,
             ...values
         }))
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
-                if(response?.id){
+                if (response?.id) {
                     navigate(-1)
                 }
             }).finally(() => {
@@ -75,7 +76,6 @@ function Incoice() {
     }
 
 
-
     // useEffect(() => {
     //     if(data?.item) {
     //         postResource('InvoiceItem','single', token,  data.item ).then((response) => {
@@ -87,15 +87,15 @@ function Incoice() {
     // }, [data?.item])
 
 
-
-    const handleValuesChange = (changed,all)=>{
+    const handleValuesChange = (changed, all) => {
         setChangeValuesState(changed)
 
-        if(changed.items){
+        if (changed.items) {
 
-            setData(handleFilterResponse({...data,...formRef?.current?.getFieldsValue()
-        },formRef))
-        }else{
+            setData(handleFilterResponse({
+                ...data, ...formRef?.current?.getFieldsValue()
+            }, 0))
+        } else {
             setData((prevState) => ({
                 ...prevState,
                 ...changed,
@@ -103,16 +103,12 @@ function Incoice() {
             }))
         }
 
-
-
-
-
         if (changed.appointment_id) {
             const foundUser = fetchedUsers.current?.find(i => i.id === changed?.appointment_id);
 
 
             formRef.current?.setFieldsValue({
-                appointment:{
+                appointment: {
                     service: foundUser?.service,
                     client_name: foundUser?.patient?.first,
                     specialty: foundUser?.specialty?.title,
@@ -121,71 +117,82 @@ function Incoice() {
                 }
 
 
-
             })
         }
     }
 
-    const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) `:null
+    const handleMapItems = (item, name) => {
+        name = item.phone_code ? `(${item.phone_code}) ` : null
         item.id = item.phone_code
-        return [name,item]
+        return [name, item]
     }
 
     const searchByNumber = (item, name, patientData) => {
         fetchedUsers.current = patientData
         name = <>{'Appointment with'}{" "}{item?.doctor?.first}{" "}{item?.doctor?.last}{' '}{item.reference_code}</>
-        let searchData = item.phone_number+item.email;
-        return [name, item,searchData]
+        let searchData = item.phone_number + item.email;
+        return [name, item, searchData]
 
 
     }
 
     const onAddItem = () => {
-        setData((prevState)=> ({
-         ...prevState,
-            items:{
-                ...(prevState?.items??{}),
-       [Math.random()]: {
-            tax:0,
-           qnt:1,
-           item:null,
-           amount:0,
-           price:0
-        }
+        setData((prevState) => ({
+            ...prevState,
+            items: {
+                ...(prevState?.items ?? {}),
+                [Math.random()]: {
+                    tax: 0,
+                    qnt: 1,
+                    item: null,
+                    amount: 0,
+                    price: 0,
+                    item_object:{}
+                }
             }
         }))
     }
 
     const onDeleteItem = (key) => {
-        setData((prevState)=> {
+        setData((prevState) => {
             let newItems = prevState.items
             delete newItems[key]
-          return   {
+            return {
                 ...prevState,
-                items:newItems
+                items: newItems
             }
         })
     }
 
 
-    const handleInvoiceSelect = (e,key)=>{
+    const handleInvoiceSelect = (e, key,data) => {
 
-        postResource('InvoiceItem','single', token,  e ).then((response) => {
-
-            formRef.current.setFieldValue(['items',key,'qnt'],1)
-            formRef.current.setFieldValue(['items',key,'price'],response?.price)
-            formRef.current.setFieldValue(['items',key,'tax'],response?.tax_percentage)
-            formRef.current.setFieldValue(['items',key,'amount'],response?.price + response?.price/100*response?.tax_percentage)
+        postResource('InvoiceItem', 'single', token, e).then((response) => {
+            console.log(data.find(u=>u.id===e),'ssss')
+            const selected_item = data.find(u=>u.id===e);
+            formRef.current.setFieldValue(['items', key, 'qnt'], 1)
+            formRef.current.setFieldValue(['items', key, 'item_object'], {
+                id:selected_item.id,
+                name:selected_item.name
+            })
+            formRef.current.setFieldValue(['items', key, 'price'], response?.price)
+            formRef.current.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
+            formRef.current.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
+            console.log( formRef.current.getFieldsValue())
 
         })
+
+
     }
 
+    formRef?.current?.getFieldValue('sub_total')
 
+    console.log(data)
 
-    return(
+    return (
         <div>
-            {data?.id ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice - ${data?.invoice_number}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Invoice`)}</h3>}
+            {data?.id ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice - ${data?.invoice_number}`)}</h3> :
+                <h3 className={'create_apdate_btns'}>{t(`Add new Invoice`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -194,27 +201,38 @@ function Incoice() {
                 ref={formRef}
                 className={'add_create_form'}
             >
-                <div  className={'add_edit_content'}>
-                    <div style={{display:"flex"}}>
-                        <div style={{width:'35%'}}>
-                            <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                <div className={'add_edit_content'}>
+                    <div style={{display: "flex"}}>
+                        <div style={{width: '35%'}}>
+                            <FormInput label={t('Country Code')} name={'phone_country_code'}
+                                       inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.phone_country_code}
+                                       initialValue={data?.appointment?.patient?.phone_country_code}
                                        handleMapItems={handleMapItems}
                                        resource={'Country'}/>
                         </div>
-                        <div style={{width:'100%', marginLeft:10}}>
-                            <FormInput label={t('Select Patient and choose an appointment (Search By phone number)')} name={'appointment_id'}
+                        <div style={{width: '100%', marginLeft: 10}}>
+                            <FormInput label={t('Select Patient and choose an appointment (Search By phone number)')}
+                                       name={'appointment_id'}
                                        inputType={'resourceSelect'}
                                 //rules={[{required: true}]}
                                        searchConfigs={{minLength: 4}}
                                        initialValue={data?.appointment?.id}
                                        inputProps={{
 
-                                           notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div> </div>
+                                           notFoundContent: <div style={{
+                                               display: "flex",
+                                               flexDirection: "row",
+                                               justifyContent: "space-between"
+                                           }}>
+                                               <div>Not found</div>
+                                           </div>
+                                       }}
+                                       resourceParams={{
+                                           phone_country_code:data?.phone_country_code??data?.appointment?.clinic?.phone_country_code
                                        }}
 
-                                       initialData={data?.appointment?[data?.appointment]:[]}
+                                       initialData={data?.appointment ? [data?.appointment] : []}
                                        handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                        customSearchKey={'phone_number'}
                                        resource={'Appointment'}/>
@@ -222,30 +240,33 @@ function Incoice() {
                         </div>
                     </div>
                     {
-                        data?.id ? <FormInput label={t('Invoice Number')} name={'invoice_number'} initialValue={data?.invoice_number} rules={[{required: true}]} /> : <div></div>
+                        data?.id ? <FormInput label={t('Invoice Number')} name={'invoice_number'}
+                                              initialValue={data?.invoice_number} rules={[{required: true}]}/> :
+                            <div></div>
                     }
 
 
                     {
                         data?.appointment_id || data?.id ? <div>
-                            <div style={{display:"flex", gap: 10}}>
+                            <div style={{display: "flex", gap: 10}}>
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client name')} name={'client_name'}
                                                inputDisabled={true}
-                                               initialValue={data?.appointment?.patient?.first ? data?.appointment?.patient?.first : formRef.current.getFieldValue(['appointment','client_name'])}
+                                               initialValue={data?.appointment?.patient?.first ? data?.appointment?.patient?.first : formRef.current.getFieldValue(['appointment', 'client_name'])}
 
-                                               rules={[{required: true}]} />
+                                               rules={[{required: true}]}/>
                                 </div>
                                 <div style={{width: '100%'}}>
-                                    <FormInput label={t('Client manager')} name={'client_manager_id'} inputType={'resourceSelect'}
+                                    <FormInput label={t('Client manager')} name={'client_manager_id'}
+                                               inputType={'resourceSelect'}
                                                rules={[{required: true}]}
                                                resource={'User'}
                                                resourceParams={{
-                                                   type:'manager',
-                                                   appointment_id:data.appointment_id
+                                                   type: 'manager',
+                                                   appointment_id: data.appointment_id
                                                }}
-                                               initialValue={data?.client_manager_id?.id}
-                                               initialData={data?.client_manager_id? [data?.client_manager_id]:[]}
+                                               initialValue={data?.client_manager?.id}
+                                               initialData={data?.client_manager ? [data?.client_manager] : []}
 
                                     />
 
@@ -256,88 +277,129 @@ function Incoice() {
                     }
 
 
-
-
-                    <div style={{display:"flex", gap: 10}}>
+                    <div style={{display: "flex", gap: 10}}>
                         <div style={{width: '100%'}}>
-                            <FormInput label={t('Issued date')} name={'issued_date'} initialValue={dayjs()} inputType={'date'} inputDisabled={true} rules={[
+                            <FormInput label={t('Issued date')} name={'issued_date'} initialValue={data?.date ? data?.date : dayjs()}
+                                       inputType={'date'} inputDisabled={true} rules={[
                                 {required: true},
 
-                            ]} />
+                            ]}/>
                         </div>
                         <div style={{width: '100%'}}>
-                            <FormInput label={t('Due date')} name={'due_date'} initialValue={data?.due_date} inputType={'date'} rules={[
+                            <FormInput label={t('Due date')} name={'due_date'} initialValue={data?.due_date}
+                                       inputType={'date'} rules={[
                                 {required: true},
 
-                            ]} />
+                            ]}/>
                         </div>
                     </div>
-                    <FormInput label={t('Customer notes')} name={'customer_notes'} inputType={'textArea'} initialValue={data?.customer_notes}/>
+                    <FormInput label={t('Customer notes')} name={'customer_notes'} inputType={'textArea'}
+                               initialValue={data?.customer_notes}/>
 
                 </div>
 
                 <div className={'add_edit_content'}>
-
                     {
-                        data?.appointment_id || data?.id ? <div>
-                            <div>
-                                {
-                                    Object.keys(data?.items??{})?.map((key) => {
-                                        return<div key={key} style={{display: 'flex', gap: 15, justifyContent: 'space-between', width:'100%'}}>
-                                            <div style={{width: '50%'}}>
-                                                <FormInput label={t('Invoice item')} name={['items',key,'item']} inputType={'resourceSelect'}
-                                                           rules={[{required: true}]}
-                                                           inputProps={{onChange:e=>handleInvoiceSelect(e,key)}}
+                        data?.primary === 1 ? <div className={'invoice_primary_inputs_div'}>
+                            <div style={{width: '100%'}}>
+                                <FormInput label={t('Lab or nursing cost')} name={'lab_or_nursing_cost'}
+                                           inputDisabled={true} initialValue={data?.lab_or_nursing_cost}/>
+                                <FormInput label={t('Service fee')} name={'service_fee'} inputDisabled={true}
+                                           initialValue={data?.service_fee}/>
+                                <FormInput label={t('Tax percentage')} name={'tax_percentage'} inputDisabled={true}
+                                           initialValue={data?.tax_percentage}/>
+                                <FormInput label={t('Coupon discount amount')} name={'coupon_discount_amount'}
+                                           inputDisabled={true} initialValue={data?.coupon_discount_amount}/>
+
+                            </div>
+                            <div style={{width: '100%'}}>
+                                <FormInput label={t('Diagnosis price')} name={'diagnosis_price'} inputDisabled={true}
+                                           initialValue={data?.diagnosis_price}/>
+                                <FormInput label={t('Insurance percentage')} name={'insurance_percentage'}
+                                           inputDisabled={true} initialValue={data?.insurance_percentage}/>
+                                <FormInput label={t('Vat')} name={'vat'} inputDisabled={true} initialValue={data?.vat}/>
+                            </div>
 
 
-                                                           resource={'InvoiceItem'}
-                                                />
-                                            </div>
-                                            <div style={{width: '50%', display: 'flex', gap: 15, }}>
-                                                <div >
-                                                    <FormInput  label={t('Quantity')} name={['items',key,'qnt']} inputType={'number'} initialValue={data?.items[key]?.qnt}/>
+                        </div> : <div>
+                            {
+                                data?.appointment_id || data?.id ? <div>
+                                    <div>
+                                        {
+                                            Object.keys(data?.items ?? {})?.map((key) => {
+
+                                                return <div key={key} style={{
+                                                    display: 'flex',
+                                                    gap: 15,
+                                                    justifyContent: 'space-between',
+                                                    width: '100%'
+                                                }}>
+                                                    <div style={{width: '50%'}}>
+                                                        <FormInput label={t('Invoice item')}
+                                                                   name={['items', key, 'item']}
+                                                                   inputType={'resourceSelect'}
+                                                                   rules={[{required: true}]}
+                                                                   inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
+                                                                   initialValue={data?.items[key]?.item}
+                                                                   initialData={data?.items[key].item_object ? [data?.items[key]?.item_object] : []}
+
+
+                                                                   resource={'InvoiceItem'}
+                                                        />
+                                                        <Form.Item hidden={1} initialValue={data?.items[key].item_object} name={['items', key, 'item_object']}/>
+                                                    </div>
+                                                    <div style={{width: '50%', display: 'flex', gap: 15,}}>
+                                                        <div>
+                                                            <FormInput label={t('Quantity')}
+                                                                       name={['items', key, 'qnt']} inputType={'number'}
+                                                                       initialValue={data?.items[key]?.qnt}/>
+                                                        </div>
+                                                        <div>
+                                                            <FormInput label={t('Price')} name={['items', key, 'price']}
+                                                                       inputType={'number'}
+                                                                       initialValue={data?.items[key]?.price}/>
+                                                        </div>
+                                                        <div>
+                                                            <FormInput label={t('Tax')} name={['items', key, 'tax']}
+                                                                       inputType={'number'}
+                                                                       initialValue={data?.items[key]?.tax}/>
+                                                        </div>
+                                                        <div>
+                                                            <FormInput inputDisabled={true} label={t('Amount  ')}
+                                                                       name={['items', key, 'amount']}
+                                                                       inputType={'number'}
+                                                                       initialValue={data?.items[key]?.amount}/>
+                                                        </div>
+                                                        <div>
+                                                            <Button style={{marginTop: 8}} type={'primary'}
+                                                                    size={'large'}
+                                                                    onClick={() => onDeleteItem(key)}>delete</Button>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-                                                <div >
-                                                    <FormInput  label={t('Price')} name={['items',key,'price']} inputType={'number'} initialValue={data?.items[key]?.price}/>
-                                                </div>
-                                                <div >
-                                                    <FormInput  label={t('Tax')} name={['items',key,'tax']} inputType={'number'} initialValue={data?.items[key]?.tax}/>
-                                                </div>
-                                                <div >
-                                                    <FormInput inputDisabled={true}  label={t('Amount  ')} name={['items',key,'amount']} inputType={'number'} initialValue={data?.items[key]?.amount}/>
-                                                </div>
-                                                <div >
-                                                    <Button style={{marginTop:8}} type={'primary'} size={'large'} onClick={()=>onDeleteItem(key)}>delete</Button>
-                                                </div>
+                                            })
+                                        }
+                                    </div>
+                                    <div className={'invoice_add_total_div'}>
+                                        <div>
+                                            <Button onClick={onAddItem}>+ Add another item</Button>
+                                        </div>
+                                        <div className={'invoice_total_div'}>
+                                            <div style={{marginTop: 15, width: 70}}> Total (sar)</div>
+                                            <div style={{width: '90%'}}>
+                                                <FormInput label={t('Sub Total')} name={'sub_total'}
+                                                           inputType={'number'} initialValue={data?.items?.amount}/>
                                             </div>
 
                                         </div>
-                                    })
-                                }
-                            </div>
-                            <div className={'invoice_add_total_div'} >
-                                <div>
-                                    <Button onClick={onAddItem}>+ Add another item</Button>
-                                </div>
-                                <div className={'invoice_total_div'}>
-                                    <div style={{marginTop: 15, width: 70}}> Total (sar)</div>
-                                    <div style={{width: '90%'}}>
-                                        <FormInput label={t('Sub Total')} name={'sub_total'} inputType={'number'} initialValue={data?.items} />
                                     </div>
-
-                                </div>
-                            </div>
-                        </div> : <div className={'invoice_firsli_text_div'}>
+                                </div> : <div className={'invoice_firsli_text_div'}>
                                     Firstly please choose an appointment
-                                 </div>
+                                </div>
+                            }
+                        </div>
                     }
-
-
-
-
-
-
-
 
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
@@ -356,4 +418,5 @@ function Incoice() {
         </div>
     )
 }
+
 export default Incoice;
