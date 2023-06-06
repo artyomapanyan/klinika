@@ -1,7 +1,6 @@
 import {Col, Row, Spin} from "antd";
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CounterGreenChart from "../../Fragments/Charts/CounterGreenChart";
-import CounterOrangeChart from "../../Fragments/Charts/CounterOrangeChart";
 import '../../Fragments/Charts/ChartStyles.sass'
 import GradientChart from "../../Fragments/Charts/GradientChart";
 import LineChartIncomes from "../../Fragments/Charts/LineChartIncomes";
@@ -28,10 +27,10 @@ function ClinicsOwner() {
 
 
     const [responseOrange,setResponseOrange] = useState([]);
-    const [dateMontKey,setdateMontKey] = useState({
-        year: new Date().getFullYear().toString(),
-        month: ownerClinics?.month_key
-    });
+    // const [dateMontKey,setdateMontKey] = useState({
+    //     year: new Date().getFullYear().toString(),
+    //     month: ownerClinics?.month_key
+    // });
 
 
 

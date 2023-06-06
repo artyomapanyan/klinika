@@ -1,9 +1,7 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {Chart,registerables} from "chart.js";
 import {Space, Spin} from "antd";
-import {useSelector} from "react-redux";
-import {postResource} from "../../Functions/api_calls";
-import Preloader from "../../Preloader";
+
 
 function CounterGreenChart({loading, data, responseState, el, setResponseState, color, a}) {
     let canvasRef = useRef();
