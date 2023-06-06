@@ -6,7 +6,7 @@ import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse
 import gray_grid from "../../../../../../dist/icons/gray_grid.png";
 import arrowDownPurple from "../../../../../../dist/icons/arrowDownPurple.svg";
 
-function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
+function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
     const [btnCollapsed, setBtnCollapsed] = useState(false);
 
     const openCollapse = () => {
@@ -50,4 +50,4 @@ function ClicicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
 
     )
 }
-export default ClicicManagerCalendarCollapse;
+export default ClinicManagerCalendarCollapse;

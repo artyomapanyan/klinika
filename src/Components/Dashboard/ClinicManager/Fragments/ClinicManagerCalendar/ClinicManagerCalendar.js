@@ -2,12 +2,13 @@ import React, {useEffect, useMemo, useState} from "react";
 import "./ClinicManagerCalendar.scss";
 import {Button, Input, Spin} from "antd";
 import ClinicManagerCalendarHead from "./Fragments/ClinicManagerCalendarHead";
-import ClicicManagerCalendarCollapse from "./Fragments/ClicicManagerCalendarCollapse";
+
 import dayjs from "dayjs";
 import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Resources from "../../../../../store/Resources";
 import search_icon_black from "../../../../../dist/icons/search_icon_black.png"
+import ClinicManagerCalendarCollapse from "./Fragments/ClicicManagerCalendarCollapse";
 
 function ClinicManagerCalendar() {
     const [loading, setLoading] = useState(true)
@@ -92,7 +93,7 @@ function ClinicManagerCalendar() {
                                                 </tr>
                                             </tbody>
 
-                                            {filteredData?.slice(0,showCount)?.map((item, key) => <ClicicManagerCalendarCollapse key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
+                                            {filteredData?.slice(0,showCount)?.map((item, key) => <ClinicManagerCalendarCollapse key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
                                         </table>
                                         {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>Load More</Button>:null}
                                     </div>

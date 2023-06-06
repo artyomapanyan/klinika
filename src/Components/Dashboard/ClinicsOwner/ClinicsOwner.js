@@ -41,19 +41,6 @@ function ClinicsOwner() {
         postResource('ClinicOwner','OwnerClinicRating', token,  '', {...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {}) } ).then((response) => {
             setLoading(true)
             setResponseState(response)
-            // // let arr = []
-            // // arr.push(+((+response?.avg_rating).toFixed(1)));
-            // // arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
-            // let arr = []
-            // let arr2 = response?.map((el) => {
-            //     return arr.push(+((+el?.avg_rating).toFixed(1)))
-            //
-            // })
-            // let arr1 = response?.map((el) => {
-            //     return arr.unshift(+((5 - (+el?.avg_rating)).toFixed(1)))
-            // })
-            //
-            // setData(arr)
             setLoading(false)
         });
 
@@ -62,69 +49,92 @@ function ClinicsOwner() {
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
+    //
+    //     postResource('ClinicOwner','OwnerClinicMontlyRating', token,  '', {...dateMontKey, ...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
+    //         setResponseOrange(response)
+    //         // let arr = []
+    //         // arr.push(+((+response?.avg_rating).toFixed(1)));
+    //         // arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
+    //         // setData(arr)
+    //
+    //     });
+    //
+    // }, [ownerClinics])
 
-        postResource('ClinicOwner','OwnerClinicMontlyRating', token,  '', {...dateMontKey, ...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
-            setResponseOrange(response)
-            // let arr = []
-            // arr.push(+((+response?.avg_rating).toFixed(1)));
-            // arr.unshift(+((5 - (+response?.avg_rating)).toFixed(1)))
-            // setData(arr)
+    let color = [
+        {
+            key: 0,
+            name: '#D477B0'
+        },
+        {
+            key: 1,
+            name: '#F7BE93'
+        },
+        {
+            key: 2,
+            name: '#9f70e6'
+        },
+        {
+            key: 3,
+            name: '#6DAF56'
+        },
+        {
+            key: 4,
+            name: '#9e9ba1'
+        },
+        {
+            key: 5,
+            name: '#FFD850'
+        },
+    ]
 
-        });
-
-    }, [ownerClinics])
 
 
     return(
         <div style={{marginBottom: 100}}>
             {!ownerClinics?.id || !ownerClinics?.month_key?<Preloader/>:<div style={{margin:'10px 20px'}} className={'clinics_owner'}>
-                <Row gutter={[19,19]}>
-                    <Col  lg={8} md={12} sm={24} xs={24} >
-                        <div className="gutter_row">
-                            {
-                                loading ? <Preloader small={30}/> : <div style={{display: 'block', }}>
-                                    {
-                                        responseState?.map((el, key) => {
-                                            return <Spin spinning={loading} key={key}>
-                                                <CounterGreenChart key={key} el={el} loading={loading}   responseOrange={responseOrange} setResponseState={setResponseState} ownerClinics={ownerClinics}/>
-                                            </Spin>
-                                        })
-                                    }
+                <div className={'k_owner_conteiners'}>
+                    {
+                       loading ? <Preloader small={30} /> : responseState?.map((el, key) => {
+                           let a = color.find(e => (e.key == key))?.name
+                            return<div key={key}>
+                                    <div className="gutter_row">
+
+                                    <div style={{display: 'block', }}>
+                                        <Spin spinning={loading}>
+                                            <CounterGreenChart a={a} el={el} loading={loading} color={color}   responseOrange={responseOrange} setResponseState={setResponseState} ownerClinics={ownerClinics}/>
+                                        </Spin>
+                                    </div>
                                 </div>
-                            }
+                            </div>
+                        })
+                    }
 
-
-
-
-                        </div>
-                    </Col>
-                    <Col lg={8} md={12} sm={24} xs={24}>
-                        <div className="gutter_row">
-                            {
-                                loading ? <Preloader small={30}/> : <div style={{display: 'block'}}>
-                                    {
-                                        responseState?.map((el, key) => {
-                                            return <CounterOrangeChart key={key} el={el} loading={loading}   responseState={responseState} setResponseState={setResponseState} ownerClinics={ownerClinics}/>
-                                        })
-                                    }
-                                </div>
-                            }
-
-
-                        </div>
-                    </Col>
-                    <Col lg={8} md={12} sm={24} xs={24}>
+                    {/*<div >*/}
+                    {/*    <div className="gutter_row">*/}
+                    {/*        {*/}
+                    {/*            loading ? <Preloader small={30 }/> : <div style={{display: 'block'}}>*/}
+                    {/*                {*/}
+                    {/*                    responseState?.map((el, key) => {*/}
+                    {/*                        return <CounterOrangeChart key={key} el={el} loading={loading}   responseState={responseState} setResponseState={setResponseState} ownerClinics={ownerClinics}/>*/}
+                    {/*                    })*/}
+                    {/*                }*/}
+                    {/*            </div>*/}
+                    {/*        }*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    <div>
                         <div className="gutter_row">
                             <CounterProgress  />
                         </div>
-                    </Col>
+                    </div>
                     {/*<Col lg={6} md={12} sm={24} xs={24}>*/}
                     {/*    <div className="gutter_row">*/}
                     {/*        <CounterMultipleChart  data={multipleData}/>*/}
                     {/*    </div>*/}
                     {/*</Col>*/}
-                </Row>
+                </div>
                 <div>
                     <GradientChart />
                 </div>

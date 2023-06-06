@@ -24,7 +24,7 @@ function DoctorReworkedCalendarHeader({setDate}) {
                 <Space>
                     <Button type={'primary'} onClick={showDrawer}>+ Add entry</Button>
                 </Space>
-                <Drawer width={411} title="Add Appointment" placement="right" onClose={onClose} open={open}>
+                <Drawer width={411} title="Add User" placement="right" onClose={onClose} open={open}>
                     {open?<DoctorReworkedCalendarDrawer setDate={setDate} setOpen={setOpen} />:null}
                 </Drawer>
             </div>

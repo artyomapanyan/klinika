@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 
 
 
-function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment}) {
+function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment,setData}) {
 
     const onFinish = (values) => {
 
@@ -45,6 +45,11 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                 <Form
                     name="edit"
                     onFinish={onFinish}
+                    initialValues={{...data}}
+                    onValuesChange={(e,v)=>setData(prevState=>({
+                        ...prevState,
+                        ...v
+                    }))}
                     layout="vertical"
                 >
                     <FormInput label={t('First name')} name={'first'} rules={[{required: true}]}/>

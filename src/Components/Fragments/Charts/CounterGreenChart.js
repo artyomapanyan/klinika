@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
 import Preloader from "../../Preloader";
 
-function CounterGreenChart({loading, data, responseState, el, setResponseState, ownerClinics}) {
+function CounterGreenChart({loading, data, responseState, el, setResponseState, color, a}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
@@ -14,7 +14,6 @@ function CounterGreenChart({loading, data, responseState, el, setResponseState, 
     let arr = []
     arr.push(+((+el?.avg_rating).toFixed(1)));
     arr.unshift(+((5 - (+el?.avg_rating)).toFixed(1)))
-
 
 
     const counterforGreenDoughnut = {
@@ -27,7 +26,7 @@ function CounterGreenChart({loading, data, responseState, el, setResponseState, 
             ctx.save();
             ctx.font = "700 22px Roboto";
             ctx.textAlign = "center";
-            ctx.fillStyle = "#6DAF56";
+            ctx.fillStyle = a;
             ctx.fillText(chart.config.data.datasets[0].data[1], width / 2, top + height / 2);
         },
     };
@@ -48,7 +47,7 @@ function CounterGreenChart({loading, data, responseState, el, setResponseState, 
             data: {
                 datasets: [
                     {
-                        backgroundColor: ["#F5F6FA", "#6DAF56"],
+                        backgroundColor: ["#F5F6FA", a],
                         weight: 0.5,
                         data: [+((5 - (+el?.avg_rating)).toFixed(1)), +((+el?.avg_rating).toFixed(1))],
                         spacing: 0,

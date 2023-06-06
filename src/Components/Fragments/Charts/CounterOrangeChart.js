@@ -77,7 +77,7 @@ function CounterOrangeChart({loading, data, responseOrange, el, ownerClinics}) {
                     <div className={'chart_counter_bold_text'}>
                         {el?.clinic}
                     </div>
-                    <div className={'avg_montly'}> Avg. monthly</div>
+                    <div className={'avg_montly'}> Avg.</div>
                     <div className={'avg_montly'}>clinic rating {el?.avg_rating}</div>
                 </Space>
             </Space>

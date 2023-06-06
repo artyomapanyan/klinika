@@ -7,7 +7,7 @@ import Resources from "../../../../../../store/Resources";
 import dayjs from "dayjs";
 
 
-function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment}) {
+function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData}) {
     const formRef = useRef();
 
     const [loading, setLoading] = useState(false)
@@ -31,19 +31,25 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                 name="edit"
                 onFinish={onFinish}
                 layout="vertical"
+                initialValues={{...data}}
+                onValuesChange={(e,v)=>setData(prevState=>({
+                    ...prevState,
+                    ...v
+                }))}
                 ref={formRef}
             >
             <Row gutter={[15, 15]}>
                 <Col lg={12}>
-                    <div style={{padding: 10, marginTop:20, display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                    <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                         <Space >
                             <Avatar size={50} icon={<UserOutlined />} />
-                            <div style={{display:"block"}}>
-                                <h3 className={'h1'}>{doctor.first} {doctor.last}</h3>
+                            <div style={{display:"block", height: 75}}>
+                                <div className={'dr_manager_divider_dr_name'}>{doctor.first} </div>
+                                <div className={'dr_manager_divider_dr_name'}>{doctor.last}</div>
                                 <div>{specialty}</div>
                             </div>
                         </Space>
-                        <Tag color="#ce4e99" size={'large'} style={{fontSize:17, fontWeight:550, marginTop:20,  padding:6, borderRadius:10}}>{data.time}</Tag>
+                        <Tag color="#ce4e99" size={'large'} style={{fontSize:14, fontWeight:600, height: 30, marginTop:20,  padding:'4px 10px', borderRadius:10}}>{data.time}</Tag>
                     </div>
                     <div>
 
@@ -78,10 +84,10 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                     </div>
                 </Col>
                 <Col lg={12}>
-                    <div align={'right'} style={{marginTop:67}}>
+                    <div align={'right'} style={{marginTop:42}}>
                         <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} /> Back to short form</Button>
                     </div>
-                    <div style={{marginTop:22}}>
+                    <div >
 
                             {/*<FormInput label={t('Address')} name={'address'}  rules={[{required: true}]} />*/}
                             <FormInput label={t('Country')} name={'country_id'}
