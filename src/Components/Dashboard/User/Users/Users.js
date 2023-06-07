@@ -16,17 +16,15 @@ function Users() {
                 {
                     title:t('First Name'),
                     dataIndex:'first',
-                    key:'First Name',
+                    key:'first',
                     sorter:true,
-                    translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
                     title:t('Last Name'),
                     dataIndex:'last',
-                    key:'Last Name',
+                    key:'last',
                     sorter:true,
-                    translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {

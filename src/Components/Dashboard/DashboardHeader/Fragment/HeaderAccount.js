@@ -15,6 +15,7 @@ import Preloader from '../../../Preloader'
 function HeaderAccount() {
 	let token = useSelector(state => state.auth.token)
 	let user = useSelector(state => state?.auth?.user)
+	let role = useSelector(state => state?.auth?.selected_role?.key)
 
 	const [approve, setApprove] = useState([])
 	const [elem, setElem] = useState([])
@@ -22,22 +23,19 @@ function HeaderAccount() {
 	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
-		setLoading(true)
-		postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
-			setApprove(response)
-			setLoading(false)
-		})
-	}, [elem])
+		if(role == 'doctor') {
+			setLoading(true)
+			postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
+				setApprove(response)
+				setLoading(false)
+			})
+		}
+
+	}, [role, elem])
 
 	const onOk = (el, key) => {
 		setElem(el)
-		postResource(
-			'ClinicDoctor',
-			'ApproveDecline',
-			token,
-			`/${el?.id}/approve`,
-			{ approve: 1 }
-		).then(response => {})
+		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {})
 	}
 
 	const onCancel = (el, key) => {

@@ -59,6 +59,7 @@ function ResourceTable ({
             page: pagination.current,
             per_page: pagination.pageSize
         }
+console.log(tableParams)
         clearObject(data)
         setSearchParams(data)
         setParams(data)

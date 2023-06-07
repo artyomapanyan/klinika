@@ -4,12 +4,23 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import {t} from "i18next";
 import Resource from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
+import {useSelector} from "react-redux";
 
 const resource='Offer'
 function Offers() {
+    let reduxInfo = useSelector((state) => state?.auth);
+
+
     return(
         <div>
-            <ResourceTable resource={resource} tableColumns={[
+            <ResourceTable resource={resource}
+                           except={{
+                               delete: reduxInfo?.selected_role?.key === 'doctor' ? true : false,
+                               edit: reduxInfo?.selected_role?.key === 'doctor' ? true : false
+                           }}
+
+
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -27,8 +38,8 @@ function Offers() {
                 {
                     dataIndex:['clinic','name'],
                     title:t('Clinic'),
-                    key:'clinics',
-                    filterDropdown: (props)=><TableFilterElement filterProps={props} resource={'Region'}/>,
+                    key:'clinic_name',
+                    filterDropdown: (props)=><TableFilterElement filterProps={props} />,
                 },
 
                 {

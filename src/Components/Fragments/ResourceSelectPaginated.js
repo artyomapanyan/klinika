@@ -93,13 +93,7 @@ function ResourceSelectPaginated({
     }
   }
   const handleSearch = (e) => {
-        if(searchConfigs.minLength){
-            if(e.length<searchConfigs.minLength){
-                setIsInitedState(false)
-            }else{
-                setIsInitedState(true)
-            }
-        }
+
 
 
     if (resource) {
@@ -107,6 +101,15 @@ function ResourceSelectPaginated({
         clearTimeout(timeout.current)
       }
       timeout.current = setTimeout(() => {
+
+          if(searchConfigs.minLength){
+              if(e.length<searchConfigs.minLength){
+                  setIsInitedState(false)
+              }else{
+                  console.log('sss')
+                  setIsInitedState(true)
+              }
+          }
         setLocalData([])
         setParams((prevState)=>({
             ...prevState,

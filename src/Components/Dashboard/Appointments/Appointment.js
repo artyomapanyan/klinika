@@ -354,14 +354,14 @@ function Appointment() {
                                                                initialValue={formRef.current.getFieldValue(['patient','dob'])}
                                                                inputType={'date'} rules={[
                                                         {required: !data?.patient_id},
-                                                        {
-                                                            validator:(rule,value)=>{
-                                                                if(dayjs().diff(value,'year')<18){
-                                                                    return Promise.reject('min age 18')
-                                                                }
-                                                                return Promise.resolve();
-                                                            }
-                                                        }
+                                                        // {
+                                                        //     validator:(rule,value)=>{
+                                                        //         if(dayjs().diff(value,'year')<18){
+                                                        //             return Promise.reject('min age 18')
+                                                        //         }
+                                                        //         return Promise.resolve();
+                                                        //     }
+                                                        // }
                                                     ]}/>
                                                     <FormInput label={t('Gender')} name={['patient','gender']}
                                                                disabled={data?.patient_id}
