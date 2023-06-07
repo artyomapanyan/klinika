@@ -140,7 +140,7 @@ function ClinicManagerAppointmentsTable() {
                         hideActions={true}
                         resource={'Appointment'}
 
-                        noPagination={true}
+                       // noPagination={true}
                         tableColumns={[{
                             title: 'Patient',
                             dataIndex: 'patient',
@@ -173,8 +173,10 @@ function ClinicManagerAppointmentsTable() {
                             },
                             {
                                 title: 'Date',
-                                dataIndex: 'date',
+                                dataIndex: 'booked_at',
                                 key: 'booked_at',
+                                sorter:true,
+                                defaultSortOrder:'descend',
                                 render:(e, record) => {
                                     return <div className={'table_bold_text'}>{dayjs(record?.booked_at?.iso_string).utc().format('DD.MM.YY')}</div>
                                 }
