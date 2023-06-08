@@ -96,13 +96,13 @@ function ClinicsOwner() {
                 <div className={'k_owner_conteiners'}>
                     {
                        loading ? <Preloader small={30} /> : responseState?.map((el, key) => {
-                           let a = color.find(e => (e.key == key))?.name
+                           let chartColors = color.find(e => (e.key == key))?.name
                             return<div key={key}>
                                     <div className="gutter_row">
 
                                     <div style={{display: 'block', }}>
                                         <Spin spinning={loading}>
-                                            <CounterGreenChart a={a} el={el} loading={loading} color={color}   responseOrange={responseOrange} setResponseState={setResponseState} ownerClinics={ownerClinics}/>
+                                            <CounterGreenChart chartColors={chartColors} el={el} loading={loading} color={color}   responseOrange={responseOrange} setResponseState={setResponseState} ownerClinics={ownerClinics}/>
                                         </Spin>
                                     </div>
                                 </div>

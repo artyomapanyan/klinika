@@ -62,6 +62,10 @@ function HeaderAccountDropdown({setAuthOpen}) {
         })
     }
 
+    const onSetings = () => {
+        navigate(`users/${auth?.user?.id}`)
+    }
+
 
     return (
         <Spin spinning={loading}>
@@ -81,7 +85,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
 
                     </div>
                     <div className={"head_acc_bottom_div"}>
-                        <Button style={{justifyContent:"none"}}>
+                        <Button style={{justifyContent:"none"}} onClick={onSetings}>
                             <div><img alt={'icons'} src={settings}/> {t("Account setings")}</div>
 
                         </Button>

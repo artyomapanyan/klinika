@@ -130,7 +130,6 @@ function Doctor() {
                             <div style={{display: 'flex', "column-gap": 10}}>
                                 <div style={{width: '20%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
-                                               rules={[{required: true}]}
                                                initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}
                                                resource={'Country'}/>

@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {postResource} from "../../../../Functions/api_calls";
 import dayjs from "dayjs";
 import {Chart, registerables} from "chart.js";
-import {Space, Spin} from "antd";
+import {Col, Row, Space, Spin} from "antd";
 
 function DrReworkedStatuses() {
     let canvasRef = useRef();
@@ -103,14 +103,14 @@ function DrReworkedStatuses() {
                     <div style={{marginLeft: 15}} className={'chart_counter_bold_text'}>
                         Statuses
                     </div>
-                    <div style={{display: 'flex'}}>
-                        <div>
-                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(0,2)}
-                        </div>
-                        <div>
-                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(2)}
-                        </div>
-                    </div>
+
+                        <Row className={'statuses_info_div'}>
+                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<Col xxl={12} xl={24} style={{width:100}}><div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div></Col>:null)}
+                        </Row>
+                        {/*<div>*/}
+                        {/*    {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(2)}*/}
+                        {/*</div>*/}
+
 
                 </Space>
             </Space>

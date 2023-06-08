@@ -54,19 +54,19 @@ function DoctorReworked() {
                     </Col>
                 </Row>
                 <Row gutter={[16, 16]}>
-                    <Col lg={18} sm={24} xs={24}>
+                    <Col xl={18} lg={24} md={24} sm={24} xs={24}>
                         <DoctorReworkedCalendar />
                     </Col>
-                    <Col lg={6} sm={24} xs={24} >
+                    <Col xl={6} lg={12} md={24} sm={24} xs={24} >
                         <DoctorReworkedNotifications />
                     </Col>
                 </Row>
 
                 <Row gutter={[16, 16]}>
-                    <Col lg={18} md={24} sm={24} xs={24}>
+                    <Col xl={18} lg={24} md={24} sm={24} xs={24}>
                         <AppointmentStats />
                     </Col>
-                    <Col lg={6} md={24} sm={24} xs={24}>
+                    <Col xl={6} lg={12} md={24} sm={24} xs={24}>
                         <MonthStatistics />
                     </Col>
                 </Row>
