@@ -8,7 +8,7 @@ import Resources from "../../store/Resources";
 import CancelComponent from "../Fragments/CancelComponent";
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {createResource, updateResource, useGetResourceSingle} from "../Functions/api_calls";
+import {createResource, updateResource} from "../Functions/api_calls";
 
 let resource = 'UserUpdateSelf';
 function UpdateSelf() {
@@ -17,15 +17,12 @@ function UpdateSelf() {
     const navigate = useNavigate();
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
-    // const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
-    // const {data, setData} = dataState;
-    // const {loading, setLoading} = loadingState
     const [loading, setLoading] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
     let data = useSelector((state) => state.auth.user);
 
-console.log(data)
+
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -48,13 +45,6 @@ console.log(data)
                 setSaveLoading(false)
             })
         }
-        dispatch({
-            type: 'AUTH',
-            payload: {
-                user: values
-
-            }
-        })
     }
 
     const handleValuesChange = (changed)=>{
