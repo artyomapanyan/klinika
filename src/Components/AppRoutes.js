@@ -10,6 +10,8 @@ import AllOffers from "./AllOffers/AllOffers";
 import OfferBook from "./AllOffers/OfferBook/OfferBook";
 import ThankYouOffer from "./AllOffers/ThankYouOffer/ThankYouOffer";
 import OfferMap from "./AllOffers/ThankYouOffer/Fragments/OfferMap";
+import UpdateSelf from "./Auth/UpdateSelf";
+
 
 function AppRoutes(){
     return(<Routes>
@@ -22,6 +24,8 @@ function AppRoutes(){
                 <Route path={'offers/:id'} element={<OfferBook/>}></Route>
                 <Route path={'thank-you'} element={<ThankYouOffer/>}></Route>
                 <Route path={'maps'} element={<OfferMap/>}></Route>
+
+
 
             </Routes>
 

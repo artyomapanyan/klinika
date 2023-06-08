@@ -32,7 +32,8 @@ function ResourceTable ({
     customTableButton,
     customHeader=null,
     resourceTablemarginTop=false,
-    noData= false
+    noData= false,
+    addBtn
 }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
@@ -59,7 +60,7 @@ function ResourceTable ({
             page: pagination.current,
             per_page: pagination.pageSize
         }
-console.log(tableParams)
+
         clearObject(data)
         setSearchParams(data)
         setParams(data)
@@ -207,9 +208,9 @@ console.log(tableParams)
             <Col lg={11}>
                 <div style={{display:'flex', gap: 4}}>
                     <div className={'recource_table_title'}>{t(title)}:</div>
-                    {PermCheck(`${resource}:create`)?<Tooltip title="Add new entry">
+                    {addBtn ? <Tooltip title="Add new entry">
                             <Button style={{marginLeft:10}} className={'resource_table_btn'} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
-                    </Tooltip>:<div></div>}
+                    </Tooltip>: <div></div>}
                     {
                         exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
                         : null

@@ -63,7 +63,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
     }
 
     const onSetings = () => {
-        navigate(`users/${auth?.user?.id}`)
+        navigate(`users/update-self`)
     }
 
 

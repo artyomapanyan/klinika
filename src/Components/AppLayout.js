@@ -79,6 +79,8 @@ import SuperAdmin from "./Dashboard/SuperAdmin/SuperAdmin";
 import ClinicDoctorUpdate from "./Dashboard/Clinics/Fragments/ManageDoctors/ClinicDoctorUpdate/ClinicDoctorUpdate";
 import Invoices from "./Dashboard/Invoices/Invoices/Invoices";
 import Invoice from "./Dashboard/Invoices/Invoices/Invoice";
+import ShowInvoiceItems from "./Dashboard/Invoices/InvoiceItems/ShowInvoiceItems";
+import UpdateSelf from "./Auth/UpdateSelf";
 
 
 function AppLayout(){
@@ -270,7 +272,8 @@ function AppLayout(){
             url:'invoice-items',
             resource:'InvoiceItem',
             singleComp:<InvoiceItem/>,
-            indexComp:<InvoiceItems/>
+            indexComp:<InvoiceItems/>,
+            showComp:<ShowInvoiceItems/>
         },
         {
             url:'invoices',
@@ -329,6 +332,7 @@ function AppLayout(){
                     <Route path={'clinic-manager'} element={<AuthCheck roleKey={'clinic-manager'} ><ClinicManager /></AuthCheck>}/>
                     <Route path={'doctor-reworked'} element={<AuthCheck roleKey={'doctor'} ><DoctorReworked /></AuthCheck>}/>
                     <Route path={'admin'} element={<AuthCheck roleKey={'super'} ><SuperAdmin /></AuthCheck>}/>
+                    <Route path={'users/update-self'} element={<UpdateSelf/>}></Route>
 
 
                 </Routes>

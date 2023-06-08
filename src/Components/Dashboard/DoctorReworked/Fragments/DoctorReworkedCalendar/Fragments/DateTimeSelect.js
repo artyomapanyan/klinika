@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import arrow_right_white from "../../../../../../dist/icons/arrow_right_white.png";
 import dayjs from "dayjs";
 import {Button, Form, Radio, Spin} from "antd";
@@ -9,12 +9,12 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({setBookedAtState, formState}) {
+function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDate}) {
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 
     const [startDate, setStartDate] = useState(dayjs())
-    const [date, setDate] = useState(null)
+
 
     const [timeLoading, setTimeLoading] = useState(false)
     const [availableTimes, setAvailableTimes] = useState([])
@@ -28,8 +28,6 @@ function DateTimeSelect({setBookedAtState, formState}) {
         }else{
             setStartDate((prevState) => prevState.add(count, 'month'))
         }
-
-
     }
     const handleChangeDay = (count) => {
         if (startDate.add(count, 'day') < dayjs()) {
@@ -40,8 +38,8 @@ function DateTimeSelect({setBookedAtState, formState}) {
 
     }
 
-
     let clinicId = authRedux?.clinics?.find(e=>e?.id===formState?.clinic_id)?.id
+
     const onDateClick = (e) => {
         setDate(e)
         setTimeLoading(true)
@@ -50,25 +48,25 @@ function DateTimeSelect({setBookedAtState, formState}) {
             date: dayjs(e).format('YYYY-MM-DD')
         }).then((response) => {
             setTimesIndex(0)
-            setAvailableTimes(response.flat())
+            setAvailableTimes(response?.flat()??[])
             setTimeLoading(false)
-
         })
         setBookedAtState(dayjs(e).format('YYYY-MM-DD'))
         setIsClicked(true)
-
-        ///postResource('')
-        //setAvailableTimes(response)
-        //setTimeLoading(false)
-
     }
+
+    useEffect(() => {
+       if(formState?.patient_id && formState?.clinic_id && formState?.service_type && formState?.specialty_id && bookedAtState) {
+           onDateClick(date)
+       }
+    }, [formState?.clinic_id, formState?.service_type])
+
     const handleChangeTime = (count) => {
         if (timesIndex + count < 0 || timesIndex + count >= availableTimes.length) {
             return setTimesIndex(0)
         }
         setTimesIndex(prevState => prevState + count)
     }
-
 
     return <div className={'drawer_cal_bog_div'}>
         <div className={'drawer_cal_top_div'}>
@@ -88,17 +86,17 @@ function DateTimeSelect({setBookedAtState, formState}) {
                 <div>
                     <div className={'big_date_div'}>
                         { formState?.clinic_id && formState?.patient_id && formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
-                            return <div key={key}
-                                        className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
-                                        onClick={() => onDateClick(startDate.add(key, 'day'))}>
-                                <div className={'date_div_in_map'} style={{fontWeight: 400}}>
-                                    {Resources.Days[startDate.add(key, 'day').day()]}
+                            return  <div key={key}
+                                     className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
+                                     onClick={() => onDateClick(startDate.add(key, 'day'))}>
+                                    <div className={'date_div_in_map'} style={{fontWeight: 400}}>
+                                        {Resources.Days[startDate.add(key, 'day').day()]}
+                                    </div>
+                                    <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
+                                    <div key={key} className={'date_div_in_map'}>
+                                        {startDate.add(key, 'day').format('DD')}
+                                    </div>
                                 </div>
-                                <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
-                                <div key={key} className={'date_div_in_map'}>
-                                    {startDate.add(key, 'day').format('DD')}
-                                </div>
-                            </div>
                         }): <div></div>
                         }
                         {
@@ -132,7 +130,7 @@ function DateTimeSelect({setBookedAtState, formState}) {
                     </div>
                     <div align={'center'} className={'big_time_div'}>
                         {
-                            availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>No available times</div> : <div></div> : <Form.Item name={'booked_time'}>
+                           date ? availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>No available times</div> : <div></div> : <Form.Item name={'booked_time'}>
                                 <Radio.Group
                                     className={'hours_select'}
                                     options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
@@ -145,7 +143,7 @@ function DateTimeSelect({setBookedAtState, formState}) {
                                     buttonStyle="solid"
 
                                 />
-                            </Form.Item>
+                           </Form.Item> : <div></div>
                         }
 
                         <Button className={'next_btn_time'} onClick={() => handleChangeTime(8)}>

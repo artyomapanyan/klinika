@@ -16,6 +16,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const [bookedAtState, setBookedAtState] = useState('');
     const [loading, setLoading] = useState(false);
     const [formState, setFormState] = useState({});
+    const [date, setDate1] = useState(null)
 
     const onNewAppointment = (values) => {
         setLoading(true)
@@ -88,10 +89,10 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            }}
                 />
 
-                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} />
+                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate={setDate1} />
 
                 <div style={{paddingTop:20}}>
-                    <Button disabled={!formState.booked_time} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
+                    <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
                 </div>
                 <div style={{paddingTop:10}}>
                     <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>Cancel</Button>

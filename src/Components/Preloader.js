@@ -6,7 +6,8 @@ function Preloader ({small,fullWidth}) {
     return (
       <div style={{
         padding: small??150, background: '#fff', minHeight: small??360, margin: '0 auto', textAlign: 'center',
-        width:fullWidth?'100%':'auto'
+        width:fullWidth?'100%':'auto',
+          borderRadius: 22
       }}
       >
         <Spin size="large" tip={'Loading'} />
