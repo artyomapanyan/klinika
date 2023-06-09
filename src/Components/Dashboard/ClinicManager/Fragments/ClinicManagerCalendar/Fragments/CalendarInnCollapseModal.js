@@ -162,7 +162,6 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                                           setOpen={setOpen} openDrawer={openDrawer}/>
                 }
 
-
             </Drawer>
 
         </div>
