@@ -65,7 +65,7 @@ function Doctor() {
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
+            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.first} ${data?.last}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -93,7 +93,18 @@ function Doctor() {
                 <div className={'add_edit_content'}>
                     <Row>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                            <div style={{display: 'flex', gap: 10}}>
+                                <div style={{width: '80%'}}>
+                                    <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                                </div>
+                                <div style={{width: '20%'}}>
+                                    <FormInput label={t('Is temporary email')} name={'is_temporary_email'} inputType={'resourceSelect'}
+                                               initialValue={data?.is_temporary_email}
+                                               initialData={Resources.TemporaryEmail}
+                                    />
+                                </div>
+                            </div>
+
                             <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[
                                 {required: true},
                                 {

@@ -72,7 +72,18 @@ function User() {
                 <div className={'add_edit_content'}>
                     <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
                     <FormInput label={t('Last')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
-                    <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                    <div style={{display: 'flex', gap: 10}}>
+                        <div style={{width: '80%'}}>
+                            <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
+                        </div>
+                        <div style={{width: '20%'}}>
+                            <FormInput label={t('Is temporary email')} name={'is_temporary_email'} inputType={'resourceSelect'}
+                                       initialValue={data?.is_temporary_email}
+                                       initialData={Resources.TemporaryEmail}
+                            />
+                        </div>
+                    </div>
+
                     <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
                     <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'}  />
                     <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[

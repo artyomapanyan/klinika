@@ -33,7 +33,7 @@ function ResourceTable ({
     customHeader=null,
     resourceTablemarginTop=false,
     noData= false,
-    addBtn
+    addBtn = true
 }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
