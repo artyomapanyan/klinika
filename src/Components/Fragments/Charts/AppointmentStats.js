@@ -249,32 +249,38 @@ function AppointmentStats(){
     }
 
     return<Spin spinning={loading}>
-    <div className={'chart_incomes_div'}>
+    <div className={'chart_appoint_state_div'}>
         <div className={'dr_reworked_app_states_chart_head'}>
             <div className={'app_clinic'}>Appointments stats</div>
 
             <div>
                 <div className={'switches_div'}>
 
-                    <div className={'switc_div'}>
-                        <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} style={{background:'#635D6B'}} /><span className={'text_switch'}>Canceled</span>
+                    <div style={{display: 'flex'}}>
+                        <div className={'switc_div1'}>
+                            <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} style={{background:'#635D6B'}} /><span className={'text_switch'}>Canceled</span>
+                        </div>
+                        <div className={'switc_div'}>
+                            <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} style={{background:'#F5A348'}} /> <span className={'text_switch'}>Rescheduled</span>
+                        </div>
+                        <div className={'switc_div'}>
+                            <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} style={{background:'#60a428'}} /> <span className={'text_switch'}>Finished</span>
+                        </div>
                     </div>
-                    <div className={'switc_div'}>
-                        <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} style={{background:'#F5A348'}} /> <span className={'text_switch'}>Rescheduled</span>
-                    </div>
-                    <div className={'switc_div'}>
-                        <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} style={{background:'#60a428'}} /> <span className={'text_switch'}>Finished</span>
+                    <div>
+                        <Space className={'arrow_button'} id={'dr_rev_app_stats_date_div'}>
+                            <Button className={'chart_button'}
+                                    onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                            <div className={'app_stats_date_div'}>
+                                {dayjs(date.from).format('DD')} -  {dayjs(date.to).format('DD')} {GMBK(dayjs(date.to).month())}
+                            </div>
+                            <Button className={'chart_button'} disabled={date.to >= dayjs()}
+                                    onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                        </Space>
                     </div>
 
-                    <Space style={{marginLeft:50}} className={'arrow_button'}>
-                        <Button className={'chart_button'}
-                                onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                        <div className={'app_stats_date_div'}>
-                            {dayjs(date.from).format('DD')} -  {dayjs(date.to).format('DD')} {GMBK(dayjs(date.to).month())}
-                        </div>
-                        <Button className={'chart_button'} disabled={date.to >= dayjs()}
-                                onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
-                    </Space>
+
+
                 </div>
 
             </div>

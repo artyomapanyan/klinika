@@ -12,6 +12,7 @@ import {FilePdfFilled} from "@ant-design/icons";
 let resource = 'Invoice'
 function Invoices() {
     let token = useSelector((state) => state.auth.token);
+    let reduxInfo = useSelector((state) => state?.auth);
 
 
     const handleExportPDF =(record)=>{
@@ -36,6 +37,11 @@ function Invoices() {
     return(
         <div>
             <ResourceTable resource={resource}
+                           except={{
+                               edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+                               delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+                           }}
+                           addBtn={reduxInfo?.selected_role?.key !== 'clinic-owner' ? true : false}
 
                            tableColumns={[
                                {

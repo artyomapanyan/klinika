@@ -13,7 +13,10 @@ function InvoiceItems() {
     return(
         <div>
             <ResourceTable resource={'InvoiceItem'}
-                           except={{edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false}}
+                           except={{
+                               edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+                               delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+            }}
 
                            tableColumns={[
                 {

@@ -98,6 +98,10 @@ let api = {
         resource: 'User',
     },
     {
+        url: 'users/update-self',
+        resource: 'UserUpdateSelf',
+    },
+    {
         url: 'posts',
         resource: 'Post',
     },

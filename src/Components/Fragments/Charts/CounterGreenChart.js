@@ -3,7 +3,7 @@ import {Chart,registerables} from "chart.js";
 import {Space, Spin} from "antd";
 
 
-function CounterGreenChart({loading, data, responseState, el, setResponseState, color, a}) {
+function CounterGreenChart({loading, data, responseState, el, setResponseState, color, chartColors}) {
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
@@ -24,7 +24,7 @@ function CounterGreenChart({loading, data, responseState, el, setResponseState, 
             ctx.save();
             ctx.font = "700 22px Roboto";
             ctx.textAlign = "center";
-            ctx.fillStyle = a;
+            ctx.fillStyle = chartColors;
             ctx.fillText(chart.config.data.datasets[0].data[1], width / 2, top + height / 2);
         },
     };
@@ -45,7 +45,7 @@ function CounterGreenChart({loading, data, responseState, el, setResponseState, 
             data: {
                 datasets: [
                     {
-                        backgroundColor: ["#F5F6FA", a],
+                        backgroundColor: ["#F5F6FA", chartColors],
                         weight: 0.5,
                         data: [+((5 - (+el?.avg_rating)).toFixed(1)), +((+el?.avg_rating).toFixed(1))],
                         spacing: 0,

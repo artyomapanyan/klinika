@@ -44,6 +44,7 @@ const ResourceLins = {
     InvoiceItem:'/dashboard/invoice-items/',
     Invoice:'/dashboard/invoices/',
     Report:'/dashboard/reports/',
+    UserUpdateSelf:'/users/update-self/',
 
 }
 export default ResourceLins
