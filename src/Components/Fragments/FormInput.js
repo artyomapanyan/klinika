@@ -30,6 +30,7 @@ function FormInput({
                        onChange,
                        textareaHeight=false,
                        suffixIcon,
+                       castomReq,
 
 
                    }) {
@@ -82,7 +83,7 @@ function FormInput({
                                      style={{width: '100%', height: 48}}
                 />
             case 'textArea':
-                return <CTextAreas isRequired={isRequired} label={label} inputProps={inputProps} textareaHeight={textareaHeight}
+                return <CTextAreas castomReq={castomReq} isRequired={isRequired} label={label} inputProps={inputProps} textareaHeight={textareaHeight}
                                    inputDisabled={inputDisabled} type={'textArea'}/>
             case 'number':
                 return <CInput className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}

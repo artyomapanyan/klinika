@@ -1,21 +1,24 @@
 import ResourceTable from "../../../Fragments/ResourceTable";
 import {t} from "i18next";
 import DateParser from "../../../Fragments/DateParser";
-import React from "react";
+import React, {useState} from "react";
 import ColorSelect from "../../../Fragments/ColorSelect";
 import Resource from "../../../../store/Resources";
 import axios from "axios";
 import api from "../../../../Api";
 import {useSelector} from "react-redux";
 import {FilePdfFilled} from "@ant-design/icons";
+import {Button} from "antd";
 
 let resource = 'Invoice'
 function Invoices() {
     let token = useSelector((state) => state.auth.token);
     let reduxInfo = useSelector((state) => state?.auth);
+    const [pdfState, setPdfState] = useState(false);
 
 
     const handleExportPDF =(record)=>{
+        setPdfState(true)
         axios.request({
             url: `${api[resource].exportPdf.url}/${record.id}/export-pdf`,
             method: api[resource].exportPdf.method,
@@ -31,6 +34,7 @@ function Invoices() {
             link.setAttribute('download', resource+'.pdf');
             document.body.appendChild(link);
             link.click();
+            setPdfState(false);
         });
     }
 
@@ -38,7 +42,6 @@ function Invoices() {
         <div>
             <ResourceTable resource={resource}
                            except={{
-                               edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
                                delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
                            }}
                            addBtn={reduxInfo?.selected_role?.key !== 'clinic-owner' ? true : false}
@@ -90,7 +93,7 @@ function Invoices() {
                                    dataIndex: 'pdf',
                                    key: 'pdf',
                                    render: (e, record) => {
-                                       return <div style={{cursor:'pointer'}} onClick={()=>handleExportPDF(record)}><FilePdfFilled style={{color: 'red'}} /></div>
+                                       return <Button disabled={pdfState} style={{border: 'none'}} onClick={()=>handleExportPDF(record)}><FilePdfFilled style={{color: 'red'}} /></Button>
                                    }
                                },
 

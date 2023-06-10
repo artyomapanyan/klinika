@@ -62,11 +62,11 @@ const Resource = {
     TemporaryEmail: [
         {
             id: 0,
-            name: 'Active'
+            name: 'No'
         },
         {
             id: 1,
-            name: 'Inactive'
+            name: 'Yas'
         },
     ],
 

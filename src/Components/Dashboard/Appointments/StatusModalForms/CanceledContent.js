@@ -12,8 +12,8 @@ export function CanceledContent({onCancel, loading}){
 
         />
 
-            <FormInput label={t('Reason')} name={'cancellation_reason'} inputType={'textArea'} rules={[
-                {required: true},
+            <FormInput label={t('Reason')} name={'cancellation_reason'} inputType={'textArea'} castomReq={true} rules={[
+
                 {
                     validator:(rule,value)=>{
                         value=value.trim();

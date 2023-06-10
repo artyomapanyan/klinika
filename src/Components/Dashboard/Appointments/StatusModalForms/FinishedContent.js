@@ -13,25 +13,25 @@ export function FinishedContent({onCancel, loading}){
             title="Your notes for the patient"
         />
 
-        <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'} rules={[
-            {required: true},
+        <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'} castomReq={true} rules={[
+            // {required: true},
             {
                 validator:(rule,value)=>{
                     value=value.trim();
                     if(value.length==0){
-                        return Promise.reject('Please enter valid text')
+                        return Promise.reject('Field validation error for Doctor notes')
                     }
                     return Promise.resolve();
                 }
             }
         ]}/>
-        <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'} rules={[
-            {required: true},
+        <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'} castomReq={true} rules={[
+             {reqIcon: true},
             {
                 validator:(rule,value)=>{
                     value=value.trim();
                     if(value.length==0){
-                        return Promise.reject('Please enter valid text')
+                        return Promise.reject('Field validation error for prescriptions')
                     }
                     return Promise.resolve();
                 }

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Form, Modal, Spin} from "antd";
+import {Button, Form, Modal, Spin} from "antd";
 import ColorSelect from "../../../../Fragments/ColorSelect";
 import arrow_next from "../../../../../dist/icons/arrow-next.svg";
 import printIcon from "../../../../../dist/icons/printIcon.svg";
@@ -29,6 +29,7 @@ function ClinicManagerAppointmentsTable() {
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
+    const [pdfState,setPdfState] = useState(false)
 
 
     const onStatusChange = (key,record)=>{
@@ -69,6 +70,7 @@ function ClinicManagerAppointmentsTable() {
     }
 
     const handleExportPDF =(record)=>{
+        setPdfState(true)
         axios.request({
             url: `${api[resource].exportPdf.url}/${record.id}/export-pdf`,
             method: api[resource].exportPdf.method,
@@ -84,6 +86,7 @@ function ClinicManagerAppointmentsTable() {
             link.setAttribute('download', resource+'.pdf');
             document.body.appendChild(link);
             link.click();
+            setPdfState(false)
         });
     }
 
@@ -207,7 +210,7 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'actions',
                                 key: 'actions',
                                 render: (e, record) => {
-                                    return record.status == 2 ? <div style={{cursor:'pointer'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></div> : record.status == 3 ? <div></div> : <div><a href={`tel:${record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`sms:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
+                                    return record.status == 2 ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button> : record.status == 3 ? <div></div> : <div><a href={`tel:${record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`sms:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
                                 }
                             },
                             {

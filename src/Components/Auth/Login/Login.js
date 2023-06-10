@@ -102,6 +102,7 @@ function Login() {
 
     const onNewInputs = () => {
         setInputState(true)
+
     }
 
     return (
@@ -143,13 +144,16 @@ function Login() {
                                             htmlType={'submit'}>{t("Login")}</Button>
                                     <Checkbox>{t("Remember me")}</Checkbox>
                                 </div>
-                                <div className={'login_log_btn_div'}>
-                                    {
-                                        dataState?.user?.is_temporary_email ?
-                                            <Button onClick={onNewInputs} className={'log_btn'} type={"primary"}>{t("Log")}</Button> : <div></div>
-                                    }
+                                {
+                                    !inputState ? <div className={'login_log_btn_div'}>
+                                        {
+                                            dataState?.user?.is_temporary_email ?
+                                                <Button onClick={onNewInputs} size={"large"} className={'log_btn'} type={"secondary"}>{t("Update Email")}</Button> : <div></div>
+                                        }
 
-                                </div>
+                                    </div> : <div></div>
+                                }
+
                             </Form>
                         </div>
                     </div>
