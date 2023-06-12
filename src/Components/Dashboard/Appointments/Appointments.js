@@ -131,7 +131,6 @@ function Appointments() {
                             return<div>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</div>
                         }
                     },
-
                     {
                         dataIndex:['booked_at','iso_string'],
                         title:t('Appointment Date'),
