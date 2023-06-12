@@ -28,23 +28,19 @@ function UpdateSelf() {
         setSaveLoading(true)
         values.dob = values.dob.format('YYYY-MM-DD')
 
-        if (params.id) {
+
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
+                    dispatch({
+                        type:'USER_UPDATE',
+                        payload:response
+                    })
                     navigate(-1)
                 }
             }).finally(() => {
                 setSaveLoading(false)
             })
-        } else {
-            createResource(resource, values, token).then((response) => {
-                if (response?.id) {
-                    navigate(-1)
-                }
-            }).finally(() => {
-                setSaveLoading(false)
-            })
-        }
+
     }
 
     const handleValuesChange = (changed)=>{

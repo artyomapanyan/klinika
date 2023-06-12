@@ -26,6 +26,10 @@ let api = {
             url: `${endpoint}${version}/auth/switch-role`,
             method: 'POST',
         },
+        UpdateTempEmail: {
+            url: `${endpoint}${version}/auth/update-temporary-email`,
+            method: 'POST',
+        },
     }
 };
 [

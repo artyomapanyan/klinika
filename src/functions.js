@@ -126,7 +126,7 @@ export function blobToObjectUrl(blob, noPdf) {
 export function notificate(data,status) {
     if (data?.errors) {
         Object.keys(data.errors).map((type) => {
-            data.errors[type].forEach((message) => {
+            data.errors.forEach((message) => {
                 notification.error({
                     message: type,
                     description: message,

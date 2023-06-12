@@ -59,6 +59,17 @@ const Resource = {
             name: 'Inactive'
         },
     ],
+    TemporaryEmail: [
+        {
+            id: 0,
+            name: 'No'
+        },
+        {
+            id: 1,
+            name: 'Yas'
+        },
+    ],
+
     StatusInvoices: [
         {
             key: '1',
