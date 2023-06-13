@@ -168,17 +168,17 @@ function Incoice() {
     const handleInvoiceSelect = (e, key,data) => {
 
         postResource('InvoiceItem', 'single', token, e).then((response) => {
-            console.log(data.find(u=>u.id===e),'ssss')
+
             const selected_item = data.find(u=>u.id===e);
-            formRef.current.setFieldValue(['items', key, 'qnt'], 1)
-            formRef.current.setFieldValue(['items', key, 'item_object'], {
+            formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
+            formRef?.current?.setFieldValue(['items', key, 'item_object'], {
                 id:selected_item.id,
                 name:selected_item.name
             })
-            formRef.current.setFieldValue(['items', key, 'price'], response?.price)
-            formRef.current.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
-            formRef.current.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
-            console.log( formRef.current.getFieldsValue())
+            formRef?.current?.setFieldValue(['items', key, 'price'], response?.price)
+            formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
+            formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
+
 
         })
 
@@ -187,7 +187,7 @@ function Incoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
-    console.log(data)
+
 
     return (
         <div>
@@ -252,9 +252,7 @@ function Incoice() {
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client name')} name={'client_name'}
                                                inputDisabled={true}
-                                               initialValue={data?.appointment?.patient?.first ? data?.appointment?.patient?.first : formRef.current.getFieldValue(['appointment', 'client_name'])}
-
-                                               rules={[{required: true}]}/>
+                                               initialValue={data?.appointment?.patient?.first ? data?.appointment?.patient?.first : formRef?.current?.getFieldValue(['appointment', 'client_name'])}/>
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client manager')} name={'client_manager_id'}

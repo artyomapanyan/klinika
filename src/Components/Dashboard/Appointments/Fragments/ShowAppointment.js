@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
@@ -17,6 +17,7 @@ function ShowAppointment() {
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
+    const [pdfState,setPdfState] = useState(false)
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -29,6 +30,7 @@ function ShowAppointment() {
 
 
     const handleExportPDF =()=>{
+        setPdfState(true)
         axios.request({
             url: api[resource].exportExcel.url,
             method: api[resource].exportExcel.method,
@@ -44,6 +46,7 @@ function ShowAppointment() {
             link.setAttribute('download', resource+'.pdf');
             document.body.appendChild(link);
             link.click();
+            setPdfState(false)
         });
     }
 
@@ -68,7 +71,7 @@ function ShowAppointment() {
                                     <Space>
                                         <div className={'show_mail_btn'}><a href={`mailto:${data?.patient?.email}`}><MailOutlined style={{fontSize: 20, color:'black'}}/></a></div>
                                         <div className={'show_phone_btn'}><a href={`${data?.patient?.phone}`}><PhoneOutlined style={{color: "#ffffff", fontSize: 20}}/></a></div>
-                                        <button onClick={handleExportPDF} className={'show_pdf_btn'}><FilePdfOutlined style={{color: "#ffffff"}}/> Appointment report</button>
+                                        <button disabled={pdfState} onClick={handleExportPDF} className={'show_pdf_btn'}><FilePdfOutlined style={{color: "#ffffff"}}/> Appointment report</button>
                                     </Space>
                                 </div>
                             </div>
