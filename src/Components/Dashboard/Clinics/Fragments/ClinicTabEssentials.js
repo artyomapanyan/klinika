@@ -303,10 +303,6 @@ import React from "react";
 import MyMapComponent from "./MapComponent";
 import CancelComponent from "../../../Fragments/CancelComponent";
 
-
-
-
-
 const resource = 'Clinic';
 
 
