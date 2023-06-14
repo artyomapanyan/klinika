@@ -2,7 +2,7 @@ import React from 'react';
 import {Input} from "antd";
 
 
-function CInput({inputDisabled, value, onChange,label, inputProps,type, maxLength=50, max, min, className}){
+function CInput({inputDisabled, value, onChange,label, inputProps,type, maxLength=50, max, min, className, placeholder=' '}){
 
 
 
@@ -10,7 +10,8 @@ function CInput({inputDisabled, value, onChange,label, inputProps,type, maxLengt
         {type==='password'? <Input className={className} {...inputProps} size={'large'} maxLength={maxLength} disabled={inputDisabled} value={value} onChange={onChange} placeholder={' '} type={'password'}/>:
 
          type === 'number' ? <Input className={className} disabled={inputDisabled} max={max} min={min} type={'number'}  {...inputProps} size={'large'} value={value} onChange={onChange} placeholder={' '} style={{width:'100%'}}/> :
-         <Input className={className} {...inputProps} disabled={inputDisabled} maxLength={maxLength} size={'large'} value={value} onChange={onChange} placeholder={' '}  style={{paddingLeft:16}} />}
+             type === 'url' ? <Input className={className} disabled={inputDisabled} type={'url'}  {...inputProps} size={'large'} value={value} onChange={onChange} placeholder={placeholder} style={{width:'100%'}}/> :
+             <Input className={className} {...inputProps} disabled={inputDisabled} maxLength={maxLength} size={'large'} value={value} onChange={onChange} placeholder={placeholder}  style={{paddingLeft:16}} />}
         <label >{label}</label>
     </div>;
 }

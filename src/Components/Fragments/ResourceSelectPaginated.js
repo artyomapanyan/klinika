@@ -106,7 +106,6 @@ function ResourceSelectPaginated({
               if(e.length<searchConfigs.minLength){
                   setIsInitedState(false)
               }else{
-                  console.log('sss')
                   setIsInitedState(true)
               }
           }

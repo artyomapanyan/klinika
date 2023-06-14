@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
 import {t} from "i18next";
-import {Form, Modal, Spin} from "antd";
+import {Button, Form, Modal, Spin} from "antd";
 import FormInput from "../../../../../Fragments/FormInput";
 
 
@@ -11,8 +11,19 @@ function ManageDoctorsModal({isModalOpen,onCreate}) {
     const handleOk =()=>{
         formRef.current.submit();
     }
+
+    const searchByNumber = (item, name) => {
+        name = <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px'}}>
+            <div>{item.first} {item.last}</div>
+            <div>+{item.phone_country_code}{item.phone_number}</div>
+        </div>
+        let searchData = item.phone_number + item.email;
+        return [name, item, searchData]
+    }
+
+
     return(
-        <Modal title="Add new doctor" open={isModalOpen} onOk={handleOk} onCancel={()=>onCreate()} okText={t("Save")} >
+        <Modal key={Math.random()} title="Add new doctor" open={isModalOpen} onOk={handleOk} onCancel={()=>onCreate()} okText={t("Save")} >
             <Spin spinning={isModalOpen===1}>
                 <Form
                     name="edit"
@@ -22,10 +33,29 @@ function ManageDoctorsModal({isModalOpen,onCreate}) {
                 >
                     <div  className={'add_clinic_modal'}>
 
-                        <FormInput label={t('Doctor')} name={'doctor_id'} inputType={'resourceSelect'}
+                        {/*<FormInput label={t('Doctor')} name={'doctor_id'} inputType={'resourceSelect'}*/}
+                        {/*           rules={[{required: true}]}*/}
+                        {/*           initialValue={null}*/}
+                        {/*           initialData={[]}*/}
+                        {/*           customSearchKey={'name_or_phone'}*/}
+                        {/*           resource={'Doctor'}/>*/}
+
+
+                        <FormInput label={t('Select Doctor (Search by phone number or name)')} name={'doctor_id'}
+                                   inputType={'resourceSelect'}
                                    rules={[{required: true}]}
+                                   searchConfigs={{minLength: 3}}
                                    initialValue={null}
+                                   inputProps={{
+                                       notFoundContent: <div
+                                           style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                                           <div>Not found</div>
+                                           </div>
+                                   }}
                                    initialData={[]}
+                                   handleMapItems={(item, name) => searchByNumber(item, name)}
+                                   customSearchKey={'name_or_phone'}
+
                                    resource={'Doctor'}/>
                     </div>
                 </Form>

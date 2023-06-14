@@ -71,7 +71,7 @@ function ShowAppointment() {
                                     <Space>
                                         <div className={'show_mail_btn'}><a href={`mailto:${data?.patient?.email}`}><MailOutlined style={{fontSize: 20, color:'black'}}/></a></div>
                                         <div className={'show_phone_btn'}><a href={`${data?.patient?.phone}`}><PhoneOutlined style={{color: "#ffffff", fontSize: 20}}/></a></div>
-                                        <button disabled={pdfState} onClick={handleExportPDF} className={'show_pdf_btn'}><FilePdfOutlined style={{color: "#ffffff"}}/> Appointment report</button>
+                                        <Button disabled={pdfState} type={'primary'} onClick={handleExportPDF} icon={<FilePdfOutlined />} className={'show_pdf_btn'}> Appointment report</Button>
                                     </Space>
                                 </div>
                             </div>
