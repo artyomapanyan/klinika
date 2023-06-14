@@ -14,6 +14,7 @@ function FormInput({
                        resourceSelectStyle,
                        searchConfigs,
                        inputDisabled,
+
                        disabled,
                        extra,
                        options,
@@ -31,6 +32,7 @@ function FormInput({
                        textareaHeight=false,
                        suffixIcon,
                        castomReq,
+                       placeholder,
 
 
                    }) {
@@ -88,6 +90,9 @@ function FormInput({
             case 'number':
                 return <CInput className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
                                inputProps={inputProps} type={'number'} min={min} max={max}/>
+            case 'url':
+                return <CInput className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
+                               inputProps={inputProps} type={'url'} placeholder={placeholder} />
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
                                                 resourceSelectStyle={resourceSelectStyle}
@@ -116,7 +121,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput onChange={onChange} className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
+                return <CInput placeholder={placeholder} onChange={onChange} className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
                                inputProps={inputProps}/>
         }
     }

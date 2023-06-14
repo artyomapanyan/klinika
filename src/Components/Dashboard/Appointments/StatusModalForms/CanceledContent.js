@@ -15,6 +15,7 @@ export function CanceledContent({onCancel, loading}){
             <FormInput label={t('Reason')} name={'cancellation_reason'} inputType={'textArea'} castomReq={true} rules={[
 
                 {
+                    message: 'Please enter valid text',
                     validator:(rule,value)=>{
                         value=value.trim();
                         if(value.length==0){

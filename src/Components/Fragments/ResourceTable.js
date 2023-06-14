@@ -208,9 +208,9 @@ function ResourceTable ({
             <Col lg={11}>
                 <div style={{display:'flex', gap: 4}}>
                     <div className={'recource_table_title'}>{t(title)}:</div>
-                    {addBtn ? <Tooltip title="Add new entry">
+                    {PermCheck(`${resource}:create`) ? addBtn ? <Tooltip title="Add new entry">
                             <Button style={{marginLeft:10}} className={'resource_table_btn'} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
-                    </Tooltip>: <div></div>}
+                    </Tooltip>: <div></div> : <div></div>}
                     {
                         exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
                         : null

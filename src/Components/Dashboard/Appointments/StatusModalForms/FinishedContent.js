@@ -16,10 +16,11 @@ export function FinishedContent({onCancel, loading}){
         <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'} castomReq={true} rules={[
             // {required: true},
             {
+                message: 'Please enter doctor notes',
                 validator:(rule,value)=>{
                     value=value.trim();
                     if(value.length==0){
-                        return Promise.reject('Field validation error for Doctor notes')
+                        return Promise.reject('Please enter doctor notes')
                     }
                     return Promise.resolve();
                 }
@@ -28,10 +29,11 @@ export function FinishedContent({onCancel, loading}){
         <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'} castomReq={true} rules={[
              {reqIcon: true},
             {
+                message: 'Please enter doctor notes',
                 validator:(rule,value)=>{
                     value=value.trim();
                     if(value.length==0){
-                        return Promise.reject('Field validation error for prescriptions')
+                        return Promise.reject('Please enter doctor notes')
                     }
                     return Promise.resolve();
                 }

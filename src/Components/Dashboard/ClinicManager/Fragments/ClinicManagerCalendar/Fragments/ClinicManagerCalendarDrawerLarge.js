@@ -116,6 +116,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                     }
                                 }
 
+
                             ]} />
                             <FormInput label={t('Identification number')} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}

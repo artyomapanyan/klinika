@@ -319,7 +319,7 @@ function AppLayout(){
                         {item.indexComp&&<Route key={key+'_i'} path={''} element={<AuthCheck permission={`${item.resource}:viewAny`}>{item.indexComp}</AuthCheck>}/>}
                         {item.singleComp&&<Route key={key+'_n'} path={`new`} element={<AuthCheck permission={`${item.resource}:create`}>{item.singleComp}</AuthCheck>}/>}
                         {item.singleComp&& <Route key={key+'_u'} path={`:id`} element={<AuthCheck permission={`${item.resource}:update`}>{item.singleComp}</AuthCheck>}/>}
-                        {item.showComp&& <Route key={key+'_e'} path={`:id/show`} element={<AuthCheck permission={`${item.resource}:create`}>{item.showComp}</AuthCheck>}/>}
+                        {item.showComp&& <Route key={key+'_e'} path={`:id/show`} element={<AuthCheck >{item.showComp}</AuthCheck>}/>}
                     </Routes>}/>
 
                         )}
