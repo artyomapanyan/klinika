@@ -125,14 +125,25 @@ export function blobToObjectUrl(blob, noPdf) {
 }
 export function notificate(data,status) {
     if (data?.errors) {
-        Object.keys(data.errors).map((type) => {
-            data.errors.forEach((message) => {
-                notification.error({
-                    message: type,
-                    description: message,
-                    placement: "bottomRight"
-                })
-            });
+        Object.keys(data?.errors).map((type) => {
+            if( typeof data.errors==='object'){
+                Object.values(data.errors)?.forEach((message) => {
+                    notification.error({
+                        message: type,
+                        description: message,
+                        placement: "bottomRight"
+                    })
+                });
+            }else{
+                data.errors?.forEach((message) => {
+                    notification.error({
+                        message: type,
+                        description: message,
+                        placement: "bottomRight"
+                    })
+                });
+            }
+
             return true;
         });
     }
