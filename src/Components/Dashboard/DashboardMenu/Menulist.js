@@ -6,6 +6,7 @@ import dash2 from "../../../dist/icons/frame2.svg";
 import invoices_icon from "../../../dist/icons/invoices_icon.png";
 import clinic_icon from "../../../dist/icons/clinic_icon.png";
 import {
+    BellOutlined,
     BugFilled,
     DiffOutlined,
     DollarOutlined, NotificationOutlined,
@@ -311,6 +312,11 @@ export default {
         {
             key: 'appointments',
             icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Appointments`),
+        },
+        {
+            key: 'notifications',
+            icon: <BellOutlined style={{color:'#ce4e99', fontSize:20}} />,
             label: t(`Appointments`),
         },
 

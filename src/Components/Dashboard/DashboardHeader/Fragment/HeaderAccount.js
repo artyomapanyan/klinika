@@ -11,16 +11,24 @@ import Languages from './Languages'
 import PermCheck from '../../../Fragments/PermCheck'
 import { postResource } from '../../../Functions/api_calls'
 import Preloader from '../../../Preloader'
+import {MedicineBoxOutlined} from "@ant-design/icons";
+import checked_calendar_icon from "../../../../dist/icons/checked_calendar_icon.png";
+import yellow_calendar from "../../../../dist/icons/yellow_calendar.png";
+import map_icon from "../../../../dist/icons/map_icon.png";
+import message_icon from "../../../../dist/icons/message_icon.png";
+import {useNavigate} from "react-router";
 
 function HeaderAccount() {
 	let token = useSelector(state => state.auth.token)
 	let user = useSelector(state => state?.auth?.user)
 	let role = useSelector(state => state?.auth?.selected_role?.key)
+	let navigate = useNavigate()
 
 	const [approve, setApprove] = useState([])
 	const [elem, setElem] = useState([])
 	const [authOpen, setAuthOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
+	const [notifications, setNotifications] = useState([])
 
 	useEffect(() => {
 		if(role == 'doctor') {
@@ -32,6 +40,17 @@ function HeaderAccount() {
 		}
 
 	}, [role, elem])
+
+	useEffect(() => {
+
+			setLoading(true)
+			postResource('Notifications', 'AllNotification', token, ``).then(response => {
+				setNotifications(response)
+				setLoading(false)
+			})
+
+
+	}, [role])
 
 	const onOk = (el, key) => {
 		setElem(el)
@@ -56,10 +75,13 @@ function HeaderAccount() {
 		// ])
 	}
 
+	console.log(notifications, 'res')
+
 	return (
 		<div>
 			<Space className='header-properties small-gap'>
-				{PermCheck(!'Doctor:viewAny') ? (
+
+				{role === 'doctor' ? (
 					<Dropdown
 						dropdownRender={() => {
 							return (
@@ -68,7 +90,7 @@ function HeaderAccount() {
 										<Preloader />
 									) : (
 										<div>
-											{approve.length < 1 ? (
+											{approve?.length < 1 ? (
 												<div>No clinics to approve!</div>
 											) : (
 												approve?.map((el, key) => {
@@ -107,8 +129,9 @@ function HeaderAccount() {
 					>
 						<Button type='link' className='header_call_dropdown'>
 							<Space>
-								<img alt={'icons'} src={notification} />
-								{approve.length}
+								<MedicineBoxOutlined style={{fontSize :24, marginTop:4}}/>
+								<span style={{marginTop: 9}}>{approve.length}</span>
+
 							</Space>
 						</Button>
 					</Dropdown>
@@ -116,8 +139,65 @@ function HeaderAccount() {
 					<div></div>
 				)}
 
+				<Dropdown
+					dropdownRender={() => {
+						return (
+							<div className={'approve_drop_div'}>
+								{loading ? (
+									<Preloader />
+								) : (
+									<div className={'notifications_drop_big_div'} >
+										{notifications?.items?.length < 1 ? (
+											<div>No clinics to approve!</div>
+										) : (
+											notifications?.items?.map((el, key) => {
+												return (
+													<div key={key} className={'notifications_drop_inn_div'}>
+														<div className={'notification_icon_div'}>
+															{
+																el?.data?.icon === "calendar-check" ? <img src={checked_calendar_icon}
+																										   alt={'checked_calendar_icon'}/> : el?.data?.icon === "yellow_calendar" ?
+																	<img src={yellow_calendar} alt={'yellow_calendar'}/> :
+																	el?.data?.icon === "map_icon" ? <img src={map_icon}
+																										 alt={'map_icon'}/> : el?.data?.icon === "message_icon" ?
+																		<img src={message_icon} alt={'message_icon'}/> : <div></div>
+															}
+														</div>
+														<div>
+															<div className={'notifications_drop_title_div'}>
+																{el?.data?.title}
+															</div>
+															<div className={'notifications_drop_descript_div'}>
+																{el?.data?.description}
+															</div>
+														</div>
+
+
+													</div>
+												)
+											})
+										)}
+									</div>
+								)}
+								<Button onClick={()=>navigate('notifications')} className={'notifications_drop_all_notifi_btn'}>
+									Show all notifacations
+								</Button>
+							</div>
+						)
+					}}
+					trigger={['click']}
+					placement='bottom'
+				>
+					<Button type='link' className='header_call_dropdown'>
+						<Space>
+							<img alt={'icons'} src={notification} />
+							{notifications?.items?.length}
+						</Space>
+					</Button>
+				</Dropdown>
+
 				{
-					<Button type='link' className='header_report'>
+					<Button onClick={()=>navigate('reports')} type='link' className='header_report'>
 						<Space>
 							<img alt={'icons'} src={alert} />
 							<span className={'report_text'}>{t('Report')}</span>
