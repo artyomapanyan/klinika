@@ -13,26 +13,33 @@ import {LeftOutlined} from "@ant-design/icons";
 function AllNotifications() {
     let token = useSelector(state => state.auth.token)
 
-    let role = useSelector(state => state?.auth?.selected_role?.key)
-
-
-
     const [loading, setLoading] = useState(false)
     const [notifications, setNotifications] = useState([])
+    const [paginationState, setPaginationState] = useState({})
+
+
     useEffect(() => {
 
         setLoading(true)
-        postResource('Notifications', 'AllNotification', token, ``).then(response => {
+        postResource('Notifications', 'AllNotification', token, ``, {
+            page: paginationState?.page,
+            per_page: paginationState?.per_page
+        }).then(response => {
             setNotifications(response)
             setLoading(false)
         })
 
 
-    }, [role])
+    }, [paginationState])
 
-    const onPaginationChange = (page) => {
-        console.log(page)
+    const onPaginationChange = (page, per_page) => {
+        setPaginationState({
+            page: page,
+            per_page: per_page
+        })
+
     }
+    console.log(notifications)
 
     return(
         <div style={{marginTop: -75}}>
@@ -76,7 +83,7 @@ function AllNotifications() {
                 </div>
             }
             <div align={'center'} >
-                <Pagination style={{marginBottom: 20}} defaultCurrent={1} onChange={onPaginationChange} total={50} />
+                <Pagination style={{marginBottom: 20}} defaultCurrent={1} onChange={onPaginationChange} total={notifications?.total_items} pageSize={notifications?.per_page}/>
             </div>
 
         </div>

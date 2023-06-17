@@ -435,6 +435,10 @@ let api = {
                 url: `${endpoint}${version}/auth/profile/notifications`,
                 method: 'GET',
             },
+            UnreadLastNotification: {
+                url: `${endpoint}${version}/auth/profile/notifications/unread-last-notifications`,
+                method: 'GET',
+            },
 
         },
 

@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {postResource} from "../../../Functions/api_calls";
 import {Chart, registerables} from "chart.js";
-import {Space, Spin} from "antd";
+import {Col, Row, Space, Spin} from "antd";
 
 function SuperAdminClinicsStatuses() {
     let canvasRef = useRef();
@@ -96,12 +96,10 @@ function SuperAdminClinicsStatuses() {
                        Clinics Statuses
                     </div>
                     <div style={{display:'flex'}}>
-                        <div>
-                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(0, 2)}
-                        </div>
-                        <div>
-                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(2)}
-                        </div>
+                        <Row className={'statuses_info_div'}>
+                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<Col key={key} xxl={12} xl={24} style={{width:100}}><div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatusesManager-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div></Col>:null)}
+
+                        </Row>
                     </div>
 
                 </Space>

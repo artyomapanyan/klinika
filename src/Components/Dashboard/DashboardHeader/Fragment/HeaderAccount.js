@@ -44,7 +44,7 @@ function HeaderAccount() {
 	useEffect(() => {
 
 			setLoading(true)
-			postResource('Notifications', 'AllNotification', token, ``).then(response => {
+			postResource('Notifications', 'UnreadLastNotification', token, ``).then(response => {
 				setNotifications(response)
 				setLoading(false)
 			})
@@ -75,7 +75,7 @@ function HeaderAccount() {
 		// ])
 	}
 
-	console.log(notifications, 'res')
+
 
 	return (
 		<div>
@@ -150,7 +150,7 @@ function HeaderAccount() {
 										{notifications?.items?.length < 1 ? (
 											<div>No clinics to approve!</div>
 										) : (
-											notifications?.items?.map((el, key) => {
+											notifications?.notifications?.map((el, key) => {
 												return (
 													<div key={key} className={'notifications_drop_inn_div'}>
 														<div className={'notification_icon_div'}>
@@ -191,7 +191,7 @@ function HeaderAccount() {
 					<Button type='link' className='header_call_dropdown'>
 						<Space>
 							<img alt={'icons'} src={notification} />
-							{notifications?.items?.length}
+							{notifications?.unread_notifications_count}
 						</Space>
 					</Button>
 				</Dropdown>
