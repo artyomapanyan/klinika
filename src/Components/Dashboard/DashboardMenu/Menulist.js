@@ -131,6 +131,11 @@ export default {
             label: t(`Requests`),
             permission:'Report'
         },
+        {
+            key: 'notifications',
+            icon: <BellOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Notifications`),
+        },
     ],
     'super': [
         {

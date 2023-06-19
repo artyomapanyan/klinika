@@ -82,9 +82,9 @@ function AllNotifications() {
                     }
                 </div>
             }
-            <div align={'center'} >
-                <Pagination style={{marginBottom: 20}} defaultCurrent={1} onChange={onPaginationChange} total={notifications?.total_items} pageSize={notifications?.per_page}/>
-            </div>
+            {/*<div align={'center'} >*/}
+            {/*    <Pagination style={{marginBottom: 20}} defaultCurrent={1} onChange={onPaginationChange} total={notifications?.total_items} pageSize={notifications?.per_page}/>*/}
+            {/*</div>*/}
 
         </div>
     )
