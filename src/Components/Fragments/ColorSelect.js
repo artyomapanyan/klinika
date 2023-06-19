@@ -4,7 +4,7 @@ import {DownOutlined} from "@ant-design/icons";
 import {postResource} from "../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function ColorSelect({items=[],initialValue,onChange=null, resource, record,name, height=false}){
+function ColorSelect({items=[],initialValue,onChange=null, resource, record,name, height=false, colorSelectDisabled=false}){
     let token = useSelector((state) => state?.auth?.token);
 
     const [value,setValue] = useState(initialValue);
@@ -72,7 +72,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
                 items: items.filter((el) => el.key !== value)
 
             }}
-            disabled={items.length < 2}
+            disabled={colorSelectDisabled ? colorSelectDisabled : items.length < 2}
             trigger={['click']}
 
         >

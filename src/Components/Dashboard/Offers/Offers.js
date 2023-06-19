@@ -60,7 +60,7 @@ function Offers() {
                     title:t('Status'),
                     key:'category',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                    render:(e,record)=><ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                    render:(e,record)=><ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                 },
 
             ]} title={t('Offers')}/>
