@@ -767,6 +767,7 @@ body
 #offer_map
   height: 700px
 .approve_drop_div
+  width: 820px
   background: #FFFFFF
   border-radius: 12px
   padding: 5px
@@ -783,10 +784,11 @@ body
 .notifications_drop_inn_div
   display: flex
   flex-direction: row
-  padding: 15px
+  padding: 23px 0
   width: 100%
   gap: 15px
-  border-bottom: 1px solid #d3d1d3
+  border-bottom: 1px dashed #d3d1d3
+
 
 .all_notifications_map_div
   display: flex
@@ -808,13 +810,35 @@ body
 
 .notifications_drop_big_div
   max-height: 400px
-  max-width: 350px
+  //width: 820px
   overflow: auto
+  padding: 40px
+  .popup_lini
+    width: 100%
+    border-bottom: 1px dashed #d3d1d3
+    margin-top: 24px
+  .mark_all_read_btn
+    border: none
+    background-color: #BF539E11
+    font-family: Roboto
+    font-size: 12px
+    font-weight: 700
+    color: #BF539E
 
+
+  .popup_info_big_div
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    width: 100%
+  .popup_ago_date
+    font-size: 13px
+    color: #8d8c8d
   .notifications_drop_title_div
-    font-size: 16px
+    font-size: 14px
     font-family: Inter
-    font-weight: 600
+    font-weight: 700
   .notifications_drop_descript_div
     font-size: 13px
     font-family: Inter
@@ -825,6 +849,14 @@ body
 .notifications_drop_all_notifi_btn
   border: none
   width: 100%
+.popup_header
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+.popup_header_not_text
+  font-weight: 700
+  font-size: 24px
+  font-family: Roboto
 
 
 

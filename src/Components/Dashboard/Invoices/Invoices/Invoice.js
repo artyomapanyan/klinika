@@ -131,7 +131,7 @@ function Incoice() {
 
     const searchByNumber = (item, name, patientData) => {
         fetchedUsers.current = patientData
-        name = <>{'Appointment with'}{" "}{item?.patient?.first}{" "}{item?.patient?.last}{' '}{item?.patient?.phone_number}{' '}<div>{item?.booked_at?.iso_string}</div></>
+        name = <>{'Appointment with'}{" "}{item?.patient?.first}{" "}{item?.patient?.last}{' '}{item?.patient?.phone_number}{' '}<div>{item?.booked_at?.iso_string}</div>{' '}<div>{item?.clinic?.name}</div></>
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
 
@@ -211,14 +211,16 @@ console.log(data)
                                        rules={[{required: true}]}
                                        initialValue={data?.appointment?.patient?.phone_country_code}
                                        handleMapItems={handleMapItems}
+                                       customSearchKey={'phone_code'}
                                        resource={'Country'}/>
                         </div>
                         <div style={{width: '100%', marginLeft: 10}}>
                             <FormInput label={t('Select Patient and choose an appointment (Search By phone number)')}
                                        name={'appointment_id'}
                                        inputType={'resourceSelect'}
+                                       disabled={!data?.phone_country_code}
                                 //rules={[{required: true}]}
-                                       searchConfigs={{minLength: 0}}
+                                       searchConfigs={{minLength: 3}}
                                        initialValue={data?.appointment?.id}
                                        inputProps={{
 

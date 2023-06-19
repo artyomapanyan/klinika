@@ -56,7 +56,6 @@ function ClinicTabManageDoctors() {
                             dataIndex: ['doctor', 'plid'],
                             title: 'Doctor PLID',
                             key: 'plid',
-                            sorter: true,
                         },
                     ]}
                 />}

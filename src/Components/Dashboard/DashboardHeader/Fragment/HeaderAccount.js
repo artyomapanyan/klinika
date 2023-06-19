@@ -17,7 +17,11 @@ import yellow_calendar from "../../../../dist/icons/yellow_calendar.png";
 import map_icon from "../../../../dist/icons/map_icon.png";
 import message_icon from "../../../../dist/icons/message_icon.png";
 import {useNavigate} from "react-router";
+import dayjs from "dayjs";
 
+
+var relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
 function HeaderAccount() {
 	let token = useSelector(state => state.auth.token)
 	let user = useSelector(state => state?.auth?.user)
@@ -147,12 +151,21 @@ function HeaderAccount() {
 									<Preloader />
 								) : (
 									<div className={'notifications_drop_big_div'} >
+										<div className={'popup_header'}>
+											<div className={'popup_header_not_text'}>Notifications</div>
+											<div>
+												<Button className={'mark_all_read_btn'}>Mark all as read</Button>
+											</div>
+
+										</div>
+										<div className={'popup_lini'}></div>
 										{notifications?.items?.length < 1 ? (
-											<div>No clinics to approve!</div>
+											<div>No notifications!</div>
 										) : (
 											notifications?.notifications?.map((el, key) => {
 												return (
 													<div key={key} className={'notifications_drop_inn_div'}>
+
 														<div className={'notification_icon_div'}>
 															{
 																el?.data?.icon === "calendar-check" ? <img src={checked_calendar_icon}
@@ -163,14 +176,27 @@ function HeaderAccount() {
 																		<img src={message_icon} alt={'message_icon'}/> : <div></div>
 															}
 														</div>
-														<div>
-															<div className={'notifications_drop_title_div'}>
-																{el?.data?.title}
+														<div className={'popup_info_big_div'}>
+															<div >
+																<div className={'notifications_drop_title_div'}>
+																	{el?.data?.title}
+																</div>
+																<div className={'notifications_drop_descript_div'}>
+																	{el?.data?.description}
+																</div>
 															</div>
-															<div className={'notifications_drop_descript_div'}>
-																{el?.data?.description}
+
+															<div className={'popup_ago_date'}>
+																{
+																	//console.log(dayjs(el?.created_at).format('D') < dayjs().format('D'))
+																	dayjs(el?.created_at).format('D') > dayjs().format('D') ? dayjs().to(dayjs(el?.created_at)) : dayjs(el?.created_at).format('YYYY-MM-DD HH:mm')
+																	//dayjs().to(dayjs('2023-06-19 10:00'))
+																}
 															</div>
 														</div>
+
+
+
 
 
 													</div>

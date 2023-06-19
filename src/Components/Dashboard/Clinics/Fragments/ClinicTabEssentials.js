@@ -417,6 +417,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
         return [name,item]
     }
 
+    console.log(data)
 
     return(
         <div >
