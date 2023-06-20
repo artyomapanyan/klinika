@@ -32,8 +32,8 @@ function ShowAppointment() {
     const handleExportPDF =()=>{
         setPdfState(true)
         axios.request({
-            url: api[resource].exportExcel.url,
-            method: api[resource].exportExcel.method,
+            url: `${api[resource].exportPdf.url}/${params.id}/export-pdf`,
+            method: api[resource].exportPdf.method,
             headers: {
                 'Authorization': token,
             },
@@ -49,6 +49,8 @@ function ShowAppointment() {
             setPdfState(false)
         });
     }
+
+
 
     const onBack = () => {
         navigate(-1)

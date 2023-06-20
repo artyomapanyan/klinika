@@ -93,17 +93,17 @@ function Doctor() {
                 <div className={'add_edit_content'}>
                     <Row>
                         <Col lg={12} className="gutter-row">
-                            <div style={{display: 'flex', gap: 10}}>
-                                <div style={{width: '80%'}}>
+                            {/*<div style={{display: 'flex', gap: 10}}>*/}
+                            {/*    <div style={{width: '80%'}}>*/}
                                     <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
-                                </div>
-                                <div style={{width: '20%'}}>
-                                    <FormInput label={t('Is temporary email')} name={'is_temporary_email'} inputType={'resourceSelect'}
-                                               initialValue={data?.is_temporary_email}
-                                               initialData={Resources.TemporaryEmail}
-                                    />
-                                </div>
-                            </div>
+                                {/*</div>*/}
+                                {/*<div style={{width: '20%'}}>*/}
+                                {/*    <FormInput label={t('Is temporary email')} name={'is_temporary_email'} inputType={'resourceSelect'}*/}
+                                {/*               initialValue={data?.is_temporary_email}*/}
+                                {/*               initialData={Resources.TemporaryEmail}*/}
+                                {/*    />*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
 
                             <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[
                                 {required: true},
@@ -143,6 +143,7 @@ function Doctor() {
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}
+                                               customSearchKey={'phone_code'}
                                                resource={'Country'}/>
                                 </div>
                                 <div style={{width: '80%'}}>

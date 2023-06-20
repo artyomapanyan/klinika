@@ -61,6 +61,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                                rules={[{required: true}]}
                                                initialValue={966}
                                                handleMapItems={handleMapItems}
+                                               customSearchKey={'phone_code'}
                                                resource={'Country'}
                                     />
                                 </div>

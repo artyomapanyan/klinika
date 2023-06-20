@@ -305,6 +305,7 @@ function Appointment() {
                                                                initialValue={formRef.current.getFieldValue(['patient','phone_country_code'])}
                                                                handleMapItems={handleMapItems}
                                                                disabled={data?.patient_id}
+                                                               customSearchKey={'phone_code'}
                                                                resource={'Country'}/>
                                                 </Col>
                                                 <Col lg={18} className="gutter-row">

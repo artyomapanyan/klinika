@@ -44,7 +44,7 @@ function ManageDoctorsModal({isModalOpen,onCreate}) {
                         <FormInput label={t('Select Doctor (Search by phone number or name)')} name={'doctor_id'}
                                    inputType={'resourceSelect'}
                                    rules={[{required: true}]}
-                                   searchConfigs={{minLength: 3}}
+                                   searchConfigs={{minLength: 1}}
                                    initialValue={null}
                                    inputProps={{
                                        notFoundContent: <div

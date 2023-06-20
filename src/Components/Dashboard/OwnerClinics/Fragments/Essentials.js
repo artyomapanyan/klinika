@@ -151,6 +151,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                                rules={[{required: true}]}
                                                initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}
+                                               customSearchKey={'phone_code'}
                                                resource={'Country'}/>
                                 </div>
                                 <div style={{width:'100%', marginLeft:10}}>
