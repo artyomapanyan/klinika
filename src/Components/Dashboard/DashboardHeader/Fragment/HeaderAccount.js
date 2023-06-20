@@ -46,12 +46,14 @@ function HeaderAccount() {
 	}, [role, elem])
 
 	useEffect(() => {
-
+		setInterval(() => {
 			setLoading(true)
 			postResource('Notifications', 'UnreadLastNotification', token, ``).then(response => {
 				setNotifications(response)
 				setLoading(false)
 			})
+		}, 60000)
+
 
 
 	}, [role])
