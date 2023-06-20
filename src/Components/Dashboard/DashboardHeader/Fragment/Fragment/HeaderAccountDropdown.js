@@ -74,13 +74,14 @@ function HeaderAccountDropdown({setAuthOpen}) {
 
                         <h3 style={{fontWeight: 700}}>Select Role :</h3>
 
-                        {roles.map((el, i) =><Button className={'btn_roles'} type ={auth?.selected_role?.id===el?.id?'primary':'default'} key={i} onClick={()=>onRoleChange(el)} >
+                        {roles.map((el, i) =>{
+                            return<Button key={el?.id} className={'btn_roles'} type ={auth?.selected_role?.id===el?.id?'primary':'default'}  onClick={()=>onRoleChange(el)} >
                             <div >
                                 <div className={"head_account_drop_text"}>{el?.name}</div>
                                 <div>{el?.key}</div>
                             </div>
                             <div><img className={"head_drop_icon"} alt={'icons'} src={checkout}/></div>
-                        </Button>)
+                        </Button>})
                         }
 
                     </div>

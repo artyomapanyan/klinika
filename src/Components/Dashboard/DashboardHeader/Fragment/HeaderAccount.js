@@ -188,9 +188,8 @@ function HeaderAccount() {
 
 															<div className={'popup_ago_date'}>
 																{
-																	//console.log(dayjs(el?.created_at).format('D') < dayjs().format('D'))
 																	dayjs(el?.created_at).format('D') > dayjs().format('D') ? dayjs().to(dayjs(el?.created_at)) : dayjs(el?.created_at).format('YYYY-MM-DD HH:mm')
-																	//dayjs().to(dayjs('2023-06-19 10:00'))
+
 																}
 															</div>
 														</div>
@@ -205,9 +204,10 @@ function HeaderAccount() {
 										)}
 									</div>
 								)}
-								<Button onClick={()=>navigate('notifications')} className={'notifications_drop_all_notifi_btn'}>
-									Show all notifacations
-								</Button>
+								<Button size={'large'} className={'popup_load_more_btn'} type={'primary'}>Load more</Button>
+								{/*<Button onClick={()=>navigate('notifications')} className={'notifications_drop_all_notifi_btn'}>*/}
+								{/*	Show all notifacations*/}
+								{/*</Button>*/}
 							</div>
 						)
 					}}

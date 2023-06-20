@@ -322,7 +322,7 @@ export default {
         {
             key: 'notifications',
             icon: <BellOutlined style={{color:'#ce4e99', fontSize:20}} />,
-            label: t(`Appointments`),
+            label: t(`Notifications`),
         },
 
 

@@ -122,12 +122,13 @@ function Login() {
                                            initialValue={dataState?.user?.is_temporary_email ? dataState?.user?.email : ''} />
 
                                 <FormInput className={'test'} inputType={'password'}  formRef={formRef}  inputProps={{
-                                    iconRender:() => (<Link onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                    }}
-                                                            to="/forgot">Forgot?</Link>)
+                                    // iconRender:() => (<Link onClick={(e) => {
+                                    //     e.preventDefault();
+                                    //     e.stopPropagation();
+                                    // }}
+                                    //                         to="/forgot">Forgot?</Link>)
                                 }} initialFocused={true} name={'password'} label={'Password'} />
+                                <Link to="/forgot" className={'forgot_link'}>Forgot?</Link>
 
                                 {
                                     inputState ? <div>
