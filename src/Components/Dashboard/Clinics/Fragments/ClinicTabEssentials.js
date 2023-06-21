@@ -305,8 +305,6 @@ import CancelComponent from "../../../Fragments/CancelComponent";
 
 const resource = 'Clinic';
 
-
-
 function ClinicTabEssentials({loadingState, dataState}) {
     const params = useParams();
     const navigate = useNavigate();
