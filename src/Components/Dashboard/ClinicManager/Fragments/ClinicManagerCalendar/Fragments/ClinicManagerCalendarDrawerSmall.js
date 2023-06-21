@@ -61,6 +61,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                                        rules={[{required: true}]}
                                        initialValue={966}
                                        handleMapItems={handleMapItems}
+                                       customSearchKey={'phone_code'}
                                        resource={'Country'}
                             />
                         </div>
@@ -72,6 +73,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     </div>
                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                initialData={Resources?.Gender}
+                               initialValue={data?.gender}
                     />
                     <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[
                         {required: true},
@@ -88,10 +90,22 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     ]} />
                     <FormInput label={t('Country')} name={'country_id'}
                                inputType={'resourceSelect'}
+                               initialData={data?.countries??[]}
                                rules={[{required: true}]}
+                               initialValue={data?.country_id}
+                               inputProps={{
+                                   onChange:(e,v)=> {
+                                       setData(prevData => ({
+                                           ...prevData,
+                                           countries: v
+                                       }))
+
+                                   }
+                               }}
                                resource={'Country'}/>
                     <FormInput label={t('Date of Birth')} name={'dob'}
                                inputDisabled={data?.patient_id}
+                               initialValue={data?.dob}
                                inputType={'date'} rules={[
                         {required: !data?.patient_id},
                         {

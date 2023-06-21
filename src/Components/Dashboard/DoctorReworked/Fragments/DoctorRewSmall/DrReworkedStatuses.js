@@ -105,7 +105,7 @@ function DrReworkedStatuses() {
                     </div>
 
                         <Row className={'statuses_info_div'}>
-                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<Col xxl={12} xl={24} style={{width:100}}><div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div></Col>:null)}
+                            {Object.keys(data).map((key)=>data[key] || data[key]==0?<Col key={key} xxl={12} xl={24} style={{width:100}}><div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div></Col>:null)}
                         </Row>
                         {/*<div>*/}
                         {/*    {Object.keys(data).map((key)=>data[key] || data[key]==0?<div  style={{paddingTop:10}} key={key} className={`withDot WD-colorStatuses-${key}`}><span style={{padding:10}} className={'plan_load_jaddah'}>{text[key]}</span><span className={'fact_percent'}>{data[key]}</span></div>:null).slice(2)}*/}

@@ -81,6 +81,7 @@ import Invoices from "./Dashboard/Invoices/Invoices/Invoices";
 import Invoice from "./Dashboard/Invoices/Invoices/Invoice";
 import ShowInvoiceItems from "./Dashboard/Invoices/InvoiceItems/ShowInvoiceItems";
 import UpdateSelf from "./Auth/UpdateSelf";
+import AllNotifications from "./Dashboard/AllNotifications/AllNotifications";
 
 
 function AppLayout(){
@@ -292,6 +293,7 @@ function AppLayout(){
 
 
 
+
     ]
 
     return <Layout className={'main-container'}>
@@ -333,6 +335,7 @@ function AppLayout(){
                     <Route path={'doctor-reworked'} element={<AuthCheck roleKey={'doctor'} ><DoctorReworked /></AuthCheck>}/>
                     <Route path={'admin'} element={<AuthCheck roleKey={'super'} ><SuperAdmin /></AuthCheck>}/>
                     <Route path={'users/update-self'} element={<UpdateSelf/>}></Route>
+                    <Route path={'notifications'} element={<AllNotifications/>}></Route>
 
 
                 </Routes>

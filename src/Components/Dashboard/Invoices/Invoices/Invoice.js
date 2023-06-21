@@ -88,6 +88,7 @@ function Incoice() {
 
 
     const handleValuesChange = (changed, all) => {
+        console.log(changed, 'changed')
         setChangeValuesState(changed)
 
         if (changed.items) {
@@ -108,6 +109,7 @@ function Incoice() {
 
 
             formRef.current?.setFieldsValue({
+                client_name:foundUser?.patient?.first,
                 appointment: {
                     service: foundUser?.service,
                     client_name: foundUser?.patient?.first,
@@ -129,7 +131,7 @@ function Incoice() {
 
     const searchByNumber = (item, name, patientData) => {
         fetchedUsers.current = patientData
-        name = <>{'Appointment with'}{" "}{item?.doctor?.first}{" "}{item?.doctor?.last}{' '}{item.reference_code}</>
+        name = <>{'Appointment with'}{" "}{item?.patient?.first}{" "}{item?.patient?.last}{' '}{item?.patient?.phone_number}{' '}<div>{item?.booked_at?.iso_string}</div>{' '}<div>{item?.clinic?.name}</div></>
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
 
@@ -188,7 +190,7 @@ function Incoice() {
     formRef?.current?.getFieldValue('sub_total')
 
 
-
+console.log(data)
     return (
         <div>
             {data?.id ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice - ${data?.invoice_number}`)}</h3> :
@@ -209,14 +211,16 @@ function Incoice() {
                                        rules={[{required: true}]}
                                        initialValue={data?.appointment?.patient?.phone_country_code}
                                        handleMapItems={handleMapItems}
+                                       customSearchKey={'phone_code'}
                                        resource={'Country'}/>
                         </div>
                         <div style={{width: '100%', marginLeft: 10}}>
                             <FormInput label={t('Select Patient and choose an appointment (Search By phone number)')}
                                        name={'appointment_id'}
                                        inputType={'resourceSelect'}
+                                       disabled={!data?.phone_country_code}
                                 //rules={[{required: true}]}
-                                       searchConfigs={{minLength: 4}}
+                                       searchConfigs={{minLength: 3}}
                                        initialValue={data?.appointment?.id}
                                        inputProps={{
 
@@ -251,8 +255,9 @@ function Incoice() {
                             <div style={{display: "flex", gap: 10}}>
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client name')} name={'client_name'}
+                                               rules={[{required: true}]}
                                                inputDisabled={true}
-                                               initialValue={data?.appointment?.patient?.first ? data?.appointment?.patient?.first : formRef?.current?.getFieldValue(['appointment', 'client_name'])}/>
+                                               initialValue={data?.client_name}/>
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client manager')} name={'client_manager_id'}

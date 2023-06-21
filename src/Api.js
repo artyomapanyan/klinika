@@ -431,10 +431,19 @@ let api = {
                 url: `${endpoint}${version}/auth/profile/notifications/mark-all-as-read/`,
                 method: 'GET',
             },
+            AllNotification: {
+                url: `${endpoint}${version}/auth/profile/notifications`,
+                method: 'GET',
+            },
+            UnreadLastNotification: {
+                url: `${endpoint}${version}/auth/profile/notifications/unread-last-notifications`,
+                method: 'GET',
+            },
 
         },
 
     },
+
 
 
     ].forEach(item => {

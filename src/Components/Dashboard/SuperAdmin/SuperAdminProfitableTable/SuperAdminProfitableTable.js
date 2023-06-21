@@ -72,6 +72,7 @@ function SuperAdminProfitableTable() {
             dataIndex: 'income',
             key: 'income',
             render:(e, record) => {
+                console.log(e, record)
                 return <div  style={{fontSize: 16, fontFamily: 'Roboto', fontWeight: 700}}>{record?.orders_count}$</div>
             }
 
@@ -90,7 +91,7 @@ function SuperAdminProfitableTable() {
 
                     </div>
                     <div className={'profitable_clinic_div'}>
-                        <Table size={'small'} dataSource={data} columns={columns} pagination={false}  />
+                        <Table size={'small'} rowKey={record => record?.clinic?.id} dataSource={data} columns={columns} pagination={false}  />
                     </div>
                 </Spin>
 

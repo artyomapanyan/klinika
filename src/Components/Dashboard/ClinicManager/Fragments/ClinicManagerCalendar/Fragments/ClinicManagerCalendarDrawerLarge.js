@@ -24,7 +24,6 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
         item.id = +item.phone_code
         return [name, item]
     }
-
     return(
         <div>
             <Form
@@ -62,6 +61,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                                rules={[{required: true}]}
                                                initialValue={966}
                                                handleMapItems={handleMapItems}
+                                               customSearchKey={'phone_code'}
                                                resource={'Country'}
                                     />
                                 </div>
@@ -71,6 +71,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             </div>
                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                        initialData={Resources?.Gender}
+                                       initialValue={data?.gender}
                             />
 
                              {/*   <FileManager text1={'Insurance Card Front'}
@@ -92,9 +93,13 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             {/*<FormInput label={t('Address')} name={'address'}  rules={[{required: true}]} />*/}
                             <FormInput label={t('Country')} name={'country_id'}
                                        inputType={'resourceSelect'}
+                                       initialValue={data?.country_id}
                                        rules={[{required: true}]}
+                                       initialData={data?.countries??[]}
                                        resource={'Country'}/>
-                            <FormInput label={t('Date of Birth')} inputType={'date'} name={'dob'} rules={[
+                            <FormInput label={t('Date of Birth')}
+                                       initialValue={data?.dob}
+                                       inputType={'date'} name={'dob'} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{

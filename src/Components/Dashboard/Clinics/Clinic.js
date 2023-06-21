@@ -72,20 +72,20 @@ function Clinic() {
                 {params.id && <items key={'working'} tab={'Working Hours'}>
                     <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>
                 </items>}
-                {dataState.data.has_clinic_visit_service &&
+                {dataState.data.has_clinic_visit_service && params.id ?
                     <items key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
                         <ClinicVisit/>
-                    </items>}
-                {dataState.data.has_home_visit_service &&
+                    </items> : <div></div>}
+                {dataState.data.has_home_visit_service && params.id ?
                     <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit/>
-                    </items>}
-                {dataState.data.has_laboratory_clinic_visit_service &&   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                    </items> : <div></div>}
+                {dataState.data.has_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
                         <Laboratory />
-                    </items> }
-                    {dataState.data.has_nursing_service && <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
+                    </items> : <div></div>}
+                    {dataState.data.has_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing/>
-                    </items>}
+                    </items> : <div></div>}
                 </ClinicTabBars>}
           </div>
     )

@@ -4,6 +4,7 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import {t} from "i18next";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
+import PermCheck from "../../Fragments/PermCheck";
 
 const resource='Clinic';
 function Clinics({resourceLink=null,}) {
@@ -95,6 +96,10 @@ function Clinics({resourceLink=null,}) {
         // </div>
         <div>
             <ResourceTable resource={resource} eyeShow={true}
+                           except={{
+                               edit: PermCheck(`${resource}:update`) ? false : true,
+                               delete: PermCheck(`${resource}:delete`) ? false : true
+                           }}
 
                            tableColumns={[
                 {
