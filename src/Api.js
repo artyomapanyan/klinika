@@ -129,6 +129,10 @@ let api = {
                 url: `${endpoint}${version}/clinic/available-times/`,
                 method: 'GET',
             },
+            ClinicsAvailableTimes:{
+                url: `${endpoint}${version}/clinics/available-times/`,
+                method: 'GET',
+            },
         }
     },
 

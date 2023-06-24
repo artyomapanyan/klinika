@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import {FilePdfFilled} from "@ant-design/icons";
 import {Button} from "antd";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
+import DateFilterElement from "../../../Fragments/TableFilterElements/DateFilterElement";
 
 let resource = 'Invoice'
 function Invoices() {
@@ -55,10 +56,12 @@ function Invoices() {
                                    sorter:true,
                                },
                                {
-                                   dataIndex:['date','iso_string'],
-                                   title:t('Date'),
-                                   key:'date',
-                                   render:i=><DateParser date={i}/>
+                                   dataIndex:['due_date','iso_string'],
+                                   title:t('Due date'),
+                                   key:'due_date',
+                                   render:i=><DateParser date={i}/>,
+                                   sorter:true,
+                                   //filterDropdown: (props)=><DateFilterElement filterProps={props}/>
                                },
                                {
                                    title:t('Invoice number'),
@@ -81,7 +84,8 @@ function Invoices() {
                                    dataIndex:'client_name',
                                    title:t('Client name'),
                                    key:'client_name',
-                                   //filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                                   sorter:true,
+                                   filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                },
                                {
                                    dataIndex:['status'],

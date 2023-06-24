@@ -27,24 +27,37 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     useEffect(() => {
 
         if(data.service_type){
-            setLoading(true)
-            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
-                service: data.service_type,
-                date: selectedDate
-            }).then(response => {
-                setLoading(false)
-                setTimes(response.flat())
-            })
+            if(data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit') {
+                setLoading(true)
+                postResource('Clinic', 'ClinicsAvailableTimes', token, clinicID, {
+                    date: selectedDate,
+                    service: data.service_type,
+                }).then(response => {
+                    setLoading(false)
+                    setTimes(response.flat())
+                })
+            } else {
+                setLoading(true)
+                postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
+                    service: data.service_type,
+                    date: selectedDate
+                }).then(response => {
+                    setLoading(false)
+                    setTimes(response.flat())
+                })
+            }
+
         }
 
     }, [selectedDate, docItem,data.service_type])
+
+    console.log(times, 'de')
+
     const openDrawer = () => {
         formRef.current.validateFields(['time','service_type']).then(e => {
             setOpen(true);
             setSize('default');
         })
-
-
     }
 
     const openLargeDrawer = () => {
@@ -107,7 +120,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                 optionType="button"
                                 buttonStyle="solid"
                             />
-                        </Form.Item>:null}
+                        </Form.Item>: <div align={'center'} style={{width:'100%', fontSize: 20, marginTop:20, marginBottom: 20, fontWeight: 500, color: '#F3A632'}}>There are no available times</div>}
                     </div>
                     <div >
                         <Space>

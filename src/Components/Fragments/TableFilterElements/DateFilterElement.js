@@ -1,8 +1,10 @@
-import React from 'react'
 import {Button, Card, Space} from "antd";
 import TFInput from "./Elements/TFInput";
+import React from "react";
+import FormInput from "../FormInput";
 
-function TableFilterElement({filterProps, type="input",resource}){
+function DateFilterElement({filterProps, type="input",resource}){
+    console.log(filterProps, 'ddddd')
     const onChangeValue =(e)=>{
         filterProps.setSelectedKeys(e?.toString())
     }
@@ -15,9 +17,10 @@ function TableFilterElement({filterProps, type="input",resource}){
 
     }
 
+    console.log(filterProps, 'ddddd')
 
-    return <Card className={'card-filters'} title={<TFInput type={type} value={filterProps.selectedKeys} onChangeValue={onChangeValue} resource={resource} name={'country'}/>} >
+    return <Card className={'card-filters'} title={<FormInput inputType={'date'}  type={type} value={filterProps.selectedKeys} onChangeValue={onChangeValue} resource={resource} name={'country'}/>} >
         <Space><Button type={"primary"} htmlType={'button'} onClick={onFilter}>Filter</Button> <Button type={"secondary"} onClick={onReset}>Reset</Button></Space>
     </Card>
 }
-export default TableFilterElement
+export default DateFilterElement
