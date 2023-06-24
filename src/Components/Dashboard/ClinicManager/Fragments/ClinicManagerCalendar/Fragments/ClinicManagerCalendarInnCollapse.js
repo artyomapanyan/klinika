@@ -42,7 +42,7 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                 })
             }
             <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'384px'} footer={null}>
-                {selectedDate ? <CalendarInnCollapseModal key={selectedDate} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
+                {selectedDate ? <CalendarInnCollapseModal key={Math.random()} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
         </tr>
         </tbody>
