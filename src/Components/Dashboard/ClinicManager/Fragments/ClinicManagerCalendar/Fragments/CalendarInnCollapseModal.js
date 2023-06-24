@@ -21,6 +21,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const [finishLoading, setFinishLoading] = useState(false);
     const [size, setSize] = useState();
     const [times, setTimes] = useState([]);
+    const [noTimes, setNoTimes] = useState(false);
     const [data, setData] = useState({});
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
@@ -35,6 +36,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 }).then(response => {
                     setLoading(false)
                     setTimes(response.flat())
+                    setNoTimes(response)
                 })
             } else {
                 setLoading(true)
@@ -44,6 +46,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 }).then(response => {
                     setLoading(false)
                     setTimes(response.flat())
+                    setNoTimes(response)
                 })
             }
 
@@ -96,6 +99,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
         })
 
     }
+
+
     return (
         <div className={'clinic_manager_modal_big_div'}>
             {
@@ -120,7 +125,11 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                 optionType="button"
                                 buttonStyle="solid"
                             />
-                        </Form.Item>: <div align={'center'} style={{width:'100%', fontSize: 20, marginTop:20, marginBottom: 20, fontWeight: 500, color: '#F3A632'}}>There are no available times</div>}
+                        </Form.Item>: <div></div>}
+                        {
+                            noTimes[0]?.length < 1 ? <div align={'center'} style={{width:'100%', fontSize: 20, marginTop:20, marginBottom: 20, fontWeight: 500, color: '#F3A632'}}>There are no available times</div> :
+                                <div></div>
+                        }
                     </div>
                     <div >
                         <Space>
