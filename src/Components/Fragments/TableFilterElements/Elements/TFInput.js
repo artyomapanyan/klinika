@@ -1,7 +1,8 @@
 import React from 'react';
 import {Input} from "antd/lib";
 import ResourceSelectPaginated from "../../ResourceSelectPaginated";
-function TFInput({onChangeValue,value,type='input', resource, name}){
+import {DatePicker} from "antd";
+function TFInput({onChangeValue,value,type, resource, name}){
 
     const onInputTypeChange = () => {
         if(type === 'selectFilter') {
@@ -16,7 +17,11 @@ function TFInput({onChangeValue,value,type='input', resource, name}){
         if(type === 'input') {
             return <Input value={value} onChange={e=>onChangeValue(e.target.value)}/>
         }
+        if(type === 'date') {
+          return  <DatePicker value={value} onChange={e=>onChangeValue(e)}/>
+        }
     }
+
 
     return onInputTypeChange()
 }

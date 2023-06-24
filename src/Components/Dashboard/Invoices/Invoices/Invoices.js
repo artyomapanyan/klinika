@@ -11,6 +11,7 @@ import {FilePdfFilled} from "@ant-design/icons";
 import {Button} from "antd";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import DateFilterElement from "../../../Fragments/TableFilterElements/DateFilterElement";
+import dayjs from "dayjs";
 
 let resource = 'Invoice'
 function Invoices() {
@@ -59,7 +60,9 @@ function Invoices() {
                                    dataIndex:['due_date','iso_string'],
                                    title:t('Due date'),
                                    key:'due_date',
-                                   render:i=><DateParser date={i}/>,
+                                   render:(e, record) => {
+                                       return dayjs(record?.due_date?.iso_string).format('DD-MM-YYYY')
+                                   },
                                    sorter:true,
                                    //filterDropdown: (props)=><DateFilterElement filterProps={props}/>
                                },
