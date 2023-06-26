@@ -64,7 +64,7 @@ function Invoices() {
                                        return dayjs(record?.due_date?.iso_string).format('DD-MM-YYYY')
                                    },
                                    sorter:true,
-                                   //filterDropdown: (props)=><DateFilterElement filterProps={props}/>
+                                   filterDropdown: (props)=><DateFilterElement filterProps={props}/>
                                },
                                {
                                    title:t('Invoice number'),
