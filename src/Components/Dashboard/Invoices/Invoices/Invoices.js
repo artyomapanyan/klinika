@@ -57,11 +57,11 @@ function Invoices() {
                                    sorter:true,
                                },
                                {
-                                   dataIndex:['due_date','iso_string'],
-                                   title:t('Due date'),
-                                   key:'due_date',
+                                   dataIndex:['date','iso_string'],
+                                   title:t('date'),
+                                   key:'date',
                                    render:(e, record) => {
-                                       return dayjs(record?.due_date?.iso_string).format('DD-MM-YYYY')
+                                       return dayjs(record?.date?.iso_string).format('YYYY-MM-DD')
                                    },
                                    sorter:true,
                                    filterDropdown: (props)=><DateFilterElement filterProps={props}/>
