@@ -417,7 +417,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
         return [name,item]
     }
 
-    console.log(data)
 
     return(
         <div >
@@ -452,7 +451,7 @@ function ClinicTabEssentials({loadingState, dataState}) {
                             <FormInput label={t('License Number')} name={'license_number'} initialValue={data?.license_number} rules={[{required: true}]} />
                             <FormInput label={t('License number expired at')} name={'license_number_expired_at'} initialValue={data?.license_number_expired_at} inputType={'date'} rules={[{required: true}]} />
                             <FormInput label={t('Website')} inputType={'url'} name={'website'} initialValue={data?.website ? data?.website : ''} placeholder={'                https://www.klinikatech.com'} />
-
+                            <FormInput label={t('Vat number')} name={'vat_number'} initialValue={data?.vat_number} rules={[{required: true}]} />
 
                         </Col>
                         <Col lg={12} className="gutter-row">
