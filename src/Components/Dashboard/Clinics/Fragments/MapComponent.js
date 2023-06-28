@@ -154,6 +154,7 @@ function MyMapComponent({data,formRef}) {
                     <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.city?.id}
                                rules={[{required: true}]}
+
                                resourceParams={{
                                    region:formRef?.current?.getFieldValue('region_id')
                                }}
