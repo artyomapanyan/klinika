@@ -4,7 +4,7 @@ import CalendarInnCollapseModal from "./CalendarInnCollapseModal";
 import dayjs from "dayjs";
 import gray_grid from "../../../../../../dist/icons/gray_grid.png";
 
-function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic}) {
+function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic, setUpdate}) {
     const [selectedDate, setSelectedDate] = useState(false);
     let thisDate = dayjs().format('YYYY-MM-DD')
 
@@ -42,7 +42,7 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
                 })
             }
             <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'384px'} footer={null}>
-                {selectedDate ? <CalendarInnCollapseModal key={Math.random()} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
+                {selectedDate ? <CalendarInnCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
         </tr>
         </tbody>

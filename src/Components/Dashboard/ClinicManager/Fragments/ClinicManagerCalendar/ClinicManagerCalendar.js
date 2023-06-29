@@ -16,6 +16,8 @@ function ClinicManagerCalendar() {
     const [data, setData] = useState({workload: []});
     const [showCount,setShowCount] = useState(10);
     const [search,setSearch] = useState('');
+    const [update,setUpdate] = useState(0);
+
 
 
     let token = useSelector((state) => state.auth.token);
@@ -34,7 +36,7 @@ function ClinicManagerCalendar() {
 
         })
 
-    }, [date])
+    }, [date, update])
 
 
     const filteredData = useMemo(()=>{
@@ -93,7 +95,7 @@ function ClinicManagerCalendar() {
                                                 </tr>
                                             </tbody>
 
-                                            {filteredData?.slice(0,showCount)?.map((item, key) => <ClinicManagerCalendarCollapse key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
+                                            {filteredData?.slice(0,showCount)?.map((item, key) => <ClinicManagerCalendarCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
                                         </table>
                                         {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>Load More</Button>:null}
                                     </div>

@@ -13,7 +13,7 @@ import {t} from "i18next";
 import Preloader from "../../../../../Preloader";
 import {getServiceTypes} from "../../../../../../functions";
 
-function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate}) {
+function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate, setUpdate}) {
 
     const {doctor} = docItem;
     const [open, setOpen] = useState(false);
@@ -37,6 +37,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                     setLoading(false)
                     setTimes(response.flat())
                     setNoTimes(response)
+
                 })
             } else {
                 setLoading(true)
@@ -94,6 +95,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 setFinishLoading(false)
                 setSelectedDate(false)
                 setDate((prevState)=>prevState)
+                setUpdate((prevState) =>prevState+1)
             }
 
         })
