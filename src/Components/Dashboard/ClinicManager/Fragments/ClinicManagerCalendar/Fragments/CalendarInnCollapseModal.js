@@ -85,7 +85,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             ...data,
             speciality_id,
             clinic_id: clinicID,
-            //doctor_id: doctor.id,
+            doctor_id: doctor.id,
             booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm')
 
         }).then(e => {
