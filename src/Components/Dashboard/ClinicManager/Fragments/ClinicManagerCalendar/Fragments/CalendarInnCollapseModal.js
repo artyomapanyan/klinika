@@ -85,7 +85,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             ...data,
             speciality_id,
             clinic_id: clinicID,
-            doctor_id: doctor.id,
+            //doctor_id: doctor.id,
             booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm')
 
         }).then(e => {
@@ -148,7 +148,10 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                    inputType={'resourceSelect'}
                                    rules={[{required: true}]}
                                    initialValue={null}
-                                   initialData={getServiceTypes(clinic.services)}/>
+                                   initialData={getServiceTypes(clinic.services).filter((el) => {
+                                       return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
+                                   })}/>
+
                         <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
                        
                         <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
