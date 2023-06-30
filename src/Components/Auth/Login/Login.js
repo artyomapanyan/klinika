@@ -2,7 +2,7 @@ import {Button, Carousel, Checkbox, Form} from "antd";
 import React, {useEffect, useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import axios from "axios";
 import api from "../../../Api";
@@ -17,7 +17,7 @@ import checkout from "../../../dist/icons/checkout.svg";
 
 function Login() {
     let dispatch = useDispatch()
-
+    let language = useSelector((state) => state?.app?.current_locale);
     const carouselRef = useRef();
     const formRef = useRef();
     const navigate = useNavigate();
@@ -128,7 +128,7 @@ function Login() {
                                     // }}
                                     //                         to="/forgot">Forgot?</Link>)
                                 }} initialFocused={true} name={'password'} label={'Password'} />
-                                <Link to="/forgot" className={'forgot_link'}>Forgot?</Link>
+                                <Link to="/forgot" className={'forgot_link'} style={{marginLeft: language === 'ar' ? '1%' : '12%'}}>{t('Forgot?')}</Link>
 
                                 {
                                     inputState ? <div>
