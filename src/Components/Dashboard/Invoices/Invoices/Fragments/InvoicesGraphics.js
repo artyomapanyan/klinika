@@ -2,7 +2,8 @@ import React from "react";
 import {Col, Row} from "antd";
 
 import InvoiceIncomesGraphic from "./Graphics/InvoiceIncomesGraphic";
-import InvoiceStatusesGraphic from "./Graphics/InvoiceStatusesGraphic";
+import InvoiceStatusesGraphic from "./Graphics/InvoicesStatusesGraphic";
+
 
 function InvoicesGraphics() {
     return(
