@@ -4,12 +4,13 @@ import {useSelector} from "react-redux";
 import {createResource, postResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
-import {Avatar, Button, Form, Input, Space} from "antd";
+import {Button, Form, Space} from "antd";
 import FormInput from "../../../Fragments/FormInput";
 import CancelComponent from "../../../Fragments/CancelComponent";
 import dayjs from "dayjs";
 import Resources from "../../../../store/Resources";
-import {AlibabaOutlined, UserOutlined} from "@ant-design/icons";
+import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.png";
+import calendar_black_icon from "../../../../dist/icons/calendar_black_icon.png";
 
 const resource = 'Invoice';
 
@@ -192,7 +193,7 @@ function Incoice() {
 
 console.log(data)
     return (
-        <div>
+        <div className={"new_invoice_big_div"}>
             {data?.id ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice - ${data?.invoice_number}`)}</h3> :
                 <h3 className={'create_apdate_btns'}>{t(`Add new Invoice`)}</h3>}
             {loading ? <Preloader/> : <Form
@@ -203,9 +204,9 @@ console.log(data)
                 ref={formRef}
                 className={'add_create_form'}
             >
-                <div className={'add_edit_content'}>
-                    <div style={{display: "flex"}}>
-                        <div style={{width: '35%'}}>
+                <div className={'add_edit_invoice'}>
+                    <div style={{display: "flex", gap: 20}}>
+                        <div style={{width: '30%'}}>
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}
@@ -214,7 +215,7 @@ console.log(data)
                                        customSearchKey={'phone_code'}
                                        resource={'Country'}/>
                         </div>
-                        <div style={{width: '100%', marginLeft: 10}}>
+                        <div style={{width: '100%'}}>
                             <FormInput label={t('Select Patient and choose an appointment (Search By phone number)')}
                                        name={'appointment_id'}
                                        inputType={'resourceSelect'}
@@ -242,17 +243,20 @@ console.log(data)
                                        resource={'Appointment'}/>
 
                         </div>
+                        <div style={{width: '30%'}}>
+                            {
+                                data?.id ? <FormInput label={t('Invoice Number')} name={'invoice_number'}
+                                                      initialValue={data?.invoice_number} rules={[{required: true}]}/> :
+                                    <div></div>
+                            }
+                        </div>
                     </div>
-                    {
-                        data?.id ? <FormInput label={t('Invoice Number')} name={'invoice_number'}
-                                              initialValue={data?.invoice_number} rules={[{required: true}]}/> :
-                            <div></div>
-                    }
+
 
 
                     {
                         data?.appointment_id || data?.id ? <div>
-                            <div style={{display: "flex", gap: 10}}>
+                            <div style={{display: "flex", gap: 20}}>
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client name')} name={'client_name'}
                                                rules={[{required: true}]}
@@ -280,28 +284,28 @@ console.log(data)
                     }
 
 
-                    <div style={{display: "flex", gap: 10}}>
-                        <div style={{width: '100%'}}>
+                    <div style={{display: "flex", gap: 20}}>
+                        <div style={{width: '30%'}}>
                             <FormInput label={t('Issued date')} name={'issued_date'} initialValue={data?.date ? data?.date : dayjs()}
-                                       inputType={'date'} inputDisabled={true} rules={[
-                                {required: true},
-
-                            ]}/>
+                                       suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
+                                       inputType={'date'} inputDisabled={true} rules={[{required: true},]}/>
+                        </div>
+                        <div style={{width: '30%'}}>
+                            <FormInput label={t('Due date')} name={'due_date'} initialValue={data?.due_date}
+                                       suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
+                                       inputType={'date'} rules={[
+                                {required: true},]}/>
                         </div>
                         <div style={{width: '100%'}}>
-                            <FormInput label={t('Due date')} name={'due_date'} initialValue={data?.due_date}
-                                       inputType={'date'} rules={[
-                                {required: true},
-
-                            ]}/>
+                            <FormInput label={t('Customer notes')} name={'customer_notes'}
+                                       initialValue={data?.customer_notes}/>
                         </div>
                     </div>
-                    <FormInput label={t('Customer notes')} name={'customer_notes'} inputType={'textArea'}
-                               initialValue={data?.customer_notes}/>
+
 
                 </div>
 
-                <div className={'add_edit_content'}>
+                <div className={'add_edit_invoice'}>
                     {
                         data?.primary === 1 ? <div className={'invoice_primary_inputs_div'}>
                             <div style={{width: '100%'}}>
@@ -328,6 +332,10 @@ console.log(data)
                             {
                                 data?.appointment_id || data?.id ? <div>
                                     <div>
+                                        <div>
+                                            Price
+                                            <Button className={'invoice_add_price_button'} type={'primary'} onClick={onAddItem}>+</Button>
+                                        </div>
                                         {
                                             Object.keys(data?.items ?? {})?.map((key) => {
 
@@ -335,7 +343,8 @@ console.log(data)
                                                     display: 'flex',
                                                     gap: 15,
                                                     justifyContent: 'space-between',
-                                                    width: '100%'
+                                                    width: '100%',
+                                                    marginTop: 10
                                                 }}>
                                                     <div style={{width: '50%'}}>
                                                         <FormInput label={t('Invoice item')}
@@ -374,9 +383,8 @@ console.log(data)
                                                                        initialValue={data?.items[key]?.amount}/>
                                                         </div>
                                                         <div>
-                                                            <Button style={{marginTop: 8}} type={'primary'}
-                                                                    size={'large'}
-                                                                    onClick={() => onDeleteItem(key)}>delete</Button>
+                                                            <div style={{marginTop: 15, cursor: 'pointer'}}
+                                                                    onClick={() => onDeleteItem(key)}><img alt={'new_delete_dark_icon'} src={new_delete_dark_icon}/></div>
                                                         </div>
                                                     </div>
 
@@ -385,9 +393,7 @@ console.log(data)
                                         }
                                     </div>
                                     <div className={'invoice_add_total_div'}>
-                                        <div>
-                                            <Button onClick={onAddItem}>+ Add another item</Button>
-                                        </div>
+                                        <div></div>
                                         <div className={'invoice_total_div'}>
                                             <div style={{marginTop: 15, width: 70}}> Total (sar)</div>
                                             <div style={{width: '90%'}}>

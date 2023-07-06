@@ -11,8 +11,11 @@ import dayjs from "dayjs";
 import InvoicesGraphics from "./Fragments/InvoicesGraphics";
 import calendar_dark_purpule_icon from "../../../../dist/icons/calendar_dark_purpule_icon.png";
 import search_icon_darkPurpole from "../../../../dist/icons/search_icon_darkPurpole.png";
+import new_sorter_icon from "../../../../dist/icons/new_sorter_icon.png";
 import printIcon from "../../../../dist/icons/printIcon.svg";
 import ClinicOwnerHeader from "../../ClinicsOwner/Fragments/ClinicOwnerHeader";
+import ColorSelect from "../../../Fragments/ColorSelect";
+import Resource from "../../../../store/Resources";
 
 let resource = 'Invoice'
 function Invoices() {
@@ -66,6 +69,9 @@ function Invoices() {
                                        title:t('Id'),
                                        key:'id',
                                        sorter:true,
+                                       sortIcon: (sortOrder)=> {
+                                           return <img alt={'new_sorter_icon'} src={new_sorter_icon}/>
+                                       }
                                    },
                                    {
                                        dataIndex:['date','iso_string'],
@@ -77,6 +83,9 @@ function Invoices() {
                                        sorter:true,
                                        filterDropdown: (props)=><DateFilterElement filterProps={props}/>,
                                        filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
+                                       sortIcon: (sortOrder)=> {
+                                           return <img alt={'new_sorter_icon'} src={new_sorter_icon}/>
+                                       }
 
                                    },
                                    {
@@ -105,16 +114,16 @@ function Invoices() {
                                        filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                        sorter:true,
                                        sortIcon: (sortOrder)=> {
-                                           return 'ggg'
+                                           return <img alt={'new_sorter_icon'} src={new_sorter_icon}/>
                                        }
                                    },
-                                   // {
-                                   //     dataIndex:['status'],
-                                   //     title:t('Status'),
-                                   //     key:'status',
-                                   //     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                                   //     render:(e,record)=><ColorSelect items={Resource.StatusInvoices} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
-                                   // },
+                                   {
+                                       dataIndex:['status'],
+                                       title:t('Status'),
+                                       key:'status',
+                                       shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                                       render:(e,record)=><ColorSelect items={Resource.StatusInvoices} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                                   },
                                    {
                                        title: '',
                                        dataIndex: 'pdf',
