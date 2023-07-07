@@ -4,13 +4,14 @@ import {useSelector} from "react-redux";
 import {createResource, postResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
-import {Button, Form, Space} from "antd";
+import {Button, Form, Popconfirm, Space} from "antd";
 import FormInput from "../../../Fragments/FormInput";
 import CancelComponent from "../../../Fragments/CancelComponent";
 import dayjs from "dayjs";
 import Resources from "../../../../store/Resources";
 import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.png";
 import calendar_black_icon from "../../../../dist/icons/calendar_black_icon.png";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const resource = 'Invoice';
 
@@ -419,10 +420,21 @@ console.log(data)
                 </div>
 
 
-                <Space className={'create_apdate_btns'}>
-                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
-                    <CancelComponent changeValuesState={changeValuesState} resource={resource}/>
-                </Space>
+                <div className={'invice_save_cancel_div'} >
+                    <Button style={{width: '100%'}} loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                    <div style={{width: '100%'}}>
+                        {
+                            Object.keys(changeValuesState).length > 0 ? <Popconfirm
+                                title={t("your changes will not be saved")}
+                                onConfirm={() => navigate(-1) }
+                                okText={t("Yes")}
+                                cancelText={t("No")}
+                                icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                                <Button style={{width: '100%'}} size={'large'} type={'secondary'} >{t('Cancel')}</Button>
+                            </Popconfirm> : <Button style={{width: '100%'}} onClick={() => navigate(-1)} size={'large'} type={'secondary'} >{t('Cancel')}</Button>
+                        }
+                    </div>
+                </div>
             </Form>}
         </div>
     )

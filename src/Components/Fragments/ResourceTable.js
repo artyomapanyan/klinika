@@ -14,6 +14,11 @@ import api from "../../Api";
 import PermCheck from "./PermCheck";
 
 import new_table_delete_icon from "../../dist/icons/new_table_delete_icon.png";
+import dayjs from "dayjs";
+import arrow_prev from "../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../dist/icons/arrow-next.svg";
+import ResourceTableHeader from "./ResourceTableHeader";
+import SwitchStatus from "./SwitchStatus";
 
 function ResourceTable ({
                             resource, tableColumns,
@@ -75,6 +80,9 @@ function ResourceTable ({
         setParams(data)
 
     }
+
+    console.log(params)
+
     useEffect(()=>{
         if(tableSFilters && Object.keys(tableSFilters).length){
             setParams((prevState)=>({
@@ -129,6 +137,8 @@ function ResourceTable ({
         }
 
     },[data])
+
+
 
     const columns = useMemo(() => {
         let filterKeys = Object.keys(params);
@@ -189,7 +199,7 @@ function ResourceTable ({
                 title: 'Status',
                 key: 'status',
                 shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                render: (e,record) => <div className={'d'}><Switch  defaultChecked/></div>
+                render: (e,record) =><SwitchStatus record={record} resource={resource} name={'status'}/>
 
             }] : [])
         ]
@@ -249,6 +259,9 @@ function ResourceTable ({
                     invoiceSwitches ? <div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
                         <Switch></Switch>  New
                         <Switch ></Switch>  Payed
+                        <ResourceTableHeader params={params} setParams={setParams} />
+
+
                     </div> : <div></div>
                 }
 
@@ -258,7 +271,8 @@ function ResourceTable ({
         <Row style={{marginTop: resourceTablemarginTop ? 10 : 42}}>
             <Col lg={24}>
                 <Form>
-                    {noData && data?.items?.length===0 && !loading?noData():<Table
+                    {noData && data?.items?.length===0 && !loading ? noData():
+                        <Table
                         columns={columns}
                         loading={loading}
                         className={tableClassname}
