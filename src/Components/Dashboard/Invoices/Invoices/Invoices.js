@@ -118,6 +118,7 @@ function Invoices() {
                                            return <img alt={'new_sorter_icon'} src={new_sorter_icon}/>
                                        }
                                    },
+
                                    // {
                                    //     dataIndex:['status'],
                                    //     title:t('Status'),
