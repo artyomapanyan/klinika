@@ -41,18 +41,17 @@ function InvoiceIncomesGraphic() {
                         {
                             data.percent_change !== 0 ? <img alt={'icons'} src={data.percent_change > 0 ? arrowGreen : arrowRed}/> : <div></div>
                         }
-                        <span style={{fontWeight: 700, marginLeft: 5}}>20%</span>
+                        <span style={{fontWeight: 700, marginLeft: 5}}>0%</span>
                     </div>
                 </Space>
 
                 <Space direction={'vertical'} style={{marginLeft: 17}}>
                     <div className={'avg_montly'}>
-                        <span>{t("Total ")}</span>
-                        <span style={{fontWeight: 700}}>{t(50+"’s")}</span>
+                        <span>{t("Current month ")}</span>
 
                     </div>
-                    <div className={'dr_counter_text'}>
-                        {t("appointments")}
+                    <div className={'dr_counter_text'} style={{fontWeight: 700}}>
+                        {t("incomes")}
                     </div>
                 </Space>
             </Space>

@@ -52,6 +52,7 @@ function Invoices() {
             <div className={'invoices_table'}>
                 <ResourceTable resource={resource}
                                andStatus={true}
+                               invoiceSwitches={true}
                                except={{
                                    delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
                                }}

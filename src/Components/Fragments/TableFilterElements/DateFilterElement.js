@@ -19,8 +19,14 @@ function DateFilterElement({filterProps, type="date",resource}){
     }
 
 
-    return <Card className={'card-filters'} title={<TFInput  type={'date'} onChangeValue={onChangeValue} resource={resource} name={'country'}/>} >
-        <Space><Button type={"primary"} htmlType={'button'} onClick={onFilter}>Filter</Button> <Button type={"secondary"} onClick={onReset}>Reset</Button></Space>
-    </Card>
+    return <div className={'date-filters-div'}>
+        <div>
+            <TFInput  type={'date'} onChangeValue={onChangeValue} resource={resource} name={'country'}/>
+        </div>
+        <div style={{display: 'flex', gap: 10, marginTop: 20}}>
+            <Button size={'large'} type={"primary"} htmlType={'button'} onClick={onFilter} style={{width: '100%'}}>Filter</Button>
+            <Button size={'large'} style={{width: '100%'}} type={"secondary"} onClick={onReset}>Reset</Button>
+        </div>
+    </div>
 }
 export default DateFilterElement

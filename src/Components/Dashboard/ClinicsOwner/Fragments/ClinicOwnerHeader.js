@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import Resources from '../../../../store/Resources'
 
 const currentMonth = new Date().getMonth()
-function ClinicOwnerHeader({ noClinicSelect = false }) {
+function ClinicOwnerHeader({ noClinicSelect = false, dashboardText=false }) {
 	let reduxInfo = useSelector((state) => state?.auth?.clinics);
 	const [items, setItems] = useState([])
 
@@ -67,13 +67,15 @@ function ClinicOwnerHeader({ noClinicSelect = false }) {
 		})
 	}
 
-	console.log(items, 'f')
 
 	const { Months } = Resources
 	return (
 		<div className={'clinic_owner_header'}>
 			<div style={{ margin: '40px 24px', fontSize: 40, fontWeight: 400 }}>
-				Dashboard
+				{
+					dashboardText ? 'Invoices Details' : 'Dashboard'
+				}
+
 			</div>
 			<div>
 				<Dropdown

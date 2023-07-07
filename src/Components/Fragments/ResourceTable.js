@@ -12,9 +12,7 @@ import {clearObject, paramsToObject} from "../../functions";
 import axios from "axios";
 import api from "../../Api";
 import PermCheck from "./PermCheck";
-import {t} from "i18next";
-import ColorSelect from "./ColorSelect";
-import Resource from "../../store/Resources";
+
 import new_table_delete_icon from "../../dist/icons/new_table_delete_icon.png";
 
 function ResourceTable ({
@@ -43,7 +41,8 @@ function ResourceTable ({
                             tableClassname='',
                             containermargin=false,
                             andStatus=false,
-                            newDelete=false
+                            newDelete=false,
+                            invoiceSwitches=false
                         }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
@@ -190,7 +189,7 @@ function ResourceTable ({
                 title: 'Status',
                 key: 'status',
                 shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                render: (e,record) => <Switch defaultChecked  style={{backgroundColor: '#4eab55'}}/>
+                render: (e,record) => <div className={'d'}><Switch  defaultChecked/></div>
 
             }] : [])
         ]
@@ -246,10 +245,13 @@ function ResourceTable ({
 
 
                 </div>
-                <div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
-                    <Switch></Switch>  New
-                    <Switch ></Switch>  Payed
-                </div>
+                {
+                    invoiceSwitches ? <div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
+                        <Switch></Switch>  New
+                        <Switch ></Switch>  Payed
+                    </div> : <div></div>
+                }
+
             </Col>
 
         </Row>}
