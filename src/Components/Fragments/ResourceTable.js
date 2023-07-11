@@ -83,6 +83,7 @@ function ResourceTable ({
 
     console.log(params)
 
+
     useEffect(()=>{
         if(tableSFilters && Object.keys(tableSFilters).length){
             setParams((prevState)=>({
@@ -104,7 +105,7 @@ function ResourceTable ({
     const {setLoading, loading} = loadingState;
     const {setData, data} = dataState
 
-
+    console.log(data)
     const onResourceEdit = (record) => {
 
         if(customActions?.edit){
@@ -135,6 +136,7 @@ function ResourceTable ({
         if(getAll){
             getAll(data.items)
         }
+
 
     },[data])
 
@@ -232,13 +234,13 @@ function ResourceTable ({
 
     return (<Content className={'layout-conatiner'} style={{marginTop: containermargin ? 1 : -75}}>
         {customHeader?<Row>
-            <Col lg={24}>{customHeader({
+            <Col lg={12}>{customHeader({
                 setParams,
                 params
             })}</Col>
         </Row>:null}
         {!noHeader&&<Row className={'resource-header'}>
-            <Col lg={24} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Col lg={12} style={{display: 'flex', flexDirection: 'row', }}>
                 <div style={{display:'flex', gap: 4}}>
                     <div className={'recource_table_title'}>{t(title)}</div>
                     {PermCheck(`${resource}:create`) ? addBtn ? <Tooltip title="Add new entry">
@@ -255,17 +257,20 @@ function ResourceTable ({
 
 
                 </div>
-                {
-                    invoiceSwitches ? <div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
-                        <Switch></Switch>  New
-                        <Switch ></Switch>  Payed
-                        <ResourceTableHeader params={params} setParams={setParams} />
 
-
-                    </div> : <div></div>
-                }
 
             </Col>
+
+                {
+                    invoiceSwitches ? <Col lg={12}><div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
+                        <Switch></Switch>  New
+                        <Switch ></Switch>  Payed
+                        <ResourceTableHeader params={params} setParams={setParams} data={data} setData={setData}/>
+
+
+                    </div> </Col>: <div></div>
+                }
+
 
         </Row>}
         <Row style={{marginTop: resourceTablemarginTop ? 10 : 42}}>
@@ -278,7 +283,7 @@ function ResourceTable ({
                         className={tableClassname}
                         pagination={{
                             ...data.pagination,
-                            showTotal: (total) =>handleTableBelowData?handleTableBelowData(dataState,loadingState,total):null,
+                            showTotal: (total) =>handleTableBelowData ? handleTableBelowData(dataState,loadingState,total):null,
                             pageSize: data.pagination.pageSize,
                             showSizeChanger:true,
 

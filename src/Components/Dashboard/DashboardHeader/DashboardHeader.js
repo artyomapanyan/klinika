@@ -21,6 +21,8 @@ function DashboardHeader() {
             case pathname.includes('/clinic-manager'):
             case pathname.includes('/admin'):
                 return <ClinicOwnerHeader noClinicSelect={true} />
+            case pathname.includes('/invoices'):
+                return <ClinicOwnerHeader />
             case pathname.includes('/patients'):
                 return   <div>
                     <Button style={{margin:"40px 24px", height:45, width:45}}><LeftOutlined /></Button>
@@ -39,7 +41,7 @@ function DashboardHeader() {
         <Col lg={14} md={24}>
             {loading?null:handleReturnHeaderPart()}
         </Col>
-        <Col lg={10} md={24} style={{display:"flex", justifyContent:"flex-end", alignItems: "center", padding:pathname==='clinics' ? 0 :'15px 36px'}} className={'lng_select'}>
+        <Col lg={10} md={24} style={{zIndex: 100, display:"flex", justifyContent:"flex-end", alignItems: "center", padding:pathname==='clinics' ? 0 :'15px 36px'}} className={'lng_select'}>
             {pathname==='clinics'  ? <div></div> : <HeaderAccount />}
         </Col>
     </Row>

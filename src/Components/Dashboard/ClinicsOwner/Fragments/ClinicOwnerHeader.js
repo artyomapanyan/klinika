@@ -70,7 +70,7 @@ function ClinicOwnerHeader({ noClinicSelect = false, dashboardText=false }) {
 
 	const { Months } = Resources
 	return (
-		<div className={'clinic_owner_header'}>
+		<div className={'clinic_owner_header'} style={{zIndex: 999}}>
 			<div style={{ margin: '40px 24px', fontSize: 40, fontWeight: 400 }}>
 				{
 					dashboardText ? 'Invoices Details' : 'Dashboard'

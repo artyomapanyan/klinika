@@ -46,8 +46,8 @@ function Invoices() {
     }
 
     return(
-        <div style={{marginTop: -130}}>
-            <ClinicOwnerHeader dashboardText={true}/>
+        <div style={{marginTop: -20, zIndex: 999}}>
+            {/*<ClinicOwnerHeader dashboardText={true}/>*/}
             <InvoicesGraphics />
             <div className={'invoices_table'}>
                 <ResourceTable resource={resource}
