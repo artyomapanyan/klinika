@@ -24,7 +24,9 @@ function Clinic() {
     const params = useParams();
     let locale = useSelector((state) => state?.app?.current_locale);
     const [lang, setLang] = useState(locale)
-    const {loadingState, dataState} = useGetResourceSingle(resource, params.id, {}, null, lang)
+    const {loadingState, dataState,addDataState} = useGetResourceSingle(resource, params.id, {
+        PaymentMethod:{}
+    }, null, lang)
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -63,6 +65,7 @@ function Clinic() {
                 <items key={'essentials'} tab={'Essentials'}>
                     <ClinicTabEssentials loadingState={loadingState} dataState={dataState}
                                          lang={lang}
+                                         addDataState={addDataState}
                                          handleLangChange={handleLangChange}/>
                 </items>
                 {params.id && <items key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>

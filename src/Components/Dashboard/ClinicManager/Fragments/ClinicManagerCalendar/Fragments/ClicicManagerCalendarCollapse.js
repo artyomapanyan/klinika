@@ -6,7 +6,7 @@ import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse
 import gray_grid from "../../../../../../dist/icons/gray_grid.png";
 import arrowDownPurple from "../../../../../../dist/icons/arrowDownPurple.svg";
 
-function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
+function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
     const [btnCollapsed, setBtnCollapsed] = useState(false);
 
     const openCollapse = () => {
@@ -44,7 +44,7 @@ function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic}) {
             </tbody>
 
             {
-                btnCollapsed ? Object.values(item?.doctors??{}).map((doctor, key)=><ClinicManagerCalendarInnCollapse key={key} setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
+                btnCollapsed ? Object.values(item?.doctors??{}).map((doctor, key)=><ClinicManagerCalendarInnCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
             }
         </>
 

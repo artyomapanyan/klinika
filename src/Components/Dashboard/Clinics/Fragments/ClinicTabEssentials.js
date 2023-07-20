@@ -290,8 +290,8 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {useRef, useState} from "react";
-import {createResource, updateResource} from "../../../Functions/api_calls";
+import {useEffect, useRef, useState} from "react";
+import {createResource, postResource, updateResource} from "../../../Functions/api_calls";
 import {Button, Col, Form, Input, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
@@ -303,19 +303,30 @@ import React from "react";
 import MyMapComponent from "./MapComponent";
 import CancelComponent from "../../../Fragments/CancelComponent";
 
+
+
+
+
 const resource = 'Clinic';
 
-function ClinicTabEssentials({loadingState, dataState}) {
+
+
+function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
     let reduxInfo = useSelector((state) => state);
+
 
     let token = useSelector((state) => state.auth.token);
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+
+
+
+
 
     const onFinish = (values) => {
 
@@ -411,8 +422,6 @@ function ClinicTabEssentials({loadingState, dataState}) {
         return [name,item]
     }
 
-    console.log(data)
-
     return(
         <div >
             {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
@@ -443,10 +452,14 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                     <FormInput maxLength={9} label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
                                 </div>
                             </div>
+
+
                             <FormInput label={t('License Number')} name={'license_number'} initialValue={data?.license_number} rules={[{required: true}]} />
+                            <div style={{height:3}}></div>
                             <FormInput label={t('License number expired at')} name={'license_number_expired_at'} initialValue={data?.license_number_expired_at} inputType={'date'} rules={[{required: true}]} />
                             <FormInput label={t('Website')} inputType={'url'} name={'website'} initialValue={data?.website ? data?.website : ''} placeholder={'                https://www.klinikatech.com'} />
-
+                            <div style={{height:3}}></div>
+                            <FormInput label={t('Vat number')} name={'vat_number'} initialValue={data?.vat_number} rules={[{required: true}]} />
 
                         </Col>
                         <Col lg={12} className="gutter-row">
@@ -483,6 +496,18 @@ function ClinicTabEssentials({loadingState, dataState}) {
                                        resource={'InsuranceCompany'}
                                        resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
                             />
+
+                                <FormInput label={t('Payment method')} name={'payment_methods'} inputType={'resourceSelect'}
+                                                                inputProps={{mode:'multiple'}}
+                                                                rules={[{required: true}]}
+                                                                initialValue={data?.payment_methods ? data?.payment_methods?.map(e=>e.id) : addDataState.addData.PaymentMethod.items?.map(e=>e.id)}
+                                                                initialData={data?.payment_methods??addDataState.addData.PaymentMethod.items}
+                                                                resource={'PaymentMethod'}
+                                />
+
+
+
+
 
                         </Col>
                     </Row>

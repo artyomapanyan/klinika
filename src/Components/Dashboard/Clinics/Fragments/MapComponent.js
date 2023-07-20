@@ -110,6 +110,7 @@ function MyMapComponent({data,formRef}) {
                 <Col lg={6}>
                     <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.region?.country?.id}
+                               rules={[{required: true}]}
                                inputProps={{
                                    onChange:(e,data)=> {
                                        formRef?.current?.setFieldsValue({
@@ -128,6 +129,7 @@ function MyMapComponent({data,formRef}) {
                 <Col lg={6}>
                     <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.region?.id}
+                               rules={[{required: true}]}
                                resourceParams={{
                                    country:formRef?.current?.getFieldValue('country_id')
                                }}
@@ -151,6 +153,8 @@ function MyMapComponent({data,formRef}) {
 
                     <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
                                initialValue={data?.location?.city?.id}
+                               rules={[{required: true}]}
+
                                resourceParams={{
                                    region:formRef?.current?.getFieldValue('region_id')
                                }}

@@ -32,8 +32,8 @@ function DoctorReworkedCalendar() {
             // console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
                 return {
                     text: Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label ,
-                    startDate: dayjs(e.booked_at.iso_string).utc().format(),
-                    endDate: dayjs(e.booked_to.iso_string).utc().format(),
+                    startDate: e.booked_at.iso_string,
+                    endDate: e.booked_to.iso_string,
                     content: e.service_name,
                     ...e
                 }

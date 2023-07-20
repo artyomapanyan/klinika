@@ -13,7 +13,7 @@ import {t} from "i18next";
 import Preloader from "../../../../../Preloader";
 import {getServiceTypes} from "../../../../../../functions";
 
-function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate}) {
+function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate, setUpdate}) {
 
     const {doctor} = docItem;
     const [open, setOpen] = useState(false);
@@ -21,30 +21,47 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const [finishLoading, setFinishLoading] = useState(false);
     const [size, setSize] = useState();
     const [times, setTimes] = useState([]);
+    const [noTimes, setNoTimes] = useState(false);
     const [data, setData] = useState({});
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
     useEffect(() => {
 
         if(data.service_type){
-            setLoading(true)
-            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
-                service: data.service_type,
-                date: selectedDate
-            }).then(response => {
-                setLoading(false)
-                setTimes(response.flat())
-            })
+            if(data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit') {
+                setLoading(true)
+                postResource('Clinic', 'ClinicsAvailableTimes', token, clinicID, {
+                    date: selectedDate,
+                    service: data.service_type,
+                }).then(response => {
+                    setLoading(false)
+                    setTimes(response.flat())
+                    setNoTimes(response)
+
+                })
+            } else {
+                setLoading(true)
+                postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
+                    service: data.service_type,
+                    date: selectedDate
+                }).then(response => {
+                    setLoading(false)
+                    setTimes(response.flat())
+                    setNoTimes(response)
+                })
+            }
+
         }
 
     }, [selectedDate, docItem,data.service_type])
+
+    console.log(times, 'de')
+
     const openDrawer = () => {
         formRef.current.validateFields(['time','service_type']).then(e => {
             setOpen(true);
             setSize('default');
         })
-
-
     }
 
     const openLargeDrawer = () => {
@@ -78,11 +95,14 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 setFinishLoading(false)
                 setSelectedDate(false)
                 setDate((prevState)=>prevState)
+                setUpdate((prevState) =>prevState+1)
             }
 
         })
 
     }
+
+
     return (
         <div className={'clinic_manager_modal_big_div'}>
             {
@@ -107,7 +127,11 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                 optionType="button"
                                 buttonStyle="solid"
                             />
-                        </Form.Item>:null}
+                        </Form.Item>: <div></div>}
+                        {
+                            noTimes[0]?.length < 1 ? <div align={'center'} style={{width:'100%', fontSize: 20, marginTop:20, marginBottom: 20, fontWeight: 500, color: '#F3A632'}}>There are no available times</div> :
+                                <div></div>
+                        }
                     </div>
                     <div >
                         <Space>
@@ -124,7 +148,10 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                    inputType={'resourceSelect'}
                                    rules={[{required: true}]}
                                    initialValue={null}
-                                   initialData={getServiceTypes(clinic.services)}/>
+                                   initialData={getServiceTypes(clinic.services).filter((el) => {
+                                       return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
+                                   })}/>
+
                         <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
                        
                         <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}

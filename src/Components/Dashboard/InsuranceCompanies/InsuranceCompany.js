@@ -55,7 +55,7 @@ function InsuranceCompany() {
 
     return (
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Insuranse Company - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Insuranse Company`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Insurance Company - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Insuranse Company`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -65,6 +65,7 @@ function InsuranceCompany() {
             >
                 <div className={"add_edit_content"}>
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+                    <FormInput label={t('Expiration date')} name={'expiration_date'} initialValue={data?.expiration_date} inputType={'date'} rules={[{required: true}]} />
 
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}

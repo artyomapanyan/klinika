@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
-import {Button, Col, Form, Popconfirm, Row, Space, Table, Tooltip} from "antd";
+import {Button, Col, Form, Popconfirm, Row, Space, Switch, Table, Tooltip} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
 import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router";
@@ -13,35 +13,49 @@ import axios from "axios";
 import api from "../../Api";
 import PermCheck from "./PermCheck";
 
+import new_table_delete_icon from "../../dist/icons/new_table_delete_icon.png";
+import dayjs from "dayjs";
+import arrow_prev from "../../dist/icons/arrow-prev.svg";
+import arrow_next from "../../dist/icons/arrow-next.svg";
+import ResourceTableHeader from "./ResourceTableHeader";
+import SwitchStatus from "./SwitchStatus";
+
 function ResourceTable ({
-    resource, tableColumns,
-    title, tableParams = {},
-    resourceLink = null,
-    hideActions = false,
-    exportButton = true,
-    except = {},
-    handleTableBelowData,
-    getAll = false,
-    noHeader = false,
-    eyeShow = false,
-    customActions,
-    initialParams = {},
-    showHeader = true,
-    editBtnStyle = {},
-    tableSFilters,
-    customTableButton,
-    customHeader=null,
-    resourceTablemarginTop=false,
-    noData= false,
-    addBtn = true
-}) {
+                            resource, tableColumns,
+                            title, tableParams = {},
+                            resourceLink = null,
+                            hideActions = false,
+                            exportButton = true,
+                            exportDatabase = true,
+                            addButtonChange = true,
+                            except = {},
+                            handleTableBelowData,
+                            getAll = false,
+                            noHeader = false,
+                            eyeShow = false,
+                            customActions,
+                            initialParams = {},
+                            showHeader = true,
+                            editBtnStyle = {},
+                            tableSFilters,
+                            customTableButton,
+                            customHeader=null,
+                            resourceTablemarginTop=false,
+                            noData= false,
+                            addBtn = true,
+                            tableClassname='',
+                            containermargin=false,
+                            andStatus=false,
+                            newDelete=false,
+                            invoiceSwitches=false
+                        }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({...paramsToObject(searchParams.entries()),
-       ...tableParams,
+        ...tableParams,
         ...initialParams,
         ...(getAll?{per_page:9999}:{})
-})
+    })
     let token = useSelector((state) => state?.auth?.token);
     let lngs = useSelector((state) => state?.app?.current_locale);
 
@@ -66,6 +80,10 @@ function ResourceTable ({
         setParams(data)
 
     }
+
+    console.log(params)
+
+
     useEffect(()=>{
         if(tableSFilters && Object.keys(tableSFilters).length){
             setParams((prevState)=>({
@@ -87,7 +105,7 @@ function ResourceTable ({
     const {setLoading, loading} = loadingState;
     const {setData, data} = dataState
 
-
+    console.log(data)
     const onResourceEdit = (record) => {
 
         if(customActions?.edit){
@@ -119,10 +137,13 @@ function ResourceTable ({
             getAll(data.items)
         }
 
+
     },[data])
 
+
+
     const columns = useMemo(() => {
-            let filterKeys = Object.keys(params);
+        let filterKeys = Object.keys(params);
         return [...tableColumns?.map(e => {
             if (params.order_by?.includes(e.key)) {
                 e = {
@@ -139,36 +160,50 @@ function ResourceTable ({
         }),
 
             ...(hideActions?[]:[{
-            dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
+                dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
 
                     {!except.edit ? <Tooltip title="Update">
-                    <Button
-                      type={editBtnStyle ? editBtnStyle.type : {}}
-                      onClick={() => onResourceEdit(record)}
-                      size={editBtnStyle?.size ? editBtnStyle?.size : 'small'}
-                      style={editBtnStyle?.btnStyle ? editBtnStyle.btnStyle : {}}
-                    >
-                        <EditOutlined style={editBtnStyle?.iconStyle ? editBtnStyle?.iconStyle : {}}/>
-                    </Button>
-                </Tooltip> :  <div></div>}
-                {!except.delete&&<Tooltip title="Delete">
-                    <Popconfirm
-                        title={t("Are you sure to delete this entry?")}
-                        onConfirm={() => onResourceDelete(record)}
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
-                        <Button size={'small'}><DeleteOutlined/></Button>
-                    </Popconfirm>
-                </Tooltip>}
+                        <Button
+                            className={'edit-button'}
+                            type={editBtnStyle ? editBtnStyle.type : {}}
+                            onClick={() => onResourceEdit(record)}
+                            size={editBtnStyle?.size ? editBtnStyle?.size : 'small'}
+                            style={editBtnStyle?.btnStyle ? editBtnStyle.btnStyle : {}}
+                        >
+                            <EditOutlined style={editBtnStyle?.iconStyle ? editBtnStyle?.iconStyle : {}}/>
+                        </Button>
+                    </Tooltip> :  <div></div>}
+                    {!except.delete&&<Tooltip title="Delete">
+                        <Popconfirm
+                            title={t("Are you sure to delete this entry?")}
+                            onConfirm={() => onResourceDelete(record)}
+                            okText={t("Yes")}
+                            cancelText={t("No")}
+                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>
+                            {
+                                newDelete ? <Button className={'delete-button'} size={'small'}><DeleteOutlined/></Button> :
+                                    <div className={'new_delete_button'} ><img src={new_table_delete_icon} alt={'new_table_delete_icon'}/></div>
+                            }
+
+                        </Popconfirm>
+                    </Tooltip>}
                     {
                         eyeShow ? <Tooltip title="Show">
                             <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><EyeOutlined style={{color: '#c98a1e'}} /></Button>
                         </Tooltip> : <div></div>
                     }
 
-            </Space>
-        }])
+                </Space>
+            }]),
+
+            ...(andStatus ? [{
+                dataIndex: 'status',
+                title: 'Status',
+                key: 'status',
+                shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                render: (e,record) =><SwitchStatus record={record} resource={resource} name={'status'}/>
+
+            }] : [])
         ]
 
 
@@ -197,50 +232,68 @@ function ResourceTable ({
     }
 
 
-    return (<Content className={'layout-conatiner'}>
+    return (<Content className={'layout-conatiner'} style={{marginTop: containermargin ? 1 : -75}}>
         {customHeader?<Row>
-            <Col lg={24}>{customHeader({
+            <Col lg={12}>{customHeader({
                 setParams,
                 params
             })}</Col>
         </Row>:null}
         {!noHeader&&<Row className={'resource-header'}>
-            <Col lg={11}>
+            <Col lg={12} style={{display: 'flex', flexDirection: 'row', }}>
                 <div style={{display:'flex', gap: 4}}>
-                    <div className={'recource_table_title'}>{t(title)}:</div>
+                    <div className={'recource_table_title'}>{t(title)}</div>
                     {PermCheck(`${resource}:create`) ? addBtn ? <Tooltip title="Add new entry">
-                            <Button style={{marginLeft:10}} className={'resource_table_btn'} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>Add</Button>
+                        <Button style={{marginLeft:10}} className={addButtonChange ? 'resource_table_btn' : ''} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>{addButtonChange ? 'Add' : ''}</Button>
                     </Tooltip>: <div></div> : <div></div>}
                     {
                         exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
-                        : null
+                            : null
+                    }
+
+                    {
+                        exportDatabase ? <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button> : null
                     }
 
 
-                        <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button>
-
                 </div>
+
+
             </Col>
+
+                {
+                    invoiceSwitches ? <Col lg={12}><div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
+                        <Switch></Switch>  New
+                        <Switch ></Switch>  Payed
+                        <ResourceTableHeader params={params} setParams={setParams} data={data} setData={setData}/>
+
+
+                    </div> </Col>: <div></div>
+                }
+
 
         </Row>}
         <Row style={{marginTop: resourceTablemarginTop ? 10 : 42}}>
             <Col lg={24}>
                 <Form>
-                    {noData && data?.items?.length===0 && !loading?noData():<Table
-                    columns={columns}
-                    loading={loading}
-                    pagination={{
-                        ...data.pagination,
-                        showTotal: (total) =>handleTableBelowData?handleTableBelowData(dataState,loadingState,total):null,
-                        pageSize: data.pagination.pageSize,
-                        showSizeChanger:true
-                    }}
-                    showHeader={showHeader}
-                    onChange={handleTableChange}
-                    dataSource={data?.items}
-                    rowKey={e => e.id}
-                    size={'small'}
-                />}
+                    {noData && data?.items?.length===0 && !loading ? noData():
+                        <Table
+                        columns={columns}
+                        loading={loading}
+                        className={tableClassname}
+                        pagination={{
+                            ...data.pagination,
+                            showTotal: (total) =>handleTableBelowData ? handleTableBelowData(dataState,loadingState,total):null,
+                            pageSize: data.pagination.pageSize,
+                            showSizeChanger:true,
+
+                        }}
+                        showHeader={showHeader}
+                        onChange={handleTableChange}
+                        dataSource={data?.items}
+                        rowKey={e => e.id}
+                        size={'small'}
+                    />}
                 </Form>
                 {customTableButton?<Button loading={loading} type={'primary'} size={'large'} style={{margin:20}} icon={customTableButton.icon} onClick={()=>customTableButton.onClick()}>{customTableButton.title}</Button>:null}
             </Col>

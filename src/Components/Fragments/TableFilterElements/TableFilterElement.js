@@ -14,6 +14,8 @@ function TableFilterElement({filterProps, type="input",resource}){
         filterProps.confirm()
 
     }
+
+
     return <Card className={'card-filters'} title={<TFInput type={type} value={filterProps.selectedKeys} onChangeValue={onChangeValue} resource={resource} name={'country'}/>} >
         <Space><Button type={"primary"} htmlType={'button'} onClick={onFilter}>Filter</Button> <Button type={"secondary"} onClick={onReset}>Reset</Button></Space>
     </Card>
