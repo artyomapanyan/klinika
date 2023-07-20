@@ -6,9 +6,7 @@ import Arrow_back_black from "../../../dist/icons/Arrow_back_black.png";
 import {MoreOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import ClinicTabBars from "../Clinics/Fragments/ClinicTabBars";
-import TabGeneralInfo from "../Clinics/Fragments/ManageDoctors/ClinicDoctorUpdate/ClinicDoctorTabs/TabGeneralInfo";
-import ClinicDoctorWorkingHours
-    from "../Clinics/Fragments/ManageDoctors/ClinicDoctorUpdate/ClinicDoctorTabs/ClinicDoctorWorkingHours";
+
 import DoctorGeneralInfo from "./DoctorGeneralInfo/DoctorGeneralInfo";
 import {useSelector} from "react-redux";
 
