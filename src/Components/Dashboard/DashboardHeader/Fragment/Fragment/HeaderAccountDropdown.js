@@ -62,8 +62,14 @@ function HeaderAccountDropdown({setAuthOpen}) {
         })
     }
 
+
     const onSetings = () => {
-        navigate(`users/update-self`)
+        if(auth?.selected_role?.key === 'doctor') {
+            navigate(`profile`)
+        } else {
+            navigate(`users/update-self`)
+        }
+
     }
 
 
@@ -87,7 +93,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
                     </div>
                     <div className={"head_acc_bottom_div"}>
                         <Button style={{justifyContent:"none"}} onClick={onSetings}>
-                            <div><img alt={'icons'} src={settings}/> {t("Account setings")}</div>
+                            <div><img alt={'icons'} src={settings}/> {t("Account settings")}</div>
 
                         </Button>
                         <Button style={{marginTop:7}} onClick={handleLogout} >

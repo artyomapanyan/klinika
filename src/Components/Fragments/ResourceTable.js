@@ -81,7 +81,7 @@ function ResourceTable ({
 
     }
 
-    console.log(params)
+
 
 
     useEffect(()=>{
@@ -105,7 +105,7 @@ function ResourceTable ({
     const {setLoading, loading} = loadingState;
     const {setData, data} = dataState
 
-    console.log(data)
+
     const onResourceEdit = (record) => {
 
         if(customActions?.edit){
@@ -132,6 +132,8 @@ function ResourceTable ({
             setLoading(false)
         })
     }
+
+
     useEffect(()=>{
         if(getAll){
             getAll(data.items)

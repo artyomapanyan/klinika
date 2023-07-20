@@ -1,0 +1,249 @@
+import {Button, Col, Divider, Form, Row, Space} from "antd";
+import DoctorImageUpload
+    from "../../Clinics/Fragments/ManageDoctors/ClinicDoctorUpdate/ClinicDoctorTabs/DoctorImageUpload";
+import FormInput from "../../../Fragments/FormInput";
+import {t} from "i18next";
+import suffix_select_icon from "../../../../dist/icons/suffix_select_icon.png";
+import calendar_black_icon from "../../../../dist/icons/calendar_black_icon.png";
+import dayjs from "dayjs";
+import Resources from "../../../../store/Resources";
+import React, {useEffect, useState} from "react";
+import {createResource, postResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import {useParams} from "react-router";
+import Preloader from "../../../Preloader";
+import DoctorProfileImage from "../DoctorProfileImage/DoctorProfileImage";
+
+
+let resource = 'DoctorUpdateProfile';
+function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
+    const params = useParams();
+    let token = useSelector((state) => state.auth.token);
+    //let data = useSelector((state) => state.auth.user);
+    const [data, setData] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [autoFillState, setAutoFillState] = useState(true);
+
+
+
+
+    useEffect(() => {
+        setLoading(true)
+        postResource(resource, 'GetDoctorProfile', token, '').then((response) => {
+            setData(response)
+            setLoading(false)
+        })
+    }, [autoFillState])
+
+    const onFinish = (values) => {
+        setSaveLoading(true)
+        updateResource(resource, '', values, token).then(response => {
+                if(response?.id){
+
+                }
+            }).finally(() => {
+                setSaveLoading(false)
+            })
+    }
+
+    const handleMapItems = (item,name)=>{
+        name = item.phone_code?`(${item.phone_code}) `:null
+        item.id = item.phone_code
+        return [name,item]
+    }
+
+    const onAutoFillYes = () => {
+        setAutoFillState(false)
+    }
+
+    // let a = [
+    //     {
+    //         id: data?.doctor_title?.id,
+    //         name: data?.doctor_title?.title
+    //     }
+    // ]
+
+
+    return(
+        <div className={'general_info_big_div'}>
+            {
+                autoFillState ? <div className={'autofill_big_div'}>
+
+                    <div>
+                        <Space >
+                            <Divider type={"vertical"} style={{height: 37, border: '2px solid #F3A632', borderRadius: 2}}></Divider>
+                            <div>
+                                <div className={'autofill_bold_text'}>
+                                    Auto fill your data
+                                </div>
+                                <div className={'autofill_text'}>
+                                    You have already filled profile from another clinic. Do you want to pre-fill this data to current profile
+                                </div>
+                            </div>
+                        </Space>
+
+
+                    </div>
+                    <div>
+                        <Button onClick={onAutoFillYes} style={{marginRight: 16}} className={'autofill_btn'} type={'primary'} >Yes</Button>
+                        <Button className={'autofill_btn'} type={'secondary'} >No</Button>
+                    </div>
+                </div> : <div></div>
+            }
+
+            {
+                loading ? <Preloader /> : <Form
+                    ref={formRef}
+                    onFinish={onFinish}
+                >
+                    <Row gutter={80}>
+                        <Col lg={3}>
+                            <DoctorProfileImage formRef={formRef}  />
+
+                        </Col>
+                        <Col lg={21} className={'clinics_select_col'}>
+
+                            <Row gutter={20}>
+                                <Col lg={6}>
+                                    <FormInput label={t('Name')} name={'first'}
+                                               initialValue={data?.first}
+                                               rules={[{required: true}]}/>
+                                </Col>
+                                <Col lg={6}>
+                                    <FormInput label={t('Surname')} name={'last'}
+                                               initialValue={data?.last}
+                                               rules={[{required: true}]}/>
+                                </Col>
+                                <Col lg={6}>
+                                    <FormInput label={t('Date of Birth')} name={'dob'}
+                                               suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
+                                               initialValue={!autoFillState ? data?.dob : null}
+
+                                        //inputDisabled={true}
+                                               inputType={'date'} rules={[
+
+                                        {
+                                            validator:(rule,value)=>{
+                                                if(dayjs().diff(value,'year')<18){
+                                                    return Promise.reject('min age 18')
+                                                }
+                                                return Promise.resolve();
+                                            }
+                                        }
+                                    ]}/>
+                                </Col>
+                                <Col lg={6}>
+                                    <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
+                                               initialValue={!autoFillState ? data?.gender : null}
+                                               initialData={Resources?.Gender}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col lg={6}>
+                                    <FormInput label={t('Qualification')} name={'qualification'}
+                                    />
+                                </Col>
+                                <Col lg={6}>
+                                    <FormInput label={t('HCP registration number:')} name={'name'}
+                                    />
+                                </Col>
+                                <Col lg={6}>
+                                    <FormInput label={t('License valid to')} name={'dob'}
+                                               suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
+
+                                        //inputDisabled={true}
+                                               inputType={'date'}
+                                    />
+                                </Col>
+                                <Col lg={6}>
+                                    <FormInput label={t('license upload')} name={'qualification'} />
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col lg={8}>
+                                    <FormInput inputProps={{mode:'multiple'}} label={t('Sub specialties')} name={'sub_specialities'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={!autoFillState ? data?.sub_specialties?.map(e=>e.id) : null}
+                                               initialData={data?.sub_specialties ??[]}
+                                               resource={'Taxonomy'}
+                                               resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                                    />
+                                </Col>
+
+                                <Col lg={16}>
+                                    <FormInput label={t('')} name={'specialities'}
+                                               inputProps={{mode: 'multiple'}}
+                                               suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Specialties </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
+
+                                               inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={!autoFillState ? data?.specialties?.map(e=>e.id) : null}
+                                               initialData={data?.specialties ??[]}
+                                               resource={'Taxonomy'}
+                                               resourceParams={{
+                                                   type: Resources.TaxonomyTypes.SPECIALTY,
+                                                   has_parent: 0
+                                               }}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col lg={8}>
+                                    <FormInput label={t('Email')} name={'email'} rules={[{required: true}]} initialValue={!autoFillState ? data?.email : null}/>
+                                </Col>
+
+                                <Col lg={6}>
+                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={data?.phone_country_code}
+                                               handleMapItems={handleMapItems}
+                                               customSearchKey={'phone_code'}
+                                               resource={'Country'}/>
+                                </Col>
+                                <Col lg={6}>
+                                    <FormInput label={t('Phone number')} name={'phone_number'} rules={[{required: true}]} initialValue={data?.phone_number}/>
+                                </Col>
+
+                            </Row>
+                            <div style={{display: 'flex', width: '100%', gap: 20}}>
+                                <div style={{width:'50%'}}>
+                                    <FormInput label={t('Plid')} name={'plid'} rules={[{required: true}]} initialValue={!autoFillState ? data?.plid : null}/>
+                                </div>
+                                <div style={{width:'50%'}}>
+                                    <FormInput label={t('Doctor title id')} name={'doctor_title_id'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={!autoFillState ? data?.doctor_title.id : null}
+                                               initialData={data?.doctor_title?[data?.doctor_title]:[]}
+                                               resource={'Taxonomy'}
+                                               resourceParams={{type:Resources.TaxonomyTypes.DOCTOR_TITLE}}
+                                    />
+                                </div>
+                            </div>
+
+
+
+
+                            <div>
+                                <FormInput label={t('Doctor description by clinic')} name={'bio'} inputType={'textArea'}
+                                     initialValue={!autoFillState ? data?.bio : null}
+                                />
+                            </div>
+
+
+
+
+                        </Col>
+
+                    </Row>
+
+
+                </Form>
+            }
+
+
+        </div>
+    )
+}
+
+export default TabGeneralInfo;

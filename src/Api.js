@@ -202,14 +202,25 @@ let api = {
         }
     },
     {
+        url: 'auth/profile/doctor',
+        resource: 'DoctorUpdateProfile',
+        custom: {
+            GetDoctorProfile:{
+                url: `${endpoint}${version}/auth/profile/doctor`,
+                method: 'GET',
+            },
+
+        }
+    },
+    {
         url: 'appointments',
         resource: 'Appointment',
-        // custom: {
-        //     AppointmentStatus:{
-        //         url: `${endpoint}${version}/appointments/`,
-        //         method: 'POST',
-        //     },
-        // }
+        custom: {
+            PrivateNotes:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'POST',
+            },
+        }
     },
     {
         url: 'public/offers',
@@ -447,6 +458,16 @@ let api = {
         },
 
     },
+    {
+        url: 'prescriptions',
+        resource: 'prescriptions',
+    },
+    // {
+    //     url: 'add-private-notes',
+    //     resource: 'PrivateNotes',
+    //
+    // },
+
 
 
 

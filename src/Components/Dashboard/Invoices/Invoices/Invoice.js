@@ -90,7 +90,6 @@ function Incoice() {
 
 
     const handleValuesChange = (changed, all) => {
-        console.log(changed, 'changed')
         setChangeValuesState(changed)
 
         if (changed.items) {
@@ -190,7 +189,6 @@ function Incoice() {
     }
 
     formRef?.current?.getFieldValue('sub_total')
-
 
 
     return (

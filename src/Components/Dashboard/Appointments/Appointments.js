@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {Form, Modal} from "antd";
+import {Button, Form, Modal} from "antd";
 import {t} from "i18next";
 import ResourceTable from "../../Fragments/ResourceTable";
-import {CheckCircleOutlined} from "@ant-design/icons";
+import {CheckCircleOutlined, EyeOutlined, MedicineBoxOutlined} from "@ant-design/icons";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import {useNavigate} from "react-router";
@@ -64,6 +64,13 @@ function Appointments() {
                 ...changed
             }))
         }
+
+    }
+
+    const onResourceShow = (record) => {
+
+
+        navigate(ResourceLinks[resource] + record.id+'/doctor')
 
     }
 
@@ -131,6 +138,7 @@ function Appointments() {
                             return<div>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</div>
                         }
                     },
+
                     {
                         dataIndex:['booked_at','iso_string'],
                         title:t('Appointment Date'),
@@ -149,6 +157,13 @@ function Appointments() {
                         }
 
                        },
+                    {
+                        dataIndex:'doctor',
+                        title:t('Doctor'),
+                        key:'doctor',
+                        render:(i, record )=> <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><MedicineBoxOutlined style={{color: '#c98a1e'}} /></Button>
+
+                    },
                 ]} title={t('Appointments')}/>}
             </div>
         </div>

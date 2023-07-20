@@ -59,7 +59,11 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
                         </p>
                         <p className="ant-upload-text">{text1}</p>
                         <p className="ant-upload-hint">{text2}</p>
-                    </Upload.Dragger>:<Upload   {...fileInputProps}><Button>Add</Button></Upload>}
+                    </Upload.Dragger>:<Upload
+
+                        {...fileInputProps}>
+                        <Button>Add</Button>
+                    </Upload>}
 
 
         </Form.Item>

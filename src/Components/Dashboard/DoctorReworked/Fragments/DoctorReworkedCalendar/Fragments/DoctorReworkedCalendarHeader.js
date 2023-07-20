@@ -4,7 +4,7 @@ import {t} from "i18next";
 import React, {useState} from "react";
 import DoctorReworkedCalendarDrawer from "./DoctorReworkedCalendarDrawer";
 
-function DoctorReworkedCalendarHeader({setDate}) {
+function DoctorReworkedCalendarHeader({setDate, textApp=true}) {
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
@@ -16,8 +16,9 @@ function DoctorReworkedCalendarHeader({setDate}) {
     let data = ['New', 'Confirmed', 'Cancelled', 'Rescheduled']
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", }}>
-            <Space className={'app_clinic'}>
-                {t("Appointments")}
+            <Space className={'app_clinic'} style={{marginLeft: textApp ? 0 : -15}}>
+                {t(textApp ? "Appointments" : '')}
+
                 {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-colorCalendar-${key}`}>{itemKey}</Space>)}
             </Space>
             <div>

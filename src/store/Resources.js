@@ -49,6 +49,15 @@ const Resource = {
             label: 'Inactive'
         },
     ],
+    ServiceKeys: {
+        telehealth: ['telehealth_activated_at', 'telehealth_diagnosis_price'],
+        clinic_visit: ['clinic_visit_activated_at', 'clinic_visit_diagnosis_price'],
+        home_visit: ['home_visit_activated_at', 'home_visit_diagnosis_price'],
+        physical_therapy_home_visit: ['physical_therapy_home_visit_activated_at', 'physical_therapy_home_visit_diagnosis_price'],
+        physical_therapy_clinic_visit: ['physical_therapy_clinic_visit_activated_at', 'physical_therapy_clinic_visit_diagnosis_price'],
+
+    },
+
     Status: [
         {
             id: 2,
@@ -91,39 +100,39 @@ const Resource = {
         },
     ],
     AppointmentStatuses: [
-          {
-              key: '0',
-              label: 'New'
-          },
-          {
-              key: '1',
-              label: 'Confirmed'
-          },
-          {
-              key: '2',
-              label: 'Finished'
-          },
-          {
-              key: '3',
-              label: 'Cancelled'
-          },
-          {
-              key: '4',
-              label: 'Rescheduled'
-          },
-          {
-              key: '5',
-              label: 'Absent'
-          },
-          {
-              key: '6',
-              label: 'Follow up'
-          },
-          {
-              key: '7',
-              label: 'Revoked'
-          },
-      ],
+        {
+            key: '0',
+            label: 'New'
+        },
+        {
+            key: '1',
+            label: 'Confirmed'
+        },
+        {
+            key: '2',
+            label: 'Finished'
+        },
+        {
+            key: '3',
+            label: 'Cancelled'
+        },
+        {
+            key: '4',
+            label: 'Rescheduled'
+        },
+        {
+            key: '5',
+            label: 'Absent'
+        },
+        {
+            key: '6',
+            label: 'Follow up'
+        },
+        {
+            key: '7',
+            label: 'Revoked'
+        },
+    ],
     StatusWays: {
         0: [
             {

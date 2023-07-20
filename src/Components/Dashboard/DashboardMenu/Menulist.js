@@ -11,7 +11,7 @@ import {
     DiffOutlined,
     DollarOutlined, NotificationOutlined,
     PercentageOutlined, ProfileOutlined,
-    RedEnvelopeOutlined
+    RedEnvelopeOutlined, UserOutlined
 } from "@ant-design/icons";
 import {t} from "i18next";
 
@@ -130,6 +130,11 @@ export default {
             key: 'reports/new',
             label: t(`Requests`),
             permission:'Report'
+        },
+        {
+            key: 'profile',
+            icon: <UserOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`My profile`),
         },
         {
             key: 'notifications',

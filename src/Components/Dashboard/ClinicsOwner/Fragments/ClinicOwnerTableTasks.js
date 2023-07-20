@@ -125,7 +125,7 @@ function ClinicOwnerTableTasks() {
     ];
 
     const onChange = (date, dateString) => {
-        console.log(date, dateString);
+
     };
 
 

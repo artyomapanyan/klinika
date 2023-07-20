@@ -1,0 +1,181 @@
+import React, {useState} from 'react';
+import {Button, Form, Switch} from "antd";
+import FormInput from "../../../../Fragments/FormInput";
+import {t} from "i18next";
+import {createResource, updateResource} from "../../../../Functions/api_calls";
+import {useParams} from "react-router";
+import {useSelector} from "react-redux";
+import Preloader from "../../../../Preloader";
+import '../../Patient.sass'
+
+
+let resource = 'prescriptions';
+function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAddDeleteState}) {
+
+    const params = useParams();
+
+    let token = useSelector((state) => state.auth.token);
+
+    const [saveLoading, setSaveLoading] = useState(false)
+
+
+    const onFinish = (values) => {
+        setSaveLoading(true)
+        values.appointment_id = params.id
+        if (data.id) {
+            updateResource(resource, data.id, values, token).then(response => {
+                if(response?.id){
+
+                }
+                setAddDeleteState((prevState) => prevState+1)
+            }).finally(() => {
+
+                setSaveLoading(false)
+                setIsModalOpen(false)
+            })
+        } else {
+            values.appointment_id = params.id
+            createResource(resource, values, token).then((response) => {
+                if (response?.id) {
+
+                }
+
+                setAddDeleteState((prevState) => prevState+1)
+
+
+            }).finally(() => {
+                setSaveLoading(false)
+                setIsModalOpen(false)
+            })
+        }
+
+    }
+
+    const units = [
+        {
+            id: 1,
+            name: 'PCS'
+        },
+        {
+            id: 2,
+            name: 'MG'
+        },
+
+    ]
+    const queue = [
+        {
+            id: 1,
+            name: 'After'
+        },
+        {
+            id: 2,
+            name: 'Before'
+        },
+        {
+            id: 3,
+            name: 'Same day'
+        },
+
+    ]
+    const handleMapItems = (item,name)=>{
+        return item.id !==data.id?[name,item]:[null,item]
+    }
+
+    return(
+        <div className={'add_medications_big_div'}>
+            {data?<Form
+                onFinish={onFinish}
+            >
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <div style={{display: 'flex', gap: 8, marginTop:-16}}>
+                    <div style={{width: '50%'}}>
+                        <FormInput label={t('Frequency')} name={'frequency'} initialValue={data?.frequency} />
+                    </div>
+                    <div style={{width: '50%'}}>
+                        <FormInput label={t('Duration')} name={'duration'} initialValue={data?.duration}/>
+                    </div>
+
+                    <div style={{width: '50%'}}>
+                        <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose}/>
+                    </div>
+                    <div style={{width: '50%'}}>
+                        <FormInput label={t('Units')} name={'unit_type'} inputType={'resourceSelect'}
+                                   rules={[{required: true}]}
+                                   initialValue={data.unit_type}
+                                   initialData={units}
+                        />
+                    </div>
+                </div>
+
+                <div style={{display: 'flex', gap: 8, marginTop:-16}}>
+                    <div style={{width: '25%'}}>
+                        <FormInput  label={t('When')} name={'queue_type'} inputType={'resourceSelect'}
+                                   //rules={[{required: true}]}
+                                   initialData={queue}
+                                   disabled={prescriptions?.length < 1}
+                                    initialValue={data?.queue_type}
+                        />
+                    </div>
+                    <div style={{width: '50%'}}>
+                        <FormInput label={t('Medication name')} name={'queue_prescription_id'} inputType={'resourceSelect'}
+                                   //rules={[{required: true}]}
+                                   handleMapItems={handleMapItems}
+                                    initialValue={data?.queuePrescription?.id}
+                                   initialData={data?.queuePrescription ? [data.queuePrescription] : []}
+                                   disabled={prescriptions?.length < 1}
+                                   resourceParams={{
+                                       appointment: params.id,
+                                    }}
+                                   resource={'prescriptions'}
+
+                        />
+                    </div>
+
+                    <div style={{width: '25%'}}>
+                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue={data?.gap}/>
+                    </div>
+                </div>
+                <div style={{ marginTop:-16}}>
+                    <FormInput label={t('Note')} name={'note'} initialValue={data?.note} />
+                </div>
+
+                <div style={{borderBottom: '1px dashed #e6e8eb', marginLeft: 6, marginRight: 6, marginTop: -10}}></div>
+
+                <div className={'reminders'}>Reminers</div>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <div className={'times_big_div'}>
+                        <div className={'morning_div'}>Morning</div>
+                        <div className={'morning_div'}>Afternoon</div>
+                        <div className={'morning_div'}>Evening</div>
+                        <div className={'morning_div'}>Before sleep</div>
+                    </div>
+                    <div className={'times_big_div'}>
+                        <div className={'time_switch'}>
+                            10:00 AM
+                            <Switch />
+                        </div>
+                        <div className={'time_switch'}>
+                            01:00 PM
+                            <Switch />
+                        </div>
+                        <div className={'time_switch'}>
+                            07:00 PM
+                            <Switch />
+                        </div>
+                        <div className={'time_switch'}>
+                            09:30 AM
+                            <Switch />
+                        </div>
+                    </div>
+                </div>
+
+                <div style={{display: 'flex', gap: 16, marginTop: 16}}>
+                    <Button loading={saveLoading} className={'add_medications_save_btn'} style={{width: '85%'}} type={"primary"} htmlType={'submit'}>Save entry</Button>
+                    <Button onClick={handleCancel} className={'add_medications_save_btn'} style={{width: '15%'}} type={'secondary'}>Cancel</Button>
+                </div>
+            </Form>:<Preloader/>}
+        </div>
+    )
+}
+
+export default AddMedications;

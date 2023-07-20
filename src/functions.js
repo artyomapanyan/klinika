@@ -190,3 +190,5 @@ export function notificate(data,status) {
         });
     }
 }
+
+

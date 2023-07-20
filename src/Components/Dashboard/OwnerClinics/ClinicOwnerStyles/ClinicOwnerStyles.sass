@@ -146,6 +146,25 @@
   flex-direction: row
   justify-content: space-between
   gap: 20px
+.new_lab_test_pac_nursing_big_div
+
+  ::-webkit-scrollbar
+    width: 8px
+
+  ::-webkit-scrollbar-track
+    box-shadow: inset 0 0 0px
+    background-color: #eceaec
+    border-radius: 0px
+    margin-top: 15px
+    margin-left: 5px
+    margin-bottom: 15px
+
+  ::-webkit-scrollbar-thumb
+    background: #7c4d98
+    border-radius: 0px
+
+
+
 .lab_tests_inputs
   display: flex
   flex-direction: row
@@ -161,10 +180,11 @@
   border-bottom: 1px solid #d3d2d3
   padding: 20px 30px
 .lab_tests_checkbox_div
-  padding: 20px
+  padding: 0 20px
   height: 400px
   overflow: auto
-.lab_tests_checkbox_groups
+.lab_packages_checkbox_groups
+  margin-top: 20px
   width: 100%
   .ant-checkbox-group
     display: flex
@@ -173,6 +193,40 @@
     flex-wrap: wrap
     .ant-checkbox-wrapper
       margin-inline-start: initial !important
+  .ant-checkbox-inner
+    border-radius: 0 !important
+    background-color: #efefef
+    border-color: #efefef
+  :where(.css-dev-only-do-not-override-utyiu4).ant-checkbox-checked .ant-checkbox-inner
+    background-color: #7c4d98
+    border-color: #7c4d98
+    &:hover
+      background-color: #7c4d98
+      border-color: #7c4d98
+.lab_tests_checkbox_groups
+  margin-top: 99px
+  width: 100%
+  .ant-checkbox-group
+    display: flex
+    flex-direction: column
+    gap: 10px
+    flex-wrap: wrap
+    .ant-checkbox-wrapper
+      margin-inline-start: initial !important
+  .ant-checkbox-inner
+    border-radius: 0 !important
+    background-color: #efefef
+    border-color: #efefef
+  :where(.css-dev-only-do-not-override-utyiu4).ant-checkbox-checked .ant-checkbox-inner
+    background-color: #7c4d98
+    border-color: #7c4d98
+    &:hover
+      background-color: #7c4d98
+      border-color: #7c4d98
+
+
+
+
 .lab_test_quantity
   padding: 5px 9px
   background-color: #E1E2E9
@@ -300,6 +354,34 @@
 .general_info_big_div
   margin: 54px 80px
 
+.autofill_big_div
+  display: flex
+  width: 100%
+  border-radius: 12px
+  background-color: #F5F5F8
+  justify-content: space-between
+  align-items: center
+  padding: 16px
+  margin-bottom: 25px
+  margin-top: -25px
+  .line
+    height: 20px
+    border-left: 2px solid #CF533E
+  .autofill_bold_text
+    font-size: 16px
+    font-weight: 700
+    font-family: Roboto
+  .autofill_text
+    font-size: 16px
+    font-weight: 500
+    font-family: Roboto
+    color: #635D6B
+  .autofill_btn
+    height: 40px
+    border-radius: 12px
+    font-size: 16px
+    font-weight: 700
+    font-family: Roboto
 
   .clinics_select_col
     .ant-select-multiple
@@ -348,6 +430,74 @@
 #upload_change_btn
   width: 200px
   background-color: #7c4d98
+
+.clinicManageTab
+  .ant-tabs-nav
+    margin-left: 80px
+
+.notice_big_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  padding: 16px
+
+  background-color: #F5F5F8
+  border-radius: 12px
+  .ello_line
+    border: 2px solid #F3A632
+    height: 40px
+    border-radius: 2px
+  .notice_text
+    font-size: 14px
+    font-family: Roboto
+    font-weight: 700
+.servise_text_and_hours
+  display: flex
+  gap: 8px
+.servises_div_text
+  font-weight: 700
+  font-size: 18px
+  font-family: Inter
+.servises_hours_div
+  padding: 4px 8px
+  background-color: #F5F5F8
+  border-radius: 4px
+.working_hours_line_div
+  border-bottom: 1px solid #c9c7c9
+  margin: 15px 0
+
+
+.working-hours-container
+  div:nth-child(even)
+    .inn_conteiner
+      padding-left: 50px
+      border-left: 1px solid #c9c7c9
+      @media screen and (max-width: 1600px)
+        padding-left: initial
+        border-left: none
+
+  .inn_conteiner
+    margin-right: 48px
+    width: 100%
+
+.new_working_hours_week_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+.new_working_hours_sv_and_day
+  display: flex
+.vertical_line
+  height: 150%
+  border-left: 1px solid #bebebe
+
+
+
+
+
+
+
+
 
 
 

@@ -51,7 +51,7 @@ function ShowInvoiceItems() {
         navigate(-1)
     }
 
-    console.log(data)
+
 
     return(
         <div style={{marginTop: -120}}>

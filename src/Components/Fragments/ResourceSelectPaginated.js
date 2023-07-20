@@ -4,6 +4,7 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
 
 function ResourceSelectPaginated({
+                                     resourceSelectStyle,
                                    initialData = [],
                                    resource = null,
                                    name,
@@ -126,14 +127,16 @@ function ResourceSelectPaginated({
     {...inputProps}
       onChange={(e)=>inputProps.onChange(e,localData)}
       disabled={disabled}
+    style={resourceSelectStyle??null}
+
     filterOption={false}
 
-    loading={loading || updateLoading}
+    loading={suffixIcon?true:false}
     onPopupScroll={handleScroll}
     onSearch={handleSearch}
     showSearch
     notFoundContent={notFoundContent??null}
-    suffixIcon={suffixIcon}
+    suffixIcon={suffixIcon??null}
 
     allowClear={!disableClear}
     options={options}

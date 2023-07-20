@@ -72,7 +72,7 @@ function SuperAdminProfitableTable() {
             dataIndex: 'income',
             key: 'income',
             render:(e, record) => {
-                console.log(e, record)
+
                 return <div  style={{fontSize: 16, fontFamily: 'Roboto', fontWeight: 700}}>{record?.orders_count}$</div>
             }
 

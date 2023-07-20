@@ -1,16 +1,19 @@
-import risk from "../../../../../dist/icons/risk.png";
+
 import Vector from "../../../../../dist/icons/Vector.png";
 import VectorHend from "../../../../../dist/icons/VectorHend.png";
-import {Divider, Space} from "antd";
-import PatientCardNextAppoint from "./PatientCardNextAppoint";
+import {Avatar, Space, Tag} from "antd";
+
+import plusPurple from "../../../../../dist/icons/plus-purple.svg";
+import {UserOutlined} from "@ant-design/icons";
+import React from "react";
 
 function PatientCardRight() {
     return(
-        <div className={'Patient_card_right_div'}>
-            <div className={'Patient_card_right_img'}>
-                <img alt={'icons'} src={risk}/>
-            </div>
-            <Divider />
+        <div className={'Patient_card_right_div'} style={{marginRight: 24, marginTop: 24}}>
+            {/*<div className={'Patient_card_right_img'}>*/}
+            {/*    <img alt={'icons'} src={risk}/>*/}
+            {/*</div>*/}
+            {/*<Divider />*/}
             <div className={'Patient_card_right_content'}>
                 <Space size={'large'}>
                     <div>
@@ -24,7 +27,7 @@ function PatientCardRight() {
                     </div>
                 </Space>
             </div>
-            <Divider />
+
             <div>
                 <div className={'Patient_card_right_content'}>
                     <Space size={'large'}>
@@ -44,8 +47,41 @@ function PatientCardRight() {
                     </Space>
                 </div>
             </div>
+
             <div>
-                <PatientCardNextAppoint/>
+                <div className={'patient_next_app_head'}>
+                    <div className={'next_app_text'}>
+                        Next Appointments:
+                    </div>
+                    <div>
+                        <div> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>Add</span></div>
+                    </div>
+                </div>
+                <div className={'patient_next_app_content'}>
+                    <div>
+                        <Avatar  size={48}  shape="square" icon={<UserOutlined />} />
+                    </div>
+                    <div className={'patient_next_app_texts'}>
+                        <div><Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>Cardiology</Tag> 30 July 2022</div>
+                        <div className={'patient_next_app_name_text'}>
+                            Annette Black
+                        </div>
+
+                    </div>
+                </div>
+                <div className={'patient_next_app_content'}>
+                    <div>
+                        <Avatar  size={48}  shape="square" icon={<UserOutlined />} />
+                    </div>
+                    <div className={'patient_next_app_texts'}>
+                        <div><Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>Cardiology</Tag> 30 July 2022</div>
+                        <div className={'patient_next_app_name_text'}>
+                            Annette Black
+                        </div>
+
+                    </div>
+                </div>
+                {/*<PatientCardNextAppoint/>*/}
             </div>
         </div>
 

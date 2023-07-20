@@ -55,7 +55,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     }, [selectedDate, docItem,data.service_type])
 
-    console.log(times, 'de')
+
 
     const openDrawer = () => {
         formRef.current.validateFields(['time','service_type']).then(e => {
@@ -169,6 +169,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                    initialData={[]}
                                    handleMapItems={(item, name) => searchByNumber(item, name)}
                                    customSearchKey={'name_or_phone'}
+
                                    resource={'User'}/>
 
                     </div>
@@ -188,6 +189,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           setOpen={setOpen} openDrawer={openDrawer}/>
                 }
+
 
             </Drawer>
 

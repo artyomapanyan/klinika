@@ -58,6 +58,7 @@ function ClinicsOwner() {
     //         // setData(arr)
     //
     //     });
+    //
     // }, [ownerClinics])
 
     let color = [

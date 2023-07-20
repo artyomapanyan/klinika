@@ -85,7 +85,7 @@ function User() {
                     </div>
 
                     <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
-                    <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'}  />
+                    <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} rules={[{required: !data?.id}]} />
                     <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[
                         {required: true},
                         {
@@ -102,7 +102,7 @@ function User() {
                                initialValue={data?.gender}
                                initialData={Resources?.Gender}
                     />
-                    <FormInput label={t('Nationality number')} name={'nationality_number'} maxLength={9} initialValue={data?.nationality_number} rules={[{required: true}]} />
+                    <FormInput label={t('Nationality number')} name={'nationality_number'}  initialValue={data?.nationality_number} rules={[{required: true}]} />
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}
@@ -148,6 +148,11 @@ function User() {
                             <FormInput label={t('Address')} name={'address1'} initialValue={data?.address?.address1} rules={[{required: true}]}/>
                         </div>
                     </div>
+
+
+
+
+
                     <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.roles?.map(e=>e.id)}

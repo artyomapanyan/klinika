@@ -5,6 +5,7 @@ import HeaderAccount from "./Fragment/HeaderAccount";
 import {LeftOutlined} from "@ant-design/icons";
 import {useLocation} from "react-router";
 import ClinicOwnerHeader from "../ClinicsOwner/Fragments/ClinicOwnerHeader";
+import {t} from "i18next";
 
 
 function DashboardHeader() {
@@ -27,8 +28,8 @@ function DashboardHeader() {
                 return <ClinicOwnerHeader />
             case pathname.includes('/patients'):
                 return   <div>
-                    <Button style={{margin:"40px 24px", height:45, width:45}}><LeftOutlined /></Button>
-                    <span style={{fontSize:24, fontWeight:700}}>Patient Card</span>
+                    <Button style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}><LeftOutlined /></Button>
+                    <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>Patient Card</span>
                 </div>
             default:
 
@@ -43,8 +44,8 @@ function DashboardHeader() {
         <Col lg={14} md={24}>
             {loading?null:handleReturnHeaderPart()}
         </Col>
-        <Col lg={10} md={24} style={{zIndex: 100, display:"flex", justifyContent:"flex-end", alignItems: "center", padding:pathname==='clinics' ? 0 :'15px 36px'}} className={'lng_select'}>
-            {pathname==='clinics'  ? <div></div> : <HeaderAccount />}
+        <Col lg={10} md={24} style={{zIndex: 100, display:"flex", justifyContent:"flex-end", alignItems: "center", padding:pathname.includes('/clinics') ? 0 :'15px 36px'}} className={'lng_select'}>
+            {pathname==='clinics'  ? <div></div> : pathname.includes('/clinics') ? <din></din> : <HeaderAccount />}
         </Col>
     </Row>
 }
