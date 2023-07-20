@@ -44,6 +44,8 @@ function PatientCardMedications({tab}) {
         })
     }
 
+    console.log(searchPrescriptions)
+
     //.filter((e) => e?.name?.toLowerCase().includes(search?.toLowerCase()))
 
     return(
@@ -76,7 +78,7 @@ function PatientCardMedications({tab}) {
                      {
 
                          searchPrescriptions ? searchPrescriptions.map((el) => {
-                             if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY HH:mm') < dayjs().format('DD-MM-YYYY HH:mm')) {
+                             if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY HH:mm') < dayjs().add(1, 'day').format('DD-MM-YYYY HH:mm')) {
                                  return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions} setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
                              }
                          }) : prescriptions.map((el) => {

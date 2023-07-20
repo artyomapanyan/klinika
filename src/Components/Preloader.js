@@ -10,7 +10,7 @@ function Preloader ({small,fullWidth}) {
           borderRadius: 22
       }}
       >
-        <Spin size="large" tip={'Loading'} />
+        <Spin size="large"  />
       </div>
 
     )
