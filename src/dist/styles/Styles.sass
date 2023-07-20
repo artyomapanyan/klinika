@@ -1242,3 +1242,2706 @@ body
 
 
 
+
+
+
+
+
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap')
+$primaryColor: #ce4e99
+body
+  div
+    font-family: 'Inter' !important
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-form-vertical .ant-form-item-label>label
+    height: auto !important
+
+
+.ant-menu-submenu-popup
+  display: none !important
+
+#root, body, html
+  height: 100%
+
+  & > span, & > section
+    min-height: 100%
+
+    .main-container
+      display: flex
+
+      .app-content
+        flex: 1 1 auto
+
+.all-div
+  width: 100%
+  border: 1px solid black
+  display: grid
+  grid-template-areas: "nav head" "nav  content" "nav  foot"
+  grid-template-rows: auto auto 50px
+  grid-template-columns: 80px auto
+
+.nav
+  grid-area: nav
+
+.layout-conatiner
+  padding: 0 20px
+  @media screen and (max-width: 3624px)
+    margin-top: -75px
+  @media screen and (max-width: 1250px)
+    margin-top: 1px
+
+  .ant-select-selection-item
+    margin-top: 3px
+
+  .resource-header .ant-col-lg-12:nth-last-of-type(1)
+    display: flex
+    justify-content: end
+
+.header
+  grid-area: head
+  transition: all .2s
+
+.content
+  grid-area: content
+
+.footer
+  grid-area: foot
+  transition: all .2s
+
+.ant-layout-content
+  transition: all .2s
+.recource_table_title
+  font-size: 22px
+  font-weight: 700
+
+
+.ant-btn-secondary
+  border: 1px solid $primaryColor
+  color: $primaryColor
+  border-radius: 10px
+
+  &:hover
+    color: #fff
+    background-color: $primaryColor
+
+.ant-btn-primary
+  border-radius: 10px
+  background-color: $primaryColor
+  color: white
+
+  &:hover
+    border: 1px solid $primaryColor
+    background-color: white !important
+    color: $primaryColor !important
+
+.side-menu
+  position: relative
+  flex: 0 0 80px
+  z-index: 99
+
+  .ant-layout-sider
+    overflow: auto !important
+
+.ant-table-cell
+  .ant-form-item
+    margin-bottom: 0 !important
+
+  .ant-select
+    width: 200px
+
+.card-filters
+  .ant-select
+    width: 300px !important
+
+.input-placeholder
+  position: relative
+
+  &.date
+    .ant-form-item-label
+      transform: translate(14px, 19px) scale(1)
+
+  .ant-form-item-row, .ant-form-item-row input, .ant-select, .ant-select-selector
+    min-height: 48px !important
+    border-radius: 12px !important
+
+    .ant-select-selection-item
+      display: flex
+      margin-top: 10px
+      align-items: center
+
+  .ant-form-item-label
+    position: absolute
+    background-color: #fff
+    padding-left: 5px
+    padding-right: 5px
+    color: rgba(0, 0, 0, 0.6)
+    transform-origin: left top
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    max-width: calc(100% - 24px)
+    transform: translate(14px, 10px) scale(1)
+    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
+    z-index: 1
+    pointer-events: none
+
+  &.input-focused
+    .ant-form-item-label
+      transform: translate(19px, -4px) scale(0.7)
+      line-height: 1em
+
+  label::after
+    display: none
+
+  .ant-form-item-label > label
+    top: 7px
+.ant-select-selection-item
+  top: -5px
+  left: 4px
+.ant-select-selection-overflow
+  max-height: 40px
+.ant-select-selection-overflow-item
+  margin-left: 5px
+  margin-top: -2px
+.ar
+  min-height: 100%
+
+  .input-placeholder .ant-form-item-label
+    right: 40px !important
+
+  .ant-input-password-icon
+    position: absolute !important
+    margin-right: -60px !important
+    margin-left: initial !important
+
+.ant_tag
+  font-weight: 700
+  border: none
+  font-size: 11px
+  font-family: Inter
+  padding: 1px 8px
+
+.patient_content
+  background-color: #FFFFFF
+  border-radius: 15px
+  margin-right: 30px
+  margin-left: 30px
+
+.working_hours_dr_name
+  font-size: 18px
+  font-weight: 700
+  font-family: Inter
+.working_hours_specialty
+  font-size: 14px
+  font-weight: 400
+  font-family: Inter
+  color: #774D9D
+.table_hours_time
+  font-size: 14px
+  font-weight: 700
+  font-family: Inter
+  color: #635D6B
+.clinic_working_hours_table_time_col
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.clinic_working_hours_table_div
+  .ant-table-cell
+    //border: 1px solid #C3BDCA
+    border-top: none
+    border-left: none
+    background-color: #FFFFFF !important
+    border-radius: 0px !important
+
+  .ant-table-wrapper .ant-table-container table>thead>tr>th
+    background-color: #FFFFFF !important
+  :where(.css-dev-only-do-not-override-1hxr4ju).ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    background-color: #C3BDCA !important
+
+  :where(.css-dev-only-do-not-override-1hxr4ju).ant-table-wrapper .ant-table-thead >tr>th:first-child:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    background-color: #ffffff !important
+
+
+  :where(.css-dev-only-do-not-override-1hxr4ju).ant-table-wrapper .ant-table-container table>thead>tr:first-child th:first-child
+    border-right: 1px solid #C3BDCA
+  :where(.css-dev-only-do-not-override-1hxr4ju).ant-table-wrapper .ant-table-container table>thead>tr:first-child th
+    border-bottom: 1px solid #C3BDCA
+
+
+
+  .ant-table-wrapper .ant-table-container table>tbody>tr>td
+    border-right: 1px solid #C3BDCA !important
+    border-bottom: 1px solid #C3BDCA !important
+
+
+
+.patient_head_div
+  border-bottom: 1px solid #d7d6d7
+
+
+  .avatar_div
+    margin: 24px
+    display: flex
+    border-right: 1px solid #F5F6FA
+
+  .patient_head_name
+    font-size: 24px
+    font-weight: 700
+    font-family: Inter
+
+  .text_norm
+    font-size: 16px
+    font-weight: 400
+    font-family: Inter
+    letter-spacing: 0.5px
+
+  .addres_Insurance
+    color: #aaa6ab
+    letter-spacing: 0.5px
+    font-size: 14px
+    font-weight: 400
+    font-family: Inter
+
+
+  .phone_mail
+    display: flex
+    margin: 5px
+    letter-spacing: 0.5px
+
+  .patient_head_text
+    margin-left: 32px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    line-height: 25px
+
+
+
+  .private_note_div
+    height: 110px
+    width: 137px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    margin: 24px
+    background-color: #fdf0e7
+    border-radius: 12px
+    cursor: pointer
+
+  .private_note_text
+    margin-top: 13px
+    font-family: Inter
+    font-size: 14px
+    font-weight: 500
+
+  .private_note_number
+    font-style: normal
+    font-weight: 700
+    font-size: 24px
+    line-height: 29px
+    display: flex
+    align-items: center
+  .patient_head_vertical_line
+    height: 110px
+    border-left: 1px solid #8d8c8d
+
+.add_meication_add_btn
+  border-radius: 12px
+  height: 36px
+.add_medications_reminder_text
+  font-size: 18px
+  font-weight: 700
+  font-family: Inter
+.add_medications_save_btn
+  width: 75%
+  height: 48px
+  font-weight: 700
+  font-size: 16px
+  font-family: Roboto
+  border-radius: 12px
+
+.button_add
+  height: 48px
+  width: 120px
+
+.add_edit_content
+  padding-top: 30px
+  padding-left: 30px
+  padding-right: 30px
+  padding-bottom: 12px
+  background-color: #FFFFFF
+  border-radius: 15px
+  border: 1px solid #e6e8eb
+  margin-left: 20px
+  margin-right: 20px
+  margin-bottom: 20px
+  .ant-form
+    margin-top: 42px
+
+.working_hours_collapse_head
+  font-size: 20px
+  font-weight: 700
+  font-family: Inter
+.working_hours_collapse_text
+  font-size: 14px
+  font-weight: 400
+  font-family: Inter
+  color: #BF539E
+  margin-left: 5px
+
+
+.patient_collapse_icon
+  color: #774D9D
+  font-size: 16px
+  margin-Left: 10px
+
+.collapse_panel
+  font-size: 20px
+  font-weight: 700
+  background-color: #FFFFFF
+  .patient_panel_big_div
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+
+  .collapse_content_head
+    color: #aaa6ab
+    font-size: 14px
+    font-weight: 400
+    font-family: Inter
+
+  .collapse_content_foot
+    font-size: 16px
+    font-weight: 500
+    font-family: Inter
+
+.current_medications_card
+  flex: 1 1 auto
+
+  .patient_card_btn
+    font-size: 16px
+    font-weight: 700
+    border: none
+
+  .ant-list-item
+    padding-left: 0px
+
+.PatientCardRight
+  padding: 24px
+
+.Patient_card_right_img
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.Patient_card_right_content
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  line-height: 25px
+  padding: 32px
+  border-bottom: 1px solid #d3d1d3
+.patient_next_app_head
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  padding: 32px 24px
+  .next_app_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 20px
+  .add_text
+    font-size: 16px
+    font-family: Inter
+    font-weight: 700
+    margin-left: 14px
+.patient_next_app_content
+  display: flex
+  margin: 24px
+  line-height: 26px
+  .patient_next_app_texts
+    margin-left: 12px
+  .patient_next_app_name_text
+    font-weight: 700
+    font-family: Inter
+    font-size: 14px
+
+.Patient_card_right_bold_text
+  font-weight: 700
+  color: #F5A348
+
+.right_vector
+  font-weight: 700
+
+.ant-tabs-content
+  .ant-layout-content
+    padding: 40px
+
+.h1
+  font-weight: 700
+
+.ant-upload-text
+  font-weight: 600
+  font-size: 18px
+
+.Patient_card_lab_tests_div
+
+.ant-table-wrapper .ant-table-thead > tr > th
+  border-bottom: 2px solid rgb(14 13 13 / 24%)
+
+  .ant-table-cell
+    font-weight: 700
+
+.medication_card_text1
+  font-size: 13px
+  font-weight: 400
+  color: #635D6B
+
+.medication_card_text2
+  font-size: 13px
+  font-weight: 700
+
+.ant-card-head
+  border-bottom: black
+
+.spaced-checkboxes
+  .ant-space
+    flex: 1 1 auto
+
+    .ant-checkbox-wrapper
+      width: 90%
+
+      span:nth-child(1)
+        width: 17px
+
+      span:nth-child(2)
+        width: 100%
+        display: flex
+        justify-content: space-between
+
+.rdw-editor-wrapper
+  border: 1px solid #d9d9d9
+
+.clinics_owner
+  position: relative
+
+  .gutter_row
+    box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+    background: #FFFFFF
+    padding: 8px
+    border-radius: 22px
+    display: flex
+    align-items: center
+    min-height: 120px
+    height: 100%
+/* width */
+::-webkit-scrollbar
+  width: 10px
+/* Track */
+::-webkit-scrollbar-track
+  box-shadow: inset 0 0 5px grey
+  border-radius: 10px
+  margin-top: 15px
+  margin-left: 5px
+  margin-bottom: 15px
+/* Handle */
+::-webkit-scrollbar-thumb
+  background: #b6bab8
+  border-radius: 10px
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover
+  background: #a7a8a7
+
+.lngSelect
+  .ant-select-arrow
+    color: #FFFFFF
+
+  .ant-select-selector
+    background-color: #ce4e99 !important
+    color: #FFFFFF
+
+.clinic_man_table_success
+  :where(.css-dev-only-do-not-override-pdfigf).ant-result .ant-result-icon > .anticon
+    font-size: 24px
+
+  :where(.css-dev-only-do-not-override-pdfigf).ant-result .ant-result-icon
+    margin: 5px
+
+.success
+  color: green
+  font-size: 20px
+
+.table_conteiner
+  background-color: #FFFFFF
+  margin-top: 30px
+  border-radius: 10px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+.table_header_none
+  .ant-table-thead
+    display: none
+
+.gutter-row
+  padding: 10px
+
+.create_apdate_btns
+  @media screen and (max-width: 3624px)
+    margin-top: -70px
+  @media screen and (max-width: 1050px)
+    margin-top: 1px
+  margin-left: 28px
+  font-weight: 700
+  font-size: 22px
+
+.percentable
+  margin-bottom: 24px
+  border-radius: 7px 0px 0px 7px
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+
+//.dx-item
+//  background-color: #ce4e99 !important
+.dx-shape-standard
+  margin-right: 20px
+
+.dx-button
+  border: none !important
+.dx-button-text
+  color: #774D9D
+  font-size: 14px
+  font-weight: 700
+  font-family: Roboto
+.dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-item-selected
+  background-color: #ffffff !important
+  border: 2px solid #774D9D !important
+
+.dx-buttongroup-item.dx-button-mode-contained.dx-button
+  border-radius: 8px !important
+
+.issues_div
+  border-radius: 15px
+  height: 350px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+  background-color: #FFFFFF
+  margin-top: 50px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: flex-start
+  padding: 30px
+
+.Clinic_tab_conteiner
+  display: flex
+  flex-direction: row
+  padding-left: 52px
+
+
+
+  .tab_item_container
+    cursor: pointer
+    //padding-right: 25px
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding-left: 40px
+
+
+
+    &.tab_active
+      .clinic_tab_below
+        background-color: #ce4e99
+
+      .clinic_tab_item
+        color: #ce4e99
+        border-color: #ce4e99
+
+    .clinic_tab_item
+      border: 2px solid #FFFFFF
+      border-radius: 8px 8px 0 0
+      border-top: none
+      border-right: none
+      border-left: none
+
+      font-family: Inter
+      font-weight: 400
+      padding: 7px
+      font-size: 18px
+      line-height: 22px
+      transition: all .3s
+
+.right-label
+  .ant-form-item-label
+    padding: 0
+    margin-left: 10px
+
+  .ant-form-item-row
+    display: flex
+    flex-wrap: nowrap
+    flex-direction: row-reverse
+    justify-content: flex-end
+    align-items: center
+
+  .ant-form-item-control
+    flex-grow: initial !important
+    width: initial !important
+
+.add_clinic_modal
+  padding: 30px
+
+.home_visit_head
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  margin: 30px
+
+.working_houre_margin
+  margin: 5px
+//.working_hours_select1_div
+//  .ant-select-selector
+//    height: 48px !important
+//    border-radius: 12px
+//  .ant-select-selection-item
+//    margin-top: 20px !important
+//    margin-left: -45px !important
+//    font-size: 15px
+//    font-weight: 500
+//    font-family: Roboto
+
+
+.web
+  margin-top: 5px
+  font-size: 18px
+  font-weight: 700
+  color: #FFFFFF
+  margin-left: 6px
+  opacity: 0.99
+
+.bar1
+  height: 30px
+  background-color: #60a428
+
+.bar2
+  height: 30px
+  background-color: #F5A348
+
+.int
+  margin-top: 5px
+  margin-left: -5px
+  margin-right: 6px
+  font-size: 18px
+  font-weight: 700
+  display: flex
+  flex-direction: row
+  justify-content: flex-end
+  color: #FFFFFF
+
+.container
+  width: 100%
+  display: flex
+  margin: 5px
+
+.current
+  font-size: 18px
+  font-weight: 600
+  color: #635D6B
+  margin-top: 15px
+
+.d-none
+  display: none !important
+
+.lab_save
+  margin-left: 20px
+  margin-bottom: 50px
+
+.lab_radio_btn
+  display: flex
+  flex-direction: row
+  justify-content: center
+.flying-label
+  input:not(:placeholder-shown) + label,input:focus + label
+    position: absolute !important
+    top: -8px
+    font-size: 11px
+    background-color: #FFFFFF
+    padding-right: 3px
+    padding-left: 3px
+  label
+    position: absolute
+    left: 15px
+    top: 11px
+    transition: 0.2s
+    font-size: 15px
+    pointer-events: none
+
+.ant-form-item-control
+  margin: 5px
+.add_create_form
+  margin-top: 45px
+.ant-form-item-required:before
+  display: inline-block
+  margin-inline-end: 4px
+  color: #ff4d4f
+  font-size: 14px
+  font-family: SimSun,sans-serif
+  line-height: 1
+  content: "*"
+.flying-label-textarea
+  textArea:not(:placeholder-shown) + label,textArea:focus + label
+    position: absolute !important
+    left: 15px
+    top: -8px
+    font-size: 11px
+    background-color: #FFFFFF
+    padding-right: 3px
+    padding-left: 3px
+  label
+    position: absolute !important
+    top: 20px
+    left: 15px
+    transition: 0.2s
+    font-size: 15px
+    pointer-events: none
+.ant-picker
+  border-radius: 12px
+.ant-select-selection-search-input
+  padding-left: 6px !important
+.ant-picker-input
+  padding-left: 6px !important
+.flying-label-textarea label
+  top: 10px
+.show_mail_btn
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: none
+  background-color: #e7e5e7
+  display: flex
+  justify-content: center
+  align-items: center
+.show_mail_btn:hover
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: none
+  background-color: #d2cfd2
+  cursor: pointer
+  display: flex
+  justify-content: center
+  align-items: center
+.show_phone_btn
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: 1px solid #13d340
+  background-color: #18c46e
+.show_phone_btn:hover
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: 1px solid #1fab40
+  background-color: #1fad66
+  cursor: pointer
+.show_pdf_btn
+  height: 40px
+  border-radius: 30px
+  background-color: #dc4aa0
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_pdf_btn:hover
+  height: 40px
+  border-radius: 30px
+  background-color: #bd3183
+  color: #FFFFFF
+  padding-left: 20px
+  padding-right: 20px
+  cursor: pointer
+#show_header
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+.show_copy_btn
+  height: 50px
+  border-radius: 30px
+  background-color: #28c3d7
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_copy_btn:hover
+  cursor: pointer
+  height: 50px
+  border-radius: 30px
+  background-color: #23a5b6
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_table
+  width: 50%
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px 0
+          border-bottom: 1px solid #c4c2c2
+.show_td_1
+  font-size: 16px
+  font-weight: 600
+.show_td_2
+  margin-left: 100px
+.show_table_right
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px
+    thead
+      tr
+        td
+          padding: 10px
+          border-bottom: 1px solid #c4c2c2
+          font-size: 16px
+          font-weight: 600
+.show_table_bottom
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px
+          border-bottom: 1px solid #c4c2c2
+          color: #969698
+          font-weight: 600
+          font-style: italic
+          font-size: 16px
+    thead
+      tr
+        td
+          padding: 10px
+          font-size: 16px
+          font-weight: 600
+
+#position-map
+  height: 480px
+.map_input_label
+  padding: 10px
+.send_again_text
+  color: #dc4aa0
+  font-size: 20px
+  cursor: pointer
+.resource_table_btn
+  border-radius: 30px
+.clinic_owner_header
+  display: flex
+  flex-direction: row
+  align-items: center
+.dashboard_head_dropdown
+  display: flex
+
+#offer_map
+  height: 700px
+.approve_drop_div
+  width: 820px
+  background: #FFFFFF
+  border-radius: 12px
+  padding: 5px
+  min-width: 250px
+  box-shadow: 8px 10px 15px #d7d5d7
+  border: 1px solid #f1eff1
+  margin-top: 15px
+.approve_drop_inn_div
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  width: 100%
+
+.notifications_drop_inn_div
+  display: flex
+  flex-direction: row
+  padding: 23px 0
+  width: 100%
+  gap: 15px
+  border-bottom: 1px dashed #d3d1d3
+.popup_load_more_btn
+  margin-left: 40px
+  margin-bottom: 40px
+  margin-top: -20px
+  font-size: 16px
+  font-family: Roboto
+  font-weight: 700
+  border-radius: 12px !important
+
+.all_notifications_map_div
+  display: flex
+  flex-direction: row
+  padding: 15px
+  gap: 15px
+  background-color: #FFFFFF
+  border-radius: 15px
+  border: 1px solid #e6e8eb
+  margin-left: 20px
+  margin-right: 20px
+  margin-bottom: 20px
+
+.all_notification_title
+  font-family: Inter
+  margin-left: 28px
+  font-weight: 700
+  font-size: 22px
+
+.notifications_drop_big_div
+  max-height: 400px
+  //width: 820px
+  overflow: auto
+  padding: 40px
+  .popup_lini
+    width: 100%
+    border-bottom: 1px dashed #d3d1d3
+    margin-top: 24px
+  .mark_all_read_btn
+    border: none
+    background-color: #BF539E11
+    font-family: Roboto
+    font-size: 12px
+    font-weight: 700
+    color: #BF539E
+
+
+  .popup_info_big_div
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    width: 100%
+  .popup_ago_date
+    font-size: 13px
+    color: #8d8c8d
+  .notifications_drop_title_div
+    font-size: 14px
+    font-family: Inter
+    font-weight: 700
+  .notifications_drop_descript_div
+    font-size: 13px
+    font-family: Inter
+    color: #706e70
+.notification_icon_div
+  display: flex
+  align-items: center
+.notifications_drop_all_notifi_btn
+  border: none
+  width: 100%
+.popup_header
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+.popup_header_not_text
+  font-weight: 700
+  font-size: 24px
+  font-family: Roboto
+
+
+
+.own_head_clinics
+  background: #EAEAEA
+  margin-left: 10px
+  border-radius: 25px
+  padding: 12px 16px 12px 24px
+  font-size: 20px
+  font-weight: 500
+
+.hours-select
+  label
+    margin: 5px
+    border-radius: 19px !important
+    border-inline-start-width: 1px !important
+    border: none !important
+    font-family: 'Roboto'
+    &::before
+      content: none !important
+.hours_select_cl_manager_modal
+  label
+    padding-left: 14px
+    padding-top: 2px
+    height: 33px
+    margin: 5px 4px
+    background-color: #ffffff10
+    border-radius: 12px !important
+    border-inline-start-width: 1px !important
+    border: none !important
+    font-size: 14px
+    font-weight: 600
+    font-family: Roboto
+    background-color: #F5F6FA
+    &::before
+      content: none !important
+.clinics_owner
+  div,canvas
+    font-family: Roboto !important
+.ant-select-multiple .ant-select-selection-overflow
+  max-height: initial
+.checkbox-groups
+  margin-top: 15px
+  width: 100%
+
+  .ant-checkbox-group
+    display: flex
+    gap: 10px
+    flex-wrap: wrap
+
+
+    .ant-checkbox-wrapper
+      margin-inline-start: initial !important
+
+.clinic-images-container1
+  display: flex
+  .cover_upload_bold_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 18px
+  .upload_small_text
+    font-size: 14px
+    font-weight: 400
+    font-family: Inter
+  input
+    display: none !important
+  .im-bg
+    cursor: pointer
+    position: relative
+    border-radius: 15px
+    background: #F5F5F8
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: center
+  .inn_logo_div
+    border-radius: 4px
+    font-family: Inter
+    font-size: 16px
+    font-weight: 700
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 200px
+
+
+
+.clinic-images-container,.clinic-gallery
+  padding-left: 56px
+  padding-top: 73px
+  display: flex
+  .cover_upload_bold_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 18px
+  .upload_small_text
+    font-size: 14px
+    font-weight: 400
+    font-family: Inter
+
+  input
+    display: none !important
+
+
+  .im-bg
+    cursor: pointer
+    position: relative
+    border-radius: 15px
+    background: #F5F5F8
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: center
+
+    .inn_logo_div
+      border: 1px dashed #BF539E
+      height: 88px
+      width: 88px
+      border-radius: 4px
+      font-family: Inter
+      font-size: 16px
+      font-weight: 700
+      display: flex
+      align-items: center
+    .bottom_text_logo_div
+      font-size: 10px
+      font-weight: 400
+      font-family: Inter
+      color: #BF539E
+    .inn_image_div
+      border: 1px dashed #BF539E
+      height: 88px
+      width: 288px
+      border-radius: 4px
+      font-family: Inter
+      font-size: 16px
+      font-weight: 700
+      display: flex
+      align-items: center
+      justify-content: center
+
+    .delete-button
+      z-index: 21
+      position: absolute
+      right: 4px
+      top: 4px
+      height: 40px
+      width: 40px
+      background: #FFFFFF
+      border-radius: 12px
+      display: flex
+      align-items: center
+      justify-content: center
+.new_delete_button
+  cursor: pointer
+
+
+
+.clinic-gallery
+  flex-direction: column
+  padding-left: 0
+  padding-top: 24px
+  .images-cnt
+
+    display: flex
+    gap: 24px
+    flex-wrap: wrap
+  .upload-btn
+    height: 240px
+    width: 274px
+    background-color: #F5F5F8
+    border-radius: 12px
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+  .photos_head_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 24px
+
+
+
+
+.clinic_manager_res_table table
+  border-collapse: separate
+  border-spacing: 0 16px
+  border-bottom: #FFFFFF
+.not_found_text
+  font-weight: 700
+  color: #8d8c8d
+  font-family: Roboto
+  font-size: 18px
+  padding-bottom: 24px
+
+
+
+.clinic_manager_res_table
+  .ant-table-cell
+    height: 45px
+
+  .ant-table-wrapper .ant-table-thead >tr>th
+    background: none
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    font-size: 14px
+    font-weight: 400
+    font-family: Roboto
+  .ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+  .ant-table-wrapper .ant-table-thead >tr>td
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    background-color: #FFFFFF
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >td
+    border-bottom: none !important
+  .ant-table-row
+    background-color: #F5F6FA
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-title, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-footer, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-thead>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>td, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td
+    padding: 8px !important
+
+
+.invoices_table table
+  border-collapse: separate
+  border-spacing: 0 16px
+  border-bottom: #FFFFFF
+
+
+.invoices_table
+  background-color: #FFFFFF
+  padding: 20px
+  margin: 20px
+  border-radius: 22px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+  .ant-table-cell
+    height: 45px !important
+
+  .ant-table-wrapper .ant-table-thead >tr>th
+    background: none
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    font-size: 14px
+    font-weight: 400
+    font-family: Roboto
+  .ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+  .ant-table-wrapper .ant-table-thead >tr>td
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    background-color: #FFFFFF
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >td
+    border-bottom: none !important
+  .ant-table-row
+    background-color: #F5F6FA
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-title, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-footer, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-thead>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>td, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td
+    padding: 8px !important
+
+  table>tbody>tr
+    border-radius: 22px
+
+
+
+.profitable_clinic_div
+
+  .ant-table-wrapper .ant-table-thead >tr>th
+    background: none
+    border-bottom: 1px solid #dddcde
+    border-radius: 0 !important
+    font-size: 14px
+    font-weight: 400
+    font-family: Roboto
+  .ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+  .ant-table-wrapper .ant-table-thead >tr>td
+    border-bottom: 1px solid #dddcde
+    border-radius: 0 !important
+    background-color: #FFFFFF
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >td
+    border-bottom: 1px dashed #dddcde !important
+  .ant-table-row
+
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-title, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-footer, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-thead>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>td, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td
+    padding: 8px !important
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-thead >tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+
+.video_sms_div
+
+  border-right: 1px solid #774D9D
+
+.video_call_avatr_Text
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: center
+  gap: 40px
+.video_call_grey_text
+  font-weight: 400
+  font-size: 14px
+  color: #8d8c8d
+  font-family: Inter
+.video_call_bold_text
+  font-weight: 700
+  font-size: 16px
+  font-family: Inter
+.video_call_date_text
+  font-weight: 500
+  font-size: 16px
+  font-family: Inter
+.video_call_primary_btn
+  font-size: 20px
+  font-family: Roboto
+  font-weight: 700
+  height: 56px
+  padding: 0 32px
+.video_call_sound_and_text_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  padding: 8px 8px 8px 12px
+  max-width: 328px
+  background-color: #F5F6FA
+  border-radius: 12px
+  .video_call_purpule_text
+    font-weight: 700
+    font-family: Inter
+    font-size: 13px
+  .video_call_permission_text
+    font-weight: 400
+    font-family: Inter
+    font-size: 12px
+    color: #8d8c8d
+  .video_call_sound_div
+    height: 36px
+    width: 36px
+    box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+    background-color: #FFFFFF
+    border-radius: 8px
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+.video_call_avatar_right_div
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  height: 278px
+
+.patient_appoint_image_div
+  margin-top: 48px
+  .ant-upload-select
+    width: 100%
+  .ant-btn
+    width: 100%
+    background-color: #BF539E
+    color: #FFFFFF
+    &:hover
+      color: #BF539E
+      background-color: #FFFFFF
+
+.chat_big_div
+  display: flex
+  flex-direction: column
+  align-items: end
+  justify-content: end
+  transition: width 2s, transform 2s
+  .ant-input:focus
+    box-shadow: 0px -10px 10px #f3f1f1
+
+.chat_bottom_div
+  display: flex
+  width: 100%
+  height: 56px
+  box-shadow: 0px -10px 10px #f3f1f1
+
+.chat_input
+  border: none
+  border-radius: 0 0 20px 0
+  height: 56px
+
+.x_div
+  position: absolute
+  right: 21px
+  top: 21px
+  border: none
+.chat_text_div
+  background-color: #BF539E
+  color: #FFFFFF
+  border-radius: 12px 12px 0 12px
+  padding: 10px
+  margin: 4px 16px
+  display: flex
+  justify-content: end
+
+
+
+
+.invoice_firsli_text_div
+  background-color: #e1e7f3
+  border-radius: 8px
+  width: 100%
+  padding: 15px
+  margin: 8px
+.invoice_add_total_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+.invoice_total_div
+  display: flex
+  flex-direction: row
+  width: 35%
+.invoice_total_input
+  width: 100%
+.invoice_primary_inputs_div
+  display: flex
+  gap: 20px
+  width: 100%
+.manage-doctors-table
+  .edit-button
+    transform: scale(0)
+    transition: all .25s
+  & tr:hover
+    box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+    .edit-button
+      transform: scale(1)
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap')
+$primaryColor: #ce4e99
+body
+  div
+    font-family: 'Inter' !important
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-form-vertical .ant-form-item-label>label
+    height: auto !important
+
+
+.ant-menu-submenu-popup
+  display: none !important
+
+#root, body, html
+  height: 100%
+
+  & > span, & > section
+    min-height: 100%
+
+    .main-container
+      display: flex
+
+      .app-content
+        flex: 1 1 auto
+
+.all-div
+  width: 100%
+  border: 1px solid black
+  display: grid
+  grid-template-areas: "nav head" "nav  content" "nav  foot"
+  grid-template-rows: auto auto 50px
+  grid-template-columns: 80px auto
+
+.nav
+  grid-area: nav
+
+.layout-conatiner
+  padding: 0 20px
+  @media screen and (max-width: 3624px)
+    margin-top: -75px
+  @media screen and (max-width: 1250px)
+    margin-top: 1px
+
+  .ant-select-selection-item
+    margin-top: 3px
+
+  .resource-header .ant-col-lg-12:nth-last-of-type(1)
+    display: flex
+    justify-content: end
+
+.header
+  grid-area: head
+  transition: all .2s
+
+.content
+  grid-area: content
+
+.footer
+  grid-area: foot
+  transition: all .2s
+
+.ant-layout-content
+  transition: all .2s
+.recource_table_title
+  font-size: 22px
+  font-weight: 700
+
+
+.ant-btn-secondary
+  border: 1px solid $primaryColor
+  color: $primaryColor
+  border-radius: 10px
+
+  &:hover
+    color: #fff
+    background-color: $primaryColor
+
+.ant-btn-primary
+  border-radius: 10px
+  background-color: $primaryColor
+  color: white
+
+  &:hover
+    border: 1px solid $primaryColor
+    background-color: white !important
+    color: $primaryColor !important
+
+.side-menu
+  position: relative
+  flex: 0 0 80px
+  z-index: 99
+
+  .ant-layout-sider
+    overflow: auto !important
+
+.ant-table-cell
+  .ant-form-item
+    margin-bottom: 0 !important
+
+  .ant-select
+    width: 200px
+
+.card-filters
+  .ant-select
+    width: 300px !important
+
+.date-filters-div
+  padding: 25px
+  border-radius: 22px
+  width: 250px
+
+.input-placeholder
+  position: relative
+
+  &.date
+    .ant-form-item-label
+      transform: translate(14px, 19px) scale(1)
+
+  .ant-form-item-row, .ant-form-item-row input, .ant-select, .ant-select-selector
+    min-height: 48px !important
+    border-radius: 12px !important
+
+    .ant-select-selection-item
+      display: flex
+      margin-top: 10px
+      align-items: center
+
+  .ant-form-item-label
+    position: absolute
+    background-color: #ffffff
+    padding-left: 5px
+    padding-right: 5px
+    color: rgba(0, 0, 0, 0.6)
+    transform-origin: left top
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    max-width: calc(100% - 24px)
+    transform: translate(14px, 10px) scale(1)
+    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
+    z-index: 1
+    pointer-events: none
+
+  &.input-focused
+    .ant-form-item-label
+      transform: translate(19px, -4px) scale(0.7)
+      line-height: 1em
+
+  label::after
+    display: none
+
+  .ant-form-item-label > label
+    top: 7px
+.ant-select-selection-item
+  top: -5px
+  left: 4px
+.ant-select-selection-overflow
+  max-height: 40px
+.ant-select-selection-overflow-item
+  margin-left: 5px
+  margin-top: -2px
+.ar
+  min-height: 100%
+
+  .input-placeholder .ant-form-item-label
+    right: 40px !important
+
+  .ant-input-password-icon
+    position: absolute !important
+    margin-right: -60px !important
+    margin-left: initial !important
+
+.ant_tag
+  font-weight: 700
+  border: none
+  font-size: 11px
+
+.patient_content
+  background-color: #FFFFFF
+  border-radius: 15px
+  margin-right: 30px
+  margin-left: 30px
+
+.patient_head_div
+  padding: 10px
+
+  .avatar_div
+    margin: 24px
+    display: flex
+
+  .patient_head_name
+    font-size: 24px
+    font-weight: 700
+
+  .text_norm
+    font-size: 16px
+    letter-spacing: 0.5px
+
+  .addres_Insurance
+    color: #aaa6ab
+    letter-spacing: 0.5px
+
+  .phone_mail
+    display: flex
+    margin: 5px
+    letter-spacing: 0.5px
+
+  .patient_head_text
+    margin-left: 20px
+
+  .private_note_div
+    padding: 25px
+    margin: 24px
+    background-color: #fdf0e7
+    border-radius: 12px
+
+  .private_note_text
+    margin-top: 10px
+
+  .private_note_number
+    font-style: normal
+    font-weight: 700
+    font-size: 24px
+    line-height: 29px
+
+.button_add
+  height: 48px
+  width: 120px
+
+.add_edit_content
+  padding-top: 30px
+  padding-left: 30px
+  padding-right: 30px
+  padding-bottom: 12px
+  background-color: #FFFFFF
+  border-radius: 15px
+  border: 1px solid #e6e8eb
+  margin-left: 20px
+  margin-right: 20px
+  margin-bottom: 20px
+  .ant-form
+    margin-top: 42px
+
+.add_edit_invoice
+  padding-top: 30px
+  padding-left: 30px
+  padding-right: 30px
+  padding-bottom: 12px
+  background-color: #FFFFFF
+  border-radius: 15px
+  margin-left: 20px
+  margin-right: 20px
+  margin-bottom: 20px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+  .ant-form
+    margin-top: 42px
+
+
+.doctor_working_hours_conteiner
+
+  background-color: #FFFFFF
+  border-radius: 15px
+  border: 1px solid #e6e8eb
+  padding: 20px
+
+
+
+.patient_collapse_icon
+  color: #774D9D
+  font-size: 16px
+  margin-Left: 10px
+
+.collapse_panel
+  font-size: 20px
+  font-weight: 700
+
+  .collapse_content_head
+    color: #aaa6ab
+    font-size: 14px
+    font-weight: 400
+
+  .collapse_content_foot
+    font-size: 16px
+    font-weight: 500
+
+.current_medications_card
+  flex: 1 1 auto
+
+  .patient_card_btn
+    font-size: 16px
+    font-weight: 700
+    border: none
+
+  .ant-list-item
+    padding-left: 0px
+
+.PatientCardRight
+  padding: 24px
+
+.Patient_card_right_img
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.Patient_card_right_content
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  line-height: 25px
+
+.Patient_card_right_bold_text
+  font-weight: 700
+  color: #F5A348
+
+.right_vector
+  font-weight: 700
+
+.ant-tabs-content
+  .ant-layout-content
+    padding: 40px
+
+.h1
+  font-weight: 700
+
+.ant-upload-text
+  font-weight: 600
+  font-size: 18px
+
+.Patient_card_lab_tests_div
+
+.ant-table-wrapper .ant-table-thead > tr > th
+  border-bottom: 2px solid rgb(14 13 13 / 24%)
+
+  .ant-table-cell
+    font-weight: 700
+
+.medication_card_text1
+  font-size: 13px
+  font-weight: 400
+  color: #635D6B
+
+.medication_card_text2
+  font-size: 13px
+  font-weight: 700
+
+.ant-card-head
+  border-bottom: black
+
+.spaced-checkboxes
+  .ant-space
+    flex: 1 1 auto
+
+    .ant-checkbox-wrapper
+      width: 90%
+
+      span:nth-child(1)
+        width: 17px
+
+      span:nth-child(2)
+        width: 100%
+        display: flex
+        justify-content: space-between
+
+.rdw-editor-wrapper
+  border: 1px solid #d9d9d9
+
+.clinics_owner
+  position: relative
+
+  .gutter_row
+    box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+    background: #FFFFFF
+    padding: 8px
+    border-radius: 22px
+    display: flex
+    align-items: center
+    min-height: 120px
+    height: 100%
+/* width */
+::-webkit-scrollbar
+  width: 10px
+/* Track */
+::-webkit-scrollbar-track
+  box-shadow: inset 0 0 5px grey
+  border-radius: 10px
+  margin-top: 15px
+  margin-left: 5px
+  margin-bottom: 15px
+/* Handle */
+::-webkit-scrollbar-thumb
+  background: #b6bab8
+  border-radius: 10px
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover
+  background: #a7a8a7
+
+.lngSelect
+  .ant-select-arrow
+    color: #FFFFFF
+
+  .ant-select-selector
+    background-color: #ce4e99 !important
+    color: #FFFFFF
+
+.clinic_man_table_success
+  :where(.css-dev-only-do-not-override-pdfigf).ant-result .ant-result-icon > .anticon
+    font-size: 24px
+
+  :where(.css-dev-only-do-not-override-pdfigf).ant-result .ant-result-icon
+    margin: 5px
+
+.success
+  color: green
+  font-size: 20px
+
+.invoices_table table
+  border-collapse: separate
+  border-spacing: 0 16px
+  border-bottom: #FFFFFF
+
+
+.invoices_table
+  background-color: #FFFFFF
+  padding: 20px
+  margin: 20px
+  border-radius: 22px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+  .ant-table-cell
+    height: 45px !important
+
+  .ant-table-wrapper .ant-table-thead >tr>th
+    background: none
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    font-size: 14px
+    font-weight: 400
+    font-family: Roboto
+  .ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+  .ant-table-wrapper .ant-table-thead >tr>td
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    background-color: #FFFFFF
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >td
+    border-bottom: none !important
+  .ant-table-row
+    background-color: #F5F6FA
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-title, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-footer, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-thead>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>td, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td
+    padding: 8px !important
+
+  table>tbody>tr
+    border-radius: 22px
+
+.table_conteiner
+  background-color: #FFFFFF
+  margin-top: 30px
+  border-radius: 10px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+
+.table_header_none
+  .ant-table-thead
+    display: none
+
+.gutter-row
+  padding: 10px
+
+.create_apdate_btns
+  @media screen and (max-width: 3624px)
+    margin-top: -70px
+  @media screen and (max-width: 1050px)
+    margin-top: 1px
+  margin-left: 28px
+  font-weight: 700
+  font-size: 22px
+
+.percentable
+  margin-bottom: 24px
+  border-radius: 7px 0px 0px 7px
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+
+//.dx-item
+//  background-color: #ce4e99 !important
+.dx-shape-standard
+  margin-right: 20px
+
+.dx-button
+  border: none !important
+.dx-button-text
+  color: #774D9D
+  font-size: 14px
+  font-weight: 700
+  font-family: Roboto
+.dx-buttongroup-item.dx-button.dx-button-mode-contained.dx-button-normal.dx-item-selected
+  background-color: #ffffff !important
+  border: 2px solid #774D9D !important
+
+.dx-buttongroup-item.dx-button-mode-contained.dx-button
+  border-radius: 8px !important
+
+.issues_div
+  border-radius: 15px
+  height: 350px
+  box-shadow: 0px 21.7244px 33.4221px rgba(0, 0, 0, 0.0278483), 0px 11.6149px 17.869px rgba(0, 0, 0, 0.0221018), 0px 6.51121px 10.0172px rgba(0, 0, 0, 0.0175873), 0px 3.45805px 5.32008px rgba(0, 0, 0, 0.013318), 0px 1.43897px 2.21381px rgba(0, 0, 0, 0.00845703)
+  background-color: #FFFFFF
+  margin-top: 50px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: flex-start
+  padding: 30px
+
+.Clinic_tab_conteiner
+  display: flex
+  flex-direction: row
+  padding-left: 52px
+
+
+
+  .tab_item_container
+    cursor: pointer
+    padding-right: 25px
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding-left: 40px
+
+
+
+    &.tab_active
+      .clinic_tab_below
+        background-color: #ce4e99
+
+      .clinic_tab_item
+        color: #ce4e99
+        border-color: #ce4e99
+
+    .clinic_tab_item
+      border: 2px solid #FFFFFF
+      border-radius: 8px 8px 0 0
+      border-top: none
+      border-right: none
+      border-left: none
+
+      font-family: Inter
+      font-weight: 400
+      padding: 7px
+      font-size: 18px
+      line-height: 22px
+      transition: all .3s
+
+.right-label
+  .ant-form-item-label
+    padding: 0
+    margin-left: 10px
+
+  .ant-form-item-row
+    display: flex
+    flex-wrap: nowrap
+    flex-direction: row-reverse
+    justify-content: flex-end
+    align-items: center
+
+  .ant-form-item-control
+    flex-grow: initial !important
+    width: initial !important
+
+.add_clinic_modal
+  padding: 30px
+
+.home_visit_head
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  margin: 30px
+
+.working_houre_margin
+  margin: 5px
+
+.web
+  margin-top: 5px
+  font-size: 18px
+  font-weight: 700
+  color: #FFFFFF
+  margin-left: 6px
+  opacity: 0.99
+
+.bar1
+  height: 30px
+  background-color: #60a428
+
+.bar2
+  height: 30px
+  background-color: #F5A348
+
+.int
+  margin-top: 5px
+  margin-left: -5px
+  margin-right: 6px
+  font-size: 18px
+  font-weight: 700
+  display: flex
+  flex-direction: row
+  justify-content: flex-end
+  color: #FFFFFF
+
+.container
+  width: 100%
+  display: flex
+  margin: 5px
+
+.current
+  font-size: 18px
+  font-weight: 600
+  color: #635D6B
+  margin-top: 15px
+
+.d-none
+  display: none !important
+
+.lab_save
+  margin-left: 20px
+  margin-bottom: 50px
+
+.lab_radio_btn
+  display: flex
+  flex-direction: row
+  justify-content: center
+.flying-label
+  input:not(:placeholder-shown) + label,input:focus + label
+    position: absolute !important
+    top: -8px
+    font-size: 11px
+    background-color: #FFFFFF
+    padding-right: 3px
+    padding-left: 3px
+  label
+    position: absolute
+    left: 15px
+    top: 11px
+    transition: 0.2s
+    font-size: 15px
+    pointer-events: none
+
+.ant-form-item-control
+  margin: 5px
+.add_create_form
+  margin-top: 45px
+.ant-form-item-required:before
+  display: inline-block
+  margin-inline-end: 4px
+  color: #ff4d4f
+  font-size: 14px
+  font-family: SimSun,sans-serif
+  line-height: 1
+  content: "*"
+.flying-label-textarea
+  textArea:not(:placeholder-shown) + label,textArea:focus + label
+    position: absolute !important
+    left: 15px
+    top: -8px
+    font-size: 11px
+    background-color: #FFFFFF
+    padding-right: 3px
+    padding-left: 3px
+  label
+    position: absolute !important
+    top: 20px
+    left: 15px
+    transition: 0.2s
+    font-size: 15px
+    pointer-events: none
+.ant-picker
+  border-radius: 12px
+.ant-select-selection-search-input
+  padding-left: 6px !important
+.ant-picker-input
+  padding-left: 6px !important
+.flying-label-textarea label
+  top: 10px
+.show_mail_btn
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: none
+  background-color: #e7e5e7
+  display: flex
+  justify-content: center
+  align-items: center
+.show_mail_btn:hover
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: none
+  background-color: #d2cfd2
+  cursor: pointer
+  display: flex
+  justify-content: center
+  align-items: center
+.show_phone_btn
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: 1px solid #13d340
+  background-color: #18c46e
+.show_phone_btn:hover
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 40px
+  width: 40px
+  border-radius: 30px
+  border: 1px solid #1fab40
+  background-color: #1fad66
+  cursor: pointer
+.show_pdf_btn
+  height: 40px
+  border-radius: 30px
+  background-color: #dc4aa0
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_pdf_btn:hover
+  height: 40px
+  border-radius: 30px
+  background-color: #bd3183
+  color: #FFFFFF
+  padding-left: 20px
+  padding-right: 20px
+  cursor: pointer
+#show_header
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+.show_copy_btn
+  height: 50px
+  border-radius: 30px
+  background-color: #28c3d7
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_copy_btn:hover
+  cursor: pointer
+  height: 50px
+  border-radius: 30px
+  background-color: #23a5b6
+  color: #FFFFFF
+  border: none
+  padding-left: 20px
+  padding-right: 20px
+.show_table
+  width: 50%
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px 0
+          border-bottom: 1px solid #c4c2c2
+.show_td_1
+  font-size: 16px
+  font-weight: 600
+.show_td_2
+  margin-left: 100px
+.show_table_right
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px
+    thead
+      tr
+        td
+          padding: 10px
+          border-bottom: 1px solid #c4c2c2
+          font-size: 16px
+          font-weight: 600
+.show_table_bottom
+  table
+    width: 100%
+    tbody
+      tr
+        td
+          padding: 10px
+          border-bottom: 1px solid #c4c2c2
+          color: #969698
+          font-weight: 600
+          font-style: italic
+          font-size: 16px
+    thead
+      tr
+        td
+          padding: 10px
+          font-size: 16px
+          font-weight: 600
+
+#position-map
+  height: 480px
+.map_input_label
+  padding: 10px
+.send_again_text
+  color: #dc4aa0
+  font-size: 20px
+  cursor: pointer
+.resource_table_btn
+  border-radius: 30px
+.clinic_owner_header
+  display: flex
+  flex-direction: row
+  align-items: center
+.dashboard_head_dropdown
+  display: flex
+
+#offer_map
+  height: 700px
+.approve_drop_div
+  width: 820px
+  background: #FFFFFF
+  border-radius: 12px
+  padding: 5px
+  min-width: 250px
+  box-shadow: 8px 10px 15px #d7d5d7
+  border: 1px solid #f1eff1
+  margin-top: 15px
+.approve_drop_inn_div
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  width: 100%
+
+.notifications_drop_inn_div
+  display: flex
+  flex-direction: row
+  padding: 23px 0
+  width: 100%
+  gap: 15px
+  border-bottom: 1px dashed #d3d1d3
+.popup_load_more_btn
+  margin-left: 40px
+  margin-bottom: 40px
+  margin-top: -20px
+  font-size: 16px
+  font-family: Roboto
+  font-weight: 700
+  border-radius: 12px !important
+
+.all_notifications_map_div
+  display: flex
+  flex-direction: row
+  padding: 15px
+  gap: 15px
+  background-color: #FFFFFF
+  border-radius: 15px
+  border: 1px solid #e6e8eb
+  margin-left: 20px
+  margin-right: 20px
+  margin-bottom: 20px
+
+.all_notification_title
+  font-family: Inter
+  margin-left: 28px
+  font-weight: 700
+  font-size: 22px
+
+.notifications_drop_big_div
+  max-height: 400px
+  //width: 820px
+  overflow: auto
+  padding: 40px
+  .popup_lini
+    width: 100%
+    border-bottom: 1px dashed #d3d1d3
+    margin-top: 24px
+  .mark_all_read_btn
+    border: none
+    background-color: #BF539E11
+    font-family: Roboto
+    font-size: 12px
+    font-weight: 700
+    color: #BF539E
+
+
+  .popup_info_big_div
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    width: 100%
+  .popup_ago_date
+    font-size: 13px
+    color: #8d8c8d
+  .notifications_drop_title_div
+    font-size: 14px
+    font-family: Inter
+    font-weight: 700
+  .notifications_drop_descript_div
+    font-size: 13px
+    font-family: Inter
+    color: #706e70
+.notification_icon_div
+  display: flex
+  align-items: center
+.notifications_drop_all_notifi_btn
+  border: none
+  width: 100%
+.popup_header
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+.popup_header_not_text
+  font-weight: 700
+  font-size: 24px
+  font-family: Roboto
+
+
+
+.own_head_clinics
+  background: #EAEAEA
+  margin-left: 10px
+  border-radius: 25px
+  padding: 12px 16px 12px 24px
+  font-size: 20px
+  font-weight: 500
+
+.hours-select
+  label
+    margin: 5px
+    border-radius: 19px !important
+    border-inline-start-width: 1px !important
+    border: none !important
+    font-family: 'Roboto'
+    &::before
+      content: none !important
+.hours_select_cl_manager_modal
+  label
+    padding-left: 14px
+    padding-top: 2px
+    height: 33px
+    margin: 5px 4px
+    background-color: #ffffff10
+    border-radius: 12px !important
+    border-inline-start-width: 1px !important
+    border: none !important
+    font-size: 14px
+    font-weight: 600
+    font-family: Roboto
+    background-color: #F5F6FA
+    &::before
+      content: none !important
+.clinics_owner
+  div,canvas
+    font-family: Roboto !important
+.ant-select-multiple .ant-select-selection-overflow
+  max-height: initial
+.checkbox-groups
+  margin-top: 34px
+  width: 100%
+
+  .ant-checkbox-group
+    display: flex
+    gap: 10px
+    flex-wrap: wrap
+
+
+    .ant-checkbox-wrapper
+      margin-inline-start: initial !important
+
+
+.clinic-images-container,.clinic-gallery
+  padding-left: 56px
+  padding-top: 73px
+  display: flex
+  .cover_upload_bold_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 18px
+  .upload_small_text
+    font-size: 14px
+    font-weight: 400
+    font-family: Inter
+
+
+  input
+    display: none !important
+
+
+  .im-bg
+    cursor: pointer
+    position: relative
+    border-radius: 15px
+    background: #F5F5F8
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: center
+
+    .inn_logo_div
+      border: 1px dashed #BF539E
+      height: 88px
+      width: 88px
+      border-radius: 4px
+      font-family: Inter
+      font-size: 16px
+      font-weight: 700
+      display: flex
+      align-items: center
+    .bottom_text_logo_div
+      font-size: 10px
+      font-weight: 400
+      font-family: Inter
+      color: #BF539E
+    .inn_image_div
+      border: 1px dashed #BF539E
+      height: 88px
+      width: 288px
+      border-radius: 4px
+      font-family: Inter
+      font-size: 16px
+      font-weight: 700
+      display: flex
+      align-items: center
+      justify-content: center
+
+    .delete-button
+      z-index: 21
+      position: absolute
+      right: 4px
+      top: 4px
+      height: 40px
+      width: 40px
+      background: #FFFFFF
+      border-radius: 12px
+      display: flex
+      align-items: center
+      justify-content: center
+
+
+.clinic-gallery
+  flex-direction: column
+  padding-left: 0
+  padding-top: 24px
+  .images-cnt
+
+    display: flex
+    gap: 24px
+    flex-wrap: wrap
+  .upload-btn
+    height: 240px
+    width: 274px
+    background-color: #F5F5F8
+    border-radius: 12px
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+  .photos_head_text
+    font-family: Inter
+    font-weight: 700
+    font-size: 24px
+
+
+
+
+.clinic_manager_res_table table
+  border-collapse: separate
+  border-spacing: 0 16px
+  border-bottom: #FFFFFF
+.not_found_text
+  font-weight: 700
+  color: #8d8c8d
+  font-family: Roboto
+  font-size: 18px
+  padding-bottom: 24px
+
+
+
+.clinic_manager_res_table
+  .ant-table-cell
+    height: 45px
+
+  .ant-table-wrapper .ant-table-thead >tr>th
+    background: none
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    font-size: 14px
+    font-weight: 400
+    font-family: Roboto
+  .ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+  .ant-table-wrapper .ant-table-thead >tr>td
+    border-bottom: 1px solid #dddcde
+    border-top: 1px solid #dddcde
+    border-radius: 0 !important
+    background-color: #FFFFFF
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >td
+    border-bottom: none !important
+  .ant-table-row
+    background-color: #F5F6FA
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-title, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-footer, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-thead>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>td, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td
+    padding: 8px !important
+
+.profitable_clinic_div
+
+
+  .ant-table-wrapper .ant-table-thead >tr>th
+    background: none
+    border-bottom: 1px solid #dddcde
+    border-radius: 0 !important
+    font-size: 14px
+    font-weight: 400
+    font-family: Roboto
+  .ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+  .ant-table-wrapper .ant-table-thead >tr>td
+    border-bottom: 1px solid #dddcde
+    border-radius: 0 !important
+    background-color: #FFFFFF
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-tbody >tr >td
+    border-bottom: 1px dashed #dddcde !important
+  .ant-table-row
+
+
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-title, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-footer, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-thead>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>td, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td
+    padding: 8px !important
+  :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before, :where(.css-dev-only-do-not-override-l7y8lu).ant-table-wrapper .ant-table-thead >tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before
+    width: 0
+
+.invoice_firsli_text_div
+  background-color: #50AF3130
+  border-radius: 8px
+  width: 100%
+  padding: 15px
+  margin: 8px
+  color: #50AF31
+  font-weight: 700
+  font-size: 14px
+  font-family: Roboto
+  width: 38%
+.invoice_add_total_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+.invoice_total_div
+  display: flex
+  flex-direction: row
+  width: 35%
+.invoice_total_input
+  width: 100%
+.invoice_primary_inputs_div
+  display: flex
+  gap: 20px
+  width: 100%
+
+.invice_save_cancel_div
+  display: flex
+  gap: 10px
+  width: 35%
+  margin-left: 20px
+  margin-bottom: 20px
+
+.new_invoice_big_div
+  :where(.css-dev-only-do-not-override-14uherg).ant-select:not(.ant-select-customize-input) .ant-select-selector
+    border: none !important
+    background-color: rgba(245, 246, 250, 1) !important
+  .ant-form-item-label
+    position: absolute
+    background-color: #f3f1f110
+    padding-left: 5px
+    padding-right: 5px
+    color: rgba(0, 0, 0, 0.6)
+    transform-origin: left top
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    max-width: calc(100% - 24px)
+    transform: translate(14px, 10px) scale(1)
+    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
+    z-index: 1
+    pointer-events: none
+
+  &.input-focused
+    .ant-form-item-label
+      transform: translate(19px, -4px) scale(0.7)
+      line-height: 1em
+  .flying-label
+    input
+      background-color: rgba(245, 246, 250, 1)
+      border: none
+      font-weight: 500
+    label
+      background-color: #f3f1f110 !important
+  .ant-picker
+    background-color: rgba(245, 246, 250, 1)
+    border: none
+  .ant-picker-input
+    input
+      font-weight: 500
+  .ant-select-selection-item
+    font-weight: 500
+    font-family: Roboto
+
+
+.invoice_add_price_button
+  height: 40px
+  margin-left: 20px
+
+.d
+  .ant-switch-checked
+    background-color: #4eab55
+  :where(.css-dev-only-do-not-override-14uherg).ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled)
+    background-color: #4eab55
+
+
+
+
+
+
+
+
+
+
+
