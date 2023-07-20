@@ -192,7 +192,7 @@ function Incoice() {
     formRef?.current?.getFieldValue('sub_total')
 
 
-console.log(data)
+
     return (
         <div className={"new_invoice_big_div"}>
             {data?.id ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice - ${data?.invoice_number}`)}</h3> :
