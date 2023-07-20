@@ -125,26 +125,27 @@ function User() {
                         <div style={{width:'25%'}}>
                             <FormInput label={t('Country')} name={'country_id'}
                                        inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
                                        initialValue={data?.address?.country?.id}
-                                       initialData={data?.address?.country ? [data?.address?.country] : []}
+                                       initialData={[data?.address?.country]}
                                        resource={'Country'}/>
                         </div>
                         <div style={{width:'25%', marginLeft:10}}>
                             <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.address?.region?.id}
-                                       initialData={data?.address?.region?[data?.address?.region]:[]}
+                                       initialData={[data?.address?.region]}
                                        resource={'Region'}/>
                         </div>
                         <div style={{width:'25%', marginLeft:10}}>
                             <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
                                        initialValue={data?.address?.city?.id}
                                        rules={[{required: true}]}
-                                       initialData={data?.address?.city?[data?.location?.city]:[]}
+                                       initialData={[data?.address?.city]}
                                        resource={'City'} />
                         </div>
                         <div style={{width:'25%', marginLeft:10}}>
-                            <FormInput label={t('Address')} name={'address1'} initialValue={data?.address?.address1} />
+                            <FormInput label={t('Address')} name={'address1'} initialValue={data?.address?.address1} rules={[{required: true}]}/>
                         </div>
                     </div>
                     <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
