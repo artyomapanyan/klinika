@@ -21,9 +21,15 @@ function IncomeChannelsChart() {
         period: 12
     })
 
+    console.log(date.month, 'k')
+
     useEffect(() => {
         setLoading(true)
-        postResource('ClinicOwner', 'IncomeChannels', token, '', date).then((response) => {
+        postResource('ClinicOwner', 'IncomeChannels', token, '', {
+            year: dayjs().format('YYYY'),
+            month: ownerClinics?.month_key,
+            period: 12
+        }).then((response) => {
 
             setLoading(false)
             const percentages = []

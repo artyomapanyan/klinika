@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react';
 import { Col, Row, Image, Button, Typography, Tabs } from 'antd';
 import {PhoneOutlined, MailOutlined, GlobalOutlined, EditOutlined, LeftOutlined} from '@ant-design/icons';
 import ShowClinicAboutTab from './ShowClinicAboutTab';
-import ShowClinicHoursTab from './ShowClinicHoursTab';
+import ShowClinicHoursTab from './ClinicShowHoursTab/ShowClinicHoursTab';
 import {useNavigate, useParams} from 'react-router';
 import {postResource, useGetResourceSingle} from '../../../../Functions/api_calls';
 import ShowClinicDoctorsTab from './ShowClinicDoctorsTab';
 import {useSelector} from "react-redux";
 import ResourceLinks from "../../../../ResourceLinks";
 import Preloader from "../../../../Preloader";
+import ClinicWorkingHours from "../ClinicWorkingHours/ClinicWorkingHours";
 
 let resource = 'Clinic';
 function ShowClinic () {
@@ -39,7 +40,7 @@ function ShowClinic () {
     {
       label: `Working Hours`,
       key: 'working_hours',
-      children: <ShowClinicHoursTab/>,
+      children: <ShowClinicHoursTab loadingState={loadingState} dataState={dataState}/>,
     },
     {
       label: `Doctors`,

@@ -143,7 +143,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
             <Row>
               <Col lg={5}>
                 <div style={{fontSize: 18, fontWeight: 600}}
-                     className={'working_houre_margin'}>{workingDay[0]?.day}</div>
+                     className={'working_houre_margin'}>{workingDay[0]?.day[0].toUpperCase() + workingDay[0]?.day.slice(1, workingDay[0]?.day.length)}</div>
               </Col>
               <Col lg={4}>
                 <div className={'working_houre_margin'}>
