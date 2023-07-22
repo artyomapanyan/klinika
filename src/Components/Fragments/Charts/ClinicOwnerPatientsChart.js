@@ -27,6 +27,9 @@ function ClinicOwnerPatientsChart(){
                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
             ];
+
+            let years = Object.keys(response?.patients)?.map(el => +el.slice(0, 4))
+
             const endDate = dayjs(date.to);
             const startDate = dayjs(date.from);
             const monthsDiff = endDate.diff(startDate, 'month');
@@ -83,6 +86,7 @@ function ClinicOwnerPatientsChart(){
                 type: 'line',
                 data: {
                     labels,
+                    years,
                     datasets: isNull.length === 0 ? [] : [
 
                         {
@@ -237,7 +241,7 @@ function ClinicOwnerPatientsChart(){
                             caretPadding: 7,
 
                             callbacks: {
-
+                                title:(e)=>e[0].chart.config.data.years[e[0].dataIndex+1],
 
                                 label: function(context) {
                                     let label = context.dataset.label || '';

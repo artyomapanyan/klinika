@@ -18,6 +18,7 @@ function LineChartIncomes() {
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [years, setYears] = useState([]);
 
 
     const [date, setDate] = useState({
@@ -45,6 +46,8 @@ function LineChartIncomes() {
         const monthName = monthNames[month - 1];
         labels.push(monthName);
     }
+
+
 
     labels.length = date.period
 
@@ -79,6 +82,9 @@ function LineChartIncomes() {
     useEffect(() => {
         setLoading(true)
         postResource('ClinicOwner', 'PeriodIncomes', token, '', date).then((response) => {
+
+
+
 
             const totalData =[];
             let a = response?.map((el, k) =>{
@@ -125,6 +131,7 @@ function LineChartIncomes() {
                 type: "bar",
                 data: {
                     labels,
+                    //years,
                     datasets: a.length === 0 ? [] : [
                         ...a,
                         {
@@ -170,7 +177,7 @@ function LineChartIncomes() {
                                     weight: "700",
                                 },
                                 padding: 40,
-                                stepSize: 500,
+                                stepSize: 50,
                                 showLabelBackdrop: false,
                                 callback: function (label) {
                                     return label / 1000 + "k";
@@ -240,6 +247,8 @@ function LineChartIncomes() {
                               borderColor: "#e3e3e320",
                             caretPadding: 7,
                             callbacks: {
+                                //title:(e)=>e[0].chart.config.data.years[e[0].dataIndex+1],
+
 
 
                                 label: function(context) {

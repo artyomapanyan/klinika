@@ -28,11 +28,16 @@ function TopServices() {
 
     useEffect(() => {
         setLoading(true)
-        postResource('ClinicOwner','TopServices', token,  '', {...yearMonth, ...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
+        postResource('ClinicOwner','TopServices', token,  '', {
+            year: new Date().getFullYear().toString(),
+            month:  ownerClinics?.month_key,
+            ...(ownerClinics?.id!=='all'?{clinic:ownerClinics?.id} : {})}).then((response) => {
             let values = Object.values(response);
             values = values.sort((a,b)=>{
                 return b.percentage-a.percentage
             })
+
+            console.log(ownerClinics)
 
 
             setData({
@@ -63,7 +68,7 @@ function TopServices() {
                     Object.values(data).sort((a,b)=>{
                         return b.percentage-a.percentage
                     }).map((el, key) => <div key={key} style={{lineHeight:1.5, width:'100%', marginTop: 16}}>
-                            <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between",  width:'100%'}}><span>{el?.service}</span> <span style={{fontWeight:700}}>${el?.incomes}</span></div>
+                            <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between",  width:'100%'}}><span>{el?.service}</span> <span style={{fontWeight:700}}>${el?.incomes.toFixed(2)}</span></div>
                             <Progress percent={el?.percentage}
                                       strokeColor={color[key]}
                                       showInfo={false}

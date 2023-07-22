@@ -4,13 +4,28 @@ import dayjs from "dayjs";
 import walking_man_icon from "../../../../../../dist/icons/walking_man_icon.png";
 import walking_man_black from "../../../../../../dist/icons/walking_man_black.png";
 import {InstagramOutlined} from "@ant-design/icons";
+import {useNavigate} from "react-router";
+import ResourceLinks from "../../../../../ResourceLinks";
 
-
+const resource = 'Appointment';
 function CalendarDataCell({data}) {
+    const navigate = useNavigate()
 
+    const toPatient = () => {
+        navigate(ResourceLinks[resource] + data?.appointmentData?.id+'/doctor')
+    }
+
+console.log(data, 'data')
+
+    let time = (dayjs(data?.appointmentData?.booked_to?.iso_string) - dayjs(data?.appointmentData?.booked_at?.iso_string))/1000/60
+
+
+    console.log(time)
 
     return(
-        <div className={'appointment-container'}>
+        <div className={'appointment-container'} onClick={toPatient}
+            style={{padding: time < 60 ? 2 : 8}}
+        >
             <div className={'appointment-item'}>
                 <div className={'appointment-icon-delete'}>
                     {/*<img className={'icon'} src={delete_icon} alt={'delete_icon'}/>*/}
@@ -25,12 +40,15 @@ function CalendarDataCell({data}) {
                     <div className={'appointment_name'} style={{color:[3,4].includes(data.appointmentData.status)? '#000000' : '#ffffff'}}>
                         {data.appointmentData?.patient?.first} {data.appointmentData?.patient?.last}
                     </div>
-                    <div className={'appointment_time'} style={{color: [3,4].includes(data.appointmentData.status) ? '#42394D' : '#ffffff'}}>
-                        {dayjs(data.appointmentData.booked_at.iso_string).format('HH:mm')} - {dayjs(data.appointmentData.booked_to.iso_string).format('HH:mm A')}
+                    <div style={{display: time < 60 ? 'flex' : 'block', gap: time < 60 ? 10 : 0}}>
+                        <div className={'appointment_time'} style={{color: [3,4].includes(data.appointmentData.status) ? '#42394D' : '#ffffff', }}>
+                            {dayjs(data.appointmentData.booked_at.iso_string).format('HH:mm')} - {dayjs(data.appointmentData.booked_to.iso_string).format('HH:mm A')}
+                        </div>
+                        <div className={'status'} style={{color: [3,4].includes(data.appointmentData.status)? '#42394D' : '#ffffff', fontSize: time < 60 ? 12 : 14}}>
+                            {data.appointmentData.service_name}
+                        </div>
                     </div>
-                    <div className={'status'} style={{color: [3,4].includes(data.appointmentData.status)? '#42394D' : '#ffffff'}}>
-                        {data.appointmentData.service_name}
-                    </div>
+
 
                 </div>
             </div>

@@ -118,7 +118,7 @@ function User() {
                                        resource={'Country'}/>
                         </div>
                         <div style={{width:'100%', marginLeft:10}}>
-                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} rules={[{required: true}]}/>
                         </div>
                     </div>
                     <div style={{display:"flex"}}>

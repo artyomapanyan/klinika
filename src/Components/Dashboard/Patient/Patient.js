@@ -41,7 +41,7 @@ function Patient() {
     }
 
     const onBack = () => {
-        navigate(ResourceLinks[resource])
+        navigate(-1)
     }
 
 
