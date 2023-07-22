@@ -116,6 +116,11 @@ function FormInput({
                                                             inputProps.onChange(e,data)
                                                         }
                                                     },
+                                                    onSearch:e=>{
+                                                        if (inputProps.onSearch) {
+                                                            inputProps.onSearch(e)
+                                                        }
+                                                    },
                                                     onBlur: () => setFocused(false),
                                                     mode: inputProps.mode
                                                 }}/>

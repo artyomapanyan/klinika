@@ -94,6 +94,9 @@ function ResourceSelectPaginated({
     }
   }
   const handleSearch = (e) => {
+        if(inputProps.onSearch){
+            inputProps.onSearch(e)
+        }
 
 
 

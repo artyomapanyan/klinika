@@ -34,6 +34,7 @@ function Appointment() {
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
     const [availableDateState, setAvailableDateState] = useState([])
+    const [searchValue, setSearchValue] = useState('')
 
 
     const [changeValuesState, setChangeValuesState] = useState({})
@@ -247,7 +248,7 @@ function Appointment() {
 
     }
 
-
+console.log(searchValue, data)
 
     return (
         <div>
@@ -274,6 +275,7 @@ function Appointment() {
                                                initialValue={null}
 
                                                inputProps={{
+                                                   onSearch:e=>setSearchValue(e),
 
                                                    notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button onClick={()=>{
                                                             formRef.current.resetFields(['patient_id','first'])
@@ -283,6 +285,8 @@ function Appointment() {
                                                             }))
                                                         }}
                                                         type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
+
+
                                                }}
 
                                                initialData={[]}
@@ -313,7 +317,7 @@ function Appointment() {
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient','phone_number']}
                                                                maxLength={9}
-
+                                                                initialValue={data?.patient_id ? formRef.current.getFieldValue(['patient','phone_country_code']) : searchValue}
 
                                                                rules={[{required: true}]}/>
                                                 </Col>
