@@ -1,6 +1,6 @@
 
 import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 
 import {Button, Form, Space} from "antd";
@@ -15,6 +15,7 @@ import CancelComponent from "../../../Fragments/CancelComponent";
 const resource = 'InvoiceItem';
 
 function IncoiceItem() {
+    let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -54,6 +55,15 @@ function IncoiceItem() {
 
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+
+        if(Object.keys(changed).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
+
+
     }
 
     return(

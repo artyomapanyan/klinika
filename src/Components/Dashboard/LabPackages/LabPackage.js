@@ -3,7 +3,7 @@ import Preloader from "../../Preloader";
 import {Button, Form, Popconfirm, Space} from "antd";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import FormInput from "../../Fragments/FormInput";
 import React, {useRef, useState} from "react";
 import FileManager from "../../Fragments/FileManager";
@@ -14,7 +14,7 @@ import DraftEditor from "../../Fragments/DraftEditor";
 const resource = 'LabPackage';
 
 function LabPackage() {
-
+    let dispatch = useDispatch()
     const params = useParams();
     const formRef = useRef();
     const navigate = useNavigate();
@@ -52,6 +52,13 @@ function LabPackage() {
 
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+
+        if(Object.keys(changed).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
     }
 
     let res = "Taxonomy"
@@ -106,7 +113,13 @@ function LabPackage() {
                     {
                         Object.keys(changeValuesState).length > 0 ? <Popconfirm
                             title={t("your changes will not be saved")}
-                            onConfirm={() => navigate(-1)}
+                            onConfirm={() => {
+                                navigate(-1)
+                                dispatch({
+                                    type: 'DASHBOARD_STATE',
+                                    payload: true
+                                })
+                            }}
                             okText={t("Yes")}
                             cancelText={t("No")}
                             icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>

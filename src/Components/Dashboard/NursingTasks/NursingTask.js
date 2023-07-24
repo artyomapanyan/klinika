@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import Preloader from "../../Preloader";
 import {Button, Form, Space} from "antd";
@@ -13,7 +13,7 @@ import CancelComponent from "../../Fragments/CancelComponent";
 const resource = 'NursingTask';
 
 function NursingTask() {
-
+    let dispatch = useDispatch()
     const params = useParams();
     const formRef = useRef();
     const navigate = useNavigate();
@@ -54,6 +54,12 @@ function NursingTask() {
     }
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+        if(Object.keys(changed).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
     }
 
     return(

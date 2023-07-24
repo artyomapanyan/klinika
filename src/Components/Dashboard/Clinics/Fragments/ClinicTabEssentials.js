@@ -289,7 +289,7 @@
 
 
 import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useRef, useState} from "react";
 import {createResource, postResource, updateResource} from "../../../Functions/api_calls";
 import {Button, Col, Form, Input, Row, Space, Switch} from "antd";
@@ -312,6 +312,7 @@ const resource = 'Clinic';
 
 
 function ClinicTabEssentials({loadingState, dataState,addDataState}) {
+    let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -408,6 +409,12 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...e
         }))
         setChangeValuesState(e)
+        if(Object.keys(e).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
     }
     // useEffect(()=>{
     //

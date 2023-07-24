@@ -18,7 +18,7 @@ function LineChartIncomes() {
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const [years, setYears] = useState([]);
+
 
 
     const [date, setDate] = useState({
@@ -84,11 +84,10 @@ function LineChartIncomes() {
         postResource('ClinicOwner', 'PeriodIncomes', token, '', date).then((response) => {
 
 
-
-
             const totalData =[];
             let a = response?.map((el, k) =>{
-                let data = Object.values(el.month_incomes).map((el) => Object.values(el)).flat();
+                let data = Object.values(el.month_incomes).map((el) => el);
+
                 data.forEach((e,key)=>{
                     totalData[key] = (totalData[key]??0)+e
                 })
@@ -105,6 +104,11 @@ function LineChartIncomes() {
                 }
             })
             setData(a)
+
+            let years = response.map((el) => {
+                return Object.keys(el?.month_incomes).map(el => +el.slice(0, 4))
+
+            })
 
 
             const noData = {
@@ -131,7 +135,7 @@ function LineChartIncomes() {
                 type: "bar",
                 data: {
                     labels,
-                    //years,
+                    years,
                     datasets: a.length === 0 ? [] : [
                         ...a,
                         {
@@ -247,7 +251,7 @@ function LineChartIncomes() {
                               borderColor: "#e3e3e320",
                             caretPadding: 7,
                             callbacks: {
-                                //title:(e)=>e[0].chart.config.data.years[e[0].dataIndex+1],
+                                title:(e)=>e[0].chart.config.data.years[0][e[0].dataIndex+1],
 
 
 

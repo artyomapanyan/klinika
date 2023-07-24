@@ -12,11 +12,12 @@ const resource = 'Region';
 
 function Region() {
     let dispatch = useDispatch()
+    let menuState = useSelector((state) => state.dashboardMenuState);
     const formRef = useRef();
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
-    let menuState = useSelector((state) => state.dashboardMenuState);
+
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
@@ -53,21 +54,16 @@ function Region() {
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
 
-        if(Object.keys(changeValuesState).length > 0) {
+        if(Object.keys(changed).length > 0) {
             dispatch({
                 type: 'DASHBOARD_STATE',
                 payload: true
-            })
-        } else {
-            dispatch({
-                type: 'DASHBOARD_STATE',
-                payload: false
             })
         }
 
     }
 
-    console.log(menuState)
+    console.log(menuState, changeValuesState)
 
 
 

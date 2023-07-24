@@ -22,7 +22,8 @@ function Preferences() {
     return (
         <ResourceTable resource={resource}
                        exportButton={false}
-                       buttonAdd={false}
+                       addBtn={false}
+                       exportDatabase={false}
                        hideActions={true}
                        tableColumns={[
                            {

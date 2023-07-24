@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useRef, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     createResource,
     postResource,
@@ -20,6 +20,7 @@ const resource = 'Appointment';
 
 
 function Appointment() {
+    let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -226,6 +227,12 @@ function Appointment() {
             })
         }
         setChangeValuesState(e)
+        if(Object.keys(e).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
 
     }
 
@@ -248,7 +255,7 @@ function Appointment() {
 
     }
 
-console.log(searchValue, data)
+
 
     return (
         <div>

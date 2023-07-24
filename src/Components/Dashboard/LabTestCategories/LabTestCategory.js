@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router";
 import React, {useRef, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {t} from "i18next";
 import Preloader from "../../Preloader";
@@ -11,6 +11,7 @@ import {QuestionCircleOutlined} from "@ant-design/icons";
 
     const resource = 'Taxonomy';
 function LabTestCategory() {
+    let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -52,6 +53,12 @@ function LabTestCategory() {
     }
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+        if(Object.keys(changed).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
     }
 
     return(
@@ -79,7 +86,13 @@ function LabTestCategory() {
                     {
                         Object.keys(changeValuesState).length > 0 ? <Popconfirm
                             title={t("your changes will not be saved")}
-                            onConfirm={() => navigate(-1)}
+                            onConfirm={() => {
+                                navigate(-1)
+                                dispatch({
+                                    type: 'DASHBOARD_STATE',
+                                    payload: true
+                                })
+                            }}
                             okText={t("Yes")}
                             cancelText={t("No")}
                             icon={<QuestionCircleOutlined style={{color: 'red'}}/>}>

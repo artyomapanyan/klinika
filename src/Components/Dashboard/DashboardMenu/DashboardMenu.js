@@ -1,7 +1,7 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import logo from "../../../dist/Img/logo.svg";
 import logoShort from "../../../dist/Img/Logo-short.svg";
-import {Button, Divider, Menu} from "antd";
+import {Button, Divider, Menu, Modal} from "antd";
 import {
     MenuOutlined
 } from "@ant-design/icons";
@@ -16,6 +16,13 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
     let {pathname} = useLocation();
     const permissions = useSelector(state=>state.auth.user.permissions);
     const selected_role = useSelector(state=>state.auth.selected_role);
+
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [linkState, setLinkState] = useState('');
+
+
+
     const handleFilterMenus = (item)=>{
         if(item.children){
             item.children = item.children.map(handleFilterMenus).filter(e=>e)
@@ -41,22 +48,41 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
        })
     },[pathname])
     const handleMenuClick = (e)=>{
+        setLinkState(e?.key)
         const link = e.key;
         const event = e.domEvent
         if(event.buttons===4 && link){
             window.open(window.location.origin+'/account/'+link,'_blank');
         }else{
             if(menuState === true) {
-                console.log('addddddddddddddd')
-                dispatch({
-                    type: 'DASHBOARD_STATE',
-                    payload: false
-                })
+                setIsModalOpen(true);
+            } else {
+                navigate(`/dashboard/${link}`)
             }
-            navigate(`/dashboard/${link}`)
+
 
         }
     }
+
+
+
+
+    const handleOk = () => {
+        dispatch({
+            type: 'DASHBOARD_STATE',
+            payload: false
+        })
+        setIsModalOpen(false);
+        navigate(`/dashboard/${linkState}`)
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+
+
+
+
     return (
         <div >
             <div style={{
@@ -82,6 +108,9 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 style={{fontSize: 16}}
                 onClick={handleMenuClick}
             />
+            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <div>dfsdfs</div>
+            </Modal>
         </div>
     )
 }

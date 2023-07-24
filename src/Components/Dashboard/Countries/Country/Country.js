@@ -3,7 +3,7 @@ import {Button, Col, Form, Row, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import Preloader from "../../../Preloader";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import "../../../../dist/styles/Styles.sass";
@@ -12,6 +12,7 @@ import CancelComponent from "../../../Fragments/CancelComponent";
 const resource = 'Country';
 
 function Country() {
+    let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
@@ -47,7 +48,12 @@ function Country() {
     }
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
-        changed.length = 5
+        if(Object.keys(changed).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
     }
 
 

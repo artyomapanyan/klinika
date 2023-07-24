@@ -1,6 +1,6 @@
 
 import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import Preloader from "../../Preloader";
 import {Button, Col, Form, Space} from "antd";
@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 const resource = 'Doctor';
 
 function Doctor() {
+    let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -61,6 +62,13 @@ function Doctor() {
 
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+
+        if(Object.keys(changed).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
     }
 
     return(
@@ -93,17 +101,7 @@ function Doctor() {
                 <div className={'add_edit_content'}>
                     <Row>
                         <Col lg={12} className="gutter-row">
-                            {/*<div style={{display: 'flex', gap: 10}}>*/}
-                            {/*    <div style={{width: '80%'}}>*/}
-                                    <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
-                                {/*</div>*/}
-                                {/*<div style={{width: '20%'}}>*/}
-                                {/*    <FormInput label={t('Is temporary email')} name={'is_temporary_email'} inputType={'resourceSelect'}*/}
-                                {/*               initialValue={data?.is_temporary_email}*/}
-                                {/*               initialData={Resources.TemporaryEmail}*/}
-                                {/*    />*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
+                            <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
 
                             <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[
                                 {required: true},

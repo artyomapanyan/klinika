@@ -3,7 +3,7 @@ import {Button, Form, Space} from 'antd';
 import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import Preloader from "../../Preloader";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import resourceLinks from "../../ResourceLinks";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
@@ -18,6 +18,7 @@ import CancelComponent from "../../Fragments/CancelComponent";
 const resource = 'Taxonomy';
 
 function Specialty() {
+    let dispatch = useDispatch();
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -60,6 +61,12 @@ function Specialty() {
 
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+        if(Object.keys(changed).length > 0) {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: true
+            })
+        }
     }
 
 const res = 'Specialty';
