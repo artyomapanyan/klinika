@@ -14,6 +14,7 @@ let resource = 'Appointment';
 
 function PrivateNotesModal({data}) {
     let token = useSelector((state) => state.auth.token);
+    let roleForPrivateNotes = useSelector((state) => state);
     const [notes, setNotes] = useState(JSON.parse(data.private_notes));
     const [buttonLoading,setButtonLoading] = useState(false)
     const [removeLoading,setRemoveLoading] = useState(false)
@@ -58,6 +59,8 @@ function PrivateNotesModal({data}) {
 
     }
 
+    console.log(roleForPrivateNotes?.auth?.selected_role?.key)
+
     return(
         <div className={'private_notes_modal_big_div'}>
             <div style={{borderBottom: '1px dashed #c2c1c1', marginTop: 24}}></div>
@@ -67,7 +70,7 @@ function PrivateNotesModal({data}) {
                 </div>
                 <div className={'date_delete_icon'}>
                     <div>{dayjs(note.time).format('DD MMM YYYY HH:mm')}</div>
-                    {removeLoading===key?<Spin/>:<div onClick={()=>handleRemove(key)}><img alt={'dark_delete_icon'} src={dark_delete_icon}/></div>}
+                    {removeLoading===key?<Spin/>: roleForPrivateNotes?.auth?.selected_role?.key == 'super' || roleForPrivateNotes?.auth?.selected_role?.key === 'doctor' ? <div style={{cursor: 'pointer'}} onClick={()=>handleRemove(key)}><img alt={'dark_delete_icon'} src={dark_delete_icon}/></div> : <div></div>}
                 </div>
             </div>)}
 
@@ -77,15 +80,18 @@ function PrivateNotesModal({data}) {
                 ref={formRef}
 
             >
-                <div className={'private_nots_modal_footer'}>
-                    <div style={{width: '80%'}}>
-                        <FormInput label={t('Name')} name={'note'} rules={[{required: true}]} maxLength={200}/>
-                    </div>
-                    <div style={{width: '20%'}}>
-                        <Button type={'primary'} className={'private_notes_add_btn'} htmlType={'submit'} loading={buttonLoading}>Add</Button>
-                    </div>
+                {
+                    roleForPrivateNotes?.auth?.selected_role?.key == 'super' || roleForPrivateNotes?.auth?.selected_role?.key === 'doctor'  ?  <div className={'private_nots_modal_footer'}>
+                        <div style={{width: '80%'}}>
+                            <FormInput label={t('Name')} name={'note'} rules={[{required: true}]} maxLength={200}/>
+                        </div>
+                        <div style={{width: '20%'}}>
+                            <Button type={'primary'} className={'private_notes_add_btn'} htmlType={'submit'} loading={buttonLoading}>Add</Button>
+                        </div>
 
-                </div>
+                    </div> : <div></div>
+                }
+
             </Form>
         </div>
 
