@@ -6,10 +6,12 @@ import {
     MenuOutlined
 } from "@ant-design/icons";
 import {useLocation, useNavigate} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Menulist from "./Menulist";
 
 function DashboardMenu({mouseCollapsed,fixCollapse}){
+    let dispatch = useDispatch()
+    let menuState = useSelector((state) => state.dashboardMenuState);
     const navigate = useNavigate();
     let {pathname} = useLocation();
     const permissions = useSelector(state=>state.auth.user.permissions);
@@ -44,7 +46,15 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
         if(event.buttons===4 && link){
             window.open(window.location.origin+'/account/'+link,'_blank');
         }else{
+            if(menuState === true) {
+                console.log('addddddddddddddd')
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
+            }
             navigate(`/dashboard/${link}`)
+
         }
     }
     return (
