@@ -69,7 +69,7 @@ function TopServices() {
                         return b.percentage-a.percentage
                     }).map((el, key) => <div key={key} style={{lineHeight:1.5, width:'100%', marginTop: 16}}>
                             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between",  width:'100%'}}><span>{el?.service}</span> <span style={{fontWeight:700}}>${el?.incomes.toFixed(2)}</span></div>
-                            <Progress percent={el?.percentage}
+                            <Progress percent={el?.percentage < 1 ? el?.percentage + 1 : el?.percentage}
                                       strokeColor={color[key]}
                                       showInfo={false}
                                       style={{width:'100%'}}
