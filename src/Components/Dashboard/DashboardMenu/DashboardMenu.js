@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import logo from "../../../dist/Img/logo.svg";
 import logoShort from "../../../dist/Img/Logo-short.svg";
-import {Button, Divider, Menu, Modal} from "antd";
+import {Button, Divider, Menu, Modal, Result} from "antd";
 import {
     MenuOutlined
 } from "@ant-design/icons";
@@ -108,8 +108,12 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 style={{fontSize: 16}}
                 onClick={handleMenuClick}
             />
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <div>dfsdfs</div>
+            <Modal title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} closeIcon={false} >
+                <Result
+                    title="Your changes will not be saved"
+
+                />
+
             </Modal>
         </div>
     )

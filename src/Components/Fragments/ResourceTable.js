@@ -294,7 +294,7 @@ function ResourceTable ({
                         onChange={handleTableChange}
                         dataSource={data?.items}
                         rowKey={e => e.id}
-                        size={'small'}
+
                     />}
                 </Form>
                 {customTableButton?<Button loading={loading} type={'primary'} size={'large'} style={{margin:20}} icon={customTableButton.icon} onClick={()=>customTableButton.onClick()}>{customTableButton.title}</Button>:null}
