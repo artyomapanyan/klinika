@@ -104,6 +104,12 @@ let api = {
     {
         url: 'users/update-self',
         resource: 'UserUpdateSelf',
+        custom: {
+            UpdateSelf:{
+                url: `${endpoint}${version}/users/update-self`,
+                method: 'POST',
+            },
+        }
     },
     {
         url: 'posts',

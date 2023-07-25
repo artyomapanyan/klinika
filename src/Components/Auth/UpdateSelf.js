@@ -8,7 +8,7 @@ import Resources from "../../store/Resources";
 import CancelComponent from "../Fragments/CancelComponent";
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {createResource, updateResource} from "../Functions/api_calls";
+import {createResource, postResource, updateResource} from "../Functions/api_calls";
 
 let resource = 'UserUpdateSelf';
 function UpdateSelf() {
@@ -28,18 +28,28 @@ function UpdateSelf() {
         setSaveLoading(true)
         values.dob = values.dob.format('YYYY-MM-DD')
 
+        postResource(resource, 'UpdateSelf', token, ``, values).then(response => {
+            if(response?.id){
+                dispatch({
+                    type:'USER_UPDATE',
+                    payload:response
+                })
+                navigate(-1)
+            }
+            setSaveLoading(false)
+        })
 
-            updateResource(resource, params.id, values, token).then(response => {
-                if(response?.id){
-                    dispatch({
-                        type:'USER_UPDATE',
-                        payload:response
-                    })
-                    navigate(-1)
-                }
-            }).finally(() => {
-                setSaveLoading(false)
-            })
+            // updateResource(resource, '', values, token).then(response => {
+            //     if(response?.id){
+            //         dispatch({
+            //             type:'USER_UPDATE',
+            //             payload:response
+            //         })
+            //         navigate(-1)
+            //     }
+            // }).finally(() => {
+            //     setSaveLoading(false)
+            // })
 
     }
 
@@ -113,6 +123,33 @@ function UpdateSelf() {
                         </div>
                         <div style={{width:'100%', marginLeft:10}}>
                             <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                        </div>
+                    </div>
+                    <div style={{display:"flex"}}>
+                        <div style={{width:'25%'}}>
+                            <FormInput label={t('Country')} name={'country_id'}
+                                       inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.address?.country?.id}
+                                       initialData={data?.address?.country ? [data?.address?.country] : []}
+                                       resource={'Country'}/>
+                        </div>
+                        <div style={{width:'25%', marginLeft:10}}>
+                            <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.address?.region?.id}
+                                       initialData={data?.address?.region ? [data?.address?.region] : []}
+                                       resource={'Region'}/>
+                        </div>
+                        <div style={{width:'25%', marginLeft:10}}>
+                            <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
+                                       initialValue={data?.address?.city?.id}
+                                       rules={[{required: true}]}
+                                       initialData={data?.address?.city ? [data?.address?.city] : []}
+                                       resource={'City'} />
+                        </div>
+                        <div style={{width:'25%', marginLeft:10}}>
+                            <FormInput label={t('Address')} name={'address1'} initialValue={data?.address?.address1} rules={[{required: true}]}/>
                         </div>
                     </div>
                     {/*<FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}*/}
