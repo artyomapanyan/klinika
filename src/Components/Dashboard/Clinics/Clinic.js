@@ -83,6 +83,9 @@ function Clinic() {
                     <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit/>
                     </items> : <div></div>}
+
+
+
                 {/*{dataState.data.has_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>*/}
                 {/*        <Laboratory />*/}
                 {/*    </items> : <div></div>}*/}
