@@ -36,6 +36,10 @@ function LabTest() {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         } else {
@@ -45,6 +49,10 @@ function LabTest() {
                 }
 
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         }

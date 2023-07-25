@@ -33,6 +33,10 @@ function Country() {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         } else {
@@ -42,6 +46,10 @@ function Country() {
                 }
 
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         }

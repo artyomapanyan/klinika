@@ -43,6 +43,10 @@ function BugReportTopic() {
                     navigate(resourceLinks['BugReport'])
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         } else {
@@ -52,6 +56,10 @@ function BugReportTopic() {
                 }
 
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         }

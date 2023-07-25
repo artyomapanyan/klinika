@@ -64,6 +64,10 @@ function Incoice() {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         } else {
@@ -73,6 +77,10 @@ function Incoice() {
                 }
 
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         }

@@ -15,6 +15,7 @@ const resource = 'User';
 
 function User() {
     let dispatch = useDispatch();
+    let selectedRole = useSelector((state) => state.auth.selected_role);
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -35,6 +36,10 @@ function User() {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         } else {
@@ -43,6 +48,10 @@ function User() {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         }
@@ -65,6 +74,7 @@ function User() {
         return [name,item]
     }
 
+    console.log(data, 'dddddddddddddd')
 
     return(
         <div>
@@ -150,14 +160,14 @@ function User() {
 
 
 
-
-
-                    <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
-                               rules={[{required: true}]}
-                               initialValue={data?.roles?.map(e=>e.id)}
-                               initialData={data?.roles??[]}
-                               resource={'Role'}
-                    />
+                    {
+                        selectedRole.key === 'super' || selectedRole.key === 'admin' ? <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
+                                                                        rules={[{required: true}]}
+                                                                        initialValue={data?.roles?.map(e=>e.id)}
+                                                                        initialData={data?.roles??[]}
+                                                                        resource={'Role'}
+                        /> : <div></div>
+                    }
 
 
                     <Space>

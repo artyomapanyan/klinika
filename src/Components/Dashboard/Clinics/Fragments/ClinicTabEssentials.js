@@ -390,6 +390,10 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         } else {
@@ -398,6 +402,10 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setSaveLoading(false)
             })
         }

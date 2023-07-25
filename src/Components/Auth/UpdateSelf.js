@@ -115,12 +115,12 @@ function UpdateSelf() {
                             <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
                         </div>
                     </div>
-                    <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
-                               rules={[{required: true}]}
-                               initialValue={data?.roles?.map(e=>e.id)}
-                               initialData={data?.roles??[]}
-                               resource={'Role'}
-                    />
+                    {/*<FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}*/}
+                    {/*           rules={[{required: true}]}*/}
+                    {/*           initialValue={data?.roles?.map(e=>e.id)}*/}
+                    {/*           initialData={data?.roles??[]}*/}
+                    {/*           resource={'Role'}*/}
+                    {/*/>*/}
 
 
                     <Space>

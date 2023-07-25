@@ -42,6 +42,10 @@ function Role() {
                     navigate(-1)
                 }
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setLoading(false)
             })
         } else {
@@ -51,6 +55,10 @@ function Role() {
                 }
 
             }).finally(() => {
+                dispatch({
+                    type: 'DASHBOARD_STATE',
+                    payload: false
+                })
                 setLoading(false)
             })
         }

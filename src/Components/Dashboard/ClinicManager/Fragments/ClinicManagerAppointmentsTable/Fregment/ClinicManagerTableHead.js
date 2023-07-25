@@ -30,9 +30,9 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
         })
     }
     return(
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", paddingTop:45}}>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", paddingTop:45, width: '100%'}}>
             <div className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
-                {t("Appointments ")}
+                {t("Appointments for patients")}
                 {!hideData && data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-clinic-man-calendar-${key}`}>{itemKey}</Space>)}
             </div>
             <div>

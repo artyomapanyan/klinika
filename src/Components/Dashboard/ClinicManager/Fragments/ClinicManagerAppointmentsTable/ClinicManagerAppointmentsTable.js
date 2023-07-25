@@ -20,11 +20,15 @@ import Preloader from "../../../../Preloader";
 import ClinicManagerTableHead from "./Fregment/ClinicManagerTableHead";
 import axios from "axios";
 import api from "../../../../../Api";
+import {MedicineBoxOutlined} from "@ant-design/icons";
+import ResourceLinks from "../../../../ResourceLinks";
+import {useNavigate} from "react-router";
 
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
     let token = useSelector((state) => state.auth.token);
 
+    const navigate = useNavigate();
     const [dateWeek, setDateWeek] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
@@ -90,6 +94,12 @@ function ClinicManagerAppointmentsTable() {
         });
     }
 
+    const onResourceShow = (record) => {
+
+
+        navigate(ResourceLinks[resource] + record.id+'/show')
+
+    }
 
 
     return (
@@ -223,7 +233,7 @@ function ClinicManagerAppointmentsTable() {
                                 title: '',
                                 dataIndex: 'modal',
                                 key: 'modal',
-                                render: () => <img alt={'arrow_next'} src={arrow_next} />
+                                render: (e, record) => <div style={{cursor: 'pointer'}} onClick={() => onResourceShow(record)} ><img alt={'arrow_next'} src={arrow_next} /></div>
                             },]}
                     />
                 </div>

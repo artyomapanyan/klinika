@@ -236,7 +236,7 @@ function ResourceTable ({
 
     return (<Content className={'layout-conatiner'} style={{marginTop: containermargin ? 1 : -75}}>
         {customHeader?<Row>
-            <Col lg={12}>{customHeader({
+            <Col lg={24}>{customHeader({
                 setParams,
                 params
             })}</Col>

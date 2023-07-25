@@ -62,6 +62,7 @@ function ClinicManagerCalendar() {
     },[search,data])
 
 
+    console.log(showCount)
 
     return (
         <section className={'table_conteiner'}>
@@ -97,7 +98,12 @@ function ClinicManagerCalendar() {
 
                                             {filteredData?.slice(0,showCount)?.map((item, key) => <ClinicManagerCalendarCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
                                         </table>
-                                        {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>Load More</Button>:null}
+                                        <div style={{padding: 10, display: 'flex', gap: 10}}>
+                                            {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>Show More</Button>:null}
+                                            {showCount>10?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState-10)}>Show Less</Button>:null}
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
