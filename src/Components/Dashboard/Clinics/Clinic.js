@@ -7,9 +7,9 @@ import {useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
 import HomeVisit from "./Fragments/HomeVisit/HomeVisit";
-import Laboratory from "./Fragments/Laboratory/Laboratory";
+
 import ClinicVisit from "./Fragments/ClinicVisit/ClinicVisit";
-import Nursing from "./Fragments/Nursing/Nursing";
+
 import ClinicTabBars from "./Fragments/ClinicTabBars";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
