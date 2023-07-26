@@ -82,6 +82,11 @@ function ClinicOwnerPatientsChart(){
             Chart.register(...registerables)
             let gradient = appointmentsStats.createLinearGradient(0, 400, 0, 10);
             gradient.addColorStop(0, "#6DAF5627");
+
+            if(appointmentChartRef) {
+                appointmentChartRef?.current?.destroy()
+            }
+
             appointmentChartRef.current = new Chart(appointmentsStats, {
                 type: 'line',
                 data: {

@@ -74,7 +74,7 @@ function TopServices() {
                                       showInfo={false}
                                       style={{width:'100%'}}
                                       strokeLinecap={'round'}
-                                      strokeWidth={'13px'}
+                                      size={'13px'}
                                       format={()=>{
                                           return ""}
                                       }/>

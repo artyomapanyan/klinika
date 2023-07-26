@@ -21,7 +21,7 @@ function IncomeChannelsChart() {
         period: 12
     })
 
-    console.log(date.month, 'k')
+    console.log(appointmentChartRef?.current?.id)
 
     useEffect(() => {
         setLoading(true)
@@ -116,6 +116,11 @@ function IncomeChannelsChart() {
             };
             const appointmentsStats = canvasRef.current.getContext("2d")
             Chart.register(...registerables)
+
+            if(appointmentChartRef) {
+                appointmentChartRef?.current?.destroy()
+            }
+
             appointmentChartRef.current = new Chart(appointmentsStats, {
                 type: "doughnut",
                 data: {
@@ -157,7 +162,7 @@ function IncomeChannelsChart() {
         <Spin spinning={loading}>
             <div className={'owner_channel_incomes_big_div'}>
                 <h1 className={'h1'} style={{marginTop: 25}}>Income channels</h1>
-                <canvas id='IncomeChannelsChart' ref={canvasRef} className="owner_chart_income_channel"></canvas>
+                <canvas id={appointmentChartRef?.current?.id} ref={canvasRef} className="owner_chart_income_channel"></canvas>
                 <table cellPadding={7}  border={0} style={{width:'100%', margin: 15}} >
                     {Object.keys(data).map((key, i) =>
                         <tbody key={i}>
