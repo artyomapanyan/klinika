@@ -15,7 +15,7 @@ import {useNavigate, useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
 import {LeftOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
-import ResourceLinks from "../../ResourceLinks";
+
 
 let resource = 'Appointment'
 function Patient() {

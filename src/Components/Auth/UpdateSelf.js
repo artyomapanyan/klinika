@@ -8,7 +8,7 @@ import Resources from "../../store/Resources";
 import CancelComponent from "../Fragments/CancelComponent";
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {createResource, postResource, updateResource} from "../Functions/api_calls";
+import {postResource} from "../Functions/api_calls";
 
 let resource = 'UserUpdateSelf';
 function UpdateSelf() {
