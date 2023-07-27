@@ -43,7 +43,7 @@ function DoctorReworkedCalendar() {
         })
     }, [date])
 
-    console.log(appointments)
+
 
     return (<div className={'dr_reworked_not'}>
             <DoctorReworkedCalendarHeader setDate={setDate}/>

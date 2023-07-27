@@ -114,11 +114,7 @@ export default {
             label: t(`Clinics`),
             permission:'Clinic'
         },
-        {
-            key: 'patients',
-            icon: <img alt={'icons'} src={dash3}/>,
-            label: 'Doctor flow',
-        },
+
         {
             icon:<img alt={'icons'} src={dash3}/>,
             key: 'offers',

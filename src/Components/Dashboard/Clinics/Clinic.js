@@ -15,6 +15,8 @@ import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
 import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoctors";
 import "../../Dashboard/OwnerClinics/ClinicOwnerStyles/ClinicOwnerStyles.sass"
+import Laboratory from "./Fragments/Laboratory/Laboratory";
+import Nursing from "./Fragments/Nursing/Nursing";
 
 
 const resource = "Clinic"
@@ -86,12 +88,12 @@ function Clinic() {
 
 
 
-                {/*{dataState.data.has_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>*/}
-                {/*        <Laboratory />*/}
-                {/*    </items> : <div></div>}*/}
-                {/*{dataState.data.has_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>*/}
-                {/*        <Nursing/>*/}
-                {/*    </items> : <div></div>}*/}
+                {dataState.data.has_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                        <Laboratory />
+                    </items> : <div></div>}
+                {dataState.data.has_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
+                        <Nursing/>
+                    </items> : <div></div>}
                 </ClinicTabBars>}
           </div>
     )

@@ -286,7 +286,7 @@ function Appointment() {
                                     <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                                inputType={'resourceSelect'}
                                                //rules={[{required: true}]}
-                                               searchConfigs={{minLength: 4}}
+                                               searchConfigs={{minLength: 1}}
                                                initialValue={null}
 
                                                inputProps={{

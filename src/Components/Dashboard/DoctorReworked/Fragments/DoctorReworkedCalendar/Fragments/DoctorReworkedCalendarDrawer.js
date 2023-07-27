@@ -41,6 +41,14 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
         setOpen(false)
     }
 
+    const searchByNumber = (item, name) => {
+        name = <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px'}}>
+            <div>{item.first} {item.last}</div>
+            <div>+{item.phone_country_code}{item.phone_number}</div>
+        </div>
+        let searchData = item.phone_number + item.email;
+        return [name, item, searchData]
+    }
 
 
     return(
@@ -60,8 +68,16 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
+                           searchConfigs={{minLength: 3}}
+                           inputProps={{
+                               notFoundContent: <div
+                                   style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                                   <div>Not found</div>
+                               </div>
+                           }}
                            initialData={[]}
-                           customSearchKey={'name_or_phone'}
+                           handleMapItems={(item, name) => searchByNumber(item, name)}
+                           customSearchKey={'full_phone_number'}
                            resource={'User'}/>
 
 

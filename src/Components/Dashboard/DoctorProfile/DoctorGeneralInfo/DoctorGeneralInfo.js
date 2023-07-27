@@ -56,40 +56,34 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
         setAutoFillState(false)
     }
 
-    // let a = [
-    //     {
-    //         id: data?.doctor_title?.id,
-    //         name: data?.doctor_title?.title
-    //     }
-    // ]
 
 
     return(
         <div className={'general_info_big_div'}>
-            {
-                autoFillState ? <div className={'autofill_big_div'}>
+            {/*{*/}
+            {/*    autoFillState ? <div className={'autofill_big_div'}>*/}
 
-                    <div>
-                        <Space >
-                            <Divider type={"vertical"} style={{height: 37, border: '2px solid #F3A632', borderRadius: 2}}></Divider>
-                            <div>
-                                <div className={'autofill_bold_text'}>
-                                    Auto fill your data
-                                </div>
-                                <div className={'autofill_text'}>
-                                    You have already filled profile from another clinic. Do you want to pre-fill this data to current profile
-                                </div>
-                            </div>
-                        </Space>
+            {/*        <div>*/}
+            {/*            <Space >*/}
+            {/*                <Divider type={"vertical"} style={{height: 37, border: '2px solid #F3A632', borderRadius: 2}}></Divider>*/}
+            {/*                <div>*/}
+            {/*                    <div className={'autofill_bold_text'}>*/}
+            {/*                        Auto fill your data*/}
+            {/*                    </div>*/}
+            {/*                    <div className={'autofill_text'}>*/}
+            {/*                        You have already filled profile from another clinic. Do you want to pre-fill this data to current profile*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </Space>*/}
 
 
-                    </div>
-                    <div>
-                        <Button onClick={onAutoFillYes} style={{marginRight: 16}} className={'autofill_btn'} type={'primary'} >Yes</Button>
-                        <Button className={'autofill_btn'} type={'secondary'} >No</Button>
-                    </div>
-                </div> : <div></div>
-            }
+            {/*        </div>*/}
+            {/*        <div>*/}
+            {/*            <Button onClick={onAutoFillYes} style={{marginRight: 16}} className={'autofill_btn'} type={'primary'} >Yes</Button>*/}
+            {/*            <Button className={'autofill_btn'} type={'secondary'} >No</Button>*/}
+            {/*        </div>*/}
+            {/*    </div> : <div></div>*/}
+            {/*}*/}
 
             {
                 loading ? <Preloader /> : <Form
@@ -117,7 +111,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                 <Col lg={6}>
                                     <FormInput label={t('Date of Birth')} name={'dob'}
                                                suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
-                                               initialValue={!autoFillState ? data?.dob : null}
+                                               initialValue={data?.dob}
 
                                         //inputDisabled={true}
                                                inputType={'date'} rules={[
@@ -134,37 +128,38 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                 </Col>
                                 <Col lg={6}>
                                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
-                                               initialValue={!autoFillState ? data?.gender : null}
+                                               initialValue={data?.gender}
                                                initialData={Resources?.Gender}
                                     />
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col lg={6}>
-                                    <FormInput label={t('Qualification')} name={'qualification'}
-                                    />
-                                </Col>
-                                <Col lg={6}>
-                                    <FormInput label={t('HCP registration number:')} name={'name'}
-                                    />
-                                </Col>
-                                <Col lg={6}>
-                                    <FormInput label={t('License valid to')} name={'dob'}
-                                               suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
 
-                                        //inputDisabled={true}
-                                               inputType={'date'}
-                                    />
-                                </Col>
-                                <Col lg={6}>
-                                    <FormInput label={t('license upload')} name={'qualification'} />
                                 </Col>
                             </Row>
+                            {/*<Row gutter={20}>*/}
+                            {/*    <Col lg={6}>*/}
+                            {/*        <FormInput label={t('Qualification')} name={'qualification'}*/}
+                            {/*        />*/}
+                            {/*    </Col>*/}
+                            {/*    <Col lg={6}>*/}
+                            {/*        <FormInput label={t('HCP registration number:')} name={'name'}*/}
+                            {/*        />*/}
+                            {/*    </Col>*/}
+                            {/*    <Col lg={6}>*/}
+                            {/*        <FormInput label={t('License valid to')} name={'dob'}*/}
+                            {/*                   suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}*/}
+
+                            {/*            //inputDisabled={true}*/}
+                            {/*                   inputType={'date'}*/}
+                            {/*        />*/}
+                            {/*    </Col>*/}
+                            {/*    <Col lg={6}>*/}
+                            {/*        <FormInput label={t('license upload')} name={'qualification'} />*/}
+                            {/*    </Col>*/}
+                            {/*</Row>*/}
                             <Row gutter={20}>
                                 <Col lg={8}>
                                     <FormInput inputProps={{mode:'multiple'}} label={t('Sub specialties')} name={'sub_specialities'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={!autoFillState ? data?.sub_specialties?.map(e=>e.id) : null}
+                                               initialValue={data?.sub_specialties?.map(e=>e?.id)}
                                                initialData={data?.sub_specialties ??[]}
                                                resource={'Taxonomy'}
                                                resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
@@ -178,7 +173,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
 
                                                inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={!autoFillState ? data?.specialties?.map(e=>e.id) : null}
+                                               initialValue={data?.specialties?.map(e=>e?.id)}
                                                initialData={data?.specialties ??[]}
                                                resource={'Taxonomy'}
                                                resourceParams={{
@@ -190,7 +185,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                             </Row>
                             <Row gutter={20}>
                                 <Col lg={8}>
-                                    <FormInput label={t('Email')} name={'email'} rules={[{required: true}]} initialValue={!autoFillState ? data?.email : null}/>
+                                    <FormInput label={t('Email')} name={'email'} rules={[{required: true}]} initialValue={data?.email}/>
                                 </Col>
 
                                 <Col lg={6}>
@@ -208,12 +203,12 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                             </Row>
                             <div style={{display: 'flex', width: '100%', gap: 20}}>
                                 <div style={{width:'50%'}}>
-                                    <FormInput label={t('Plid')} name={'plid'} rules={[{required: true}]} initialValue={!autoFillState ? data?.plid : null}/>
+                                    <FormInput label={t('Plid')} name={'plid'} rules={[{required: true}]} initialValue={data?.plid}/>
                                 </div>
                                 <div style={{width:'50%'}}>
                                     <FormInput label={t('Doctor title id')} name={'doctor_title_id'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={!autoFillState ? data?.doctor_title.id : null}
+                                               initialValue={data?.doctor_title?.id}
                                                initialData={data?.doctor_title?[data?.doctor_title]:[]}
                                                resource={'Taxonomy'}
                                                resourceParams={{type:Resources.TaxonomyTypes.DOCTOR_TITLE}}
@@ -226,7 +221,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
 
                             <div>
                                 <FormInput label={t('Doctor description by clinic')} name={'bio'} inputType={'textArea'}
-                                     initialValue={!autoFillState ? data?.bio : null}
+                                     initialValue={data?.bio}
                                 />
                             </div>
 
