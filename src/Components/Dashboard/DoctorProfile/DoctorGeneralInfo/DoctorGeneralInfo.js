@@ -156,7 +156,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                             {/*    </Col>*/}
                             {/*</Row>*/}
                             <Row gutter={20}>
-                                <Col lg={8}>
+                                <Col lg={8} className={'doc_profile_specialties'}>
                                     <FormInput inputProps={{mode:'multiple'}} label={t('Sub specialties')} name={'sub_specialities'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
                                                initialValue={data?.sub_specialties?.map(e=>e?.id)}
@@ -166,7 +166,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                     />
                                 </Col>
 
-                                <Col lg={16}>
+                                <Col lg={16} className={'doc_profile_specialties'}>
                                     <FormInput label={t('')} name={'specialities'}
                                                inputProps={{mode: 'multiple'}}
                                                suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Specialties </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}

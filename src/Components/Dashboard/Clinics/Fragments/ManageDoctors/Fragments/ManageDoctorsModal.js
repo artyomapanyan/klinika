@@ -41,22 +41,36 @@ function ManageDoctorsModal({isModalOpen,onCreate}) {
                         {/*           resource={'Doctor'}/>*/}
 
 
-                        <FormInput label={t('Select Doctor (Search by phone number or name)')} name={'doctor_id'}
+                        <FormInput label={t('Search by phone number or name')} name={'doctor_id'}
+                                   searchConfigs={{minLength: 5}}
                                    inputType={'resourceSelect'}
                                    rules={[{required: true}]}
-                                   searchConfigs={{minLength: 3}}
-                                   initialValue={null}
-                                   inputProps={{
-                                       notFoundContent: <div
-                                           style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                                           <div>Not found</div>
-                                           </div>
+                                   resource={'Doctor'}
+                                   resourceParams={{
+                                       type: 'doctor',
                                    }}
-                                   initialData={[]}
-                                   handleMapItems={(item, name) => searchByNumber(item, name)}
                                    customSearchKey={'name_or_phone'}
+                                   initialValue={null}
+                                   initialData={[]}
 
-                                   resource={'Doctor'}/>
+                        />
+
+                        {/*<FormInput label={t('Select Doctor (Search by phone number or name)')} name={'doctor_id'}*/}
+                        {/*           inputType={'resourceSelect'}*/}
+                        {/*           rules={[{required: true}]}*/}
+                        {/*           searchConfigs={{minLength: 5}}*/}
+                        {/*           initialValue={null}*/}
+                        {/*           inputProps={{*/}
+                        {/*               notFoundContent: <div*/}
+                        {/*                   style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>*/}
+                        {/*                   <div>Not found</div>*/}
+                        {/*                   </div>*/}
+                        {/*           }}*/}
+                        {/*           initialData={[]}*/}
+                        {/*           handleMapItems={(item, name) => searchByNumber(item, name)}*/}
+                        {/*           customSearchKey={'name_or_phone'}*/}
+
+                        {/*           resource={'Doctor'}/>*/}
                     </div>
                 </Form>
             </Spin>

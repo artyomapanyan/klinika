@@ -491,11 +491,16 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        initialData={reduxInfo?.auth?.selected_role?.key === 'clinic-owner' ? reduxInfo?.auth?.user ? [reduxInfo?.auth?.user]:[] : data?.owner ? [data?.owner] : []}
                                        customSearchKey={'name_or_phone'}
                                        resource={'User'}/>
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Manager')} name={'managers'} inputType={'resourceSelect'}
+                            <FormInput inputProps={{mode:'multiple'}} label={t('Manager, search by phone number')} name={'managers'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
+                                       searchConfigs={{minLength: 3}}
                                        initialValue={data?.managers?.map(e=>e.id)}
                                        initialData={data?.managers ??[]}
-                                       customSearchKey={'name_or_phone'}
+                                       resourceParams={{
+                                           type: 'managers',
+
+                                       }}
+                                       customSearchKey={'full_phone_number'}
                                        resource={'User'}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}

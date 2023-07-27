@@ -69,14 +69,17 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            rules={[{required: true}]}
                            initialValue={null}
                            searchConfigs={{minLength: 3}}
-                           inputProps={{
-                               notFoundContent: <div
-                                   style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                                   <div>Not found</div>
-                               </div>
+                           // inputProps={{
+                           //     notFoundContent: <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                           //         <div>Not found</div>
+                           //     </div>
+                           // }}
+                           resourceParams={{
+                               type: 'patient',
+
                            }}
                            initialData={[]}
-                           handleMapItems={(item, name) => searchByNumber(item, name)}
+                           //handleMapItems={(item, name) => searchByNumber(item, name)}
                            customSearchKey={'full_phone_number'}
                            resource={'User'}/>
 

@@ -263,7 +263,7 @@ function Appointment() {
 
     }
 
-
+console.log(data)
 
     return (
         <div>
@@ -283,31 +283,49 @@ function Appointment() {
                         <div>
                             <div className={'add_edit_content'}>
                                 <div className="gutter-row">
-                                    <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
+                                    {/*<FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}*/}
+                                    {/*           inputType={'resourceSelect'}*/}
+                                    {/*           //rules={[{required: true}]}*/}
+                                    {/*           searchConfigs={{minLength: 1}}*/}
+                                    {/*           initialValue={null}*/}
+
+
+
+                                    {/*           initialData={[]}*/}
+                                    {/*           //handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}*/}
+                                    {/*           customSearchKey={'full_phone_number'}*/}
+                                    {/*           resource={'User'}/>*/}
+                                    <FormInput label={t('Select Patient (Search By phone number')} name={'patient_id'}
+                                               searchConfigs={{minLength: 5}}
                                                inputType={'resourceSelect'}
-                                               //rules={[{required: true}]}
-                                               searchConfigs={{minLength: 1}}
-                                               initialValue={null}
-
+                                               rules={[{required: true}]}
+                                               resource={'User'}
+                                               resourceParams={{
+                                                   type: 'user',
+                                               }}
                                                inputProps={{
-                                                   onSearch:e=>setSearchValue(e),
+                                                   //onSearch:e=>setSearchValue(e),
 
-                                                   notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}><div>Not found</div><Button onClick={()=>{
-                                                            formRef.current.resetFields(['patient_id','first'])
-                                                            setData((prevState)=>({
-                                                                ...prevState,
-                                                                patient_id:0
-                                                            }))
-                                                        }}
-                                                        type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
+                                                   notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                                                       <div>Not found</div>
+                                                       <Button onClick={()=>{
+                                                           formRef.current.resetFields(['patient_id','first'])
+                                                           setData((prevState)=>({
+                                                               ...prevState,
+                                                               patient_id:0
+                                                           }))
+                                                       }}
+                                                               type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
 
 
                                                }}
-
-                                               initialData={[]}
                                                handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
-                                               customSearchKey={'phone_number'}
-                                               resource={'User'}/>
+                                               customSearchKey={'full_phone_number'}
+                                               initialValue={null}
+                                               initialData={[]}
+                                               disabled={data?.patient_id}
+
+                                    />
                                 </div>
 
                             </div>

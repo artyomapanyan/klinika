@@ -280,6 +280,7 @@ function Incoice() {
                                 </div>
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client manager')} name={'client_manager_id'}
+                                               searchConfigs={{minLength: 3}}
                                                inputType={'resourceSelect'}
                                                rules={[{required: true}]}
                                                resource={'User'}
@@ -287,6 +288,7 @@ function Incoice() {
                                                    type: 'manager',
                                                    appointment_id: data.appointment_id
                                                }}
+                                               customSearchKey={'full_phone_number'}
                                                initialValue={data?.client_manager?.id}
                                                initialData={data?.client_manager ? [data?.client_manager] : []}
 

@@ -24,7 +24,7 @@ console.log(data, 'data')
 
     return(
         <div className={'appointment-container'} onClick={toPatient}
-            style={{padding: time < 60 ? 2 : 8}}
+            style={{padding: time < 60 ? 0 : 8}}
         >
             <div className={'appointment-item'}>
                 <div className={'appointment-icon-delete'}>
@@ -36,8 +36,8 @@ console.log(data, 'data')
                             [0,1].includes(data.appointmentData.status) ?  <img src={walking_man_icon} alt={'walking_man_icon'}/> : <img src={walking_man_black} alt={'walking_man_black'}/>
                     }
                 </div>
-                <div className={'appointment-data'}>
-                    <div className={'appointment_name'} style={{color:[3,4].includes(data.appointmentData.status)? '#000000' : '#ffffff'}}>
+                <div className={'appointment-data'} style={{lineHeight: time < 60 ? 1 : 1.5}}>
+                    <div className={'appointment_name'} style={{color:[3,4].includes(data.appointmentData.status)? '#000000' : '#ffffff', fontSize: time < 60 ? 14 : 14}}>
                         {data.appointmentData?.patient?.first} {data.appointmentData?.patient?.last}
                     </div>
                     <div style={{display: time < 60 ? 'flex' : 'block', gap: time < 60 ? 10 : 0}}>
