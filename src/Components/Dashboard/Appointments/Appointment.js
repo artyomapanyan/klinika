@@ -24,6 +24,7 @@ function Appointment() {
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
+    const phoneNumberRef = useRef();
     let token = useSelector((state) => state.auth.token);
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
@@ -35,7 +36,7 @@ function Appointment() {
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
     const [availableDateState, setAvailableDateState] = useState([])
-    const [searchValue, setSearchValue] = useState('')
+
 
 
     const [changeValuesState, setChangeValuesState] = useState({})
@@ -304,7 +305,7 @@ console.log(data)
                                                    type: 'user',
                                                }}
                                                inputProps={{
-                                                   //onSearch:e=>setSearchValue(e),
+                                                   onSearch:e=>phoneNumberRef.current = e,
 
                                                    notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                                                        <div>Not found</div>
@@ -323,7 +324,7 @@ console.log(data)
                                                customSearchKey={'full_phone_number'}
                                                initialValue={null}
                                                initialData={[]}
-                                               disabled={data?.patient_id}
+                                               //disabled={data?.patient_id}
 
                                     />
                                 </div>
@@ -350,7 +351,7 @@ console.log(data)
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient','phone_number']}
                                                                maxLength={9}
-                                                                initialValue={data?.patient_id ? formRef.current.getFieldValue(['patient','phone_country_code']) : searchValue}
+                                                                initialValue={data?.patient_id ? formRef.current.getFieldValue(['patient','phone_country_code']) : phoneNumberRef.current}
 
                                                                rules={[{required: true}]}/>
                                                 </Col>

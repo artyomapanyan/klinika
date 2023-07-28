@@ -21,6 +21,7 @@ function DashboardHeader() {
             case pathname.includes('/doctor-reworked'):
             case pathname.includes('/clinic-manager'):
             case pathname.includes('/admin'):
+            case pathname.includes('/super-admin'):
                 return <ClinicOwnerHeader noClinicSelect={true} />
             case pathname.includes('/invoices/'):
                 return <div></div>

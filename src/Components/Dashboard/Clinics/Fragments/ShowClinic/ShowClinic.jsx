@@ -31,6 +31,7 @@ function ShowClinic () {
   }, []);
 
 
+
   const tabItems = [
     {
       label: `About Clinic`,
@@ -45,7 +46,7 @@ function ShowClinic () {
     {
       label: `Doctors`,
       key: 'doctors',
-      children: <ShowClinicDoctorsTab/>,
+      children: <ShowClinicDoctorsTab dataState={dataState}/>,
     },
   ];
 
@@ -126,6 +127,7 @@ function ShowClinic () {
                   size={'large'}
                   type="card"
                   items={tabItems}
+                  style={{width: '100%'}}
               />
             </Row>
           </div>

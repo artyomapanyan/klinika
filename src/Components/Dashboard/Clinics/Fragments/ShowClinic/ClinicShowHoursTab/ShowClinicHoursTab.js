@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {postResource, updateResource} from "../../../../../Functions/api_calls";
 import WorkingHours from "../../../../../Fragments/WorkingHours/WorkingHours";
 import ClinicShowWorkingHours from "./ClinicShowWorkingHours";
+import Preloader from "../../../../../Preloader";
 
 const resource = "Clinic";
 const service = 'telehealth'
@@ -44,8 +45,11 @@ function ShowClinicHoursTab({loadingState, workingHoursFooter}) {
   let type = "telehealth"
 
   return(
-      <div className={'add_edit_content'}>
-        <ClinicShowWorkingHours loading={loading} data={data} onFinish={onFinish} type={type} workingHoursFooter={workingHoursFooter}/>
+      <div className={'add_edit_content'} style={{width: '50%'}}>
+        {
+          loading ? <Preloader /> : <ClinicShowWorkingHours loading={loading} data={data} onFinish={onFinish} type={type} workingHoursFooter={workingHoursFooter}/>
+        }
+
       </div>
   )
 }

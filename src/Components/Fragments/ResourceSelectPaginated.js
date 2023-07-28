@@ -37,11 +37,17 @@ function ResourceSelectPaginated({
   const {data} = dataState;
 
     useEffect(()=>{
-        if(JSON.stringify(resourceParams)!==JSON.stringify(params)){
+        let needsUpdate = false
+        Object.keys(resourceParams).forEach(key=>{
+            if(resourceParams[key]!==params[key]){
+                needsUpdate = true
+
+            }
+        })
+        if(needsUpdate){
             setLocalData([])
             setParams(resourceParams)
         }
-
 
     },[resourceParams])
     useEffect(()=>{

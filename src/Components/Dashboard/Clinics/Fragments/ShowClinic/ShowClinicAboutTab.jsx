@@ -9,12 +9,12 @@ const ShowClinicAboutTab = ({ desc, companies }) => {
         <Title level={4}>Bio</Title>
         <Paragraph>{desc}</Paragraph>
       </div>
-      <div className="add_edit_content">
-        <Title level={4}>Specialties</Title>
-        <Paragraph>
+      {/*<div className="add_edit_content">*/}
+      {/*  <Title level={4}>Specialties</Title>*/}
+      {/*  <Paragraph>*/}
 
-        </Paragraph>
-      </div>
+      {/*  </Paragraph>*/}
+      {/*</div>*/}
       <div className="add_edit_content">
         <Title level={4}>Insurance Companies</Title>
         <Paragraph>

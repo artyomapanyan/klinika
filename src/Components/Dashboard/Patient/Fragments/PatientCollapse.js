@@ -27,7 +27,7 @@ function PatientCollapse({data}) {
                         </div>
                         <div>
                             <div className={'collapse_content_head'}>Appt Time/Date</div>
-                            <div className={'collapse_content_foot'}><span style={{fontWeight: 700}}>{dayjs(data?.booked_at?.iso_string).format('HH:mm')} PM</span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}</div>
+                            <div className={'collapse_content_foot'}><span style={{fontWeight: 700}}>{dayjs(data?.booked_at?.iso_string).format('HH:mm')} </span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}</div>
                         </div>
                         <div>
                             <div className={'collapse_content_head'}>Referring doctor</div>

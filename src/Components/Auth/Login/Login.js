@@ -82,8 +82,9 @@ function Login() {
                             case 'doctor':
                                 return navigate('/dashboard/doctor-reworked')
                             case 'super':
+                                return navigate('/dashboard/super-admin')
+                            case 'admin':
                                 return navigate('/dashboard/admin')
-
                             default:
                                 return  navigate('/dashboard')
 

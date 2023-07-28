@@ -1,29 +1,75 @@
-const ShowClinicDoctorsTab = ({ desc, companies }) => {
-  // const { Paragraph, Text } = Typography;
-  // const doctor = {
-  //   name: 'Lorem Ipsum',
-  //   image: 'https://randomuser.me/api/portraits/men/31.jpg',
-  //   doctorSpecialities: [
-  //     'Psychiatry',
-  //     'Neurosurgery',
-  //     'Vascular Surgery',
-  //   ],
-  // };
+import {Avatar, Button, Card, Form, Table, Typography} from "antd";
+import {t} from "i18next";
+import TableFilterElement from "../../../../Fragments/TableFilterElements/TableFilterElement";
+import DateParser from "../../../../Fragments/DateParser";
+import ResourceTable from "../../../../Fragments/ResourceTable";
+import React, {useEffect, useState} from "react";
+import {UserOutlined} from "@ant-design/icons";
+import {postResource} from "../../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import Preloader from "../../../../Preloader";
+
+const ShowClinicDoctorsTab = ({dataState}) => {
+    let token = useSelector((state) => state.auth.token);
+
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('ClinicDoctor', 'list', token, dataState?.id).then((response) => {
+            console.log(response, 'ffffddd')
+            setData(response.items?.map((el) => {
+               return {
+                   key: el.id,
+                   doctor: <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                           <div>
+                               <Avatar size={64} icon={<UserOutlined />} />
+                           </div>
+                           <div  style={{padding:10, minWidth: 150}}>{el.doctor.first} {el.doctor.last}</div>
+                       </div>,
+                   specialty: <div>{el?.specialties?.map((specialty, key) => {
+                           return<span key={key}><span style={{backgroundColor: '#d24a9a', color: '#ffffff', marginLeft: 5, padding: 1, borderRadius: 2}}>{specialty?.title}</span></span>
+                       })}
+                       </div>
+               }
+            }))
+            setLoading(false)
+        })
+    }, [])
+
+console.log(data)
+    const dataSource = [
+        {
+            key: '1',
+            doctor: 'Mike',
+            specialty: 32,
+
+        },
+
+    ];
+
+    const columns = [
+        {
+            title: 'Doctor',
+            dataIndex: 'doctor',
+            key: 'doctor',
+        },
+        {
+            title: 'Specialty',
+            dataIndex: 'specialty',
+            key: 'specialty',
+        },
+
+    ];
+
   return (
-    <div className="add_edit_content">
-      {/*<Card style={{ width: '100%', marginTop: 16 }}>*/}
-      {/*  <Card.Meta*/}
-      {/*    avatar={<Avatar src={doctor.image}/>}*/}
-      {/*    title={doctor.name}*/}
-      {/*    description={*/}
-      {/*      <Paragraph>*/}
-      {/*        {doctor?.doctorSpecialities?.map ((speciality, i) => {*/}
-      {/*          return <Text code key={i}>{speciality}</Text>;*/}
-      {/*        })}*/}
-      {/*      </Paragraph>*/}
-      {/*    }*/}
-      {/*  />*/}
-      {/*</Card>*/}
+    <div style={{width: '100%'}}>
+        {
+            loading ? <Preloader /> : <Table rowKey={e => e.id} dataSource={data} columns={columns} style={{width: '100%'}} pagination={false}/>
+        }
+
+
     </div>
   );
 };

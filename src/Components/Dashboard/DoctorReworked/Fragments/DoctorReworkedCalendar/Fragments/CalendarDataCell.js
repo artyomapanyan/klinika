@@ -4,18 +4,10 @@ import dayjs from "dayjs";
 import walking_man_icon from "../../../../../../dist/icons/walking_man_icon.png";
 import walking_man_black from "../../../../../../dist/icons/walking_man_black.png";
 import {InstagramOutlined} from "@ant-design/icons";
-import {useNavigate} from "react-router";
-import ResourceLinks from "../../../../../ResourceLinks";
 
-const resource = 'Appointment';
+
 function CalendarDataCell({data}) {
-    const navigate = useNavigate()
 
-    const toPatient = () => {
-        navigate(ResourceLinks[resource] + data?.appointmentData?.id+'/doctor')
-    }
-
-console.log(data, 'data')
 
     let time = (dayjs(data?.appointmentData?.booked_to?.iso_string) - dayjs(data?.appointmentData?.booked_at?.iso_string))/1000/60
 
@@ -23,7 +15,7 @@ console.log(data, 'data')
     console.log(time)
 
     return(
-        <div className={'appointment-container'} onClick={toPatient}
+        <div className={'appointment-container'}
             style={{padding: time < 60 ? 0 : 8}}
         >
             <div className={'appointment-item'}>

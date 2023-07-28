@@ -9,11 +9,14 @@ import dayjs from "dayjs";
 
 import {Spin} from "antd";
 import Resources from "../../../../../store/Resources";
+import ResourceLinks from "../../../../ResourceLinks";
+import {useNavigate} from "react-router";
 
 
-
+const resource = 'Appointment';
 function DoctorReworkedCalendar() {
     let token = useSelector((state) => state.auth.token);
+    const navigate = useNavigate()
 
     const [date, setDate] = useState({
         from: dayjs().format('YYYY-MM-DD'),
@@ -69,7 +72,7 @@ function DoctorReworkedCalendar() {
                     }}
                     defaultCurrentDate={date.from}
 
-                    appointmentRender={(e) => <CalendarDataCell data={e}/>}
+                    appointmentRender={(e) => <CalendarDataCell data={e} />}
                     views={[{
                         type: 'day', name: '3 Days', intervalCount: 3,
                     }, 'week']}
@@ -81,7 +84,7 @@ function DoctorReworkedCalendar() {
                         allowDragging: false,
                         allowTimeZoneEditing: false,
                     }}
-                    onAppointmentClick={(e) => e.cancel = true}
+                    onAppointmentClick={(e) => navigate(ResourceLinks[resource] + e?.appointmentData?.id+'/doctor')}
                     onAppointmentDblClick={(e) => e.cancel = true}
                     onCellClick={(e) => e.cancel = true}
                     onAppointmentTooltipShowing={(e) => e.cancel = true}

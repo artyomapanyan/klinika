@@ -334,7 +334,8 @@ function AppLayout(){
                     <Route path={'clinics-owner'} element={<AuthCheck roleKey={'clinic-owner'} ><ClinicsOwner /></AuthCheck>}/>
                     <Route path={'clinic-manager'} element={<AuthCheck roleKey={'clinic-manager'} ><ClinicManager /></AuthCheck>}/>
                     <Route path={'doctor-reworked'} element={<AuthCheck roleKey={'doctor'} ><DoctorReworked /></AuthCheck>}/>
-                    <Route path={'admin'} element={<AuthCheck roleKey={'super'} ><SuperAdmin /></AuthCheck>}/>
+                    <Route path={'super-admin'} element={<AuthCheck roleKey={'super'} ><SuperAdmin /></AuthCheck>}/>
+                    <Route path={'admin'} element={<AuthCheck roleKey={'admin'} ><SuperAdmin /></AuthCheck>}/>
                     <Route path={'users/update-self'} element={<UpdateSelf/>}></Route>
                     <Route path={'notifications'} element={<AllNotifications/>}></Route>
                     <Route path={'profile'} element={<DoctorProfile/>}></Route>

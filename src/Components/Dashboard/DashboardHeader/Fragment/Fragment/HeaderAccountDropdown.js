@@ -49,7 +49,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
                     case 'doctor':
                         return navigate('/dashboard/doctor-reworked')
                     case 'super':
-                        return navigate('/dashboard/admin')
+                        return navigate('/dashboard/super-admin')
                     case 'admin':
                         return navigate('/dashboard/admin')
 
@@ -66,11 +66,11 @@ function HeaderAccountDropdown({setAuthOpen}) {
 
 
     const onSetings = () => {
-        if(auth?.selected_role?.key === 'doctor') {
-            navigate(`profile`)
-        } else {
+        // if(auth?.selected_role?.key === 'doctor') {
+        //     navigate(`profile`)
+        // } else {
             navigate(`users/update-self`)
-        }
+        //}
 
     }
 
