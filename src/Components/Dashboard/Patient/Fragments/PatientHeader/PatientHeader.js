@@ -25,8 +25,8 @@ function PatientHeader({data}) {
 
     return (
         <div className={'patient_head_div'}>
-            <Row>
-                <Col lg={7} className={'col'}>
+            <div style={{display: 'flex', justifyContent: 'space-between', }}>
+                <div >
                     <div className={'avatar_div'}>
 
                             <Avatar style={{borderRadius: 8}} shape="square" size={110} icon={<UserOutlined />} />
@@ -39,9 +39,13 @@ function PatientHeader({data}) {
 
                     </div>
 
-                </Col>
+                </div>
 
-                <Col lg={8} className={'col'}>
+                <div style={{borderRight: '1px solid #f0eded'}}></div>
+
+
+
+                <div >
                     <div className={'avatar_div'}>
 
                             <div className={'patient_head_text'} style={{height: 110, justifyContent: "space-between"}}>
@@ -66,11 +70,14 @@ function PatientHeader({data}) {
 
 
                     </div>
-                </Col>
-                <Col lg={9} className={'col'}>
-                    <Row>
-                        <Col lg={17}>
-                            <div className={'patient_head_text'} style={{margin:24, justifyContent: 'space-between', height: 110}}>
+                </div>
+
+                <div style={{borderRight: '1px solid #f0eded'}}></div>
+
+
+
+                        <div>
+                            <div className={'patient_head_text'} style={{ justifyContent: 'space-between', height: 110}}>
                                     <div className={'phone_mail'}>
                                         <img alt={'icons'} src={phoneWithFrame}/>
 
@@ -90,13 +97,13 @@ function PatientHeader({data}) {
 
                                     </div>
                             </div>
-                        </Col>
-                        <Col lg={7}>
+                        </div>
+                        <div>
                             <div className={'private_note_div'} onClick={showModal}>
                                 <div align={'center'}>
                                     <div className={'private_note_number'}>
                                         {JSON.parse(data?.private_notes)?.length ?? 0}
-                                        <img alt={'icons'} src={noteBlack} style={{marginLeft: 9}}/>
+                                        <img alt={'icons'} src={noteBlack} style={{margin: '0 9px'}}/>
                                     </div>
 
                                 </div>
@@ -106,10 +113,11 @@ function PatientHeader({data}) {
                                 <PrivateNotesModal data={data}/>
 
                             </Modal>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
+                        </div>
+
+
+                </div>
+
         </div>
     )
 }

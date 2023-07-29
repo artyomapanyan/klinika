@@ -80,7 +80,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
             <div>
                     <div className={"head_account_drop"}>
 
-                        <h3 style={{fontWeight: 700}}>Select Role :</h3>
+                        <h3 style={{fontWeight: 700}}>{t("Select Role :")}</h3>
 
                         {roles.map((el, i) =>{
                             return<Button key={el?.id} className={'btn_roles'} type ={auth?.selected_role?.id===el?.id?'primary':'default'}  onClick={()=>onRoleChange(el)} >

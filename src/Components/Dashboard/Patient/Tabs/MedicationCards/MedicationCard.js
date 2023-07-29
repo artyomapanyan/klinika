@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 
 function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true}) {
     let token = useSelector((state) => state?.auth?.token);
+    let language = useSelector((state) => state.app.current_locale)
     const deletePrescription = () => {
 
         deleteResource('prescriptions', el.id, token).then(resp => {
@@ -41,7 +42,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
 
 
                     <Row>
-                        <Col lg={7} align={'left'}>
+                        <Col lg={7} align={language === 'en' ? 'left' : 'right'}>
                             <div className={"medication_card_text1"}>Frequency</div>
                             <div className={"medication_card_text2"}>{el?.frequency} times/day</div>
                         </Col>
@@ -56,7 +57,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
                             <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
                         </Col>
 
-                        <Col lg={7} align={'right'}>
+                        <Col lg={7} align={language === 'en' ? 'right' : 'left'}>
                             <div className={"medication_card_text1"}>Duration</div>
                             <div className={"medication_card_text2"}>{el?.duration} days</div>
                         </Col>

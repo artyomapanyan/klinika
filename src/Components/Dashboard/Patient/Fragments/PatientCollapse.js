@@ -3,8 +3,11 @@ import {Collapse, Tag} from 'antd';
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
 import arrowUpPurple from "../../../../dist/icons/arrow-up-purple.svg";
 import dayjs from "dayjs";
+import {useSelector} from "react-redux";
 const { Panel } = Collapse;
 function PatientCollapse({data}) {
+    let language = useSelector((state) => state.app.current_locale)
+
     const onChange = () => {
 
     };
@@ -26,8 +29,10 @@ function PatientCollapse({data}) {
                             <div className={'collapse_content_foot'}>{dayjs(data?.created_at?.iso_string).format('DD MMMM YY')}</div>
                         </div>
                         <div>
-                            <div className={'collapse_content_head'}>Appt Time/Date</div>
-                            <div className={'collapse_content_foot'}><span style={{fontWeight: 700}}>{dayjs(data?.booked_at?.iso_string).format('HH:mm')} </span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}</div>
+                            <div className={'collapse_content_head'}>{language === 'en' ? 'Appt Time/Date' : 'Date/Appt Time'}</div>
+                            <div className={'collapse_content_foot'}>
+                                <span style={{fontWeight: 700}}>{dayjs(data?.booked_at?.iso_string).format('HH:mm')} </span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}
+                            </div>
                         </div>
                         <div>
                             <div className={'collapse_content_head'}>Referring doctor</div>
