@@ -9,6 +9,7 @@ import ClinicTabBars from "../Clinics/Fragments/ClinicTabBars";
 
 import DoctorGeneralInfo from "./DoctorGeneralInfo/DoctorGeneralInfo";
 import {useSelector} from "react-redux";
+import DoctorWorkingHours from "./DoctorWorkingHours/DoctorWorkingHours";
 
 
 let resource = 'DoctorUpdateProfile';
@@ -106,7 +107,7 @@ function DoctorProfile() {
                 </items>
                 <items key={'working_hours'} tab={'Working hours'} >
                     a
-                    {/*<ClinicDoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>*/}
+                    <DoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>
                 </items>
 
             </ClinicTabBars>}
