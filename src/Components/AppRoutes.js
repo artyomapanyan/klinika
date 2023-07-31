@@ -10,7 +10,7 @@ import AllOffers from "./AllOffers/AllOffers";
 import OfferBook from "./AllOffers/OfferBook/OfferBook";
 import ThankYouOffer from "./AllOffers/ThankYouOffer/ThankYouOffer";
 import OfferMap from "./AllOffers/ThankYouOffer/Fragments/OfferMap";
-import UpdateSelf from "./Auth/UpdateSelf";
+
 
 
 function AppRoutes(){

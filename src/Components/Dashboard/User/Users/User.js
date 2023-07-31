@@ -73,12 +73,11 @@ function User() {
         item.id = item.phone_code
         return [name,item]
     }
-
-    console.log(data, 'dddddddddddddd')
+console.log(data)
 
     return(
         <div>
-            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing User - ${data?.first}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new User`)}</h3>}
+            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing User - ${data?.first} ${data?.last}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new User`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -110,6 +109,12 @@ function User() {
                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                initialValue={data?.gender}
                                initialData={Resources?.Gender}
+                    />
+                    <FormInput label={t('Insurance company')} name={'insurance_company_id'} inputType={'resourceSelect'}
+                               initialValue={data?.insurance_company.id}
+                               initialData={data?.insurance_company ? [data?.insurance_company] : []}
+                               resource={'InsuranceCompany'}
+                               resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
                     />
                     <FormInput label={t('Nationality number')} name={'nationality_number'}  initialValue={data?.nationality_number} rules={[{required: true}]} />
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}

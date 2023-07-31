@@ -41,7 +41,7 @@ function DoctorRewProgress() {
                         {
                             data.percent_change !== 0 ? <img alt={'icons'} src={data.percent_change > 0 ? arrowGreen : arrowRed}/> : <div></div>
                         }
-                         <span style={{fontWeight: 700, marginLeft: 5}}>{data.percent_change?.toFixed(1)}%</span>
+                         <span style={{fontWeight: 700, margin: 5}}>{data.percent_change?.toFixed(1)}%</span>
                     </div>
                 </Space>
 

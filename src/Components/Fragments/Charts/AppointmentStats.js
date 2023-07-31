@@ -256,7 +256,7 @@ function AppointmentStats(){
             <div>
                 <div className={'switches_div'}>
 
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex', margin: ' 0 20px'}}>
                         <div className={'switc_div1'}>
                             <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)}  /><span className={'text_switch'}>Canceled</span>
                         </div>

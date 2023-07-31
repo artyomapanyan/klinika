@@ -7,16 +7,18 @@ import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 
-import {Spin} from "antd";
+import {ConfigProvider, Spin} from "antd";
 import Resources from "../../../../../store/Resources";
 import ResourceLinks from "../../../../ResourceLinks";
 import {useNavigate} from "react-router";
+
 
 
 const resource = 'Appointment';
 function DoctorReworkedCalendar() {
     let token = useSelector((state) => state.auth.token);
     const navigate = useNavigate()
+    let language = useSelector((state) => state.app.current_locale)
 
     const [date, setDate] = useState({
         from: dayjs().format('YYYY-MM-DD'),
@@ -51,12 +53,17 @@ function DoctorReworkedCalendar() {
     return (<div className={'dr_reworked_not'}>
             <DoctorReworkedCalendarHeader setDate={setDate}/>
 
+        <ConfigProvider
+            direction={'ltr'}
+        >
+
+
+
             <div className={'dr_reworked_calendar_div'}>
                 <Spin spinning={loading}>
                     <Scheduler
                     dataSource={appointments}
                     height={500}
-
                     currentView={view}
                     onCurrentDateChange={(e) => {
                         setDate(() => {
@@ -90,6 +97,7 @@ function DoctorReworkedCalendar() {
                     onAppointmentTooltipShowing={(e) => e.cancel = true}
                     onAppointmentFormOpening={e => e.cancel = true}
                     showAllDayPanel={false}
+                    data
 
                 >
 
@@ -98,7 +106,7 @@ function DoctorReworkedCalendar() {
 
 
             </div>
-
+        </ConfigProvider>
         </div>)
 }
 

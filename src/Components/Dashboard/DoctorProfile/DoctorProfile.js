@@ -104,10 +104,10 @@ function DoctorProfile() {
                 <items key={'general_information'} tab={'General information'}  >
                     <DoctorGeneralInfo formRef={formRefs.general_information} data={data} saveLoading={saveLoading} setSaveLoading={setSaveLoading}/>
                 </items>
-                {/*<items key={'working_hours'} tab={'Working hours'} >*/}
-                {/*    aaaaaaa*/}
-                {/*    /!*<ClinicDoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>*!/*/}
-                {/*</items>*/}
+                <items key={'working_hours'} tab={'Working hours'} >
+                    a
+                    {/*<ClinicDoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>*/}
+                </items>
 
             </ClinicTabBars>}
 

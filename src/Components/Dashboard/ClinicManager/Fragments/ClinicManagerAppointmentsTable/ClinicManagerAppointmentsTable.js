@@ -23,6 +23,9 @@ import api from "../../../../../Api";
 import {MedicineBoxOutlined} from "@ant-design/icons";
 import ResourceLinks from "../../../../ResourceLinks";
 import {useNavigate} from "react-router";
+import TableFilterElement from "../../../../Fragments/TableFilterElements/TableFilterElement";
+import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_purpule_icon.png";
+import search_icon_darkPurpole from "../../../../../dist/icons/search_icon_darkPurpole.png";
 
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
@@ -156,8 +159,10 @@ function ClinicManagerAppointmentsTable() {
                        // noPagination={true}
                         tableColumns={[{
                             title: 'Patient',
-                            dataIndex: 'patient',
-                            key: 'patient',
+                            dataIndex: 'patient_name',
+                            key: 'patient_name',
+                            filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                            filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                             render: (e, record) => <div style={{fontWeight: 700, fontSize: 14, fontFamily: 'Roboto'}}>{record?.patient?.first} {record?.patient?.last}</div>
                         },
                             {
