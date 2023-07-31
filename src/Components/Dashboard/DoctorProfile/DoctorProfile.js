@@ -38,43 +38,57 @@ function DoctorProfile() {
     const [saveLoading, setSaveLoading] = useState(false)
 
 
-    const {loadingState, dataState} = useGetResourceSingle('ClinicDoctor', params.id,)
+    const {loadingState, dataState} = useGetResourceSingle('ClinicDoctor', 207,)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const handleChange = (e) => {
         setTab(e)
 
     }
-    // const handleSave = ()=>{
-    //     console.log(tab,formRefs)
-    //     if(formRefs[tab].current){
-    //         console.log('sdasd')
-    //         formRefs[tab].current.validateFields().then((e,d)=>{
-    //             console.log(e.errorFields,d)
-    //         }).catch(e=>{
-    //             console.log(e)
-    //         })
-    //     }else{
-    //         console.log('sdasd')
-    //         Promise.all(Object.keys(formRefs[tab]).map(refKey=>formRefs[tab][refKey].current.submit())).then(datas=>{
-    //             console.log(datas)
-    //         })
-    //
-    //     }
-    //
-    // }
 
-    const handleSave = () => {
-        setSaveLoading(true)
-        let values = formRefs?.general_information?.current?.getFieldValue();
-        updateResource(resource, '', values, token).then(response => {
-            if(response?.id){
+    console.log(tab, 'tab')
+    const handleSave = ()=>{
+        console.log(tab,formRefs)
+        // if(formRefs[tab].current){
+        //     console.log('sdasd')
+        //     formRefs[tab].current.validateFields().then((e,d)=>{
+        //         console.log(e.errorFields,d)
+        //     }).catch(e=>{
+        //         console.log(e)
+        //     })
+        // }else{
+        //     console.log('sdasd')
+        //     Promise.all(Object.keys(formRefs[tab]).map(refKey=>formRefs[tab][refKey].current.submit())).then(datas=>{
+        //         console.log(datas)
+        //     })
+        //
+        // }
 
+            if(tab === 'general_information1') {
+                setSaveLoading(true)
+                let values = formRefs?.general_information?.current?.getFieldValue();
+                updateResource(resource, '', values, token).then(response => {
+                    if(response?.id){
+
+                    }
+                }).finally(() => {
+                    setSaveLoading(false)
+                })
             }
-        }).finally(() => {
-            setSaveLoading(false)
-        })
+
     }
+
+    // const handleSave = () => {
+    //     setSaveLoading(true)
+    //     let values = formRefs?.general_information?.current?.getFieldValue();
+    //     updateResource(resource, '', values, token).then(response => {
+    //         if(response?.id){
+    //
+    //         }
+    //     }).finally(() => {
+    //         setSaveLoading(false)
+    //     })
+    // }
 
     const onBack = () => {
         navigate(-1)

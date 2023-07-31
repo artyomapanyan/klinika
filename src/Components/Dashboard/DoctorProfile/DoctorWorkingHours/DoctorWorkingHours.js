@@ -4,6 +4,7 @@ import {postResource, updateResource} from "../../../Functions/api_calls";
 import Resources from "../../../../store/Resources";
 import Preloader from "../../../Preloader";
 import {Col, Row} from "antd";
+import NewClinicDoctorWorkingHour from "./WorkingHoursDrProfile";
 
 function DoctorWorkingHours({data, workingHRefs}) {
     const token = useSelector((state) => state.auth.token);
