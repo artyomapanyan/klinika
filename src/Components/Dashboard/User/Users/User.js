@@ -111,7 +111,7 @@ console.log(data)
                                initialData={Resources?.Gender}
                     />
                     <FormInput label={t('Insurance company')} name={'insurance_company_id'} inputType={'resourceSelect'}
-                               initialValue={data?.insurance_company.id}
+                               initialValue={data?.insurance_company?.id}
                                initialData={data?.insurance_company ? [data?.insurance_company] : []}
                                resource={'InsuranceCompany'}
                                resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}

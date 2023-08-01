@@ -38,69 +38,69 @@ function DoctorProfile() {
     const [saveLoading, setSaveLoading] = useState(false)
 
 
-    const {loadingState, dataState} = useGetResourceSingle('ClinicDoctor', 207,)
-    const {data, setData} = dataState;
+     const {loadingState, dataState} = useGetResourceSingle('ClinicDoctor', params.id,)
+     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const handleChange = (e) => {
         setTab(e)
 
     }
 
-    const handleSave = ()=>{
-        console.log(tab,formRefs)
-        // if(formRefs[tab].current){
-        //     console.log('sdasd')
-        //     formRefs[tab].current.validateFields().then((e,d)=>{
-        //         console.log(e.errorFields,d)
-        //     }).catch(e=>{
-        //         console.log(e)
-        //     })
-        // }else{
-        //     console.log('sdasd')
-        //     Promise.all(Object.keys(formRefs[tab]).map(refKey=>formRefs[tab][refKey].current.submit())).then(datas=>{
-        //         console.log(datas)
-        //     })
-        //
-        // }
-
-            if(tab === 'general_information') {
-                setSaveLoading(true)
-                let values = formRefs?.general_information?.current?.getFieldValue();
-                updateResource(resource, '', values, token).then(response => {
-                    if(response?.id){
-
-                    }
-                }).finally(() => {
-                    setSaveLoading(false)
-                })
-            } else if (tab === 'working_hours'){
-                setSaveLoading(true)
-                    Promise.all(Object.keys(formRefs[tab]).map(refKey=>formRefs[tab][refKey].current.submit())).then(datas=>{
-
-                        updateResource('ClinicDoctorWorkingHours', data?.doctor?.id, datas, token,).then(response => {
-
-                        }).finally(() => {
-
-                        })
-                        setSaveLoading(false)
-                    })
-            }
-
-    }
-
-    console.log(formRefs?.working_hours, 'ref')
-
-    // const handleSave = () => {
-    //     setSaveLoading(true)
-    //     let values = formRefs?.general_information?.current?.getFieldValue();
-    //     updateResource(resource, '', values, token).then(response => {
-    //         if(response?.id){
+    // const handleSave = ()=>{
     //
+    //     // if(formRefs[tab].current){
+    //     //     console.log('sdasd')
+    //     //     formRefs[tab].current.validateFields().then((e,d)=>{
+    //     //         console.log(e.errorFields,d)
+    //     //     }).catch(e=>{
+    //     //         console.log(e)
+    //     //     })
+    //     // }else{
+    //     //     console.log('sdasd')
+    //     //     Promise.all(Object.keys(formRefs[tab]).map(refKey=>formRefs[tab][refKey].current.submit())).then(datas=>{
+    //     //         console.log(datas)
+    //     //     })
+    //     //
+    //     // }
+    //
+    //         if(tab === 'general_information') {
+    //             setSaveLoading(true)
+    //             let values = formRefs?.general_information?.current?.getFieldValue();
+    //             updateResource(resource, '', values, token).then(response => {
+    //                 if(response?.id){
+    //
+    //                 }
+    //             }).finally(() => {
+    //                 setSaveLoading(false)
+    //             })
+    //         } else if (tab === 'working_hours'){
+    //             setSaveLoading(true)
+    //                 Promise.all(Object.keys(formRefs[tab]).map(refKey=>formRefs[tab][refKey].current.submit())).then(datas=>{
+    //
+    //                     updateResource('ClinicDoctorWorkingHours', data?.doctor?.id, datas, token,).then(response => {
+    //
+    //                     }).finally(() => {
+    //
+    //                     })
+    //                     setSaveLoading(false)
+    //                 })
     //         }
-    //     }).finally(() => {
-    //         setSaveLoading(false)
-    //     })
+    //
     // }
+
+
+
+    const handleSave = () => {
+        setSaveLoading(true)
+        let values = formRefs?.general_information?.current?.getFieldValue();
+        updateResource(resource, '', values, token).then(response => {
+            if(response?.id){
+
+            }
+        }).finally(() => {
+            setSaveLoading(false)
+        })
+    }
 
     const onBack = () => {
         navigate(-1)
@@ -131,9 +131,9 @@ function DoctorProfile() {
                 <items key={'general_information'} tab={'General information'}  >
                     <DoctorGeneralInfo formRef={formRefs.general_information} data={data} saveLoading={saveLoading} setSaveLoading={setSaveLoading}/>
                 </items>
-                <items key={'working_hours'} tab={'Working hours'} >
-                    <DoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>
-                </items>
+                {/*<items key={'working_hours'} tab={'Working hours'} >*/}
+                {/*    <DoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>*/}
+                {/*</items>*/}
 
             </ClinicTabBars>}
 

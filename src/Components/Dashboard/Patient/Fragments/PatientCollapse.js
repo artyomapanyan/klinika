@@ -31,7 +31,7 @@ function PatientCollapse({data}) {
                         <div>
                             <div className={'collapse_content_head'}>{language === 'en' ? 'Appt Time/Date' : 'Date/Appt Time'}</div>
                             <div className={'collapse_content_foot'}>
-                                <span style={{fontWeight: 700}}>{dayjs(data?.booked_at?.iso_string).format('HH:mm')} </span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}
+                                <span style={{fontWeight: 700}}>{dayjs(data?.booked_at?.iso_string).format('h:mm A')} </span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}
                             </div>
                         </div>
                         <div>

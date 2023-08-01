@@ -34,7 +34,7 @@ function CalendarDataCell({data}) {
                     </div>
                     <div style={{display: time < 60 ? 'flex' : 'block', gap: time < 60 ? 10 : 0}}>
                         <div className={'appointment_time'} style={{color: [3,4].includes(data.appointmentData.status) ? '#42394D' : '#ffffff', }}>
-                            {dayjs(data.appointmentData.booked_at.iso_string).format('HH:mm')} - {dayjs(data.appointmentData.booked_to.iso_string).format('HH:mm A')}
+                            {dayjs(data.appointmentData.booked_at.iso_string).format('h:mm')} - {dayjs(data.appointmentData.booked_to.iso_string).format('h:mm A')}
                         </div>
                         <div className={'status'} style={{color: [3,4].includes(data.appointmentData.status)? '#42394D' : '#ffffff', fontSize: time < 60 ? 12 : 14}}>
                             {data.appointmentData.service_name}

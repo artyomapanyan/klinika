@@ -8,18 +8,17 @@ import calendar_black_icon from "../../../../dist/icons/calendar_black_icon.png"
 import dayjs from "dayjs";
 import Resources from "../../../../store/Resources";
 import React, {useEffect, useState} from "react";
-import {createResource, postResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
+import {postResource, updateResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
-import {useParams} from "react-router";
+
 import Preloader from "../../../Preloader";
 import DoctorProfileImage from "../DoctorProfileImage/DoctorProfileImage";
 
 
 let resource = 'DoctorUpdateProfile';
 function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
-    const params = useParams();
+
     let token = useSelector((state) => state.auth.token);
-    //let data = useSelector((state) => state.auth.user);
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
     const [autoFillState, setAutoFillState] = useState(true);
@@ -90,12 +89,12 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                     ref={formRef}
                     onFinish={onFinish}
                 >
-                    <Row gutter={80}>
-                        <Col lg={3}>
+                    <div className={'general_info_form'}>
+                        <div >
                             <DoctorProfileImage formRef={formRef}  />
 
-                        </Col>
-                        <Col lg={21} className={'clinics_select_col'}>
+                        </div>
+                        <div className={'clinics_select_col'}>
 
                             <Row gutter={20}>
                                 <Col lg={6}>
@@ -167,20 +166,23 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                 </Col>
 
                                 <Col lg={16} className={'doc_profile_specialties'}>
-                                    <FormInput label={t('')} name={'specialities'}
-                                               inputProps={{mode: 'multiple'}}
-                                               suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Specialties </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
+                                    <div style={{width: '100%'}}>
+                                        <FormInput label={t('')} name={'specialities'}
+                                                   inputProps={{mode: 'multiple'}}
+                                                   suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Specialties </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
 
-                                               inputType={'resourceSelect'}
-                                               rules={[{required: true}]}
-                                               initialValue={data?.specialties?.map(e=>e?.id)}
-                                               initialData={data?.specialties ??[]}
-                                               resource={'Taxonomy'}
-                                               resourceParams={{
-                                                   type: Resources.TaxonomyTypes.SPECIALTY,
-                                                   has_parent: 0
-                                               }}
-                                    />
+                                                   inputType={'resourceSelect'}
+                                                   rules={[{required: true}]}
+                                                   initialValue={data?.specialties?.map(e=>e?.id)}
+                                                   initialData={data?.specialties ??[]}
+                                                   resource={'Taxonomy'}
+                                                   resourceParams={{
+                                                       type: Resources.TaxonomyTypes.SPECIALTY,
+                                                       has_parent: 0
+                                                   }}
+                                        />
+                                    </div>
+
                                 </Col>
                             </Row>
                             <Row gutter={20}>
@@ -228,9 +230,9 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
 
 
 
-                        </Col>
+                        </div>
 
-                    </Row>
+                    </div>
 
 
                 </Form>

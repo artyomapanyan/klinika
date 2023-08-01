@@ -51,12 +51,12 @@ export default {
             label: t(`Requests`),
             permission:'Report'
         },
-        {
-            icon:<img alt={'icons'} src={dash4}/>,
-            key: 'users',
-            label: t(`Users`),
-            permission:'User'
-        },
+        // {
+        //     icon:<img alt={'icons'} src={dash4}/>,
+        //     key: 'users',
+        //     label: t(`Users`),
+        //     permission:'User'
+        // },
     ],
     'clinic-owner': [
         {
@@ -94,12 +94,12 @@ export default {
             label: t(`Requests`),
             permission:'Report'
         },
-        {
-            icon:<img alt={'icons'} src={dash4}/>,
-            key: 'users',
-            label: t(`Users`),
-            permission:'User'
-        },
+        // {
+        //     icon:<img alt={'icons'} src={dash4}/>,
+        //     key: 'users',
+        //     label: t(`Users`),
+        //     permission:'User'
+        // },
     ],
     'doctor': [
         {
