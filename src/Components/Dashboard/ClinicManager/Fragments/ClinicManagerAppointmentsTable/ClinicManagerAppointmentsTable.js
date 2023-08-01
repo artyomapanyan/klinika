@@ -13,7 +13,7 @@ import Resource from "../../../../../store/Resources";
 import {CanceledContent} from "../../../Appointments/StatusModalForms/CanceledContent";
 import {FinishedContent} from "../../../Appointments/StatusModalForms/FinishedContent";
 import {RascheduledContent} from "../../../Appointments/StatusModalForms/RascheduledContent";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {postResource} from "../../../../Functions/api_calls";
 import {Confirmed} from "../../../Appointments/StatusModalForms/Confirmed";
 import Preloader from "../../../../Preloader";
@@ -30,13 +30,15 @@ import search_icon_darkPurpole from "../../../../../dist/icons/search_icon_darkP
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
     let token = useSelector((state) => state.auth.token);
-
+    let ascDesc = useSelector((state) => state.ascDesc);
+    let dispatch = useDispatch()
     const navigate = useNavigate();
     const [dateWeek, setDateWeek] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
     const [pdfState,setPdfState] = useState(false)
+    const [sort,setSort] = useState('descend')
 
 
     const onStatusChange = (key,record)=>{
@@ -104,7 +106,7 @@ function ClinicManagerAppointmentsTable() {
 
     }
 
-
+console.log(ascDesc, 'ddd')
     return (
         <div className={'table_conteiner'}>
             {loading ? <Preloader/> :  <Spin spinning={loading}>
@@ -170,6 +172,7 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'phone',
                                 key: 'phone',
                                 render:(e, record) => {
+
                                     return <div>{record?.patient?.phone_number}</div>
                                 }
                             },
@@ -193,8 +196,27 @@ function ClinicManagerAppointmentsTable() {
                                 title: 'Date',
                                 dataIndex: 'booked_at',
                                 key: 'booked_at',
-                                sorter:true,
-                                defaultSortOrder:'descend',
+                                sorter: {
+
+                                    compare: (a, b, c) => {
+                                        console.log(c, 'c')
+                                       if(c === 'ascend') {
+                                           dispatch({
+                                               type: 'ASC_DESC',
+                                               payload: 'ascend'
+                                           })
+                                       } else {
+                                           dispatch({
+                                               type: 'ASC_DESC',
+                                               payload: 'descend'
+                                           })
+                                       }
+
+                                       return a.math - b.math
+                                    },
+
+                                },
+                                defaultSortOrder: 'ascend ',
                                 render:(e, record) => {
                                     return <div className={'table_bold_text'}>{dayjs(record?.booked_at?.iso_string).format('DD.MM.YY')}</div>
                                 }

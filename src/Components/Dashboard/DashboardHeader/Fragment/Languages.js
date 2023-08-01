@@ -5,11 +5,13 @@ import {changeLanguage} from "i18next";
 import Eglend from "../../../../dist/Img/Eglend.png";
 import Arabia from "../../../../dist/Img/Arabia.png";
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
+import {postResource} from "../../../Functions/api_calls";
 
 
 function Languages() {
     //let {supported_locales,current_locale} = useSelector((state) => state?.app);
     let lngs = useSelector((state) => state?.app?.current_locale);
+    const auth = useSelector(state => state.auth)
     let dispatch = useDispatch()
     // const languageChange = (value) => {
     //     changeLanguage(value)
@@ -38,6 +40,9 @@ function Languages() {
             type:'LANGUAGE_STATE',
             payload:key
         })
+        // postResource('Auth','switchRole', auth.token,null,{role_id:auth?.selected_role?.id}).then((response) => {
+        //     console.log(response, 'o')
+        // })
         window.location.reload()
     };
 

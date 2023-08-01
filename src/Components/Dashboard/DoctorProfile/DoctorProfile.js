@@ -46,7 +46,6 @@ function DoctorProfile() {
 
     }
 
-    console.log(tab, 'tab')
     const handleSave = ()=>{
         console.log(tab,formRefs)
         // if(formRefs[tab].current){
@@ -64,7 +63,7 @@ function DoctorProfile() {
         //
         // }
 
-            if(tab === 'general_information1') {
+            if(tab === 'general_information') {
                 setSaveLoading(true)
                 let values = formRefs?.general_information?.current?.getFieldValue();
                 updateResource(resource, '', values, token).then(response => {
@@ -74,9 +73,22 @@ function DoctorProfile() {
                 }).finally(() => {
                     setSaveLoading(false)
                 })
+            } else if (tab === 'working_hours'){
+                setSaveLoading(true)
+                    Promise.all(Object.keys(formRefs[tab]).map(refKey=>formRefs[tab][refKey].current.submit())).then(datas=>{
+
+                        updateResource('ClinicDoctorWorkingHours', data?.doctor?.id, datas, token,).then(response => {
+
+                        }).finally(() => {
+
+                        })
+                        setSaveLoading(false)
+                    })
             }
 
     }
+
+    console.log(formRefs?.working_hours, 'ref')
 
     // const handleSave = () => {
     //     setSaveLoading(true)
@@ -120,7 +132,6 @@ function DoctorProfile() {
                     <DoctorGeneralInfo formRef={formRefs.general_information} data={data} saveLoading={saveLoading} setSaveLoading={setSaveLoading}/>
                 </items>
                 <items key={'working_hours'} tab={'Working hours'} >
-                    a
                     <DoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>
                 </items>
 

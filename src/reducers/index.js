@@ -5,7 +5,8 @@ import app from "./app";
 import publicClinic from "./publicClinic";
 import owner from "./owner";
 import dashboardMenuState from "./dashboardMenuState";
+import ascDesc from "./ascDesc";
 
 export default combineReducers({
-    auth,  globalState, app, publicClinic, owner, dashboardMenuState
+    auth,  globalState, app, publicClinic, owner, dashboardMenuState, ascDesc
 })

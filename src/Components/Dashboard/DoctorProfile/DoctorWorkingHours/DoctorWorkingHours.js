@@ -39,6 +39,7 @@ function DoctorWorkingHours({data, workingHRefs}) {
         }
     }
 
+    console.log(workingHRefs, 'rrrrrrrrrrrr')
 
     return (
         <div style={{margin: '24px 80px'}}>

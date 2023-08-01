@@ -34,6 +34,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
     const onRoleChange = (el) => {
         setLoading(true)
         postResource('Auth','switchRole', auth.token,null,{role_id:el.id}).then((response)=>{
+
             dispatch({
                 type: 'AUTH',
                 payload: response
