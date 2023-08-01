@@ -47,7 +47,8 @@ function ResourceTable ({
                             containermargin=false,
                             andStatus=false,
                             newDelete=false,
-                            invoiceSwitches=false
+                            invoiceSwitches=false,
+    updateTable = 0
                         }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
@@ -81,6 +82,9 @@ function ResourceTable ({
 
     }
 
+    useEffect(()=>{
+        setParams({...params})
+    },[updateTable])
 
 
 

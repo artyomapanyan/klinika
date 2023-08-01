@@ -13,32 +13,27 @@ import Resource from "../../../../../store/Resources";
 import {CanceledContent} from "../../../Appointments/StatusModalForms/CanceledContent";
 import {FinishedContent} from "../../../Appointments/StatusModalForms/FinishedContent";
 import {RascheduledContent} from "../../../Appointments/StatusModalForms/RascheduledContent";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {postResource} from "../../../../Functions/api_calls";
 import {Confirmed} from "../../../Appointments/StatusModalForms/Confirmed";
-import Preloader from "../../../../Preloader";
 import ClinicManagerTableHead from "./Fregment/ClinicManagerTableHead";
 import axios from "axios";
 import api from "../../../../../Api";
-import {MedicineBoxOutlined} from "@ant-design/icons";
 import ResourceLinks from "../../../../ResourceLinks";
 import {useNavigate} from "react-router";
 import TableFilterElement from "../../../../Fragments/TableFilterElements/TableFilterElement";
-import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_purpule_icon.png";
 import search_icon_darkPurpole from "../../../../../dist/icons/search_icon_darkPurpole.png";
 
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
     let token = useSelector((state) => state.auth.token);
-    let ascDesc = useSelector((state) => state.ascDesc);
-    let dispatch = useDispatch()
     const navigate = useNavigate();
     const [dateWeek, setDateWeek] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
     const [pdfState,setPdfState] = useState(false)
-    const [sort,setSort] = useState('descend')
+    const [tableUpdate,setTableUpdate] = useState(0)
 
 
     const onStatusChange = (key,record)=>{
@@ -58,8 +53,8 @@ function ClinicManagerAppointmentsTable() {
             status:modal.key,
             ...values
         }).then(() => {
-
             setModal(null)
+            setTableUpdate(tableUpdate+1)
             setLoading(false)
         })
     }
@@ -106,15 +101,10 @@ function ClinicManagerAppointmentsTable() {
 
     }
 
-console.log(ascDesc, 'ddd')
     return (
         <div className={'table_conteiner'}>
-            {loading ? <Preloader/> :  <Spin spinning={loading}>
+              <Spin spinning={loading}>
                 <div style={{paddingBottom: 60}}>
-
-
-
-
                     <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                         <Form onFinish={onFinish}
                               onValuesChange={handleValuesChange}
@@ -136,6 +126,7 @@ console.log(ascDesc, 'ddd')
                 </div>
                 <div className={'clinic_manager_res_table'}>
                     <ResourceTable
+                        updateTable={tableUpdate}
                         noData={()=><div className={'not_found_text'}>There aren't any information yet</div>}
                         customHeader={(props)=> <ClinicManagerTableHead getDates={(dates)=>props.setParams((prevState)=>(
                             {
@@ -150,7 +141,7 @@ console.log(ascDesc, 'ddd')
                         }}
 
                         resourceTablemarginTop={true}
-                        tableParams={{
+                        initialParams={{
                             order_by: 'booked_at',
                             order: 'desc'
                         }}
@@ -196,27 +187,8 @@ console.log(ascDesc, 'ddd')
                                 title: 'Date',
                                 dataIndex: 'booked_at',
                                 key: 'booked_at',
-                                sorter: {
-
-                                    compare: (a, b, c) => {
-                                        console.log(c, 'c')
-                                       if(c === 'ascend') {
-                                           dispatch({
-                                               type: 'ASC_DESC',
-                                               payload: 'ascend'
-                                           })
-                                       } else {
-                                           dispatch({
-                                               type: 'ASC_DESC',
-                                               payload: 'descend'
-                                           })
-                                       }
-
-                                       return a.math - b.math
-                                    },
-
-                                },
-                                defaultSortOrder: 'ascend ',
+                                sorter:true,
+                                defaultSortOrder: 'descend',
                                 render:(e, record) => {
                                     return <div className={'table_bold_text'}>{dayjs(record?.booked_at?.iso_string).format('DD.MM.YY')}</div>
                                 }
@@ -226,7 +198,7 @@ console.log(ascDesc, 'ddd')
                                 dataIndex: 'time',
                                 key: 'time',
                                 render:(e, record) => {
-                                    return <div className={'table_normal_text'}>{dayjs(record?.booked_at?.iso_string).format('HH:mm A')}</div>
+                                    return <div className={'table_normal_text'}>{dayjs(record?.booked_at?.iso_string).format('h:mm A')}</div>
                                 }
                             },
                             {
@@ -266,7 +238,6 @@ console.log(ascDesc, 'ddd')
                 </div>
 
             </Spin>
-            }
         </div>
     )
 }

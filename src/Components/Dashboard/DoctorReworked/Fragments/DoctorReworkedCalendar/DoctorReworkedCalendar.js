@@ -50,20 +50,14 @@ function DoctorReworkedCalendar() {
 
 
 
-    return (<div className={'dr_reworked_not'}>
-            <DoctorReworkedCalendarHeader setDate={setDate}/>
-
-        <ConfigProvider
-            direction={'ltr'}
-        >
-
-
-
-            <div className={'dr_reworked_calendar_div'}>
+    return (<div className={'dr_reworked_not'} >
+            <DoctorReworkedCalendarHeader setDate={setDate} />
+            <div className={'dr_reworked_calendar_div'} dir={'ltr'}>
                 <Spin spinning={loading}>
                     <Scheduler
                     dataSource={appointments}
                     height={500}
+                    rtlEnabled={false}
                     currentView={view}
                     onCurrentDateChange={(e) => {
                         setDate(() => {
@@ -106,7 +100,6 @@ function DoctorReworkedCalendar() {
 
 
             </div>
-        </ConfigProvider>
         </div>)
 }
 
