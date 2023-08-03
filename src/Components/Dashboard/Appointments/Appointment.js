@@ -190,19 +190,19 @@ function Appointment({isPatient}) {
 
         values.booked_at = values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
         setSaveLoading(true)
-        if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
-                if (response?.id) {
-                    navigate(-1)
-                }
-            }).finally(() => {
-                dispatch({
-                    type: 'DASHBOARD_STATE',
-                    payload: false
-                })
-                setSaveLoading(false)
-            })
-        } else {
+        // if (params.id) {
+        //     updateResource(resource, params.id, values, token).then(response => {
+        //         if (response?.id) {
+        //             navigate(-1)
+        //         }
+        //     }).finally(() => {
+        //         dispatch({
+        //             type: 'DASHBOARD_STATE',
+        //             payload: false
+        //         })
+        //         setSaveLoading(false)
+        //     })
+        // } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
                     navigate(-1)
@@ -215,7 +215,7 @@ function Appointment({isPatient}) {
                 })
                 setSaveLoading(false)
             })
-        }
+
     }
 
 
