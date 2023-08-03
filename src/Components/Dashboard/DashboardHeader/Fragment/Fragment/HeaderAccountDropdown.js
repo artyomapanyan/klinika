@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Spin} from "antd";
 import "./HeaderAccountDropdown.sass"
 import checkout from "../../../../../dist/icons/checkout.svg";
@@ -13,6 +13,7 @@ import {postResource} from "../../../../Functions/api_calls";
 
 function HeaderAccountDropdown({setAuthOpen}) {
     const auth = useSelector(state => state.auth)
+    const app = useSelector(state => state.app)
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
@@ -64,6 +65,15 @@ function HeaderAccountDropdown({setAuthOpen}) {
 
         })
     }
+    useEffect(()=>{
+        postResource('Role','list',auth.token).then((data)=>{
+            console.log(data)
+            dispatch({
+                type: 'ROLES_UPDATE',
+                payload: data.items
+            })
+        })
+    },[app.current_locale])
 
 
     const onSetings = () => {

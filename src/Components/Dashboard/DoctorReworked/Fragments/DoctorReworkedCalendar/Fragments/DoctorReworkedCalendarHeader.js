@@ -4,7 +4,7 @@ import {t} from "i18next";
 import React, {useState} from "react";
 import DoctorReworkedCalendarDrawer from "./DoctorReworkedCalendarDrawer";
 
-function DoctorReworkedCalendarHeader({setDate, textApp=true}) {
+function DoctorReworkedCalendarHeader({textApp=true}) {
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
@@ -26,7 +26,7 @@ function DoctorReworkedCalendarHeader({setDate, textApp=true}) {
                     <Button type={'primary'} onClick={showDrawer}>+ Add entry</Button>
                 </Space>
                 <Drawer width={411} title="Add User" placement="right" onClose={onClose} open={open}>
-                    {open?<DoctorReworkedCalendarDrawer setDate={setDate} setOpen={setOpen} />:null}
+                    {open?<DoctorReworkedCalendarDrawer setOpen={setOpen} />:null}
                 </Drawer>
             </div>
         </div>

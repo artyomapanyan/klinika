@@ -10,6 +10,18 @@ export default function auth(state = {}, action) {
 
             }
     }
+    if(action.type==='ROLES_UPDATE'){
+            return {
+                ...state,
+                user:{
+                    ...state.user,
+                    roles:state.user.roles.map(role=>{
+                     return   action.payload.find(e=>e.id===role.id)
+                    })
+                }
+
+            }
+    }
     if(action.type==='LOGOUT'){
         return {
 

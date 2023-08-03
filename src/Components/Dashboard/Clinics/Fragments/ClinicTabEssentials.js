@@ -317,6 +317,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     const navigate = useNavigate();
     const formRef = useRef();
     let reduxInfo = useSelector((state) => state);
+    let role = useSelector((state) => state.auth.selected_role?.key);
 
 
     let token = useSelector((state) => state.auth.token);
@@ -437,6 +438,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name,item]
     }
 
+    const searchByNumber = (item, name) => {
+        name = <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px'}}>
+            <div>{item.first} {item.last}</div>
+            <div>+{item.phone_country_code}{item.phone_number}</div>
+        </div>
+        let searchData = item.phone_number + item.email;
+        return [name, item, searchData]
+    }
+
     return(
         <div >
             {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
@@ -500,8 +510,9 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                            type: 'managers',
 
                                        }}
+                                       handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                        customSearchKey={'full_phone_number'}
-                                       resource={'User'}
+                                       resource={role === 'super' || role === 'admin' ? 'User' : 'Patient'}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}

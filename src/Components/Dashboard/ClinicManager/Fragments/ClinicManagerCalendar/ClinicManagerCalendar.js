@@ -62,7 +62,6 @@ function ClinicManagerCalendar() {
     },[search,data])
 
 
-    console.log(showCount)
 
     return (
         <section className={'table_conteiner'}>

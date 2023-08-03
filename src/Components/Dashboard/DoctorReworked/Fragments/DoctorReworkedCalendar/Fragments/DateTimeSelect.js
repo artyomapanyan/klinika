@@ -9,7 +9,7 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDate}) {
+function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDate1}) {
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 
@@ -41,7 +41,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     let clinicId = authRedux?.clinics?.find(e=>e?.id===formState?.clinic_id)?.id
 
     const onDateClick = (e) => {
-        setDate(e)
+        setDate1(e)
         setTimeLoading(true)
         postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + clinicId, {
             service: formState?.service_type,

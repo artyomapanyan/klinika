@@ -294,7 +294,7 @@ function AppLayout(){
         {
             url:'users/patient-list',
             resource:'Patient',
-            //singleComp:<Patient/>,
+            singleComp:<Appointment isPatient={true}/>,
             indexComp:<Patients/>,
             showComp:<ShowPatient/>
         },

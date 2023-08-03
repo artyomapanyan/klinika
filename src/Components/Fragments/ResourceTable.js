@@ -2,7 +2,14 @@ import React, {useEffect, useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
 import {Button, Col, Form, Popconfirm, Row, Space, Switch, Table, Tooltip} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
-import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {
+    CarryOutOutlined,
+    DeleteOutlined,
+    EditOutlined,
+    EyeOutlined,
+    PlusOutlined,
+    QuestionCircleOutlined
+} from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
 import {useTranslation} from "react-i18next";
@@ -48,6 +55,7 @@ function ResourceTable ({
                             andStatus=false,
                             newDelete=false,
                             invoiceSwitches=false,
+    editStyle=false,
     updateTable = 0
                         }) {
 
@@ -168,16 +176,27 @@ function ResourceTable ({
             ...(hideActions?[]:[{
                 dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
 
-                    {!except.edit ? <Tooltip title="Update">
-                        <Button
-                            className={'edit-button'}
-                            type={editBtnStyle ? editBtnStyle.type : {}}
-                            onClick={() => onResourceEdit(record)}
-                            size={editBtnStyle?.size ? editBtnStyle?.size : 'small'}
-                            style={editBtnStyle?.btnStyle ? editBtnStyle.btnStyle : {}}
-                        >
-                            <EditOutlined style={editBtnStyle?.iconStyle ? editBtnStyle?.iconStyle : {}}/>
-                        </Button>
+                    {!except.edit ? <Tooltip title={editStyle ? 'Schedule an Appointment' : "Update"}>
+                        {
+                            editStyle ?
+                                <Button
+                                    className={'edit-button'}
+                                    type={editBtnStyle ? editBtnStyle.type : {}}
+                                    onClick={() => onResourceEdit(record)}
+                                    size={editBtnStyle?.size ? editBtnStyle?.size : 'small'}
+                                    style={{border: 'none'}}>
+                                    <CarryOutOutlined style={{color: '#c98a1e'}}/>
+                                </Button> : <Button
+                                className={'edit-button'}
+                                type={editBtnStyle ? editBtnStyle.type : {}}
+                                onClick={() => onResourceEdit(record)}
+                                size={editBtnStyle?.size ? editBtnStyle?.size : 'small'}
+                                style={editBtnStyle?.btnStyle ? editBtnStyle.btnStyle : {}}>
+                                <EditOutlined style={editBtnStyle?.iconStyle ? editBtnStyle?.iconStyle : {}}/>
+                            </Button>
+                        }
+
+
                     </Tooltip> :  <div></div>}
                     {!except.delete&&<Tooltip title="Delete">
                         <Popconfirm

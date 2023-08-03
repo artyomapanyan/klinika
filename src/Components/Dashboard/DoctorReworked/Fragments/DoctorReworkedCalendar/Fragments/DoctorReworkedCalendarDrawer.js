@@ -8,7 +8,7 @@ import {getServiceTypes} from "../../../../../../functions";
 import DateTimeSelect from "./DateTimeSelect";
 import {createResource} from "../../../../../Functions/api_calls";
 
-function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
+function DoctorReworkedCalendarDrawer({setOpen}) {
     const authRedux = useSelector((state) => state?.auth);
     const lng = useSelector((state) => state?.app?.current_locale);
     let token = useSelector((state) => state.auth.token);
@@ -19,18 +19,18 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const [formState, setFormState] = useState({});
     const [date, setDate1] = useState(null)
 
+
     const onNewAppointment = (values) => {
         setLoading(true)
         values.doctor_id = authRedux?.user?.id
         values.booked_at = bookedAtState+' '+values.booked_time;
 
+
         createResource('Appointment', values, token).then((response) => {
             if (response?.id) {
                 setOpen(false)
                 setLoading(false)
-                setDate(prevState=>({
-                    ...prevState
-                }))
+
             }
 
         }).finally(() => {
@@ -80,9 +80,9 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
 
                            }}
                            initialData={[]}
-                           //handleMapItems={(item, name) => searchByNumber(item, name)}
+                           handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                            customSearchKey={'full_phone_number'}
-                           resource={'User'}/>
+                           resource={'Patient'}/>
 
 
                 <FormInput label={t('Clinic')} name={'clinic_id'}
@@ -109,7 +109,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
                            }}
                 />
 
-                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate={setDate1} />
+                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} />
 
                 <div style={{paddingTop:20}}>
                     <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>

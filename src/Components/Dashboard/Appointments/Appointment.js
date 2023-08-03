@@ -19,15 +19,23 @@ import CancelComponent from "../../Fragments/CancelComponent";
 const resource = 'Appointment';
 
 
-function Appointment() {
-    const {pathname} = useLocation()
+function Appointment({isPatient}) {
     let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
     const phoneNumberRef = useRef();
     let token = useSelector((state) => state.auth.token);
-    const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
+    let role = useSelector((state) => state.auth.selected_role?.key);
+
+
+
+    const {loadingState, dataState} = useGetResourceSingle(!isPatient ? resource : 'Patient', params.id,{},isPatient ?(data)=>{
+       setTimeout(()=>{
+           handleValuesChange({patient_id:data.id})
+       },500)
+        return data
+    }:null)
     const {data, setData} = dataState;
     const {loading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
@@ -145,10 +153,11 @@ function Appointment() {
             })
         }
         if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(data?.service_type)) {
-            postResource('Clinic', 'AvailableTimes', token, data?.clinic_id, {
+            postResource('Clinic', 'ClinicsAvailableTimes', token, data?.clinic_id, {
                 date: data?.booked_at?.format('YYYY-MM-DD'),
                 service: data?.service_type,
             }).then((res) => {
+                console.log(res, 'd')
                 setAvailableTimesState(res.map((el) => {
                     return {
                         label: 'Break Time',
@@ -174,7 +183,7 @@ function Appointment() {
     const onFinish = (values) => {
         if(values.patient_id){
             delete values.patient;
-            delete values.dob
+            delete values?.dob
         } else {
             values.dob = values.patient.dob.format('YYYY-MM-DD')
         }
@@ -211,6 +220,7 @@ function Appointment() {
 
 
     const handleValuesChange = (e, v) => {
+
         setData((prevState) => ({
             ...prevState,
             ...e
@@ -225,7 +235,7 @@ function Appointment() {
                     phone_number: foundUser?.phone_number,
                     email: foundUser?.email,
                     country_id: foundUser?.country_id,
-                    dob: dayjs(foundUser.dob),
+                    dob: dayjs(foundUser?.dob),
                     gender: foundUser?.gender,
                     nationality_number: foundUser?.nationality_number,
                     status: foundUser?.status,
@@ -245,6 +255,9 @@ function Appointment() {
         }
 
     }
+
+
+
 
     const handleMapItems = (item, name) => {
         name = item.phone_code ? `${item.phone_code} ` : null
@@ -301,7 +314,7 @@ function Appointment() {
                                                searchConfigs={{minLength: 5}}
                                                inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               resource={'User'}
+                                               resource={role === 'super' || role === 'admin' ? 'User' : 'Patient'}
                                                resourceParams={{
                                                    type: 'user',
                                                }}
@@ -323,8 +336,8 @@ function Appointment() {
                                                }}
                                                handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                                customSearchKey={'full_phone_number'}
-                                               initialValue={null}
-                                               initialData={[]}
+                                               initialValue={dataState.data.id}
+                                               initialData={isPatient?[dataState.data]:[]}
                                                //disabled={data?.patient_id}
 
                                     />
@@ -332,7 +345,7 @@ function Appointment() {
 
                             </div>
                             {
-                                data?.patient_id || data?.patient_id === 0 ? <div>
+                                data?.patient_id || data?.patient_id === 0 || data?.id ? <div>
                                     <div className={'add_edit_content'}>
 
                                         <div>
@@ -341,7 +354,7 @@ function Appointment() {
                                                     <FormInput label={t('Country Code')} name={['patient','phone_country_code']}
                                                                inputType={'resourceSelect'}
                                                                rules={[{required: true}]}
-                                                               initialValue={formRef.current.getFieldValue(['patient','phone_country_code'])}
+                                                               initialValue={formRef?.current?.getFieldValue(['patient','phone_country_code'])}
                                                                handleMapItems={handleMapItems}
                                                                disabled={data?.patient_id}
                                                                customSearchKey={'phone_code'}
@@ -352,7 +365,7 @@ function Appointment() {
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient','phone_number']}
                                                                maxLength={9}
-                                                                initialValue={data?.patient_id ? formRef.current.getFieldValue(['patient','phone_country_code']) : phoneNumberRef.current}
+                                                                initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : phoneNumberRef?.current}
 
                                                                rules={[{required: true}]}/>
                                                 </Col>
@@ -382,7 +395,7 @@ function Appointment() {
 
                                                     <FormInput label={t('Country')} name={['patient','country_id']}
                                                                inputType={'resourceSelect'}
-                                                               initialValue={formRef.current.getFieldValue(['patient','country_id'])}
+                                                               initialValue={formRef?.current?.getFieldValue(['patient','country_id'])}
                                                                rules={[{required: !data?.patient_id}]}
                                                                disabled={data?.patient_id}
                                                                resource={'Country'}/>
@@ -391,7 +404,7 @@ function Appointment() {
 
                                                     <FormInput label={t('Date of Birth')} name={['patient','dob']}
                                                                inputDisabled={data?.patient_id}
-                                                               initialValue={formRef.current.getFieldValue(['patient','dob'])}
+                                                               initialValue={formRef?.current?.getFieldValue(['patient','dob'])}
                                                                inputType={'date'} rules={[
                                                         {required: !data?.patient_id},
                                                         // {
@@ -406,7 +419,7 @@ function Appointment() {
                                                     <FormInput label={t('Gender')} name={['patient','gender']}
                                                                disabled={data?.patient_id}
                                                                inputType={'resourceSelect'}
-                                                               initialValue={formRef.current.getFieldValue(['patient','gender'])}
+                                                               initialValue={formRef?.current?.getFieldValue(['patient','gender'])}
                                                                initialData={Resources?.Gender}
                                                                rules={[{required: !data?.patient_id}]}/>
 
@@ -428,7 +441,7 @@ function Appointment() {
                                                     <FormInput label={t('Status')} disabled={data?.patient_id}
                                                                name={['patient','status']} inputType={'resourceSelect'}
                                                                rules={[{required: !data?.patient_id}]}
-                                                               initialValue={formRef.current.getFieldValue(['patient','status'])}
+                                                               initialValue={formRef?.current?.getFieldValue(['patient','status'])}
                                                                initialData={Resources.Status}
                                                     />
                                                     <FormInput label={t('Bio')} inputDisabled={data?.patient_id}
