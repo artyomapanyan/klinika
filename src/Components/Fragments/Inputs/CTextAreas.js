@@ -9,7 +9,7 @@ function CTextAreas({ value, onChange,label, inputProps,isRequired, inputDisable
     return <div className={'flying-label-textarea'}>
 
         <TextArea {...inputProps} size={'large'} value={value} disabled={inputDisabled} onChange={onChange} placeholder={' '}  style={{paddingLeft:16, borderRadius:12, height: textareaHeight ? 198 : 130}} />
-        <label   className={(isRequired?'ant-form-item-required':'')}><span style={{color: 'red'}}>{castomReq ? "* " : ''}</span>{label}</label>
+        <label  style={language === 'en' ? {left: 15} : {right: 15}} className={(isRequired?'ant-form-item-required':'')}><span style={{color: 'red'}}>{castomReq ? "* " : ''}</span>{label}</label>
     </div>;
 }
 export default CTextAreas

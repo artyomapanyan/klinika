@@ -51,13 +51,13 @@ function DoctorReworkedCalendar() {
 
 
     return (<div className={'dr_reworked_not'} >
-            <DoctorReworkedCalendarHeader setDate={setDate} />
-            <div className={'dr_reworked_calendar_div'} dir={'ltr'}>
+            <DoctorReworkedCalendarHeader  />
+            <div className={'dr_reworked_calendar_div'} >
                 <Spin spinning={loading}>
                     <Scheduler
                     dataSource={appointments}
                     height={500}
-                    rtlEnabled={false}
+                    rtlEnabled={language === 'ar' ? true : false}
                     currentView={view}
                     onCurrentDateChange={(e) => {
                         setDate(() => {

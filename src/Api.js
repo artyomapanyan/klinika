@@ -468,6 +468,10 @@ let api = {
         url: 'prescriptions',
         resource: 'prescriptions',
     },
+    {
+        url: 'patients',
+        resource: 'Patient',
+    },
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',

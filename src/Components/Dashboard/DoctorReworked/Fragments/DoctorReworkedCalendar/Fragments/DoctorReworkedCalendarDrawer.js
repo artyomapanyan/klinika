@@ -10,6 +10,7 @@ import {createResource} from "../../../../../Functions/api_calls";
 
 function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
     const authRedux = useSelector((state) => state?.auth);
+    const lng = useSelector((state) => state?.app?.current_locale);
     let token = useSelector((state) => state.auth.token);
     const formRef = useRef();
 
@@ -52,7 +53,7 @@ function DoctorReworkedCalendarDrawer({setOpen,setDate}) {
 
 
     return(
-        <div>
+        <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''}>
             <Form
                 onFinish={onNewAppointment}
                 ref={formRef}

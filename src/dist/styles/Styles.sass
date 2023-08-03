@@ -129,7 +129,7 @@ body
     position: absolute
     background-color: #ffffff
     padding-left: 5px
-    padding-right: 5px
+
     color: rgba(0, 0, 0, 0.6)
     transform-origin: left top
     white-space: nowrap
@@ -154,21 +154,42 @@ body
 .ant-select-selection-item
   top: -5px
   left: 4px
+  right: 4px
 .ant-select-selection-overflow
   max-height: 40px
 .ant-select-selection-overflow-item
   margin-left: 5px
+  margin-right: 5px
   margin-top: -2px
+
+.ant-input-rtl
+  padding-right: 20px !important
+
 .ar
   min-height: 100%
 
   .input-placeholder .ant-form-item-label
-    right: 40px !important
+    right: 25px !important
 
   .ant-input-password-icon
     position: absolute !important
     margin-right: -60px !important
     margin-left: initial !important
+
+
+.dr_reworked_calendar_drawer_form
+  .ar
+  min-height: 100%
+
+  .input-placeholder .ant-form-item-label
+    right: 25px !important
+
+  .ant-input-password-icon
+    position: absolute !important
+    margin-right: -60px !important
+    margin-left: initial !important
+
+
 
 .ant_tag
   font-weight: 700
@@ -626,9 +647,11 @@ body
   line-height: 1
   content: "*"
 .flying-label-textarea
+  textarea
+    padding-right: 18px
   textArea:not(:placeholder-shown) + label,textArea:focus + label
     position: absolute !important
-    left: 15px
+    //left: 15px
     top: -8px
     font-size: 11px
     background-color: #FFFFFF
@@ -637,7 +660,7 @@ body
   label
     position: absolute !important
     top: 20px
-    left: 15px
+    //left: 15px
     transition: 0.2s
     font-size: 15px
     pointer-events: none
@@ -1319,66 +1342,8 @@ body
   .ant-select
     width: 300px !important
 
-.input-placeholder
-  position: relative
 
-  &.date
-    .ant-form-item-label
-      transform: translate(14px, 19px) scale(1)
 
-  .ant-form-item-row, .ant-form-item-row input, .ant-select, .ant-select-selector
-    min-height: 48px !important
-    border-radius: 12px !important
-
-    .ant-select-selection-item
-      display: flex
-      margin-top: 10px
-      align-items: center
-
-  .ant-form-item-label
-    position: absolute
-    background-color: #fff
-    padding-left: 5px
-    padding-right: 5px
-    color: rgba(0, 0, 0, 0.6)
-    transform-origin: left top
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
-    max-width: calc(100% - 24px)
-    transform: translate(14px, 10px) scale(1)
-    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
-    z-index: 1
-    pointer-events: none
-
-  &.input-focused
-    .ant-form-item-label
-      transform: translate(19px, -4px) scale(0.7)
-      line-height: 1em
-
-  label::after
-    display: none
-
-  .ant-form-item-label > label
-    top: 7px
-.ant-select-selection-item
-  top: -5px
-  left: 4px
-.ant-select-selection-overflow
-  max-height: 40px
-.ant-select-selection-overflow-item
-  margin-left: 5px
-  margin-top: -2px
-.ar
-  min-height: 100%
-
-  .input-placeholder .ant-form-item-label
-    right: 40px !important
-
-  .ant-input-password-icon
-    position: absolute !important
-    margin-right: -60px !important
-    margin-left: initial !important
 
 .ant_tag
   font-weight: 700
@@ -2743,66 +2708,8 @@ body
   border-radius: 22px
   width: 250px
 
-.input-placeholder
-  position: relative
 
-  &.date
-    .ant-form-item-label
-      transform: translate(14px, 19px) scale(1)
 
-  .ant-form-item-row, .ant-form-item-row input, .ant-select, .ant-select-selector
-    min-height: 48px !important
-    border-radius: 12px !important
-
-    .ant-select-selection-item
-      display: flex
-      margin-top: 10px
-      align-items: center
-
-  .ant-form-item-label
-    position: absolute
-    background-color: #ffffff
-    padding-left: 5px
-    padding-right: 5px
-    color: rgba(0, 0, 0, 0.6)
-    transform-origin: left top
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
-    max-width: calc(100% - 24px)
-    transform: translate(14px, 10px) scale(1)
-    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms
-    z-index: 1
-    pointer-events: none
-
-  &.input-focused
-    .ant-form-item-label
-      transform: translate(19px, -4px) scale(0.7)
-      line-height: 1em
-
-  label::after
-    display: none
-
-  .ant-form-item-label > label
-    top: 7px
-.ant-select-selection-item
-  top: -5px
-  left: 4px
-.ant-select-selection-overflow
-  max-height: 40px
-.ant-select-selection-overflow-item
-  margin-left: 5px
-  margin-top: -2px
-.ar
-  min-height: 100%
-
-  .input-placeholder .ant-form-item-label
-    right: 40px !important
-
-  .ant-input-password-icon
-    position: absolute !important
-    margin-right: -60px !important
-    margin-left: initial !important
 
 .ant_tag
   font-weight: 700

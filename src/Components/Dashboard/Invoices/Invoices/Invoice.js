@@ -279,7 +279,7 @@ function Incoice() {
                                                initialValue={data?.client_name}/>
                                 </div>
                                 <div style={{width: '100%'}}>
-                                    <FormInput label={t('Client manager')} name={'client_manager_id'}
+                                    <FormInput label={t('Client manager (Search By phone number)')} name={'client_manager_id'}
                                                searchConfigs={{minLength: 3}}
                                                inputType={'resourceSelect'}
                                                rules={[{required: true}]}

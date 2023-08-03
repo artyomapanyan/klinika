@@ -51,12 +51,12 @@ export default {
             label: t(`Requests`),
             permission:'Report'
         },
-        // {
-        //     icon:<img alt={'icons'} src={dash4}/>,
-        //     key: 'users',
-        //     label: t(`Users`),
-        //     permission:'User'
-        // },
+        {
+            icon:<img alt={'icons'} src={dash4}/>,
+            key: 'users/patient-list',
+            label: t(`Patients`),
+            permission:'Patient'
+        },
     ],
     'clinic-owner': [
         {
@@ -93,6 +93,12 @@ export default {
             key: 'reports/new',
             label: t(`Requests`),
             permission:'Report'
+        },
+        {
+            icon:<img alt={'icons'} src={dash4}/>,
+            key: 'users/patient-list',
+            label: t(`Patients`),
+            permission:'Patient'
         },
         // {
         //     icon:<img alt={'icons'} src={dash4}/>,
@@ -730,7 +736,7 @@ export default {
 
         },
         {
-            key: 'patients',
+            key: 'doctor-flow',
             icon: <img alt={'icons'} src={dash3}/>,
             label: 'Doctor flow',
         },

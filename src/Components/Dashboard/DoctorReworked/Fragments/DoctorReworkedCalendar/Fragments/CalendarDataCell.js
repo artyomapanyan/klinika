@@ -28,7 +28,7 @@ function CalendarDataCell({data}) {
                             [0,1].includes(data.appointmentData.status) ?  <img src={walking_man_icon} alt={'walking_man_icon'}/> : <img src={walking_man_black} alt={'walking_man_black'}/>
                     }
                 </div>
-                <div className={'appointment-data'} style={{lineHeight: time < 60 ? 1 : 1.5}}>
+                <div className={'appointment-data'} style={{lineHeight: time < 60 ? 1 : 1.5, margin: '0 12px'}}>
                     <div className={'appointment_name'} style={{color:[3,4].includes(data.appointmentData.status)? '#000000' : '#ffffff', fontSize: time < 60 ? 14 : 14}}>
                         {data.appointmentData?.patient?.first} {data.appointmentData?.patient?.last}
                     </div>

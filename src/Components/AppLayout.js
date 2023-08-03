@@ -83,6 +83,8 @@ import ShowInvoiceItems from "./Dashboard/Invoices/InvoiceItems/ShowInvoiceItems
 import UpdateSelf from "./Auth/UpdateSelf";
 import AllNotifications from "./Dashboard/AllNotifications/AllNotifications";
 import DoctorProfile from "./Dashboard/DoctorProfile/DoctorProfile";
+import Patients from "./Dashboard/Patients/Patients";
+import ShowPatient from "./Dashboard/Patients/ShowPatient";
 
 
 function AppLayout(){
@@ -289,6 +291,13 @@ function AppLayout(){
             //singleComp:<Report/>,
             indexComp:<Reports/>
         },
+        {
+            url:'users/patient-list',
+            resource:'Patient',
+            //singleComp:<Patient/>,
+            indexComp:<Patients/>,
+            showComp:<ShowPatient/>
+        },
 
 
 
@@ -339,6 +348,7 @@ function AppLayout(){
                     <Route path={'users/update-self'} element={<UpdateSelf/>}></Route>
                     <Route path={'notifications'} element={<AllNotifications/>}></Route>
                     <Route path={'profile'} element={<DoctorProfile/>}></Route>
+                    <Route path={'users/patient-list'} element={<Patients/>}></Route>
 
 
 

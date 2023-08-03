@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from "react-router";
+import {useLocation, useNavigate, useParams} from "react-router";
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -20,6 +20,7 @@ const resource = 'Appointment';
 
 
 function Appointment() {
+    const {pathname} = useLocation()
     let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
@@ -264,7 +265,7 @@ function Appointment() {
 
     }
 
-console.log(data)
+
 
     return (
         <div>
