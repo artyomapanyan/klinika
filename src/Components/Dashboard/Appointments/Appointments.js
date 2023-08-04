@@ -145,7 +145,7 @@ function Appointments() {
                         key:'booked_at',
                         sorter:true,
                         defaultSortOrder:'descend',
-                        render:(i )=> dayjs(i).format('DD-MM-YYYY HH:mm')
+                        render:(i )=> dayjs(i).format('YYYY-MM-DD HH:mm')
 
                     },
                     {

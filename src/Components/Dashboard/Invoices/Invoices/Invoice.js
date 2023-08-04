@@ -24,9 +24,9 @@ function Incoice() {
 
     const handleFilterResponse = (data,timeout = 80) => {
 
-
+console.log(data,'dat')
         let total = 0;
-        if (Object.keys(data.items).length) {
+        if (data?.items) {
 
 
             Object.keys(data.items).map((key) => {
@@ -107,8 +107,7 @@ function Incoice() {
                 payload: true
             })
         }
-
-        if (changed.items) {
+        if (changed?.items) {
 
             setData(handleFilterResponse({
                 ...data, ...formRef?.current?.getFieldsValue()

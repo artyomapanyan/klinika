@@ -23,6 +23,7 @@ import ResourceLinks from "../../../../ResourceLinks";
 import {useNavigate} from "react-router";
 import TableFilterElement from "../../../../Fragments/TableFilterElements/TableFilterElement";
 import search_icon_darkPurpole from "../../../../../dist/icons/search_icon_darkPurpole.png";
+import Preloader from "../../../../Preloader";
 
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
@@ -56,6 +57,9 @@ function ClinicManagerAppointmentsTable() {
             setModal(null)
             setTableUpdate(tableUpdate+1)
             setLoading(false)
+        }).finally(()=>{
+            setLoading(true)
+            setTimeout(()=> {setLoading(false)}, 3000)
         })
     }
 
@@ -226,7 +230,11 @@ function ClinicManagerAppointmentsTable() {
                                 title: 'Status',
                                 dataIndex: 'status',
                                 key: 'status',
-                                render: (e, record) => <ColorSelect height={true} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={'Appointment'} onChange={onStatusChange} name={'status'}/>
+                                render: (e, record) => {
+                                    return loading ? <Preloader small={15}/> : <Spin spinning={loading}>
+                                        <ColorSelect height={true} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={'Appointment'} onChange={onStatusChange} name={'status'} lo={loading}/>
+                                    </Spin>
+                                }
                             },
                             {
                                 title: '',
