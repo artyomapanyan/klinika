@@ -38,7 +38,7 @@ function SuperAdminRegisteredClinics() {
 
     return (<Spin spinning={loading}>
             <Space>
-                <Space direction={'vertical'} className={'progress_big_div'}>
+                <Space direction={'vertical'} className={'progress_big_div1'}>
                     <div className={'clinic_owner_big_text'}>
                         {data.clinics}
                     </div>

@@ -21,7 +21,7 @@ function IncomeChannelsChart() {
         period: 12
     })
 
-    console.log(appointmentChartRef?.current?.id)
+
 
     useEffect(() => {
         setLoading(true)

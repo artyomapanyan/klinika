@@ -13,6 +13,7 @@ import Preloader from "../../../Preloader";
 
 
 function SuperAdminProfitableTable() {
+    let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     let ownerClinics = useSelector((state) => state?.owner);
 
@@ -85,8 +86,12 @@ function SuperAdminProfitableTable() {
                     <div className={'incomes_table_head'}>
                         <h1 className={'h1'}>Profitable Clinics</h1>
                         <Space>
-                            <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                            <Button className={'chart_button'} style={{paddingTop: 1}} ><img src={arrow_next} alt={'arrow_next'}/></Button>
+                            <Button className={'chart_button'} style={{paddingTop: 1}} >
+                                {language === 'en' ? <img src={arrow_prev} alt={'arrow_prev'}/> : <img src={arrow_next} alt={'arrow_next'}/>}
+                            </Button>
+                            <Button className={'chart_button'} style={{paddingTop: 1}} >
+                                {language === 'en' ? <img src={arrow_next} alt={'arrow_next'}/> : <img src={arrow_prev} alt={'arrow_prev'}/>}
+                            </Button>
                         </Space>
 
                     </div>

@@ -12,7 +12,7 @@ function CalendarDataCell({data}) {
     let time = (dayjs(data?.appointmentData?.booked_to?.iso_string) - dayjs(data?.appointmentData?.booked_at?.iso_string))/1000/60
 
 
-    console.log(time)
+
 
     return(
         <div className={'appointment-container'}

@@ -65,7 +65,7 @@ function DoctorReworkedCalendarDrawer({setOpen}) {
                 }}
 
             >
-                <FormInput label={t('Select Patient')} name={'patient_id'}
+                <FormInput label={t('Select Patient (Search by phone number)')} name={'patient_id'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}

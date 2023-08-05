@@ -67,7 +67,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
     }
     useEffect(()=>{
         postResource('Role','list',auth.token).then((data)=>{
-            console.log(data)
+
             dispatch({
                 type: 'ROLES_UPDATE',
                 payload: data.items

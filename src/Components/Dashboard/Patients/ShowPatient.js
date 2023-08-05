@@ -21,7 +21,7 @@ function ShowPatient() {
         navigate(-1)
     }
 
-    console.log(data, 'data')
+
 
     let a = 'aaa@mail.ru'
     let b = '123456789'

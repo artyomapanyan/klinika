@@ -11,6 +11,7 @@ import arrow_prev from "../../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../../dist/icons/arrow-next.svg";
 
 function SuperAdminGradientChart() {
+    let language = useSelector((state) => state.app.current_locale)
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
@@ -73,6 +74,9 @@ function SuperAdminGradientChart() {
             let growth = Object.values(response?.appointments?.growth)
             let canceled = Object.values(response?.appointments[3])
             let closed = Object.values(response?.appointments[2])
+
+            let years = Object.keys(response?.appointments?.growth).map(e=>dayjs(e).year())
+
 
 
 
@@ -193,8 +197,10 @@ function SuperAdminGradientChart() {
 
             appointmentChartRef.current = new Chart(appointmentsStats, {
                 type: "line",
+
                 data: {
                     labels,
+                    years,
                     datasets: isNull.length === 0 ? [] :[
                         {
                             label: "Canceled",
@@ -336,6 +342,7 @@ function SuperAdminGradientChart() {
                             caretPadding: 7,
 
                             callbacks: {
+                                title:(e)=>e[0].chart.config.data.years[e[0].dataIndex+1],
                                 labelTextColor: function(context) {
                                     return '#000000';
                                 },
@@ -488,7 +495,8 @@ function SuperAdminGradientChart() {
             <div className={'superAdmin_gradient_chart_big_div'}>
                 <div className={'gradient_chart_inn_big_div'}>
                     <div className={'app_clinic'}>
-                        <span>Appointments:</span>  <Dropdown
+                      <span>Appointments:</span>
+                      <Dropdown
                         menu={{
                             items,
                             onClick,
@@ -516,8 +524,12 @@ function SuperAdminGradientChart() {
                                 <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                                 {/*<Radio.Button value="month">{t(" Month ")}</Radio.Button>*/}
                             </Radio.Group>
-                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.from <= dayjs(data.to).add(-60, 'month').format('YYYY-MM-DD')} onClick={onBackYear}>
+                                {language === 'en' ? <img src={arrow_prev} alt={'arrow_prev'}/> : <img src={arrow_next} alt={'arrow_next'}/>}
+                            </Button>
+                            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date?.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}>
+                                {language === 'en' ? <img src={arrow_next} alt={'arrow_next'}/> : <img src={arrow_prev} alt={'arrow_prev'}/>}
+                            </Button>
                         </Space>
                     </div>
                 </div>

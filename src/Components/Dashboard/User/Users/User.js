@@ -73,7 +73,7 @@ function User() {
         item.id = item.phone_code
         return [name,item]
     }
-console.log(data)
+
 
     return(
         <div>

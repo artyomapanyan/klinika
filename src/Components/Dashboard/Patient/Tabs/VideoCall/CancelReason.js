@@ -8,12 +8,11 @@ function CancelReason({setIsModalOpen}) {
     const [radioState, setRadioState] = useState();
 
     const onChange = (e) => {
-        console.log(`checked = ${e.target.value}`);
         setRadioState(e.target.value)
     };
 
     const onFinish = (values) => {
-        console.log(values)
+
         setIsModalOpen(false)
     }
 

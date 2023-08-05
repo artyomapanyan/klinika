@@ -9,6 +9,7 @@ import arrow_prev from "../../../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../../../dist/icons/arrow-next.svg";
 
 function SuperAdminClinicPatientChart(){
+    let language = useSelector((state) => state.app.current_locale)
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
     let token = useSelector((state) => state.auth.token);
@@ -25,6 +26,7 @@ function SuperAdminClinicPatientChart(){
         setLoading(true)
         postResource('SuperAdmin', 'SuperAdminConfirmedClinic', token, null, date).then((response) => {
 
+            let years = Object.keys(response?.clinics).map(e => dayjs(e).year())
 
             const monthNames = [
                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -86,6 +88,7 @@ function SuperAdminClinicPatientChart(){
                 type: 'line',
                 data: {
                     labels,
+                    years,
                     datasets: isNull.length === 0 ? [] : [
 
                         {
@@ -240,7 +243,7 @@ function SuperAdminClinicPatientChart(){
                             caretPadding: 7,
 
                             callbacks: {
-
+                                title:(e)=>e[0].chart.config.data.years[e[0].dataIndex+1],
 
                                 label: function(context) {
                                     let label = context.dataset.label || '';
@@ -333,8 +336,8 @@ function SuperAdminClinicPatientChart(){
                             <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                             <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                         </Radio.Group>
-                        <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                        <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                        <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) <= dayjs().add(-36, 'month')} onClick={onBackYear}>{language === 'en' ? <img src={arrow_prev} alt={'arrow_prev'}/> : <img src={arrow_next} alt={'arrow_next'}/>}</Button>
+                        <Button className={'chart_button'} style={{paddingTop: 2}} disabled={dayjs(date.to) >= dayjs()} onClick={onNextYear}>{language === 'en' ? <img src={arrow_next} alt={'arrow_next'}/> : <img src={arrow_prev} alt={'arrow_prev'}/>}</Button>
                     </Space>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 function DateFilterElement({filterProps, type="date",resource}){
     const onChangeValue =(e)=>{
         filterProps.setSelectedKeys(dayjs(e).format('YYYY-MM-DD').toString())
-        console.log(dayjs(e).format('DD'), 'd')
+
     }
     const onFilter = ()=>{
         filterProps.confirm()

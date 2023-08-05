@@ -39,7 +39,7 @@ function AllNotifications() {
         })
 
     }
-    console.log(notifications)
+
 
     return(
         <div style={{marginTop: -75}}>

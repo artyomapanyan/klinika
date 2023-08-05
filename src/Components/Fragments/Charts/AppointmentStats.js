@@ -11,6 +11,7 @@ function AppointmentStats(){
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
     let token = useSelector((state) => state.auth.token);
+    let lng = useSelector((state) => state.app.current_locale);
     const [loading, setLoading] = useState(true)
 
 
@@ -269,13 +270,21 @@ function AppointmentStats(){
                     </div>
                     <div>
                         <Space className={'arrow_button'} id={'dr_rev_app_stats_date_div'}>
-                            <Button className={'chart_button'}
-                                    onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+                            <Button className={'chart_button'} onClick={onBackYear}>
+                                {
+                                    lng === 'ar' ? <img src={arrow_next} alt={'arrow_next'}/> : <img src={arrow_prev} alt={'arrow_prev'}/>
+                                }
+
+                            </Button>
                             <div className={'app_stats_date_div'}>
                                 {dayjs(date.from).format('DD')} -  {dayjs(date.to).format('DD')} {GMBK(dayjs(date.to).month())}
                             </div>
-                            <Button className={'chart_button'} disabled={date.to >= dayjs()}
-                                    onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                            <Button className={'chart_button'} disabled={date.to >= dayjs()} onClick={onNextYear}>
+                                {
+                                    lng === 'ar' ? <img src={arrow_prev} alt={'arrow_prev'}/> : <img src={arrow_next} alt={'arrow_next'}/>
+                                }
+
+                            </Button>
                         </Space>
                     </div>
 

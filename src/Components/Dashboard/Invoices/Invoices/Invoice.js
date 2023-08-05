@@ -24,7 +24,6 @@ function Incoice() {
 
     const handleFilterResponse = (data,timeout = 80) => {
 
-console.log(data,'dat')
         let total = 0;
         if (data?.items) {
 

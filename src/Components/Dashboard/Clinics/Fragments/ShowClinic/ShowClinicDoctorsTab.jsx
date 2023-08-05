@@ -18,7 +18,7 @@ const ShowClinicDoctorsTab = ({dataState}) => {
     useEffect(() => {
         setLoading(true)
         postResource('ClinicDoctor', 'list', token, dataState?.id).then((response) => {
-            console.log(response, 'ffffddd')
+
             setData(response.items?.map((el) => {
                return {
                    key: el.id,
@@ -38,7 +38,7 @@ const ShowClinicDoctorsTab = ({dataState}) => {
         })
     }, [])
 
-console.log(data)
+
     const dataSource = [
         {
             key: '1',

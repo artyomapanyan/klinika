@@ -114,7 +114,7 @@ function ClinicShowWorkingHours({onFinish, data, loading, type, modalId, isDocto
                     <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
                 </div> : Object.keys(workingData).map((dataKey, iKey) => {
                     let workingDay = workingData[dataKey]
-                    console.log(workingDay[0]?.day)
+
                     return workingDay && <div key={iKey}>
 
                         <Row>

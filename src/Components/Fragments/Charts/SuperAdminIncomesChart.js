@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 import {postResource} from "../../Functions/api_calls";
@@ -11,6 +11,7 @@ import arrow_next from "../../../dist/icons/arrow-next.svg";
 
 
 function SuperAdminIncomesChart() {
+    let language = useSelector((state) => state.app.current_locale)
     let canvasRef = useRef();
     let appointmentChartRef = useRef(null)
 
@@ -42,6 +43,8 @@ function SuperAdminIncomesChart() {
         postResource('SuperAdmin', 'SuperAdminIncomes', token, '', date).then((response) => {
             let incomes = Object.values(response?.incomes);
             let offers = Object.values(response?.offers);
+
+            let years = Object.keys(response?.incomes).map(e => dayjs(e).year())
 
             let isNull = [];
             incomes.forEach((el) => {
@@ -97,6 +100,7 @@ function SuperAdminIncomesChart() {
                     type: "bar",
                     data: {
                         labels: labels,
+                        years,
                         datasets: [
                             {
                                 label: "Jeddah Clinic",
@@ -223,7 +227,7 @@ function SuperAdminIncomesChart() {
                             borderColor: "#e3e3e320",
                             caretPadding: 7,
                             callbacks: {
-
+                                title:(e)=>e[0].chart.config.data.years[e[0].dataIndex],
 
                                 label: function(context) {
                                     let label = context.dataset.label || '';
@@ -319,8 +323,7 @@ function SuperAdminIncomesChart() {
                     <div className={'gradient_chart_inn_big_div'}>
                         <Space style={{fontSize: 24, fontWeight: 600}}>
                             {t("Incomes")}
-                            {['Offers created', 'Income'].map((itemKey, key) => <Space key={key}
-                                                                                                    className={`withDot WD-colorSuperAdmin-incomes-${key}`}>{itemKey}</Space>)}
+                            {['Offers created', 'Income'].map((itemKey, key) => <Space key={key} className={`withDot WD-colorSuperAdmin-incomes-${key}`}>{itemKey}</Space>)}
                         </Space>
                         <div>
                             <Space className={'arrow_button'}>
@@ -328,10 +331,12 @@ function SuperAdminIncomesChart() {
                                     <Radio.Button value="year">{t("12 Month")}</Radio.Button>
                                     <Radio.Button value="half">{t("1/2 Year")}</Radio.Button>
                                 </Radio.Group>
-                                <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.from <= dayjs().add(-4, 'year').format('YYYY-MM-DD')}
-                                        onClick={onBackYear}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                                <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.to >= dayjs().format('YYYY-MM-DD')}
-                                        onClick={onNextYear}><img src={arrow_next} alt={'arrow_next'}/></Button>
+                                <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.from <= dayjs().add(-4, 'year').format('YYYY-MM-DD')} onClick={onBackYear}>
+                                    {language === 'en' ? <img src={arrow_prev} alt={'arrow_prev'}/> : <img src={arrow_next} alt={'arrow_next'}/>}
+                                </Button>
+                                <Button className={'chart_button'} style={{paddingTop: 2}} disabled={date.to >= dayjs().format('YYYY-MM-DD')} onClick={onNextYear}>
+                                    {language === 'en' ? <img src={arrow_next} alt={'arrow_next'}/> : <img src={arrow_prev} alt={'arrow_prev'}/>}
+                                </Button>
                             </Space>
                         </div>
                     </div>

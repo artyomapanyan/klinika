@@ -59,7 +59,7 @@ function PrivateNotesModal({data}) {
 
     }
 
-    console.log(roleForPrivateNotes?.auth?.selected_role?.key)
+
 
     return(
         <div className={'private_notes_modal_big_div'}>

@@ -1,10 +1,9 @@
-import {useLocation, useNavigate, useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     createResource,
     postResource,
-    updateResource,
     useGetResourceSingle
 } from "../../Functions/api_calls";
 import {Button, Form, Space, Row, Col, Spin} from "antd";
@@ -126,7 +125,7 @@ function Appointment({isPatient}) {
                 setTimesLoading(false)
             })
         }
-    }, [data?.doctor_id,data?.clinic_id])
+    }, [data?.doctor_id, data?.clinic_id])
 
 
     useEffect(() => {
@@ -157,7 +156,7 @@ function Appointment({isPatient}) {
                 date: data?.booked_at?.format('YYYY-MM-DD'),
                 service: data?.service_type,
             }).then((res) => {
-                console.log(res, 'd')
+
                 setAvailableTimesState(res.map((el) => {
                     return {
                         label: 'Break Time',

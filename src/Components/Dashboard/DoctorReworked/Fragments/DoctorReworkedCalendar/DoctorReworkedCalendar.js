@@ -28,6 +28,7 @@ function DoctorReworkedCalendar() {
 
     const [loading, setLoading] = useState(false);
     const [appointments, setAppointments] = useState([]);
+    const [periudDate, setPeriudDate] = useState(null);
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ function DoctorReworkedCalendar() {
         })
     }, [date])
 
-
+console.log(periudDate)
 
     return (<div className={'dr_reworked_not'} >
             <DoctorReworkedCalendarHeader  />
@@ -60,8 +61,9 @@ function DoctorReworkedCalendar() {
                     rtlEnabled={language === 'ar' ? true : false}
                     currentView={view}
                     onCurrentDateChange={(e) => {
+                        setPeriudDate(dayjs(e).format('YYYY-MM-DD'))
                         setDate(() => {
-                            const currentDate = dayjs(e).utc();
+                            const currentDate = dayjs(e);
                             return {
                                 from: currentDate.add(-10, 'day').format('YYYY-MM-DD'),
                                 to: currentDate.add(10, 'day').format('YYYY-MM-DD')
@@ -71,7 +73,7 @@ function DoctorReworkedCalendar() {
                     onCurrentViewChange={(e) => {
                         setView(e)
                     }}
-                    defaultCurrentDate={date.from}
+                    defaultCurrentDate={periudDate ? periudDate : date.from}
 
                     appointmentRender={(e) => <CalendarDataCell data={e} />}
                     views={[{
@@ -85,7 +87,9 @@ function DoctorReworkedCalendar() {
                         allowDragging: false,
                         allowTimeZoneEditing: false,
                     }}
-                    onAppointmentClick={(e) => navigate(ResourceLinks[resource] + e?.appointmentData?.id+'/doctor')}
+                    onAppointmentClick={(e) => {
+                       return navigate(ResourceLinks[resource] + e?.appointmentData?.id + '/doctor')
+                    }}
                     onAppointmentDblClick={(e) => e.cancel = true}
                     onCellClick={(e) => e.cancel = true}
                     onAppointmentTooltipShowing={(e) => e.cancel = true}

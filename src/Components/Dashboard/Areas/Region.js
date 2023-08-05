@@ -71,7 +71,7 @@ function Region() {
 
     }
 
-    console.log(menuState, changeValuesState)
+
 
 
 

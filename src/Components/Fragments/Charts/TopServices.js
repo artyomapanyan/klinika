@@ -37,7 +37,7 @@ function TopServices() {
             //     return b.percentage-a.percentage
             // })
 
-            console.log(response, 'ddddddddd')
+
 
 
             setData(response)

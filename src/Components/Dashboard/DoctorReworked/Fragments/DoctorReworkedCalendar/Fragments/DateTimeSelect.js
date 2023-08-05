@@ -10,6 +10,7 @@ import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
 function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDate1}) {
+    let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
 
@@ -75,11 +76,13 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
                     Pick Date
                 </div>
                 <div className={'next_prev_div'}>
-                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== dayjs().format('DD-MM-YYYY')}
-                            onClick={() => handleChangeMonth(-1)}><LeftOutlined style={{color: '#ffffff'}}/></Button>
+                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== dayjs().format('DD-MM-YYYY')} onClick={() => handleChangeMonth(-1)}>
+                        {language === 'en' ? <LeftOutlined style={{color: '#ffffff'}}/> : <RightOutlined style={{color: '#ffffff'}}/>}
+                    </Button>
                     <div className={'top_div_title'}>{t(GMBK(startDate.month()))}</div>
-                    <Button className={'next_prev_btn'} onClick={() => handleChangeMonth(1)}><RightOutlined
-                        style={{color: '#ffffff'}}/></Button>
+                    <Button className={'next_prev_btn'} onClick={() => handleChangeMonth(1)}>
+                        {language === 'en' ? <RightOutlined style={{color: '#ffffff'}}/> : <LeftOutlined style={{color: '#ffffff'}}/>}
+                    </Button>
                 </div>
             </div>
             <div>
