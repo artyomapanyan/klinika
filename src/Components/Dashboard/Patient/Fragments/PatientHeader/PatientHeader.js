@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Avatar, Col, Modal, Row, Space, Tag} from "antd";
+import {Avatar, Modal, Space, Tag} from "antd";
 import "../../../../../dist/styles/Styles.sass"
 import { UserOutlined } from '@ant-design/icons';
 import phoneWithFrame from "../../../../../dist/icons/phoneWithFrame.svg";
