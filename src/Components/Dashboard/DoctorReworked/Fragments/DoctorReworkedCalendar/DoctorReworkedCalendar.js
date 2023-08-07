@@ -7,7 +7,7 @@ import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 
-import {ConfigProvider, Spin} from "antd";
+import {Spin} from "antd";
 import Resources from "../../../../../store/Resources";
 import ResourceLinks from "../../../../ResourceLinks";
 import {useNavigate} from "react-router";
@@ -55,7 +55,8 @@ console.log(periudDate)
             <DoctorReworkedCalendarHeader  />
             <div className={'dr_reworked_calendar_div'} >
                 <Spin spinning={loading}>
-                    <Scheduler
+                  <Scheduler
+                    showCurrentTimeIndicator ={ false }
                     dataSource={appointments}
                     height={500}
                     rtlEnabled={language === 'ar' ? true : false}

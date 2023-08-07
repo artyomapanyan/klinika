@@ -259,7 +259,7 @@ function Appointment({isPatient}) {
 
 
     const handleMapItems = (item, name) => {
-        name = item.phone_code ? `${item.phone_code} ` : null
+        name = item.phone_code ? `${item.phone_code}  ${item.name}` : null
         item.id = +item.phone_code
         return [name, item]
     }
@@ -312,7 +312,7 @@ function Appointment({isPatient}) {
                                     <FormInput label={t('Select Patient (Search By phone number')} name={'patient_id'}
                                                searchConfigs={{minLength: 5}}
                                                inputType={'resourceSelect'}
-                                               rules={[{required: true}]}
+
                                                resource={role === 'super' || role === 'admin' ? 'User' : 'Patient'}
                                                resourceParams={{
                                                    type: 'user',

@@ -17,9 +17,9 @@ function PatientOverviewTab(){
                 <PatientCardAllergy/>
                 <PatientCardChronicDiseases/>
             </div>
-            <div style={{padding: 24}}>
-                <PatientCardChart />
-            </div>
+            {/*<div style={{padding: 24}}>*/}
+            {/*    <PatientCardChart />*/}
+            {/*</div>*/}
 
         </Col>
         <Col lg={8}>

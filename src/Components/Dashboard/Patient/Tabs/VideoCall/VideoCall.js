@@ -7,8 +7,11 @@ import CancelReason from "./CancelReason";
 import spiral_icon from "../../../../../dist/icons/spiral_icon.png";
 import send_arrow_purpule from "../../../../../dist/icons/send_arrow_purpule.png";
 import x_black from "../../../../../dist/icons/x_black.png";
+import {useSelector} from "react-redux";
+import dayjs from "dayjs";
 
-function VideoCall() {
+function VideoCall({data}) {
+    let language = useSelector((state) => state.app.current_locale)
 
     const [videoState, setVideoState] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -91,7 +94,7 @@ function VideoCall() {
 
     return(
         <div style={{display: 'flex'}}>
-            <div className={'video_sms_div'} style={{ padding: videoState ? 0 : 180, width: collapseState ? '75%' : '96%'}}>
+            <div className={'video_sms_div'} style={{ padding: videoState ? 0 : 180, width: collapseState ? '100%' : '100%'}}>
                 {
                     videoState ? <JitsiVideo/> : <div className={'video_call_avatr_Text'}>
                         <div>
@@ -106,8 +109,10 @@ function VideoCall() {
                             </div>
 
                             <div>
-                                <div className={'video_call_grey_text'}>Appt Time/Date</div>
-                                <div><span className={'video_call_bold_text'}>10:00 PM</span> <span className={'video_call_date_text'}> / 28 July 2021</span></div>
+                                <div className={'video_call_grey_text'}>{language === 'en' ? 'Appt Time/Date' : 'Date/Appt Time'}</div>
+                                <div className={'collapse_content_foot'} style={{fontSize: 16}}>
+                                    <span style={{fontWeight: 700, }}>{dayjs(data?.booked_at?.iso_string).format('h:mm A')} </span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}
+                                </div>
                             </div>
 
                             <div style={{display: 'flex', gap: 10}}>
@@ -141,33 +146,33 @@ function VideoCall() {
             </div>
 
 
-            <Button onClick={onHideChat} className={'x_div'} icon={collapseState ? <img src={x_black} alt={'x_black'}/> : <LeftOutlined />}>
+            {/*<Button onClick={onHideChat} className={'x_div'} icon={collapseState ? <img src={x_black} alt={'x_black'}/> : <LeftOutlined />}>*/}
 
-            </Button>
-            {
-                collapseState ? <div className={'chat_big_div'} style={{width: collapseState ? '25%' : '4%'}}>
+            {/*</Button>*/}
+            {/*{*/}
+            {/*    collapseState ? <div className={'chat_big_div'} style={{width: collapseState ? '25%' : '4%'}}>*/}
 
-                    <div style={{maxWidth: '80%', display: 'flex', flexDirection: 'column', marginBottom: 24}}>
-                        {
-                            chatState.map((el) => {
-                                return <div key={el.id} className={'chat_text_div'}>{el.text}</div>
-                            })
-                        }
-                    </div>
+            {/*        <div style={{maxWidth: '80%', display: 'flex', flexDirection: 'column', marginBottom: 24}}>*/}
+            {/*            {*/}
+            {/*                chatState.map((el) => {*/}
+            {/*                    return <div key={el.id} className={'chat_text_div'}>{el.text}</div>*/}
+            {/*                })*/}
+            {/*            }*/}
+            {/*        </div>*/}
 
-                    <Form className={'chat_bottom_div'}
-                        onFinish={onSend}
-                    >
-                        <div style={{width:'100%'}}>
-                            <Input onChange={(e)=>inputChange(e)} value={inputState}  className={'chat_input'} placeholder={'Type your message here'}/>
-                        </div>
-                        <Space className={'chat_icons_div'}>
-                            <Button style={{border: 'none'}} icon={<img style={{marginRight: 18, cursor: 'pointer'}} src={spiral_icon} alt={'spiral_icon'}/>}></Button>
-                            <Button onClick={onSend} style={{border: 'none'}} icon={<img style={{marginRight: 18, cursor: 'pointer'}} src={send_arrow_purpule} alt={'send_arrow_purpule'}/>}></Button>
-                        </Space>
-                    </Form>
-                </div> : <div></div>
-            }
+            {/*        <Form className={'chat_bottom_div'}*/}
+            {/*            onFinish={onSend}*/}
+            {/*        >*/}
+            {/*            <div style={{width:'100%'}}>*/}
+            {/*                <Input onChange={(e)=>inputChange(e)} value={inputState}  className={'chat_input'} placeholder={'Type your message here'}/>*/}
+            {/*            </div>*/}
+            {/*            <Space className={'chat_icons_div'}>*/}
+            {/*                <Button style={{border: 'none'}} icon={<img style={{marginRight: 18, cursor: 'pointer'}} src={spiral_icon} alt={'spiral_icon'}/>}></Button>*/}
+            {/*                <Button onClick={onSend} style={{border: 'none'}} icon={<img style={{marginRight: 18, cursor: 'pointer'}} src={send_arrow_purpule} alt={'send_arrow_purpule'}/>}></Button>*/}
+            {/*            </Space>*/}
+            {/*        </Form>*/}
+            {/*    </div> : <div></div>*/}
+            {/*}*/}
 
         </div>
     )

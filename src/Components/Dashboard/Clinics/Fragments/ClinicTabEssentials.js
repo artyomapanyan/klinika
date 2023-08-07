@@ -290,8 +290,8 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useRef, useState} from "react";
-import {createResource, postResource, updateResource} from "../../../Functions/api_calls";
+import {useRef, useState} from "react";
+import {createResource, updateResource} from "../../../Functions/api_calls";
 import {Button, Col, Form, Input, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
@@ -433,7 +433,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     //
     // },[])
     const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) `:null
+        name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
         item.id = item.phone_code
         return [name,item]
     }
@@ -446,6 +446,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
     }
+
+    console.log(data, 'data')
 
     return(
         <div >
@@ -468,7 +470,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                 <div style={{width:'35%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={data?.phone_country_code}
+                                               initialValue={data?.phone_country_code + 'hhh'}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>
@@ -510,7 +512,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                            type: 'managers',
 
                                        }}
-                                       handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
+                                       //handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                        customSearchKey={'full_phone_number'}
                                        resource={role === 'super' || role === 'admin' ? 'User' : 'Patient'}
                             />

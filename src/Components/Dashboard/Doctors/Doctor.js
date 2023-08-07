@@ -31,6 +31,9 @@ function Doctor() {
     const onFinish = (values) => {
         setSaveLoading(true)
         values.dob = values.dob.format('YYYY-MM-DD')
+        if(values.phone_country_code.length > 3) {
+            values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
+        }
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -63,7 +66,7 @@ function Doctor() {
     }
 
     const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) `:null
+        name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
         item.id = item.phone_code
         return [name,item]
     }
@@ -78,6 +81,7 @@ function Doctor() {
             })
         }
     }
+
 
     return(
         <div>
@@ -144,10 +148,10 @@ function Doctor() {
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
                             
-                            <div style={{display: 'flex', "column-gap": 10}}>
+                            <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
-                                               initialValue={data?.phone_country_code}
+                                               initialValue={data?.phone_country_code ? `(${data?.phone_country_code}) ${data?.phone_country?.name}` : null}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>

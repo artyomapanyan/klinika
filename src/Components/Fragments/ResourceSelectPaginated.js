@@ -56,28 +56,30 @@ function ResourceSelectPaginated({
         }
     },[initialData])
   const handleGenerateOptions = (data) => {
+      if(data) {
+          return data.map((item, key) => {
+              let name = item.name ?? item.title
+              if (resource === 'User' || resource === 'Doctor') {
+                  name = `${item.first} ${item.last} ${item?.phone_number??''}`
+              }
+              if (resource === 'ClinicDoctor') {
+                  name = `${item.doctor.first} ${item.doctor.last}`
+              }
+              if (handleMapItems) {
+                  let [newName, newItem,searchData] = handleMapItems(item, name,data)
+                  name = newName;
+                  item = newItem
+                  if(typeof item==='object'){
+                      item.searchData = searchData;
+                  }
 
-    return data.map((item, key) => {
-      let name = item.name ?? item.title
-      if (resource === 'User' || resource === 'Doctor') {
-        name = `${item.first} ${item.last} ${item?.phone_number??''}`
+              }
+
+
+              return name ? <Select.Option key={key} value={item.id} name={item.searchData??name}>{name}</Select.Option> : null
+          })
       }
-        if (resource === 'ClinicDoctor') {
-            name = `${item.doctor.first} ${item.doctor.last}`
-        }
-      if (handleMapItems) {
-        let [newName, newItem,searchData] = handleMapItems(item, name,data)
-        name = newName;
-        item = newItem
-          if(typeof item==='object'){
-              item.searchData = searchData;
-          }
 
-      }
-
-
-      return name ? <Select.Option key={key} value={item.id} name={item.searchData??name}>{name}</Select.Option> : null
-    })
   }
   useEffect(() => {
     setLocalData(makeUnique([...localData, ...(data?.items ?? [])], 'id'))

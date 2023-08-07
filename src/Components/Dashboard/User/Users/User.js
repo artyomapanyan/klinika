@@ -28,8 +28,13 @@ function User() {
 
 
     const onFinish = (values) => {
+        console.log(values)
         setSaveLoading(true)
         values.dob = values.dob.format('YYYY-MM-DD')
+        if(values.phone_country_code.length > 3) {
+            values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
+        }
+
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
@@ -68,8 +73,10 @@ function User() {
 
     }
 
+
     const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) `:null
+        console.log(item, 'f')
+        name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
         item.id = item.phone_code
         return [name,item]
     }
@@ -126,7 +133,7 @@ function User() {
                         <div style={{width:'25%'}}>
                             <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.phone_country_code}
+                                       initialValue={data?.phone_country_code ? `(${data?.phone_country_code}) ${data?.phone_country?.name}` : null}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        resource={'Country'}/>

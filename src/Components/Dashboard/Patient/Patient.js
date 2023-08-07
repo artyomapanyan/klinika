@@ -71,20 +71,20 @@ function Patient() {
                                 <PatientCardAppointment/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'video_call'} tab={'Video call'} >
-                                <VideoCall/>
+                                <VideoCall data={data}/>
                             </Tabs.TabPane>
-                            <Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >
-                                <PatientHistory />
-                            </Tabs.TabPane>
-                            <Tabs.TabPane key={'lab-tests'} tab={'Lab Tests'} >
-                                <PatientCardLabTests/>
-                            </Tabs.TabPane>
+                            {/*<Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >*/}
+                            {/*    <PatientHistory />*/}
+                            {/*</Tabs.TabPane>*/}
+                            {/*<Tabs.TabPane key={'lab-tests'} tab={'Lab Tests'} >*/}
+                            {/*    <PatientCardLabTests/>*/}
+                            {/*</Tabs.TabPane>*/}
                             <Tabs.TabPane key={'medications'} tab={'Medications'} >
                                 <PatientCardMedications tab={tab}/>
                             </Tabs.TabPane>
-                            <Tabs.TabPane key={'log'} tab={'log'} >
-                                <PatientCardLog />
-                            </Tabs.TabPane>
+                            {/*<Tabs.TabPane key={'log'} tab={'log'} >*/}
+                            {/*    <PatientCardLog />*/}
+                            {/*</Tabs.TabPane>*/}
                         </TabBars>
                     </div>
                 </div>
