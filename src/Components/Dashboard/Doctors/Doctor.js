@@ -151,7 +151,7 @@ function Doctor() {
                             <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
-                                               initialValue={data?.phone_country_code ? `(${data?.phone_country_code}) ${data?.phone_country?.name}` : null}
+                                               initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : null}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>

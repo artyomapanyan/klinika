@@ -470,7 +470,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                 <div style={{width:'35%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={data?.phone_country_code + 'hhh'}
+                                               initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>

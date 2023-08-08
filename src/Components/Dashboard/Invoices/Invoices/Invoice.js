@@ -139,7 +139,7 @@ function Incoice() {
     }
 
     const handleMapItems = (item, name) => {
-        name = item.phone_code ? `(${item.phone_code}) ` : null
+        name = item.phone_code ? `(${item.phone_code}) ${item.name}` : null
         item.id = item.phone_code
         return [name, item]
     }
