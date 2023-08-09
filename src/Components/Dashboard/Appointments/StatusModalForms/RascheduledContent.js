@@ -29,7 +29,7 @@ export function RascheduledContent({onCancel, modal, loading}){
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
            }).then((responce) => {
-               setAvailableTimesState(responce.map((el) => {
+               setAvailableTimesState(responce?.map((el) => {
                    return {
                        label: 'Break Time',
                        options: el.map((el1) => {
@@ -47,8 +47,8 @@ export function RascheduledContent({onCancel, modal, loading}){
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
            }).then((res) => {
-
-               setAvailableTimesState(res.map((el) => {
+console.log(res, 'f')
+               setAvailableTimesState(res?.map((el) => {
                    return {
                        label: 'Break Time',
                        options: el.map((el1) => {
