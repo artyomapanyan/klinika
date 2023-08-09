@@ -4,7 +4,7 @@ import Scheduler from 'devextreme-react/scheduler';
 import DoctorReworkedCalendarHeader from "./Fragments/DoctorReworkedCalendarHeader";
 import CalendarDataCell from "./Fragments/CalendarDataCell";
 import {postResource} from "../../../../Functions/api_calls";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import dayjs from "dayjs";
 
 import {Spin} from "antd";
@@ -19,20 +19,22 @@ function DoctorReworkedCalendar() {
     let token = useSelector((state) => state.auth.token);
     const navigate = useNavigate()
     let language = useSelector((state) => state.app.current_locale)
+    let dispatch = useDispatch()
+    let periudDate = useSelector((state) => state.drCalendarDate)
 
     const [date, setDate] = useState({
-        from: dayjs().format('YYYY-MM-DD'),
-        to: dayjs().add(3, 'day').format('YYYY-MM-DD'),
+        from: periudDate ? dayjs(periudDate).add(-7, 'day').format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
+        to: periudDate ? dayjs(periudDate).add(7, 'day').format('YYYY-MM-DD') : dayjs().add(7, 'day').format('YYYY-MM-DD'),
     })
     const [view, setView] = useState('3 Days')
 
     const [loading, setLoading] = useState(false);
     const [appointments, setAppointments] = useState([]);
-    const [periudDate, setPeriudDate] = useState(null);
 
 
     useEffect(() => {
         setLoading(true)
+        console.log(date)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
             let data = Object.values(response.calendar).flat().map(e =>{
             // console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
@@ -47,9 +49,9 @@ function DoctorReworkedCalendar() {
             setAppointments(data)
             setLoading(false)
         })
-    }, [date])
+    }, [date, periudDate])
 
-console.log(periudDate)
+
 
     return (<div className={'dr_reworked_not'} >
             <DoctorReworkedCalendarHeader  />
@@ -62,12 +64,16 @@ console.log(periudDate)
                     rtlEnabled={language === 'ar' ? true : false}
                     currentView={view}
                     onCurrentDateChange={(e) => {
-                        setPeriudDate(dayjs(e).format('YYYY-MM-DD'))
+
+                        dispatch({
+                            type:'CALENDAR_DATE',
+                            payload: dayjs(e).format('YYYY-MM-DD')
+                        })
                         setDate(() => {
                             const currentDate = dayjs(e);
                             return {
-                                from: currentDate.add(-10, 'day').format('YYYY-MM-DD'),
-                                to: currentDate.add(10, 'day').format('YYYY-MM-DD')
+                                from: periudDate ? dayjs(periudDate).add(-10, 'day').format('YYYY-MM-DD') : currentDate.add(-10, 'day').format('YYYY-MM-DD'),
+                                to: periudDate ? dayjs(periudDate).add(10, 'day').format('YYYY-MM-DD') : currentDate.add(10, 'day').format('YYYY-MM-DD')
                             }
                         })
                     }}

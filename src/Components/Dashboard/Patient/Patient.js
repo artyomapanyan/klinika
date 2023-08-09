@@ -13,14 +13,16 @@ import VideoCall from "./Tabs/VideoCall/VideoCall";
 import {useGetResourceSingle} from "../../Functions/api_calls";
 import {useNavigate, useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
-import {LeftOutlined} from "@ant-design/icons";
+import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
+import {useSelector} from "react-redux";
 
 
 let resource = 'Appointment'
 function Patient() {
     const params = useParams();
     const navigate = useNavigate()
+    let language = useSelector((state) => state.app.current_locale)
 
 
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -51,7 +53,7 @@ function Patient() {
     return(
         <div style={{marginBottom: 100, marginTop: -120}} >
             <div>
-                <Button onClick={onBack} style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}><LeftOutlined /></Button>
+                <Button onClick={onBack} style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}>{language === 'en' ? <LeftOutlined /> : <RightOutlined />}</Button>
                 <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>Patient Card</span>
             </div>
             {
