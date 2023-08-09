@@ -65,10 +65,10 @@ function ShowAppointment() {
             responseType: 'blob',
 
         }).then((response) => {
-            const url = window.URL.createObjectURL(new Blob([invoiceResource]));
+            const url = window.URL.createObjectURL(new Blob([response]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', resource+'.pdf');
+            link.setAttribute('download', invoiceResource+'.pdf');
             document.body.appendChild(link);
             link.click();
             setPdfState(false)
