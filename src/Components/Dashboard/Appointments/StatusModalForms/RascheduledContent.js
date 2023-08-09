@@ -43,11 +43,11 @@ export function RascheduledContent({onCancel, modal, loading}){
                setDateLoading(false)
            })
        }else if(date && !modal?.doctor?.id){
-           postResource('Clinic', 'AvailableTimes', token, modal?.clinic?.id, {
+           postResource('Clinic', 'ClinicsAvailableTimes', token, modal?.clinic?.id, {
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
            }).then((res) => {
-console.log(res, 'f')
+
                setAvailableTimesState(res?.map((el) => {
                    return {
                        label: 'Break Time',
