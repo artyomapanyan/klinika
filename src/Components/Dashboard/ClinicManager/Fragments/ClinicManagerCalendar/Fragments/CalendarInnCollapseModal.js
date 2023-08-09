@@ -14,7 +14,7 @@ import Preloader from "../../../../../Preloader";
 import {getServiceTypes} from "../../../../../../functions";
 
 function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate, setUpdate}) {
-
+    let language = useSelector((state) => state?.app?.current_locale);
     const {doctor} = docItem;
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -104,7 +104,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
     return (
-        <div className={'clinic_manager_modal_big_div'}>
+        <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : ''}>
             {
                 !selectedDate ? <Preloader/> : <Form ref={formRef} onValuesChange={(e, v) => setData(v)} onFinish={handleCreateAppointment}>
                     <Space >

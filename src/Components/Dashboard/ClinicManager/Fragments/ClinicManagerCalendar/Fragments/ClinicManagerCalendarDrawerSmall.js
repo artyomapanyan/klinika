@@ -5,11 +5,12 @@ import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
 import Resources from "../../../../../../store/Resources";
 import dayjs from "dayjs";
+import {useSelector} from "react-redux";
 
 
 
 function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment,setData}) {
-
+    let language = useSelector((state) => state?.app?.current_locale);
     const onFinish = (values) => {
 
         handleCreateAppointment(data,{
@@ -22,7 +23,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
         return [name, item]
     }
     return (
-        <div>
+        <div className={language === 'ar' ? 'KM_drawer' : ''}>
             <div style={{padding: 1, marginTop: 1}}>
                 <Space>
                     <Avatar size={50} icon={<UserOutlined/>}/>
@@ -36,7 +37,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     fontFamily: 'Inter',
                     fontWeight: 600,
                     marginTop: 10,
-                    marginLeft: 5,
+                    margin: '0 5px',
                     padding: '6px 10px',
                     borderRadius: 12
                 }}>{data?.time}</Tag>
@@ -55,7 +56,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     <FormInput label={t('First name')} name={'first'} rules={[{required: true}]}/>
                     <FormInput label={t('Last name')} name={'last'} rules={[{required: true}]}/>
                     <FormInput label={t('Email')}  name={'email'} rules={[{required: true}]}/>
-                    <div style={{display: "flex", width: '100%'}}>
+                    <div style={{display: "flex", gap: 20, width: '100%'}}>
                         <div style={{width: 80}}>
                             <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
@@ -65,7 +66,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                                        resource={'Country'}
                             />
                         </div>
-                        <div style={{marginLeft: 20, width: '100%'}}>
+                        <div style={{ width: '100%'}}>
                             <FormInput label={t('Phone number')} name={'phone_number'} maxLength={9} rules={[
                                 {required: true},
                             ]}/>
