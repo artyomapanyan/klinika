@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {Button, Form, Modal} from "antd";
+import {Button, Form, Modal, Spin} from "antd";
 import {t} from "i18next";
 import ResourceTable from "../../Fragments/ResourceTable";
-import {CheckCircleOutlined, EyeOutlined, MedicineBoxOutlined} from "@ant-design/icons";
+import {CheckCircleOutlined, MedicineBoxOutlined} from "@ant-design/icons";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import {useNavigate} from "react-router";
@@ -24,6 +24,7 @@ function Appointments() {
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
+    const [tableUpdate,setTableUpdate] = useState(0)
 
 
 
@@ -49,7 +50,11 @@ function Appointments() {
         }).then(() => {
 
             setModal(null)
+            setTableUpdate(tableUpdate+1)
             setLoading(false)
+        }).finally(()=>{
+            setLoading(true)
+            setTimeout(()=> {setLoading(false)}, 3000)
         })
     }
 
@@ -76,6 +81,7 @@ function Appointments() {
 
     return(
         <div >
+            <Spin spinning={loading}>
             <div>
                 <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                     <Form onFinish={onFinish}
@@ -94,7 +100,9 @@ function Appointments() {
                     </Form>
                 </Modal>
 
-                {loading?<Preloader/>:<ResourceTable resource={resource}
+                <ResourceTable
+                               resource={resource}
+                               updateTable={tableUpdate}
                                eyeShow={true}
                                tableParams={{
                                    order_by: 'booked_at',
@@ -153,8 +161,10 @@ function Appointments() {
                        title:t('Status'),
                        key:'status',
                         render: (e, record) => {
-                            return <ColorSelect appointmentloading={loading} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
-                        }
+                            return loading ? <Preloader small={15}/> : <Spin spinning={loading}>
+                            <ColorSelect appointmentloading={loading} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
+                            </Spin>
+                            }
 
                        },
                     {
@@ -164,8 +174,9 @@ function Appointments() {
                         render:(i, record )=> <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><MedicineBoxOutlined style={{color: '#c98a1e'}} /></Button>
 
                     },
-                ]} title={t('Appointments')}/>}
+                ]} title={t('Appointments')}/>
             </div>
+            </Spin>
         </div>
     )
 }

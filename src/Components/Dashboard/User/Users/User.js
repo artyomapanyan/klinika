@@ -25,12 +25,14 @@ function User() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [countryCode, setCountryCode] = useState('')
+
 
 
     const onFinish = (values) => {
-        console.log(values)
         setSaveLoading(true)
         values.dob = values.dob.format('YYYY-MM-DD')
+        values.phone_country = countryCode.key
         if(values.phone_country_code.length > 3) {
             values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
         }
@@ -75,9 +77,10 @@ function User() {
 
 
     const handleMapItems = (item,name)=>{
-        console.log(item, 'f')
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
+        item.key = item.id
         item.id = item.phone_code
+
         return [name,item]
     }
 
@@ -133,10 +136,17 @@ function User() {
                         <div style={{width:'25%'}}>
                             <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.phone_country_code ? `(${data?.phone_country_code}) ${data?.phone_country?.name}` : null}
+                                       initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : null}
+                                inputProps={{onChange:(e, re)=> {
+                                       let a = re.find((el) => el.id === e)
+                                        setCountryCode(a)
+                                    }
+                                    }}
                                        handleMapItems={handleMapItems}
+
                                        customSearchKey={'phone_code'}
                                        resource={'Country'}/>
+
                         </div>
                         <div style={{width:'100%', marginLeft:10}}>
                             <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} rules={[{required: true}]}/>

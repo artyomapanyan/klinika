@@ -5,11 +5,12 @@ import {t} from "i18next";
 import React, {useRef, useState} from "react";
 import Resources from "../../../../../../store/Resources";
 import dayjs from "dayjs";
+import {useSelector} from "react-redux";
 
 
 function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData}) {
     const formRef = useRef();
-
+    let language = useSelector((state) => state?.app?.current_locale);
     const [loading, setLoading] = useState(false)
 
     const onFinish = (values) => {
@@ -24,8 +25,9 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
         item.id = +item.phone_code
         return [name, item]
     }
+
     return(
-        <div>
+        <div className={language === 'ar' ? 'KM_drawer' : ''}>
             <Form
                 name="edit"
                 onFinish={onFinish}
@@ -39,12 +41,12 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
             >
             <Row gutter={[15, 15]}>
                 <Col lg={12}>
-                    <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                    <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems: 'center'}}>
                         <Space >
-                            <Avatar size={50} icon={<UserOutlined />} />
-                            <div style={{display:"block", height: 75}}>
-                                <div className={'dr_manager_divider_dr_name'}>{doctor.first} </div>
-                                <div className={'dr_manager_divider_dr_name'}>{doctor.last}</div>
+                            <Avatar size={50} icon={<UserOutlined />} style={{marginTop: 20}} />
+                            <div style={{display:"block", marginTop: 26}}>
+                                <div className={'dr_manager_divider_dr_name'}>{doctor.first} {doctor.last}</div>
+
                                 <div>{specialty}</div>
                             </div>
                         </Space>
@@ -55,7 +57,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             <FormInput label={t('First name')} name={'first'}   rules={[{required: true}]} />
                             <FormInput label={t('Last name')} name={'last'} rules={[{required: true}]} />
                             <FormInput label={t('Email')} name={'email'} rules={[{required: true}]} />
-                            <div style={{display:"flex", width:'100%'}}>
+                            <div style={{display:"flex", gap: 20, width:'100%'}}>
                                 <div style={{width:110}}>
                                     <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
@@ -65,7 +67,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                                resource={'Country'}
                                     />
                                 </div>
-                                <div style={{marginLeft:20, width:'100%'}}>
+                                <div style={{width:'100%'}}>
                                     <FormInput maxLength={9} label={t('Phone number')} name={'phone_number'} />
                                 </div>
                             </div>

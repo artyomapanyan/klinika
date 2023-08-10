@@ -56,7 +56,7 @@ function Invoices() {
                                except={{
                                    delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
                                }}
-                               addBtn={reduxInfo?.selected_role?.key !== 'clinic-owner' ? true : false}
+                               //addBtn={reduxInfo?.selected_role?.key !== 'clinic-owner' ? true : false}
                                resourceTablemarginTop={true}
                                containermargin={true}
                                exportDatabase={false}

@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {t} from "i18next";
 import {postResource} from "../../../../Functions/api_calls";
+import dayjs from "dayjs";
 
 function HeaderAccountDropdown({setAuthOpen}) {
     const auth = useSelector(state => state.auth)
@@ -39,6 +40,10 @@ function HeaderAccountDropdown({setAuthOpen}) {
             dispatch({
                 type: 'AUTH',
                 payload: response
+            })
+            dispatch({
+                type:'CALENDAR_DATE',
+                payload: null
             })
             setAuthOpen(false)
             setLoading(false)

@@ -139,7 +139,7 @@ function Incoice() {
     }
 
     const handleMapItems = (item, name) => {
-        name = item.phone_code ? `(${item.phone_code}) ` : null
+        name = item.phone_code ? `(${item.phone_code}) ${item.name}` : null
         item.id = item.phone_code
         return [name, item]
     }
@@ -204,6 +204,7 @@ function Incoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
+    console.log(data, 'da')
 
     return (
         <div className={"new_invoice_big_div"}>

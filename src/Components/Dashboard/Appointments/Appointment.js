@@ -258,10 +258,11 @@ function Appointment({isPatient}) {
 
 
 
-    const handleMapItems = (item, name) => {
-        name = item.phone_code ? `${item.phone_code}  ${item.name}` : null
-        item.id = +item.phone_code
-        return [name, item]
+
+    const handleMapItems = (item,name)=>{
+        name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
+        item.id = item.phone_code
+        return [name,item]
     }
     const disabledDate = (current) => {
         return current.add(1, 'day') < dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(current.day())

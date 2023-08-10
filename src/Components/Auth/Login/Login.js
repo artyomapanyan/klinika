@@ -13,6 +13,7 @@ import AuthHeader from "../AuthHeader";
 import "../../../dist/styles/Styles.sass";
 import {Link} from "react-router-dom";
 import checkout from "../../../dist/icons/checkout.svg";
+import dayjs from "dayjs";
 
 
 function Login() {
@@ -38,10 +39,15 @@ function Login() {
         formRef.current.resetFields()
         carouselRef.current.prev()
         setRolesState([])
+
     }
     useEffect(()=>{
         dispatch({
             type: 'LOGOUT'
+        })
+        dispatch({
+            type:'CALENDAR_DATE',
+            payload: null
         })
     },[])
     const handleLogin = (values) => {

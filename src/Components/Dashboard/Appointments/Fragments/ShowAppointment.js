@@ -7,9 +7,12 @@ import {CopyOutlined, FilePdfOutlined, LeftOutlined, MailOutlined, PhoneOutlined
 import axios from "axios";
 import api from "../../../../Api";
 import Preloader from "../../../Preloader";
+import dayjs from "dayjs";
+import ResourceLinks from "../../../ResourceLinks";
 
 
 const resource = 'Appointment';
+const invoiceResource = 'Invoice';
 function ShowAppointment() {
     const navigate = useNavigate();
     const params = useParams();
@@ -28,6 +31,7 @@ function ShowAppointment() {
         });
     };
 
+    console.log(data, 'data')
 
     const handleExportPDF =()=>{
         setPdfState(true)
@@ -49,6 +53,29 @@ function ShowAppointment() {
             setPdfState(false)
         });
     }
+
+    const invoiceHandleExportPDF =(id)=>{
+        setPdfState(true)
+        axios.request({
+            url: `${api[invoiceResource].exportPdf.url}/${id}/export-pdf`,
+            method: api[invoiceResource].exportPdf.method,
+            headers: {
+                'Authorization': token,
+            },
+            responseType: 'blob',
+
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', invoiceResource+'.pdf');
+            document.body.appendChild(link);
+            link.click();
+            setPdfState(false)
+        });
+    }
+
+
 
 
 
@@ -137,12 +164,22 @@ function ShowAppointment() {
 
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+
+                                        {
+                                            data?.invoices.map((el) => {
+                                                return <tr>
+                                                    <td onClick={()=> navigate(ResourceLinks[invoiceResource] + el.id)} className={'app_show_invoce'}>{el.invoice_number}</td>
+                                                    <td>{dayjs(el?.date?.iso_string).format('YYYY-MM-DD hh:mm')}</td>
+                                                    <td>{el?.total_price}</td>
+                                                    <td><Button disabled={pdfState} onClick={()=>invoiceHandleExportPDF(el.id)} size={'small'} style={{background:'red'}}><FilePdfOutlined style={{color: "#ffffff"}}/></Button></td>
+                                                </tr>
+                                            })
+
+                                        }
+
+
                                     {/*<td><Button size={'small'} style={{background:'red'}}><FilePdfOutlined style={{color: "#ffffff"}}/></Button></td>*/}
-                                </tr>
+
                                 </tbody>
                             </table>
                         </div>

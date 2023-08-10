@@ -28,7 +28,7 @@ function Users() {
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
-                    dataIndex:['created_at','iso_string'],
+                    dataIndex:['updated_at','iso_string'],
                     title:t('Create date'),
                     key:'date',
                     render:i=><DateParser date={i}/>
