@@ -292,7 +292,7 @@ import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
-import {Button, Col, Form, Input, Row, Space, Switch} from "antd";
+import {Button, Col, Form, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
