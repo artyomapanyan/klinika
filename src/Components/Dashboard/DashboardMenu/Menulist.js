@@ -35,9 +35,9 @@ export default {
         },
         {
             icon:<img alt={'invoices_icon'} src={invoices_icon}/>,
-            key: 'invoice-items',
-            label:  t(`Invoice Items`),
-            permission:'InvoiceItem'
+            key: 'invoices',
+            label:  t(`Invoices`),
+            permission:'Invoice'
         },
         {
             icon:<img alt={'icons'} src={dash3}/>,

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, Form, Modal, Spin} from "antd";
 import {t} from "i18next";
 import ResourceTable from "../../Fragments/ResourceTable";
-import {CheckCircleOutlined, EyeOutlined, MedicineBoxOutlined} from "@ant-design/icons";
+import {CheckCircleOutlined, MedicineBoxOutlined} from "@ant-design/icons";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import {useNavigate} from "react-router";

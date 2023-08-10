@@ -204,6 +204,7 @@ function Incoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
+    console.log(data, 'da')
 
     return (
         <div className={"new_invoice_big_div"}>
