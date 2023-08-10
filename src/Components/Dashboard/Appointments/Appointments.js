@@ -15,6 +15,10 @@ import {useSelector} from "react-redux";
 import Preloader from "../../Preloader";
 import dayjs from "dayjs";
 import {Confirmed} from "./StatusModalForms/Confirmed";
+import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import search_icon_darkPurpole from "../../../dist/icons/search_icon_darkPurpole.png";
+import DateFilterElement from "../../Fragments/TableFilterElements/DateFilterElement";
+import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
 
 const resource = 'Appointment';
 function Appointments() {
@@ -121,12 +125,16 @@ function Appointments() {
                         title:'ID',
                         key:'id',
                         sorter:true,
+                        filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                        filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                     },
                     {
                         dataIndex:'service_type',
                         title:t('Service'),
                         key:'service_type',
                         translatable:true,
+                        filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
+                        filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                         render:(e, record) => {
                             return record?.service_type[0]?.toUpperCase()+record?.service_type?.slice(1)?.replaceAll("_", " ")
                         }
@@ -134,8 +142,9 @@ function Appointments() {
                     {
                         dataIndex:["clinic", "name"],
                         title:t('Clinic'),
-                        key:'clinic_id',
-                        sorter:true,
+                        key:'clinic',
+                        filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
+                        filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
                     },
                     {
@@ -151,6 +160,8 @@ function Appointments() {
                         dataIndex:['booked_at','iso_string'],
                         title:t('Appointment Date'),
                         key:'booked_at',
+                        filterDropdown: (props)=><DateFilterElement filterProps={props}/>,
+                        filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
                         sorter:true,
                         defaultSortOrder:'descend',
                         render:(i )=> dayjs(i).format('YYYY-MM-DD HH:mm')

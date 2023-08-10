@@ -4,9 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {createResource, postResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
-import {Button, Form, Popconfirm, Space} from "antd";
+import {Button, Form, Popconfirm} from "antd";
 import FormInput from "../../../Fragments/FormInput";
-import CancelComponent from "../../../Fragments/CancelComponent";
+
 import dayjs from "dayjs";
 import Resources from "../../../../store/Resources";
 import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.png";
@@ -21,6 +21,7 @@ function Incoice() {
     const navigate = useNavigate();
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
+    let roleRedux = useSelector((state) => state.auth.selected_role.key);
 
     const handleFilterResponse = (data,timeout = 80) => {
 
@@ -99,6 +100,8 @@ function Incoice() {
 
     const handleValuesChange = (changed, all) => {
         setChangeValuesState(changed)
+        console.log(all, 'dfffffff')
+
 
         if(Object.keys(changed).length > 0) {
             dispatch({
@@ -147,6 +150,16 @@ function Incoice() {
     const searchByNumber = (item, name, patientData) => {
         fetchedUsers.current = patientData
         name = <>{'Appointment with'}{" "}{item?.patient?.first}{" "}{item?.patient?.last}{' '}{item?.patient?.phone_number}{' '}<div>{item?.booked_at?.iso_string}</div>{' '}<div>{item?.clinic?.name}</div></>
+        let searchData = item.phone_number + item.email;
+        return [name, item, searchData]
+
+
+    }
+
+    const onManagers = (item, name, patientData) => {
+        console.log(item, name, patientData)
+        fetchedUsers.current = patientData
+        name = <>{item?.first}{" "}{item?.last}</>
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
 
@@ -204,7 +217,7 @@ function Incoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
-    console.log(data, 'da')
+    console.log(roleRedux, 'da')
 
     return (
         <div className={"new_invoice_big_div"}>
@@ -282,11 +295,14 @@ function Incoice() {
                                                searchConfigs={{minLength: 3}}
                                                inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               resource={'User'}
+                                               resource={roleRedux === 'admin' || roleRedux === 'super' ? 'User' : 'Patient'}
                                                resourceParams={{
                                                    type: 'manager',
-                                                   appointment_id: data.appointment_id
+                                                   appointment_id: data.appointment_id,
+                                                   appointment_clinic_managers: data.appointment_id
+
                                                }}
+                                               handleMapItems={(item, name, patientData) => onManagers(item, name, patientData)}
                                                customSearchKey={'full_phone_number'}
                                                initialValue={data?.client_manager?.id}
                                                initialData={data?.client_manager ? [data?.client_manager] : []}
