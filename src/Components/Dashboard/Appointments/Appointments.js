@@ -19,6 +19,7 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import search_icon_darkPurpole from "../../../dist/icons/search_icon_darkPurpole.png";
 import DateFilterElement from "../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
+import SelectFilterElement from "../../Fragments/TableFilterElements/SelectFilterElement";
 
 const resource = 'Appointment';
 function Appointments() {
@@ -134,7 +135,7 @@ function Appointments() {
                         key:'service_type',
                         translatable:true,
                         filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
-                        filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                        filterDropdown: (props)=><SelectFilterElement filterProps={props}/>,
                         render:(e, record) => {
                             return record?.service_type[0]?.toUpperCase()+record?.service_type?.slice(1)?.replaceAll("_", " ")
                         }

@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {Input} from "antd/lib";
 import ResourceSelectPaginated from "../../ResourceSelectPaginated";
-import {DatePicker} from "antd";
+import {DatePicker, Select} from "antd";
 import {t} from "i18next";
 import calendar_black_icon from "../../../../dist/icons/calendar_black_icon.png";
 import FormInput from "../../FormInput";
 function TFInput({onChangeValue,value,type, resource, name, initialFocused=false}){
     const [focused, setFocused] = useState(initialFocused);
+
+
 
     const onInputTypeChange = () => {
         if(type === 'selectFilter') {
@@ -33,6 +35,54 @@ function TFInput({onChangeValue,value,type, resource, name, initialFocused=false
                                value={value}
                                style={{width: '100%', height: 45}}
           />
+            // <DatePicker value={value} onChange={e=>onChangeValue(e)}/>
+        }
+        if(type === 'select') {
+            return <Select
+                style={{
+                    width: 120,
+                }}
+                onChange={(e)=> onChangeValue(e)}
+                options={[
+                    {
+                        value: 'clinic_visit',
+                        label: 'Clinic visit',
+                    },
+                    {
+                        value: 'telehealth',
+                        label: 'Telehealth',
+                    },
+                    {
+                        value: 'home_visit',
+                        label: 'Home visit',
+                    },
+                    {
+                        value: 'physical_therapy_home_visit',
+                        label: 'Physical therapy home visit',
+
+                    },
+                    {
+                        value: 'physical_therapy_clinic_visit',
+                        label: 'Physical therapy clinic visit',
+
+                    },
+                    {
+                        value: 'laboratory_home_visit',
+                        label: 'Laboratory home visit',
+
+                    },
+                    {
+                        value: 'laboratory_clinic_visit',
+                        label: 'Laboratory clinic visit',
+
+                    },
+                    {
+                        value: 'nursing',
+                        label: 'Nursing',
+
+                    },
+                ]}
+            />
             // <DatePicker value={value} onChange={e=>onChangeValue(e)}/>
         }
     }

@@ -24,6 +24,8 @@ import {useNavigate} from "react-router";
 import TableFilterElement from "../../../../Fragments/TableFilterElements/TableFilterElement";
 import search_icon_darkPurpole from "../../../../../dist/icons/search_icon_darkPurpole.png";
 import Preloader from "../../../../Preloader";
+import DateFilterElement from "../../../../Fragments/TableFilterElements/DateFilterElement";
+import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_purpule_icon.png";
 
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
@@ -131,7 +133,7 @@ function ClinicManagerAppointmentsTable() {
                 <div className={'clinic_manager_res_table'}>
                     <ResourceTable
                         updateTable={tableUpdate}
-                        noData={()=><div className={'not_found_text'}>There aren't any information yet</div>}
+                        //noData={()=><div className={'not_found_text'}>There aren't any information yet</div>}
                         customHeader={(props)=> <ClinicManagerTableHead getDates={(dates)=>props.setParams((prevState)=>(
                             {
                                 ...prevState,
@@ -164,8 +166,10 @@ function ClinicManagerAppointmentsTable() {
                         },
                             {
                                 title: 'Phone',
-                                dataIndex: 'phone',
-                                key: 'phone',
+                                dataIndex: 'phone_number',
+                                key: 'phone_number',
+                                filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                                filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
 
                                     return <div>{record?.patient?.phone_number}</div>
@@ -175,6 +179,8 @@ function ClinicManagerAppointmentsTable() {
                                 title: 'Doctor',
                                 dataIndex: 'doctor',
                                 key: 'doctor',
+                                filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                                filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
                                     return <div className={'table_normal_text'}>{record?.doctor?.first} {record?.doctor?.last}</div>
                                 }
@@ -183,6 +189,8 @@ function ClinicManagerAppointmentsTable() {
                                 title: 'Specialty',
                                 dataIndex: 'specialty',
                                 key: 'specialty',
+                                filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                                filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
                                     return <div className={'table_normal_text'}>{record?.specialty?.title}</div>
                                 }
@@ -191,6 +199,8 @@ function ClinicManagerAppointmentsTable() {
                                 title: 'Date',
                                 dataIndex: 'booked_at',
                                 key: 'booked_at',
+                                filterDropdown: (props)=><DateFilterElement filterProps={props}/>,
+                                filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
                                 sorter:true,
                                 defaultSortOrder: 'descend',
                                 render:(e, record) => {
