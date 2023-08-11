@@ -47,7 +47,7 @@ function ClinicTabManageDoctors() {
                     noHeader={true}
                     except={{edit: true}}
                     tableParams={{
-                        clinic: params.id,
+                        clinic: params?.id,
                         is_approved: 0
                     }}
                     resource={'ClinicDoctor'}
