@@ -19,17 +19,18 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import search_icon_darkPurpole from "../../../dist/icons/search_icon_darkPurpole.png";
 import DateFilterElement from "../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
+import SelectFilterElement from "../../Fragments/TableFilterElements/SelectFilterElement";
 
 const resource = 'Appointment';
 function Appointments() {
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
+    let selectedRole = useSelector((state) => state.auth.selected_role.key);
 
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
     const [tableUpdate,setTableUpdate] = useState(0)
-
 
 
 
@@ -86,7 +87,7 @@ function Appointments() {
     return(
         <div >
             <Spin spinning={loading}>
-            <div>
+            <div className={'appointment_table'}>
                 <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                     <Form onFinish={onFinish}
                           onValuesChange={handleValuesChange}
@@ -134,7 +135,7 @@ function Appointments() {
                         key:'service_type',
                         translatable:true,
                         filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
-                        filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                        filterDropdown: (props)=><SelectFilterElement filterProps={props}/>,
                         render:(e, record) => {
                             return record?.service_type[0]?.toUpperCase()+record?.service_type?.slice(1)?.replaceAll("_", " ")
                         }
@@ -178,13 +179,14 @@ function Appointments() {
                             }
 
                        },
-                    {
+                                   (selectedRole === 'super' || selectedRole === 'admin' ?
+                                       {
                         dataIndex:'doctor',
                         title:t('Doctor'),
                         key:'doctor',
                         render:(i, record )=> <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><MedicineBoxOutlined style={{color: '#c98a1e'}} /></Button>
 
-                    },
+                    } : {} ),
                 ]} title={t('Appointments')}/>
             </div>
             </Spin>

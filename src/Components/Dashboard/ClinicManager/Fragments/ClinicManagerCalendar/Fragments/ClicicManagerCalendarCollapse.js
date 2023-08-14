@@ -1,7 +1,6 @@
 
 import React, {useState} from "react";
 import {Button} from "antd";
-import {DownOutlined} from "@ant-design/icons";
 import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse";
 import gray_grid from "../../../../../../dist/icons/gray_grid.png";
 import arrowDownPurple from "../../../../../../dist/icons/arrowDownPurple.svg";

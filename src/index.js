@@ -16,19 +16,20 @@ import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
 const {persistor, store} = configureStore();
 var utc = require('dayjs/plugin/utc')
+var timezone = require('dayjs/plugin/timezone')
 dayjs.extend(utc)
+dayjs.extend(timezone)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 axios.defaults.withCredentials = true;
-/*axios.interceptors.request.use((request) => {
-if(request?.data){
-    let data = JSON.parse(request?.data)
-  console.log(handleFormatDates(data))
-}
+axios.interceptors.request.use((request) => {
 
+    request.headers.local_timezone = dayjs.tz.guess()
 
     return request
-})*/
+
+
+})
 axios.interceptors.response.use((response) => {
     notificate(response?.data, response?.status)
     let data = response?.data?.data??response?.data;

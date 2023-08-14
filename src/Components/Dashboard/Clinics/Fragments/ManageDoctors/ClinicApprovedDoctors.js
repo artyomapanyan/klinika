@@ -56,7 +56,7 @@ function ClinicApprovedDoctors() {
                             key: 'plid',
                             render:(e, record)=> {
 
-                                return <div  style={{padding:2}}>{record.doctor.first} {record.doctor.last}</div>
+                                return <div  style={{padding:2}}>{record?.doctor?.first} {record?.doctor?.last}</div>
                             }
                         },
                         {
