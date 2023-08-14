@@ -25,12 +25,12 @@ const resource = 'Appointment';
 function Appointments() {
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
+    let selectedRole = useSelector((state) => state.auth.selected_role.key);
 
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
     const [tableUpdate,setTableUpdate] = useState(0)
-
 
 
 
@@ -87,7 +87,7 @@ function Appointments() {
     return(
         <div >
             <Spin spinning={loading}>
-            <div>
+            <div className={'appointment_table'}>
                 <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                     <Form onFinish={onFinish}
                           onValuesChange={handleValuesChange}
@@ -179,13 +179,14 @@ function Appointments() {
                             }
 
                        },
-                    {
+                                   (selectedRole === 'super' || selectedRole === 'admin' ?
+                                       {
                         dataIndex:'doctor',
                         title:t('Doctor'),
                         key:'doctor',
                         render:(i, record )=> <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><MedicineBoxOutlined style={{color: '#c98a1e'}} /></Button>
 
-                    },
+                    } : {} ),
                 ]} title={t('Appointments')}/>
             </div>
             </Spin>
