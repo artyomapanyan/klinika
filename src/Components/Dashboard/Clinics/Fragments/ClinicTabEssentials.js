@@ -425,13 +425,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             })
         }
     }
-    // useEffect(()=>{
-    //
-    //         postResource('Country','list',token,null,{per_page:5000}).then(responses => {
-    //             setCountryCode(responses)
-    //         })
-    //
-    // },[])
+
     const handleMapItems = (item,name)=>{
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
         item.id = item.phone_code
