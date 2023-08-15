@@ -438,10 +438,12 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name,item]
     }
 
+
+
     const searchByNumber = (item, name) => {
         name = <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px'}}>
             <div>{item.first} {item.last}</div>
-            <div>+{item.phone_country_code}{item.phone_number}</div>
+
         </div>
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
@@ -508,13 +510,10 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        searchConfigs={{minLength: 3}}
                                        initialValue={data?.managers?.map(e=>e.id)}
                                        initialData={data?.managers ??[]}
-                                       resourceParams={{
-                                           type: 'managers',
 
-                                       }}
-                                       //handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
+                                       handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                        customSearchKey={'full_phone_number'}
-                                       resource={role === 'super' || role === 'admin' ? 'User' : 'Patient'}
+                                       resource={role === 'super' || role === 'admin' ? 'User' : 'Manager'}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
