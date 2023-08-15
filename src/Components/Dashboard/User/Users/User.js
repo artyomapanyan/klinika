@@ -136,7 +136,7 @@ function User() {
                         <div style={{width:'25%'}}>
                             <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : null}
+                                       initialValue={data?.phone_country_code ? `${data?.phone_country_code}` : null}
                                 inputProps={{onChange:(e, re)=> {
                                        let a = re.find((el) => el.id === e)
                                         setCountryCode(a)

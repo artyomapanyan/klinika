@@ -35,6 +35,7 @@ function Languages() {
 
     ];
     const onClick = ({key}) => {
+        console.log(key, 'ke')
         changeLanguage(key)
         dispatch({
             type:'LANGUAGE_STATE',
