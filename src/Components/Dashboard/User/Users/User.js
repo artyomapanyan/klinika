@@ -183,7 +183,7 @@ function User() {
 
 
                     {
-                        selectedRole.key === 'super' || selectedRole.key === 'admin' || selectedRole.key === 'super-admin' ? <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
+                        selectedRole.key === 'super' || selectedRole.key === 'admin'  || selectedRole.key === 'super-admin' ? <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
                                                                         rules={[{required: true}]}
                                                                         initialValue={data?.roles?.map(e=>e.id)}
                                                                         initialData={data?.roles??[]}

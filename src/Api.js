@@ -472,6 +472,10 @@ let api = {
         url: 'patients',
         resource: 'Patient',
     },
+    {
+        url: 'managers',
+        resource: 'Manager',
+    },
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',
