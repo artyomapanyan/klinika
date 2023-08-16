@@ -3,29 +3,28 @@ import {Button} from "antd";
 import arrow_prev from "../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../dist/icons/arrow-next.svg";
 
-function ResourceTableHeader({params, setParams,data, setData}) {
+function ResourceTableHeader({props}) {
 
     const onNextPage = () => {
 
-        setParams((prevState)=>({
+        props?.setParams((prevState)=>({
             ...prevState,
-            page: data?.pagination?.current+1
+            page: props?.data?.pagination?.current+1
         }))
     }
     const onBackPage = () => {
-        setParams((prevState)=>({
+        props?.setParams((prevState)=>({
             ...prevState,
-            page: data?.pagination?.current-1
+            page: props?.data?.pagination?.current-1
         }))
     }
-
     return(
         <div style={{display: 'flex', gap: 5}}>
-            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={data?.pagination?.current == 1} onClick={onBackPage}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
+            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={props?.data?.pagination?.current == 1} onClick={onBackPage}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
             <div className={'resource_table_pagination_info_div'}>
-                {data?.pagination?.current}/{data?.pagination?.last_page}
+                {props?.data?.pagination?.current}/{props?.data?.pagination?.last_page}
             </div>
-            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={params?.page == data?.pagination?.last_page} onClick={onNextPage} ><img src={arrow_next} alt={'arrow_next'}/></Button>
+            <Button className={'chart_button'} style={{paddingTop: 2}} disabled={props?.params?.page == props?.data?.pagination?.last_page} onClick={onNextPage} ><img src={arrow_next} alt={'arrow_next'}/></Button>
         </div>
     )
 }

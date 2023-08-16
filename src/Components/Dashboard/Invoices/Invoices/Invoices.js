@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import api from "../../../../Api";
 import {useSelector} from "react-redux";
-import {Button} from "antd";
+import {Button, Switch} from "antd";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import DateFilterElement from "../../../Fragments/TableFilterElements/DateFilterElement";
 import dayjs from "dayjs";
@@ -16,12 +16,16 @@ import printIcon from "../../../../dist/icons/printIcon.svg";
 import ClinicOwnerHeader from "../../ClinicsOwner/Fragments/ClinicOwnerHeader";
 import ColorSelect from "../../../Fragments/ColorSelect";
 import Resource from "../../../../store/Resources";
+import ClinicManagerTableHead from "../../ClinicManager/Fragments/ClinicManagerAppointmentsTable/Fregment/ClinicManagerTableHead";
+import ResourceTableHeader from "../../../Fragments/ResourceTableHeader";
 
 let resource = 'Invoice'
 function Invoices() {
     let token = useSelector((state) => state.auth.token);
     let reduxInfo = useSelector((state) => state?.auth);
     const [pdfState, setPdfState] = useState(false);
+    const [updateTable,setUpdateTable] = useState({})
+    const [statusState,setStatusState] = useState(1)
 
 
     const handleExportPDF =(record)=>{
@@ -45,12 +49,44 @@ function Invoices() {
         });
     }
 
+    const onNew = (e) => {
+        setUpdateTable(prevState => ({
+            ...prevState,
+            status_new:e?1:0
+        }))
+
+    }
+    const onPayed = (e) => {
+        setUpdateTable(prevState => ({
+            ...prevState,
+            status_paid:e?2:0
+        }))
+
+    }
+console.log(statusState)
     return(
         <div style={{marginTop: -20, zIndex: 999}}>
             {/*<ClinicOwnerHeader dashboardText={true}/>*/}
             <InvoicesGraphics />
             <div className={'invoices_table'}>
                 <ResourceTable resource={resource}
+                               updateTable={updateTable}
+
+                               customHeader={(props)=> {
+
+                                   return <div  style={{display: 'flex', gap: 15, alignItems: 'center', justifyContent: 'right', width: '100%', }}>
+
+                                       <Switch onChange={(e)=> onNew(e)}></Switch>  New
+                                       <Switch  onChange={(e)=> onPayed(e)} ></Switch>  Payed
+                                       <ResourceTableHeader props={props}/>
+                                   </div>
+                               }}
+
+
+                               initialParams={{
+                                   status: statusState,
+                               }}
+
                                andStatus={true}
                                invoiceSwitches={true}
                                except={{
