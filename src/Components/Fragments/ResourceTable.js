@@ -262,10 +262,6 @@ function ResourceTable ({
     }
 
 
-    const onPayed = (e) => {
-
-        console.log(data, params)
-    }
 
 
     return (<Content className={'layout-conatiner'} style={{marginTop: containermargin ? 1 : -75}}>
@@ -299,7 +295,7 @@ function ResourceTable ({
             </Col>
 
                 {
-                    invoiceSwitches ? <Col lg={12}><div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
+                    invoiceSwitches ? <Col lg={1}><div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
                         {/*<Switch onChange={(e)=>onPayed(e)}></Switch>  New*/}
                         {/*<Switch ></Switch>  Payed*/}
                         {/*<ResourceTableHeader params={params} setParams={setParams} data={data} setData={setData}/>*/}

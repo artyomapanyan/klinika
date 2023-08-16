@@ -13,10 +13,7 @@ import calendar_dark_purpule_icon from "../../../../dist/icons/calendar_dark_pur
 import search_icon_darkPurpole from "../../../../dist/icons/search_icon_darkPurpole.png";
 import new_sorter_icon from "../../../../dist/icons/new_sorter_icon.png";
 import printIcon from "../../../../dist/icons/printIcon.svg";
-import ClinicOwnerHeader from "../../ClinicsOwner/Fragments/ClinicOwnerHeader";
-import ColorSelect from "../../../Fragments/ColorSelect";
-import Resource from "../../../../store/Resources";
-import ClinicManagerTableHead from "../../ClinicManager/Fragments/ClinicManagerAppointmentsTable/Fregment/ClinicManagerTableHead";
+
 import ResourceTableHeader from "../../../Fragments/ResourceTableHeader";
 
 let resource = 'Invoice'
@@ -25,7 +22,7 @@ function Invoices() {
     let reduxInfo = useSelector((state) => state?.auth);
     const [pdfState, setPdfState] = useState(false);
     const [updateTable,setUpdateTable] = useState({})
-    const [statusState,setStatusState] = useState(1)
+
 
 
     const handleExportPDF =(record)=>{
@@ -63,7 +60,7 @@ function Invoices() {
         }))
 
     }
-console.log(statusState)
+
     return(
         <div style={{marginTop: -20, zIndex: 999}}>
             {/*<ClinicOwnerHeader dashboardText={true}/>*/}
@@ -74,7 +71,7 @@ console.log(statusState)
 
                                customHeader={(props)=> {
 
-                                   return <div  style={{display: 'flex', gap: 15, alignItems: 'center', justifyContent: 'right', width: '100%', }}>
+                                   return <div  style={{display: 'flex', gap: 15, alignItems: 'center', justifyContent: 'right', width: '100%', marginBottom: -30, marginTop:15}}>
 
                                        <Switch onChange={(e)=> onNew(e)}></Switch>  New
                                        <Switch  onChange={(e)=> onPayed(e)} ></Switch>  Payed
@@ -83,9 +80,7 @@ console.log(statusState)
                                }}
 
 
-                               initialParams={{
-                                   status: statusState,
-                               }}
+
 
                                andStatus={true}
                                invoiceSwitches={true}
