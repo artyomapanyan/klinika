@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Spin} from "antd";
+import {Button, Modal, Result, Spin} from "antd";
 import "./HeaderAccountDropdown.sass"
 import checkout from "../../../../../dist/icons/checkout.svg";
 import settings from "../../../../../dist/icons/settings.svg";
@@ -17,58 +17,76 @@ function HeaderAccountDropdown({setAuthOpen}) {
     const app = useSelector(state => state.app)
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    let menuState = useSelector((state) => state.dashboardMenuState);
 
     const [loading, setLoading] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [logOuthState, setLogOuthState] = useState(false);
+    const [roleEl, setRoleEl] = useState({});
+
+
+
     const handleLogout = () => {
-        axios.get(api.Auth.logout.url, {
-            headers: {
-                'Authorization': auth.token,
-            }
-        }).then(() => {
-            dispatch({
-                type: 'LOGOUT'
+        setLogOuthState(true)
+        if(menuState === true) {
+            setIsModalOpen(true);
+        } else {
+            axios.get(api.Auth.logout.url, {
+                headers: {
+                    'Authorization': auth.token,
+                }
+            }).then(() => {
+                dispatch({
+                    type: 'LOGOUT'
+                })
+                navigate('/')
             })
-            navigate('/')
-        })
+        }
+
+
     }
 
     let roles = auth?.user?.roles
     const onRoleChange = (el) => {
-        setLoading(true)
-        postResource('Auth','switchRole', auth.token,null,{role_id:el.id}).then((response)=>{
+        setRoleEl(el)
+        if(menuState === true) {
+            setIsModalOpen(true);
+        } else {
+            setLoading(true)
+            postResource('Auth', 'switchRole', auth.token, null, {role_id: el.id}).then((response) => {
 
-            dispatch({
-                type: 'AUTH',
-                payload: response
+                dispatch({
+                    type: 'AUTH',
+                    payload: response
+                })
+                dispatch({
+                    type: 'CALENDAR_DATE',
+                    payload: null
+                })
+                setAuthOpen(false)
+                setLoading(false)
+                setTimeout(() => {
+                    switch (response.selected_role.key) {
+                        case 'clinic-manager':
+                            return navigate('/dashboard/clinic-manager')
+                        case 'clinic-owner':
+                            return navigate('/dashboard/clinics-owner')
+                        case 'doctor':
+                            return navigate('/dashboard/doctor-reworked')
+                        case 'super':
+                            return navigate('/dashboard/super-admin')
+                        case 'admin':
+                            return navigate('/dashboard/admin')
+
+                        default:
+                            return navigate('/dashboard')
+
+                    }
+                }, 500)
+
+
             })
-            dispatch({
-                type:'CALENDAR_DATE',
-                payload: null
-            })
-            setAuthOpen(false)
-            setLoading(false)
-            setTimeout(() => {
-                switch (response.selected_role.key){
-                    case 'clinic-manager':
-                        return navigate('/dashboard/clinic-manager')
-                    case 'clinic-owner':
-                        return navigate('/dashboard/clinics-owner')
-                    case 'doctor':
-                        return navigate('/dashboard/doctor-reworked')
-                    case 'super':
-                        return navigate('/dashboard/super-admin')
-                    case 'admin':
-                        return navigate('/dashboard/admin')
-
-                    default:
-                        return  navigate('/dashboard')
-
-                }
-            }, 500)
-
-
-
-        })
+        }
     }
     useEffect(()=>{
         postResource('Role','list',auth.token).then((data)=>{
@@ -89,6 +107,72 @@ function HeaderAccountDropdown({setAuthOpen}) {
         //}
 
     }
+
+    const handleOk = () => {
+
+        setIsModalOpen(false);
+
+        if(logOuthState) {
+            axios.get(api.Auth.logout.url, {
+                headers: {
+                    'Authorization': auth.token,
+                }
+            }).then(() => {
+                dispatch({
+                    type: 'LOGOUT'
+                })
+                navigate('/')
+            })
+            setLogOuthState(false)
+        } else {
+            setLoading(true)
+            postResource('Auth', 'switchRole', auth.token, null, {role_id: roleEl.id}).then((response) => {
+
+                dispatch({
+                    type: 'AUTH',
+                    payload: response
+                })
+                dispatch({
+                    type: 'CALENDAR_DATE',
+                    payload: null
+                })
+                setAuthOpen(false)
+                setLoading(false)
+                setTimeout(() => {
+                    switch (response.selected_role.key) {
+                        case 'clinic-manager':
+                            return navigate('/dashboard/clinic-manager')
+                        case 'clinic-owner':
+                            return navigate('/dashboard/clinics-owner')
+                        case 'doctor':
+                            return navigate('/dashboard/doctor-reworked')
+                        case 'super':
+                            return navigate('/dashboard/super-admin')
+                        case 'admin':
+                            return navigate('/dashboard/admin')
+
+                        default:
+                            return navigate('/dashboard')
+
+                    }
+                }, 500)
+
+
+            })
+        }
+
+
+
+
+
+        dispatch({
+            type: 'DASHBOARD_STATE',
+            payload: false
+        })
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
 
     return (
@@ -119,6 +203,13 @@ function HeaderAccountDropdown({setAuthOpen}) {
                         </Button>
                     </div>
                 </div>
+            <Modal title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} closeIcon={false} >
+                <Result
+                    title="Your changes will not be saved"
+
+                />
+
+            </Modal>
         </Spin>
 
 
