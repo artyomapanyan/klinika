@@ -119,7 +119,7 @@ function Appointments() {
                                    }
                                }}
 
-                               except={{edit: true}}
+                               except={{edit: true,delete: true}}
                                tableColumns={[
                     {
                         dataIndex:'id',

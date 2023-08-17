@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Layout} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
@@ -27,6 +27,7 @@ function AppLayout(){
     }
 
 
+    const child = useMemo(() => <DashboardRoutes />, []);
     return <Layout className={'main-container'}>
             <div className={'side-menu'}>
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%"}}
@@ -43,15 +44,11 @@ function AppLayout(){
 
             <div  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
                 <DashboardHeader/>
-
             </div>
 
             <Content id={'layout-content'}  style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0, height: '100%'}:{marginRight: btnCollapsed ? 130 : 0, height: '100%'}}>
-               <DashboardRoutes/>
+                {child}
             </Content>
-            <div style={!redux.globalState ?{marginLeft: btnCollapsed ? 130 : 0}:{marginRight: btnCollapsed ? 130 : 0}}>
-
-            </div>
             </div>
 
     </Layout>
