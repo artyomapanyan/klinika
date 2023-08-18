@@ -25,11 +25,11 @@ function Languages() {
 
     const items = [
         {
-            label: [<img src={Eglend} alt={'Eglend'} style={{width:20, borderRadius: 15}}/>, '  ', 'English'],
+            label: [<img key={Math.random()} src={Eglend} alt={'Eglend'} style={{width:20, borderRadius: 15}}/>, '  ', 'English'],
             key: 'en',
         },
         {
-            label: [<img src={Arabia} alt={'Arabia'} style={{width:22}}/>,"  ", "Arabic"],
+            label: [<img key={Math.random()} src={Arabia} alt={'Arabia'} style={{width:22}}/>,"  ", "Arabic"],
             key: 'ar',
         },
 
