@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import api from "../../../../Api";
 import {useSelector} from "react-redux";
-import {Button} from "antd";
+import {Button, Switch} from "antd";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import DateFilterElement from "../../../Fragments/TableFilterElements/DateFilterElement";
 import dayjs from "dayjs";
@@ -13,15 +13,16 @@ import calendar_dark_purpule_icon from "../../../../dist/icons/calendar_dark_pur
 import search_icon_darkPurpole from "../../../../dist/icons/search_icon_darkPurpole.png";
 import new_sorter_icon from "../../../../dist/icons/new_sorter_icon.png";
 import printIcon from "../../../../dist/icons/printIcon.svg";
-import ClinicOwnerHeader from "../../ClinicsOwner/Fragments/ClinicOwnerHeader";
-import ColorSelect from "../../../Fragments/ColorSelect";
-import Resource from "../../../../store/Resources";
+
+import ResourceTableHeader from "../../../Fragments/ResourceTableHeader";
 
 let resource = 'Invoice'
 function Invoices() {
     let token = useSelector((state) => state.auth.token);
     let reduxInfo = useSelector((state) => state?.auth);
     const [pdfState, setPdfState] = useState(false);
+    const [updateTable,setUpdateTable] = useState({})
+
 
 
     const handleExportPDF =(record)=>{
@@ -45,12 +46,42 @@ function Invoices() {
         });
     }
 
+    const onNew = (e) => {
+        setUpdateTable(prevState => ({
+            ...prevState,
+            status_new:e?1:0
+        }))
+
+    }
+    const onPayed = (e) => {
+        setUpdateTable(prevState => ({
+            ...prevState,
+            status_paid:e?2:0
+        }))
+
+    }
+
     return(
         <div style={{marginTop: -20, zIndex: 999}}>
             {/*<ClinicOwnerHeader dashboardText={true}/>*/}
             <InvoicesGraphics />
             <div className={'invoices_table'}>
                 <ResourceTable resource={resource}
+                               updateTable={updateTable}
+
+                               customHeader={(props)=> {
+
+                                   return <div  style={{display: 'flex', gap: 15, alignItems: 'center', justifyContent: 'right', width: '100%', marginBottom: -30, marginTop:15}}>
+
+                                       <Switch onChange={(e)=> onNew(e)}></Switch>  New
+                                       <Switch  onChange={(e)=> onPayed(e)} ></Switch>  Payed
+                                       <ResourceTableHeader props={props}/>
+                                   </div>
+                               }}
+
+
+
+
                                andStatus={true}
                                invoiceSwitches={true}
                                except={{

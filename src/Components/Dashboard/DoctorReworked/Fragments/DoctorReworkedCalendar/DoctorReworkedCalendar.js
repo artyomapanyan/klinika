@@ -34,7 +34,6 @@ function DoctorReworkedCalendar() {
 
     useEffect(() => {
         setLoading(true)
-        console.log(date)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
             let data = Object.values(response.calendar).flat().map(e =>{
             // console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
@@ -49,15 +48,19 @@ function DoctorReworkedCalendar() {
             setAppointments(data)
             setLoading(false)
         })
+
+
     }, [date, periudDate])
 
 
 
-    return (<div className={'dr_reworked_not'} >
+    return (<div className={'dr_reworked_not'}>
             <DoctorReworkedCalendarHeader  />
             <div className={'dr_reworked_calendar_div'} >
+
                 <Spin spinning={loading}>
                   <Scheduler
+
                     showCurrentTimeIndicator ={ false }
                     dataSource={appointments}
                     height={500}
@@ -103,6 +106,7 @@ function DoctorReworkedCalendar() {
                     onAppointmentFormOpening={e => e.cancel = true}
                     showAllDayPanel={false}
                     data
+
 
                 >
 

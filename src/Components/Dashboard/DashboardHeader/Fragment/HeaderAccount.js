@@ -27,6 +27,7 @@ function HeaderAccount() {
 	let user = useSelector(state => state?.auth?.user)
 	let role = useSelector(state => state?.auth?.selected_role?.key)
 	let navigate = useNavigate()
+	let language = useSelector((state) => state?.app?.current_locale);
 
 	const [approve, setApprove] = useState([])
 	const [elem, setElem] = useState([])
@@ -82,12 +83,68 @@ function HeaderAccount() {
 	}
 
 
-
 	return (
 		<div>
-			<Space className='header-properties small-gap'>
+			<div className='header-properties small-gap'>
+				<div className={'header_2_div'}>
+					{role === 'doctor' ? (
+						<Dropdown
+							dropdownRender={() => {
+								return (
+									<div className={'approve_drop_div'}>
+										{loading ? (
+											<Preloader />
+										) : (
+											<div>
+												{approve?.length < 1 ? (
+													<div>No clinics to approve!</div>
+												) : (
+													approve?.map((el, key) => {
+														return (
+															<div key={key} className={'approve_drop_inn_div'}>
+																<div>Invite from {el?.clinic?.name}</div>
+																<div>
+																	<Button
+																		onClick={() => onOk(el, key)}
+																		style={{ margin: 3 }}
+																		type={'primary'}
+																		size={'small'}
+																	>
+																		Ok
+																	</Button>
+																	<Button
+																		onClick={() => onCancel(el, key)}
+																		style={{ margin: 3 }}
+																		type={'secondary'}
+																		size={'small'}
+																	>
+																		Cancel
+																	</Button>
+																</div>
+															</div>
+														)
+													})
+												)}
+											</div>
+										)}
+									</div>
+								)
+							}}
+							trigger={['click']}
+							placement='bottom'
+						>
+							<Button type='link' className='header_call_dropdown'>
+								<Space>
+									<MedicineBoxOutlined style={{fontSize :24, marginTop:4}}/>
+									<span style={{marginTop: 9}}>{approve.length}</span>
 
-				{role === 'doctor' ? (
+								</Space>
+							</Button>
+						</Dropdown>
+					) : (
+						<div></div>
+					)}
+
 					<Dropdown
 						dropdownRender={() => {
 							return (
@@ -95,38 +152,64 @@ function HeaderAccount() {
 									{loading ? (
 										<Preloader />
 									) : (
-										<div>
-											{approve?.length < 1 ? (
-												<div>No clinics to approve!</div>
+										<div className={'notifications_drop_big_div'} >
+											<div className={'popup_header'}>
+												<div className={'popup_header_not_text'}>Notifications</div>
+												<div>
+													<Button className={'mark_all_read_btn'}>Mark all as read</Button>
+												</div>
+
+											</div>
+											<div className={'popup_lini'}></div>
+											{notifications?.items?.length < 1 ? (
+												<div>No notifications!</div>
 											) : (
-												approve?.map((el, key) => {
+												notifications?.notifications?.map((el, key) => {
 													return (
-														<div key={key} className={'approve_drop_inn_div'}>
-															<div>Invite from {el?.clinic?.name}</div>
-															<div>
-																<Button
-																	onClick={() => onOk(el, key)}
-																	style={{ margin: 3 }}
-																	type={'primary'}
-																	size={'small'}
-																>
-																	Ok
-																</Button>
-																<Button
-																	onClick={() => onCancel(el, key)}
-																	style={{ margin: 3 }}
-																	type={'secondary'}
-																	size={'small'}
-																>
-																	Cancel
-																</Button>
+														<div key={key} className={'notifications_drop_inn_div'}>
+
+															<div className={'notification_icon_div'}>
+																{
+																	el?.data?.icon === "calendar-check" ? <img src={checked_calendar_icon}
+																											   alt={'checked_calendar_icon'}/> : el?.data?.icon === "yellow_calendar" ?
+																		<img src={yellow_calendar} alt={'yellow_calendar'}/> :
+																		el?.data?.icon === "map_icon" ? <img src={map_icon}
+																											 alt={'map_icon'}/> : el?.data?.icon === "message_icon" ?
+																			<img src={message_icon} alt={'message_icon'}/> : <div></div>
+																}
 															</div>
+															<div className={'popup_info_big_div'}>
+																<div >
+																	<div className={'notifications_drop_title_div'}>
+																		{el?.data?.title}
+																	</div>
+																	<div className={'notifications_drop_descript_div'}>
+																		{el?.data?.description}
+																	</div>
+																</div>
+
+																<div className={'popup_ago_date'}>
+																	{
+																		dayjs(el?.created_at).format('D') > dayjs().format('D') ? dayjs().to(dayjs(el?.created_at)) : dayjs(el?.created_at).format('YYYY-MM-DD HH:mm')
+
+																	}
+																</div>
+															</div>
+
+
+
+
+
 														</div>
 													)
 												})
 											)}
 										</div>
 									)}
+									<Button size={'large'} className={'popup_load_more_btn'} type={'primary'}>Load more</Button>
+									{/*<Button onClick={()=>navigate('notifications')} className={'notifications_drop_all_notifi_btn'}>*/}
+									{/*	Show all notifacations*/}
+									{/*</Button>*/}
 								</div>
 							)
 						}}
@@ -135,134 +218,57 @@ function HeaderAccount() {
 					>
 						<Button type='link' className='header_call_dropdown'>
 							<Space>
-								<MedicineBoxOutlined style={{fontSize :24, marginTop:4}}/>
-								<span style={{marginTop: 9}}>{approve.length}</span>
-
+								<img alt={'icons'} src={notification} />
+								{notifications?.unread_notifications_count}
 							</Space>
 						</Button>
 					</Dropdown>
-				) : (
-					<div></div>
-				)}
-
-				<Dropdown
-					dropdownRender={() => {
-						return (
-							<div className={'approve_drop_div'}>
-								{loading ? (
-									<Preloader />
-								) : (
-									<div className={'notifications_drop_big_div'} >
-										<div className={'popup_header'}>
-											<div className={'popup_header_not_text'}>Notifications</div>
-											<div>
-												<Button className={'mark_all_read_btn'}>Mark all as read</Button>
-											</div>
-
-										</div>
-										<div className={'popup_lini'}></div>
-										{notifications?.items?.length < 1 ? (
-											<div>No notifications!</div>
-										) : (
-											notifications?.notifications?.map((el, key) => {
-												return (
-													<div key={key} className={'notifications_drop_inn_div'}>
-
-														<div className={'notification_icon_div'}>
-															{
-																el?.data?.icon === "calendar-check" ? <img src={checked_calendar_icon}
-																										   alt={'checked_calendar_icon'}/> : el?.data?.icon === "yellow_calendar" ?
-																	<img src={yellow_calendar} alt={'yellow_calendar'}/> :
-																	el?.data?.icon === "map_icon" ? <img src={map_icon}
-																										 alt={'map_icon'}/> : el?.data?.icon === "message_icon" ?
-																		<img src={message_icon} alt={'message_icon'}/> : <div></div>
-															}
-														</div>
-														<div className={'popup_info_big_div'}>
-															<div >
-																<div className={'notifications_drop_title_div'}>
-																	{el?.data?.title}
-																</div>
-																<div className={'notifications_drop_descript_div'}>
-																	{el?.data?.description}
-																</div>
-															</div>
-
-															<div className={'popup_ago_date'}>
-																{
-																	dayjs(el?.created_at).format('D') > dayjs().format('D') ? dayjs().to(dayjs(el?.created_at)) : dayjs(el?.created_at).format('YYYY-MM-DD HH:mm')
-
-																}
-															</div>
-														</div>
 
 
-
-
-
-													</div>
-												)
-											})
-										)}
-									</div>
-								)}
-								<Button size={'large'} className={'popup_load_more_btn'} type={'primary'}>Load more</Button>
-								{/*<Button onClick={()=>navigate('notifications')} className={'notifications_drop_all_notifi_btn'}>*/}
-								{/*	Show all notifacations*/}
-								{/*</Button>*/}
-							</div>
-						)
-					}}
-					trigger={['click']}
-					placement='bottom'
-				>
-					<Button type='link' className='header_call_dropdown'>
-						<Space>
-							<img alt={'icons'} src={notification} />
-							{notifications?.unread_notifications_count}
-						</Space>
-					</Button>
-				</Dropdown>
-
-				{
 					<Button onClick={()=>navigate('reports')} type='link' className='header_report'>
 						<Space>
 							<img alt={'icons'} src={alert} />
 							<span className={'report_text'}>{t('Report')}</span>
 						</Space>
 					</Button>
-				}
-				<Divider type={'vertical'} style={{ height: 32 }} />
 
-				<Dropdown
-					onOpenChange={e => setAuthOpen(e)}
-					open={authOpen}
-					dropdownRender={() => (
-						<Card className={'head_account_dropdown'}>
-							<HeaderAccountDropdown setAuthOpen={setAuthOpen} />
-						</Card>
-					)}
-					placement='bottomRight'
-					trigger={['click']}
-				>
-					<Button type={'link'} className={'head_user_db'}>
-						<div className={'avatar_big_div'}>
-							<Avatar size={'large'} className='header_avatar'>
-								A
-							</Avatar>
-							<div style={{ marginLeft: 8 }}>
-								<div className={'first_name'}>{user?.first}</div>
-								<div className={'last_name'}>{user?.last}</div>
+					<Divider type={'vertical'} style={{ height: 32 }} />
+				</div>
+				<div className={'header_2_div'}>
+					<Dropdown
+						onOpenChange={e => setAuthOpen(e)}
+						open={authOpen}
+						dropdownRender={() => (
+							<Card className={'head_account_dropdown'}>
+								<HeaderAccountDropdown setAuthOpen={setAuthOpen} />
+							</Card>
+						)}
+						placement='bottomRight'
+						trigger={['click']}
+					>
+						<Button type={'link'} className={'head_user_db'}>
+							<div className={'avatar_big_div'}>
+								<Avatar size={'large'} className='header_avatar'>
+									{user?.first.slice(0, 1)}
+									{user?.last.slice(0, 1)}
+								</Avatar>
+								<div style={{ margin: '0 8px' }}>
+									<div className={'first_name'}>{user?.first}</div>
+									<div className={'last_name'}>{user?.last}</div>
+								</div>
+								<div style={{ marginLeft: language === 'en' ? 15 : 0, display: 'flex' }}>
+									<img alt={'icons'} src={arrowDownPurple} />
+								</div>
 							</div>
-							<div style={{ marginLeft: 15, display: 'flex' }}>
-								<img alt={'icons'} src={arrowDownPurple} />
-							</div>
-						</div>
-					</Button>
-				</Dropdown>
-				<Divider type={'vertical'} style={{ height: 32 }} />
-				<Languages />
-			</Space>
+						</Button>
+					</Dropdown>
+					<Divider type={'vertical'} style={{ height: 32 }} />
+					<Languages />
+				</div>
+
+
+
+			</div>
 		</div>
 	)
 }

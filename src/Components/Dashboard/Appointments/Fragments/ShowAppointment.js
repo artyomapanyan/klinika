@@ -31,7 +31,6 @@ function ShowAppointment() {
         });
     };
 
-    console.log(data, 'data')
 
     const handleExportPDF =()=>{
         setPdfState(true)
@@ -84,14 +83,14 @@ function ShowAppointment() {
     }
 
     return(
-        <div style={{marginTop: -120}}>
+        <div className={'app_show_big_div'}>
             <div>
                 <Button style={{margin:"40px 24px", height:45, width:45}} onClick={onBack}><LeftOutlined /></Button>
             </div>
             {
                 loading ? <Preloader /> : <div>
                     <div className={'add_edit_content'} id={'show_header'}>
-                        <Space >
+                        <div style={{display: 'flex'}}>
                             <Avatar size={120} src={<img src={data?.logo?.url} />} style={{background:'gray'}}/>
                             <div style={{display:"block", marginLeft:20}}>
                                 <div>id {data?.patient?.id}</div>
@@ -105,7 +104,7 @@ function ShowAppointment() {
                                 </div>
                             </div>
 
-                        </Space>
+                        </div>
 
                         <div>
                             <button onClick={success} className={'show_copy_btn'}><CopyOutlined /> Copy Deep Link</button>
@@ -113,8 +112,8 @@ function ShowAppointment() {
                         </div>
 
                     </div>
-                    <div className={'add_edit_content'} style={{display:'flex', gap:50}}>
-                        <div className={'show_table'}>
+                    <div className={'add_edit_content'} id={'app_show_tables_div'}>
+                        <div className={'show_table'} style={{width: '100%'}}>
                             <table>
                                 <tbody >
                                 <tr>
@@ -152,7 +151,7 @@ function ShowAppointment() {
                                 </tbody>
                             </table>
                         </div>
-                        <div className={'show_table_right'} style={{width:'50%'}}>
+                        <div className={'show_table_right'} style={{width:'100%'}}>
                             <table>
                                 <thead>
                                 <tr>

@@ -91,7 +91,12 @@ function ResourceTable ({
     }
 
     useEffect(()=>{
-        setParams({...params})
+        if(typeof updateTable === 'object'){
+            setParams({...params,...updateTable})
+        }else{
+            setParams({...params})
+        }
+
     },[updateTable])
 
 
@@ -257,11 +262,14 @@ function ResourceTable ({
     }
 
 
-    return (<Content className={'layout-conatiner'} style={{marginTop: containermargin ? 1 : -75}}>
+
+
+    return (<Content className={containermargin ? 'layout-conatiner1' : 'layout-conatiner'}>
         {customHeader?<Row>
             <Col lg={24}>{customHeader({
                 setParams,
-                params
+                params,
+                data
             })}</Col>
         </Row>:null}
         {!noHeader&&<Row className={'resource-header'}>
@@ -287,10 +295,10 @@ function ResourceTable ({
             </Col>
 
                 {
-                    invoiceSwitches ? <Col lg={12}><div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
-                        <Switch></Switch>  New
-                        <Switch ></Switch>  Payed
-                        <ResourceTableHeader params={params} setParams={setParams} data={data} setData={setData}/>
+                    invoiceSwitches ? <Col lg={1}><div style={{display: 'flex', gap: 15, alignItems: 'center' }}>
+                        {/*<Switch onChange={(e)=>onPayed(e)}></Switch>  New*/}
+                        {/*<Switch ></Switch>  Payed*/}
+                        {/*<ResourceTableHeader params={params} setParams={setParams} data={data} setData={setData}/>*/}
 
 
                     </div> </Col>: <div></div>

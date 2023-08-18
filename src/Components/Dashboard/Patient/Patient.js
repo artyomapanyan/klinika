@@ -65,7 +65,7 @@ function Patient() {
                     </div>
 
                     <div style={{backgroundColor:'white', margin:'0 24px',  borderRadius: '20px'}}>
-                        <TabBars onChange={handleChange} activeKey={data.telehealth ? 'video_call' : tab}>
+                        <TabBars onChange={handleChange} activeKey={tab}>
                             <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
                                 <PatientOverviewTab/>
                             </Tabs.TabPane>
