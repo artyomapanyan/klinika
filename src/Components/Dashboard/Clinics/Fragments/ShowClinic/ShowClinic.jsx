@@ -15,6 +15,7 @@ let resource = 'Clinic';
 function ShowClinic () {
   const params = useParams ();
   let token = useSelector((state) => state.auth.token);
+  let role = useSelector((state) => state.auth.selected_role);
   let navigate = useNavigate()
 
   const [loading, setLoading] = useState(false)
@@ -61,6 +62,8 @@ function ShowClinic () {
   const onBack = () => {
     navigate(-1)
   }
+
+  console.log(role, 'ffdfdf')
 
   return (
       <div style={{marginTop: -120}}>
@@ -111,13 +114,16 @@ function ShowClinic () {
                 </Row>
               </Col>
               <Col style={{ marginLeft: 'auto' }}>
-                <Button
-                    size={'large'}
-                    icon={<EditOutlined/>}
-                    onClick={onEdit}
-                >
-                  Edit
-                </Button>
+                {
+                  role?.key !== 'doctor' ? <Button
+                      size={'large'}
+                      icon={<EditOutlined/>}
+                      onClick={onEdit}
+                  >
+                    Edit
+                  </Button> : <div></div>
+                }
+
               </Col>
             </Row>
             <Row>

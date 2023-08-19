@@ -229,6 +229,11 @@ let api = {
         }
     },
     {
+        url: 'appointments-clinic-owner',
+        resource: 'AppointmentsClinicOwner',
+
+    },
+    {
         url: 'public/offers',
         resource: 'PublicOffer',
         custom: {

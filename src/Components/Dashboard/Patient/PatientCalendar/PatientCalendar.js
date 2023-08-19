@@ -29,8 +29,8 @@ function PatientCalendar() {
                 // console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
                 return {
                     text: Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label ,
-                    startDate: dayjs(e.booked_at.iso_string).utc().format(),
-                    endDate: dayjs(e.booked_to.iso_string).utc().format(),
+                    startDate: dayjs(e.booked_at.iso_string).format(),
+                    endDate: dayjs(e.booked_to.iso_string).format(),
                     content: e.service_name,
                     ...e
                 }
@@ -53,7 +53,7 @@ function PatientCalendar() {
                     currentView={view}
                     onCurrentDateChange={(e) => {
                         setDate(() => {
-                            const currentDate = dayjs(e).utc();
+                            const currentDate = dayjs(e);
                             return {
                                 from: currentDate.add(-10, 'day').format('YYYY-MM-DD'),
                                 to: currentDate.add(10, 'day').format('YYYY-MM-DD')

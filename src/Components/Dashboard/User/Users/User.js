@@ -149,7 +149,7 @@ function User() {
 
                         </div>
                         <div style={{width:'100%', marginLeft:10}}>
-                            <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} rules={[{required: true}]}/>
+                            <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} initialValue={data?.phone_number} rules={[{required: true}]}/>
                         </div>
                     </div>
                     <div style={{display:"flex"}}>

@@ -471,7 +471,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                resource={'Country'}/>
                                 </div>
                                 <div style={{width:'100%', marginLeft:10}}>
-                                    <FormInput maxLength={9} label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
+                                    <FormInput maxLength={10} label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} />
                                 </div>
                             </div>
 

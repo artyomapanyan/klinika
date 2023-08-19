@@ -23,7 +23,7 @@ export function handleFormatDates(data,isReq=false){
                if(isReq){
                    data[key] = dayjs(data[key]).format('YYYY-MM-DD HH:mm')
                }else{
-                   data[key] = dayjs(data[key]).utc(true).format('YYYY-MM-DD HH:mm')
+                   data[key] = dayjs(data[key]).format('YYYY-MM-DD HH:mm')
                }
 
 

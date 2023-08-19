@@ -310,7 +310,7 @@ function Appointment({isPatient}) {
                                     {/*           //handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}*/}
                                     {/*           customSearchKey={'full_phone_number'}*/}
                                     {/*           resource={'User'}/>*/}
-                                    <FormInput label={t('Select Patient (Search By phone number')} name={'patient_id'}
+                                    <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                                searchConfigs={{minLength: 5}}
                                                inputType={'resourceSelect'}
 
@@ -364,7 +364,7 @@ function Appointment({isPatient}) {
                                                     <FormInput label={t('Phone number')}
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient','phone_number']}
-                                                               maxLength={9}
+                                                               maxLength={10}
                                                                 initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : phoneNumberRef?.current}
 
                                                                rules={[{required: true}]}/>
@@ -490,6 +490,7 @@ function Appointment({isPatient}) {
                                                                    initialValue={null}
                                                                    initialData={[]}
                                                                    resource={'Taxonomy'}
+                                                                   customSearchKey={'title'}
                                                                    resourceParams={{
                                                                        type: Resources.TaxonomyTypes.SPECIALTY,
                                                                        has_parent: 0

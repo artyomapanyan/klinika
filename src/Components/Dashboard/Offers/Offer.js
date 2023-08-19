@@ -11,6 +11,7 @@ import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
 import CancelComponent from "../../Fragments/CancelComponent";
+import dayjs from "dayjs";
 
 const resource = 'Offer';
 
@@ -25,6 +26,7 @@ function Offer() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [oldPrice, setOldPrice] = useState(0)
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -64,6 +66,7 @@ function Offer() {
         }
     }
  const handleValuesChange = (changed,all)=>{
+        console.log(all, changed, 'aaaaaaa')
         if(changed.clinic_id) {
             setData((prevData)=>({
                 ...prevData,
@@ -71,6 +74,8 @@ function Offer() {
             }))
         }
      setChangeValuesState(changed)
+     setOldPrice(all?.old_price)
+
      if(Object.keys(changed).length > 0) {
          dispatch({
              type: 'DASHBOARD_STATE',
@@ -101,13 +106,24 @@ function Offer() {
                     <Row>
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Old price ')} name={'old_price'} initialValue={data?.old_price} rules={[{required: true}]} />
-                            <FormInput label={t('New price')} name={'new_price'} initialValue={data?.new_price} rules={[{required: true}]} />
-                            <FormInput label={t('Begins at')} name={'begins_at'} initialValue={data?.begins_at} inputType={'date'} rules={[
+                            <FormInput label={t('New price')} name={'new_price'} inputDisabled={!oldPrice} initialValue={data?.new_price} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        if(+value > +oldPrice){
+                                            return Promise.reject('New price cannot be bigger then old price')
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+
+                            ]} />
+                            <FormInput label={t('Begins at')} name={'begins_at'}  initialValue={data?.begins_at} inputType={'date'} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{
                                         if (formRef?.current.getFieldValue()?.expired_at) {
-                                            if(formRef?.current.getFieldValue()?.expired_at < formRef?.current.getFieldValue()?.begins_at) {
+                                            if(formRef?.current.getFieldValue()?.expired_at <= formRef?.current.getFieldValue()?.begins_at) {
                                                 return Promise.reject('Begins at cannot be greater than expired at')
                                             }
                                         }
