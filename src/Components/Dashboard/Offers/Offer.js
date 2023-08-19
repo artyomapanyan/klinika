@@ -26,6 +26,7 @@ function Offer() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [oldPrice, setOldPrice] = useState(0)
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -65,6 +66,7 @@ function Offer() {
         }
     }
  const handleValuesChange = (changed,all)=>{
+        console.log(all, changed, 'aaaaaaa')
         if(changed.clinic_id) {
             setData((prevData)=>({
                 ...prevData,
@@ -72,6 +74,8 @@ function Offer() {
             }))
         }
      setChangeValuesState(changed)
+     setOldPrice(all?.old_price)
+
      if(Object.keys(changed).length > 0) {
          dispatch({
              type: 'DASHBOARD_STATE',
@@ -80,7 +84,7 @@ function Offer() {
      }
  }
 
-console.log(changeValuesState, 'fffddd')
+console.log(+oldPrice, 'fffddd')
 
     return(
         <div >
@@ -105,18 +109,18 @@ console.log(changeValuesState, 'fffddd')
                             <FormInput label={t('Old price ')} name={'old_price'} initialValue={data?.old_price} rules={[{required: true}]} />
                             <FormInput label={t('New price')} name={'new_price'} initialValue={data?.new_price} rules={[
                                 {required: true},
-                                // {
-                                //     validator:(rule,value)=>{
-                                //         console.log(+value, 'aaa')
-                                //         if(+value > +changeValuesState?.old_price){
-                                //             return Promise.reject('min age 18')
-                                //         }
-                                //         return Promise.resolve();
-                                //     }
-                                // }
+                                {
+                                    validator:(rule,value)=>{
+                                        //console.log(+value,Number(changeValuesState?.old_price), 'aaa')
+                                        if(+value > +oldPrice){
+                                            return Promise.reject('New price cannot be bigger then old price')
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
 
                             ]} />
-                            <FormInput label={t('Begins at')} name={'begins_at'} initialValue={data?.begins_at} inputType={'date'} rules={[
+                            <FormInput label={t('Begins at')} name={'begins_at'}  initialValue={data?.begins_at} inputType={'date'} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{

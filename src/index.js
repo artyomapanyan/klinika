@@ -24,7 +24,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use((request) => {
 
-    request.headers.local_timezone = 'UTC'
+    request.headers.local_timezone = dayjs.tz.guess()
 
     return request
 

@@ -490,6 +490,7 @@ function Appointment({isPatient}) {
                                                                    initialValue={null}
                                                                    initialData={[]}
                                                                    resource={'Taxonomy'}
+                                                                   customSearchKey={'title'}
                                                                    resourceParams={{
                                                                        type: Resources.TaxonomyTypes.SPECIALTY,
                                                                        has_parent: 0

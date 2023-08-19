@@ -28,6 +28,13 @@ function Users() {
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
+                    title:t('Phone number'),
+                    dataIndex:'phone_number',
+                    key:'phone_number',
+
+
+                },
+                {
                     dataIndex:['updated_at','iso_string'],
                     title:t('Create date'),
                     key:'date',

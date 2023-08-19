@@ -267,7 +267,7 @@ function Incoice() {
                                        initialData={data?.appointment ? [data?.appointment] : []}
                                        handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                        customSearchKey={'phone_number'}
-                                       resource={'Appointment'}/>
+                                       resource={'AppointmentsClinicOwner'}/>
 
                         </div>
                         <div style={{width: '30%'}}>

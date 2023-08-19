@@ -42,10 +42,10 @@ function DashboardHeader() {
 
 
     return <Row>
-        <Col lg={14} md={24}>
+        <Col lg={18} md={24}>
             {loading?null:handleReturnHeaderPart()}
         </Col>
-        <Col lg={10} md={24}  className={'lng_select'}>
+        <Col lg={6} md={24}  className={'lng_select'}>
             {pathname==='clinics'  ? <div></div> : <HeaderAccount />}
         </Col>
     </Row>

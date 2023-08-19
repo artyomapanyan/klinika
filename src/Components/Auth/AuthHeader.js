@@ -4,10 +4,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {ArrowLeftOutlined, DownOutlined} from "@ant-design/icons";
 import React from "react";
 import logo from "../../dist/Img/logo_klinika.png";
+import {useNavigate} from "react-router";
 
 function AuthHeader({headerState}) {
      let lngs = useSelector((state) => state?.app?.current_locale);
     let dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const items = [
         {
@@ -34,7 +36,7 @@ function AuthHeader({headerState}) {
             {
                 headerState ? <div style={{marginLeft:'20%'}}>
                     <img src={logo} alt={'logo_klinika'}/>
-                </div> : <Button style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
+                </div> : <Button onClick={()=>navigate(-1)} style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
             }
             <div style={{marginLeft:headerState ? '45%' : '90%', cursor:"pointer"}}>
                 <Dropdown
