@@ -68,7 +68,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                     />
                                 </div>
                                 <div style={{width:'100%'}}>
-                                    <FormInput maxLength={9} label={t('Phone number')} name={'phone_number'} />
+                                    <FormInput maxLength={10} label={t('Phone number')} name={'phone_number'} />
                                 </div>
                             </div>
                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}

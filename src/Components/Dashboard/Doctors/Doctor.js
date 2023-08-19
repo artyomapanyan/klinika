@@ -157,7 +157,7 @@ function Doctor() {
                                                resource={'Country'}/>
                                 </div>
                                 <div style={{width: '80%'}}>
-                                    <FormInput label={t('Phone number')} name={'phone_number'} initialValue={data?.phone_number} inputType={'number'} />
+                                    <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} initialValue={data?.phone_number} />
                                 </div>
                             </div>
                             <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />

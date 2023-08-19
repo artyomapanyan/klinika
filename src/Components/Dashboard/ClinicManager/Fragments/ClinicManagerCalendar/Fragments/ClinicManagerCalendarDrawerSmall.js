@@ -67,7 +67,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                             />
                         </div>
                         <div style={{ width: '100%'}}>
-                            <FormInput label={t('Phone number')} name={'phone_number'} maxLength={9} rules={[
+                            <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} rules={[
                                 {required: true},
                             ]}/>
                         </div>

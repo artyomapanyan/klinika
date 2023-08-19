@@ -141,7 +141,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
                                            resource={'Country'}/>
                             </div>
                             <div style={{width:'100%', marginLeft:10}}>
-                                <FormInput label={t('Phone number')} name={'phone_number'} />
+                                <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} />
                             </div>
 
                             <Button loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>Send code</Button>

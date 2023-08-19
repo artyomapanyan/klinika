@@ -152,7 +152,7 @@ function TabGeneralInfo({formRef}) {
                                            resource={'Country'}/>
                             </Col>
                             <Col lg={6}>
-                                <FormInput label={t('Phone number')} name={'phone_number'} rules={[{required: true}]}/>
+                                <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} rules={[{required: true}]}/>
                             </Col>
 
                         </Row>

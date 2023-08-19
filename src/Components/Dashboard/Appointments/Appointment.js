@@ -364,7 +364,7 @@ function Appointment({isPatient}) {
                                                     <FormInput label={t('Phone number')}
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient','phone_number']}
-                                                               maxLength={9}
+                                                               maxLength={10}
                                                                 initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : phoneNumberRef?.current}
 
                                                                rules={[{required: true}]}/>

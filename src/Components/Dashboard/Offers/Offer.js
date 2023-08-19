@@ -11,6 +11,7 @@ import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
 import CancelComponent from "../../Fragments/CancelComponent";
+import dayjs from "dayjs";
 
 const resource = 'Offer';
 
@@ -79,6 +80,7 @@ function Offer() {
      }
  }
 
+console.log(changeValuesState, 'fffddd')
 
     return(
         <div >
@@ -101,7 +103,19 @@ function Offer() {
                     <Row>
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Old price ')} name={'old_price'} initialValue={data?.old_price} rules={[{required: true}]} />
-                            <FormInput label={t('New price')} name={'new_price'} initialValue={data?.new_price} rules={[{required: true}]} />
+                            <FormInput label={t('New price')} name={'new_price'} initialValue={data?.new_price} rules={[
+                                {required: true},
+                                // {
+                                //     validator:(rule,value)=>{
+                                //         console.log(+value, 'aaa')
+                                //         if(+value > +changeValuesState?.old_price){
+                                //             return Promise.reject('min age 18')
+                                //         }
+                                //         return Promise.resolve();
+                                //     }
+                                // }
+
+                            ]} />
                             <FormInput label={t('Begins at')} name={'begins_at'} initialValue={data?.begins_at} inputType={'date'} rules={[
                                 {required: true},
                                 {
