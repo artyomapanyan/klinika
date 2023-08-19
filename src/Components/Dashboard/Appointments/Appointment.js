@@ -310,7 +310,7 @@ function Appointment({isPatient}) {
                                     {/*           //handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}*/}
                                     {/*           customSearchKey={'full_phone_number'}*/}
                                     {/*           resource={'User'}/>*/}
-                                    <FormInput label={t('Select Patient (Search By phone number')} name={'patient_id'}
+                                    <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                                searchConfigs={{minLength: 5}}
                                                inputType={'resourceSelect'}
 

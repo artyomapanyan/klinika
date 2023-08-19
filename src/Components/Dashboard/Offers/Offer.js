@@ -84,7 +84,6 @@ function Offer() {
      }
  }
 
-console.log(+oldPrice, 'fffddd')
 
     return(
         <div >
@@ -107,11 +106,10 @@ console.log(+oldPrice, 'fffddd')
                     <Row>
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Old price ')} name={'old_price'} initialValue={data?.old_price} rules={[{required: true}]} />
-                            <FormInput label={t('New price')} name={'new_price'} initialValue={data?.new_price} rules={[
+                            <FormInput label={t('New price')} name={'new_price'} inputDisabled={!oldPrice} initialValue={data?.new_price} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{
-                                        //console.log(+value,Number(changeValuesState?.old_price), 'aaa')
                                         if(+value > +oldPrice){
                                             return Promise.reject('New price cannot be bigger then old price')
                                         }
@@ -125,7 +123,7 @@ console.log(+oldPrice, 'fffddd')
                                 {
                                     validator:(rule,value)=>{
                                         if (formRef?.current.getFieldValue()?.expired_at) {
-                                            if(formRef?.current.getFieldValue()?.expired_at < formRef?.current.getFieldValue()?.begins_at) {
+                                            if(formRef?.current.getFieldValue()?.expired_at <= formRef?.current.getFieldValue()?.begins_at) {
                                                 return Promise.reject('Begins at cannot be greater than expired at')
                                             }
                                         }
