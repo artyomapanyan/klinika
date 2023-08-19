@@ -32,7 +32,6 @@ function Users() {
                     dataIndex:'phone_number',
                     key:'phone_number',
 
-
                 },
                 {
                     dataIndex:['updated_at','iso_string'],
