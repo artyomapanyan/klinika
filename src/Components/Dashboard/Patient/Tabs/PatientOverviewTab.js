@@ -11,11 +11,11 @@ function PatientOverviewTab(){
         <Col lg={16}>
             <div style={{display:"flex", gap: 24, padding: 24}}>
                 <PatientCardMedications/>
-                <PatientCardRiskFactors/>
+                {/*<PatientCardRiskFactors/>*/}
             </div>
             <div style={{display:"flex", gap: 24, padding: 24}}>
-                <PatientCardAllergy/>
-                <PatientCardChronicDiseases/>
+                {/*<PatientCardAllergy/>*/}
+                {/*<PatientCardChronicDiseases/>*/}
             </div>
             {/*<div style={{padding: 24}}>*/}
             {/*    <PatientCardChart />*/}

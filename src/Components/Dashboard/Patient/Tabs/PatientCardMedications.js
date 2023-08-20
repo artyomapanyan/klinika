@@ -25,6 +25,7 @@ function PatientCardMedications({tab}) {
                 appointment: params.id
             }
         ).then((response) => {
+            console.log(response)
             setPrescriptions(response?.items)
             setLoading(false)
 
