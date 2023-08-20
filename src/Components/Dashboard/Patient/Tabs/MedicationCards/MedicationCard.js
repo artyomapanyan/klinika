@@ -67,7 +67,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
 
                     <div>
                         <div className={"medication_card_text1"}>Note</div>
-                        <div className={"medication_card_text2"}>{el?.note}</div>
+                        <div className={"medication_card_text2"}>{el?.note ? el?.note : 'No note'}</div>
                     </div>
                 </div>
             </Col>

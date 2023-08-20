@@ -13,7 +13,7 @@ import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
 
 const { TextArea } = Input;
-function PatientCardAppointment() {
+function PatientCardAppointment({bigData}) {
     const formRef = useRef();
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
@@ -52,14 +52,20 @@ function PatientCardAppointment() {
                     <Col lg={24}>
                         <Row gutter={[40,0]}>
                             <Col lg={16}>
-                                <TextArea placeholder="Patients condition" rows={8} />
-                                <div align={'right'}>
-                                    <Button style={{right:20, top:-50}} type={'secondary'}>Submit</Button>
-                                </div>
+                                <Form>
+                                    <Form.Item initialValue={bigData?.doctor_notes} name={'dddd'}>
+                                        <TextArea placeholder="Patients condition" rows={8}/>
+                                    </Form.Item>
+                                    <div align={'right'}>
+                                        <Button style={{right:20, top:-70}} type={'secondary'}>Submit</Button>
+                                    </div>
+                                </Form>
+
+
                                 <div style={{width:'100%'}}>
                                     <h1 className={'h1'}>Purpose</h1>
                                     <TextArea placeholder="Add notes here" rows={8} />
-                                    <h1 className={'prescription_text'}>Prescription</h1>
+                                    <h1 className={'prescription_text'}>Prescriptions</h1>
                                     <Row gutter={16} style={{marginTop:-16}}>
                                         {
 

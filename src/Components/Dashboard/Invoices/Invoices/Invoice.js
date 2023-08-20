@@ -152,16 +152,18 @@ function Incoice() {
         fetchedUsers.current = patientData
         name = <>{'Appointment with'}{" "}{item?.patient?.first}{" "}{item?.patient?.last}{' '}{item?.patient?.phone_number}{' '}<div>{item?.booked_at?.iso_string}</div>{' '}<div>{item?.clinic?.name}</div></>
         let searchData = item.phone_number + item.email;
+        setSearchCeys('')
         return [name, item, searchData]
 
 
     }
 
     const onManagers = (item, name, patientData) => {
-        console.log(item, name, patientData)
+
         fetchedUsers.current = patientData
         name = <>{item?.first}{" "}{item?.last}</>
         let searchData = item.phone_number + item.email;
+
         return [name, item, searchData]
 
 
@@ -199,7 +201,6 @@ function Incoice() {
     const handleInvoiceSelect = (e, key,data) => {
 
         postResource('InvoiceItem', 'single', token, e).then((response) => {
-console.log(response)
             const selected_item = data.find(u=>u.id===e);
             formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
             formRef?.current?.setFieldValue(['items', key, 'item_object'], {

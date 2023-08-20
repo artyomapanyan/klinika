@@ -38,6 +38,7 @@ function ClinicManagerCalendar() {
 
     }, [date, update])
 
+    console.log(data)
 
     const filteredData = useMemo(()=>{
         return [...data.workload].map(e=>{
