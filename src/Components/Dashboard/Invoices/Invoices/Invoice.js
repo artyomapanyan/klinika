@@ -303,9 +303,9 @@ console.log(response)
                                                        flexDirection: "row",
                                                        justifyContent: "space-between"
                                                    }}>
-                                                       <div>{
-                                                           searchCeys.length >= 1 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
-                                                       }</div>
+                                                       {/*<div>{*/}
+                                                       {/*    searchCeys.length >= 1 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'*/}
+                                                       {/*}</div>*/}
                                                    </div>
                                                }}
                                                inputType={'resourceSelect'}
