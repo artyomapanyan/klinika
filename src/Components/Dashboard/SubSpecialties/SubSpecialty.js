@@ -32,15 +32,16 @@ function SubSpecialty() {
 
     const onFinish = (values) => {
         setSaveLoading(true)
-        values.type = Resources.TaxonomyTypes.SUB_SPECIALTY
+        values.type = Resources.TaxonomyTypes.SPECIALTY
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
         if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
+            updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
                     setData(response)
+                    navigate(resourceLinks['SubSpecialty'])
                 }
             }).finally(() => {
                 dispatch({
@@ -52,7 +53,7 @@ function SubSpecialty() {
         } else {
             createResource(resource, values, token).then((response) => {
                 if (response?.id) {
-                    navigate(resourceLinks['SubSpecialty'] + response.id)
+                    navigate(resourceLinks['SubSpecialty'])
                 }
 
             }).finally(() => {
@@ -76,6 +77,8 @@ function SubSpecialty() {
     }
     const res = 'SubSpecialty'
 
+    console.log(data)
+
     return (
         <div>
             {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Sub Specialty - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Sub Specialty`)}</h3>}
@@ -88,7 +91,7 @@ function SubSpecialty() {
                 className={'add_create_form'}
             >
                 <div className={"add_edit_content"}>
-                    <FormInput label={t('Title')} name={'title'} initialValue={data?.name} rules={[{required: true}]}/>
+                    <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}
