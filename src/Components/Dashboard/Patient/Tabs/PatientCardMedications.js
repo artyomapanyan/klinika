@@ -58,7 +58,7 @@ function PatientCardMedications({tab}) {
                 {
 
                     prescriptions.map((el) => {
-                        if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY HH:mm') >= dayjs().format('DD-MM-YYYY HH:mm')) {
+                        if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY HH:mm') > dayjs().format('DD-MM-YYYY HH:mm')) {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
                         }
