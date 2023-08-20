@@ -314,7 +314,7 @@ function Appointment({isPatient}) {
                                                searchConfigs={{minLength: 5}}
                                                inputType={'resourceSelect'}
 
-                                               resource={role === 'super' || role === 'admin' ? 'User' : 'Patient'}
+                                               resource={'User'}
                                                resourceParams={{
                                                    type: 'user',
                                                }}
