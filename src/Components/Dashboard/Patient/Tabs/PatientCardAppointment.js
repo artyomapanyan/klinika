@@ -72,10 +72,10 @@ function PatientCardAppointment() {
 
                                     <div style={{marginTop:30}}>
 
-                                        <div>
-                                            <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>
+                                        {/*<div>*/}
+                                        {/*    <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>*/}
 
-                                        </div>
+                                        {/*</div>*/}
                                         <Button onClick={showModal} size={'large'} type={'primary'}>Add medications</Button>
                                         <div>
                                             <Modal className={'medications_modal'} width={752} title="Add medication" footer={false} open={isModalOpen} onCancel={handleCancel}>
@@ -85,20 +85,20 @@ function PatientCardAppointment() {
 
                                     </div>
                                 </div>
-                                <div >
-                                    <AppointmentCheckboxes/>
-                                </div>
+                                {/*<div >*/}
+                                {/*    <AppointmentCheckboxes/>*/}
+                                {/*</div>*/}
                             </Col>
 
 
                             <Col lg={8}>
-                                <div style={{border:"1px solid #cfceca", borderRadius:12, padding:15, display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}} >
-                                    <div style={{ display:"flex", flexDirection:"column", justifyContent: "center", alignItems:"center", width:'60%'}}>
-                                        <h1 className={'h1'}>Possible Diagnoses</h1>
-                                        <p>Describe patient’s current condition. provide symptoms, signs, lab tests, risk factrors, etc...</p>
-                                        <Button type={'secondary'}>How in works?</Button>
-                                    </div>
-                                </div>
+                                {/*<div style={{border:"1px solid #cfceca", borderRadius:12, padding:15, display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}} >*/}
+                                {/*    <div style={{ display:"flex", flexDirection:"column", justifyContent: "center", alignItems:"center", width:'60%'}}>*/}
+                                {/*        <h1 className={'h1'}>Possible Diagnoses</h1>*/}
+                                {/*        <p>Describe patient’s current condition. provide symptoms, signs, lab tests, risk factrors, etc...</p>*/}
+                                {/*        <Button type={'secondary'}>How in works?</Button>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                                 <div className={'patient_appoint_image_div'}>
                                     <h1 className={'h1'}>Files and Images</h1>
                                     <Form ref={formRef}>
@@ -110,9 +110,9 @@ function PatientCardAppointment() {
                                     </Form>
 
                                 </div>
-                                <div style={{marginTop:30}}>
-                                    <AppointmentFollowUpHistory/>
-                                </div>
+                                {/*<div style={{marginTop:30}}>*/}
+                                {/*    <AppointmentFollowUpHistory/>*/}
+                                {/*</div>*/}
                             </Col>
                         </Row>
                     </Col>

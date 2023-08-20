@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Col, Row} from "antd";
 import PatientCardMedications from "./OverviewItems/PatientCardMedications";
 import PatientCardRiskFactors from "./OverviewItems/PatientCardRiskFactors";
@@ -6,11 +6,17 @@ import PatientCardAllergy from "./OverviewItems/PatientCardAllergy";
 import PatientCardChronicDiseases from "./OverviewItems/PatientCardChronicDiseases";
 import PatientCardRight from "./OverviewItems/PatientCardRight";
 import PatientCardChart from "../../../Fragments/Charts/PatientCardChart";
-function PatientOverviewTab(){
+import {postResource} from "../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import {useParams} from "react-router";
+function PatientOverviewTab( tab={tab}){
+
+
+
     return <Row gutter={[16,16]}>
         <Col lg={16}>
             <div style={{display:"flex", gap: 24, padding: 24}}>
-                <PatientCardMedications/>
+                <PatientCardMedications tab={tab}/>
                 {/*<PatientCardRiskFactors/>*/}
             </div>
             <div style={{display:"flex", gap: 24, padding: 24}}>
