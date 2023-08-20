@@ -1,14 +1,14 @@
 import React from 'react';
 import {JitsiMeeting} from "@jitsi/react-sdk";
 
-function JitsiVideo() {
+function JitsiVideo({data}) {
 
 
 
     return(
         <JitsiMeeting
 
-            roomName = "SmoothTinsStealAccordingly"
+            roomName ={`${data?.telehealth?.room_name}`}
             configOverwrite = {{
                 startWithAudioMuted: true,
                 disableModeratorIndicator: true,
@@ -22,7 +22,7 @@ function JitsiVideo() {
                 DISABLE_JOIN_LEAVE_NOTIFICATIONS: true
             }}
             userInfo = {{
-                displayName: 'YOUR_USERNAME'
+                displayName: data?.doctor?.first
             }}
             onApiReady = { (externalApi) => {
 

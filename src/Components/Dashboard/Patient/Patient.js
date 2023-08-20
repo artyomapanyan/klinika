@@ -49,7 +49,6 @@ function Patient() {
 
 
 
-
     return(
         <div style={{marginBottom: 100, marginTop: -120}} >
             <div>
@@ -70,7 +69,7 @@ function Patient() {
                                 <PatientOverviewTab tab={tab}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-                                <PatientCardAppointment/>
+                                <PatientCardAppointment bigData={data}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'video_call'} tab={'Video call'} >
                                 <VideoCall data={data}/>
