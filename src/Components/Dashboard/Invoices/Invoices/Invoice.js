@@ -23,6 +23,8 @@ function Incoice() {
     let token = useSelector((state) => state.auth.token);
     let roleRedux = useSelector((state) => state.auth.selected_role.key);
 
+    const [searchCeys, setSearchCeys] = useState('')
+
     const handleFilterResponse = (data,timeout = 80) => {
 
         let total = 0;
@@ -100,7 +102,6 @@ function Incoice() {
 
     const handleValuesChange = (changed, all) => {
         setChangeValuesState(changed)
-        console.log(all, 'dfffffff')
 
 
         if(Object.keys(changed).length > 0) {
@@ -198,7 +199,7 @@ function Incoice() {
     const handleInvoiceSelect = (e, key,data) => {
 
         postResource('InvoiceItem', 'single', token, e).then((response) => {
-
+console.log(response)
             const selected_item = data.find(u=>u.id===e);
             formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
             formRef?.current?.setFieldValue(['items', key, 'item_object'], {
@@ -217,7 +218,7 @@ function Incoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
-    console.log(roleRedux, 'da')
+    console.log(searchCeys, 'da')
 
     return (
         <div className={"new_invoice_big_div"}>
@@ -251,13 +252,15 @@ function Incoice() {
                                        searchConfigs={{minLength: 3}}
                                        initialValue={data?.appointment?.id}
                                        inputProps={{
-
+                                           onSearch:e=>setSearchCeys(e),
                                            notFoundContent: <div style={{
                                                display: "flex",
                                                flexDirection: "row",
                                                justifyContent: "space-between"
                                            }}>
-                                               <div>Not found</div>
+                                               <div>{
+                                                   searchCeys.length >= 1 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                               }</div>
                                            </div>
                                        }}
                                        resourceParams={{
@@ -267,7 +270,7 @@ function Incoice() {
                                        initialData={data?.appointment ? [data?.appointment] : []}
                                        handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
                                        customSearchKey={'phone_number'}
-                                       resource={'AppointmentsClinicOwner'}/>
+                                       resource={'Appointment'}/>
 
                         </div>
                         <div style={{width: '30%'}}>
@@ -293,6 +296,18 @@ function Incoice() {
                                 <div style={{width: '100%'}}>
                                     <FormInput label={t('Client manager (Search By phone number)')} name={'client_manager_id'}
                                                searchConfigs={{minLength: 3}}
+                                               inputProps={{
+                                                   onSearch:e=>setSearchCeys(e),
+                                                   notFoundContent: <div style={{
+                                                       display: "flex",
+                                                       flexDirection: "row",
+                                                       justifyContent: "space-between"
+                                                   }}>
+                                                       <div>{
+                                                           searchCeys.length >= 1 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                       }</div>
+                                                   </div>
+                                               }}
                                                inputType={'resourceSelect'}
                                                rules={[{required: true}]}
                                                resource={roleRedux === 'admin' || roleRedux === 'super' ? 'User' : 'Patient'}

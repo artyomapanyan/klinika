@@ -36,7 +36,7 @@ function ResourceSelectPaginated({
   const {loading} = loadingState;
   const {data} = dataState;
 
-  console.log(data,'data')
+
 
     useEffect(()=>{
         let needsUpdate = false
