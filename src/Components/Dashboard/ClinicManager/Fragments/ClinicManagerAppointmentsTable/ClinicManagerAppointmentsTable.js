@@ -199,8 +199,8 @@ function ClinicManagerAppointmentsTable() {
                                 title: 'Date',
                                 dataIndex: 'booked_at',
                                 key: 'booked_at',
-                                filterDropdown: (props)=><DateFilterElement filterProps={props}/>,
-                                filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
+                                // filterDropdown: (props)=><DateFilterElement filterProps={props}/>,
+                                // filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
                                 sorter:true,
                                 defaultSortOrder: 'descend',
                                 render:(e, record) => {

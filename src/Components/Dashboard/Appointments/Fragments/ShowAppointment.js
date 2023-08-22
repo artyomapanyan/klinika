@@ -82,6 +82,7 @@ function ShowAppointment() {
         navigate(-1)
     }
 
+    console.log(data)
     return(
         <div className={'app_show_big_div'}>
             <div>
@@ -221,7 +222,7 @@ function ShowAppointment() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{data?.doctor_notes || <span style={{fontStyle: 'italic'}}>N/A</span>}</td>
+                                    <td>{data?.appointment_doctor_notes || <span style={{fontStyle: 'italic'}}>N/A</span>}</td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -1,13 +1,44 @@
 
 import Vector from "../../../../../dist/icons/Vector.png";
 import VectorHend from "../../../../../dist/icons/VectorHend.png";
-import {Avatar, Space, Tag} from "antd";
+import {Avatar, Drawer, Space, Tag} from "antd";
 
 import plusPurple from "../../../../../dist/icons/plus-purple.svg";
 import {UserOutlined} from "@ant-design/icons";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {postResource} from "../../../../Functions/api_calls";
+import {useSelector} from "react-redux";
+import dayjs from "dayjs";
+import DoctorReworkedCalendarDrawer
+    from "../../../DoctorReworked/Fragments/DoctorReworkedCalendar/Fragments/DoctorReworkedCalendarDrawer";
+import Preloader from "../../../../Preloader";
 
-function PatientCardRight() {
+function PatientCardRight({id, patientId, dataClinic}) {
+    const token = useSelector((state) => state.auth.token);
+    const [appointments, setAppointments] = useState()
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('Appointment', 'list', token, `/${id}/upcoming-appointments-patient`).then((response) => {
+            setAppointments(response)
+            setLoading(false)
+        })
+    }, [open])
+
+
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
+
+
     return(
         <div className={'Patient_card_right_div'} style={{marginRight: 24, marginTop: 24}}>
             {/*<div className={'Patient_card_right_img'}>*/}
@@ -54,33 +85,32 @@ function PatientCardRight() {
                         Next Appointments:
                     </div>
                     <div>
-                        <div> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>Add</span></div>
+                        <div onClick={showDrawer} style={{cursor: 'pointer'}}> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>Add</span></div>
                     </div>
                 </div>
-                <div className={'patient_next_app_content'}>
-                    <div>
-                        <Avatar  size={48}  shape="square" icon={<UserOutlined />} />
-                    </div>
-                    <div className={'patient_next_app_texts'}>
-                        <div><Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>Cardiology</Tag> 30 July 2022</div>
-                        <div className={'patient_next_app_name_text'}>
-                            Annette Black
-                        </div>
+                {
+                    loading ? <Preloader /> : appointments?.items?.map((el) => {
+                        return <div key={el.id} className={'patient_next_app_content'}>
 
-                    </div>
-                </div>
-                <div className={'patient_next_app_content'}>
-                    <div>
-                        <Avatar  size={48}  shape="square" icon={<UserOutlined />} />
-                    </div>
-                    <div className={'patient_next_app_texts'}>
-                        <div><Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>Cardiology</Tag> 30 July 2022</div>
-                        <div className={'patient_next_app_name_text'}>
-                            Annette Black
-                        </div>
+                            <div>
+                                <Avatar  size={48}  shape="square" icon={<UserOutlined />} />
+                            </div>
+                            <div className={'patient_next_app_texts'}>
+                                <div>
+                                    <Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title}</Tag>
+                                    {dayjs(el?.booked_at?.iso_string).format('YYYY MMM DD')}
+                                </div>
+                                <div className={'patient_next_app_name_text'}>
+                                    {el?.patient?.first} {el?.patient?.last}
+                                </div>
 
-                    </div>
-                </div>
+                            </div>
+                        </div>
+                    })
+                }
+                <Drawer width={411} title="Add User" placement="right" onClose={onClose} open={open}>
+                    {open?<DoctorReworkedCalendarDrawer setOpen={setOpen}  patient={false} patientId={patientId} dataClinic={dataClinic}/>:null}
+                </Drawer>
                 {/*<PatientCardNextAppoint/>*/}
             </div>
         </div>

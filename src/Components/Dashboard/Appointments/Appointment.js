@@ -44,6 +44,7 @@ function Appointment({isPatient}) {
     const [serviceTypeState, setServiceTypeState] = useState([])
     const [availableTimeState, setAvailableTimesState] = useState([])
     const [availableDateState, setAvailableDateState] = useState([])
+    const [searchCeys, setSearchCeys] = useState('')
 
 
 
@@ -278,7 +279,7 @@ function Appointment({isPatient}) {
 
     }
 
-
+console.log(searchCeys)
 
     return (
         <div>
@@ -319,10 +320,16 @@ function Appointment({isPatient}) {
                                                    type: 'user',
                                                }}
                                                inputProps={{
-                                                   onSearch:e=>phoneNumberRef.current = e,
+                                                   onSearch:e=>{
+                                                       setSearchCeys(e)
+                                                       return phoneNumberRef.current = e
+                                                   },
 
                                                    notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-                                                       <div>Not found</div>
+                                                       {
+                                                           searchCeys?.length < 5 ? <div>Not found</div> : <div>Number didn't find in the system. Please enter correct phone number.</div>
+                                                       }
+
                                                        <Button onClick={()=>{
                                                            formRef.current.resetFields(['patient_id','first'])
                                                            setData((prevState)=>({

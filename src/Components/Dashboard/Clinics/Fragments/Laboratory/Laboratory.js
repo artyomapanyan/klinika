@@ -48,22 +48,22 @@ function Laboratory() {
 
     return(
         <div  style={{background: "#ffffff", padding: '10px 80px'}} >
-            <div align={'center'} style={{fontSize: 30}}>In developing</div>
+            {/*<div align={'center'} style={{fontSize: 30}}>In developing</div>*/}
             {/*<div className={'add_edit_content'}>*/}
-            {/*    /!*<Collapse*!/*/}
-            {/*    /!*    bordered={false}*!/*/}
-            {/*    /!*    defaultActiveKey={['1']}*!/*/}
-            {/*    /!*    expandIconPosition={'end'}*!/*/}
-            {/*    /!*    expandIcon={(panelProps) =><div>{panelProps.isActive ?*!/*/}
-            {/*    /!*        <div><img alt={'icons'} src={arrowUpPurple}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :*!/*/}
-            {/*    /!*        <div><img alt={'icons'} src={arrowDownPurple}/> <span className={'patient_collapse_icon'}>Expend</span></div>}</div>}*!/*/}
-            {/*    /!*>*!/*/}
-            {/*    /!*    <Panel className={'collapse_panel'} expandTextPosition={'end'} header="PatientCardAppointment Details" key="1">*!/*/}
-            {/*    /!*        <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>*!/*/}
-            {/*    /!*    </Panel>*!/*/}
-            {/*    /!*</Collapse>*!/*/}
+                {/*<Collapse*/}
+                {/*    bordered={false}*/}
+                {/*    defaultActiveKey={['1']}*/}
+                {/*    expandIconPosition={'end'}*/}
+                {/*    expandIcon={(panelProps) =><div>{panelProps.isActive ?*/}
+                {/*        <div><img alt={'icons'} src={arrowUpPurple}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :*/}
+                {/*        <div><img alt={'icons'} src={arrowDownPurple}/> <span className={'patient_collapse_icon'}>Expend</span></div>}</div>}*/}
+                {/*>*/}
+                {/*    <Panel className={'collapse_panel'} expandTextPosition={'end'} header="PatientCardAppointment Details" key="1">*/}
+                {/*        <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>*/}
+                {/*    </Panel>*/}
+                {/*</Collapse>*/}
 
-            {/*    <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>*/}
+                <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
 
 
             {/*</div>*/}

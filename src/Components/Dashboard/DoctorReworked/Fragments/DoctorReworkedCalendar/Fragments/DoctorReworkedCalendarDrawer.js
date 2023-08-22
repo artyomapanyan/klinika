@@ -8,11 +8,13 @@ import {getServiceTypes} from "../../../../../../functions";
 import DateTimeSelect from "./DateTimeSelect";
 import {createResource} from "../../../../../Functions/api_calls";
 
-function DoctorReworkedCalendarDrawer({setOpen}) {
+function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataClinic}) {
     const authRedux = useSelector((state) => state?.auth);
     const lng = useSelector((state) => state?.app?.current_locale);
     let token = useSelector((state) => state.auth.token);
+    let role = useSelector((state) => state.auth.selected_role.key);
     const formRef = useRef();
+
 
     const [bookedAtState, setBookedAtState] = useState('');
     const [loading, setLoading] = useState(false);
@@ -20,10 +22,16 @@ function DoctorReworkedCalendarDrawer({setOpen}) {
     const [date, setDate1] = useState(null)
 
 
+
     const onNewAppointment = (values) => {
         setLoading(true)
         values.doctor_id = authRedux?.user?.id
         values.booked_at = bookedAtState+' '+values.booked_time;
+        if(values?.patient_id){
+            values.patient_id = values?.patient_id
+        } else {
+            values.patient_id = patientId
+        }
 
 
         createResource('Appointment', values, token).then((response) => {
@@ -50,7 +58,7 @@ function DoctorReworkedCalendarDrawer({setOpen}) {
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
     }
-
+console.log([dataClinic?.clinic]?.clinic, authRedux?.clinics)
 
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''}>
@@ -65,37 +73,41 @@ function DoctorReworkedCalendarDrawer({setOpen}) {
                 }}
 
             >
-                <FormInput label={t('Select Patient (Search by phone number)')} name={'patient_id'}
-                           inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={null}
-                           searchConfigs={{minLength: 3}}
-                           // inputProps={{
-                           //     notFoundContent: <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                           //         <div>Not found</div>
-                           //     </div>
-                           // }}
-                           resourceParams={{
-                               type: 'patient',
+                {
+                    patient ? <FormInput label={t('Select Patient (Search by phone number)')} name={'patient_id'}
+                                         inputType={'resourceSelect'}
+                                         rules={[{required: true}]}
+                                         initialValue={null}
+                                         searchConfigs={{minLength: 3}}
+                        // inputProps={{
+                        //     notFoundContent: <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                        //         <div>Not found</div>
+                        //     </div>
+                        // }}
+                                         resourceParams={{
+                                             type: 'patient',
 
-                           }}
-                           initialData={[]}
-                           handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
-                           customSearchKey={'full_phone_number'}
-                           resource={'Patient'}/>
+                                         }}
+                                         initialData={[]}
+                                         handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
+                                         customSearchKey={'full_phone_number'}
+                                         resource={'Patient'}/> : <div></div>
+                }
+
 
 
                 <FormInput label={t('Clinic')} name={'clinic_id'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
-                           initialData={authRedux?.clinics}
+                           initialData={role === 'doctor' ? authRedux?.clinics : [dataClinic?.clinic]}
+
                 />
-                {formState.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
+                {formState?.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
-                    initialData={getServiceTypes(authRedux?.clinics.find(e=>e.id===formState.clinic_id)?.services)}
+                    initialData={role === 'doctor' ? getServiceTypes(authRedux?.clinics?.find(e=>e.id===formState?.clinic_id)?.services) : getServiceTypes([dataClinic?.clinic]?.find(e=>e.id===formState?.clinic_id)?.services)}
                 />:null}
                 <FormInput label={t('Specialties')} name={'specialty_id'}
                            inputType={'resourceSelect'}
@@ -109,7 +121,7 @@ function DoctorReworkedCalendarDrawer({setOpen}) {
                            }}
                 />
 
-                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} />
+                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 
                 <div style={{paddingTop:20}}>
                     <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>

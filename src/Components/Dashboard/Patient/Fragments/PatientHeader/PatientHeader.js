@@ -32,7 +32,7 @@ function PatientHeader({data}) {
                             <Avatar style={{borderRadius: 8}} shape="square" size={110} icon={<UserOutlined />} />
                             <div className={'patient_head_text'}>
                                 <div className={'patient_head_name'}>{data?.patient?.first} {data?.patient?.last}</div>
-                                <div className={'text_norm'}>{data?.patient?.dob ? dayjs(data?.patient?.dob).fromNow(true) : ''} {data?.patient?.gender == 0 ? 'male' : 'female'} </div>
+                                <div className={'text_norm'}>{data?.patient?.dob ? dayjs(data?.patient?.dob).fromNow(true) : ''} {data?.patient?.gender == 1 ? 'male' : 'female'} </div>
                                 <div><Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>ID: {data?.patient?.id}</Tag></div>
                             </div>
 
@@ -57,13 +57,13 @@ function PatientHeader({data}) {
                                     <div className={'addres_Insurance'}>Insurance</div>
                                     <Space className={'text_norm'}>{data?.patient?.insurance_company?.name}  <span style={{fontWeight:700}}>#{data?.patient?.insurance_company?.id}
                                     </span>
-                                        <Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',
-                                            color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >
-                                            {
-                                                dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'
-                                            }
+                                        {/*<Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',*/}
+                                        {/*    color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >*/}
+                                        {/*    {*/}
+                                        {/*        dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'*/}
+                                        {/*    }*/}
 
-                                        </Tag>
+                                        {/*</Tag>*/}
                                     </Space>
                                 </div>
                             </div>

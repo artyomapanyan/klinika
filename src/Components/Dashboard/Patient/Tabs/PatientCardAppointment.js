@@ -13,7 +13,7 @@ import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
 
 const { TextArea } = Input;
-function PatientCardAppointment({bigData}) {
+function PatientCardAppointment({bigData, id}) {
     const formRef = useRef();
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
@@ -21,6 +21,7 @@ function PatientCardAppointment({bigData}) {
     const [prescriptions, setPrescriptions] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
+    const [loadingSubmit, setLoadingSubmit] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
     const showModal = (data) => {
         setIsModalOpen(data??{});
@@ -43,6 +44,14 @@ function PatientCardAppointment({bigData}) {
     }, [addDeleteState])
 
 
+    const onFinish = (values) => {
+        setLoadingSubmit(true)
+        postResource('Appointment', 'NotePurpose', token, `${id}/add-notes-and-purpose`, values).then(() => {
+            setLoadingSubmit(false)
+
+        })
+    }
+
 
     return(
         <Layout.Content>
@@ -52,19 +61,25 @@ function PatientCardAppointment({bigData}) {
                     <Col lg={24}>
                         <Row gutter={[40,0]}>
                             <Col lg={16}>
-                                <Form>
-                                    <Form.Item initialValue={bigData?.doctor_notes} name={'dddd'}>
+                                <Form
+                                    onFinish={onFinish}
+                                >
+                                    <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
                                         <TextArea placeholder="Patients condition" rows={8}/>
                                     </Form.Item>
                                     <div align={'right'}>
-                                        <Button style={{right:20, top:-70}} type={'secondary'}>Submit</Button>
+                                        <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>Submit</Button>
                                     </div>
+                                    <h1 className={'h1'}>Purpose</h1>
+                                    <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
+                                        <TextArea placeholder="Add notes here" rows={8} />
+                                    </Form.Item>
+
                                 </Form>
 
 
                                 <div style={{width:'100%'}}>
-                                    <h1 className={'h1'}>Purpose</h1>
-                                    <TextArea placeholder="Add notes here" rows={8} />
+
                                     <h1 className={'prescription_text'}>Prescriptions</h1>
                                     <Row gutter={16} style={{marginTop:-16}}>
                                         {

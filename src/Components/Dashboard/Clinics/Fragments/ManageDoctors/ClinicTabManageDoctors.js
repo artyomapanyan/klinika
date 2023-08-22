@@ -10,7 +10,7 @@ import ManageDoctorsModal from "./Fragments/ManageDoctorsModal";
 import Preloader from "../../../../Preloader";
 
 
-function ClinicTabManageDoctors() {
+function ClinicTabManageDoctors({dataService}) {
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
 
@@ -39,6 +39,7 @@ function ClinicTabManageDoctors() {
         })
     }
 
+
     return (
         <div>
             <div  className={'add_edit_content'}>
@@ -64,7 +65,7 @@ function ClinicTabManageDoctors() {
                 <ManageDoctorsModal isModalOpen={isModalOpen} onCreate={onCreate}/>
             </div >
             <div className={'add_edit_content'}>
-                <ClinicApprovedDoctors />
+                <ClinicApprovedDoctors dataService={dataService} />
             </div>
             
         </div>

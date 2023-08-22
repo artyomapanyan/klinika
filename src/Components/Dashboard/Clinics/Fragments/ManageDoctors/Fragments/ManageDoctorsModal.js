@@ -41,7 +41,7 @@ function ManageDoctorsModal({isModalOpen,onCreate}) {
                         {/*           resource={'Doctor'}/>*/}
 
 
-                        <FormInput label={t('Search by phone number or name')} name={'doctor_id'}
+                        <FormInput label={t('Search by phone number or name or plid')} name={'doctor_id'}
                                    searchConfigs={{minLength: 5}}
                                    inputType={'resourceSelect'}
                                    rules={[{required: true}]}

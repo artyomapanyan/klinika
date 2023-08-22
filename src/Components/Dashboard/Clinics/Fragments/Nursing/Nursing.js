@@ -46,9 +46,9 @@ function Nursing() {
 
     return(
         <div className={'add_edit_content'}>
-            <div align={'center'} style={{fontSize: 30}}>In developing</div>
+            {/*<div align={'center'} style={{fontSize: 30}}>In developing</div>*/}
             {/*<div className={'add_edit_content'}>*/}
-            {/*    <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>*/}
+                <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
             {/*</div>*/}
             {/*<ClinicNursingTasks />*/}
         </div>

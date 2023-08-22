@@ -16,13 +16,16 @@ import {useSearchParams} from "react-router-dom";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
+import ResourceLins from "../../ResourceLinks";
 
 
 let resource = 'Appointment'
+let res = 'DoctorReworked'
 function Patient() {
     const params = useParams();
     const navigate = useNavigate()
     let language = useSelector((state) => state.app.current_locale)
+    let role = useSelector((state) => state.auth.selected_role.key)
 
 
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -43,11 +46,10 @@ function Patient() {
     }
 
     const onBack = () => {
-        navigate(-1)
+        navigate(role === 'doctor' ? ResourceLins[res] : ResourceLins[resource])
     }
 
-
-
+//console.log(data?.patient?.id, 'ddddssss')
 
     return(
         <div style={{marginBottom: 100, marginTop: -120}} >
@@ -64,12 +66,12 @@ function Patient() {
                     </div>
 
                     <div style={{backgroundColor:'white', margin:'0 24px',  borderRadius: '20px'}}>
-                        <TabBars onChange={handleChange} activeKey={tab}>
+                        <TabBars onChange={handleChange} activeKey={tab} >
                             <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
-                                <PatientOverviewTab tab={tab}/>
+                                <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-                                <PatientCardAppointment bigData={data}/>
+                                <PatientCardAppointment bigData={data} id={params.id}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'video_call'} tab={'Video call'} >
                                 <VideoCall data={data}/>

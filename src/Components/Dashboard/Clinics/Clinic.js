@@ -46,7 +46,6 @@ function Clinic() {
         setLang(e.target.value)
     }
 
-
     return (
         <div  className={'clinic_tab_big_div'}>
             {/*<div className={'clinic_header_div'}>*/}
@@ -72,28 +71,28 @@ function Clinic() {
                 </items>
                 {params.id && <items key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
                     {/*<SecondClinicTabManageDoctors  />*/}
-                    <ClinicTabManageDoctors/>
+                    <ClinicTabManageDoctors dataService={dataState?.data}/>
                 </items>}
-                {params.id && <items key={'working'} tab={'Working Hours'}>
+                {params.id && dataState.data.has_telehealth_service ? <items key={'working'} tab={'Telehealth'}>
                     <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>
-                </items>}
+                </items> : null}
                 {dataState.data.has_clinic_visit_service && params.id ?
                     <items key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
                         <ClinicVisit/>
-                    </items> : <div></div>}
+                    </items> : null}
                 {dataState.data.has_home_visit_service && params.id ?
                     <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit/>
-                    </items> : <div></div>}
+                    </items> : null}
 
 
 
                 {dataState.data.has_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
                         <Laboratory />
-                    </items> : <div></div>}
+                    </items> : null}
                 {dataState.data.has_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing/>
-                    </items> : <div></div>}
+                    </items> : null}
                 </ClinicTabBars>}
           </div>
     )
