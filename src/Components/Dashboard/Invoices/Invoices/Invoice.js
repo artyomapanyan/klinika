@@ -49,7 +49,7 @@ function Incoice() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
-    const [a, seta] = useState(null)
+
 
 
 
@@ -151,7 +151,6 @@ function Incoice() {
     }
 
     const searchByNumber = (item, name, patientData) => {
-        seta(patientData)
         fetchedUsers.current = patientData
         name = <>{'Appointment with'}{" "}{item?.patient?.first}{" "}{item?.patient?.last}{' '}{item?.patient?.phone_number}{' '}<div>{item?.booked_at?.iso_string}</div>{' '}<div>{item?.clinic?.name}</div></>
         let searchData = item.phone_number + item.email;
