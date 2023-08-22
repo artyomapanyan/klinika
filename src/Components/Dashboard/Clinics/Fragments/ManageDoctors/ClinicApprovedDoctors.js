@@ -6,7 +6,7 @@ import {Button, Form, Modal} from "antd";
 import DoctorsHoursModal from "./DoctorsHoursModal";
 
 
-function ClinicApprovedDoctors() {
+function ClinicApprovedDoctors({dataService}) {
     const params = useParams();
 
     const [isModalOpen, setIsModalOpen] = useState({});
@@ -61,42 +61,52 @@ function ClinicApprovedDoctors() {
                         },
                         {
                             dataIndex: ['doctor'],
-                            title: 'Telehealth',
+                            title: dataService?.has_telehealth_service ? 'Telehealth' : ' ',
                             key: 'telehealth',
                             render:(e, record)=> {
-                                return <div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'telehealth',['telehealth_activated_at','telehealth_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
+                                return <div  style={{padding:2}}>{dataService?.has_telehealth_service ? <Button
+                                    onClick={() => showModal(record.id, 'telehealth', ['telehealth_activated_at', 'telehealth_diagnosis_price'])}
+                                    type={'primary'} size={'large'}>Manage Working hours</Button> : null}</div>
                             }
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: 'Clinic Visit',
+                            title: dataService?.has_clinic_visit_service ? 'Clinic Visit' : ' ',
                             key: 'clinic_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'clinic_visit', ['clinic_visit_activated_at','clinic_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
+                                return<div  style={{padding:2}}>{dataService?.has_clinic_visit_service ? <Button
+                                    onClick={() => showModal(record.id, 'clinic_visit', ['clinic_visit_activated_at', 'clinic_visit_diagnosis_price'])}
+                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: 'Home Visit',
+                            title: dataService?.has_home_visit_service ? 'Home Visit' : ' ',
                             key: 'home_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'home_visit', ['home_visit_activated_at','home_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
+                                return<div  style={{padding:2}}>{dataService?.has_home_visit_service ? <Button
+                                    onClick={() => showModal(record.id, 'home_visit', ['home_visit_activated_at', 'home_visit_diagnosis_price'])}
+                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: 'Physical Therapy Home Visit',
+                            title: dataService?.has_physical_therapy_home_visit_service ? 'Physical Therapy Home Visit' : ' ',
                             key: 'physical_therapy_home_visit',
                             render:(e, record)=> {
-                                return<div style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_home_visit', ['physical_therapy_home_visit_activated_at','physical_therapy_home_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
+                                return<div style={{padding:2}}>{dataService?.has_physical_therapy_home_visit_service ? <Button
+                                    onClick={() => showModal(record.id, 'physical_therapy_home_visit', ['physical_therapy_home_visit_activated_at', 'physical_therapy_home_visit_diagnosis_price'])}
+                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: 'Physical Therapy Clinic Visit',
+                            title: dataService?.has_physical_therapy_clinic_visit_service ? 'Physical Therapy Clinic Visit' : ' ',
                             key: 'physical_therapy_clinic_visit',
                             render:(e, record)=> {
-                                return<div  style={{padding:2}}><Button onClick={()=>showModal(record.id,'physical_therapy_clinic_visit', ['physical_therapy_clinic_visit_activated_at','physical_therapy_clinic_visit_diagnosis_price'])} type={'primary'} size={'large'}>Manage Working hours</Button></div>
+                                return<div  style={{padding:2}}>{dataService?.has_physical_therapy_clinic_visit_service ? <Button
+                                    onClick={() => showModal(record.id, 'physical_therapy_clinic_visit', ['physical_therapy_clinic_visit_activated_at', 'physical_therapy_clinic_visit_diagnosis_price'])}
+                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {

@@ -46,7 +46,6 @@ function Clinic() {
         setLang(e.target.value)
     }
 
-
     return (
         <div  className={'clinic_tab_big_div'}>
             {/*<div className={'clinic_header_div'}>*/}
@@ -72,7 +71,7 @@ function Clinic() {
                 </items>
                 {params.id && <items key={'manage'} tab={'Manage Doctors'} disabled={!params.id}>
                     {/*<SecondClinicTabManageDoctors  />*/}
-                    <ClinicTabManageDoctors/>
+                    <ClinicTabManageDoctors dataService={dataState?.data}/>
                 </items>}
                 {params.id && <items key={'working'} tab={'Working Hours'}>
                     <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>

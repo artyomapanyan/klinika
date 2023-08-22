@@ -44,7 +44,7 @@ function PatientCardMedications({tab}) {
         })
     }
 
-
+console.log(prescriptions)
 
     //.filter((e) => e?.name?.toLowerCase().includes(search?.toLowerCase()))
 
@@ -58,7 +58,7 @@ function PatientCardMedications({tab}) {
                 {
 
                     prescriptions.map((el) => {
-                        if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY HH:mm') > dayjs().format('DD-MM-YYYY HH:mm')) {
+                        if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY') >= dayjs().format('DD-MM-YYYY')) {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
                         }
@@ -78,11 +78,12 @@ function PatientCardMedications({tab}) {
                      {
 
                          searchPrescriptions ? searchPrescriptions.map((el) => {
-                             if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY HH:mm') < dayjs().format('DD-MM-YYYY HH:mm')) {
+
+                             if(dayjs(el?.end_date?.iso_string).add(-2, 'day').format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY')) {
                                  return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions} setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
                              }
                          }) : prescriptions.map((el) => {
-                             if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY HH:mm') < dayjs().format('DD-MM-YYYY HH:mm')) {
+                             if(dayjs(el?.end_date?.iso_string).add(-2, 'day').format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY')) {
                                  return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions} setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
                              }
                          })

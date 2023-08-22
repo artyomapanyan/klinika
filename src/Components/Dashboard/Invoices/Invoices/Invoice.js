@@ -49,6 +49,8 @@ function Incoice() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [a, seta] = useState(null)
+
 
 
     const fetchedUsers = useRef([]);
@@ -149,6 +151,7 @@ function Incoice() {
     }
 
     const searchByNumber = (item, name, patientData) => {
+        seta(patientData)
         fetchedUsers.current = patientData
         name = <>{'Appointment with'}{" "}{item?.patient?.first}{" "}{item?.patient?.last}{' '}{item?.patient?.phone_number}{' '}<div>{item?.booked_at?.iso_string}</div>{' '}<div>{item?.clinic?.name}</div></>
         let searchData = item.phone_number + item.email;
@@ -259,10 +262,10 @@ function Incoice() {
                                                flexDirection: "row",
                                                justifyContent: "space-between"
                                            }}>
-                                               <div>Not found</div>
-                                               {/*<div>{*/}
-                                               {/*    searchCeys.length >= 1 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'*/}
-                                               {/*}</div>*/}
+                                               {/*<div>Not found</div>*/}
+                                               <div>{
+                                                   searchCeys.length >= 5 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                               }</div>
                                            </div>
                                        }}
                                        resourceParams={{
@@ -305,10 +308,9 @@ function Incoice() {
                                                        flexDirection: "row",
                                                        justifyContent: "space-between"
                                                    }}>
-                                                       <div>not found</div>
-                                                       {/*<div>{*/}
-                                                       {/*    searchCeys.length >= 1 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'*/}
-                                                       {/*}</div>*/}
+                                                       <div>{
+                                                           searchCeys.length >= 5 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                       }</div>
                                                    </div>
                                                }}
                                                inputType={'resourceSelect'}

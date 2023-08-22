@@ -44,11 +44,15 @@ function PatientCollapse({data}) {
                         </div>
                         <div>
                             <div className={'collapse_content_head'}>Offer</div>
-                            <div className={'collapse_content_foot'}>{data?.offer?.title}</div>
+                            <div className={'collapse_content_foot'}>{data?.offer ? data?.offer?.title : <span style={{margin: "0 10px"}}>-</span>}</div>
                         </div>
                         <div>
                             <div className={'collapse_content_head'}>Payment</div>
-                            <div className={'collapse_content_foot'}>23 323 SAR <Tag className={'ant_tag'} color="green" >Paid</Tag></div>
+                            <div className={'collapse_content_foot'}>{data?.primaryInvoice?.total_price} SAR
+                                {<Tag className={'ant_tag'} style={{color: data?.primaryInvoice?.status == 2 ? '#6DAF56' : '#ee4e4e', backgroundColor: data?.primaryInvoice?.status == 2 ? '#6DAF5630' : '#f6d7d7', margin: '0 8px', fontSize: 11}}>
+                                    { data?.primaryInvoice?.status == 2 ? "Paid" : "No payed"}
+                                </Tag>}
+                            </div>
                         </div>
                     </div>
                 </Panel>

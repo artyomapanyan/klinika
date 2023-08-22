@@ -88,7 +88,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
             <div>
                 <div>
                     <div className={'big_date_div'}>
-                        { formState?.clinic_id && formState?.patient_id && formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
+                        { formState?.clinic_id &&  formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
                             return  <div key={key}
                                      className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                      onClick={() => onDateClick(startDate.add(key, 'day'))}>

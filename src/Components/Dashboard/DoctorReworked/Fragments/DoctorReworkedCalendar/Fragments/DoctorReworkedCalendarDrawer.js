@@ -8,7 +8,7 @@ import {getServiceTypes} from "../../../../../../functions";
 import DateTimeSelect from "./DateTimeSelect";
 import {createResource} from "../../../../../Functions/api_calls";
 
-function DoctorReworkedCalendarDrawer({setOpen}) {
+function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId}) {
     const authRedux = useSelector((state) => state?.auth);
     const lng = useSelector((state) => state?.app?.current_locale);
     let token = useSelector((state) => state.auth.token);
@@ -19,11 +19,17 @@ function DoctorReworkedCalendarDrawer({setOpen}) {
     const [formState, setFormState] = useState({});
     const [date, setDate1] = useState(null)
 
+    console.log(patientId, 'ffff2')
 
     const onNewAppointment = (values) => {
         setLoading(true)
         values.doctor_id = authRedux?.user?.id
         values.booked_at = bookedAtState+' '+values.booked_time;
+        if(values?.patient_id){
+            values.patient_id = values?.patient_id
+        } else {
+            values.patient_id = patientId
+        }
 
 
         createResource('Appointment', values, token).then((response) => {
@@ -65,24 +71,27 @@ function DoctorReworkedCalendarDrawer({setOpen}) {
                 }}
 
             >
-                <FormInput label={t('Select Patient (Search by phone number)')} name={'patient_id'}
-                           inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={null}
-                           searchConfigs={{minLength: 3}}
-                           // inputProps={{
-                           //     notFoundContent: <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                           //         <div>Not found</div>
-                           //     </div>
-                           // }}
-                           resourceParams={{
-                               type: 'patient',
+                {
+                    patient ? <FormInput label={t('Select Patient (Search by phone number)')} name={'patient_id'}
+                                         inputType={'resourceSelect'}
+                                         rules={[{required: true}]}
+                                         initialValue={null}
+                                         searchConfigs={{minLength: 3}}
+                        // inputProps={{
+                        //     notFoundContent: <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                        //         <div>Not found</div>
+                        //     </div>
+                        // }}
+                                         resourceParams={{
+                                             type: 'patient',
 
-                           }}
-                           initialData={[]}
-                           handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
-                           customSearchKey={'full_phone_number'}
-                           resource={'Patient'}/>
+                                         }}
+                                         initialData={[]}
+                                         handleMapItems={(item, name, patientData) => searchByNumber(item, name, patientData)}
+                                         customSearchKey={'full_phone_number'}
+                                         resource={'Patient'}/> : <div></div>
+                }
+
 
 
                 <FormInput label={t('Clinic')} name={'clinic_id'}

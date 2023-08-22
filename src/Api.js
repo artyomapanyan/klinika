@@ -226,6 +226,10 @@ let api = {
                 url: `${endpoint}${version}/appointments/`,
                 method: 'POST',
             },
+            NotePurpose:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'PUT',
+            },
         }
     },
     {
