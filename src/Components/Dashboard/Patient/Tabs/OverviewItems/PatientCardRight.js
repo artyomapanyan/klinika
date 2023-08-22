@@ -13,7 +13,7 @@ import DoctorReworkedCalendarDrawer
     from "../../../DoctorReworked/Fragments/DoctorReworkedCalendar/Fragments/DoctorReworkedCalendarDrawer";
 import Preloader from "../../../../Preloader";
 
-function PatientCardRight({id, patientId}) {
+function PatientCardRight({id, patientId, dataClinic}) {
     const token = useSelector((state) => state.auth.token);
     const [appointments, setAppointments] = useState()
     const [open, setOpen] = useState(false);
@@ -110,7 +110,7 @@ function PatientCardRight({id, patientId}) {
                     })
                 }
                 <Drawer width={411} title="Add User" placement="right" onClose={onClose} open={open}>
-                    {open?<DoctorReworkedCalendarDrawer setOpen={setOpen}  patient={false} patientId={patientId}/>:null}
+                    {open?<DoctorReworkedCalendarDrawer setOpen={setOpen}  patient={false} patientId={patientId} dataClinic={dataClinic}/>:null}
                 </Drawer>
                 {/*<PatientCardNextAppoint/>*/}
             </div>

@@ -9,10 +9,11 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDate1}) {
+function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDate1, dataClinic}) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
+    let role = useSelector((state) => state.auth.selected_role.key);
 
     const [startDate, setStartDate] = useState(dayjs())
 
@@ -44,7 +45,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     const onDateClick = (e) => {
         setDate1(e)
         setTimeLoading(true)
-        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + clinicId, {
+        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
             service: formState?.service_type,
             date: dayjs(e).format('YYYY-MM-DD')
         }).then((response) => {

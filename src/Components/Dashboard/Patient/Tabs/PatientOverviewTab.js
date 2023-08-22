@@ -9,7 +9,7 @@ import PatientCardChart from "../../../Fragments/Charts/PatientCardChart";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {useParams} from "react-router";
-function PatientOverviewTab({tab = {tab}, id, patientId}){
+function PatientOverviewTab({tab = {tab}, id, patientId, dataClinic}){
 
 
 
@@ -29,7 +29,7 @@ function PatientOverviewTab({tab = {tab}, id, patientId}){
 
         </Col>
         <Col lg={8}>
-            <PatientCardRight id={id} patientId={patientId}/>
+            <PatientCardRight id={id} patientId={patientId} dataClinic={dataClinic}/>
         </Col>
 
     </Row>

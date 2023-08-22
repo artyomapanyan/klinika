@@ -68,7 +68,7 @@ function Patient() {
                     <div style={{backgroundColor:'white', margin:'0 24px',  borderRadius: '20px'}}>
                         <TabBars onChange={handleChange} activeKey={tab} >
                             <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
-                                <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id}/>
+                                <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
                                 <PatientCardAppointment bigData={data} id={params.id}/>
