@@ -89,10 +89,10 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
                 <div style={{display: 'flex', gap: 8, marginTop:-16}}>
                     <div style={{width: '50%'}}>
-                        <FormInput label={t('Frequency')} name={'frequency'} initialValue={data?.frequency} />
+                        <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} />
                     </div>
                     <div style={{width: '50%'}}>
-                        <FormInput label={t('Duration')} name={'duration'} initialValue={data?.duration}/>
+                        <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration}/>
                     </div>
 
                     <div style={{width: '50%'}}>

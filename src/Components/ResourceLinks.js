@@ -46,6 +46,7 @@ const ResourceLins = {
     Report:'/dashboard/reports/',
     UserUpdateSelf:'/users/update-self/',
     Patient:'/dashboard/users/patient-list/',
+    DoctorReworked:'/dashboard/doctor-reworked/',
 
 }
 export default ResourceLins

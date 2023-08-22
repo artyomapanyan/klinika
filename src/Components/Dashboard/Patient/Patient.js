@@ -16,13 +16,16 @@ import {useSearchParams} from "react-router-dom";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
+import ResourceLins from "../../ResourceLinks";
 
 
 let resource = 'Appointment'
+let res = 'DoctorReworked'
 function Patient() {
     const params = useParams();
     const navigate = useNavigate()
     let language = useSelector((state) => state.app.current_locale)
+    let role = useSelector((state) => state.auth.selected_role.key)
 
 
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
@@ -43,7 +46,7 @@ function Patient() {
     }
 
     const onBack = () => {
-        navigate(-1)
+        navigate(role === 'doctor' ? ResourceLins[res] : ResourceLins[resource])
     }
 
 //console.log(data?.patient?.id, 'ddddssss')
