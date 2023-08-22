@@ -264,7 +264,7 @@ function Incoice() {
                                            }}>
                                                {/*<div>Not found</div>*/}
                                                <div>{
-                                                   searchCeys.length >= 5 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                   searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
                                                }</div>
                                            </div>
                                        }}
@@ -309,7 +309,7 @@ function Incoice() {
                                                        justifyContent: "space-between"
                                                    }}>
                                                        <div>{
-                                                           searchCeys.length >= 5 ? <span style={{color: 'red'}}>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                           searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
                                                        }</div>
                                                    </div>
                                                }}

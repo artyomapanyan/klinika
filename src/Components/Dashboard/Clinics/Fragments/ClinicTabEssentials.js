@@ -325,6 +325,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [searchCeys, setSearchCeys] = useState('')
 
 
 
@@ -507,6 +508,19 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        resource={'User'}/>
                             <FormInput inputProps={{mode:'multiple'}} label={t('Manager, search by phone number')} name={'managers'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
+                                       inputProps={{
+                                           onSearch:e=>setSearchCeys(e),
+                                           notFoundContent: <div style={{
+                                               display: "flex",
+                                               flexDirection: "row",
+                                               justifyContent: "space-between"
+                                           }}>
+
+                                               <div>{
+                                                   searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                               }</div>
+                                           </div>
+                                       }}
                                        searchConfigs={{minLength: 3}}
                                        initialValue={data?.managers?.map(e=>e.id)}
                                        initialData={data?.managers ??[]}

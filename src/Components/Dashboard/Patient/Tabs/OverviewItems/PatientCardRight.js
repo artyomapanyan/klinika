@@ -20,7 +20,6 @@ function PatientCardRight({id, patientId, dataClinic}) {
     const [loading, setLoading] = useState(false);
 
 
-    console.log(open)
 
     useEffect(() => {
         setLoading(true)
