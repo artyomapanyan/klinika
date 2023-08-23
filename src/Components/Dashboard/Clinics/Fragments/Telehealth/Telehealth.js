@@ -20,6 +20,7 @@ function Telehealth({loadingState, tab}) {
         setLoad(true)
         postResource(resource,'WorkingHours',token,params.id,{service}).then(response => {
             setData(response)
+            console.log(response, 'l')
             setLoad(false)
         })
 

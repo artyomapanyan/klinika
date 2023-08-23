@@ -33,7 +33,7 @@ function ClinicWorkingHours({loadingState,tab}) {
             ...prevState,
             ...prevValues?.working_hours
         }))
-        console.log(values, prevValues)
+
         if (params.id) {
             updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
                 setData(response)

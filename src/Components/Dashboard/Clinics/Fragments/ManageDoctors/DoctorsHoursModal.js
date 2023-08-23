@@ -9,6 +9,7 @@ import Preloader from "../../../../Preloader";
 
 
 const resource = "ClinicDoctor";
+const res = "Clinic";
 function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     let token = useSelector((state) => state.auth.token);
     const params = useParams();
@@ -18,6 +19,15 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [loading, setLoading] = useState(true)
 
 
+
+    useEffect(()=>{
+
+        postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
+            console.log(response, 'dddddssss')
+
+        })
+
+    }, [id,type]);
 
 
     useEffect(() => {
