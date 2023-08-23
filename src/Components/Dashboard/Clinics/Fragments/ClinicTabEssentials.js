@@ -451,6 +451,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     }
 
 
+    console.log(data?.managers)
 
     return(
         <div >
@@ -506,10 +507,13 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        initialData={reduxInfo?.auth?.selected_role?.key === 'clinic-owner' ? reduxInfo?.auth?.user ? [reduxInfo?.auth?.user]:[] : data?.owner ? [data?.owner] : []}
                                        customSearchKey={'name_or_phone'}
                                        resource={'User'}/>
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Manager, search by phone number')} name={'managers'} inputType={'resourceSelect'}
+                            <FormInput
+
+                                       label={t('Manager, search by phone number')} name={'managers'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        inputProps={{
                                            onSearch:e=>setSearchCeys(e),
+                                           mode:'multiple',
                                            notFoundContent: <div style={{
                                                display: "flex",
                                                flexDirection: "row",

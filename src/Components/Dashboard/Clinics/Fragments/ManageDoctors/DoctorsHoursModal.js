@@ -17,13 +17,14 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [data, setData] = useState([])
     const [docData, setDocData] = useState({})
     const [loading, setLoading] = useState(true)
+    const [clinichoursData, setClinichoursData] = useState({})
 
 
 
     useEffect(()=>{
 
         postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
-            console.log(response, 'dddddssss')
+            setClinichoursData(response)
 
         })
 
@@ -69,7 +70,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
     return(
         <div className={'doctor_working_hours_conteiner'}>
-            {loading?<Preloader/>:<WorkingHours handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} />}
+            {loading?<Preloader/>:<WorkingHours handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
         </div>
     )
 }
