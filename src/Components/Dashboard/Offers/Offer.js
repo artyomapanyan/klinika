@@ -27,6 +27,7 @@ function Offer() {
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
     const [oldPrice, setOldPrice] = useState(0)
+    const [newPrice, setNewPrice] = useState(0)
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -75,6 +76,7 @@ function Offer() {
         }
      setChangeValuesState(changed)
      setOldPrice(all?.old_price)
+     setNewPrice(all?.new_price)
 
      if(Object.keys(changed).length > 0) {
          dispatch({
@@ -105,8 +107,20 @@ function Offer() {
                 <div className={'add_edit_content'}>
                     <Row>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('Old price ')} name={'old_price'} initialValue={data?.old_price} rules={[{required: true}]} />
-                            <FormInput label={t('New price')} name={'new_price'} inputDisabled={!oldPrice} initialValue={data?.new_price} rules={[
+                            <FormInput label={t('Old price ')} name={'old_price'} initialValue={data?.old_price} rules={[
+                                {required: true},
+                                {
+                                    validator:(rule,value)=>{
+                                        console.log(newPrice, value)
+                                        if(+value < +newPrice){
+                                            return Promise.reject('New price cannot be bigger then old price')
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+
+                            ]} />
+                            <FormInput label={t('New price')} name={'new_price'}  initialValue={data?.new_price} inputType={'number'} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{

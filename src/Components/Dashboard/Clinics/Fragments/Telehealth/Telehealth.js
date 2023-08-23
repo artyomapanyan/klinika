@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {useSelector} from "react-redux";
-import { postResource, updateResource} from "../../../../Functions/api_calls";
+import React, {useEffect, useState} from "react";
+import {postResource, updateResource} from "../../../../Functions/api_calls";
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 import Preloader from "../../../../Preloader";
 
-
 const resource = "Clinic";
-const service = 'main'
-function ClinicWorkingHours({loadingState,tab}) {
+const service = 'telehealth'
+function Telehealth({loadingState, tab}) {
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
     const {loading, setLoading} = loadingState;
@@ -19,10 +18,10 @@ function ClinicWorkingHours({loadingState,tab}) {
 
     useEffect(()=>{
         setLoad(true)
-            postResource(resource,'WorkingHours',token,params.id,{service}).then(response => {
-                setData(response)
-                setLoad(false)
-            })
+        postResource(resource,'WorkingHours',token,params.id,{service}).then(response => {
+            setData(response)
+            setLoad(false)
+        })
 
     }, [tab]);
 
@@ -33,7 +32,6 @@ function ClinicWorkingHours({loadingState,tab}) {
             ...prevState,
             ...prevValues?.working_hours
         }))
-        console.log(values, prevValues)
         if (params.id) {
             updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
                 setData(response)
@@ -44,15 +42,15 @@ function ClinicWorkingHours({loadingState,tab}) {
     }
 
 
-    let type = "main"
+    let type = "telehealth"
 
     return(
         <div className={'add_edit_content'}>
             {
-                load ? <Preloader /> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type} sincWitMain={false}/>
+                load ? <Preloader /> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
             }
 
         </div>
     )
 }
-export default ClinicWorkingHours;
+export default Telehealth;

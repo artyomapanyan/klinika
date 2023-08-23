@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
@@ -114,10 +114,12 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
         <h1 className={'h1'}>{t(`Working Hours`)}</h1>
         <Space>
           <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'}
-                     label={'Sync with main working hours'}>
-            <Switch onChange={onChangeSwitch} checkedChildren={<CheckOutlined/>}
-                    unCheckedChildren={<CloseOutlined/>}/>
-          </Form.Item>
+                                     label={sincWitMain ? 'Sync with main working hours' : ''}>
+              <Switch hidden={!sincWitMain} onChange={onChangeSwitch} checkedChildren={<CheckOutlined/>}
+                      unCheckedChildren={<CloseOutlined/>}/>
+            </Form.Item>
+
+
 
         </Space></div> : <Space>
         <FormInput inputType='number' inputNumberStyle={{width: 200}} label={'Diagnosis price'}
