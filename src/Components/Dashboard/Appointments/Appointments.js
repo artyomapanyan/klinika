@@ -160,7 +160,7 @@ function Appointments() {
                     {
                         dataIndex:['booked_at','iso_string'],
                         title:t('Appointment Date'),
-                        key:'booked_at',
+                        key:'booked_at_date',
                         filterDropdown: (props)=><DateFilterElement filterProps={props}/>,
                         filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
                         sorter:true,

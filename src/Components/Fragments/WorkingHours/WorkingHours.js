@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
@@ -101,6 +101,10 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
     setSwitchChange(val)
   }
 
+  // console.log(clinichoursData, 'ddddddsssssaaaaa')
+  // let aaa = Object.values(clinichoursData).map((el)=> el.)
+  //
+  // console.log(aaa,'fff')
 
   return (loading ? <Preloader/> : <Form
     onValuesChange={handleValuesChange}
@@ -114,10 +118,12 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
         <h1 className={'h1'}>{t(`Working Hours`)}</h1>
         <Space>
           <Form.Item name={'sync_with_main'} initialValue={false} className={'right-label'}
-                     label={'Sync with main working hours'}>
-            <Switch onChange={onChangeSwitch} checkedChildren={<CheckOutlined/>}
-                    unCheckedChildren={<CloseOutlined/>}/>
-          </Form.Item>
+                                     label={sincWitMain ? 'Sync with main working hours' : ''}>
+              <Switch hidden={!sincWitMain} onChange={onChangeSwitch} checkedChildren={<CheckOutlined/>}
+                      unCheckedChildren={<CloseOutlined/>}/>
+            </Form.Item>
+
+
 
         </Space></div> : <Space>
         <FormInput inputType='number' inputNumberStyle={{width: 200}} label={'Diagnosis price'}
@@ -159,6 +165,9 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
               </Col>
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
+
+
+
                   let currentOptions = [...Resources.dateOptions]
                   if (key > 0 && workingDay?.length) {
                     currentOptions = currentOptions.slice(

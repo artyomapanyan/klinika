@@ -292,7 +292,7 @@ import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
-import {Button, Col, Form, Row, Space, Switch} from "antd";
+import {Button, Col, Form, Input, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -426,7 +426,13 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             })
         }
     }
-
+    // useEffect(()=>{
+    //
+    //         postResource('Country','list',token,null,{per_page:5000}).then(responses => {
+    //             setCountryCode(responses)
+    //         })
+    //
+    // },[])
     const handleMapItems = (item,name)=>{
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
         item.id = item.phone_code
@@ -443,6 +449,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
     }
+
 
 
     return(
@@ -499,10 +506,13 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        initialData={reduxInfo?.auth?.selected_role?.key === 'clinic-owner' ? reduxInfo?.auth?.user ? [reduxInfo?.auth?.user]:[] : data?.owner ? [data?.owner] : []}
                                        customSearchKey={'name_or_phone'}
                                        resource={'User'}/>
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Manager, search by phone number')} name={'managers'} inputType={'resourceSelect'}
+                            <FormInput
+
+                                       label={t('Manager, search by phone number')} name={'managers'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        inputProps={{
                                            onSearch:e=>setSearchCeys(e),
+                                           mode:'multiple',
                                            notFoundContent: <div style={{
                                                display: "flex",
                                                flexDirection: "row",

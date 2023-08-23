@@ -17,6 +17,7 @@ import ClinicTabManageDoctors from "./Fragments/ManageDoctors/ClinicTabManageDoc
 import "../../Dashboard/OwnerClinics/ClinicOwnerStyles/ClinicOwnerStyles.sass"
 import Laboratory from "./Fragments/Laboratory/Laboratory";
 import Nursing from "./Fragments/Nursing/Nursing";
+import Telehealth from "./Fragments/Telehealth/Telehealth";
 
 
 const resource = "Clinic"
@@ -73,25 +74,28 @@ function Clinic() {
                     {/*<SecondClinicTabManageDoctors  />*/}
                     <ClinicTabManageDoctors dataService={dataState?.data}/>
                 </items>}
-                {params.id && dataState.data.has_telehealth_service ? <items key={'working'} tab={'Telehealth'}>
-                    <ClinicWorkingHours loadingState={loadingState} dataState={dataState}/>
+                {params.id ? <items key={'working'} tab={'Working hours'}>
+                    <ClinicWorkingHours loadingState={loadingState} dataState={dataState} tab={tab}/>
+                </items> : null}
+                {params.id && dataState.data.has_telehealth_service ? <items key={'Telehealth'} tab={'Telehealth'}>
+                    <Telehealth loadingState={loadingState} dataState={dataState} tab={tab}/>
                 </items> : null}
                 {dataState.data.has_clinic_visit_service && params.id ?
                     <items key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
-                        <ClinicVisit/>
+                        <ClinicVisit tab={tab}/>
                     </items> : null}
                 {dataState.data.has_home_visit_service && params.id ?
                     <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
-                        <HomeVisit/>
+                        <HomeVisit tab={tab}/>
                     </items> : null}
 
 
 
                 {dataState.data.has_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
-                        <Laboratory />
+                        <Laboratory tab={tab}/>
                     </items> : null}
                 {dataState.data.has_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
-                        <Nursing/>
+                        <Nursing tab={tab}/>
                     </items> : null}
                 </ClinicTabBars>}
           </div>

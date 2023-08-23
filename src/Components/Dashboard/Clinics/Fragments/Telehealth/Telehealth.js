@@ -1,32 +1,31 @@
-import React, {useEffect, useState} from "react";
-import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
-import {postResource, updateResource} from "../../../../Functions/api_calls";
+import {useParams} from "react-router";
 import {useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router";
+import React, {useEffect, useState} from "react";
+import {postResource, updateResource} from "../../../../Functions/api_calls";
+import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 import Preloader from "../../../../Preloader";
 
-
 const resource = "Clinic";
-function HomeVisit({tab}) {
-    let token = useSelector((state) => state.auth.token);
-    const navigate = useNavigate();
+const service = 'telehealth'
+function Telehealth({loadingState, tab}) {
     const params = useParams();
+    let token = useSelector((state) => state.auth.token);
+    const {loading, setLoading} = loadingState;
+    const [load, setLoad] = useState(false);
 
     const [data, setData] = useState({})
-    const [loading, setLoading] = useState(false)
 
 
-
-    let type = "home_visit";
-
-    useEffect(() => {
-        setLoading(true)
-        postResource(resource,'WorkingHours',token,params.id,{service:'home_visit'}).then(responses => {
-            setData(responses)
-            setLoading(false)
+    useEffect(()=>{
+        setLoad(true)
+        postResource(resource,'WorkingHours',token,params.id,{service}).then(response => {
+            setData(response)
+            console.log(response, 'l')
+            setLoad(false)
         })
 
     }, [tab]);
+
 
     const onFinish = (values,prevValues) => {
         setLoading(true)
@@ -44,14 +43,15 @@ function HomeVisit({tab}) {
     }
 
 
+    let type = "telehealth"
+
     return(
         <div className={'add_edit_content'}>
             {
-                loading ? <Preloader/> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+                load ? <Preloader /> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
             }
-
 
         </div>
     )
 }
-export default HomeVisit;
+export default Telehealth;
