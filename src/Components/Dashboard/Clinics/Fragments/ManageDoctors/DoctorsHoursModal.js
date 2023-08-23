@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import {postResource, updateResource} from "../../../../Functions/api_calls";
 import WorkingHours from "../../../../Fragments/WorkingHours/WorkingHours";
 import Preloader from "../../../../Preloader";
+import Resources from "../../../../../store/Resources";
 
 
 
@@ -24,6 +25,13 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     useEffect(()=>{
 
         postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
+            Object.keys(response).forEach(key=>{
+                response[key] = response[key].map(e=>({
+                start:Resources.dateOptions.findIndex(u=>u.value===e.opens_at),
+                end:Resources.dateOptions.findIndex(u=>u.value===e.closes_at)
+            }))
+            })
+
             setClinichoursData(response)
 
         })
@@ -34,13 +42,28 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     useEffect(() => {
 
         setLoading(true)
-        postResource(resource,'WorkingHours',token,id,{service:type}).then(response => {
-            setData(response?.working_hours)
+        Promise.all([
+            postResource(resource,'WorkingHours',token,id,{service:type}),
+            postResource(res,'WorkingHours',token,params.id,{service: type})
+
+        ])
+       .then(responses => {
+            setData(responses[0]?.working_hours)
             setDocData({
-                price:response?.clinic_doctor[keys[1]],
-                status:response?.clinic_doctor[keys[0]]
+                price:responses[0]?.clinic_doctor[keys[1]],
+                status:responses[0]?.clinic_doctor[keys[0]]
             })
-            setLoading(false)
+           let clinicTimes = responses[1];
+           Object.keys(clinicTimes).forEach(key=>{
+               clinicTimes[key] =clinicTimes[key].map(e=>({
+                   start:Resources.dateOptions.findIndex(u=>u.value===e.opens_at),
+                   end:Resources.dateOptions.findIndex(u=>u.value===e.closes_at)
+               }))
+           })
+
+           setClinichoursData(clinicTimes)
+
+           setLoading(false)
         })
 
     },[type,id]);
@@ -70,7 +93,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
     return(
         <div className={'doctor_working_hours_conteiner'}>
-            {loading?<Preloader/>:<WorkingHours handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
+            {loading?<Preloader/>:<WorkingHours timeLimits={clinichoursData}  handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
         </div>
     )
 }

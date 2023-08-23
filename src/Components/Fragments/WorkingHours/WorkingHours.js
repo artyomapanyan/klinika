@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData,timeLimits}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
@@ -143,7 +143,18 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
           <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
         </div> : Object.keys(workingData).map((dataKey, iKey) => {
           let workingDay = workingData[dataKey]
+          let currentTimes = [];
 
+          if(timeLimits){
+            timeLimits[dataKey].forEach(data=>{
+              currentTimes.push( Resources.dateOptions.slice(data.start,data.end+1))
+            })
+          }else{
+            currentTimes = [...Resources.dateOptions]
+          }
+
+
+          console.log(currentTimes)
           return workingDay && <div key={iKey}>
 
             <Row>
@@ -168,7 +179,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
 
-                  let currentOptions = [...Resources.dateOptions]
+                  let currentOptions =[...currentTimes].flat()
                   if (key > 0 && workingDay?.length) {
                     currentOptions = currentOptions.slice(
                       currentOptions.findIndex(
@@ -202,11 +213,9 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                           className={'working_houre_margin'}
                           style={{width: 120,}}
                           options={
-                            currentOptions.slice(
-                              currentOptions.findIndex(
-                                e => e?.value === workingDay[0].opens_at
-                              ) + 1, currentOptions.length
-                            )}
+                            workingDay[key]?.opens_at && timeLimits?currentTimes.find(e=>e.find(u=>u.value=== workingDay[key].opens_at)).slice(
+                                currentTimes.find(e=>e.find(u=>u.value=== workingDay[key].opens_at)).findIndex(e => e?.value === workingDay[key].opens_at) + 1, currentTimes.find(e=>e.find(u=>u.value=== workingDay[key].opens_at)).length
+                            ):currentOptions}
                         />
                       </Form.Item>
                       <Form.Item
