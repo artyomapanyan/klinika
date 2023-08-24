@@ -172,8 +172,13 @@ function MyMapComponent({data,formRef}) {
                         onLoad={onLoad}
                         onPlaceChanged={onPlaceChanged}
                     >
-                        <Form.Item name={'address'}>
-                            <Input  style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}} />
+                        <Form.Item name={'address'}  rules={[
+                            {
+                                required: true,
+                                message: 'Please input your address!',
+                            },
+                        ]}>
+                            <Input  style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>
                         </Form.Item>
                     </Autocomplete>
                 </Col>

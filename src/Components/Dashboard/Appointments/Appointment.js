@@ -272,8 +272,8 @@ function Appointment({isPatient}) {
 
     const searchByNumber = (item, name, patientData) => {
         fetchedUsers.current = patientData
-        name = <>{item.phone_number}{" "}{item.email}</>
-        let searchData = item.phone_number+item.email;
+        name = <>{item?.phone_number}{" "}{item?.email}</>
+        let searchData = item?.phone_number+item?.email;
         return [name, item,searchData]
 
 
@@ -511,13 +511,13 @@ console.log(searchCeys)
                                                                            inputType={'resourceSelect'}
                                                                            rules={[{required: true}]}
                                                                            handleMapItems={(item, name) => {
-                                                                               item.id = item.doctor?.id
+                                                                               item.id = item?.doctor?.id
                                                                                return [name, item]
                                                                            }}
                                                                            disabled={!data.specialty_id && true}
                                                                            resourceParams={{
-                                                                               specialty: data.specialty_id,
-                                                                               clinic: data.clinic_id
+                                                                               specialty: data?.specialty_id,
+                                                                               clinic: data?.clinic_id
                                                                            }}
                                                                            customSearchKey={'name'}
                                                                            initialValue={null}

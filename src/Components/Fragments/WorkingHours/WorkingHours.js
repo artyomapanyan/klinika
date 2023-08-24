@@ -28,11 +28,13 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
   }
   const handleFilterData = (data) => {
     let newData = {...data}
-    Object.keys(newData).forEach(key => {
-      newData[key] = newData[key].map(e => ({...e, is_day_off: !e.is_day_off}))
+    console.log(newData ,'d')
+    Object.keys(newData)?.forEach(key => {
+      newData[key] = newData[key]?.map(e => ({...e, is_day_off: !e?.is_day_off}))
     })
     return newData
   }
+
 
   useEffect(() => {
     formRef?.current?.setFieldsValue({
@@ -62,7 +64,7 @@ console.log(values)
       Object.keys(values.working_hours).forEach(key => {
         working_hours = [...working_hours, ...values.working_hours[key]]
       })
-      values.working_hours = working_hours.map(e => {
+      values.working_hours = working_hours?.map(e => {
         if(e.is_day_off!==undefined){
           e.is_day_off = !e.is_day_off
         }else{
@@ -147,7 +149,7 @@ console.log(values)
       <div>
         {switchChange ? <div className={'add_edit_content'} align={"center"}>
           <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
-        </div> : Object.keys(workingData).map((dataKey, iKey) => {
+        </div> : Object.keys(workingData)?.map((dataKey, iKey) => {
           let workingDay = workingData[dataKey]
           let currentTimes = [];
 

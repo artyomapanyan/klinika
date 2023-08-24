@@ -451,7 +451,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     }
 
 
-    console.log(data?.managers)
+
 
     return(
         <div >
