@@ -95,7 +95,7 @@ function MyMapComponent({data,formRef}) {
     const apiKey = 'AIzaSyD9MbMz7FESa79v-nntPfcxJHYTw8Am1S4'
 
     const uluru = { lat: 24.845909101072877, lng: 39.569421557617204 }
-
+console.log(data)
 
     return(
         <LoadScript
@@ -177,7 +177,10 @@ function MyMapComponent({data,formRef}) {
                                 required: true,
                                 message: 'Please input your address!',
                             },
-                        ]}>
+
+                        ]}
+                                   initialValue={data?.location?.address1}
+                        >
                             <Input  style={{paddingLeft:16, paddingTop:13, paddingBottom:13, borderRadius:12}}/>
                         </Form.Item>
                     </Autocomplete>
