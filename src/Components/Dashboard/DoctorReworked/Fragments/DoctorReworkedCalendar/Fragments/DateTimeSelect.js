@@ -57,6 +57,39 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         setIsClicked(true)
     }
 
+
+    // useEffect(() => {
+    //     if(formState?.clinic_id &&  formState?.service_type && formState?.specialty_id) {
+    //         Promise.all([
+    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+    //                 service: formState?.service_type,
+    //                 date: startDate.format('YYYY-MM-DD')}),
+    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+    //                 service: formState?.service_type,
+    //                 date: startDate.format('YYYY-MM-DD')}),
+    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+    //                 service: formState?.service_type,
+    //                 date: startDate.format('YYYY-MM-DD')}),
+    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+    //                 service: formState?.service_type,
+    //                 date: startDate.format('YYYY-MM-DD')}),
+    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+    //                 service: formState?.service_type,
+    //                 date: startDate.format('YYYY-MM-DD')}),
+    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+    //                 service: formState?.service_type,
+    //                 date: startDate.format('YYYY-MM-DD')}),
+    //
+    //         ]).then((response) => {
+    //             console.log(response, 'dddddddddd')
+    //         })
+    //     }
+    //
+    // }, [formState?.clinic_id, formState?.service_type, formState?.specialty_id])
+
+
+
+
     useEffect(() => {
        if(formState?.patient_id && formState?.clinic_id && formState?.service_type && formState?.specialty_id && bookedAtState) {
            onDateClick(date)
@@ -90,6 +123,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
                 <div>
                     <div className={'big_date_div'}>
                         { formState?.clinic_id &&  formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
+                            console.log(key, 'key')
                             return  <div key={key}
                                      className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                      onClick={() => onDateClick(startDate.add(key, 'day'))}>

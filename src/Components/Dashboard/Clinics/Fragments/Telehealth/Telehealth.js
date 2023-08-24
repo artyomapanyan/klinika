@@ -20,7 +20,6 @@ function Telehealth({loadingState, tab}) {
         setLoad(true)
         postResource(resource,'WorkingHours',token,params.id,{service}).then(response => {
             setData(response)
-            console.log(response, 'l')
             setLoad(false)
         })
 
@@ -33,6 +32,11 @@ function Telehealth({loadingState, tab}) {
             ...prevState,
             ...prevValues?.working_hours
         }))
+        if(values.sync_with_main) {
+            values.service = 'telehealth'
+            values.working_hours = [{is_day_off: false, opens_at: "02:00", closes_at: "09:00", day: "monday"}]
+        }
+
         if (params.id) {
             updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
                 setData(response)
@@ -48,7 +52,7 @@ function Telehealth({loadingState, tab}) {
     return(
         <div className={'add_edit_content'}>
             {
-                load ? <Preloader /> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+                load ? <Preloader /> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type} />
             }
 
         </div>

@@ -6,6 +6,7 @@ import {useParams} from "react-router";
 import LaboratoryTestsTable from "./Fragments/LaboratoryTestsTable";
 import LabPackagesTable from "./Fragments/LabPackagesTable";
 import {Collapse} from "antd";
+import Preloader from "../../../../Preloader";
 
 const { Panel } = Collapse;
 
@@ -36,6 +37,10 @@ function Laboratory() {
             ...prevState,
             ...prevValues?.working_hours
         }))
+        if(values.sync_with_main) {
+            values.service = 'laboratory_clinic_visit'
+            values.working_hours = [{is_day_off: false, opens_at: "02:00", closes_at: "09:00", day: "monday"}]
+        }
         if (params.id) {
             updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
                 setData(response)
@@ -62,8 +67,10 @@ function Laboratory() {
                 {/*        <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>*/}
                 {/*    </Panel>*/}
                 {/*</Collapse>*/}
+            {
+                loading ? <Preloader/> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+            }
 
-                <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
 
 
             {/*</div>*/}

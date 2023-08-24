@@ -52,24 +52,30 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   const onFormFinish = (values) => {
-    values?.status ? values.status = true : values.status = false
-    let prevValues = {...values}
-    let working_hours = [];
-    Object.keys(values.working_hours).forEach(key => {
-      working_hours = [...working_hours, ...values.working_hours[key]]
-    })
-    values.working_hours = working_hours.map(e => {
-      if(e.is_day_off!==undefined){
-        e.is_day_off = !e.is_day_off
-      }else{
-        e.is_day_off = false
-      }
+console.log(values)
+    if(values?.sync_with_main) {
+      onFinish(values)
+    } else {
+      values?.status ? values.status = true : values.status = false
+      let prevValues = {...values}
+      let working_hours = [];
+      Object.keys(values.working_hours).forEach(key => {
+        working_hours = [...working_hours, ...values.working_hours[key]]
+      })
+      values.working_hours = working_hours.map(e => {
+        if(e.is_day_off!==undefined){
+          e.is_day_off = !e.is_day_off
+        }else{
+          e.is_day_off = false
+        }
 
-      return e
-    })
-    values.service = type;
+        return e
+      })
+      values.service = type;
 
-    onFinish(values, prevValues)
+      onFinish(values, prevValues)
+    }
+
   }
 
   const handleValuesChange = (e, v) => {
@@ -154,7 +160,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
           }
 
 
-          console.log(currentTimes)
+          //console.log(currentTimes)
           return workingDay && <div key={iKey}>
 
             <Row>

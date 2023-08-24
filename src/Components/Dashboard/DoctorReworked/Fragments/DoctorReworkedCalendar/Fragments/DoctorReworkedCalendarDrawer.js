@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
 import Resources from "../../../../../../store/Resources";
@@ -58,7 +58,11 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
     }
-console.log([dataClinic?.clinic]?.clinic, authRedux?.clinics)
+
+    useEffect(() => {
+
+    }, [])
+
 
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''}>
