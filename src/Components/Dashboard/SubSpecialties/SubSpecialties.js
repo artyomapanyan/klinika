@@ -9,7 +9,7 @@ function SubSpecialties() {
         <div>
             <ResourceTable resource={'Taxonomy'}
                            resourceLink={'SubSpecialty'}
-                           tableParams={{type:Resources.TaxonomyTypes.SUB_SPECIALTY}}
+                           tableParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                            tableColumns={[
                                {
                                    dataIndex:'id',

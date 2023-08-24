@@ -20,7 +20,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [loading, setLoading] = useState(true)
     const [clinichoursData, setClinichoursData] = useState({})
 
-
+console.log(type)
 
     useEffect(()=>{
 
@@ -54,10 +54,10 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
                 status:responses[0]?.clinic_doctor[keys[0]]
             })
            let clinicTimes = responses[1];
-           Object.keys(clinicTimes).forEach(key=>{
-               clinicTimes[key] =clinicTimes[key].map(e=>({
-                   start:Resources.dateOptions.findIndex(u=>u.value===e.opens_at),
-                   end:Resources.dateOptions.findIndex(u=>u.value===e.closes_at)
+           Object.keys(clinicTimes)?.forEach(key=>{
+               clinicTimes[key] =clinicTimes[key]?.map(e=>({
+                   start:Resources.dateOptions?.findIndex(u=>u?.value===e?.opens_at),
+                   end:Resources.dateOptions?.findIndex(u=>u?.value===e?.closes_at)
                }))
            })
 

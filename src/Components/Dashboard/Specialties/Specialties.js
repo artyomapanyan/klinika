@@ -10,7 +10,7 @@ function Specialties() {
         <div>
             <ResourceTable resource={'Taxonomy'}
                            resourceLink={'Specialty'}
-                           tableParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                           tableParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                            tableColumns={[
                                {
                                    dataIndex:'id',

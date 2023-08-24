@@ -54,7 +54,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   const onFormFinish = (values) => {
-console.log(values)
+
     if(values?.sync_with_main) {
       onFinish(values)
     } else {

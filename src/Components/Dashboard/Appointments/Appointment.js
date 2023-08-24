@@ -119,7 +119,7 @@ function Appointment({isPatient}) {
                     return el.filter((el1) => el1.is_day_off === true)
                 }).map((el, i) => {
                     if (el.length > 0) {
-                        day.push(i + 1)
+                        day.push(i)
                     }
                 })
                 setAvailableDateState(day)
@@ -266,7 +266,8 @@ function Appointment({isPatient}) {
         return [name,item]
     }
     const disabledDate = (current) => {
-        return current.add(1, 'day') < dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(current.day())
+        console.log(current.format('dddd'))
+        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(current.add(-1, 'day').day())
     };
 
 
@@ -279,7 +280,7 @@ function Appointment({isPatient}) {
 
     }
 
-console.log(searchCeys)
+
 
     return (
         <div>

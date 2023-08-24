@@ -25,12 +25,17 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
     const onNewAppointment = (values) => {
         setLoading(true)
-        values.doctor_id = authRedux?.user?.id
+        //values.doctor_id = role === 'doctor' ? authRedux?.user?.id : dataClinic.doctor.id
         values.booked_at = bookedAtState+' '+values.booked_time;
         if(values?.patient_id){
             values.patient_id = values?.patient_id
         } else {
             values.patient_id = patientId
+        }
+        if(role === 'doctor') {
+            values.doctor_id = authRedux?.user?.id
+        } else {
+            values.doctor_id = dataClinic.doctor.id
         }
 
 
@@ -63,6 +68,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
     }, [])
 
+console.log(formState, 'fo')
 
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''}>
@@ -113,17 +119,36 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                            initialValue={null}
                     initialData={role === 'doctor' ? getServiceTypes(authRedux?.clinics?.find(e=>e.id===formState?.clinic_id)?.services) : getServiceTypes([dataClinic?.clinic]?.find(e=>e.id===formState?.clinic_id)?.services)}
                 />:null}
-                <FormInput label={t('Specialties')} name={'specialty_id'}
-                           inputType={'resourceSelect'}
-                           rules={[{required: true}]}
-                           initialValue={null}
-                           initialData={[]}
-                           resource={'Taxonomy'}
-                           resourceParams={{
-                               type: Resources.TaxonomyTypes.SPECIALTY,
-                               has_parent: 0
-                           }}
-                />
+                {
+                    formState?.service_type === 'nursing' ? <FormInput label={t('Nursing tasks')}
+                name={'nursing_tasks'}
+                inputProps={{mode: 'multiple'}}
+                rules={[{required: true}]}
+                inputType={'resourceSelect'}
+                resource={'NursingTask'}/> : formState?.service_type === 'laboratory_home_visit' || formState?.service_type === 'laboratory_clinic_visit' ? <div>
+                            <FormInput label={t('Lab Tests')}
+                                       name={'lab_test_id'}
+                                       rules={[{required: true}]}
+                                       inputType={'resourceSelect'}
+                                       resource={'LabTest'}/>
+                            <FormInput label={t('Lab Packages')}
+                                       name={'lab_package_id'}
+                                       rules={[{required: true}]}
+                                       inputType={'resourceSelect'}
+                                       resource={'LabPackage'}/>
+                        </div> : <FormInput label={t('Specialties')} name={'specialty_id'}
+                                                        inputType={'resourceSelect'}
+                                                        rules={[{required: true}]}
+                                                        initialValue={null}
+                                                        initialData={[]}
+                                                        resource={'Taxonomy'}
+                                                        resourceParams={{
+                                                            type: Resources.TaxonomyTypes.SPECIALTY,
+                                                            has_parent: 0
+                                                        }}
+                    />
+                }
+
 
                 <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 

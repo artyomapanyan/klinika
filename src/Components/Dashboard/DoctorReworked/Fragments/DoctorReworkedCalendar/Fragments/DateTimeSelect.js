@@ -22,7 +22,9 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     const [availableTimes, setAvailableTimes] = useState([])
     const [timesIndex, setTimesIndex] = useState(0)
     const [isClicked, setIsClicked] = useState(false)
-   // const [availableDates, setavailableDates] = useState([])
+    const [disabledDays, setDisabledDays] = useState([])
+
+
 
 
     const handleChangeMonth = (count) => {
@@ -46,48 +48,59 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     const onDateClick = (e) => {
         setDate1(e)
         setTimeLoading(true)
-        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-            service: formState?.service_type,
-            date: dayjs(e).format('YYYY-MM-DD')
-        }).then((response) => {
-            setTimesIndex(0)
-            setAvailableTimes(response?.flat()??[])
-            setTimeLoading(false)
-        })
+        if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(formState?.service_type)) {
+            postResource('Clinic', 'ClinicsAvailableTimes', token, (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+                date: dayjs(e).format('YYYY-MM-DD'),
+                service: formState?.service_type,
+            }).then((res) => {
+                setAvailableTimes(res?.flat()??[])
+                setTimeLoading(false)
+
+            })
+        } else {
+            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, (role === 'doctor' ? authRedux?.user?.id : dataClinic?.doctor?.id) + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+                service: formState?.service_type,
+                date: dayjs(e).format('YYYY-MM-DD')
+            }).then((response) => {
+
+                setTimesIndex(0)
+                setAvailableTimes(response?.flat()??[])
+                setTimeLoading(false)
+            })
+        }
         setBookedAtState(dayjs(e).format('YYYY-MM-DD'))
         setIsClicked(true)
     }
 
 
-    // useEffect(() => {
-    //     if(formState?.clinic_id &&  formState?.service_type && formState?.specialty_id) {
-    //         Promise.all([
-    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-    //                 service: formState?.service_type,
-    //                 date: startDate.format('YYYY-MM-DD')}),
-    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-    //                 service: formState?.service_type,
-    //                 date: startDate.add(1, 'day').format('YYYY-MM-DD')}),
-    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-    //                 service: formState?.service_type,
-    //                 date: startDate.add(2, 'day').format('YYYY-MM-DD')}),
-    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-    //                 service: formState?.service_type,
-    //                 date: startDate.add(3, 'day').format('YYYY-MM-DD')}),
-    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-    //                 service: formState?.service_type,
-    //                 date: startDate.add(4, 'day').format('YYYY-MM-DD')}),
-    //             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-    //                 service: formState?.service_type,
-    //                 date: startDate.add(5, 'day').format('YYYY-MM-DD')}),
-    //
-    //         ]).then((response) => {
-    //             console.log(response, 'dddddddddd')
-    //             setavailableDates(response)
-    //         })
-    //     }
-    //
-    // }, [formState?.clinic_id, formState?.service_type, formState?.specialty_id])
+
+
+
+
+    useEffect(() => {
+        if (formState?.clinic_id &&  formState?.service_type && formState?.specialty_id) {
+
+            postResource('ClinicDoctorWorkingHours', 'single', token, (role === 'doctor' ? authRedux?.user?.id : dataClinic?.doctor?.id)+'/'+formState?.clinic_id, {service: formState?.service_type}).then(responses => {
+                const res = responses?.working_hours
+                let day = [];
+                Object.keys(res)?.forEach((key) => {
+                    if(res[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+                setDisabledDays(day)
+                //console.log(responses, day, 'hhhh')
+
+            })
+        }
+
+
+
+
+    }, [formState?.clinic_id, formState?.service_type, formState?.specialty_id])
+
+
+
 
 
 
@@ -104,7 +117,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         }
         setTimesIndex(prevState => prevState + count)
     }
-    console.log(availableTimes)
+
 
     return <div className={'drawer_cal_bog_div'}>
         <div className={'drawer_cal_top_div'}>
@@ -125,9 +138,10 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
             <div>
                 <div>
                     <div className={'big_date_div'}>
-                        { formState?.clinic_id &&  formState?.service_type && formState?.specialty_id ? [...[...Array(6).keys()]].map((e, key) => {
+                        { formState?.clinic_id &&  formState?.service_type || formState?.specialty_id || formState?.nursing_tasks ? [...[...Array(6).keys()]].map((e, key) => {
 
-                            return  <div key={key}
+                            return  <Button key={key}
+disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowerCase())}
                                      className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                      onClick={() => onDateClick(startDate.add(key, 'day'))}>
                                     <div className={'date_div_in_map'} style={{fontWeight: 400}}>
@@ -135,9 +149,10 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
                                     </div>
                                     <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
                                     <div key={key} className={'date_div_in_map'}>
+
                                         {startDate.add(key, 'day').format('DD')}
                                     </div>
-                                </div>
+                                </Button>
                         }): <div></div>
                         }
                         {
@@ -200,3 +215,33 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 }
 
 export default DateTimeSelect
+
+// useEffect(() => {
+//     if(formState?.clinic_id &&  formState?.service_type && formState?.specialty_id) {
+//         Promise.all([
+//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+//                 service: formState?.service_type,
+//                 date: startDate.format('YYYY-MM-DD')}),
+//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+//                 service: formState?.service_type,
+//                 date: startDate.add(1, 'day').format('YYYY-MM-DD')}),
+//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+//                 service: formState?.service_type,
+//                 date: startDate.add(2, 'day').format('YYYY-MM-DD')}),
+//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+//                 service: formState?.service_type,
+//                 date: startDate.add(3, 'day').format('YYYY-MM-DD')}),
+//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+//                 service: formState?.service_type,
+//                 date: startDate.add(4, 'day').format('YYYY-MM-DD')}),
+//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
+//                 service: formState?.service_type,
+//                 date: startDate.add(5, 'day').format('YYYY-MM-DD')}),
+//
+//         ]).then((response) => {
+//             console.log(response, 'dddddddddd')
+//             setavailableDates(response)
+//         })
+//     }
+//
+// }, [formState?.clinic_id, formState?.service_type, formState?.specialty_id])
