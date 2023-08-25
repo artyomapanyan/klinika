@@ -26,6 +26,7 @@ import arrow_prev from "../../dist/icons/arrow-prev.svg";
 import arrow_next from "../../dist/icons/arrow-next.svg";
 import ResourceTableHeader from "./ResourceTableHeader";
 import SwitchStatus from "./SwitchStatus";
+import {t} from "i18next";
 
 function ResourceTable ({
                             resource, tableColumns,
@@ -277,7 +278,7 @@ function ResourceTable ({
                 <div style={{display:'flex', gap: 4}}>
                     <div className={'recource_table_title'}>{t(title)}</div>
                     {PermCheck(`${resource}:create`) ? addBtn ? <Tooltip title="Add new entry">
-                        <Button style={{marginLeft:10}} className={addButtonChange ? 'resource_table_btn' : ''} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>{addButtonChange ? 'Add' : ''}</Button>
+                        <Button style={{marginLeft:10}} className={addButtonChange ? 'resource_table_btn' : ''} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>{addButtonChange ? t('Add') : ''}</Button>
                     </Tooltip>: <div></div> : <div></div>}
                     {
                         exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>

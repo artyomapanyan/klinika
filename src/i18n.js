@@ -12,11 +12,14 @@ i18n
             fallbackLng: "en",
             en: {
                 translation: {
+
+                    Add :"add"
                 }
             },
             ar: {
                 translation: {
 
+                    Add : "إضافة"
                 }
             },
         },
