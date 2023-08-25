@@ -28,7 +28,7 @@ function MyMapComponent({data,formRef}) {
                 if (results[0]) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
-                    formRef.current.setFieldValue('address',results[0]?.formatted_address)
+                    formRef.current.setFieldValue('address1',results[0]?.formatted_address)
                 }
             });
         }, 100)
@@ -43,7 +43,7 @@ function MyMapComponent({data,formRef}) {
                 if (results[0]) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
-                    formRef.current.setFieldValue('address',results[0]?.formatted_address)
+                    formRef.current.setFieldValue('address1',results[0]?.formatted_address)
                 }
             });
         }, 100)
@@ -69,7 +69,7 @@ function MyMapComponent({data,formRef}) {
             let geocoder =  new window.google.maps.Geocoder();
 
 
-            geocoder.geocode( { 'address':  [mapData.country,mapData.area,mapData.city].filter(e=>e).join(' ')}, function(results, status) {
+            geocoder.geocode( { 'address1':  [mapData.country,mapData.area,mapData.city].filter(e=>e).join(' ')}, function(results, status) {
 
                 if (status == window.google.maps.GeocoderStatus.OK) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
@@ -172,7 +172,7 @@ console.log(data)
                         onLoad={onLoad}
                         onPlaceChanged={onPlaceChanged}
                     >
-                        <Form.Item name={'address'}  rules={[
+                        <Form.Item name={'address1'}  rules={[
                             {
                                 required: true,
                                 message: 'Please input your address!',

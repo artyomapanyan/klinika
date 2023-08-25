@@ -1,7 +1,9 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Input, Table} from "antd";
 import {createResource} from "../../Functions/api_calls";
+import {SearchOutlined} from "@ant-design/icons";
+
 
 function Translations(){
     let token = useSelector((state) => state.auth.token);
@@ -33,6 +35,83 @@ function Translations(){
             })
         })
    }
+
+
+
+
+
+
+
+
+
+
+    const searchInput = useRef(null);
+    const handleSearch = (selectedKeys, confirm) => {
+        confirm();
+
+    };
+    const handleReset = (clearFilters) => {
+        clearFilters();
+
+    };
+    const getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+            <div
+                style={{
+                    padding: 10,
+                }}
+                onKeyDown={(e) => e.stopPropagation()}
+            >
+                <Input
+                    ref={searchInput}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+
+                />
+                <div style={{marginTop: 10}}>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{
+                            width: 90,
+
+                        }}
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        size="small"
+                        style={{
+                            width: 90,
+                            margin: '0 10px'
+                        }}
+                    >
+                        Reset
+                    </Button>
+
+                </div>
+            </div>
+        ),
+        filterIcon: (filtered) => (
+            <SearchOutlined
+                style={{
+                    color: filtered ? '#1677ff' : undefined,
+                }}
+            />
+        ),
+        onFilter: (value, record) =>
+            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+        onFilterDropdownOpenChange: (visible) => {
+            if (visible) {
+                setTimeout(() => searchInput.current?.select(), 100);
+            }
+        },
+
+    });
     return(
         <div>
             <Table
@@ -40,7 +119,8 @@ function Translations(){
                     {
                         title:'Key',
                         dataIndex:'key',
-                        key:'key'
+                        key:'key',
+                        ...getColumnSearchProps('key'),
                     },
                     {
                         title:'Value',

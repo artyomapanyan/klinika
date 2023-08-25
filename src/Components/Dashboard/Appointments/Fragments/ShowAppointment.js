@@ -2,13 +2,21 @@ import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
-import {Avatar, Button, message, Space} from "antd";
-import {CopyOutlined, FilePdfOutlined, LeftOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons";
+import {Avatar, Button, Col, Divider, message, Row, Space} from "antd";
+import {
+    CopyOutlined,
+    EditOutlined,
+    FilePdfOutlined,
+    LeftOutlined,
+    MailOutlined,
+    PhoneOutlined
+} from "@ant-design/icons";
 import axios from "axios";
 import api from "../../../../Api";
 import Preloader from "../../../Preloader";
 import dayjs from "dayjs";
 import ResourceLinks from "../../../ResourceLinks";
+import closeLightGray from "../../../../dist/icons/close-lightGray.svg";
 
 
 const resource = 'Appointment';
@@ -17,6 +25,7 @@ function ShowAppointment() {
     const navigate = useNavigate();
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
+    let language = useSelector((state) => state.app.current_locale)
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
@@ -236,13 +245,59 @@ function ShowAppointment() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{data?.prescriptions ? <div>{
+
+
+
+
+                                    <td>{data?.prescriptions ? <div style={{display: 'flex', gap: 20}}>{
                                         data?.prescriptions?.map((el) => {
-                                            return <span>
-                                                {el?.name },
-                                            </span>
+                                            return <div className={'patient_card'} style={{width: 300}}>
+                                                <div className={'patient_card_header'}>
+                                                    <div>
+                                                        <div style={{fontSize: 16, fontWeight: 700}}>{el?.name}</div>
+                                                    </div>
+
+                                                </div>
+                                                <div style={{borderBottom: '1px solid #cbc9cb', marginTop: 12, marginBottom: 12}}></div>
+
+
+
+                                                <Row>
+                                                    <Col lg={7} align={language === 'en' ? 'left' : 'right'}>
+                                                        <div className={"medication_card_text1"}>Frequency</div>
+                                                        <div className={"medication_card_text2"}>{el?.frequency} times/day</div>
+                                                    </Col>
+                                                    <Col lg={1} align={'center'}>
+                                                        <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
+                                                    </Col>
+                                                    <Col lg={7} align={'center'}>
+                                                        <div className={"medication_card_text1"}>Dose</div>
+                                                        <div className={"medication_card_text2"}>{el?.dose} pcs</div>
+                                                    </Col>
+                                                    <Col lg={1} align={'center'}>
+                                                        <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
+                                                    </Col>
+
+                                                    <Col lg={7} align={language === 'en' ? 'right' : 'left'}>
+                                                        <div className={"medication_card_text1"}>Duration</div>
+                                                        <div className={"medication_card_text2"}>{el?.duration} days</div>
+                                                    </Col>
+                                                </Row>
+
+                                                <div style={{borderBottom: '1px solid #cbc9cb', marginTop: 12, marginBottom: 12}}></div>
+
+                                                <div>
+                                                    <div className={"medication_card_text1"}>Note</div>
+                                                    <div className={"medication_card_text2"}>{el?.note ? el?.note : 'No note'}</div>
+                                                </div>
+                                            </div>
                                         })
                                     }</div> : <span style={{fontStyle: 'italic'}}>N/A</span>}</td>
+
+
+
+
+
                                 </tr>
                                 </tbody>
                             </table>

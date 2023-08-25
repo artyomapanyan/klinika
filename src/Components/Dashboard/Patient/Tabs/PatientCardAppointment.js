@@ -7,12 +7,15 @@ import AppointmentCheckboxes from "./CardAppointmentItems/AppointmentCheckboxes"
 import addimage from "../../../../dist/icons/addimage.svg";
 import MedicationCards from "./MedicationCards/MedicationCard";
 import AddMedications from "./CardAppointmentItems/AddMedications";
-import {postResource} from "../../../Functions/api_calls";
+import {postResource, postResource1, updateResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
+import resourceLinks from "../../../ResourceLinks";
 
 const { TextArea } = Input;
+
+const resource = 'Appointment'
 function PatientCardAppointment({bigData, id}) {
     const formRef = useRef();
     const token = useSelector((state) => state.auth.token);
@@ -52,6 +55,17 @@ function PatientCardAppointment({bigData, id}) {
         })
     }
 
+
+    const onFileCreate = (values) => {
+
+        postResource1('Appointment', 'NotePurpose', token, `${id}/upload-files`, values, null, true).then(() => {
+            setLoadingSubmit(false)
+
+        })
+
+    }
+
+    console.log(bigData)
 
     return(
         <Layout.Content>
@@ -122,12 +136,16 @@ function PatientCardAppointment({bigData, id}) {
                                 {/*</div>*/}
                                 <div className={'patient_appoint_image_div'}>
                                     <h1 className={'h1'}>Files and Images</h1>
-                                    <Form ref={formRef}>
+                                    <Form ref={formRef}
+                                        onFinish={onFileCreate}
+                                    >
                                         <FileManager text1={'Drag here or Select'}
                                                      text2={'files and images'}
                                                      uploadIcon={<img alt={'icons'} src={addimage}/>}
                                                      limit={5}
-                                                     name={'cover'} initialFileList={[]} formRef={formRef} />
+                                                     name={'files'} initialFileList={[]} formRef={formRef} />
+
+                                        <Button htmlType={'submit'}>Save</Button>
                                     </Form>
 
                                 </div>
