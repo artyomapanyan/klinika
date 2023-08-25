@@ -61,7 +61,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
       values?.status ? values.status = true : values.status = false
       let prevValues = {...values}
       let working_hours = [];
-      Object.keys(values.working_hours).forEach(key => {
+      Object.keys(values.working_hours)?.forEach(key => {
         working_hours = [...working_hours, ...values.working_hours[key]]
       })
       values.working_hours = working_hours?.map(e => {
@@ -154,7 +154,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
           let currentTimes = [];
 
           if(timeLimits){
-            timeLimits[dataKey].forEach(data=>{
+            timeLimits[dataKey]?.forEach(data=>{
               currentTimes.push( Resources.dateOptions?.slice(data.start,data.end+1))
             })
           }else{
@@ -184,7 +184,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
               </Col>
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
-console.log()
+
 
 
                   let currentOptions =[...currentTimes]?.flat()
@@ -241,7 +241,7 @@ console.log()
                         <Space>
                           {key !== 0 && <Button type={'secondary'} style={{border: 'none'}}
                                                 onClick={() => handleRemoveHours(key, dataKey)}>x</Button>}
-                          {currentOptions.length !== 0 && ((key === (workingDay.length - 1) && currentOptions.slice(currentOptions.findIndex(e => e?.value === workingDay[key]?.closes_at) + 1, currentOptions.length - 1).length > 0)) && workingDay[key]?.closes_at &&
+                          {currentOptions.length !== 0 && ((key === (workingDay.length - 1) && currentOptions?.slice(currentOptions?.findIndex(e => e?.value === workingDay[key]?.closes_at) + 1, currentOptions.length - 1).length > 0)) && workingDay[key]?.closes_at &&
                             <Button type={'secondary'} style={{border: 'none'}}
                                     onClick={() => handleAddHours(workingDay, dataKey)}>Add
                               Hours</Button>}
