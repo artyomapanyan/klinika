@@ -33,6 +33,8 @@ function SubSpecialty() {
     const onFinish = (values) => {
         setSaveLoading(true)
         values.type = Resources.TaxonomyTypes.SPECIALTY
+        values.has_parent = 1
+
         setData((prevState)=>({
             ...prevState,
             ...values

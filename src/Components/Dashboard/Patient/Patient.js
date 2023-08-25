@@ -49,7 +49,7 @@ function Patient() {
         navigate(role === 'doctor' ? ResourceLins[res] : ResourceLins[resource])
     }
 
-//console.log(data?.patient?.id, 'ddddssss')
+
 
     return(
         <div style={{marginBottom: 100, marginTop: -120}} >

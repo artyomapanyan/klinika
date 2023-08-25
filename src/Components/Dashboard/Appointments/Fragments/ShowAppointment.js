@@ -236,7 +236,13 @@ function ShowAppointment() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{data?.prescriptions && <span style={{fontStyle: 'italic'}}>N/A</span>}</td>
+                                    <td>{data?.prescriptions ? <div>{
+                                        data?.prescriptions?.map((el) => {
+                                            return <span>
+                                                {el?.name },
+                                            </span>
+                                        })
+                                    }</div> : <span style={{fontStyle: 'italic'}}>N/A</span>}</td>
                                 </tr>
                                 </tbody>
                             </table>

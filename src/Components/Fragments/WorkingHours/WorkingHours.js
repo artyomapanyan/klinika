@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData,timeLimits}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
@@ -28,11 +28,13 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
   }
   const handleFilterData = (data) => {
     let newData = {...data}
-    Object.keys(newData).forEach(key => {
-      newData[key] = newData[key].map(e => ({...e, is_day_off: !e.is_day_off}))
+
+    Object.keys(newData)?.forEach(key => {
+      newData[key] = newData[key]?.map(e => ({...e, is_day_off: !e?.is_day_off}))
     })
     return newData
   }
+
 
   useEffect(() => {
     formRef?.current?.setFieldsValue({
@@ -52,24 +54,30 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   const onFormFinish = (values) => {
-    values?.status ? values.status = true : values.status = false
-    let prevValues = {...values}
-    let working_hours = [];
-    Object.keys(values.working_hours).forEach(key => {
-      working_hours = [...working_hours, ...values.working_hours[key]]
-    })
-    values.working_hours = working_hours.map(e => {
-      if(e.is_day_off!==undefined){
-        e.is_day_off = !e.is_day_off
-      }else{
-        e.is_day_off = false
-      }
 
-      return e
-    })
-    values.service = type;
+    if(values?.sync_with_main) {
+      onFinish(values)
+    } else {
+      values?.status ? values.status = true : values.status = false
+      let prevValues = {...values}
+      let working_hours = [];
+      Object.keys(values.working_hours)?.forEach(key => {
+        working_hours = [...working_hours, ...values.working_hours[key]]
+      })
+      values.working_hours = working_hours?.map(e => {
+        if(e.is_day_off!==undefined){
+          e.is_day_off = !e.is_day_off
+        }else{
+          e.is_day_off = false
+        }
 
-    onFinish(values, prevValues)
+        return e
+      })
+      values.service = type;
+
+      onFinish(values, prevValues)
+    }
+
   }
 
   const handleValuesChange = (e, v) => {
@@ -141,15 +149,26 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
       <div>
         {switchChange ? <div className={'add_edit_content'} align={"center"}>
           <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
-        </div> : Object.keys(workingData).map((dataKey, iKey) => {
+        </div> : Object.keys(workingData)?.map((dataKey, iKey) => {
           let workingDay = workingData[dataKey]
+          let currentTimes = [];
 
+          if(timeLimits){
+            timeLimits[dataKey]?.forEach(data=>{
+              currentTimes.push( Resources.dateOptions?.slice(data.start,data.end+1))
+            })
+          }else{
+            currentTimes = [...Resources.dateOptions]
+          }
+
+
+          //console.log(currentTimes)
           return workingDay && <div key={iKey}>
 
             <Row>
               <Col lg={5}>
                 <div style={{fontSize: 18, fontWeight: 600}}
-                     className={'working_houre_margin'}>{workingDay[0]?.day[0].toUpperCase() + workingDay[0]?.day.slice(1, workingDay[0]?.day.length)}</div>
+                     className={'working_houre_margin'}>{workingDay[0]?.day[0]?.toUpperCase() + workingDay[0]?.day?.slice(1, workingDay[0]?.day?.length)}</div>
               </Col>
               <Col lg={4}>
                 <div className={'working_houre_margin'}>
@@ -168,12 +187,12 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
 
-                  let currentOptions = [...Resources.dateOptions]
+                  let currentOptions =[...currentTimes]?.flat()
                   if (key > 0 && workingDay?.length) {
-                    currentOptions = currentOptions.slice(
-                      currentOptions.findIndex(
-                        e => e?.value === workingDay[key - 1].closes_at
-                      ) + 1, currentOptions.length
+                    currentOptions = currentOptions?.slice(
+                      currentOptions?.findIndex(
+                        e => e?.value === workingDay[key - 1]?.closes_at
+                      ) + 1, currentOptions?.length
                     );
                   }
                   return <Row key={dataKey + key + (new Date())}
@@ -202,11 +221,9 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                           className={'working_houre_margin'}
                           style={{width: 120,}}
                           options={
-                            currentOptions.slice(
-                              currentOptions.findIndex(
-                                e => e?.value === workingDay[0].opens_at
-                              ) + 1, currentOptions.length
-                            )}
+                            workingDay[key]?.opens_at && timeLimits?currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
+                                currentTimes?.find(e=>e?.find(u=>u.value=== workingDay[key]?.opens_at))?.findIndex(e => e?.value === workingDay[key]?.opens_at) + 1, currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.length
+                            ):currentOptions}
                         />
                       </Form.Item>
                       <Form.Item
@@ -224,7 +241,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                         <Space>
                           {key !== 0 && <Button type={'secondary'} style={{border: 'none'}}
                                                 onClick={() => handleRemoveHours(key, dataKey)}>x</Button>}
-                          {currentOptions.length !== 0 && ((key === (workingDay.length - 1) && currentOptions.slice(currentOptions.findIndex(e => e?.value === workingDay[key]?.closes_at) + 1, currentOptions.length - 1).length > 0)) && workingDay[key]?.closes_at &&
+                          {currentOptions.length !== 0 && ((key === (workingDay.length - 1) && currentOptions?.slice(currentOptions?.findIndex(e => e?.value === workingDay[key]?.closes_at) + 1, currentOptions.length - 1).length > 0)) && workingDay[key]?.closes_at &&
                             <Button type={'secondary'} style={{border: 'none'}}
                                     onClick={() => handleAddHours(workingDay, dataKey)}>Add
                               Hours</Button>}

@@ -32,6 +32,10 @@ function ClinicVisit({tab}) {
             ...prevState,
             ...prevValues?.working_hours
         }))
+        if(values.sync_with_main) {
+            values.service = "clinic_visit"
+            values.working_hours = [{is_day_off: false, opens_at: "02:00", closes_at: "09:00", day: "monday"}]
+        }
         if (params.id) {
             updateResource('ClinicWorkingHours', params.id, values, token, ).then(response => {
                 setData(response)

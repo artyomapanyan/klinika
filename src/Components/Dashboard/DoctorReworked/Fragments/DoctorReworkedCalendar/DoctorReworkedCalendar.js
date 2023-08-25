@@ -35,7 +35,7 @@ function DoctorReworkedCalendar() {
     useEffect(() => {
         setLoading(true)
         postResource('DoctorReworked', 'DoctorCalendar', token, '', date).then((response) => {
-            console.log(response)
+
             let data = Object.values(response.calendar).flat().map(e =>{
             // console.log(Resources.AppointmentStatuses,Resources.AppointmentStatuses.find(s=>s.key==e.status)?.label,'sss')
                 return {

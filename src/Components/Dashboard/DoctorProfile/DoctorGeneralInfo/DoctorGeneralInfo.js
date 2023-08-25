@@ -161,7 +161,9 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                                initialValue={data?.sub_specialties?.map(e=>e?.id)}
                                                initialData={data?.sub_specialties ??[]}
                                                resource={'Taxonomy'}
-                                               resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY}}
+                                               resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,
+                                                   has_parent: 1
+                                               }}
                                     />
                                 </Col>
 

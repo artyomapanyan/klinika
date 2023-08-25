@@ -95,7 +95,7 @@ function ClinicApprovedDoctors({dataService}) {
                             key: 'physical_therapy_home_visit',
                             render:(e, record)=> {
                                 return<div style={{padding:2}}>{dataService?.has_physical_therapy_home_visit_service ? <Button
-                                    onClick={() => showModal(record.id, 'physical_therapy_home_visit', ['physical_therapy_home_visit_activated_at', 'physical_therapy_home_visit_diagnosis_price'])}
+                                    onClick={() => showModal(record.id, 'home_visit', ['physical_therapy_home_visit_activated_at', 'physical_therapy_home_visit_diagnosis_price'])}
                                     type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
@@ -105,7 +105,7 @@ function ClinicApprovedDoctors({dataService}) {
                             key: 'physical_therapy_clinic_visit',
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_physical_therapy_clinic_visit_service ? <Button
-                                    onClick={() => showModal(record.id, 'physical_therapy_clinic_visit', ['physical_therapy_clinic_visit_activated_at', 'physical_therapy_clinic_visit_diagnosis_price'])}
+                                    onClick={() => showModal(record.id, 'clinic_visit', ['physical_therapy_clinic_visit_activated_at', 'physical_therapy_clinic_visit_diagnosis_price'])}
                                     type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
@@ -126,8 +126,8 @@ function ClinicApprovedDoctors({dataService}) {
 
 
                 />
-            <Modal title="Working Hours" width={"750px"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false}>
-                {isModalOpen?.id ? <DoctorsHoursModal  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} setIsModalOpen={setIsModalOpen} />:null}
+            <Modal title="Working Hours" width={"750px"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false} >
+                {isModalOpen?.id ? <DoctorsHoursModal key={Math.random()}  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} setIsModalOpen={setIsModalOpen} />:null}
             </Modal>
         </div>
     )

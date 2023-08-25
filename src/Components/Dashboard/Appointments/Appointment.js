@@ -119,7 +119,7 @@ function Appointment({isPatient}) {
                     return el.filter((el1) => el1.is_day_off === true)
                 }).map((el, i) => {
                     if (el.length > 0) {
-                        day.push(i + 1)
+                        day.push(i)
                     }
                 })
                 setAvailableDateState(day)
@@ -266,20 +266,21 @@ function Appointment({isPatient}) {
         return [name,item]
     }
     const disabledDate = (current) => {
-        return current.add(1, 'day') < dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(current.day())
+        console.log(current.format('dddd'))
+        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(current.add(-1, 'day').day())
     };
 
 
     const searchByNumber = (item, name, patientData) => {
         fetchedUsers.current = patientData
-        name = <>{item.phone_number}{" "}{item.email}</>
-        let searchData = item.phone_number+item.email;
+        name = <>{item?.phone_number}{" "}{item?.email}</>
+        let searchData = item?.phone_number+item?.email;
         return [name, item,searchData]
 
 
     }
 
-console.log(searchCeys)
+
 
     return (
         <div>
@@ -470,6 +471,9 @@ console.log(searchCeys)
                                                            rules={[{required: true}]}
                                                            initialValue={null}
                                                            initialData={[data?.clinic].filter(e=>e)}
+                                                           resourceParams={{
+                                                               active:1
+                                                           }}
                                                            resource={'Clinic'}/>
                                             </Col>
                                             {
@@ -511,13 +515,13 @@ console.log(searchCeys)
                                                                            inputType={'resourceSelect'}
                                                                            rules={[{required: true}]}
                                                                            handleMapItems={(item, name) => {
-                                                                               item.id = item.doctor?.id
+                                                                               item.id = item?.doctor?.id
                                                                                return [name, item]
                                                                            }}
                                                                            disabled={!data.specialty_id && true}
                                                                            resourceParams={{
-                                                                               specialty: data.specialty_id,
-                                                                               clinic: data.clinic_id
+                                                                               specialty: data?.specialty_id,
+                                                                               clinic: data?.clinic_id
                                                                            }}
                                                                            customSearchKey={'name'}
                                                                            initialValue={null}

@@ -187,6 +187,7 @@ function Offer() {
                                        rules={[{required: true}]}
                                        initialValue={data?.specialty_id?.id}
                                        initialData={data?.specialty_id ?[data.specialty_id]:[]}
+                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 
                             <FormInput inputProps={{mode:'multiple'}} label={t('Sub specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
@@ -194,7 +195,7 @@ function Offer() {
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.SUB_SPECIALTY}}
+                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
                             <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}

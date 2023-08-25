@@ -33,6 +33,7 @@ function Specialty() {
     const onFinish = (values) => {
         setSaveLoading(true)
         values.type = Resources.TaxonomyTypes.SPECIALTY
+        values.has_parent = 0
         setData((prevState)=>({
             ...prevState,
             ...values
