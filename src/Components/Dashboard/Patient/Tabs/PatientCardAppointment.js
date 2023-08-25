@@ -65,7 +65,7 @@ function PatientCardAppointment({bigData, id}) {
 
     }
 
-    console.log(bigData)
+
 
     return(
         <Layout.Content>
@@ -143,7 +143,7 @@ function PatientCardAppointment({bigData, id}) {
                                                      text2={'files and images'}
                                                      uploadIcon={<img alt={'icons'} src={addimage}/>}
                                                      limit={5}
-                                                     name={'files'} initialFileList={[]} formRef={formRef} />
+                                                     name={'files'} initialFileList={bigData?.files} formRef={formRef} />
 
                                         <Button htmlType={'submit'}>Save</Button>
                                     </Form>
