@@ -28,7 +28,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
   }
   const handleFilterData = (data) => {
     let newData = {...data}
-    console.log(newData ,'d')
+
     Object.keys(newData)?.forEach(key => {
       newData[key] = newData[key]?.map(e => ({...e, is_day_off: !e?.is_day_off}))
     })
@@ -155,7 +155,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
           if(timeLimits){
             timeLimits[dataKey].forEach(data=>{
-              currentTimes.push( Resources.dateOptions.slice(data.start,data.end+1))
+              currentTimes.push( Resources.dateOptions?.slice(data.start,data.end+1))
             })
           }else{
             currentTimes = [...Resources.dateOptions]
@@ -168,7 +168,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
             <Row>
               <Col lg={5}>
                 <div style={{fontSize: 18, fontWeight: 600}}
-                     className={'working_houre_margin'}>{workingDay[0]?.day[0].toUpperCase() + workingDay[0]?.day.slice(1, workingDay[0]?.day.length)}</div>
+                     className={'working_houre_margin'}>{workingDay[0]?.day[0]?.toUpperCase() + workingDay[0]?.day?.slice(1, workingDay[0]?.day?.length)}</div>
               </Col>
               <Col lg={4}>
                 <div className={'working_houre_margin'}>
@@ -184,15 +184,15 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
               </Col>
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
+console.log()
 
 
-
-                  let currentOptions =[...currentTimes].flat()
+                  let currentOptions =[...currentTimes]?.flat()
                   if (key > 0 && workingDay?.length) {
-                    currentOptions = currentOptions.slice(
-                      currentOptions.findIndex(
-                        e => e?.value === workingDay[key - 1].closes_at
-                      ) + 1, currentOptions.length
+                    currentOptions = currentOptions?.slice(
+                      currentOptions?.findIndex(
+                        e => e?.value === workingDay[key - 1]?.closes_at
+                      ) + 1, currentOptions?.length
                     );
                   }
                   return <Row key={dataKey + key + (new Date())}
@@ -221,8 +221,8 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                           className={'working_houre_margin'}
                           style={{width: 120,}}
                           options={
-                            workingDay[key]?.opens_at && timeLimits?currentTimes.find(e=>e.find(u=>u.value=== workingDay[key].opens_at)).slice(
-                                currentTimes.find(e=>e.find(u=>u.value=== workingDay[key].opens_at)).findIndex(e => e?.value === workingDay[key].opens_at) + 1, currentTimes.find(e=>e.find(u=>u.value=== workingDay[key].opens_at)).length
+                            workingDay[key]?.opens_at && timeLimits?currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
+                                currentTimes?.find(e=>e?.find(u=>u.value=== workingDay[key]?.opens_at))?.findIndex(e => e?.value === workingDay[key]?.opens_at) + 1, currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.length
                             ):currentOptions}
                         />
                       </Form.Item>

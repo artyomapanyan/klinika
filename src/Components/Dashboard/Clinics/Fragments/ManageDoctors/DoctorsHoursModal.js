@@ -20,13 +20,13 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [loading, setLoading] = useState(true)
     const [clinichoursData, setClinichoursData] = useState({})
 
-console.log(type)
+
 
     useEffect(()=>{
 
         postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
-            Object.keys(response).forEach(key=>{
-                response[key] = response[key].map(e=>({
+            Object.keys(response)?.forEach(key=>{
+                response[key] = response[key]?.map(e=>({
                 start:Resources.dateOptions.findIndex(u=>u.value===e.opens_at),
                 end:Resources.dateOptions.findIndex(u=>u.value===e.closes_at)
             }))

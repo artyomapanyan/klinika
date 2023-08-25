@@ -31,9 +31,12 @@ function Doctor() {
     const onFinish = (values) => {
         setSaveLoading(true)
         values.dob = values.dob.format('YYYY-MM-DD')
-        if(values.phone_country_code.length > 3) {
-            values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
+        if(values?.phone_country_code) {
+            if(values.phone_country_code.length > 3) {
+                values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
+            }
         }
+
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -150,7 +153,7 @@ function Doctor() {
                             
                             <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
-                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                    <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : null}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}

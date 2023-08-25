@@ -471,6 +471,9 @@ function Appointment({isPatient}) {
                                                            rules={[{required: true}]}
                                                            initialValue={null}
                                                            initialData={[data?.clinic].filter(e=>e)}
+                                                           resourceParams={{
+                                                               active:1
+                                                           }}
                                                            resource={'Clinic'}/>
                                             </Col>
                                             {
