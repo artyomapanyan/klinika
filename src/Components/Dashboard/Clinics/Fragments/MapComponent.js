@@ -111,6 +111,7 @@ function MyMapComponent({data,formRef}) {
             <Row gutter={[20]}>
                 <Col lg={6}>
                     <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
+                               disableClear={true}
                                initialValue={data?.location?.region?.country?.id}
                                rules={[{required: true}]}
                                inputProps={{
@@ -130,6 +131,7 @@ function MyMapComponent({data,formRef}) {
                 </Col>
                 <Col lg={6}>
                     <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
+                               disableClear={true}
                                initialValue={data?.location?.region?.id}
                                rules={[{required: true}]}
                                resourceParams={{
@@ -154,6 +156,7 @@ function MyMapComponent({data,formRef}) {
                     <Form.Item hidden={true} name={'longitude'} initialValue={data?.location?.longitude}></Form.Item>
 
                     <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
+                               disableClear={true}
                                initialValue={data?.location?.city?.id}
                                rules={[{required: true}]}
 

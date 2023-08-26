@@ -33,6 +33,7 @@ function FormInput({
                        suffixIcon,
                        castomReq,
                        placeholder,
+                       disableClear,
 
 
                    }) {
@@ -95,6 +96,7 @@ function FormInput({
                                inputProps={inputProps} type={'url'} placeholder={placeholder} />
             case 'resourceSelect':
                 return <ResourceSelectPaginated {...inputProps} name={name} label={label} rules={rules}
+                                                disableClear={disableClear}
                                                 resourceSelectStyle={resourceSelectStyle}
                                                 suffixIcon={suffixIcon}
                                                 options={options}

@@ -327,10 +327,10 @@ function ShowAppointment() {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><span style={{color:"#F5A348"}}>Images</span> {data?.images} </td>
+                                        <td><span style={{color:"#F5A348"}}>Images</span>  </td>
                                     </tr>
                                     <tr>
-                                        <td><span style={{color:"#F5A348"}}>Files</span> {data?.files}</td>
+                                        <td><span style={{color:"#F5A348"}}>Files</span> </td>
                                     </tr>
                                 </tbody>
                             </table>
