@@ -453,7 +453,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
 
 
-
     return(
         <div >
             {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic - ${data?.name}`)}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
