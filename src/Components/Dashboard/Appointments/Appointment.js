@@ -115,18 +115,72 @@ function Appointment({isPatient}) {
             postResource('ClinicDoctorWorkingHours', 'single', token, data?.doctor_id+'/'+data?.clinic_id, {service: data?.service_type}).then(responses => {
                 const res = responses?.working_hours
                 let day = [];
-                Object.values(res)?.map((el, i) => {
-                    return el.filter((el1) => el1.is_day_off === true)
-                }).map((el, i) => {
-                    if (el.length > 0) {
-                        day.push(i)
+                // Object.values(res)?.map((el, i) => {
+                //     return el.filter((el1) => el1.is_day_off === true)
+                // }).map((el, i) => {
+                //     if (el.length > 0) {
+                //         day.push(i)
+                //     }
+                // })
+                Object.keys(res)?.forEach((key) => {
+                    if(res[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+
+                setAvailableDateState(day)
+                setTimesLoading(false)
+            })
+        }
+        if (data?.clinic_id && data?.service_type === 'nursing') {
+            setTimesLoading(true)
+            postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'nursing'}).then(response => {
+                console.log(response)
+                let day = [];
+
+                Object.keys(response)?.forEach((key) => {
+                    if(response[key][0]?.is_day_off){
+                        day.push(key)
                     }
                 })
                 setAvailableDateState(day)
                 setTimesLoading(false)
             })
         }
-    }, [data?.doctor_id, data?.clinic_id])
+        if (data?.clinic_id && data?.service_type === "laboratory_home_visit" || data?.service_type === "laboratory_clinic_visit") {
+            setTimesLoading(true)
+            postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'laboratory_clinic_visit'}).then(response => {
+                console.log(response)
+                let day = [];
+
+                Object.keys(response)?.forEach((key) => {
+                    if(response[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+                setAvailableDateState(day)
+                setTimesLoading(false)
+            })
+        }
+        // if (data?.clinic_id && data?.service_type === "laboratory_clinic_visit") {
+        //     setTimesLoading(true)
+        //     postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'laboratory_clinic_visit'}).then(response => {
+        //         console.log(response)
+        //         let day = [];
+        //
+        //         Object.keys(response)?.forEach((key) => {
+        //             if(response[key][0]?.is_day_off){
+        //                 day.push(key)
+        //             }
+        //         })
+        //         setAvailableDateState(day)
+        //         setTimesLoading(false)
+        //     })
+        // }
+
+    }, [data?.doctor_id, data?.clinic_id, data?.service_type])
+
+
 
 
     useEffect(() => {
@@ -138,10 +192,10 @@ function Appointment({isPatient}) {
                 date: data?.booked_at?.format('YYYY-MM-DD')
             }).then((responce) => {
 
-                setAvailableTimesState(responce.map((el) => {
+                setAvailableTimesState(responce?.map((el) => {
                     return {
                         label: 'Break Time',
-                        options: el.map((el1) => {
+                        options: el?.map((el1) => {
                             return {
                                 lebel: el1,
                                 value: el1
@@ -158,10 +212,10 @@ function Appointment({isPatient}) {
                 service: data?.service_type,
             }).then((res) => {
 
-                setAvailableTimesState(res.map((el) => {
+                setAvailableTimesState(res?.map((el) => {
                     return {
                         label: 'Break Time',
-                        options: el.map((el1) => {
+                        options: el?.map((el1) => {
                             return {
                                 lebel: el1,
                                 value: el1
@@ -265,9 +319,11 @@ function Appointment({isPatient}) {
         item.id = item.phone_code
         return [name,item]
     }
+
+console.log(availableDateState, 'av')
     const disabledDate = (current) => {
-        console.log(current.format('dddd'))
-        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(current.add(-1, 'day').day())
+
+        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
     };
 
 
@@ -436,14 +492,7 @@ function Appointment({isPatient}) {
                                                                name={['patient',"nationality_number"]}
                                                                rules={[
                                                                    {required: !data?.patient_id},
-                                                                   {
-                                                                       validator:(rule,value)=>{
-                                                                           if(value?.length < 10){
-                                                                               return Promise.reject('min length 10')
-                                                                           }
-                                                                           return Promise.resolve();
-                                                                       }
-                                                                   }
+
                                                                ]}/>
 
                                                     <FormInput label={t('Status')} disabled={data?.patient_id}

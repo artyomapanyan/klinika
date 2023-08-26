@@ -244,6 +244,27 @@ export const postResource = (resource,param,token,id=null,params,customProps={})
         }
     })
 }
+
+export const postResource1 = (resource,param,token,id=null,params,customProps={}, withFormData=false)=>{
+    const method ='POST';
+    let formData = {}
+    if(withFormData){
+        formData =  handleGenerateFD(params,null)
+    }else{
+        formData = params;
+    }
+
+    return  axios.request({
+        url:`${api[resource][param].url}${id??''}`,
+        method,
+        ...(method!=='GET'?{
+            data:formData
+        }:{formData}),
+        headers: {
+            'Authorization': token,
+        }
+    })
+}
 export const createResource = (resource,values,token,withFormData=false)=>{
     let formData = {}
     if(withFormData){

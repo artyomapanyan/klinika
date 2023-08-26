@@ -56,6 +56,7 @@ function ResourceTable ({
                             andStatus=false,
                             newDelete=false,
                             invoiceSwitches=false,
+    paginationResourceTable = true,
     editStyle=false,
     updateTable = 0
                         }) {
@@ -315,13 +316,13 @@ function ResourceTable ({
                         columns={columns}
                         loading={loading}
                         className={tableClassname}
-                        pagination={{
+                        pagination={paginationResourceTable ? {
                             ...data.pagination,
                             showTotal: (total) =>handleTableBelowData ? handleTableBelowData(dataState,loadingState,total):null,
                             pageSize: data.pagination.pageSize,
                             showSizeChanger:true,
 
-                        }}
+                        } : false}
                         showHeader={showHeader}
                         onChange={handleTableChange}
                         dataSource={data?.items}

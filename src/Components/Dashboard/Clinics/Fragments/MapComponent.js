@@ -28,7 +28,8 @@ function MyMapComponent({data,formRef}) {
                 if (results[0]) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
-                    formRef.current.setFieldValue('address',results[0]?.formatted_address)
+                    formRef.current.setFieldValue('address1',results[0]?.formatted_address)
+
                 }
             });
         }, 100)
@@ -43,11 +44,12 @@ function MyMapComponent({data,formRef}) {
                 if (results[0]) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
-                    formRef.current.setFieldValue('address',results[0]?.formatted_address)
+                    formRef.current.setFieldValue('address1',results[0]?.formatted_address)
                 }
             });
         }, 100)
         setInitialPosition(pos.latLng)
+
     }
 
     const onLoadMarker = (marker) => {
@@ -95,7 +97,7 @@ function MyMapComponent({data,formRef}) {
     const apiKey = 'AIzaSyD9MbMz7FESa79v-nntPfcxJHYTw8Am1S4'
 
     const uluru = { lat: 24.845909101072877, lng: 39.569421557617204 }
-console.log(data)
+
 
     return(
         <LoadScript
@@ -109,6 +111,7 @@ console.log(data)
             <Row gutter={[20]}>
                 <Col lg={6}>
                     <FormInput label={t('Country')} name={'country_id'} inputType={'resourceSelect'}
+                               disableClear={true}
                                initialValue={data?.location?.region?.country?.id}
                                rules={[{required: true}]}
                                inputProps={{
@@ -128,6 +131,7 @@ console.log(data)
                 </Col>
                 <Col lg={6}>
                     <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
+                               disableClear={true}
                                initialValue={data?.location?.region?.id}
                                rules={[{required: true}]}
                                resourceParams={{
@@ -152,6 +156,7 @@ console.log(data)
                     <Form.Item hidden={true} name={'longitude'} initialValue={data?.location?.longitude}></Form.Item>
 
                     <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
+                               disableClear={true}
                                initialValue={data?.location?.city?.id}
                                rules={[{required: true}]}
 
@@ -172,7 +177,7 @@ console.log(data)
                         onLoad={onLoad}
                         onPlaceChanged={onPlaceChanged}
                     >
-                        <Form.Item name={'address'}  rules={[
+                        <Form.Item name={'address1'}  rules={[
                             {
                                 required: true,
                                 message: 'Please input your address!',

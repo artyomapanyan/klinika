@@ -95,7 +95,7 @@ function ClinicApprovedDoctors({dataService}) {
                             key: 'physical_therapy_home_visit',
                             render:(e, record)=> {
                                 return<div style={{padding:2}}>{dataService?.has_physical_therapy_home_visit_service ? <Button
-                                    onClick={() => showModal(record.id, 'home_visit', ['physical_therapy_home_visit_activated_at', 'physical_therapy_home_visit_diagnosis_price'])}
+                                    onClick={() => showModal(record.id, 'physical_therapy_home_visit', ['physical_therapy_home_visit_activated_at', 'physical_therapy_home_visit_diagnosis_price'])}
                                     type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
@@ -105,7 +105,7 @@ function ClinicApprovedDoctors({dataService}) {
                             key: 'physical_therapy_clinic_visit',
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_physical_therapy_clinic_visit_service ? <Button
-                                    onClick={() => showModal(record.id, 'clinic_visit', ['physical_therapy_clinic_visit_activated_at', 'physical_therapy_clinic_visit_diagnosis_price'])}
+                                    onClick={() => showModal(record.id, 'physical_therapy_clinic_visit', ['physical_therapy_clinic_visit_activated_at', 'physical_therapy_clinic_visit_diagnosis_price'])}
                                     type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },

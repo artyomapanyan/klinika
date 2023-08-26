@@ -11,6 +11,10 @@ import Resources from "../../../../../store/Resources";
 
 const resource = "ClinicDoctor";
 const res = "Clinic";
+const excludedGet = {
+    'physical_therapy_home_visit':'home_visit',
+    'physical_therapy_clinic_visit' : 'clinic_visit'
+}
 function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     let token = useSelector((state) => state.auth.token);
     const params = useParams();
@@ -19,7 +23,6 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [docData, setDocData] = useState({})
     const [loading, setLoading] = useState(true)
     const [clinichoursData, setClinichoursData] = useState({})
-
 
 
     useEffect(()=>{
@@ -43,8 +46,8 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
         setLoading(true)
         Promise.all([
-            postResource(resource,'WorkingHours',token,id,{service:type}),
-            postResource(res,'WorkingHours',token,params.id,{service: type})
+            postResource(resource,'WorkingHours',token,id,{service:excludedGet[type]??type}),
+            postResource(res,'WorkingHours',token,params.id,{service: excludedGet[type]??type})
 
         ])
        .then(responses => {
@@ -90,6 +93,8 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
         }
 
     }
+
+
 
     return(
         <div className={'doctor_working_hours_conteiner'}>

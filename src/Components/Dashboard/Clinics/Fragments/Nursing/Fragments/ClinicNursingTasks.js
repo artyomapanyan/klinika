@@ -69,6 +69,7 @@ function LabPackagesTable() {
                 <h1 className={'h1'}>{t(`Nursing Tasks`)}</h1>
 
                 {loading ? <Preloader/> : <ResourceTable
+                    paginationResourceTable={false}
                     noHeader={true}
                     customTableButton={{
                         title:'Add New Nursing Task',
