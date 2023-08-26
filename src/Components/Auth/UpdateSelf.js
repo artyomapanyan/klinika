@@ -98,14 +98,7 @@ function UpdateSelf() {
                     />
                     <FormInput label={t('Nationality number')} name={'nationality_number'}  initialValue={data?.nationality_number} rules={[
                         {required: true},
-                        {
-                            validator:(rule,value)=>{
-                                if(value?.length < 10){
-                                    return Promise.reject('min length 10')
-                                }
-                                return Promise.resolve();
-                            }
-                        }
+
                     ]} />
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}

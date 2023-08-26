@@ -492,14 +492,7 @@ console.log(availableDateState, 'av')
                                                                name={['patient',"nationality_number"]}
                                                                rules={[
                                                                    {required: !data?.patient_id},
-                                                                   {
-                                                                       validator:(rule,value)=>{
-                                                                           if(value?.length < 10){
-                                                                               return Promise.reject('min length 10')
-                                                                           }
-                                                                           return Promise.resolve();
-                                                                       }
-                                                                   }
+
                                                                ]}/>
 
                                                     <FormInput label={t('Status')} disabled={data?.patient_id}
