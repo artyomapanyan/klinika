@@ -51,9 +51,11 @@ function Telehealth({loadingState, tab}) {
 
     return(
         <div className={'add_edit_content'}>
+            <div className={'add_edit_content'}>
             {
                 load ? <Preloader /> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type} />
             }
+            </div>
 
         </div>
     )

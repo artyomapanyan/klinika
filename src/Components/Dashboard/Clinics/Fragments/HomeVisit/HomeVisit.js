@@ -50,9 +50,11 @@ function HomeVisit({tab}) {
 
     return(
         <div className={'add_edit_content'}>
+            <div className={'add_edit_content'}>
             {
                 loading ? <Preloader/> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
             }
+            </div>
 
 
         </div>

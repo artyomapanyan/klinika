@@ -3,12 +3,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, Input, Table} from "antd";
 import {createResource} from "../../Functions/api_calls";
 import {SearchOutlined} from "@ant-design/icons";
+import Preloader from "../../Preloader";
 
 
 function Translations(){
     let token = useSelector((state) => state.auth.token);
     const translations = useSelector(state=>state.app.translations)
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false)
 
 
     const filteredTranslations = useMemo(()=>{
@@ -21,7 +23,10 @@ function Translations(){
        })
        return transArray
     },[translations])
+
+
    const handleSaveTranslation = (record) =>{
+       setLoading(true)
         let data = {
             translations:{
             ...translations,
@@ -33,6 +38,7 @@ function Translations(){
                 type:'UPDATE_TRANSLATIONS',
                 payload:data
             })
+            setLoading(false)
         })
    }
 
@@ -114,29 +120,32 @@ function Translations(){
     });
     return(
         <div>
-            <Table
-                columns={[
-                    {
-                        title:'Key',
-                        dataIndex:'key',
-                        key:'key',
-                        ...getColumnSearchProps('key'),
-                    },
-                    {
-                        title:'Value',
-                        dataIndex:'value',
-                        key:'value',
-                        shouldCellUpdate:(record, prevRecord)=>record.value!==prevRecord.value,
-                        render:(i,record)=><Input defaultValue={record.value} onChange={(value)=>record.value=value.target.value}/>
-                    },
-                    {
-                        title:'Submit',
-                        dataIndex:'submit',
-                        key:'submit',
-                        render:(i,record)=><Button onClick={()=>handleSaveTranslation(record)}>Save</Button>
-                    },
-                ]}
-                dataSource={filteredTranslations}/>
+            {
+                loading ? <Preloader/> : <Table
+                    columns={[
+                        {
+                            title:'Key',
+                            dataIndex:'key',
+                            key:'key',
+                            // ...getColumnSearchProps('key'),
+                        },
+                        {
+                            title:'Value',
+                            dataIndex:'value',
+                            key:'value',
+                            shouldCellUpdate:(record, prevRecord)=>record.value!==prevRecord.value,
+                            render:(i,record)=><Input defaultValue={record.value} onChange={(value)=>record.value=value.target.value}/>
+                        },
+                        {
+                            title:'Submit',
+                            dataIndex:'submit',
+                            key:'submit',
+                            render:(i,record)=><Button onClick={()=>handleSaveTranslation(record)}>Save</Button>
+                        },
+                    ]}
+                    dataSource={filteredTranslations}/>
+            }
+
 
         </div>
     )

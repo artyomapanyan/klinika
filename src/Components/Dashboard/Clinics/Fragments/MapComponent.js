@@ -29,6 +29,7 @@ function MyMapComponent({data,formRef}) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
                     formRef.current.setFieldValue('longitude',results[0]?.geometry?.location?.lng().toString())
                     formRef.current.setFieldValue('address1',results[0]?.formatted_address)
+
                 }
             });
         }, 100)
@@ -48,6 +49,7 @@ function MyMapComponent({data,formRef}) {
             });
         }, 100)
         setInitialPosition(pos.latLng)
+
     }
 
     const onLoadMarker = (marker) => {
@@ -69,7 +71,7 @@ function MyMapComponent({data,formRef}) {
             let geocoder =  new window.google.maps.Geocoder();
 
 
-            geocoder.geocode( { 'address1':  [mapData.country,mapData.area,mapData.city].filter(e=>e).join(' ')}, function(results, status) {
+            geocoder.geocode( { 'address':  [mapData.country,mapData.area,mapData.city].filter(e=>e).join(' ')}, function(results, status) {
 
                 if (status == window.google.maps.GeocoderStatus.OK) {
                     formRef.current.setFieldValue('latitude',results[0]?.geometry?.location?.lat().toString())
@@ -95,7 +97,7 @@ function MyMapComponent({data,formRef}) {
     const apiKey = 'AIzaSyD9MbMz7FESa79v-nntPfcxJHYTw8Am1S4'
 
     const uluru = { lat: 24.845909101072877, lng: 39.569421557617204 }
-console.log(data)
+
 
     return(
         <LoadScript

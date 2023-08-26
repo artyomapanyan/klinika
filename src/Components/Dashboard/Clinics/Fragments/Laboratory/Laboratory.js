@@ -52,7 +52,7 @@ function Laboratory() {
 
 
     return(
-        <div  style={{background: "#ffffff", padding: '10px 80px'}} >
+        <div className={'add_edit_content'} >
             {/*<div align={'center'} style={{fontSize: 30}}>In developing</div>*/}
             {/*<div className={'add_edit_content'}>*/}
                 {/*<Collapse*/}
@@ -67,10 +67,11 @@ function Laboratory() {
                 {/*        <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>*/}
                 {/*    </Panel>*/}
                 {/*</Collapse>*/}
-            {
-                loading ? <Preloader/> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
-            }
-
+            <div className={'add_edit_content'}>
+                {
+                    loading ? <Preloader/> : <WorkingHours loading={loading} data={data} onFinish={onFinish} type={type}/>
+                }
+            </div>
 
 
             {/*</div>*/}

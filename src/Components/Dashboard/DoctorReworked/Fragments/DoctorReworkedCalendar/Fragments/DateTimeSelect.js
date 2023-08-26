@@ -82,7 +82,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 
             postResource('ClinicDoctorWorkingHours', 'single', token, (role === 'doctor' ? authRedux?.user?.id : dataClinic?.doctor?.id)+'/'+formState?.clinic_id, {service: formState?.service_type}).then(responses => {
                 const res = responses?.working_hours
-                console.log(res)
+
                 let day = [];
                 Object.keys(res)?.forEach((key) => {
                     if(res[key][0]?.is_day_off){
@@ -110,7 +110,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         }
         if(formState?.clinic_id &&  formState?.service_type === 'laboratory_home_visit' || formState?.service_type === 'laboratory_clinic_visit') {
             postResource('Clinic','WorkingHours',token,formState?.clinic_id,{service:'laboratory_home_visit'}).then(response => {
-                console.log(response, 'hhhh')
+
                 //const res = response?.working_hours
                 let day = [];
                 Object.keys(response)?.forEach((key) => {
