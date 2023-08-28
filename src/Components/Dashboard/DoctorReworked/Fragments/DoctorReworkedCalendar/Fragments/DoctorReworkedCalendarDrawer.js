@@ -124,18 +124,30 @@ console.log(formState, 'fo')
                 name={'nursing_tasks'}
                 inputProps={{mode: 'multiple'}}
                 rules={[{required: true}]}
+                resourceParams={{
+                    clinic: formState.clinic_id
+                }}
                 inputType={'resourceSelect'}
                 resource={'NursingTask'}/> : formState?.service_type === 'laboratory_home_visit' || formState?.service_type === 'laboratory_clinic_visit' ? <div>
+
                             <FormInput label={t('Lab Tests')}
                                        name={'lab_test_id'}
                                        rules={[{required: true}]}
                                        inputType={'resourceSelect'}
+                                       resourceParams={{
+                                           clinic: formState.clinic_id
+                                       }}
                                        resource={'LabTest'}/>
+
                             <FormInput label={t('Lab Packages')}
                                        name={'lab_package_id'}
                                        rules={[{required: true}]}
                                        inputType={'resourceSelect'}
+                                       resourceParams={{
+                                           clinic: formState.clinic_id
+                                       }}
                                        resource={'LabPackage'}/>
+
                         </div> : <FormInput label={t('Specialties')} name={'specialty_id'}
                                                         inputType={'resourceSelect'}
                                                         rules={[{required: true}]}

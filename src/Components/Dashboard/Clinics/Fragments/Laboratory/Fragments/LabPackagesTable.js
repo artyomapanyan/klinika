@@ -68,6 +68,7 @@ function LabPackagesTable() {
                 <h1 className={'h1'}>{t(`Packages`)}</h1>
 
                 {loading ? <Preloader/> : <ResourceTable
+                    paginationResourceTable={false}
                     noHeader={true}
                     customTableButton={{
                         title:'Add New Package',

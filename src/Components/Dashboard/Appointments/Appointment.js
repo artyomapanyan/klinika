@@ -320,7 +320,7 @@ function Appointment({isPatient}) {
         return [name,item]
     }
 
-console.log(availableDateState, 'av')
+
     const disabledDate = (current) => {
 
         return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
@@ -609,6 +609,9 @@ console.log(availableDateState, 'av')
                                                                            name={'lab_test_id'}
                                                                            rules={[{required: true}]}
                                                                            inputType={'resourceSelect'}
+                                                                           resourceParams={{
+                                                                               clinic: data.clinic_id
+                                                                           }}
                                                                            resource={'LabTest'}/>
                                                             </Col>
                                                             <Col lg={12} className="gutter-row">
@@ -616,6 +619,9 @@ console.log(availableDateState, 'av')
                                                                            name={'lab_package_id'}
                                                                            rules={[{required: true}]}
                                                                            inputType={'resourceSelect'}
+                                                                           resourceParams={{
+                                                                               clinic: data.clinic_id
+                                                                           }}
                                                                            resource={'LabPackage'}/>
                                                             </Col>
                                                         </Row> : data?.service_type === 'nursing' ? <Row>
@@ -624,6 +630,9 @@ console.log(availableDateState, 'av')
                                                                            name={'nursing_tasks'}
                                                                            inputProps={{mode: 'multiple'}}
                                                                            rules={[{required: true}]}
+                                                                           resourceParams={{
+                                                                               clinic: data.clinic_id
+                                                                           }}
                                                                            inputType={'resourceSelect'}
                                                                            resource={'NursingTask'}/>
                                                             </Col>

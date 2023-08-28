@@ -243,32 +243,3 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
 
 export default DateTimeSelect
 
-// useEffect(() => {
-//     if(formState?.clinic_id &&  formState?.service_type && formState?.specialty_id) {
-//         Promise.all([
-//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-//                 service: formState?.service_type,
-//                 date: startDate.format('YYYY-MM-DD')}),
-//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-//                 service: formState?.service_type,
-//                 date: startDate.add(1, 'day').format('YYYY-MM-DD')}),
-//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-//                 service: formState?.service_type,
-//                 date: startDate.add(2, 'day').format('YYYY-MM-DD')}),
-//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-//                 service: formState?.service_type,
-//                 date: startDate.add(3, 'day').format('YYYY-MM-DD')}),
-//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-//                 service: formState?.service_type,
-//                 date: startDate.add(4, 'day').format('YYYY-MM-DD')}),
-//             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-//                 service: formState?.service_type,
-//                 date: startDate.add(5, 'day').format('YYYY-MM-DD')}),
-//
-//         ]).then((response) => {
-//             console.log(response, 'dddddddddd')
-//             setavailableDates(response)
-//         })
-//     }
-//
-// }, [formState?.clinic_id, formState?.service_type, formState?.specialty_id])

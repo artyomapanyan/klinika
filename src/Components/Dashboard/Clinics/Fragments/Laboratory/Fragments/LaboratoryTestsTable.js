@@ -67,6 +67,7 @@ function LaboratoryTestsTable() {
                 <h1 className={'h1'}>{t(`Tests`)}</h1>
 
                 {loading ? <Preloader/> : <ResourceTable
+                    paginationResourceTable={false}
                     noHeader={true}
                     customTableButton={{
                         title:'Add New Test',
