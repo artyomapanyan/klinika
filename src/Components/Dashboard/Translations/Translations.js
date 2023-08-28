@@ -4,6 +4,8 @@ import {Button, Form, Input, Modal, Table} from "antd";
 import {createResource} from "../../Functions/api_calls";
 import {SearchOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
+import {t} from "i18next";
+import FormInput from "../../Fragments/FormInput";
 
 
 function Translations(){
@@ -140,7 +142,7 @@ function Translations(){
         <div style={{marginTop: -50}}>
             <div style={{marginBottom: 20, marginLeft: 20, fontSize: 20, fontWeight: 700}}>
                 Translations
-                <Button onClick={showModal} type={'primary'} >add</Button>
+                <Button style={{margin: '0 10px'}} onClick={showModal} type={'primary'} >add</Button>
             </div>
 
             <Modal key={'modal_translation'+ Math.random().toString()} title="Add translation" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={false}>
@@ -148,16 +150,11 @@ function Translations(){
                     name="basic"
                     onFinish={onFinish}
                 >
-                   <Form.Item name={'key'}>
-                       <Input />
 
-                   </Form.Item>
-                    <Form.Item  name={'value'}>
-                        <Input />
+                       <FormInput label={t('Key')} name={'key'} />
+                        <FormInput label={t('Value')} name={'value'}/>
 
-                    </Form.Item>
-
-                    <Button htmlType={'submit'}>Ok</Button>
+                    <Button htmlType={'submit'} type={'primary'} style={{margin: '0 8px'}}>Ok</Button>
                     <Button onClick={handleCancel}>Cancel</Button>
                 </Form>
             </Modal>
