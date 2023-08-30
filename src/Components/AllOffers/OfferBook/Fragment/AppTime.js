@@ -12,7 +12,7 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
 
     useEffect(() => {
         if(dataState?.doctor_id && dataState?.date) {
-            postResource('PublicClinicDoctorAvailableTimes','single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service:'home_visit', date:dataState?.date}).then(response => {
+            postResource('PublicClinicDoctorAvailableTimes','single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service:'clinic_visit', date:dataState?.date}).then(response => {
                 setTimes(response[0]);
             })
         }

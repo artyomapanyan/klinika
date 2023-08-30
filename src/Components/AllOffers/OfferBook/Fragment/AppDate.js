@@ -16,8 +16,7 @@ function AppDate({setDataState, dataState, data, setDate}) {
 
     useEffect(() => {
         if(dataState?.doctor_id) {
-            postResource('PublicClinicDoctorWorkingHours','single', token,  dataState?.doctor_id+ '/' + data?.clinic?.id, {service:'home_visit'}).then(response => {
-
+            postResource('PublicClinicDoctorWorkingHours','single', token,  dataState?.doctor_id+ '/' + data?.clinic?.id, {service:'clinic_visit'}).then(response => {
                 const res = response?.working_hours
                 let day = [];
                 Object.values(res)?.map((el) => {

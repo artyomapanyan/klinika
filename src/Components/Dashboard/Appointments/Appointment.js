@@ -108,7 +108,6 @@ function Appointment({isPatient}) {
         }
     }, [data?.clinic_id])
 
-
     useEffect(() => {
         if (data?.doctor_id && data?.clinic_id) {
             setTimesLoading(true)
@@ -132,10 +131,14 @@ function Appointment({isPatient}) {
                 setTimesLoading(false)
             })
         }
+    }, [data?.booked_at])
+
+
+    useEffect(() => {
+
         if (data?.clinic_id && data?.service_type === 'nursing') {
             setTimesLoading(true)
             postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'nursing'}).then(response => {
-                console.log(response)
                 let day = [];
 
                 Object.keys(response)?.forEach((key) => {
@@ -150,7 +153,6 @@ function Appointment({isPatient}) {
         if (data?.clinic_id && data?.service_type === "laboratory_home_visit" || data?.service_type === "laboratory_clinic_visit") {
             setTimesLoading(true)
             postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'laboratory_clinic_visit'}).then(response => {
-                console.log(response)
                 let day = [];
 
                 Object.keys(response)?.forEach((key) => {
@@ -162,23 +164,8 @@ function Appointment({isPatient}) {
                 setTimesLoading(false)
             })
         }
-        // if (data?.clinic_id && data?.service_type === "laboratory_clinic_visit") {
-        //     setTimesLoading(true)
-        //     postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'laboratory_clinic_visit'}).then(response => {
-        //         console.log(response)
-        //         let day = [];
-        //
-        //         Object.keys(response)?.forEach((key) => {
-        //             if(response[key][0]?.is_day_off){
-        //                 day.push(key)
-        //             }
-        //         })
-        //         setAvailableDateState(day)
-        //         setTimesLoading(false)
-        //     })
-        // }
 
-    }, [data?.doctor_id, data?.clinic_id, data?.service_type])
+    }, [data?.doctor_id, data?.service_type])
 
 
 
@@ -191,18 +178,21 @@ function Appointment({isPatient}) {
                 service: data?.service_type,
                 date: data?.booked_at?.format('YYYY-MM-DD')
             }).then((responce) => {
+                if(responce) {
+                    setAvailableTimesState(responce?.map((el) => {
+                        return {
+                            label: 'Break Time',
+                            options: el?.map((el1) => {
+                                return {
+                                    lebel: el1,
+                                    value: el1
+                                }
+                            })
+                        }
+                    }))
+                }
 
-                setAvailableTimesState(responce?.map((el) => {
-                    return {
-                        label: 'Break Time',
-                        options: el?.map((el1) => {
-                            return {
-                                lebel: el1,
-                                value: el1
-                            }
-                        })
-                    }
-                }))
+
                 setTimesLoading(false)
             })
         }
@@ -212,17 +202,21 @@ function Appointment({isPatient}) {
                 service: data?.service_type,
             }).then((res) => {
 
-                setAvailableTimesState(res?.map((el) => {
-                    return {
-                        label: 'Break Time',
-                        options: el?.map((el1) => {
-                            return {
-                                lebel: el1,
-                                value: el1
-                            }
-                        })
-                    }
-                }))
+                if(res) {
+                    setAvailableTimesState(res?.map((el) => {
+                        return {
+                            label: 'Break Time',
+                            options: el?.map((el1) => {
+                                return {
+                                    lebel: el1,
+                                    value: el1
+                                }
+                            })
+                        }
+                    }))
+                }
+
+
             })
         }
 
@@ -336,7 +330,7 @@ function Appointment({isPatient}) {
 
     }
 
-
+console.log(data)
 
     return (
         <div>
@@ -520,6 +514,18 @@ function Appointment({isPatient}) {
                                                            rules={[{required: true}]}
                                                            initialValue={null}
                                                            initialData={[data?.clinic].filter(e=>e)}
+                                                           inputProps={{
+                                                               onChange:(e,dat)=> {
+                                                                   console.log(formRef?.current?.setFieldsValue(), 'ref')
+                                                                   // formRef?.current?.setFieldsValue({
+                                                                   //     specialty_id:null,
+                                                                   //     doctor_id: null,
+                                                                   //     booked_at: null,
+                                                                   //     appointment_time: null,
+                                                                   // })
+
+                                                               }
+                                                           }}
                                                            resourceParams={{
                                                                active:1
                                                            }}
@@ -532,6 +538,17 @@ function Appointment({isPatient}) {
                                                             <FormInput label={t('Service Type')} name={'service_type'}
                                                                        inputType={'resourceSelect'}
                                                                        rules={[{required: true}]}
+                                                                       inputProps={{
+                                                                           onChange:(e,data)=> {
+                                                                               formRef?.current?.setFieldsValue({
+                                                                                   specialty_id:null,
+                                                                                   doctor_id: null,
+                                                                                   booked_at: null,
+                                                                                   appointment_time: null,
+                                                                               })
+
+                                                                           }
+                                                                       }}
                                                                        initialValue={null}
                                                                        initialData={serviceTypeState}/>
                                                     }

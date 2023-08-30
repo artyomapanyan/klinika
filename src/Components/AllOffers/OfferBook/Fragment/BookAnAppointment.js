@@ -80,10 +80,10 @@ function BookAnAppointment({data}) {
                     <AppTime data={data} setDataState={setDataState} dataState={dataState} setDataTimes={setDataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppPersonalDetails setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params} date={date} dataTimes={dataTimes}/>
+                    <AppPersonalDetails responseCodeState={responseCodeState} setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params} date={date} dataTimes={dataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppPaymentMethods setDataState={setDataState} dataState={dataState}  responseCodeState={responseCodeState}/>
+                    <AppPaymentMethods data={data} setDataState={setDataState} dataState={dataState}  responseCodeState={responseCodeState}/>
                 </div>
             </div>
             <Divider style={{background: '#e3e0e3'}}/>

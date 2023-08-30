@@ -130,6 +130,20 @@ function Appointments() {
                         filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                     },
                     {
+                        dataIndex:'patient',
+                        title:'Patient',
+                        key:'patient',
+                        render:(e, record) => {
+                            return <div>{record?.patient?.first} {record?.patient?.last}</div>
+                        }
+                    },
+                    {
+                        dataIndex:['patient', 'phone_number'],
+                        title:'Phone number',
+                        key:'phone_number',
+
+                    },
+                    {
                         dataIndex:'service_type',
                         title:t('Service'),
                         key:'service_type',

@@ -18,7 +18,7 @@ function CongratulationsText({clinicRedux}) {
                 {clinicRedux?.date}<span style={{color:'#ce4e99', fontWeight:600, marginLeft:15}}>{clinicRedux?.time}</span>
             </div>
             <div style={{fontSize:16, marginTop:12}}>
-                {clinicRedux?.location?.address1}
+                {clinicRedux?.location?.address1?.en}
             </div>
             <a target={'_blank'} href={`https://www.google.com/maps/@${clinicRedux?.location?.latitude},${clinicRedux?.location?.longitude}`}><div style={{marginTop:12, cursor:'pointer'}}>
                 <EnvironmentOutlined style={{color:"#ce4e99", fontSize:16}}/> <span style={{color:"#ce4e99", fontSize:16, fontWeight:600}}>Show on map</span>

@@ -49,7 +49,7 @@ function OfferCard({data, id}) {
                                 currentTarget.src=off_image_1;}}  />}  />
                             <div style={{display:"block"}}>
                                 <h2 style={{fontWeight: 600}}>{data?.clinic?.name}</h2>
-                                <div  className={'offer_card_smoll_text1'}>{data?.clinic?.location?.address1}</div>
+                                <div  className={'offer_card_smoll_text1'}>{data?.clinic?.location?.address1?.en}</div>
                             </div>
 
                         </Space>
@@ -65,7 +65,7 @@ function OfferCard({data, id}) {
                                 <div style={{display:"block"}}>
                                     <h2 style={{fontWeight: 600}}>{data?.new_price} SAR</h2>
                                     <div>
-                                        <span style={{fontSize: 14, }}>{data?.old_price} SAR</span><span style={{marginLeft: 20, color:'#CD499B'}}>Save {data?.old_price - data?.new_price} SAR</span>
+                                        <span style={{fontSize: 14, }}>{data?.old_price} SAR</span><span style={{marginLeft: 20, color:'#CD499B'}}>Save {(data?.old_price - data?.new_price).toFixed(1)} SAR</span>
                                         <div className={'line'}></div>
                                     </div>
                                 </div>

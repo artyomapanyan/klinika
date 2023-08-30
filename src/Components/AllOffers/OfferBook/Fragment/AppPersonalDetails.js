@@ -7,7 +7,7 @@ import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 
 
-function AppPersonalDetails({setDataState, dataState, setResponseCodeState, params, dataTimes, date}) {
+function AppPersonalDetails({setDataState, dataState, setResponseCodeState, responseCodeState, params, dataTimes, date}) {
     let token = useSelector((state) => state.auth.token);
     let formRef= useRef();
     let refObj = formRef?.current?.getFieldValue()
@@ -45,7 +45,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
 
     const onVerifyNumber = (values) => {
         setPhoneLoading(true)
-        postResource('PublicOffer', 'PhoneVerify', token, '', values).then(() => {
+        postResource('PublicOffer', 'PhoneVerify', token, '', values).then((response) => {
             setPhoneLoading(false)
             setVerifyState(1)
 
@@ -73,7 +73,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
             setResponseCodeState(response)
             setVerifyResponse(response)
             setPhoneLoading(false)
-            setVerifyState(2)
+
             if(response?.message === 'Verification code successfully sent to your phone number'){
                 setDataState((prevState) => ({
                     ...prevState,
@@ -117,12 +117,12 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
     });
 
     const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) `:null
+        name = item.phone_code?`(${item.phone_code}) ${item.name} `:null
         item.id = item.phone_code
         return [name,item]
     }
 
-
+    console.log(responseCodeState)
     return (
         <div>
             <Space>
@@ -138,7 +138,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
                                 <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                            rules={[{required: true}]}
                                            handleMapItems={handleMapItems}
-                                           resource={'Country'}/>
+                                           resource={'PublicCountry'}/>
                             </div>
                             <div style={{width:'100%', marginLeft:10}}>
                                 <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} />
@@ -171,7 +171,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
 
                         </Form>
                     </div>}
-                    {verifyState === 2 && <div>
+                    {responseCodeState?.patient ? <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
                             <Form ref={formRef}>
                                 <FormInput inputDisabled={verifyResponse?.patient?.first} label={t('First Name')} name={'first'} initialValue={verifyResponse?.patient?.first} rules={[{required: true}]} />
@@ -181,7 +181,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
 
                         </Space>
 
-                    </div>}
+                    </div> : <div></div>}
                 </div>
 
             </div> : <div></div>
