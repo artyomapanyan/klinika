@@ -67,7 +67,7 @@ function Offer() {
         }
     }
  const handleValuesChange = (changed,all)=>{
-        console.log(all, changed, 'aaaaaaa')
+
         if(changed.clinic_id) {
             setData((prevData)=>({
                 ...prevData,

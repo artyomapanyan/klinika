@@ -1,10 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, useMemo} from "react";
 import {CheckCircleOutlined} from "@ant-design/icons";
-import {Button, Form, Input, Space} from "antd";
+import {Button, Form, Input, Space, notification } from "antd";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
+
 
 
 function AppPersonalDetails({setDataState, dataState, setResponseCodeState, responseCodeState, params, dataTimes, date}) {
@@ -15,6 +16,9 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     const [verifyState, setVerifyState] = useState(0);
     const [codeAndNumber, setCodeAndNumber] = useState()
     const [verifyResponse, setVerifyResponse] = useState()
+
+
+
 
     useEffect(() => {
         if(dataState?.payment_method_id){
@@ -53,12 +57,24 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
         setCodeAndNumber(values)
 
     }
+
+    const [api, contextHolder] = notification.useNotification();
+
     // const enterInput = (e) => {
     //     setDataState((prevState) => ({
     //         ...prevState,
     //         verifyNumber: e?.target?.value,
     //     }))
     // }
+
+    const openNotification = (placement) => {
+        api.error({
+            message: `Notification`,
+            description: 'You entered an incorrect code',
+            placement,
+        });
+    };
+
 
     const onVerifyCode = (values) => {
         values = {
@@ -79,6 +95,10 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                     ...prevState,
                     verifyNumber: 'Verification code successfully sent to your phone number',
                 }))
+            }
+            console.log(response, 'jjj')
+            if(response === 'You entered an incorrect code'){
+                openNotification('bottomRight')
             }
 
         })
@@ -122,9 +142,16 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
         return [name,item]
     }
 
-    console.log(responseCodeState)
+
+
+
+    //console.log(responseCodeState)
     return (
         <div>
+
+            {contextHolder}
+            <Button onClick={() => openNotification('bottomRight')}>sdf</Button>
+
             <Space>
                 <CheckCircleOutlined style={{color:verifyResponse ? '#2ce310' : 'gray', fontSize: 22}}/>
                 <h2 style={{fontWeight: 600, marginTop: 8}}>Personal Details</h2>
