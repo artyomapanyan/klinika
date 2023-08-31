@@ -145,7 +145,7 @@ function ShowAppointment() {
                                 </tr>
                                 <tr>
                                     <td className={'show_td_1'}>Booking Date</td>
-                                    <td className={'show_td_2'}>{data?.booked_at?.iso_string || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
+                                    <td className={'show_td_2'}>{dayjs(data?.booked_at?.iso_string).format('YYYY-MM-DD hh:mm A') || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 <tr>
                                     <td className={'show_td_1'}>Appointment’s Status</td>
@@ -179,7 +179,7 @@ function ShowAppointment() {
                                             data?.invoices.map((el) => {
                                                 return <tr>
                                                     <td onClick={()=> navigate(ResourceLinks[invoiceResource] + el.id)} className={'app_show_invoce'}>{el.invoice_number}</td>
-                                                    <td>{dayjs(el?.date?.iso_string).format('YYYY-MM-DD hh:mm')}</td>
+                                                    <td>{dayjs(el?.date?.iso_string).format('YYYY-MM-DD h:mm A')}</td>
                                                     <td>{el?.total_price}</td>
                                                     <td><Button disabled={pdfState} onClick={()=>invoiceHandleExportPDF(el.id)} size={'small'} style={{background:'red'}}><FilePdfOutlined style={{color: "#ffffff"}}/></Button></td>
                                                 </tr>
