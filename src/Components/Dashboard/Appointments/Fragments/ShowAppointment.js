@@ -177,7 +177,7 @@ function ShowAppointment() {
 
                                         {
                                             data?.invoices.map((el) => {
-                                                return <tr>
+                                                return <tr key={el?.id}>
                                                     <td onClick={()=> navigate(ResourceLinks[invoiceResource] + el.id)} className={'app_show_invoce'}>{el.invoice_number}</td>
                                                     <td>{dayjs(el?.date?.iso_string).format('YYYY-MM-DD h:mm A')}</td>
                                                     <td>{el?.total_price}</td>

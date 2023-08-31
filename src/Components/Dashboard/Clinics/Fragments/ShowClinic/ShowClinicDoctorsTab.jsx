@@ -22,7 +22,7 @@ const ShowClinicDoctorsTab = ({dataState}) => {
             setData(response.items?.map((el) => {
                return {
                    key: el.id,
-                   doctor: <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                   doctor: <div key={el?.id} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                            <div>
                                <Avatar size={64} icon={<UserOutlined />} />
                            </div>
