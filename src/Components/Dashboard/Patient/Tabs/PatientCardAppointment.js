@@ -17,7 +17,7 @@ import {t} from "i18next";
 const { TextArea } = Input;
 
 const resource = 'Appointment'
-function PatientCardAppointment({bigData, id}) {
+function PatientCardAppointment({bigData, id, setBigData}) {
     const formRef = useRef();
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
@@ -50,7 +50,8 @@ function PatientCardAppointment({bigData, id}) {
 
     const onFinish = (values) => {
         setLoadingSubmit(true)
-        postResource('Appointment', 'NotePurpose', token, `${id}/add-notes-and-purpose`, values).then(() => {
+        postResource('Appointment', 'NotePurpose', token, `${id}/add-notes-and-purpose`, values).then((response) => {
+            setBigData(response)
             setLoadingSubmit(false)
 
         })
@@ -59,7 +60,8 @@ function PatientCardAppointment({bigData, id}) {
 
     const onFileCreate = (values) => {
 
-        postResource1('Appointment', 'NotePurpose', token, `${id}/upload-files`, values, null, true).then(() => {
+        postResource1('Appointment', 'NotePurpose', token, `${id}/upload-files`, values, null, true).then((response) => {
+            setBigData(response)
             setLoadingSubmit(false)
 
         })
@@ -76,21 +78,27 @@ function PatientCardAppointment({bigData, id}) {
                     <Col lg={24}>
                         <Row gutter={[40,0]}>
                             <Col lg={16}>
-                                <Form
-                                    onFinish={onFinish}
-                                >
-                                    <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
-                                        <TextArea placeholder={t("Patients condition")} rows={8}/>
-                                    </Form.Item>
-                                    <div align={'right'}>
-                                        <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
-                                    </div>
-                                    <h1 className={'h1'}>{t('Purpose')}</h1>
-                                    <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
-                                        <TextArea placeholder={t("Add notes here")} rows={8} />
-                                    </Form.Item>
 
-                                </Form>
+                                    <Form
+                                            onFinish={onFinish}
+                                        >
+                                            <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
+                                                <TextArea placeholder={t("Patients condition")} rows={8}/>
+                                            </Form.Item>
+                                            <div align={'right'}>
+                                                <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                            </div>
+                                            <h1 className={'h1'}>{t('Purpose')}</h1>
+                                            <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
+                                                <TextArea placeholder={t("Add notes here")} rows={8} />
+                                            </Form.Item>
+                                        <div align={'right'}>
+                                            <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                        </div>
+
+                                        </Form>
+
+
 
 
                                 <div style={{width:'100%'}}>

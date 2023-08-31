@@ -41,6 +41,7 @@ function Patient() {
         setTab(searchParams.get('tab') ?? 'overview')
     }, [])
 
+
     const handleChange = (e) => {
         setTab(e)
         setSearchParams({tab: e})
@@ -72,7 +73,7 @@ function Patient() {
                                 <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-                                <PatientCardAppointment bigData={data} id={params.id}/>
+                                <PatientCardAppointment bigData={data} id={params.id} setBigData={setData}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'video_call'} tab={'Video call'} >
                                 <VideoCall data={data}/>

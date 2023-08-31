@@ -14,7 +14,7 @@ function PatientCardMedications({tab}) {
     let params = useParams()
 
     const [prescriptions, setPrescriptions] = useState([])
-    const [searchPrescriptions, setSearchPrescriptions] = useState(null)
+    const [searchPrescriptions, setSearchPrescriptions] = useState('')
     const [searchLoading, setSearchLoading] = useState(false)
     const [loading, setLoading] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
@@ -32,23 +32,28 @@ function PatientCardMedications({tab}) {
         })
     }, [tab, addDeleteState])
 
-    const onSearch = () => {
-        setSearchLoading(true)
-        postResource('prescriptions','single', token,  '', {
-                appointment: params.id,
-                name: search
-            }
-        ).then((response) => {
-            setSearchPrescriptions(response?.items)
-            setSearchLoading(false)
+    const onSearch = (e) => {
+        // setSearchLoading(true)
+        // postResource('prescriptions','single', token,  '', {
+        //         appointment: params.id,
+        //         name: search
+        //     }
+        // ).then((response) => {
+        //     setSearchPrescriptions(response?.items)
+        //     setSearchLoading(false)
+        //
+        // })
 
-        })
+    }
+
+    const onChange = (e) => {
+        setSearchPrescriptions(e.target.value)
     }
 
 
 
     //.filter((e) => e?.name?.toLowerCase().includes(search?.toLowerCase()))
-
+console.log(prescriptions)
     return(
         <div style={{padding:40}}>
             {
@@ -58,18 +63,19 @@ function PatientCardMedications({tab}) {
             <Row gutter={[16]} >
                 {
 
-                    prescriptions.map((el) => {
-                        if(dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY') >= dayjs().format('DD-MM-YYYY')) {
+                    prescriptions.filter((el) => {
+                       return dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY')
+                    }).map((el) => {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
-                        }
+
                     })
                 }
 
             </Row>
             <div className={'finished_header'}>
                 <div className={'medications_big_text'}>{t('Finished')}</div>
-                <div><Input onChange={(e)=>setSearch(e.target.value)} style={{width: 320, height: 48, borderRadius: 12}} placeholder={'Search by name'} suffix={<img onClick={onSearch}  style={{cursor: 'pointer'}} alt={'search_icon_black'} src={search_icon_black}/>}/></div>
+                <div><Input onChange={(e)=>onChange(e)} style={{width: 320, height: 48, borderRadius: 12}} placeholder={'Search by name'} suffix={<img   style={{cursor: 'pointer'}} alt={'search_icon_black'} src={search_icon_black}/>}/></div>
             </div>
 
 
@@ -78,15 +84,12 @@ function PatientCardMedications({tab}) {
 
                      {
 
-                         searchPrescriptions ? searchPrescriptions.map((el) => {
+                         prescriptions.filter((el) => {
+                             return dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY') > dayjs().format('DD-MM-YYYY')
+                         }).map((el) => {
+                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
+                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
 
-                             if(dayjs(el?.end_date?.iso_string).add(-2, 'day').format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY')) {
-                                 return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions} setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
-                             }
-                         }) : prescriptions.map((el) => {
-                             if(dayjs(el?.end_date?.iso_string).add(-2, 'day').format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY')) {
-                                 return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions} setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
-                             }
                          })
                      }
 
