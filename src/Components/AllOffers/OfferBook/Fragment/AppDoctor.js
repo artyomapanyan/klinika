@@ -1,6 +1,7 @@
 import React from "react";
 import {CheckCircleOutlined, UserOutlined} from "@ant-design/icons";
 import {Avatar, Button, Space} from "antd";
+import {t} from "i18next";
 
 function AppDoctor({setDataState, dataState, data}) {
     //const [doctorName, setDoctorName] = useState('')
@@ -24,12 +25,12 @@ function AppDoctor({setDataState, dataState, data}) {
         <div>
             <Space>
                 <CheckCircleOutlined style={{color:dataState?.doctor_id ?'#2ce310':'gray', fontSize:22}} />
-                <h2 style={{fontWeight: 600, marginTop:8}}>Doctor</h2>
+                <h2 style={{fontWeight: 600, marginTop:8}}>{t('Doctor')}</h2>
             </Space>
             {
                 dataState?.doctor_id ? <div>
                     <Space>
-                        Selected Doctor : <span className={'selected_text'}>{doctorName?.first}{doctorName?.last}</span>
+                        {t('Selected Doctor')} : <span className={'selected_text'}>{doctorName?.first}{doctorName?.last}</span>
                         <Button type={'secondary'} onClick={onChangeDoctor} style={{borderRadius:15}}>Change Selected Doctor</Button>
                     </Space>
                 </div> : <div style={{maxWidth:800}}>

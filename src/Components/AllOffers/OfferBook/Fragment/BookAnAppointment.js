@@ -8,6 +8,7 @@ import AppPaymentMethods from "./AppPaymentMethods";
 import {postResource} from "../../../Functions/api_calls";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
+import {t} from "i18next";
 
 function BookAnAppointment({data}) {
     let token = useSelector((state) => state.auth.token);
@@ -62,10 +63,10 @@ function BookAnAppointment({data}) {
         <div className={'app_big_div'}>
             <div className={'app_title'}>
                 <h1 style={{fontWeight: 700}}>
-                    One Final Step
+                    {t('One Final Step')}
                 </h1>
                 <div style={{color: '#8d8c8c'}}>
-                    In Order to Claim This Offer Choose a Doctor & The Best Time For You.
+                    {t('In Order to Claim This Offer Choose a Doctor & The Best Time For You.')}
                 </div>
                 <Divider style={{background: '#e3e0e3'}}/>
             </div>

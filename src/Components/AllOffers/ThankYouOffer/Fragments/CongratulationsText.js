@@ -1,5 +1,6 @@
 import React from "react";
 import {EnvironmentOutlined} from "@ant-design/icons";
+import {t} from "i18next";
 
 function CongratulationsText({clinicRedux}) {
 
@@ -21,7 +22,7 @@ function CongratulationsText({clinicRedux}) {
                 {clinicRedux?.location?.address1?.en}
             </div>
             <a target={'_blank'} href={`https://www.google.com/maps/@${clinicRedux?.location?.latitude},${clinicRedux?.location?.longitude}`}><div style={{marginTop:12, cursor:'pointer'}}>
-                <EnvironmentOutlined style={{color:"#ce4e99", fontSize:16}}/> <span style={{color:"#ce4e99", fontSize:16, fontWeight:600}}>Show on map</span>
+                <EnvironmentOutlined style={{color:"#ce4e99", fontSize:16}}/> <span style={{color:"#ce4e99", fontSize:16, fontWeight:600}}>{t('Show on map')}</span>
             </div></a>
 
         </div>

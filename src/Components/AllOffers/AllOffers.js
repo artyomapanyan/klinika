@@ -82,7 +82,7 @@ function AllOffers() {
                             {
                                 data?.items?.length < 1 ? <div className={'no_offers'}>
                                     <Result
-                                        title="No offers found"
+                                        title={t("No offers found")}
 
                                     />
                                     </div> : data?.items?.map((el) => {
@@ -95,7 +95,7 @@ function AllOffers() {
                 </div>
             </div>}
             <div align={'center'} style={{marginTop:30}}>
-                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>Load more</Button>
+                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>{t('Load more')}</Button>
             </div>
 
             <OffersFooter />

@@ -2,6 +2,7 @@ import React from "react";
 import {Avatar, Button, Col, Divider, Rate, Space} from "antd";
 import off_image_1 from "../../../dist/Img/off_image_1.jpg";
 import {useNavigate} from "react-router";
+import {t} from "i18next";
 
 function OfferCard({data, id}) {
     const navigate = useNavigate()
@@ -70,7 +71,7 @@ function OfferCard({data, id}) {
                                     </div>
                                 </div>
                             </Space>
-                            <Button size={'large'} type={'primary'} onClick={onBookNow}>Book now</Button>
+                            <Button size={'large'} type={'primary'} onClick={onBookNow}>{t('Book now')}</Button>
                         </div>
 
                     </div>

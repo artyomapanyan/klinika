@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {CheckCircleOutlined} from "@ant-design/icons";
 import {Button, Space} from "antd";
 import Radio from "antd/lib/radio/radio";
+import {t} from "i18next";
 
 
 function AppPaymentMethods({setDataState, dataState, responseCodeState, data}) {
@@ -31,7 +32,7 @@ function AppPaymentMethods({setDataState, dataState, responseCodeState, data}) {
         <div>
             <Space>
                 <CheckCircleOutlined style={{color:paymentMethodState ?'#2ce310':'gray', fontSize:22}} />
-                <h2 style={{fontWeight: 600, marginTop:8}}>Payment Method</h2>
+                <h2 style={{fontWeight: 600, marginTop:8}}>{t('Payment Method')}</h2>
             </Space>
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment && dataState?.verifyNumber ? <div>
@@ -53,12 +54,7 @@ function AppPaymentMethods({setDataState, dataState, responseCodeState, data}) {
 
                         }
                         </Radio.Group>
-                        {/*<Radio.Group onChange={onChange}>*/}
-                        {/*    <Space direction="vertical">*/}
-                        {/*        <Radio value={1}>Cash</Radio>*/}
-                        {/*        <Radio value={2}>Tap Payments</Radio>*/}
-                        {/*    </Space>*/}
-                        {/*</Radio.Group>*/}
+
                     </div>
 
                 </div> :<div></div>

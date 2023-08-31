@@ -4,6 +4,7 @@ import {Button, Space} from "antd";
 import Slider from "react-slick";
 import {useSelector} from "react-redux";
 import {postResource} from "../../../Functions/api_calls";
+import {t} from "i18next";
 
 function AppTime({setDataState, dataState, data, setDataTimes}) {
     let token = useSelector((state) => state.auth.token);
@@ -78,7 +79,7 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
                 dataState?.doctor_id && dataState?.date && dataState?.time ? <div>
                     <Space>
                         Selected Time : <span className={'selected_text'}>{dataState?.time}</span>
-                        <Button type={'secondary'} onClick={onChangeTime} style={{borderRadius:15}}>Change Time</Button>
+                        <Button type={'secondary'} onClick={onChangeTime} style={{borderRadius:15}}>{t('Change Time')}</Button>
                     </Space>
                 </div> : (dataState?.doctor_id && dataState?.date) || dataState?.time ? <div className={'date_carousel_div'}>
                     <div style={{position:'absolute', width:'98%'}}>

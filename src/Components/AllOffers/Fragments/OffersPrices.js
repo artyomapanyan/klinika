@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Button, Col, Dropdown, Input, Row, Slider, Space} from "antd";
 import {DownOutlined, FunnelPlotOutlined, InsertRowRightOutlined, SearchOutlined} from "@ant-design/icons";
+import {t} from "i18next";
 
 
 function OffersPrices({clinics, setParams, params,  setResetState}) {
@@ -71,7 +72,7 @@ function OffersPrices({clinics, setParams, params,  setResetState}) {
             <Col lg={7}>
                 <div className={'price'}>
                     <div className={'price_text'}>
-                        Price:
+                        {t('Price:')}
                     </div>
                     <div className={'price_text'}>
                         {params?.min_price ?? 0} SAR
@@ -103,7 +104,7 @@ function OffersPrices({clinics, setParams, params,  setResetState}) {
                     <FunnelPlotOutlined style={{color:'#ce4e99', fontSize:20, paddingRight:10, }} />
                     <span style={{fontSize: 14}} >
                         {
-                            lowHighState ? "Price: Low to High" : 'Price: High to Low'
+                            lowHighState ? t("Price: Low to High") : t('Price: High to Low')
                         }
 
                     </span>
@@ -124,7 +125,7 @@ function OffersPrices({clinics, setParams, params,  setResetState}) {
                             >
                                 <Space direction={'horizontal'} style={{cursor:"pointer"}}>
                                     <div style={{marginLeft:10, fontSize:14}}>{params?.clinic ? items?.find((el) => {
-                                        return el?.key === +params?.clinic})?.label : `All Clinics (${clinics?.length})`}</div>
+                                        return el?.key === +params?.clinic})?.label : `${t('All Clinics')} (${clinics?.length})`}</div>
                                     <div><DownOutlined style={{color:'#ce4e99'}}/></div>
                                 </Space>
 
@@ -141,7 +142,7 @@ function OffersPrices({clinics, setParams, params,  setResetState}) {
             </Col>
             <Col lg={2} align={'center'}>
                 <div>
-                    <Button type={"secondary"} style={{backgroundColor:'#F3F3F3', border:'none', color:'#8d8c8d', fontWeight:600, height:37}} onClick={onReset}>Reset</Button>
+                    <Button type={"secondary"} style={{backgroundColor:'#F3F3F3', border:'none', color:'#8d8c8d', fontWeight:600, height:37}} onClick={onReset}>{t('Reset')}</Button>
                 </div>
             </Col>
         </Row>

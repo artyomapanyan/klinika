@@ -150,11 +150,10 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
         <div>
 
             {contextHolder}
-            <Button onClick={() => openNotification('bottomRight')}>sdf</Button>
 
             <Space>
                 <CheckCircleOutlined style={{color:verifyResponse ? '#2ce310' : 'gray', fontSize: 22}}/>
-                <h2 style={{fontWeight: 600, marginTop: 8}}>Personal Details</h2>
+                <h2 style={{fontWeight: 600, marginTop: 8}}>{t('Personal Details')}</h2>
             </Space>
             {dataState?.doctor_id && dataState?.date && dataState?.time ? <div className={'date_carousel_div'}>
                 <div>
@@ -182,18 +181,18 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                             <div style={{display: 'flex', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <div style={{width:'50%', marginLeft:10}}>
                                     <Input value={`+${codeAndNumber?.phone_country_code}${codeAndNumber?.phone_number}`} style={{marginTop:7, height:46, borderRadius:12}}/>
-                                    <div className={'change_number'} onClick={onSendSMSAgain}>Change Number</div>
+                                    <div className={'change_number'} onClick={onSendSMSAgain}>{t('Change Number')}</div>
                                 </div>
                                 <div style={{width: '20%'}} align={'center'}>
                                     {
-                                        mins === 0 && secs === 0 ? <div className={'send_again_text'} onClick={onSendSMSAgain}>Send Again</div> :
+                                        mins === 0 && secs === 0 ? <div className={'send_again_text'} onClick={onSendSMSAgain}>{t('Send Again')}</div> :
                                             <p>{`${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`}</p>
                                     }
                                 </div>
                                 <div className={'space_compact'}>
                                     <FormInput label={t('Verify code')} name={'code'} />
                                 </div>
-                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>Virify</Button>
+                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>{t('Virify')}</Button>
                             </div>
 
                         </Form>
