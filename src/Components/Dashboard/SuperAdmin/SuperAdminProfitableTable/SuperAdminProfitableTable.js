@@ -59,17 +59,17 @@ function SuperAdminProfitableTable() {
             }
         },
         {
-            title: 'Offers',
+            title: t('Offers'),
             dataIndex: 'offers_count',
             key: 'offers_count',
         },
         {
-            title: 'Orders',
+            title: t('Orders'),
             dataIndex: 'orders_count',
             key: 'orders_count',
         },
         {
-            title: 'Income',
+            title: t('Income'),
             dataIndex: 'income',
             key: 'income',
             render:(e, record) => {
@@ -84,7 +84,7 @@ function SuperAdminProfitableTable() {
         <div className={'profitable_table_big_div'}>
             <Spin spinning={loading}>
                     <div className={'incomes_table_head'}>
-                        <h1 className={'h1'}>Profitable Clinics</h1>
+                        <h1 className={'h1'}>{t('Profitable Clinics')}</h1>
                         <Space>
                             <Button className={'chart_button'} style={{paddingTop: 1}} >
                                 {language === 'en' ? <img src={arrow_prev} alt={'arrow_prev'}/> : <img src={arrow_next} alt={'arrow_next'}/>}

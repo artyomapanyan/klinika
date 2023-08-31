@@ -88,7 +88,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                 </Col>
                 <Col lg={12}>
                     <div align={'right'} style={{marginTop:42}}>
-                        <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} /> Back to short form</Button>
+                        <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} />{t('Back to short form')}</Button>
                     </div>
                     <div >
 

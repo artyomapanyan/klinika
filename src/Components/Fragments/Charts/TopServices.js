@@ -2,6 +2,7 @@ import {Progress, Spin} from "antd";
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
+import {t} from "i18next";
 
 function TopServices() {
     let token = useSelector((state) => state.auth.token);
@@ -64,7 +65,7 @@ function TopServices() {
     return(
         <Spin spinning={loading}>
             <div className={'top_services'}>
-                <h1 className={'top_services_text'}>TOP 5 services</h1>
+                <h1 className={'top_services_text'}>{t('TOP 5 services')}</h1>
                 {
                     Object.values(data).sort((a,b)=>{
                         return b.percentage-a.percentage

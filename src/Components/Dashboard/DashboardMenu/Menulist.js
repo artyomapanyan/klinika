@@ -154,7 +154,7 @@ export default {
         {
             key: 'super-admin',
             icon: <img alt={'icons'} src={dash1}/>,
-            label: 'Dashboard',
+            label: t('Dashboard'),
         },
         {
             label: t(`Inputs`),

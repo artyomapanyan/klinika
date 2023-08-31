@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import {postResource} from "../../../Functions/api_calls";
 import {Chart, registerables} from "chart.js";
 import {Col, Row, Space, Spin} from "antd";
+import {t} from "i18next";
 
 function SuperAdminClinicsStatuses() {
     let canvasRef = useRef();
@@ -93,7 +94,7 @@ function SuperAdminClinicsStatuses() {
 
                 <Space direction={'vertical'}>
                     <div style={{marginLeft: 15}} className={'chart_counter_bold_text'}>
-                       Clinics Statuses
+                        {t('Clinics Statuses')}
                     </div>
                     <div style={{display:'flex'}}>
                         <Row className={'statuses_info_div'}>

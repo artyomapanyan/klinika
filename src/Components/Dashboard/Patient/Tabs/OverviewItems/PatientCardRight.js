@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import DoctorReworkedCalendarDrawer
     from "../../../DoctorReworked/Fragments/DoctorReworkedCalendar/Fragments/DoctorReworkedCalendarDrawer";
 import Preloader from "../../../../Preloader";
+import {t} from "i18next";
 
 function PatientCardRight({id, patientId, dataClinic}) {
     const token = useSelector((state) => state.auth.token);
@@ -82,10 +83,10 @@ function PatientCardRight({id, patientId, dataClinic}) {
             <div>
                 <div className={'patient_next_app_head'}>
                     <div className={'next_app_text'}>
-                        Next Appointments:
+                        {t('Next Appointments')}:
                     </div>
                     <div>
-                        <div onClick={showDrawer} style={{cursor: 'pointer'}}> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>Add</span></div>
+                        <div onClick={showDrawer} style={{cursor: 'pointer'}}> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>{t('Add')}</span></div>
                     </div>
                 </div>
                 {

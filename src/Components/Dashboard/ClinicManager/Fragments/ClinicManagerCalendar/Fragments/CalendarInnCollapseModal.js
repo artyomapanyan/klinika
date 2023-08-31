@@ -162,9 +162,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                    inputProps={{
                                        notFoundContent: <div
                                            style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                                           <div>Not found</div>
-                                           <Button type={'secondary'} style={{border: "none"}} onClick={openDrawer}>Create
-                                               new</Button></div>
+                                           <div>{t('Not found')}</div>
+                                           <Button type={'secondary'} style={{border: "none"}} onClick={openDrawer}>{t('Create new')}</Button></div>
                                    }}
                                    initialData={[]}
                                    handleMapItems={(item, name) => searchByNumber(item, name)}
@@ -179,7 +178,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 </Form>
             }
 
-            <Drawer size={size} title="Add User" placement="right" onClose={() => setOpen(false)} open={open}>
+            <Drawer size={size} title={t("Add User")} placement="right" onClose={() => setOpen(false)} open={open}>
                 {
                     size === "default" ?
                         <ClinicManagerCalendarDrawerSmall setData={setData} data={data} doctor={doctor} specialty={specialty}

@@ -331,7 +331,7 @@ function ClinicOwnerPatientsChart(){
         <div className={'gradient_chart_inn_big_div'}>
             <Space className={'owner_patient_text'} >
                 {t("Patients")}
-                {['New', 'Returned'].map((itemKey,key)=><Space  key={key} className={`withDot WD-color2-${key}`}><span className={'color_text_charts'}>{itemKey}</span></Space>)}
+                {[t('New'), t('Returned')].map((itemKey,key)=><Space  key={key} className={`withDot WD-color2-${key}`}><span className={'color_text_charts'}>{itemKey}</span></Space>)}
             </Space>
             <div>
                 <Space className={'arrow_button'}>

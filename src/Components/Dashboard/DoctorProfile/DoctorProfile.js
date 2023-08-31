@@ -10,6 +10,7 @@ import ClinicTabBars from "../Clinics/Fragments/ClinicTabBars";
 import DoctorGeneralInfo from "./DoctorGeneralInfo/DoctorGeneralInfo";
 import {useSelector} from "react-redux";
 import DoctorWorkingHours from "./DoctorWorkingHours/DoctorWorkingHours";
+import {t} from "i18next";
 
 
 let resource = 'DoctorUpdateProfile';
@@ -115,11 +116,11 @@ function DoctorProfile() {
                 <div className={'clinic_header_left_div'}>
                     <Button onClick={onBack} className={'clinic_back_btn'} ><img
                         alt={'Arrow_back_black'} src={Arrow_back_black}/></Button>
-                    <span style={{fontSize: 24, fontWeight: 700}}>Your profile</span>
+                    <span style={{fontSize: 24, fontWeight: 700}}>{t('Your profile')}</span>
                 </div>
                 <div className={'clinic_header_right_div'}>
-                    <Button loading={saveLoading} className={'add_btn'} size={'large'} type={'primary'} onClick={handleSave} >Save changes</Button>
-                    <Button className={'add_btn'} size={'large'} type={'secondary'}>Cancel</Button>
+                    <Button loading={saveLoading} className={'add_btn'} size={'large'} type={'primary'} onClick={handleSave} >{t('Save changes')}</Button>
+                    <Button className={'add_btn'} size={'large'} type={'secondary'}>{t('Cancel')}</Button>
                     <MoreOutlined style={{fontSize: 28}}/>
                 </div>
 

@@ -17,6 +17,7 @@ import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
 import ResourceLins from "../../ResourceLinks";
+import {t} from "i18next";
 
 
 let resource = 'Appointment'
@@ -55,7 +56,7 @@ function Patient() {
         <div style={{marginBottom: 100, marginTop: -120}} >
             <div>
                 <Button onClick={onBack} style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}>{language === 'en' ? <LeftOutlined /> : <RightOutlined />}</Button>
-                <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>Patient Card</span>
+                <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>{t('Patient Card')}</span>
             </div>
             {
                 loading ? <Preloader /> : <div>

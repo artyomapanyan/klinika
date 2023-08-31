@@ -495,7 +495,7 @@ function SuperAdminGradientChart() {
             <div className={'superAdmin_gradient_chart_big_div'}>
                 <div className={'gradient_chart_inn_big_div'}>
                     <div className={'app_clinic'}>
-                      <span>Appointments:</span>
+                      <span>{t('Appointments')}:</span>
                       <Dropdown
                         menu={{
                             items,

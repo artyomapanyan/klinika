@@ -24,6 +24,7 @@ import {useNavigate} from "react-router";
 import TableFilterElement from "../../../../Fragments/TableFilterElements/TableFilterElement";
 import search_icon_darkPurpole from "../../../../../dist/icons/search_icon_darkPurpole.png";
 import Preloader from "../../../../Preloader";
+import {t} from "i18next";
 import DateFilterElement from "../../../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_purpule_icon.png";
 
@@ -157,7 +158,7 @@ function ClinicManagerAppointmentsTable() {
 
                        // noPagination={true}
                         tableColumns={[{
-                            title: 'Patient',
+                            title: t('Patient'),
                             dataIndex: 'patient_name',
                             key: 'patient_name',
                             filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
@@ -165,7 +166,7 @@ function ClinicManagerAppointmentsTable() {
                             render: (e, record) => <div style={{fontWeight: 700, fontSize: 14, fontFamily: 'Roboto'}}>{record?.patient?.first} {record?.patient?.last}</div>
                         },
                             {
-                                title: 'Phone',
+                                title: t('Phone'),
                                 dataIndex: 'phone_number',
                                 key: 'phone_number',
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
@@ -176,7 +177,7 @@ function ClinicManagerAppointmentsTable() {
                                 }
                             },
                             {
-                                title: 'Doctor',
+                                title: t('Doctor'),
                                 dataIndex: 'doctor',
                                 key: 'doctor',
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
@@ -186,7 +187,7 @@ function ClinicManagerAppointmentsTable() {
                                 }
                             },
                             {
-                                title: 'Specialty',
+                                title: t('Specialty'),
                                 dataIndex: 'specialty',
                                 key: 'specialty',
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
@@ -196,7 +197,7 @@ function ClinicManagerAppointmentsTable() {
                                 }
                             },
                             {
-                                title: 'Date',
+                                title: t('Date'),
                                 dataIndex: 'booked_at',
                                 key: 'booked_at',
                                 // filterDropdown: (props)=><DateFilterElement filterProps={props}/>,
@@ -208,7 +209,7 @@ function ClinicManagerAppointmentsTable() {
                                 }
                             },
                             {
-                                title: 'Time',
+                                title: t('Time'),
                                 dataIndex: 'time',
                                 key: 'time',
                                 render:(e, record) => {
@@ -216,12 +217,12 @@ function ClinicManagerAppointmentsTable() {
                                 }
                             },
                             {
-                                title: 'Price',
+                                title: t('Price'),
                                 dataIndex: 'price',
                                 key: 'price',
                             },
                             {
-                                title: 'Offer',
+                                title: t('Offer'),
                                 dataIndex: 'offer',
                                 key: 'offer',
                                 render:(e, record) => {
@@ -229,7 +230,7 @@ function ClinicManagerAppointmentsTable() {
                                 }
                             },
                             {
-                                title: 'Actions',
+                                title: t('Actions'),
                                 dataIndex: 'actions',
                                 key: 'actions',
                                 render: (e, record) => {
@@ -237,7 +238,7 @@ function ClinicManagerAppointmentsTable() {
                                 }
                             },
                             {
-                                title: 'Status',
+                                title: t('Status'),
                                 dataIndex: 'status',
                                 key: 'status',
                                 render: (e, record) => {

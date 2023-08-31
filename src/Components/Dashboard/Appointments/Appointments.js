@@ -131,7 +131,7 @@ function Appointments() {
                     },
                     {
                         dataIndex:'patient',
-                        title:'Patient',
+                        title:t('Patient'),
                         key:'patient',
                         render:(e, record) => {
                             return <div>{record?.patient?.first} {record?.patient?.last}</div>
@@ -139,7 +139,7 @@ function Appointments() {
                     },
                     {
                         dataIndex:['patient', 'phone_number'],
-                        title:'Phone number',
+                        title:t('Phone number'),
                         key:'phone_number',
 
                     },

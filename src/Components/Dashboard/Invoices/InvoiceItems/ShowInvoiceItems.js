@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
 import axios from "axios";
 import api from "../../../../Api";
+import {t} from "i18next";
 
 
 const resource = 'InvoiceItem';
@@ -78,7 +79,7 @@ function ShowInvoiceItems() {
                         </Space>
 
                         <div>
-                            <button  className={'show_copy_btn'}><CopyOutlined /> Copy Deep Link</button>
+                            <button  className={'show_copy_btn'}><CopyOutlined />{t('Copy Deep Link')}</button>
                             {contextHolder}
                         </div>
 
@@ -88,35 +89,35 @@ function ShowInvoiceItems() {
                             <table>
                                 <tbody >
                                 <tr>
-                                    <td className={'show_td_1'}>Service Type</td>
+                                    <td className={'show_td_1'}>{t('Service Type')}</td>
                                     <td className={'show_td_2'}><span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span></td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Clinic</td>
+                                    <td className={'show_td_1'}>{t('Clinic')}</td>
                                     <td className={'show_td_2'}><span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span></td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Doctors</td>
+                                    <td className={'show_td_1'}>{t('Doctors')}</td>
                                     <td className={'show_td_2'}><span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span></td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Insurance Company</td>
+                                    <td className={'show_td_1'}>{t('Insurance Company')}</td>
                                     <td className={'show_td_2'}><span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span></td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Booking Date</td>
+                                    <td className={'show_td_1'}>{t('Booking Date')}</td>
                                     <td className={'show_td_2'}><span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span></td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Appointment’s Status</td>
+                                    <td className={'show_td_1'}>{t('Appointment’s Status')}</td>
                                     <td className={'show_td_2'}>N/A</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Marked as completed in</td>
+                                    <td className={'show_td_1'}>{t('Marked as completed in')}</td>
                                     <td className={'show_td_2'}><span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span></td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Offer</td>
+                                    <td className={'show_td_1'}>{t('Offer')}</td>
                                     <td className={'show_td_2'}><span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span></td>
                                 </tr>
                                 </tbody>
@@ -126,10 +127,10 @@ function ShowInvoiceItems() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Invoices</td>
-                                    <td>Date</td>
-                                    <td>Total Price</td>
-                                    <td>Print</td>
+                                    <td>{t('Invoices')}</td>
+                                    <td>{t('Date')}</td>
+                                    <td>{t('Total Price')}</td>
+                                    <td>{t('Print')}</td>
                                 </tr>
 
                                 </thead>
@@ -149,7 +150,7 @@ function ShowInvoiceItems() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Purpose</td>
+                                    <td>{t('Purpose')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -163,7 +164,7 @@ function ShowInvoiceItems() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Personal info</td>
+                                    <td>{t('Personal info')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -177,7 +178,7 @@ function ShowInvoiceItems() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Doctor notes</td>
+                                    <td>{t('Doctor notes')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -191,7 +192,7 @@ function ShowInvoiceItems() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Prescriptions</td>
+                                    <td>{t('Prescriptions')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -205,7 +206,7 @@ function ShowInvoiceItems() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Follow up history</td>
+                                    <td>{t('Follow up history')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -221,15 +222,15 @@ function ShowInvoiceItems() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Appointment Documents (Attachments)</td>
+                                    <td>{t('Appointment Documents (Attachments)')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><span style={{color:"#F5A348"}}>Images</span> </td>
+                                    <td><span style={{color:"#F5A348"}}>{t('Images')}</span> </td>
                                 </tr>
                                 <tr>
-                                    <td><span style={{color:"#F5A348"}}>Files</span> </td>
+                                    <td><span style={{color:"#F5A348"}}>{t('Files')}</span> </td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -165,10 +165,10 @@ console.log(formState, 'fo')
                 <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 
                 <div style={{paddingTop:20}}>
-                    <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
+                    <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>{t('Add Entry')}</Button>
                 </div>
                 <div style={{paddingTop:10}}>
-                    <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>Cancel</Button>
+                    <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>{t('Cancel')}</Button>
                 </div>
             </Form>
 

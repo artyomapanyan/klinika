@@ -7,6 +7,7 @@ import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
 import dayjs from "dayjs";
 import search_icon_black from "../../../../dist/icons/search_icon_black.png";
+import {t} from "i18next";
 
 function PatientCardMedications({tab}) {
     const token = useSelector((state) => state.auth.token);
@@ -44,7 +45,7 @@ function PatientCardMedications({tab}) {
         })
     }
 
-console.log(prescriptions)
+
 
     //.filter((e) => e?.name?.toLowerCase().includes(search?.toLowerCase()))
 
@@ -52,7 +53,7 @@ console.log(prescriptions)
         <div style={{padding:40}}>
             {
                 loading ? <Preloader /> : <div>
-            <div className={'medications_big_text'}>Active Medication</div>
+            <div className={'medications_big_text'}>{t('Active Medication')}</div>
 
             <Row gutter={[16]} >
                 {
@@ -67,7 +68,7 @@ console.log(prescriptions)
 
             </Row>
             <div className={'finished_header'}>
-                <div className={'medications_big_text'}>Finished</div>
+                <div className={'medications_big_text'}>{t('Finished')}</div>
                 <div><Input onChange={(e)=>setSearch(e.target.value)} style={{width: 320, height: 48, borderRadius: 12}} placeholder={'Search by name'} suffix={<img onClick={onSearch}  style={{cursor: 'pointer'}} alt={'search_icon_black'} src={search_icon_black}/>}/></div>
             </div>
 

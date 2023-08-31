@@ -131,7 +131,7 @@ function Appointment({isPatient}) {
                 setTimesLoading(false)
             })
         }
-    }, [data?.booked_at])
+    }, [ data?.doctor_id])
 
 
     useEffect(() => {
@@ -516,13 +516,23 @@ function Appointment({isPatient}) {
                                                            initialData={[data?.clinic].filter(e=>e)}
                                                            inputProps={{
                                                                onChange:(e,dat)=> {
-                                                                   console.log(formRef?.current?.setFieldsValue(), 'ref')
-                                                                   // formRef?.current?.setFieldsValue({
-                                                                   //     specialty_id:null,
-                                                                   //     doctor_id: null,
-                                                                   //     booked_at: null,
-                                                                   //     appointment_time: null,
-                                                                   // })
+
+                                                                   setData((prevState)=>({
+                                                                    ...prevState,
+                                                                       specialty_id:null,
+                                                                       doctor_id: null,
+                                                                       booked_at: null,
+                                                                       appointment_time: null,
+                                                                       service_type: null,
+                                                                   }))
+
+                                                                    formRef?.current?.setFieldsValue({
+                                                                        specialty_id:null,
+                                                                       doctor_id: null,
+                                                                        booked_at: null,
+                                                                        appointment_time: null,
+                                                                        service_type: null,
+                                                                    })
 
                                                                }
                                                            }}
@@ -545,6 +555,7 @@ function Appointment({isPatient}) {
                                                                                    doctor_id: null,
                                                                                    booked_at: null,
                                                                                    appointment_time: null,
+
                                                                                })
 
                                                                            }
@@ -566,6 +577,17 @@ function Appointment({isPatient}) {
                                                                    rules={[{required: true}]}
                                                                    initialValue={null}
                                                                    initialData={[]}
+                                                                   inputProps={{
+                                                                       onChange:(e,data)=> {
+                                                                           formRef?.current?.setFieldsValue({
+                                                                               doctor_id: null,
+                                                                               booked_at: null,
+                                                                               appointment_time: null,
+
+                                                                           })
+
+                                                                       }
+                                                                   }}
                                                                    resource={'Taxonomy'}
                                                                    customSearchKey={'title'}
                                                                    resourceParams={{

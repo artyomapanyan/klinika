@@ -12,6 +12,7 @@ import {useSelector} from "react-redux";
 import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
 import resourceLinks from "../../../ResourceLinks";
+import {t} from "i18next";
 
 const { TextArea } = Input;
 
@@ -71,7 +72,7 @@ function PatientCardAppointment({bigData, id}) {
         <Layout.Content>
             {
                 loading ? <Preloader /> : <Row gutter={[40,0]}>
-                    <Col lg={24}>   <h1 className={'h1'}>Doctor Notes</h1></Col>
+                    <Col lg={24}>   <h1 className={'h1'}>{t('Doctor Notes')}</h1></Col>
                     <Col lg={24}>
                         <Row gutter={[40,0]}>
                             <Col lg={16}>
@@ -79,14 +80,14 @@ function PatientCardAppointment({bigData, id}) {
                                     onFinish={onFinish}
                                 >
                                     <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
-                                        <TextArea placeholder="Patients condition" rows={8}/>
+                                        <TextArea placeholder={t("Patients condition")} rows={8}/>
                                     </Form.Item>
                                     <div align={'right'}>
-                                        <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>Submit</Button>
+                                        <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
                                     </div>
-                                    <h1 className={'h1'}>Purpose</h1>
+                                    <h1 className={'h1'}>{t('Purpose')}</h1>
                                     <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
-                                        <TextArea placeholder="Add notes here" rows={8} />
+                                        <TextArea placeholder={t("Add notes here")} rows={8} />
                                     </Form.Item>
 
                                 </Form>
@@ -94,7 +95,7 @@ function PatientCardAppointment({bigData, id}) {
 
                                 <div style={{width:'100%'}}>
 
-                                    <h1 className={'prescription_text'}>Prescriptions</h1>
+                                    <h1 className={'prescription_text'}>{t('Prescriptions')}</h1>
                                     <Row gutter={16} style={{marginTop:-16}}>
                                         {
 
@@ -111,7 +112,7 @@ function PatientCardAppointment({bigData, id}) {
                                         {/*    <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>*/}
 
                                         {/*</div>*/}
-                                        <Button onClick={showModal} size={'large'} type={'primary'}>Add medications</Button>
+                                        <Button onClick={showModal} size={'large'} type={'primary'}>{t('Add medications')}</Button>
                                         <div>
                                             <Modal className={'medications_modal'} width={752} title="Add medication" footer={false} open={isModalOpen} onCancel={handleCancel}>
                                                 <AddMedications key={Math.random()} handleCancel={handleCancel} setIsModalOpen={setIsModalOpen} data={isModalOpen} prescriptions={prescriptions} setAddDeleteState={setAddDeleteState}/>
@@ -135,7 +136,7 @@ function PatientCardAppointment({bigData, id}) {
                                 {/*    </div>*/}
                                 {/*</div>*/}
                                 <div className={'patient_appoint_image_div'}>
-                                    <h1 className={'h1'}>Files and Images</h1>
+                                    <h1 className={'h1'}>{t('Files and Images')}</h1>
                                     <Form ref={formRef}
                                         onFinish={onFileCreate}
                                     >
@@ -145,7 +146,7 @@ function PatientCardAppointment({bigData, id}) {
                                                      limit={5}
                                                      name={'files'} initialFileList={bigData?.files} formRef={formRef} />
 
-                                        <Button htmlType={'submit'}>Save</Button>
+                                        <Button htmlType={'submit'}>{t('Save')}</Button>
                                     </Form>
 
                                 </div>

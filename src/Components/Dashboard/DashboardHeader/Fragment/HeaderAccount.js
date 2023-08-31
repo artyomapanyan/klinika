@@ -97,7 +97,7 @@ function HeaderAccount() {
 										) : (
 											<div>
 												{approve?.length < 1 ? (
-													<div>No clinics to approve!</div>
+													<div>{t('No clinics to approve')}!</div>
 												) : (
 													approve?.map((el, key) => {
 														return (
@@ -154,15 +154,15 @@ function HeaderAccount() {
 									) : (
 										<div className={'notifications_drop_big_div'} >
 											<div className={'popup_header'}>
-												<div className={'popup_header_not_text'}>Notifications</div>
+												<div className={'popup_header_not_text'}>{t('Notifications')}</div>
 												<div>
-													<Button className={'mark_all_read_btn'}>Mark all as read</Button>
+													<Button className={'mark_all_read_btn'}>{t('Mark all as read')}</Button>
 												</div>
 
 											</div>
 											<div className={'popup_lini'}></div>
 											{notifications?.items?.length < 1 ? (
-												<div>No notifications!</div>
+												<div>{t('No notifications')}!</div>
 											) : (
 												notifications?.notifications?.map((el, key) => {
 													return (

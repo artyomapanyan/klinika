@@ -9,6 +9,7 @@ import {useSelector} from "react-redux";
 import Resources from "../../../../../store/Resources";
 import search_icon_black from "../../../../../dist/icons/search_icon_black.png"
 import ClinicManagerCalendarCollapse from "./Fragments/ClicicManagerCalendarCollapse";
+import {t} from "i18next";
 
 function ClinicManagerCalendar() {
     const [loading, setLoading] = useState(true)
@@ -38,7 +39,7 @@ function ClinicManagerCalendar() {
 
     }, [date, update])
 
-    console.log(data)
+
 
     const filteredData = useMemo(()=>{
         return [...data.workload].map(e=>{
@@ -99,8 +100,8 @@ function ClinicManagerCalendar() {
                                             {filteredData?.slice(0,showCount)?.map((item, key) => <ClinicManagerCalendarCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
                                         </table>
                                         <div style={{padding: 10, display: 'flex', gap: 10}}>
-                                            {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>Show More</Button>:null}
-                                            {showCount>10?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState-10)}>Show Less</Button>:null}
+                                            {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>{t('Show More')}</Button>:null}
+                                            {showCount>10?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState-10)}>{t('Show Less')}</Button>:null}
                                         </div>
 
 

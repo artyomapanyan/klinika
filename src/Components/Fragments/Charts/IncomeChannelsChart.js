@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {postResource} from '../../Functions/api_calls';
 import Resource from '../../../store/Resources';
 import dayjs from "dayjs";
+import {t} from "i18next";
 
 function IncomeChannelsChart() {
     let canvasRef = useRef();
@@ -161,7 +162,7 @@ function IncomeChannelsChart() {
     return (
         <Spin spinning={loading}>
             <div className={'owner_channel_incomes_big_div'}>
-                <h1 className={'h1'} style={{marginTop: 25}}>Income channels</h1>
+                <h1 className={'h1'} style={{marginTop: 25}}>{t('Income channels')}</h1>
                 <canvas id={appointmentChartRef?.current?.id} ref={canvasRef} className="owner_chart_income_channel"></canvas>
                 <table cellPadding={7}  border={0} style={{width:'100%', margin: 15}} >
                     {Object.keys(data).map((key, i) =>
