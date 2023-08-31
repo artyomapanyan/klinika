@@ -330,7 +330,7 @@ function Appointment({isPatient}) {
 
     }
 
-console.log(data)
+
 
     return (
         <div>

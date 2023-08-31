@@ -88,14 +88,14 @@ function LaboratoryTestsTable() {
                     tableColumns={[
                         {
                             dataIndex: ['lab_test', 'name'],
-                            title: 'Tests',
+                            title: t('Tests'),
                             key: 'lab_test',
                             sorter: true,
 
                         },
                         {
                             dataIndex: "price",
-                            title: 'price',
+                            title: t('price'),
                             key: 'price',
                         }
                     ]}

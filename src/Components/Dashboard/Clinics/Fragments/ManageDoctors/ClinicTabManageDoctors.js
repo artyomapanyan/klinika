@@ -60,7 +60,7 @@ function ClinicTabManageDoctors({dataService}) {
                         },
                     ]}
                 />}
-                <Button type={'primary'} onClick={showModal}>+ Add new Doctor</Button>
+                <Button type={'primary'} onClick={showModal}>+ {t('Add new Doctor')}</Button>
 
                 <ManageDoctorsModal isModalOpen={isModalOpen} onCreate={onCreate}/>
             </div >

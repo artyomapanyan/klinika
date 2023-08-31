@@ -17,6 +17,7 @@ import Preloader from "../../../Preloader";
 import dayjs from "dayjs";
 import ResourceLinks from "../../../ResourceLinks";
 import closeLightGray from "../../../../dist/icons/close-lightGray.svg";
+import {t} from "i18next";
 
 
 const resource = 'Appointment';
@@ -91,7 +92,7 @@ function ShowAppointment() {
         navigate(-1)
     }
 
-    console.log(data)
+
     return(
         <div className={'app_show_big_div'}>
             <div>
@@ -109,7 +110,7 @@ function ShowAppointment() {
                                     <Space>
                                         <div className={'show_mail_btn'}><a href={`mailto:${data?.patient?.email}`}><MailOutlined style={{fontSize: 20, color:'black'}}/></a></div>
                                         <div className={'show_phone_btn'}><a href={`${data?.patient?.phone}`}><PhoneOutlined style={{color: "#ffffff", fontSize: 20}}/></a></div>
-                                        <Button disabled={pdfState} type={'primary'} onClick={handleExportPDF} icon={<FilePdfOutlined />} className={'show_pdf_btn'}> Appointment report</Button>
+                                        <Button disabled={pdfState} type={'primary'} onClick={handleExportPDF} icon={<FilePdfOutlined />} className={'show_pdf_btn'}> {t('Appointment report')}</Button>
                                     </Space>
                                 </div>
                             </div>
@@ -117,7 +118,7 @@ function ShowAppointment() {
                         </div>
 
                         <div>
-                            <button onClick={success} className={'show_copy_btn'}><CopyOutlined /> Copy Deep Link</button>
+                            <button onClick={success} className={'show_copy_btn'}><CopyOutlined /> {t('Copy Deep Link')}</button>
                             {contextHolder}
                         </div>
 
@@ -165,10 +166,10 @@ function ShowAppointment() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Invoices</td>
-                                    <td>Date</td>
-                                    <td>Total Price</td>
-                                    <td>Print</td>
+                                    <td>{t('Invoices')}</td>
+                                    <td>{t('Date')}</td>
+                                    <td>{t('Total Price')}</td>
+                                    <td>{t('Print')}</td>
                                 </tr>
 
                                 </thead>
@@ -198,7 +199,7 @@ function ShowAppointment() {
                             <table>
                                 <thead>
                                     <tr>
-                                        <td>Purpose</td>
+                                        <td>{t('Purpose')}</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -212,7 +213,7 @@ function ShowAppointment() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Personal info</td>
+                                    <td>{t('Personal info')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -226,7 +227,7 @@ function ShowAppointment() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Doctor notes</td>
+                                    <td>{t('Doctor notes')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -240,7 +241,7 @@ function ShowAppointment() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Prescriptions</td>
+                                    <td>{t('Prescriptions')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -264,14 +265,14 @@ function ShowAppointment() {
 
                                                 <Row>
                                                     <Col lg={7} align={language === 'en' ? 'left' : 'right'}>
-                                                        <div className={"medication_card_text1"}>Frequency</div>
+                                                        <div className={"medication_card_text1"}>{t('Frequency')}</div>
                                                         <div className={"medication_card_text2"}>{el?.frequency} times/day</div>
                                                     </Col>
                                                     <Col lg={1} align={'center'}>
                                                         <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
                                                     </Col>
                                                     <Col lg={7} align={'center'}>
-                                                        <div className={"medication_card_text1"}>Dose</div>
+                                                        <div className={"medication_card_text1"}>{t('Dose')}</div>
                                                         <div className={"medication_card_text2"}>{el?.dose} pcs</div>
                                                     </Col>
                                                     <Col lg={1} align={'center'}>
@@ -279,7 +280,7 @@ function ShowAppointment() {
                                                     </Col>
 
                                                     <Col lg={7} align={language === 'en' ? 'right' : 'left'}>
-                                                        <div className={"medication_card_text1"}>Duration</div>
+                                                        <div className={"medication_card_text1"}>{t('Duration')}</div>
                                                         <div className={"medication_card_text2"}>{el?.duration} days</div>
                                                     </Col>
                                                 </Row>
@@ -287,7 +288,7 @@ function ShowAppointment() {
                                                 <div style={{borderBottom: '1px solid #cbc9cb', marginTop: 12, marginBottom: 12}}></div>
 
                                                 <div>
-                                                    <div className={"medication_card_text1"}>Note</div>
+                                                    <div className={"medication_card_text1"}>{t('Note')}</div>
                                                     <div className={"medication_card_text2"}>{el?.note ? el?.note : 'No note'}</div>
                                                 </div>
                                             </div>
@@ -306,7 +307,7 @@ function ShowAppointment() {
                             <table>
                                 <thead>
                                 <tr>
-                                    <td>Follow up history</td>
+                                    <td>{t('Follow up history')}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -322,15 +323,15 @@ function ShowAppointment() {
                             <table>
                                 <thead>
                                     <tr>
-                                        <td>Appointment Documents (Attachments)</td>
+                                        <td>{t('Appointment Documents (Attachments)')}</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><span style={{color:"#F5A348"}}>Images</span>  </td>
+                                        <td><span style={{color:"#F5A348"}}>{t('Images')}</span>  </td>
                                     </tr>
                                     <tr>
-                                        <td><span style={{color:"#F5A348"}}>Files</span> </td>
+                                        <td><span style={{color:"#F5A348"}}>{t('Files')}</span> </td>
                                     </tr>
                                 </tbody>
                             </table>

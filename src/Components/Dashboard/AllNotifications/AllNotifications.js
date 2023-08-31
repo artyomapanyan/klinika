@@ -9,6 +9,7 @@ import map_icon from "../../../dist/icons/map_icon.png";
 import message_icon from "../../../dist/icons/message_icon.png";
 import {Button, Pagination, Space} from "antd";
 import {LeftOutlined} from "@ant-design/icons";
+import {t} from "i18next";
 
 function AllNotifications() {
     let token = useSelector(state => state.auth.token)
@@ -45,9 +46,9 @@ function AllNotifications() {
         <div style={{marginTop: -75}}>
             <Space>
                 <div className={'all_notification_title'}>
-                    All notification
+                    {t('All notification')}
                 </div>
-                <Button type={'primary'}>Mark as read</Button>
+                <Button type={'primary'}>{t('Mark as read')}</Button>
             </Space>
 
             {
