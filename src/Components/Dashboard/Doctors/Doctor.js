@@ -12,6 +12,8 @@ import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import CancelComponent from "../../Fragments/CancelComponent";
 import dayjs from "dayjs";
+import {InboxOutlined} from "@ant-design/icons";
+import FileManager from "../../Fragments/FileManager";
 
 const resource = 'Doctor';
 
@@ -30,19 +32,27 @@ function Doctor() {
 
     const onFinish = (values) => {
         setSaveLoading(true)
-        values.dob = values.dob.format('YYYY-MM-DD')
+
+        values.dob = values?.dob?.format('YYYY-MM-DD')
+        values.plid_expired_at = values?.plid_expired_at?.format('YYYY-MM-DD')
+
         if(values?.phone_country_code) {
             if(values.phone_country_code.length > 3) {
-                values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
+                values.phone_country_code = values?.phone_country_code?.slice(1, values?.phone_country_code?.indexOf(')'))
             }
         }
+
+
 
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
+
+
         if (params.id) {
-            updateResource(resource, params.id, values, token).then(response => {
+            updateResource(resource, params.id, values, token, true).then(response => {
+                console.log(response)
                 if(response?.id){
                     navigate(-1)
                 }
@@ -54,7 +64,7 @@ function Doctor() {
                 setSaveLoading(false)
             })
         } else {
-            createResource(resource, values, token).then((response) => {
+            createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
                     navigate(-1)
                 }
@@ -66,6 +76,7 @@ function Doctor() {
                 setSaveLoading(false)
             })
         }
+
     }
 
     const handleMapItems = (item,name)=>{
@@ -180,8 +191,15 @@ function Doctor() {
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1}}
                             />
 
+
                         </Col>
                     </Row>
+                    <FileManager text1={'avatar'}
+                                 text2={'Download the file'}
+                                 name={'avatar'}
+                                 uploadIcon={<InboxOutlined/>}
+                                 initialFileList={[data?.avatar]} limit={1} formRef={formRef} type={'drag'}/>
+
                 </div>
 
                 <Space className={'create_apdate_btns'}>

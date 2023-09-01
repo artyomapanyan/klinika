@@ -20,6 +20,7 @@ import {useNavigate} from "react-router";
 
 
 function ThankYouOffer() {
+    const currentUrl = window.location.href;
     let clinicRedux = useSelector((state) => state?.publicClinic);
     let navigate = useNavigate();
 
@@ -93,7 +94,7 @@ function ThankYouOffer() {
                         </Radio.Group>
                         <Divider />
                         <div>
-                            <OffersPrices filterClinic={filterClinic} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
+                            <OffersPrices currentUrl={currentUrl} filterClinic={filterClinic} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
                         </div>
                     </div>
                     <div className={'big_div_cards'}>

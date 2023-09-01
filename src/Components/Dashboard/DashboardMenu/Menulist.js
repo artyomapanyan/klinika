@@ -120,6 +120,11 @@ export default {
             label: t(`Clinics`),
             permission:'Clinic'
         },
+        {
+            key: 'appointments',
+            icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Appointments`),
+        },
 
         {
             icon:<img alt={'icons'} src={dash3}/>,

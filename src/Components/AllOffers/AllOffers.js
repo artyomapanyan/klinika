@@ -15,6 +15,7 @@ import {paramsToObject} from "../../functions";
 
 
 function AllOffers() {
+    const currentUrl = window.location.href;
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
         order_by: 'new_price',
@@ -49,7 +50,7 @@ function AllOffers() {
             category: e?.target?.value
         })
     }
-
+console.log(currentUrl.includes('thank-you'), 'data')
 
     return(
         <div>
@@ -72,7 +73,7 @@ function AllOffers() {
                     </Radio.Group>
                     <Divider />
                     <div>
-                        <OffersPrices clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
+                        <OffersPrices currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
                     </div>
                 </div>
                 <div className={'big_div_cards'}>

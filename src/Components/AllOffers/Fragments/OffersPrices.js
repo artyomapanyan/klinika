@@ -4,7 +4,7 @@ import {DownOutlined, FunnelPlotOutlined, InsertRowRightOutlined, SearchOutlined
 import {t} from "i18next";
 
 
-function OffersPrices({clinics, setParams, params,  setResetState}) {
+function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) {
     const [lowHighState, setLowHighState] = useState(false)
 
     const items = clinics?.map((el) => {
@@ -108,13 +108,12 @@ function OffersPrices({clinics, setParams, params,  setResetState}) {
                         }
 
                     </span>
-
                 </div>
             </Col>
             <Col lg={6}>
                 <div align={'center'}>
                     {
-                        params?.clinic ? <div></div> : <div>
+                        currentUrl.includes('thank-you') ? <div></div> : <div>
                             <InsertRowRightOutlined style={{color:'#ce4e99', fontSize: 18}}/>
                             <Dropdown
                                 menu={{
