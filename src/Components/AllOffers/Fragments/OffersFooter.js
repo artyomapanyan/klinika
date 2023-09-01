@@ -8,7 +8,7 @@ import {t} from "i18next";
 
 function OffersFooter() {
     return(
-        <div className={'footer_big_div'}>
+        <div className={'footer_footer_big_div'}>
             <div className={'footer_content_div'}>
                 <div>
                     <img src={Logo_short} alt={'Logo_short'} style={{width:70}}/>

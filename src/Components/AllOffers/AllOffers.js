@@ -50,15 +50,15 @@ function AllOffers() {
             category: e?.target?.value
         })
     }
-console.log(currentUrl.includes('thank-you'), 'data')
+
 
     return(
         <div>
             <div className={'bac_div'}>
-                <img src={off_head} alt={'off_head'} style={{width:'120%'}}/>
+                <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
             </div>
             <div className={'offer_logo_div'}>
-                <AuthHeader headerState={true}/>
+                {/*<AuthHeader headerState={true}/>*/}
             </div>
             { resetState ? <Preloader /> :
              <div className={'menu_div'}>
@@ -98,8 +98,10 @@ console.log(currentUrl.includes('thank-you'), 'data')
             <div align={'center'} style={{marginTop:30}}>
                 <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>{t('Load more')}</Button>
             </div>
+            <div style={{width: '100%'}}>
+                <OffersFooter />
+            </div>
 
-            <OffersFooter />
         </div>
     )
 }

@@ -73,7 +73,7 @@
   .offer_card
     box-shadow: 0 0 10px 5px rgb(140 152 164 / 40%)
     background-color: #FFFFFF
-    min-height: 580px
+    min-height: 620px
     border-radius: 12px
   .offer_card_image_div
     height: 200px
@@ -118,7 +118,7 @@
       border-top: 1px solid black
       width: 60px
       margin-top: -8px
-.footer_big_div
+.footer_footer_big_div
   background-color: #8447DF
   width: 100%
   padding: 40px 0px
@@ -130,6 +130,12 @@
     flex-direction: row
     justify-content: space-between
     width: 60%
+    @media screen and (max-width: 1545px)
+      width: 70%
+    @media screen and (max-width: 1320px)
+      width: 80%
+    @media screen and (max-width: 1200px)
+      width: 90%
   .big_bold_text
     color: #FFFFFF
     font-size: 24px
