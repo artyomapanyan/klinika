@@ -84,6 +84,12 @@ function Offer() {
              payload: true
          })
      }
+console.log(formRef.current.getFieldValue('old_price'), formRef.current.getFieldValue('new_price'))
+     if(+formRef.current.getFieldValue('old_price') <= +formRef.current.getFieldValue('new_price')) {
+         formRef?.current?.setFieldsValue({
+             new_price: +formRef.current.getFieldValue('old_price')-1
+         })
+     }
  }
 
 
@@ -109,22 +115,21 @@ function Offer() {
                         <Col lg={12} className="gutter-row">
                             <FormInput label={t('Old price ')} name={'old_price'} inputType={'number'} initialValue={data?.old_price} rules={[
                                 {required: true},
-                                {
-                                    validator:(rule,value)=>{
-                                        console.log(newPrice, value)
-                                        if(+value < +newPrice){
-                                            return Promise.reject('New price cannot be bigger then old price')
-                                        }
-                                        return Promise.resolve();
-                                    }
-                                }
+                                // {
+                                //     validator:(rule,value)=>{
+                                //         if(+value <= +newPrice){
+                                //             return Promise.reject('New price cannot be bigger then old price')
+                                //         }
+                                //         return Promise.resolve();
+                                //     }
+                                // }
 
                             ]} />
                             <FormInput label={t('New price')} name={'new_price'}  initialValue={data?.new_price} inputType={'number'} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{
-                                        if(+value > +oldPrice){
+                                        if(+value >= +oldPrice){
                                             return Promise.reject('New price cannot be bigger then old price')
                                         }
                                         return Promise.resolve();
