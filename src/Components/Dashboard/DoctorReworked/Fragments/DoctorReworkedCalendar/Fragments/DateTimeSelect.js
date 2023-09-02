@@ -144,7 +144,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         }
         setTimesIndex(prevState => prevState + count)
     }
-
+console.log(formState)
 
     return <div className={'drawer_cal_bog_div'}>
         <div className={'drawer_cal_top_div'}>
@@ -218,8 +218,8 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
                                     className={'hours_select'}
                                     options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
                                         return {
-                                            label: e,
-                                            value: e
+                                            label: dayjs('2023-10-10' + e).format('h:mmA'),
+                                            value: dayjs('2023-10-10' + e).format('h:mmA'),
                                         }
                                     })}
                                     optionType="button"

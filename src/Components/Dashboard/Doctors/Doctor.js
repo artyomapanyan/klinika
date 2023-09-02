@@ -52,7 +52,6 @@ function Doctor() {
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
-                console.log(response)
                 if(response?.id){
                     navigate(-1)
                 }
