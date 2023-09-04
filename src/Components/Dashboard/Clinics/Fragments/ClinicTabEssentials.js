@@ -813,6 +813,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                     </div>
                                     <div style={{width:200}}>
                                         <FormInput  label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
+                                        <FormInput  label={t('Duration')} name={["service_settings","nursing","duration"]} inputType={'number'} inputDisabled={true} initialValue={60}/>
                                     </div>
                                 </div> : <div></div>
                             }

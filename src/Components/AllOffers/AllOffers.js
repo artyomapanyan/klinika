@@ -11,6 +11,7 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import Preloader from "../Preloader";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../functions";
+import AuthHeader from "../Auth/AuthHeader";
 
 
 
@@ -66,7 +67,7 @@ function AllOffers() {
                 <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
             </div>
             <div className={'offer_logo_div'}>
-                {/*<AuthHeader headerState={true}/>*/}
+                <AuthHeader headerState={true}/>
             </div>
             { resetState ? <Preloader /> :
              <div className={'menu_div'}>

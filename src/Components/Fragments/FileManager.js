@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import {Button, Form, notification, Upload} from "antd";
+import {Button, Form, notification, Upload, message } from "antd";
 
 function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type, text1, text2, uploadIcon}) {
     const [fileList, setFileList] = useState(initialFileList.filter(e => e))
@@ -43,6 +43,17 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
     },
     customRequest:(e) => e.onSuccess("ok")
     }
+
+    function beforeUpload(file) {
+
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            message.error('File must smaller than 2MB!');
+        }
+        return isLt2M;
+    }
+
+
     return <div style={{height:'100%', position:'relative'}}>
         <div style={{height:'100%', position:'relative'}}>
             <div style={{ width: '100%'}}>
@@ -60,6 +71,7 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
                         <p className="ant-upload-text">{text1}</p>
                         <p className="ant-upload-hint">{text2}</p>
                     </Upload.Dragger>:<Upload
+                        beforeUpload={beforeUpload}
 
                         {...fileInputProps}>
                         <Button>Add</Button>

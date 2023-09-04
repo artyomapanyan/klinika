@@ -181,7 +181,7 @@ function ResourceTable ({
         }),
 
             ...(hideActions?[]:[{
-                dataIndex: 'id', title: 'action', key: 'id', render: (e,record) => <Space>
+                dataIndex: 'id', title: t('Actions'), key: 'id', render: (e,record) => <Space>
 
                     {!except.edit ? <Tooltip title={editStyle ? 'Schedule an Appointment' : "Update"}>
                         {

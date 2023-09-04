@@ -243,7 +243,7 @@ export default {
                 },
                 {
                     key: 'posts',
-                    label: t(`Posts`),
+                    label: t('Posts'),
                     permission:'Post'
                 },
                 {

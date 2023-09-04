@@ -162,20 +162,20 @@ function Translations(){
                 loading ? <Preloader/> : <Table
                     columns={[
                         {
-                            title:'Key',
+                            title:t('Key'),
                             dataIndex:'key',
                             key:'key',
                             // ...getColumnSearchProps('key'),
                         },
                         {
-                            title:'Value',
+                            title:t('Value'),
                             dataIndex:'value',
                             key:'value',
                             shouldCellUpdate:(record, prevRecord)=>record.value!==prevRecord.value,
                             render:(i,record)=><Input defaultValue={record.value} onChange={(value)=>record.value=value.target.value}/>
                         },
                         {
-                            title:'Submit',
+                            title:t('Submit'),
                             dataIndex:'submit',
                             key:'submit',
                             render:(i,record)=><Button onClick={()=>handleSaveTranslation(record)}>Save</Button>
