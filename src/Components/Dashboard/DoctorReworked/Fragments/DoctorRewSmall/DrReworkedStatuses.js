@@ -4,6 +4,7 @@ import {postResource} from "../../../../Functions/api_calls";
 import dayjs from "dayjs";
 import {Chart, registerables} from "chart.js";
 import {Col, Row, Space, Spin} from "antd";
+import {t} from "i18next";
 
 function DrReworkedStatuses() {
     let canvasRef = useRef();
@@ -101,7 +102,7 @@ function DrReworkedStatuses() {
 
                 <Space direction={'vertical'}>
                     <div style={{marginLeft: 15}} className={'chart_counter_bold_text'}>
-                        Statuses
+                        {t('Statuses')}
                     </div>
 
                         <Row className={'statuses_info_div'}>

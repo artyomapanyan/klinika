@@ -25,7 +25,9 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
     const onReset = () => {
         setResetState(true)
         setParams({
-            page:1
+            order_by: 'new_price',
+            page:1,
+            per_page:5000,
         })
         setTimeout(() => {
             setResetState(false)

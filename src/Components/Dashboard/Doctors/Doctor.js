@@ -141,6 +141,7 @@ function Doctor() {
                             ]} />
 
                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
                                        initialValue={data?.gender}
                                        initialData={Resources?.Gender}
                             />

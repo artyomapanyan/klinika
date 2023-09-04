@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {Chart, registerables} from "chart.js";
 import {Space} from "antd";
+import {t} from "i18next";
 
 function InvoiceStatusesGraphic() {
     let canvasRef = useRef();
@@ -83,7 +84,7 @@ function InvoiceStatusesGraphic() {
             <Space></Space>
             <Space direction={'vertical'}>
                 <div className={'chart_counter_bold_text'}>
-                    Statuses
+                    {t('Statuses')}
                 </div>
                 {Object.keys(data).map((itemKey,key)=><div key={key} className={`withDot_fact WD-invoice-status-${key}`}><span className={'plan_load_jaddah'}>{itemKey}</span> <span className={'fact_percent'}>{data[itemKey]}</span> </div>)}
 

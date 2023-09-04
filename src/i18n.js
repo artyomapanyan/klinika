@@ -13,13 +13,15 @@ i18n
             en: {
                 translation: {
 
-                    Add :"add"
+                    Add :"add",
+                    //Countries: 'Countries'
                 }
             },
             ar: {
                 translation: {
 
-                    Add : "إضافة"
+                    Add : "إضافة",
+                    //Countries: 'Countrie'
                 }
             },
         },

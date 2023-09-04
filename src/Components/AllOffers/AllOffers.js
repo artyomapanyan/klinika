@@ -16,13 +16,16 @@ import {paramsToObject} from "../../functions";
 
 function AllOffers() {
     const currentUrl = window.location.href;
+    const [dataLength, setDataLength] = useState(9)
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
         order_by: 'new_price',
         page:1,
-        per_page:5,
+        per_page:5000,
         ...paramsToObject(searchParams.entries())
     })
+
+    console.log(params)
 
      const [resetState, setResetState] = useState(false)
 
@@ -39,10 +42,15 @@ function AllOffers() {
 
     useEffect(()=>setSearchParams(params),[params])
     const handleNextPage = ()=>{
-        setParams((prevState)=>({
-            ...prevState,
-            page: (+prevState.page)+1
-        }))
+        // setParams((prevState)=>({
+        //     ...prevState,
+        //     page: (+prevState.page)+1
+        // }))
+
+        setDataLength((prevState)=>(
+            prevState + 5
+    ))
+
     }
     const onChangeRadio = (e) => {
         setParams({
@@ -87,7 +95,7 @@ function AllOffers() {
 
                                     />
                                     </div> : data?.items?.map((el) => {
-                                    return <OfferCard key={el?.id} data={el} id={el?.id} />})
+                                    return <OfferCard key={el?.id} data={el} id={el?.id} />}).slice(0, dataLength)
                             }
 
                         </Row>}
@@ -96,7 +104,8 @@ function AllOffers() {
                 </div>
             </div>}
             <div align={'center'} style={{marginTop:30}}>
-                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>{t('Load more')}</Button>
+
+                <Button type={'primary'} onClick={handleNextPage} disabled={dataLength >=data?.items.length} >{t('Load more')}</Button>
             </div>
             <div style={{width: '100%'}}>
                 <OffersFooter />
