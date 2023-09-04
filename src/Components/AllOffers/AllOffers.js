@@ -22,7 +22,7 @@ function AllOffers() {
     const [params, setParams] = useState({
         order_by: 'new_price',
         page:1,
-        per_page:5000,
+        per_page: 15,
         ...paramsToObject(searchParams.entries())
     })
 
@@ -43,14 +43,14 @@ function AllOffers() {
 
     useEffect(()=>setSearchParams(params),[params])
     const handleNextPage = ()=>{
-        // setParams((prevState)=>({
-        //     ...prevState,
-        //     page: (+prevState.page)+1
-        // }))
+        setParams((prevState)=>({
+            ...prevState,
+            page: (+prevState.page)+1
+        }))
 
-        setDataLength((prevState)=>(
-            prevState + 5
-    ))
+    //     setDataLength((prevState)=>(
+    //         prevState + 5
+    // ))
 
     }
     const onChangeRadio = (e) => {
@@ -96,7 +96,7 @@ function AllOffers() {
 
                                     />
                                     </div> : data?.items?.map((el) => {
-                                    return <OfferCard key={el?.id} data={el} id={el?.id} />}).slice(0, dataLength)
+                                    return <OfferCard key={el?.id} data={el} id={el?.id} />})
                             }
 
                         </Row>}
@@ -106,7 +106,7 @@ function AllOffers() {
             </div>}
             <div align={'center'} style={{marginTop:30}}>
 
-                <Button type={'primary'} onClick={handleNextPage} disabled={dataLength >=data?.items?.length} >{t('Load more')}</Button>
+                <Button type={'primary'} onClick={handleNextPage}  >{t('Load more')}</Button>
             </div>
             <div style={{width: '100%'}}>
                 <OffersFooter />

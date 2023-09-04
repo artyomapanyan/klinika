@@ -64,7 +64,7 @@ console.log(prescriptions)
                 {
 
                     prescriptions.filter((el) => {
-                       return dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY')
+                       return dayjs(el?.end_date?.iso_string) <= dayjs()
                     }).map((el) => {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
@@ -85,7 +85,7 @@ console.log(prescriptions)
                      {
 
                          prescriptions.filter((el) => {
-                             return dayjs(el?.end_date?.iso_string).format('DD-MM-YYYY') > dayjs().format('DD-MM-YYYY')
+                             return dayjs(el?.end_date?.iso_string) > dayjs()
                          }).map((el) => {
                              return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
                                                      setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
