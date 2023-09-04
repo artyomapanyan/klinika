@@ -62,6 +62,7 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
         }}>
 
                     {type==='drag'?<Upload.Dragger
+                        beforeUpload={beforeUpload}
                         style={{width:'100%'}}
                         {...fileInputProps}
                     >
