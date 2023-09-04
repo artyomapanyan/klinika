@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./AllOffers.sass"
 import off_head from "../../dist/Img/off_head.png";
-import AuthHeader from "../Auth/AuthHeader";
+
 import {Button, Divider, Radio, Result, Row} from "antd";
 import OffersPrices from "./Fragments/OffersPrices";
 import {t} from "i18next";
