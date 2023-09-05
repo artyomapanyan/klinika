@@ -7,6 +7,7 @@ import emailWithFrame from "../../../../../dist/icons/emailWithFrame.svg";
 import noteBlack from "../../../../../dist/icons/noteBlack.svg";
 import PrivateNotesModal from "./PrivateNotesModal";
 import dayjs from "dayjs";
+import {t} from "i18next";
 
 function PatientHeader({data}) {
 
@@ -50,11 +51,11 @@ function PatientHeader({data}) {
 
                             <div className={'patient_head_text'} style={{height: 110, justifyContent: "space-between"}}>
                                 <div >
-                                    <div className={'addres_Insurance'}>Addres</div>
+                                    <div className={'addres_Insurance'}>{t('Addres')}</div>
                                     <div className={'text_norm'}>{data?.patient?.address?.country?.name} {data?.patient?.address?.region?.name} {data?.patient?.address?.city?.name} {data?.patient?.address?.address1}</div>
                                 </div>
                                 <div >
-                                    <div className={'addres_Insurance'}>Insurance</div>
+                                    <div className={'addres_Insurance'}>{t('Insurance')}</div>
                                     <Space className={'text_norm'}>{data?.patient?.insurance_company?.name}  <span style={{fontWeight:700}}>#{data?.patient?.insurance_company?.id}
                                     </span>
                                         {/*<Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',*/}

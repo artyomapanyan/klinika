@@ -8,6 +8,7 @@ import {
 import {useLocation, useNavigate} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import Menulist from "./Menulist";
+import {t} from "i18next";
 
 
 function DashboardMenu({mouseCollapsed,fixCollapse}){
@@ -111,7 +112,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
             />
             <Modal title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} closeIcon={false} >
                 <Result
-                    title="Your changes will not be saved"
+                    title={t("Your changes will not be saved")}
 
                 />
 

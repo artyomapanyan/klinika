@@ -61,7 +61,7 @@ function ClinicApprovedDoctors({dataService}) {
                         },
                         {
                             dataIndex: ['doctor'],
-                            title: dataService?.has_telehealth_service ? 'Telehealth' : ' ',
+                            title: dataService?.has_telehealth_service ? t('Telehealth') : ' ',
                             key: 'telehealth',
                             render:(e, record)=> {
                                 return <div  style={{padding:2}}>{dataService?.has_telehealth_service ? <Button
@@ -71,7 +71,7 @@ function ClinicApprovedDoctors({dataService}) {
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: dataService?.has_clinic_visit_service ? 'Clinic Visit' : ' ',
+                            title: dataService?.has_clinic_visit_service ? t('Clinic Visit') : ' ',
                             key: 'clinic_visit',
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_clinic_visit_service ? <Button
@@ -81,7 +81,7 @@ function ClinicApprovedDoctors({dataService}) {
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: dataService?.has_home_visit_service ? 'Home Visit' : ' ',
+                            title: dataService?.has_home_visit_service ? t('Home Visit') : ' ',
                             key: 'home_visit',
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_home_visit_service ? <Button
@@ -91,7 +91,7 @@ function ClinicApprovedDoctors({dataService}) {
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: dataService?.has_physical_therapy_home_visit_service ? 'Physical Therapy Home Visit' : ' ',
+                            title: dataService?.has_physical_therapy_home_visit_service ? t('Physical Therapy Home Visit') : ' ',
                             key: 'physical_therapy_home_visit',
                             render:(e, record)=> {
                                 return<div style={{padding:2}}>{dataService?.has_physical_therapy_home_visit_service ? <Button
@@ -101,7 +101,7 @@ function ClinicApprovedDoctors({dataService}) {
                         },
                         {
                             dataIndex: ['doctor', 'id'],
-                            title: dataService?.has_physical_therapy_clinic_visit_service ? 'Physical Therapy Clinic Visit' : ' ',
+                            title: dataService?.has_physical_therapy_clinic_visit_service ? t('Physical Therapy Clinic Visit') : ' ',
                             key: 'physical_therapy_clinic_visit',
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_physical_therapy_clinic_visit_service ? <Button
@@ -126,7 +126,7 @@ function ClinicApprovedDoctors({dataService}) {
 
 
                 />
-            <Modal title="Working Hours" width={"750px"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false} >
+            <Modal title={t("Working Hours")} width={"750px"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false} >
                 {isModalOpen?.id ? <DoctorsHoursModal key={Math.random()}  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} setIsModalOpen={setIsModalOpen} />:null}
             </Modal>
         </div>

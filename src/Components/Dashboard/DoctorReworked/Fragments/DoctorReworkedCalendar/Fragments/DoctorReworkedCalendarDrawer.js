@@ -124,18 +124,30 @@ console.log(formState, 'fo')
                 name={'nursing_tasks'}
                 inputProps={{mode: 'multiple'}}
                 rules={[{required: true}]}
+                resourceParams={{
+                    clinic: formState.clinic_id
+                }}
                 inputType={'resourceSelect'}
                 resource={'NursingTask'}/> : formState?.service_type === 'laboratory_home_visit' || formState?.service_type === 'laboratory_clinic_visit' ? <div>
+
                             <FormInput label={t('Lab Tests')}
                                        name={'lab_test_id'}
                                        rules={[{required: true}]}
                                        inputType={'resourceSelect'}
+                                       resourceParams={{
+                                           clinic: formState.clinic_id
+                                       }}
                                        resource={'LabTest'}/>
+
                             <FormInput label={t('Lab Packages')}
                                        name={'lab_package_id'}
                                        rules={[{required: true}]}
                                        inputType={'resourceSelect'}
+                                       resourceParams={{
+                                           clinic: formState.clinic_id
+                                       }}
                                        resource={'LabPackage'}/>
+
                         </div> : <FormInput label={t('Specialties')} name={'specialty_id'}
                                                         inputType={'resourceSelect'}
                                                         rules={[{required: true}]}
@@ -153,10 +165,10 @@ console.log(formState, 'fo')
                 <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 
                 <div style={{paddingTop:20}}>
-                    <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>Add Entry</Button>
+                    <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>{t('Add Entry')}</Button>
                 </div>
                 <div style={{paddingTop:10}}>
-                    <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>Cancel</Button>
+                    <Button className={'btn_cancel_drawer'} onClick={onCancel} type={'secondary'}>{t('Cancel')}</Button>
                 </div>
             </Form>
 

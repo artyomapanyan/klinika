@@ -17,6 +17,8 @@ import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
 import ResourceLins from "../../ResourceLinks";
+import {t} from "i18next";
+import dayjs from "dayjs";
 
 
 let resource = 'Appointment'
@@ -40,6 +42,7 @@ function Patient() {
         setTab(searchParams.get('tab') ?? 'overview')
     }, [])
 
+
     const handleChange = (e) => {
         setTab(e)
         setSearchParams({tab: e})
@@ -55,7 +58,7 @@ function Patient() {
         <div style={{marginBottom: 100, marginTop: -120}} >
             <div>
                 <Button onClick={onBack} style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}>{language === 'en' ? <LeftOutlined /> : <RightOutlined />}</Button>
-                <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>Patient Card</span>
+                <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>{t('Patient Card')}</span>
             </div>
             {
                 loading ? <Preloader /> : <div>
@@ -71,7 +74,7 @@ function Patient() {
                                 <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-                                <PatientCardAppointment bigData={data} id={params.id}/>
+                                <PatientCardAppointment bigData={data} id={params.id} setBigData={setData}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'video_call'} tab={'Video call'} >
                                 <VideoCall data={data}/>

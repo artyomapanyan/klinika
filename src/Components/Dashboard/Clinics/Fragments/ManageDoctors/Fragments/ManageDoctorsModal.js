@@ -23,7 +23,7 @@ function ManageDoctorsModal({isModalOpen,onCreate}) {
 
 
     return(
-        <Modal key={Math.random()} title="Add new doctor" open={isModalOpen} onOk={handleOk} onCancel={()=>onCreate()} okText={t("Save")} >
+        <Modal key={Math.random()} title={t("Add new doctor")} open={isModalOpen} onOk={handleOk} onCancel={()=>onCreate()} okText={t("Save")} >
             <Spin spinning={isModalOpen===1}>
                 <Form
                     name="edit"

@@ -54,26 +54,26 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
     const units = [
         {
             id: 1,
-            name: 'PCS'
+            name: t('PCS')
         },
         {
             id: 2,
-            name: 'MG'
+            name: t('MG')
         },
 
     ]
     const queue = [
         {
             id: 1,
-            name: 'After'
+            name: t('After')
         },
         {
             id: 2,
-            name: 'Before'
+            name: t('Before')
         },
         {
             id: 3,
-            name: 'Same day'
+            name: t('Same day')
         },
 
     ]
@@ -144,10 +144,10 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                 <div className={'reminders'}>Reminers</div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div className={'times_big_div'}>
-                        <div className={'morning_div'}>Morning</div>
-                        <div className={'morning_div'}>Afternoon</div>
-                        <div className={'morning_div'}>Evening</div>
-                        <div className={'morning_div'}>Before sleep</div>
+                        <div className={'morning_div'}>{t('Morning')}</div>
+                        <div className={'morning_div'}>{t('Afternoon')}</div>
+                        <div className={'morning_div'}>{t('Evening')}</div>
+                        <div className={'morning_div'}>{t('Before sleep')}</div>
                     </div>
                     <div className={'times_big_div'}>
                         <div className={'time_switch'}>
@@ -170,8 +170,8 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                 </div>
 
                 <div style={{display: 'flex', gap: 16, marginTop: 16}}>
-                    <Button loading={saveLoading} className={'add_medications_save_btn'} style={{width: '85%'}} type={"primary"} htmlType={'submit'}>Save entry</Button>
-                    <Button onClick={handleCancel} className={'add_medications_save_btn'} style={{width: '15%'}} type={'secondary'}>Cancel</Button>
+                    <Button loading={saveLoading} className={'add_medications_save_btn'} style={{width: '85%'}} type={"primary"} htmlType={'submit'}>{t('Save entry')}</Button>
+                    <Button onClick={handleCancel} className={'add_medications_save_btn'} style={{width: '15%'}} type={'secondary'}>{t('Cancel')}</Button>
                 </div>
             </Form>:<Preloader/>}
         </div>

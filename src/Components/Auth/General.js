@@ -5,6 +5,7 @@ import api from "../../Api.js"
 import logo from "../../dist/Img/logo.svg";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
+import {t} from "i18next";
 
 function General(){
     const dispatch = useDispatch()
@@ -52,7 +53,7 @@ function General(){
                     <div style={{display:"flex", flexDirection: "column", JustifyContent:"center", alignItems: "center" }}>
 
                             <img src={logo} alt={'logo'} style={{width: 200, height: 200}} />
-                            <p>Login to Your Account</p>
+                            <p>{t('Login to Your Account')}</p>
                         <div>
                             <Form
                                 onFinish={handleLogin}>
@@ -77,7 +78,7 @@ function General(){
                             <Form.Item>
 
                             <a className="login-form-forgot" href="/forgot">
-                                Forgot password
+                                {t('Forgot password')}
                             </a>
                         </Form.Item>
                                 <Form.Item>
@@ -85,7 +86,7 @@ function General(){
                                 </Form.Item>
 
 
-                                <Button loading={loading??<Spin />} type={'primary'} htmlType={'submit'}>Submit</Button>
+                                <Button loading={loading??<Spin />} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
 
                             </Form>
                         </div>

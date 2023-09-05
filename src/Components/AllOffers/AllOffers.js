@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./AllOffers.sass"
 import off_head from "../../dist/Img/off_head.png";
-import AuthHeader from "../Auth/AuthHeader";
+
 import {Button, Divider, Radio, Result, Row} from "antd";
 import OffersPrices from "./Fragments/OffersPrices";
 import {t} from "i18next";
@@ -11,17 +11,22 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import Preloader from "../Preloader";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../functions";
+import AuthHeader from "../Auth/AuthHeader";
 
 
 
 function AllOffers() {
+    const currentUrl = window.location.href;
+    const [dataLength, setDataLength] = useState(9)
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
         order_by: 'new_price',
         page:1,
-        per_page:5,
+        per_page: 15,
         ...paramsToObject(searchParams.entries())
     })
+
+    console.log(params)
 
      const [resetState, setResetState] = useState(false)
 
@@ -42,6 +47,11 @@ function AllOffers() {
             ...prevState,
             page: (+prevState.page)+1
         }))
+
+    //     setDataLength((prevState)=>(
+    //         prevState + 5
+    // ))
+
     }
     const onChangeRadio = (e) => {
         setParams({
@@ -50,17 +60,18 @@ function AllOffers() {
         })
     }
 
+
     return(
         <div>
             <div className={'bac_div'}>
-                <img src={off_head} alt={'off_head'} style={{width:'120%'}}/>
+                <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
             </div>
             <div className={'offer_logo_div'}>
                 <AuthHeader headerState={true}/>
             </div>
             { resetState ? <Preloader /> :
              <div className={'menu_div'}>
-                <div className={'tab_div'} style={{boxShadow: '0 0 10px 5px rgb(140 152 164 / 40%)' }}>
+                <div className={'tab_div'} style={{boxShadow: '0 0 10px 5px rgb(140 152 164 / 40%)'}}>
                     <Radio.Group onChange={onChangeRadio} defaultValue={params.category??''} className={'radio_grup'}>
                         <Radio.Button value={''}>{t("All offers")}</Radio.Button>
                         {
@@ -71,7 +82,7 @@ function AllOffers() {
                     </Radio.Group>
                     <Divider />
                     <div>
-                        <OffersPrices clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
+                        <OffersPrices currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
                     </div>
                 </div>
                 <div className={'big_div_cards'}>
@@ -81,7 +92,7 @@ function AllOffers() {
                             {
                                 data?.items?.length < 1 ? <div className={'no_offers'}>
                                     <Result
-                                        title="No offers found"
+                                        title={t("No offers found")}
 
                                     />
                                     </div> : data?.items?.map((el) => {
@@ -94,10 +105,13 @@ function AllOffers() {
                 </div>
             </div>}
             <div align={'center'} style={{marginTop:30}}>
-                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>Load more</Button>
+
+                <Button type={'primary'} onClick={handleNextPage}  >{t('Load more')}</Button>
+            </div>
+            <div style={{width: '100%'}}>
+                <OffersFooter />
             </div>
 
-            <OffersFooter />
         </div>
     )
 }

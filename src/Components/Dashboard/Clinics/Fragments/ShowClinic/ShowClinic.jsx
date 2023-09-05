@@ -63,7 +63,7 @@ function ShowClinic () {
     navigate(-1)
   }
 
-  console.log(role, 'ffdfdf')
+
 
   return (
       <div style={{marginTop: -120}}>

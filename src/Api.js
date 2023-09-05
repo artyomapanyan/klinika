@@ -38,6 +38,10 @@ let api = {
         resource: 'Country',
     },
     {
+        url: 'public/countries',
+        resource: 'PublicCountry',
+    },
+    {
         url: 'regions',
         resource: 'Region',
     },

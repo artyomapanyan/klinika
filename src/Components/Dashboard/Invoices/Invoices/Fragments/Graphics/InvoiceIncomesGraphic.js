@@ -47,7 +47,7 @@ function InvoiceIncomesGraphic() {
 
                 <Space direction={'vertical'} style={{marginLeft: 17}}>
                     <div className={'avg_montly'}>
-                        <span>{t("Current month ")}</span>
+                        <span>{t("Current month")}</span>
 
                     </div>
                     <div className={'dr_counter_text'} style={{fontWeight: 700}}>

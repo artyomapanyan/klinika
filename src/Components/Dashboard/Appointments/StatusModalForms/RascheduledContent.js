@@ -95,8 +95,8 @@ export function RascheduledContent({onCancel, modal, loading}){
 
 
         <div style={{display: 'flex', gap: 3}} >
-            <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
-            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
+            <Button size={'large'} type={'secondary'} onClick={onCancel} >{t('Cancel')}</Button>
+            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
         </div>
 
     </div>

@@ -3,6 +3,7 @@ import {Chart, registerables} from "chart.js";
 import {Space, Spin} from "antd";
 import {useSelector} from "react-redux";
 import {postResource} from "../../../Functions/api_calls";
+import {t} from "i18next";
 
 
 function SuperAdminGenderChart() {
@@ -163,7 +164,7 @@ function SuperAdminGenderChart() {
                 <canvas id='SuperAdminGenderChart' ref={canvasRef} className="chart_income_channel"></canvas>
                 <div>
                     <h1 className={'h1'}>
-                        <div>Patients gender</div>
+                        <div>{t('Patients gender')}</div>
                     </h1>
                     <Space  direction={'vertical'}>
                         {Object.keys(data).map((itemKey, key) => {

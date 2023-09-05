@@ -14,7 +14,7 @@ function SuperAdminPlatformIssues({data}) {
                         {dataColor.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{itemKey}</Space>)}
                     </Space>
                 </div>
-            <div className={'current'}>Current month</div>
+            <div className={'current'}>{t("Current month")}</div>
             {Object.keys(data).map(key=>{
                 return  <FIssuesItem key={key} data={data[key]}/>
 

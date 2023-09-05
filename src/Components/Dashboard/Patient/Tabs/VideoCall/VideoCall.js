@@ -9,6 +9,7 @@ import send_arrow_purpule from "../../../../../dist/icons/send_arrow_purpule.png
 import x_black from "../../../../../dist/icons/x_black.png";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
+import {t} from "i18next";
 
 function VideoCall({data}) {
     let language = useSelector((state) => state.app.current_locale)
@@ -102,23 +103,23 @@ function VideoCall({data}) {
                         </div>
                         <div className={'video_call_avatar_right_div'}>
                             <div>
-                                <div className={'video_call_grey_text'}>Purpose</div>
+                                <div className={'video_call_grey_text'}>{t('Purpose')}</div>
                                 <div className={'video_call_bold_text'}>
-                                    Fever, issue with nose and skin
+                                    {t('Fever, issue with nose and skin')}
                                 </div>
                             </div>
 
                             <div>
-                                <div className={'video_call_grey_text'}>{language === 'en' ? 'Appt Time/Date' : 'Date/Appt Time'}</div>
+                                <div className={'video_call_grey_text'}>{language === 'en' ? t('Appt Time/Date') : t('Date/Appt Time')}</div>
                                 <div className={'collapse_content_foot'} style={{fontSize: 16}}>
                                     <span style={{fontWeight: 700, }}>{dayjs(data?.booked_at?.iso_string).format('h:mm A')} </span>  / {dayjs(data?.booked_at?.iso_string).format('DD MMMM YY')}
                                 </div>
                             </div>
 
                             <div style={{display: 'flex', gap: 10}}>
-                                <Button onClick={onStartCall} className={'video_call_primary_btn'} type={'primary'}>Start call now</Button>
-                                <Button onClick={showModal} className={'video_call_primary_btn'} type={'secondary'}>Cancel</Button>
-                                <Modal title="Are you sure?" footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                <Button onClick={onStartCall} className={'video_call_primary_btn'} type={'primary'}>{t('Start call now')}</Button>
+                                <Button onClick={showModal} className={'video_call_primary_btn'} type={'secondary'}>{t('Cancel')}</Button>
+                                <Modal title={t("Are you sure?")} footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                                     <CancelReason setIsModalOpen={setIsModalOpen}/>
                                 </Modal>
                             </div>
@@ -126,10 +127,10 @@ function VideoCall({data}) {
                             <div onClick={getLocalStream} className={'video_call_sound_and_text_div'}>
                                 <div>
                                     <div className={'video_call_purpule_text'}>
-                                        Test your permissions and devices
+                                        {t('Test your permissions and devices')}
                                     </div>
                                     <div className={'video_call_permission_text'}>
-                                        Before call please check audio and video permissions
+                                        {t('Before call please check audio and video permissions')}
                                     </div>
                                 </div>
                                 <div>

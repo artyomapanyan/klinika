@@ -2,6 +2,7 @@ import React from "react";
 import {Avatar, Button, Col, Divider, Rate, Space} from "antd";
 import off_image_1 from "../../../dist/Img/off_image_1.jpg";
 import {useNavigate} from "react-router";
+import {t} from "i18next";
 
 function OfferCard({data, id}) {
     const navigate = useNavigate()
@@ -11,7 +12,7 @@ function OfferCard({data, id}) {
 
 
     return(
-        <Col lg={8} >
+        <Col lg={12} xl={8} xxl={8} sm={24}>
             <div className={'offer_card'}>
                 <div className={'offer_card_image_div'}>
                     <div className={'offer_card_image'}>
@@ -49,7 +50,7 @@ function OfferCard({data, id}) {
                                 currentTarget.src=off_image_1;}}  />}  />
                             <div style={{display:"block"}}>
                                 <h2 style={{fontWeight: 600}}>{data?.clinic?.name}</h2>
-                                <div  className={'offer_card_smoll_text1'}>{data?.clinic?.location?.address1}</div>
+                                <div  className={'offer_card_smoll_text1'}>{data?.clinic?.location?.address1?.en}</div>
                             </div>
 
                         </Space>
@@ -65,12 +66,12 @@ function OfferCard({data, id}) {
                                 <div style={{display:"block"}}>
                                     <h2 style={{fontWeight: 600}}>{data?.new_price} SAR</h2>
                                     <div>
-                                        <span style={{fontSize: 14, }}>{data?.old_price} SAR</span><span style={{marginLeft: 20, color:'#CD499B'}}>Save {data?.old_price - data?.new_price} SAR</span>
-                                        <div className={'line'}></div>
+                                        <span style={{fontSize: 14, textDecoration: 'line-through'}}>{data?.old_price} SAR</span><span style={{marginLeft: 20, color:'#CD499B'}}>Save {(data?.old_price - data?.new_price).toFixed(1)} SAR</span>
+
                                     </div>
                                 </div>
                             </Space>
-                            <Button size={'large'} type={'primary'} onClick={onBookNow}>Book now</Button>
+                            <Button size={'large'} type={'primary'} onClick={onBookNow}>{t('Book now')}</Button>
                         </div>
 
                     </div>

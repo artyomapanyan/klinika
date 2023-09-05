@@ -14,9 +14,9 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
             .format('DD MMM')}`;
 
 
-    let data = ['Specialty Load',
-        'HCP Load',
-        'Day off',
+    let data = [t('Specialty Load'),
+        t('HCP Load'),
+        t('Day off'),
         //'Holidays/Weekend'
     ]
 
@@ -32,7 +32,7 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:24}}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
-                {t("Appointments :")}
+                {t("Appointments")} :
                 {!hideData && data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-clinic-man-calendar-${key}`}>{itemKey}</Space>)}
             </Space>
             <div>

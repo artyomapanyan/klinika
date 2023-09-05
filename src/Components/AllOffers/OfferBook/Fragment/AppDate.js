@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import Resources from "../../../../store/Resources";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import {t} from "i18next";
 
 function AppDate({setDataState, dataState, data, setDate}) {
     let token = useSelector((state) => state.auth.token);
@@ -16,8 +17,7 @@ function AppDate({setDataState, dataState, data, setDate}) {
 
     useEffect(() => {
         if(dataState?.doctor_id) {
-            postResource('PublicClinicDoctorWorkingHours','single', token,  dataState?.doctor_id+ '/' + data?.clinic?.id, {service:'home_visit'}).then(response => {
-
+            postResource('PublicClinicDoctorWorkingHours','single', token,  dataState?.doctor_id+ '/' + data?.clinic?.id, {service:'clinic_visit'}).then(response => {
                 const res = response?.working_hours
                 let day = [];
                 Object.values(res)?.map((el) => {
@@ -94,7 +94,7 @@ function AppDate({setDataState, dataState, data, setDate}) {
                 dataState?.doctor_id && dataState?.date ? <div>
                     <Space>
                         Selected Date : <span className={'selected_text'}>{dataState?.date}</span>
-                        <Button type={'secondary'} onClick={onChangeDate} style={{borderRadius:15}}>Change Date</Button>
+                        <Button type={'secondary'} onClick={onChangeDate} style={{borderRadius:15}}>{t('Change Date')}</Button>
                     </Space>
                 </div> : dataState?.doctor_id || dataState?.date ? <div className={'date_carousel_div'}>
                     <div style={{position:'absolute', width:'98%'}}>

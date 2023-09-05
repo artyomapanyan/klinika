@@ -1,6 +1,7 @@
 import {useEffect, useRef} from "react";
 import {Chart,registerables} from "chart.js";
 import {Space} from "antd";
+import {t} from "i18next";
 
 function DoctorReworkedStatusesChart({data}) {
     let canvasRef = useRef();
@@ -71,7 +72,7 @@ function DoctorReworkedStatusesChart({data}) {
             <Space></Space>
             <Space direction={'vertical'}>
                 <div className={'chart_counter_bold_text'}>
-                    Statuses
+                    {t('Statuses')}
                 </div>
                 <div>
                     {data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-${key}`}>{text[key]}{itemKey}</Space>)}

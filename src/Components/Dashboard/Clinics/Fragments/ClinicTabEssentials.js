@@ -692,7 +692,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                     </div>
                                     <div style={{width:200}}>
                                         <FormInput  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
-                                        <FormInput  label={t('Duration')} name={["service_settings","home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.duration}/>
+                                        <FormInput  label={t('Duration')} inputDisabled={true} name={["service_settings","home_visit","duration"]}  initialValue={60}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -813,6 +813,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                     </div>
                                     <div style={{width:200}}>
                                         <FormInput  label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
+                                        <FormInput  label={t('Duration')} name={["service_settings","nursing","duration"]} inputType={'number'} inputDisabled={true} initialValue={60}/>
                                     </div>
                                 </div> : <div></div>
                             }
@@ -853,7 +854,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                     </div>
                                     <div style={{width:200}}>
                                         <FormInput  label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
-                                        <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.duration}/>
+                                        <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} inputDisabled={true} initialValue={60}/>
                                     </div>
                                 </div> : <div></div>
                             }

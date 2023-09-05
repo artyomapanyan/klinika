@@ -7,6 +7,7 @@ import OfferBookDetails from "./OfferBookDetails";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
 import {useParams} from "react-router";
 import BookAnAppointment from "./BookAnAppointment";
+import {t} from "i18next";
 
 function OfferBookContent() {
     const params = useParams();
@@ -33,12 +34,12 @@ function OfferBookContent() {
                         <Space >
                             <Avatar shape="square" size={130} src={<img src={data?.logo?.url} />} style={{marginTop:-40, background:'grey'}}/>
                             <div style={{display:"block"}}>
-                                <h2 style={{fontWeight: 600}}>Fractional Laser Session</h2>
+                                <h2 style={{fontWeight: 600}}>{data?.title}</h2>
                                 <div>
-                                    <Rate disabled value={4} />
-                                    <span style={{marginLeft:15}}>(5 Reviews)</span>
+                                    <Rate disabled value={data?.avg_rating} />
+                                    <span style={{marginLeft:15}}>{`(${data?.avg_rating}${t('Reviews')})`}</span>
                                 </div>
-                                <div  className={'offer_pink_text'}>2 months Left</div>
+                                {/*<div  className={'offer_pink_text'}>2 months Left</div>*/}
                             </div>
 
                         </Space>
@@ -46,7 +47,7 @@ function OfferBookContent() {
 
                     <div className={'big_price_div'}>
                         <div>
-                            <Tag color="#63183e" style={{marginBottom:-5, marginLeft:15, fontWeight:600}}>Save {(100 - (data?.new_price *100 / data?.old_price)).toFixed(1)}%</Tag>
+                            <Tag color="#63183e" style={{marginBottom:-5, marginLeft:15, fontWeight:600}}>{t('Save')} {(100 - (data?.new_price *100 / data?.old_price)).toFixed(1)}%</Tag>
                             <div className={'price_div'}>
                                 <div style={{marginTop:8}}>
                                     <div className={'line'}></div>
@@ -56,7 +57,7 @@ function OfferBookContent() {
                                 <Divider type={'vertical'} style={{backgroundColor: '#ffffff', height: 25}} />
                                 <div style={{display: 'flex'}}>
 
-                                    <div>Claim Now</div>
+                                    <div>{t('Claim Now')}</div>
                                     <RightOutlined />
                                 </div>
                             </div>
@@ -73,7 +74,7 @@ function OfferBookContent() {
                     <OfferBookDetails data={data} />
                 </div>
                 <div align={'center'} >
-                    <div className={'purple_text'} >Book an appointment</div>
+                    <div className={'purple_text'} >{t('Book an appointment')}</div>
                     <Divider style={{background:'#e3e0e3'}}/>
                 </div>
                 <div className={'app_border_div'}>

@@ -1,9 +1,11 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Input, Table} from "antd";
+import {Button, Form, Input, Modal, Table} from "antd";
 import {createResource} from "../../Functions/api_calls";
 import {SearchOutlined} from "@ant-design/icons";
 import Preloader from "../../Preloader";
+import {t} from "i18next";
+import FormInput from "../../Fragments/FormInput";
 
 
 function Translations(){
@@ -11,6 +13,8 @@ function Translations(){
     const translations = useSelector(state=>state.app.translations)
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 
     const filteredTranslations = useMemo(()=>{
@@ -42,9 +46,24 @@ function Translations(){
         })
    }
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
 
 
+    const onFinish = (values) => {
+        handleSaveTranslation(values)
+        setIsModalOpen(false)
+    }
 
 
 
@@ -56,8 +75,9 @@ function Translations(){
         confirm();
 
     };
-    const handleReset = (clearFilters) => {
-        clearFilters();
+    const handleReset = (selectedKeys, confirm, ) => {
+
+        confirm();
 
     };
     const getColumnSearchProps = (dataIndex) => ({
@@ -89,7 +109,7 @@ function Translations(){
                         Search
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() => handleReset(selectedKeys, confirm, dataIndex)}
                         size="small"
                         style={{
                             width: 90,
@@ -119,25 +139,43 @@ function Translations(){
 
     });
     return(
-        <div>
+        <div style={{marginTop: -50}}>
+            <div style={{marginBottom: 20, marginLeft: 20, fontSize: 20, fontWeight: 700}}>
+                Translations
+                <Button style={{margin: '0 10px'}} onClick={showModal} type={'primary'} >add</Button>
+            </div>
+
+            <Modal key={'modal_translation'+ Math.random().toString()} title="Add translation" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={false}>
+                <Form
+                    name="basic"
+                    onFinish={onFinish}
+                >
+
+                       <FormInput label={t('Key')} name={'key'} />
+                        <FormInput label={t('Value')} name={'value'}/>
+
+                    <Button htmlType={'submit'} type={'primary'} style={{margin: '0 8px'}}>Ok</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
+                </Form>
+            </Modal>
             {
                 loading ? <Preloader/> : <Table
                     columns={[
                         {
-                            title:'Key',
+                            title:t('Key'),
                             dataIndex:'key',
                             key:'key',
                             // ...getColumnSearchProps('key'),
                         },
                         {
-                            title:'Value',
+                            title:t('Value'),
                             dataIndex:'value',
                             key:'value',
                             shouldCellUpdate:(record, prevRecord)=>record.value!==prevRecord.value,
                             render:(i,record)=><Input defaultValue={record.value} onChange={(value)=>record.value=value.target.value}/>
                         },
                         {
-                            title:'Submit',
+                            title:t('Submit'),
                             dataIndex:'submit',
                             key:'submit',
                             render:(i,record)=><Button onClick={()=>handleSaveTranslation(record)}>Save</Button>

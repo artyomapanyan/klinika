@@ -67,6 +67,7 @@ function LaboratoryTestsTable() {
                 <h1 className={'h1'}>{t(`Tests`)}</h1>
 
                 {loading ? <Preloader/> : <ResourceTable
+                    paginationResourceTable={false}
                     noHeader={true}
                     customTableButton={{
                         title:'Add New Test',
@@ -87,14 +88,14 @@ function LaboratoryTestsTable() {
                     tableColumns={[
                         {
                             dataIndex: ['lab_test', 'name'],
-                            title: 'Tests',
+                            title: t('Tests'),
                             key: 'lab_test',
                             sorter: true,
 
                         },
                         {
                             dataIndex: "price",
-                            title: 'price',
+                            title: t('price'),
                             key: 'price',
                         }
                     ]}

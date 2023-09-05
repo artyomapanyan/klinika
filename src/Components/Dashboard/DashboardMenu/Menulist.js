@@ -120,6 +120,11 @@ export default {
             label: t(`Clinics`),
             permission:'Clinic'
         },
+        {
+            key: 'appointments',
+            icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Appointments`),
+        },
 
         {
             icon:<img alt={'icons'} src={dash3}/>,
@@ -154,7 +159,7 @@ export default {
         {
             key: 'super-admin',
             icon: <img alt={'icons'} src={dash1}/>,
-            label: 'Dashboard',
+            label: t('Dashboard'),
         },
         {
             label: t(`Inputs`),
@@ -238,7 +243,7 @@ export default {
                 },
                 {
                     key: 'posts',
-                    label: t(`Posts`),
+                    label: t('Posts'),
                     permission:'Post'
                 },
                 {

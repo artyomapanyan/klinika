@@ -10,13 +10,13 @@ export function FinishedContent({onCancel, loading}){
 
     return<div>
         <Result
-            title="Your notes for the patient"
+            title={t("Your notes for the patient")}
         />
 
         <FormInput label={t('Doctor notes')} name={'doctor_notes'} inputType={'textArea'} castomReq={true} rules={[
             // {required: true},
             {
-                message: 'Please enter doctor notes',
+                message: t('Please enter doctor notes'),
                 validator:(rule,value)=>{
                     value=value.trim();
                     if(value.length==0){
@@ -29,7 +29,7 @@ export function FinishedContent({onCancel, loading}){
         <FormInput label={t('Prescriptions')} name={'prescriptions'} inputType={'textArea'} castomReq={true} rules={[
              {reqIcon: true},
             {
-                message: 'Please enter doctor notes',
+                message: t('Please enter doctor notes'),
                 validator:(rule,value)=>{
                     value=value.trim();
                     if(value.length==0){
@@ -40,8 +40,8 @@ export function FinishedContent({onCancel, loading}){
             }
         ]}/>
         <div style={{display: 'flex', gap: 5}} >
-            <Button size={'large'} type={'secondary'} onClick={onCancel} >Cancel</Button>
-            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>Submit</Button>
+            <Button size={'large'} type={'secondary'} onClick={onCancel} >{t('Cancel')}</Button>
+            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
         </div>
 
     </div>

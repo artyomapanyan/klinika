@@ -2,10 +2,13 @@ import React, {useState} from "react";
 import {CheckCircleOutlined} from "@ant-design/icons";
 import {Button, Space} from "antd";
 import Radio from "antd/lib/radio/radio";
+import {t} from "i18next";
 
 
-function AppPaymentMethods({setDataState, dataState, responseCodeState}) {
+function AppPaymentMethods({setDataState, dataState, responseCodeState, data}) {
     const [paymentMethodState, setPaymentMethodState] = useState('')
+
+   // console.log(data)
 
 
 
@@ -29,7 +32,7 @@ function AppPaymentMethods({setDataState, dataState, responseCodeState}) {
         <div>
             <Space>
                 <CheckCircleOutlined style={{color:paymentMethodState ?'#2ce310':'gray', fontSize:22}} />
-                <h2 style={{fontWeight: 600, marginTop:8}}>Payment Method</h2>
+                <h2 style={{fontWeight: 600, marginTop:8}}>{t('Payment Method')}</h2>
             </Space>
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment && dataState?.verifyNumber ? <div>
@@ -37,14 +40,21 @@ function AppPaymentMethods({setDataState, dataState, responseCodeState}) {
                         Selected Payment Method: <span className={'selected_text'}>{dataState?.payment_method_id}</span>
                         <Button type={'secondary'} onClick={onChangeDetails} style={{borderRadius:15}}>Change Payment Method</Button>
                     </Space>
-                </div> : responseCodeState ? <div className={'date_carousel_div'}>
+                </div> : responseCodeState?.patient ? <div className={'date_carousel_div'}>
                     <div>
                         <Radio.Group onChange={onChange}>
-                            <Space direction="vertical">
-                                <Radio value={1}>Cash</Radio>
-                                <Radio value={2}>Tap Payments</Radio>
-                            </Space>
+                        {
+                            data?.clinic?.payment_methods?.map((el) => {
+                                return<div key={el?.id}>
+                                        <Radio value={el?.id}>{el?.title}</Radio>
+
+                                    </div>
+
+                            })
+
+                        }
                         </Radio.Group>
+
                     </div>
 
                 </div> :<div></div>

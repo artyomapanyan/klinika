@@ -7,7 +7,7 @@ function JitsiVideo({data}) {
 
     return(
         <JitsiMeeting
-
+            domain = {`${data?.telehealth?.domain}`}
             roomName ={`${data?.telehealth?.room_name}`}
             configOverwrite = {{
                 startWithAudioMuted: true,

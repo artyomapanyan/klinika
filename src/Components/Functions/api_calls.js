@@ -191,7 +191,8 @@ function handleGenerateFD(values,method){
                 }
             }else{
                 values[name] = values[name]===true?1:values[name]===false?0: values[name]
-                if(typeof values[name] === "object"){
+                if(values[name] && typeof values[name] === "object"){
+                    console.log(values[name],'sss')
 
                     hGOD(formData,name,values[name])
                 }else{

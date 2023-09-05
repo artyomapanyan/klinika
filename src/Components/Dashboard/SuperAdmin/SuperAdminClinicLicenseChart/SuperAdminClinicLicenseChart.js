@@ -3,6 +3,7 @@ import {Chart, registerables} from "chart.js";
 import {Space, Spin} from "antd";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import {t} from "i18next";
 
 function SuperAdminClinicLicenseChart() {
     let canvasRef = useRef();
@@ -156,7 +157,7 @@ function SuperAdminClinicLicenseChart() {
             <div className={'patient_gender_div'}>
                 <canvas id='SuperAdminClinicLicenseChart' ref={canvasRef} className="chart_income_channel"></canvas>
                 <div>
-                    <h1 className={'h1'}><div>Clinics licenses</div> </h1>
+                    <h1 className={'h1'}><div>{t('Clinics licenses')}</div> </h1>
                     <Space direction={'vertical'}>
                         {Object.keys(data).map((itemKey,key)=><div key={key} className={`doctor_licenses_chart WD-color-${key}`}><span>{itemKey}</span> <span style={{fontWeight:600}}>{data[itemKey]}</span> </div>)}
                     </Space>

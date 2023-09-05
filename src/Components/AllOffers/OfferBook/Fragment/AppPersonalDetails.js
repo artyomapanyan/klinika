@@ -1,13 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, useMemo} from "react";
 import {CheckCircleOutlined} from "@ant-design/icons";
-import {Button, Form, Input, Space} from "antd";
+import {Button, Form, Input, Space, notification } from "antd";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 
 
-function AppPersonalDetails({setDataState, dataState, setResponseCodeState, params, dataTimes, date}) {
+
+function AppPersonalDetails({setDataState, dataState, setResponseCodeState, responseCodeState, params, dataTimes, date}) {
     let token = useSelector((state) => state.auth.token);
     let formRef= useRef();
     let refObj = formRef?.current?.getFieldValue()
@@ -15,6 +16,9 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
     const [verifyState, setVerifyState] = useState(0);
     const [codeAndNumber, setCodeAndNumber] = useState()
     const [verifyResponse, setVerifyResponse] = useState()
+
+
+
 
     useEffect(() => {
         if(dataState?.payment_method_id){
@@ -45,7 +49,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
 
     const onVerifyNumber = (values) => {
         setPhoneLoading(true)
-        postResource('PublicOffer', 'PhoneVerify', token, '', values).then(() => {
+        postResource('PublicOffer', 'PhoneVerify', token, '', values).then((response) => {
             setPhoneLoading(false)
             setVerifyState(1)
 
@@ -53,12 +57,24 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
         setCodeAndNumber(values)
 
     }
+
+    const [api, contextHolder] = notification.useNotification();
+
     // const enterInput = (e) => {
     //     setDataState((prevState) => ({
     //         ...prevState,
     //         verifyNumber: e?.target?.value,
     //     }))
     // }
+
+    const openNotification = (placement) => {
+        api.error({
+            message: `Notification`,
+            description: 'You entered an incorrect code',
+            placement,
+        });
+    };
+
 
     const onVerifyCode = (values) => {
         values = {
@@ -73,12 +89,16 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
             setResponseCodeState(response)
             setVerifyResponse(response)
             setPhoneLoading(false)
-            setVerifyState(2)
+
             if(response?.message === 'Verification code successfully sent to your phone number'){
                 setDataState((prevState) => ({
                     ...prevState,
                     verifyNumber: 'Verification code successfully sent to your phone number',
                 }))
+            }
+            console.log(response, 'jjj')
+            if(response === 'You entered an incorrect code'){
+                openNotification('bottomRight')
             }
 
         })
@@ -117,17 +137,23 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
     });
 
     const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) `:null
+        name = item.phone_code?`(${item.phone_code}) ${item.name} `:null
         item.id = item.phone_code
         return [name,item]
     }
 
 
+
+
+    //console.log(responseCodeState)
     return (
         <div>
+
+            {contextHolder}
+
             <Space>
                 <CheckCircleOutlined style={{color:verifyResponse ? '#2ce310' : 'gray', fontSize: 22}}/>
-                <h2 style={{fontWeight: 600, marginTop: 8}}>Personal Details</h2>
+                <h2 style={{fontWeight: 600, marginTop: 8}}>{t('Personal Details')}</h2>
             </Space>
             {dataState?.doctor_id && dataState?.date && dataState?.time ? <div className={'date_carousel_div'}>
                 <div>
@@ -138,7 +164,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
                                 <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                            rules={[{required: true}]}
                                            handleMapItems={handleMapItems}
-                                           resource={'Country'}/>
+                                           resource={'PublicCountry'}/>
                             </div>
                             <div style={{width:'100%', marginLeft:10}}>
                                 <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} />
@@ -155,23 +181,23 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
                             <div style={{display: 'flex', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <div style={{width:'50%', marginLeft:10}}>
                                     <Input value={`+${codeAndNumber?.phone_country_code}${codeAndNumber?.phone_number}`} style={{marginTop:7, height:46, borderRadius:12}}/>
-                                    <div className={'change_number'} onClick={onSendSMSAgain}>Change Number</div>
+                                    <div className={'change_number'} onClick={onSendSMSAgain}>{t('Change Number')}</div>
                                 </div>
                                 <div style={{width: '20%'}} align={'center'}>
                                     {
-                                        mins === 0 && secs === 0 ? <div className={'send_again_text'} onClick={onSendSMSAgain}>Send Again</div> :
+                                        mins === 0 && secs === 0 ? <div className={'send_again_text'} onClick={onSendSMSAgain}>{t('Send Again')}</div> :
                                             <p>{`${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`}</p>
                                     }
                                 </div>
                                 <div className={'space_compact'}>
                                     <FormInput label={t('Verify code')} name={'code'} />
                                 </div>
-                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>Virify</Button>
+                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>{t('Virify')}</Button>
                             </div>
 
                         </Form>
                     </div>}
-                    {verifyState === 2 && <div>
+                    {responseCodeState?.patient ? <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
                             <Form ref={formRef}>
                                 <FormInput inputDisabled={verifyResponse?.patient?.first} label={t('First Name')} name={'first'} initialValue={verifyResponse?.patient?.first} rules={[{required: true}]} />
@@ -181,7 +207,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, para
 
                         </Space>
 
-                    </div>}
+                    </div> : <div></div>}
                 </div>
 
             </div> : <div></div>

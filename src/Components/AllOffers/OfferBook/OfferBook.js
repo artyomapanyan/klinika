@@ -8,7 +8,7 @@ import {useGetResourceSingle} from "../../Functions/api_calls";
 
 function OfferBook() {
     const params = useParams();
-    const {loadingState, dataState} = useGetResourceSingle('Offer', params.id)
+    const {loadingState, dataState} = useGetResourceSingle('PublicOffer', params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     return(

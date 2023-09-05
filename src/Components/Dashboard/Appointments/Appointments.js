@@ -130,6 +130,20 @@ function Appointments() {
                         filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                     },
                     {
+                        dataIndex:'patient',
+                        title:t('Patient'),
+                        key:'patient',
+                        render:(e, record) => {
+                            return <div>{record?.patient?.first} {record?.patient?.last}</div>
+                        }
+                    },
+                    {
+                        dataIndex:['patient', 'phone_number'],
+                        title:t('Phone number'),
+                        key:'phone_number',
+
+                    },
+                    {
                         dataIndex:'service_type',
                         title:t('Service'),
                         key:'service_type',
@@ -165,7 +179,7 @@ function Appointments() {
                         filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
                         sorter:true,
                         defaultSortOrder:'descend',
-                        render:(i )=> dayjs(i).format('YYYY-MM-DD HH:mm')
+                        render:(i )=> dayjs(i).format('YYYY-MM-DD h:mm A')
 
                     },
                     {
