@@ -179,7 +179,15 @@ console.log(formRef.current.getFieldValue('old_price'), formRef.current.getField
                             </Form.Item>
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
+                            <FormInput inputProps={{
+                                mode:'multiple',
+                                // onChange:(e,data)=> {
+                                //     let doctor = data?.find((el) => [el?.id] === [e])
+                                //     console.log(doctor)
+                                //
+                                // }
+                            }}
+                                       label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.doctors?.map(e=>e.id)}
                                        initialData={data?.doctors??[]}
