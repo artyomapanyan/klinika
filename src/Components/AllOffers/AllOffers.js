@@ -105,8 +105,7 @@ function AllOffers() {
                 </div>
             </div>}
             <div align={'center'} style={{marginTop:30}}>
-
-                <Button type={'primary'} onClick={handleNextPage}  >{t('Load more')}</Button>
+                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>{t('Load more')}</Button>
             </div>
             <div style={{width: '100%'}}>
                 <OffersFooter />
