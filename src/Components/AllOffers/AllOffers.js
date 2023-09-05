@@ -14,7 +14,6 @@ import {paramsToObject} from "../../functions";
 import AuthHeader from "../Auth/AuthHeader";
 
 
-
 function AllOffers() {
     const currentUrl = window.location.href;
 
