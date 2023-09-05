@@ -915,7 +915,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                          text2={'Download the file'}
                                          name={'cover'}
                                          uploadIcon={<InboxOutlined/>}
-                                         initialFileList={[data?.cover]} limit={1} formRef={formRef} type={'drag'}/>
+                                         initialFileList={[data?.cover]} limit={2} formRef={formRef} type={'drag'}/>
                         </Col>
                     </Row>
 
@@ -924,7 +924,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                  text2={'Download files'}
                                  name={'gallery'}
                                  uploadIcon={<InboxOutlined/>}
-                                 initialFileList={[data?.gallery]} limit={5} formRef={formRef} type={'drag'}/>
+                                 initialFileList={data?.gallery} limit={5} formRef={formRef} type={'drag'}/>
 
 
                 </div>
