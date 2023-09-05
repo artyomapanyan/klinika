@@ -17,7 +17,7 @@ import AuthHeader from "../Auth/AuthHeader";
 
 function AllOffers() {
     const currentUrl = window.location.href;
-    const [dataLength, setDataLength] = useState(9)
+
     let [searchParams, setSearchParams] = useSearchParams();
     const [params, setParams] = useState({
         order_by: 'new_price',
@@ -26,7 +26,7 @@ function AllOffers() {
         ...paramsToObject(searchParams.entries())
     })
 
-    console.log(params)
+
 
      const [resetState, setResetState] = useState(false)
 
