@@ -27,7 +27,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
         setParams({
             order_by: 'new_price',
             page:1,
-            per_page:5000,
+            per_page:15,
         })
         setTimeout(() => {
             setResetState(false)
