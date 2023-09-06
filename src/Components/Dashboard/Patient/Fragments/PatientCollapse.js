@@ -13,8 +13,9 @@ import {FinishedContent} from "../../Appointments/StatusModalForms/FinishedConte
 import {RascheduledContent} from "../../Appointments/StatusModalForms/RascheduledContent";
 import {Confirmed} from "../../Appointments/StatusModalForms/Confirmed";
 import {postResource} from "../../../Functions/api_calls";
+import Preloader from "../../../Preloader";
 const { Panel } = Collapse;
-function PatientCollapse({data}) {
+function PatientCollapse({data, setData}) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
 
@@ -44,11 +45,13 @@ function PatientCollapse({data}) {
         }).then(() => {
 
             setModal(null)
-
+            setData((prevState)=>({
+                ...prevState,
+            }))
             setLoading(false)
         }).finally(()=>{
             setLoading(true)
-            setTimeout(()=> {setLoading(false)}, 3000)
+            window.location.reload()
         })
     }
 
@@ -72,7 +75,7 @@ function PatientCollapse({data}) {
 
     return(
         <div style={{padding:24, margin: '0 20px'}}>
-            <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
+            <Modal key={Math.random()} maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                 <Form onFinish={onFinish}
                       onValuesChange={handleValuesChange}
                 >
@@ -97,7 +100,10 @@ function PatientCollapse({data}) {
                             Appointment Details
                         </div>
                         <div style={{zIndex: 999, margin: '0 30px'}}>
-                            <PatientStatusChange    record={data} resource={'Appointment'} initialValue={data?.status.toString()} onChange={onStatusChange}  name={'status'}/>
+                            {
+                                loading ? <Preloader /> : <PatientStatusChange setLoading={setLoading} loading={loading}  record={data} resource={'Appointment'} initialValue={data?.status.toString()} onChange={onStatusChange}  name={'status'}/>
+                            }
+
                         </div>
                     </div>
                     <div onClick={onCollepse} style={{cursor: 'pointer', paddingTop: 9}}>

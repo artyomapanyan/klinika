@@ -6,7 +6,7 @@ import {Dropdown, Space} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import Resource from "../../../../store/Resources";
 
-function PatientStatusChange({initialValue,onChange=null, resource, record,name, height=false, colorSelectDisabled=false, lo}){
+function PatientStatusChange({initialValue,onChange=null, resource, record,name, height=false, colorSelectDisabled=false, loading, setLoading}){
 
     //
      const [value,setValue] = useState(initialValue);
@@ -17,9 +17,9 @@ function PatientStatusChange({initialValue,onChange=null, resource, record,name,
     let token = useSelector((state) => state?.auth?.token);
 
 
-    const [loading,setLoading] = useState(false);
+    // const [loading,setLoading] = useState(false);
 
-    console.log(initialValue, items)
+
     const onClick = (e) => {
         if(onChange) {
             onChange(e.key,record)
@@ -77,10 +77,10 @@ function PatientStatusChange({initialValue,onChange=null, resource, record,name,
     return(
         <div>
             {
-                <Dropdown
+                loading ? <Preloader /> :  <Dropdown
                     menu={{
                         onClick,
-                        items: items
+                        items: items.filter((el) => el.key !== value)
 
                     }}
                     disabled={colorSelectDisabled ? colorSelectDisabled : items.length < 2}

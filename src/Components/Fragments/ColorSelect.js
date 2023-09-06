@@ -13,7 +13,6 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
 
 
     const onClick = (e) => {
-    console.log(e)
         if(onChange) {
             onChange(e.key,record)
         }else{
