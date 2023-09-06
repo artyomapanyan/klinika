@@ -300,10 +300,7 @@ const Resource = {
         },
     ],
     dateOptions: [
-        {
-            values: "Closes",
-            label: "Closes"
-        },
+
         {
             value: "00:00",
             label: '00:00',

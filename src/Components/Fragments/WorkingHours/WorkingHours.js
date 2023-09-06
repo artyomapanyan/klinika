@@ -8,6 +8,7 @@ import Preloader from "../../Preloader";
 import FormInput from "../FormInput";
 import resourceLinks from "../../ResourceLinks";
 import Resources from "../../../store/Resources";
+import dayjs from "dayjs";
 
 let res = "Clinic";
 
@@ -150,19 +151,28 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
         {switchChange ? <div className={'add_edit_content'} align={"center"}>
           <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
         </div> : Object.keys(workingData)?.map((dataKey, iKey) => {
+          let currentLabel = Resources.dateOptions?.map((el) => {
+            return {
+              ...el,
+              label: dayjs('2023-10-10' + el.label).format('hh:mm A'),
+
+            }
+
+          })
+
           let workingDay = workingData[dataKey]
           let currentTimes = [];
 
           if(timeLimits){
             timeLimits[dataKey]?.forEach(data=>{
-              currentTimes.push( Resources.dateOptions?.slice(data.start,data.end+1))
+              currentTimes.push( currentLabel?.slice(data.start,data.end+1))
             })
           }else{
-            currentTimes = [...Resources.dateOptions]
+            currentTimes = [...currentLabel]
           }
 
 
-          //console.log(currentTimes)
+          //console.log(currentTimes, 'g')
           return workingDay && <div key={iKey}>
 
             <Row>
@@ -195,6 +205,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                       ) + 1, currentOptions?.length
                     );
                   }
+
                   return <Row key={dataKey + key + (new Date())}
                               className={!workingDay[0]?.is_day_off ? 'd-none' : ''}
                   >
