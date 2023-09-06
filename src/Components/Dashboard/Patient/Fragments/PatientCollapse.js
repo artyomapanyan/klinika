@@ -1,29 +1,119 @@
-import React from 'react';
-import {Collapse, Tag} from 'antd';
+import React, {useState} from 'react';
+import {Collapse, Form, Modal, Tag} from 'antd';
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
 import arrowUpPurple from "../../../../dist/icons/arrow-up-purple.svg";
 import dayjs from "dayjs";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
+import Resource from "../../../../store/Resources";
+import ColorSelect from "../../../Fragments/ColorSelect";
+import PatientStatusChange from "../PatientStatusChange/PatientStatusChange";
+import {CanceledContent} from "../../Appointments/StatusModalForms/CanceledContent";
+import {FinishedContent} from "../../Appointments/StatusModalForms/FinishedContent";
+import {RascheduledContent} from "../../Appointments/StatusModalForms/RascheduledContent";
+import {Confirmed} from "../../Appointments/StatusModalForms/Confirmed";
+import {postResource} from "../../../Functions/api_calls";
 const { Panel } = Collapse;
 function PatientCollapse({data}) {
     let language = useSelector((state) => state.app.current_locale)
+    let token = useSelector((state) => state.auth.token);
 
-    const onChange = () => {
+    const [modal,setModal] = useState(false)
+    const [loading,setLoading] = useState(false)
+    const [date,setDate] = useState(false)
+    const [collapseState,setCollapseState] = useState(true)
 
-    };
+
+
+    const onStatusChange = (key)=>{
+        setModal({
+            ...data,
+            key
+        })
+
+    }
+
+    const onFinish = (values) => {
+        setLoading(true)
+        if (values?.booked_at) {
+            values.booked_at = values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
+        }
+        postResource('Appointment','appointmentStatus', token, `${modal.id}/switch-status`, {
+            status:modal.key,
+            ...values
+        }).then(() => {
+
+            setModal(null)
+
+            setLoading(false)
+        }).finally(()=>{
+            setLoading(true)
+            setTimeout(()=> {setLoading(false)}, 3000)
+        })
+    }
+
+    const onCancel = () => {
+        setModal(null)
+    }
+
+    const handleValuesChange = (changed)=>{
+        if(changed.booked_at) {
+            setDate((prevDate)=>({
+                ...prevDate,
+                ...changed
+            }))
+        }
+
+    }
+
+    const onCollepse = () => {
+        setCollapseState(!collapseState)
+    }
+
     return(
-        <div style={{padding:8, marginRight: 20}}>
-            <Collapse
-                bordered={false}
-                defaultActiveKey={['1']}
-                onChange={onChange}
-                expandIconPosition={'end'}
-                expandIcon={(panelProps) =><div style={{marginTop: 5}}>{panelProps.isActive ?
-                                        <div><img alt={'icons'} src={arrowUpPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :
-                                        <div><img alt={'icons'} src={arrowDownPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>Expend</span></div>}</div>}
-            >
-                <Panel className={'collapse_panel'} expandtextposition='end' header="Appointment Details" key="1">
+        <div style={{padding:24, margin: '0 20px'}}>
+            <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
+                <Form onFinish={onFinish}
+                      onValuesChange={handleValuesChange}
+                >
+                    {
+                        modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
+                            modal?.key === '2' ? <FinishedContent loading={loading}  onCancel={onCancel} /> :
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
+                                    modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                        modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                            modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                                modal?.key === '7' ? <Confirmed loading={loading} onCancel={onCancel}/>  : null
+                    }
+
+                </Form>
+            </Modal>
+
+
+
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width:'100%'}}>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                        <div style={{fontSize: 20, fontWeight: 700}}>
+                            Appointment Details
+                        </div>
+                        <div style={{zIndex: 999, margin: '0 30px'}}>
+                            <PatientStatusChange    record={data} resource={'Appointment'} initialValue={data?.status.toString()} onChange={onStatusChange}  name={'status'}/>
+                        </div>
+                    </div>
+                    <div onClick={onCollepse} style={{cursor: 'pointer', paddingTop: 9}}>
+                        {
+                            collapseState ?
+                            <div><img alt={'icons'} src={arrowUpPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :
+                            <div><img alt={'icons'} src={arrowDownPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>Expend</span></div>
+                        }
+                    </div>
+                    </div>
+
+
+
+            {
+                collapseState ? <div className={'collapse_panel'}>
+                    {/*<PatientStatusChange    record={data} resource={'Appointment'} initialValue={data?.status.toString()} onChange={onStatusChange}  name={'status'}/>*/}
                     <div className={'patient_panel_big_div'}>
                         <div>
                             <div className={'collapse_content_head'}>{t('Scheduled Appt')}</div>
@@ -56,9 +146,11 @@ function PatientCollapse({data}) {
                             </div>
                         </div>
                     </div>
-                </Panel>
-            </Collapse>
-        </div>
+                </div> : <div style={{transition: '0.2s'}}></div>
+            }
+
+            </div>
+
     )
 }
 export default PatientCollapse;

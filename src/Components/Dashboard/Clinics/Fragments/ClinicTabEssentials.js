@@ -344,6 +344,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         values.has_physical_therapy_home_visit_service = values.has_physical_therapy_home_visit_service === true
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
+
+
         if(values.has_clinic_visit_service) {
             values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
             values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
@@ -377,6 +379,12 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         if(values.has_telehealth_service) {
             values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
+        }
+
+        if(values?.insurance_companies) {
+            values.insurance_companies = values?.insurance_companies
+        } else {
+            values.insurance_companies = []
         }
 
 
@@ -540,7 +548,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        resource={'Country'}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
                                        initialValue={data?.insurance_companies?.map(e=>e.id)}
                                        initialData={data?.insurance_companies??[]}
                                        resource={'InsuranceCompany'}

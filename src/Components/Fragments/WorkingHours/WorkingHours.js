@@ -159,7 +159,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
             }
 
           })
-
+          
           let workingDay = workingData[dataKey]
           let currentTimes = [];
 
@@ -172,7 +172,6 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
           }
 
 
-          //console.log(currentTimes, 'g')
           return workingDay && <div key={iKey}>
 
             <Row>

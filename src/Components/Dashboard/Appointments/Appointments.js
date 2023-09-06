@@ -35,6 +35,7 @@ function Appointments() {
 
 
     const onStatusChange = (key,record)=>{
+        console.log(key,record, 'ddd')
         setModal({
            ...record,
             key

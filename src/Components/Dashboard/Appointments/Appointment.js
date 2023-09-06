@@ -484,10 +484,7 @@ function Appointment({isPatient}) {
                                                     <FormInput label={t('Nationality Number')}
                                                                inputDisabled={data?.patient_id}
                                                                name={['patient',"nationality_number"]}
-                                                               rules={[
-                                                                   {required: !data?.patient_id},
-
-                                                               ]}/>
+                                                               />
 
                                                     <FormInput label={t('Status')} disabled={data?.patient_id}
                                                                name={['patient','status']} inputType={'resourceSelect'}

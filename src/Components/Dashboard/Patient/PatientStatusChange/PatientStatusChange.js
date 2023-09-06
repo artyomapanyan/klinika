@@ -1,19 +1,26 @@
-import React, {useState} from 'react'
+import {useSelector} from "react-redux";
+import React, {useState} from "react";
+import {postResource} from "../../../Functions/api_calls";
+import Preloader from "../../../Preloader";
 import {Dropdown, Space} from "antd";
 import {DownOutlined} from "@ant-design/icons";
-import {postResource} from "../Functions/api_calls";
-import {useSelector} from "react-redux";
-import Preloader from "../Preloader";
+import Resource from "../../../../store/Resources";
 
-function ColorSelect({items=[],initialValue,onChange=null, resource, record,name, height=false, colorSelectDisabled=false, lo}){
+function PatientStatusChange({initialValue,onChange=null, resource, record,name, height=false, colorSelectDisabled=false, lo}){
+
+    //
+     const [value,setValue] = useState(initialValue);
+    // const [loading,setLoading] = useState(false);
+
+    const [items, setItems] = useState(Resource?.StatusWays[record?.status])
+
     let token = useSelector((state) => state?.auth?.token);
 
-    const [value,setValue] = useState(initialValue);
+
     const [loading,setLoading] = useState(false);
 
-
+    console.log(initialValue, items)
     const onClick = (e) => {
-    console.log(e)
         if(onChange) {
             onChange(e.key,record)
         }else{
@@ -22,7 +29,7 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
             postResource(resource,'updateField',token,record.id,{
                 key:name,
                 value:e.key,
-            //[name]:e.key
+                //[name]:e.key
             }).then(() => {
                 setLoading(false)
             })
@@ -70,10 +77,10 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
     return(
         <div>
             {
-                loading ? <Preloader/> : <Dropdown
+                <Dropdown
                     menu={{
                         onClick,
-                        items: items.filter((el) => el.key !== value)
+                        items: items
 
                     }}
                     disabled={colorSelectDisabled ? colorSelectDisabled : items.length < 2}
@@ -96,4 +103,4 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
 
     )
 }
-export default ColorSelect
+export default PatientStatusChange
