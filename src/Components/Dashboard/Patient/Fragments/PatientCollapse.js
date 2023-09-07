@@ -59,15 +59,15 @@ function PatientCollapse({data, setData}) {
         setModal(null)
     }
 
-    const handleValuesChange = (changed)=>{
-        if(changed.booked_at) {
-            setDate((prevDate)=>({
-                ...prevDate,
-                ...changed
-            }))
-        }
-
-    }
+    // const handleValuesChange = (changed)=>{
+    //     if(changed.booked_at) {
+    //         setDate((prevDate)=>({
+    //             ...prevDate,
+    //             ...changed
+    //         }))
+    //     }
+    //
+    // }
 
     const onCollepse = () => {
         setCollapseState(!collapseState)
@@ -77,7 +77,7 @@ function PatientCollapse({data, setData}) {
         <div style={{padding:24, margin: '0 20px'}}>
             <Modal key={Math.random()} maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                 <Form onFinish={onFinish}
-                      onValuesChange={handleValuesChange}
+                      //onValuesChange={handleValuesChange}
                 >
                     {
                         modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :

@@ -11,12 +11,11 @@ export function RascheduledContent({onCancel, modal, loading}){
     const [date,setDate] = useState(null);
     const [availableTimes,setAvailableTimesState] = useState([]);
     const [dateLoading,setDateLoading] = useState(false);
+    const [availableDateState, setAvailableDateState] = useState([])
 
 
-    const disabledDate = (current) => {
-        return current.add(1, 'day') < dayjs()
-    };
 
+console.log(date)
 
 
 
@@ -24,6 +23,7 @@ export function RascheduledContent({onCancel, modal, loading}){
 
 
        if (date && modal?.doctor?.id) {
+
            setDateLoading(true)
            postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
                service: modal?.service_type,
@@ -40,9 +40,13 @@ export function RascheduledContent({onCancel, modal, loading}){
                        })
                    }
                }))
+
                setDateLoading(false)
            })
+
        }else if(date && !modal?.doctor?.id){
+
+           setDateLoading(true)
            postResource('Clinic', 'ClinicsAvailableTimes', token, modal?.clinic?.id, {
                service: modal?.service_type,
                date: date.format('YYYY-MM-DD')
@@ -64,6 +68,61 @@ export function RascheduledContent({onCancel, modal, loading}){
        }
 
    }, [date])
+
+    useEffect(() => {
+        if(modal?.service_type === 'telehealth' ||modal?.service_type === 'clinic_visit' || modal?.service_type === 'home_visit' || modal?.service_type === 'physical_therapy_clinic_visit' || modal?.service_type === 'physical_therapy_home_visit') {
+            postResource('ClinicDoctorWorkingHours', 'single', token, modal?.doctor?.id+'/'+modal?.clinic?.id, {service: modal?.service_type}).then(responses => {
+                const res = responses?.working_hours
+                let day = [];
+                // Object.values(res)?.map((el, i) => {
+                //     return el.filter((el1) => el1.is_day_off === true)
+                // }).map((el, i) => {
+                //     if (el.length > 0) {
+                //         day.push(i)
+                //     }
+                // })
+                Object.keys(res)?.forEach((key) => {
+                    if(res[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+
+
+                setAvailableDateState(day)
+
+            })
+        } else if(modal?.service_type === 'nursing') {
+            postResource('Clinic','WorkingHours',token, +modal?.clinic?.id,{service:'nursing'}).then(response => {
+                let day = [];
+
+                Object.keys(response)?.forEach((key) => {
+                    if(response[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+                setAvailableDateState(day)
+
+
+            })
+        } else if(modal?.service_type === 'laboratory_home_visit' || modal?.service_type === 'laboratory_clinic_visit') {
+            postResource('Clinic','WorkingHours',token, +modal?.clinic?.id,{service:'laboratory_clinic_visit'}).then(response => {
+                let day = [];
+
+                Object.keys(response)?.forEach((key) => {
+                    if(response[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+                setAvailableDateState(day)
+
+            })
+        }
+
+    }, [])
+
+    const disabledDate = (current) => {
+        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+    };
 
 
     return<div>
