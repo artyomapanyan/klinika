@@ -53,7 +53,7 @@ function PatientCardMedications({tab}) {
 
 
     //.filter((e) => e?.name?.toLowerCase().includes(search?.toLowerCase()))
-console.log(prescriptions)
+
     return(
         <div style={{padding:40}}>
             {
@@ -64,7 +64,7 @@ console.log(prescriptions)
                 {
 
                     prescriptions.filter((el) => {
-                       return dayjs(el?.end_date?.iso_string) <= dayjs()
+                       return dayjs(el?.end_date?.iso_string) >= dayjs()
                     }).map((el) => {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
@@ -85,7 +85,7 @@ console.log(prescriptions)
                      {
 
                          prescriptions.filter((el) => {
-                             return dayjs(el?.end_date?.iso_string) > dayjs()
+                             return dayjs(el?.end_date?.iso_string) < dayjs()
                          }).map((el) => {
                              return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
                                                      setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>

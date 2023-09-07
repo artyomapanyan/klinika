@@ -15,7 +15,7 @@ export function RascheduledContent({onCancel, modal, loading}){
 
 
 
-console.log(date)
+
 
 
 

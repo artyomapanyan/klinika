@@ -194,7 +194,9 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
 
-
+console.log(currentTimes?.findIndex(
+    e => e?.value === workingDay[key - 1]?.opens_at
+)+1)
 
                   let currentOptions =[...currentTimes]?.flat()
                   if (key > 0 && workingDay?.length) {
@@ -233,7 +235,11 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                           options={
                             workingDay[key]?.opens_at && timeLimits?currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
                                 currentTimes?.find(e=>e?.find(u=>u.value=== workingDay[key]?.opens_at))?.findIndex(e => e?.value === workingDay[key]?.opens_at) + 1, currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.length
-                            ):currentOptions}
+                            ): key > 0 && workingDay?.length ? currentOptions : currentOptions?.slice(
+                                currentTimes?.findIndex(
+                                    e => e?.value === workingDay[key]?.opens_at
+                                ) + 1, currentTimes?.length
+                            )}
                         />
                       </Form.Item>
                       <Form.Item
