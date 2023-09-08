@@ -73,12 +73,12 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
         <div>
             <Space>
                 <CheckCircleOutlined style={{color:dataState?.time ?'#2ce310':'gray', fontSize:22}} />
-                <h2 style={{fontWeight: 600, marginTop:8}}>time</h2>
+                <h2 style={{fontWeight: 600, marginTop:8}}>{t('time')}</h2>
             </Space>
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time ? <div>
                     <Space>
-                        Selected Time : <span className={'selected_text'}>{dataState?.time}</span>
+                        {t('Selected Time')} : <span className={'selected_text'}>{dataState?.time}</span>
                         <Button type={'secondary'} onClick={onChangeTime} style={{borderRadius:15}}>{t('Change Time')}</Button>
                     </Space>
                 </div> : (dataState?.doctor_id && dataState?.date) || dataState?.time ? <div className={'date_carousel_div'}>

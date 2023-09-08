@@ -49,7 +49,7 @@ function Doctor() {
             ...values
         }))
 
-
+console.log(values)
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -194,8 +194,8 @@ function Doctor() {
 
                         </Col>
                     </Row>
-                    <FileManager text1={'avatar'}
-                                 text2={'Download the file'}
+                    <FileManager text1={t('avatar')}
+                                 text2={t('Download the file')}
                                  name={'avatar'}
                                  uploadIcon={<InboxOutlined/>}
                                  initialFileList={[data?.avatar]} limit={1} formRef={formRef} type={'drag'}/>

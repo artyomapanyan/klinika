@@ -100,11 +100,11 @@ function HeaderAccountDropdown({setAuthOpen}) {
 
 
     const onSetings = () => {
-        // if(auth?.selected_role?.key === 'doctor') {
-        //     navigate(`profile`)
-        // } else {
-            navigate(`users/update-self`)
-        //}
+         if(auth?.selected_role?.key === 'doctor') {
+             navigate(`profile`)
+         } else {
+          navigate(`users/update-self`)
+        }
 
     }
 

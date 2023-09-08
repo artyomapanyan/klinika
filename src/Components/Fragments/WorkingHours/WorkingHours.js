@@ -8,6 +8,7 @@ import Preloader from "../../Preloader";
 import FormInput from "../FormInput";
 import resourceLinks from "../../ResourceLinks";
 import Resources from "../../../store/Resources";
+import dayjs from "dayjs";
 
 let res = "Clinic";
 
@@ -150,19 +151,27 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
         {switchChange ? <div className={'add_edit_content'} align={"center"}>
           <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
         </div> : Object.keys(workingData)?.map((dataKey, iKey) => {
+          let currentLabel = Resources.dateOptions?.map((el) => {
+            return {
+              ...el,
+              label: dayjs('2023-10-10' + el.label).format('hh:mm A'),
+
+            }
+
+          })
+          
           let workingDay = workingData[dataKey]
           let currentTimes = [];
 
           if(timeLimits){
             timeLimits[dataKey]?.forEach(data=>{
-              currentTimes.push( Resources.dateOptions?.slice(data.start,data.end+1))
+              currentTimes.push( currentLabel?.slice(data.start,data.end+1))
             })
           }else{
-            currentTimes = [...Resources.dateOptions]
+            currentTimes = [...currentLabel]
           }
 
 
-          //console.log(currentTimes)
           return workingDay && <div key={iKey}>
 
             <Row>
@@ -185,7 +194,9 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
 
-
+console.log(currentTimes?.findIndex(
+    e => e?.value === workingDay[key - 1]?.opens_at
+)+1)
 
                   let currentOptions =[...currentTimes]?.flat()
                   if (key > 0 && workingDay?.length) {
@@ -195,6 +206,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                       ) + 1, currentOptions?.length
                     );
                   }
+
                   return <Row key={dataKey + key + (new Date())}
                               className={!workingDay[0]?.is_day_off ? 'd-none' : ''}
                   >
@@ -223,7 +235,11 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                           options={
                             workingDay[key]?.opens_at && timeLimits?currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
                                 currentTimes?.find(e=>e?.find(u=>u.value=== workingDay[key]?.opens_at))?.findIndex(e => e?.value === workingDay[key]?.opens_at) + 1, currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.length
-                            ):currentOptions}
+                            ): key > 0 && workingDay?.length ? currentOptions : currentOptions?.slice(
+                                currentTimes?.findIndex(
+                                    e => e?.value === workingDay[key]?.opens_at
+                                ) + 1, currentTimes?.length
+                            )}
                         />
                       </Form.Item>
                       <Form.Item

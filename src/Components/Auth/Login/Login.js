@@ -124,7 +124,7 @@ function Login() {
                                 ref={formRef}
                                 onFinish={handleLogin}>
 
-                                <FormInput className={'test'} name={'email'} label={'Email'} formRef={formRef} initialFocused={true}
+                                <FormInput className={'test'} name={'email'} label={t('Email')} formRef={formRef} initialFocused={true}
                                            inputDisabled={inputState}
                                            initialValue={dataState?.user?.is_temporary_email ? dataState?.user?.email : ''} />
 

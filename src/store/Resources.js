@@ -1,3 +1,5 @@
+import {t} from "i18next";
+
 const Resource = {
     PostTypes: [
         {
@@ -42,11 +44,11 @@ const Resource = {
     Status1: [
         {
             key: '2',
-            label: 'Active'
+            label: t('Active')
         },
         {
             key: '3',
-            label: 'Inactive'
+            label: t('Inactive')
         },
     ],
     ServiceKeys: {
@@ -61,169 +63,169 @@ const Resource = {
     Status: [
         {
             id: 2,
-            name: 'Active'
+            name: t('Active')
         },
         {
             id: 3,
-            name: 'Inactive'
+            name: t('Inactive')
         },
     ],
     TemporaryEmail: [
         {
             id: 0,
-            name: 'No'
+            name: t('No')
         },
         {
             id: 1,
-            name: 'Yas'
+            name: t('Yas')
         },
     ],
 
     StatusInvoices: [
         {
             key: '1',
-            label: 'New'
+            label: t('New')
         },
         {
             key: '2',
-            label: 'Payed'
+            label: t('Payed')
         },
     ],
     StatusInvoices1: [
         {
             id: 1,
-            name: 'New'
+            name: t('New')
         },
         {
             id: 2,
-            name: 'Payed'
+            name: t('Payed')
         },
     ],
     AppointmentStatuses: [
         {
             key: '0',
-            label: 'New'
+            label: t('New')
         },
         {
             key: '1',
-            label: 'Confirmed'
+            label: t('Confirmed')
         },
         {
             key: '2',
-            label: 'Finished'
+            label: t('Finished')
         },
         {
             key: '3',
-            label: 'Cancelled'
+            label: t('Cancelled')
         },
         {
             key: '4',
-            label: 'Rescheduled'
+            label: t('Rescheduled')
         },
         {
             key: '5',
-            label: 'Absent'
+            label: t('Absent')
         },
         {
             key: '6',
-            label: 'Follow up'
+            label: t('Follow up')
         },
         {
             key: '7',
-            label: 'Revoked'
+            label: t('Revoked')
         },
     ],
     StatusWays: {
         0: [
             {
                 key: '0',
-                label: 'New'
+                label: t('New')
             },
             {
                 key: '1',
-                label: 'Confirmed'
+                label: t('Confirmed')
             },
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '3',
-                label: 'Cancelled'
+                label: t('Cancelled')
             },
         ],
         1: [
             {
                 key: '1',
-                label: 'Confirmed'
+                label: t('Confirmed')
             },
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '3',
-                label: 'Cancelled'
+                label: t('Cancelled')
             },
             {
                 key: '4',
-                label: 'Rescheduled'
+                label: t('Rescheduled')
             },
             {
                 key: '5',
-                label: 'Absent'
+                label: t('Absent')
             },
         ],
         2: [
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '6',
-                label: 'Follow up'
+                label: t('Follow up')
             }
         ],
         4: [
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '3',
-                label: 'Cancelled'
+                label: t('Cancelled')
             },
             {
                 key: '4',
-                label: 'Rescheduled'
+                label: t('Rescheduled')
             },
             {
                 key: '5',
-                label: 'Absent'
+                label: t('Absent')
             },
         ],
         3: [{
             key: '3',
-            label: 'Cancelled'
+            label: t('Cancelled')
         },],
         5: [{
             key: '5',
-            label: 'Absent'
+            label: t('Absent')
         },],
         7: [
             {
                 key: '7',
-                label: 'Revoked'
+                label: t('Revoked')
             },
         ],
         6: [
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '6',
-                label: 'Follow up'
+                label: t('Follow up')
             }
         ],
     },
@@ -231,79 +233,76 @@ const Resource = {
     StatusAppointments: [
         {
             key: '0',
-            label: 'New'
+            label: t('New')
         },
         {
             key: '1',
-            label: 'Confirmed'
+            label: t('Confirmed')
         },
         {
             key: '2',
-            label: 'Finished'
+            label: t('Finished')
         },
         {
             key: '3',
-            label: 'Cancelled'
+            label: t('Cancelled')
         },
         {
             key: '4',
-            label: 'Rescheduled'
+            label: t('Rescheduled')
         },
         {
             key: '5',
-            label: 'Absent'
+            label: t('Absent')
         },
         {
             key: '6',
-            label: 'Follow up'
+            label: t('Follow up')
         }, {
             key: '7',
-            label: 'Revoked'
+            label: t('Revoked')
         },
     ],
     StatusReports: [
         {
             key: '1',
-            label: 'New'
+            label: t('New')
         },
         {
             key: '2',
-            label: 'Rejected'
+            label: t('Rejected')
         },
         {
             key: '3',
-            label: 'Fixed'
+            label: t('Fixed')
         },
     ],
     StatusReports1: [
         {
             id: 1,
-            name: 'New'
+            name: t('New')
         },
         {
             id: 2,
-            name: 'Rejected'
+            name: t('Rejected')
         },
         {
             id: 3,
-            name: 'Fixed'
+            name: t('Fixed')
         },
     ],
     PaymentMethodKeys: [
         {
             id: 'cash',
-            name: 'Cash'
+            name: t('Cash')
         },
         {
             id: 'tap-payments',
-            name: 'Tap Payments'
+            name: t('Tap Payments')
         },
     ],
     dateOptions: [
-        {
-            values: "Closes",
-            label: "Closes"
-        },
+
         {
             value: "00:00",
             label: '00:00',

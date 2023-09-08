@@ -83,6 +83,7 @@ function HeaderAccount() {
 	}
 
 
+
 	return (
 		<div>
 			<div className='header-properties small-gap'>
@@ -206,7 +207,7 @@ function HeaderAccount() {
 											)}
 										</div>
 									)}
-									<Button size={'large'} className={'popup_load_more_btn'} type={'primary'}>Load more</Button>
+									<Button size={'large'} className={'popup_load_more_btn'} type={'primary'}>{t('Load more')}</Button>
 									{/*<Button onClick={()=>navigate('notifications')} className={'notifications_drop_all_notifi_btn'}>*/}
 									{/*	Show all notifacations*/}
 									{/*</Button>*/}

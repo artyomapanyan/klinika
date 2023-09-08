@@ -128,35 +128,35 @@ function ShowAppointment() {
                             <table>
                                 <tbody >
                                 <tr>
-                                    <td className={'show_td_1'}>Service Type</td>
+                                    <td className={'show_td_1'}>{t('Service Type')}</td>
                                     <td className={'show_td_2'}>{data?.service_type[0]?.toUpperCase() + data?.service_type?.slice(1)?.replaceAll("_", " ") || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Clinic</td>
+                                    <td className={'show_td_1'}>{t('Clinic')}</td>
                                     <td className={'show_td_2'}>{data?.clinic?.name || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Doctors</td>
+                                    <td className={'show_td_1'}>{t('Doctors')}</td>
                                     <td className={'show_td_2'}>{ data?.doctor?.first ? `${data?.doctor?.first} ${data?.doctor?.last}` : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Insurance Company</td>
+                                    <td className={'show_td_1'}>{t('Insurance Company')}</td>
                                     <td className={'show_td_2'}>{data?.insurance_company || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Booking Date</td>
+                                    <td className={'show_td_1'}>{t('Booking Date')}</td>
                                     <td className={'show_td_2'}>{dayjs(data?.booked_at?.iso_string).format('YYYY-MM-DD hh:mm A') || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Appointment’s Status</td>
+                                    <td className={'show_td_1'}>{t('Appointment’s Status')}</td>
                                     <td className={'show_td_2'}>{data?.status || 'N/A'}</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Marked as completed in</td>
+                                    <td className={'show_td_1'}>{t('Marked as completed in')}</td>
                                     <td className={'show_td_2'}>{data?.completed_at?.iso_string || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 <tr>
-                                    <td className={'show_td_1'}>Offer</td>
+                                    <td className={'show_td_1'}>{t('Offer')}</td>
                                     <td className={'show_td_2'}>{data?.offer?.title || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
                                 </tbody>

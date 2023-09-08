@@ -130,11 +130,11 @@ function Invoices() {
                                        }
                                    },
                                    {
-                                       dataIndex:'diagnosis_price',
+                                       dataIndex:'total_price',
                                        title:t('Price'),
-                                       key:'diagnosis_price',
+                                       key:'total_price',
                                        render:(e, record) => {
-                                           return <div>{record?.diagnosis_price} SAR</div>
+                                           return <div>{record?.total_price} SAR</div>
                                        }
                                    },
                                    {

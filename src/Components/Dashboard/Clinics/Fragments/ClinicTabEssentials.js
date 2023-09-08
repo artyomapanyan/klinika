@@ -344,6 +344,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         values.has_physical_therapy_home_visit_service = values.has_physical_therapy_home_visit_service === true
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
+
+
         if(values.has_clinic_visit_service) {
             values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
             values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
@@ -377,6 +379,12 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         if(values.has_telehealth_service) {
             values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
+        }
+
+        if(values?.insurance_companies) {
+            values.insurance_companies = values?.insurance_companies
+        } else {
+            values.insurance_companies = []
         }
 
 
@@ -521,7 +529,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                            }}>
 
                                                <div>{
-                                                   searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                   searchCeys.length >= 5 ? <span>{t('Number didnt find in the system. Please enter correct phone number.')}</span> : t('Not found')
                                                }</div>
                                            </div>
                                        }}
@@ -540,7 +548,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        resource={'Country'}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Insurance companies')} name={'insurance_companies'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
                                        initialValue={data?.insurance_companies?.map(e=>e.id)}
                                        initialData={data?.insurance_companies??[]}
                                        resource={'InsuranceCompany'}
@@ -904,15 +911,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                 <div className={'add_edit_content'}>
                     <Row gutter={[16, 16]}>
                         <Col lg={12} className="gutter-row">
-                            <FileManager text1={'Logo'}
-                                         text2={'Download the file'}
+                            <FileManager text1={t('Logo')}
+                                         text2={t('Download the file')}
                                          name={'logo'}
                                          uploadIcon={<InboxOutlined/>}
                                          initialFileList={[data?.logo]} limit={1} formRef={formRef} type={'drag'}/>
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FileManager text1={'Cover Pic'}
-                                         text2={'Download the file'}
+                            <FileManager text1={t('Cover Pic')}
+                                         text2={t('Download the file')}
                                          name={'cover'}
                                          uploadIcon={<InboxOutlined/>}
                                          initialFileList={[data?.cover]} limit={2} formRef={formRef} type={'drag'}/>
@@ -920,8 +927,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                     </Row>
 
 
-                    <FileManager text1={'Gallery'}
-                                 text2={'Download files'}
+                    <FileManager text1={t('Gallery')}
+                                 text2={t('Download files')}
                                  name={'gallery'}
                                  uploadIcon={<InboxOutlined/>}
                                  initialFileList={data?.gallery} limit={5} formRef={formRef} type={'drag'}/>

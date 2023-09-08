@@ -80,7 +80,7 @@ function NewLaboratoryTests() {
                             </div>
 
                             <div onClick={onCheckAllChange} className={'delete_div'}>
-                                Deselect all
+                                {t('Deselect all')}
                             </div>
                         </div>
                         <div>
@@ -110,7 +110,7 @@ function NewLaboratoryTests() {
                         </div>
 
                         <div onClick={onCheckAllChange} className={'delete_div'}>
-                            Delete  without prices
+                            {t('Delete without prices')}
                         </div>
                     </div>
                     <div style={{display: 'flex', width: "100%", flexWrap: 'wrap'}}>

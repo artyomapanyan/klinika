@@ -141,7 +141,7 @@ function Translations(){
     return(
         <div style={{marginTop: -50}}>
             <div style={{marginBottom: 20, marginLeft: 20, fontSize: 20, fontWeight: 700}}>
-                Translations
+                {t('Translations')}
                 <Button style={{margin: '0 10px'}} onClick={showModal} type={'primary'} >add</Button>
             </div>
 

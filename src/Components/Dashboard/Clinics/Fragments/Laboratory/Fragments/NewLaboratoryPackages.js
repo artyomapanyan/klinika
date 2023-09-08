@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 import Preloader from "../../../../../Preloader";
 import x_black from "../../../../../../dist/icons/x_black.png";
 import dark_delete_icon from "../../../../../../dist/icons/dark_delete_icon.png";
+import {t} from "i18next";
 
 
 const CheckboxGroup = Checkbox.Group;
@@ -64,7 +65,7 @@ function NewLaboratoryTests() {
                             </div>
 
                             <div onClick={onCheckAllChange} className={'delete_div'}>
-                                Deselect all
+                                {t('Deselect all')}
                             </div>
                         </div>
                         <div>
@@ -91,7 +92,7 @@ function NewLaboratoryTests() {
                         </div>
 
                         <div onClick={onCheckAllChange} className={'delete_div'}>
-                            Delete  without prices
+                            {t('Delete  without prices')}
                         </div>
                     </div>
                     <div style={{ width: "100%"}}>

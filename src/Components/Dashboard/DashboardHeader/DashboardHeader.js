@@ -30,7 +30,7 @@ function DashboardHeader() {
             case pathname.includes('/patients'):
                 return   <div>
                     <Button style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}><LeftOutlined /></Button>
-                    <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>Patient Card</span>
+                    <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>{t('Patient Card')}</span>
                 </div>
             default:
 

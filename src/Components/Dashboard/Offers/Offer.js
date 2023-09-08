@@ -26,8 +26,8 @@ function Offer() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
-    const [oldPrice, setOldPrice] = useState(0)
-    const [newPrice, setNewPrice] = useState(0)
+
+
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -68,15 +68,14 @@ function Offer() {
     }
  const handleValuesChange = (changed,all)=>{
 
-        if(changed.clinic_id) {
+
             setData((prevData)=>({
                 ...prevData,
                 ...changed
             }))
-        }
+
      setChangeValuesState(changed)
-     setOldPrice(all?.old_price)
-     setNewPrice(all?.new_price)
+
 
      if(Object.keys(changed).length > 0) {
          dispatch({
@@ -84,7 +83,7 @@ function Offer() {
              payload: true
          })
      }
-console.log(formRef.current.getFieldValue('old_price'), formRef.current.getFieldValue('new_price'))
+
      if(+formRef.current.getFieldValue('old_price') <= +formRef.current.getFieldValue('new_price')) {
          formRef?.current?.setFieldsValue({
              new_price: +formRef.current.getFieldValue('old_price')-1
@@ -92,6 +91,7 @@ console.log(formRef.current.getFieldValue('old_price'), formRef.current.getField
      }
  }
 
+ console.log(data)
 
     return(
         <div >
@@ -113,7 +113,7 @@ console.log(formRef.current.getFieldValue('old_price'), formRef.current.getField
                 <div className={'add_edit_content'}>
                     <Row>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('Old price ')} name={'old_price'} inputType={'number'} initialValue={data?.old_price} rules={[
+                            <FormInput label={t('Old price')} name={'old_price'} inputType={'number'} initialValue={data?.old_price} rules={[
                                 {required: true},
                                 // {
                                 //     validator:(rule,value)=>{
@@ -127,14 +127,14 @@ console.log(formRef.current.getFieldValue('old_price'), formRef.current.getField
                             ]} />
                             <FormInput label={t('New price')} name={'new_price'}  initialValue={data?.new_price} inputType={'number'} rules={[
                                 {required: true},
-                                {
-                                    validator:(rule,value)=>{
-                                        if(+value >= +oldPrice){
-                                            return Promise.reject('New price cannot be bigger then old price')
-                                        }
-                                        return Promise.resolve();
-                                    }
-                                }
+                                // {
+                                //     validator:(rule,value)=>{
+                                //         if(+value >= +oldPrice){
+                                //             return Promise.reject('New price cannot be bigger then old price')
+                                //         }
+                                //         return Promise.resolve();
+                                //     }
+                                // }
 
                             ]} />
                             <FormInput label={t('Begins at')} name={'begins_at'}  initialValue={data?.begins_at} inputType={'date'} rules={[
@@ -170,6 +170,33 @@ console.log(formRef.current.getFieldValue('old_price'), formRef.current.getField
                                        initialData={Resources.Status}
                             />
                             <FormInput label={t('Clinic')} name={'clinic_id'} inputType={'resourceSelect'}
+                                       inputProps={{
+                                           onChange:(e,dat)=> {
+                                               setData((prevState)=>({
+                                                   ...prevState,
+                                                   doctors: undefined,
+                                                   specialty_id: undefined,
+                                                   sub_specialties: undefined,
+                                                   category_id: undefined,
+                                                   service_id: undefined,
+                                                   sub_categories: undefined,
+                                                   sub_services: undefined
+
+                                               }))
+
+                                               formRef?.current?.setFieldsValue({
+                                                   doctors: undefined,
+                                                   specialty_id: undefined,
+                                                   sub_specialties: undefined,
+                                                   category_id: undefined,
+                                                   service_id: undefined,
+                                                   sub_categories: undefined,
+                                                   sub_services: undefined
+
+                                               })
+
+                                           }
+                                       }}
                                        rules={[{required: true}]}
                                        initialValue={data?.clinic?.id}
                                        initialData={data?.clinic?[data.clinic]:[]}
@@ -181,12 +208,31 @@ console.log(formRef.current.getFieldValue('old_price'), formRef.current.getField
                         <Col lg={12} className="gutter-row">
                             <FormInput inputProps={{
                                 mode:'multiple',
-                                // onChange:(e,data)=> {
-                                //     let doctor = data?.find((el) => [el?.id] === [e])
-                                //     console.log(doctor)
-                                //
-                                // }
+                                onChange:(e,dat)=> {
+                                    setData((prevState)=>({
+                                        ...prevState,
+                                        specialty_id: undefined,
+                                        sub_specialties: undefined,
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    }))
+
+                                    formRef?.current?.setFieldsValue({
+                                        specialty_id: undefined,
+                                        sub_specialties: undefined,
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    })
+
+                                }
                             }}
+                                       disabled={!data?.clinic_id}
                                        label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.doctors?.map(e=>e.id)}
@@ -197,39 +243,151 @@ console.log(formRef.current.getFieldValue('old_price'), formRef.current.getField
                                        }}
                             />
                             <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}
+                                       inputProps={{
+
+                                           onChange:(e,dat)=> {
+                                               setData((prevState)=>({
+                                                   ...prevState,
+                                                   sub_specialties: undefined,
+                                                   category_id: undefined,
+                                                   service_id: undefined,
+                                                   sub_categories: undefined,
+                                                   sub_services: undefined
+
+                                               }))
+
+                                               formRef?.current?.setFieldsValue({
+                                                   sub_specialties: undefined,
+                                                   category_id: undefined,
+                                                   service_id: undefined,
+                                                   sub_categories: undefined,
+                                                   sub_services: undefined
+
+                                               })
+
+                                           }
+                                       }}
                                        rules={[{required: true}]}
+                                       disabled={!data?.doctors}
                                        initialValue={data?.specialty_id?.id}
-                                       initialData={data?.specialty_id ?[data.specialty_id]:[]}
+                                       initialData={data?.specialty_id ? [data.specialty_id] : []}
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Sub specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
+                            <FormInput inputProps={{
+                                mode:'multiple',
+                                onChange:(e,dat)=> {
+                                    setData((prevState)=>({
+                                        ...prevState,
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    }))
+
+                                    formRef?.current?.setFieldsValue({
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    })
+
+                                }
+                            }} label={t('Sub specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
+                                       disabled={!data?.specialty_id}
                                        rules={[{required: true}]}
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
+
                             <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
+                                       inputProps={{
+                                           onChange:(e,dat)=> {
+
+                                               setData((prevState)=>({
+                                                   ...prevState,
+                                                   service_id: undefined,
+                                                   sub_categories: undefined,
+                                                   sub_services: undefined
+                                               }))
+
+                                               formRef?.current?.setFieldsValue({
+                                                   service_id: undefined,
+                                                   sub_categories: undefined,
+                                                   sub_services: undefined
+                                               })
+
+                                           }
+                                       }}
                                        rules={[{required: true}]}
+                                       disabled={!data?.sub_specialties}
                                        initialValue={data?.category?.id}
                                        initialData={data?.category ?[data.category]:[]}
                                        resource={'Category'}/>
 
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Sub categories')} name={'sub_categories'} inputType={'resourceSelect'}
+                            <FormInput inputProps={{
+                                mode:'multiple',
+                                onChange:(e,dat)=> {
+
+                                    setData((prevState)=>({
+                                        ...prevState,
+                                        service_id: undefined,
+                                        sub_services: undefined
+                                    }))
+
+                                    formRef?.current?.setFieldsValue({
+                                        service_id: undefined,
+                                        sub_services: undefined
+                                    })
+
+                                }
+                            }} label={t('Sub categories')} name={'sub_categories'} inputType={'resourceSelect'}
+
                                        rules={[{required: true}]}
-                                       initialValue={data?.sub_categories?.map(e=>e.id)}
+                                       disabled={!data?.category_id}
+                                       resourceParams={{
+                                           category:data.category_id
+                                       }}
+                                       initialValue={data?.sub_categories?.map(e=>e.id) ?? null}
                                        initialData={data?.sub_categories ??[]}
                                        resource={'SubCategory'}
                             />
+
+
                             <FormInput label={t('Service')} name={'service_id'} inputType={'resourceSelect'}
+                                       inputProps={{
+                                           onChange:(e,dat)=> {
+
+                                               setData((prevState)=>({
+                                                   ...prevState,
+                                                   sub_services: undefined
+                                               }))
+
+                                               formRef?.current?.setFieldsValue({
+                                                   sub_services: undefined
+                                               })
+
+                                           }
+                                       }}
+                                       disabled={!data?.sub_categories}
+                                       resourceParams={{
+                                           sub_categories:data.sub_categories
+                                       }}
                                        rules={[{required: true}]}
-                                       initialValue={data?.service?.id}
+                                       initialValue={data?.service?.id ? data?.service?.id : null}
                                        initialData={data?.service ?[data.service]:[]}
                                        resource={'Service'}/>
 
                             <FormInput inputProps={{mode:'multiple'}} label={t('Sub services')} name={'sub_services'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
+                                       disabled={!data?.service_id}
+                                       resourceParams={{
+                                           service:data.service_id
+                                       }}
                                        initialValue={data?.sub_services?.map(e=>e.id)}
                                        initialData={data?.sub_services ??[]}
                                        resource={'SubService'}

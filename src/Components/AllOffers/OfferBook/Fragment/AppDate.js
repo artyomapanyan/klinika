@@ -88,12 +88,12 @@ function AppDate({setDataState, dataState, data, setDate}) {
         <div>
             <Space>
                 <CheckCircleOutlined style={{color:dataState?.date ?'#2ce310':'gray', fontSize:22}} />
-                <h2 style={{fontWeight: 600, marginTop:8}}>Date</h2>
+                <h2 style={{fontWeight: 600, marginTop:8}}>{t('Date')}</h2>
             </Space>
             {
                 dataState?.doctor_id && dataState?.date ? <div>
                     <Space>
-                        Selected Date : <span className={'selected_text'}>{dataState?.date}</span>
+                        {t('Selected Date')} : <span className={'selected_text'}>{dataState?.date}</span>
                         <Button type={'secondary'} onClick={onChangeDate} style={{borderRadius:15}}>{t('Change Date')}</Button>
                     </Space>
                 </div> : dataState?.doctor_id || dataState?.date ? <div className={'date_carousel_div'}>

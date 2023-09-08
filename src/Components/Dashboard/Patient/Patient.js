@@ -65,7 +65,7 @@ function Patient() {
                     <div style={{background:"#ffffff", margin:'0 24px', borderRadius: 12}}>
                         <PatientHeader data={data} />
 
-                        <PatientCollapse data={data} />
+                        <PatientCollapse data={data} setData={setData} />
                     </div>
 
                     <div style={{backgroundColor:'white', margin:'0 24px',  borderRadius: '20px'}}>

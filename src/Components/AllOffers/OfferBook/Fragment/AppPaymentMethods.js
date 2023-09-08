@@ -32,13 +32,13 @@ function AppPaymentMethods({setDataState, dataState, responseCodeState, data}) {
         <div>
             <Space>
                 <CheckCircleOutlined style={{color:paymentMethodState ?'#2ce310':'gray', fontSize:22}} />
-                <h2 style={{fontWeight: 600, marginTop:8}}>{t('Payment Method')}</h2>
+                <h2 style={{fontWeight: 600, marginTop:8}}>{t('Payment method')}</h2>
             </Space>
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment && dataState?.verifyNumber ? <div>
                     <Space>
-                        Selected Payment Method: <span className={'selected_text'}>{dataState?.payment_method_id}</span>
-                        <Button type={'secondary'} onClick={onChangeDetails} style={{borderRadius:15}}>Change Payment Method</Button>
+                        {t('Selected Payment Method')}: <span className={'selected_text'}>{dataState?.payment_method_id}</span>
+                        <Button type={'secondary'} onClick={onChangeDetails} style={{borderRadius:15}}>{t('Change Payment Method')}</Button>
                     </Space>
                 </div> : responseCodeState?.patient ? <div className={'date_carousel_div'}>
                     <div>

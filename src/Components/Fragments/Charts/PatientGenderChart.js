@@ -3,6 +3,7 @@ import {Chart, registerables} from "chart.js";
 import {Space, Spin} from "antd";
 import {useSelector} from "react-redux";
 import {postResource} from "../../Functions/api_calls";
+import {t} from "i18next";
 
 function PatientGenderChart() {
     let canvasRef = useRef();
@@ -120,8 +121,8 @@ function PatientGenderChart() {
                 <canvas ref={canvasRef} className="chart_income_channel"></canvas>
                 <div>
                     <h1 className={'h1'}>
-                        <div>Patients</div>
-                        <div>gender</div>
+                        <div>{t('Patients')}</div>
+                        <div>{t('gender')}</div>
                     </h1>
                     <Space direction={'vertical'}>
                         {Object.keys(data).map((itemKey, key) => {

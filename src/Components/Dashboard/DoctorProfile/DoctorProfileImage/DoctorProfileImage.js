@@ -3,14 +3,11 @@ import {Col, Form, Row} from "antd";
 import delete_icon from "../../../../dist/icons/delete_icon.png";
 import upload_photos_icon from "../../../../dist/icons/upload_photos_icon.png";
 
-function DoctorProfileImage({formRef}) {
-    const [cover, setCover] = useState({
-        file: null,
-        src: null
-    });
+function DoctorProfileImage({formRef, data}) {
+
     const [logo, setLogo] = useState({
         file: null,
-        src: null
+        src: data?.avatar?.url ? data?.avatar?.url : null
     });
     const handleDeleteClick = (e,type) => {
         e.preventDefault();
@@ -25,10 +22,10 @@ function DoctorProfileImage({formRef}) {
     }
     useEffect(()=>{
         formRef?.current?.setFieldsValue({
-            logo:logo.file,
-            cover:cover.file
+            //avatar:[logo.file],
+
         })
-    },[logo,cover])
+    },[logo])
     const preview = (file,type) => {
         const fr = new FileReader();
         fr.onload = () => {
@@ -44,10 +41,14 @@ function DoctorProfileImage({formRef}) {
         fr.readAsDataURL(file);
     }
     const handleFileUploaded = (e,type) => {
+
         [...e.target.files].forEach((e)=>preview(e,type))
 
 
     }
+
+    //console.log(logo, data)
+
     return <Row className={'clinic-images-container1'} gutter={[10,38]}>
 
         <Col lg={4}>

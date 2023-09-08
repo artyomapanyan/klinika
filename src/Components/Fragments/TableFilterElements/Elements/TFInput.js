@@ -46,39 +46,39 @@ function TFInput({onChangeValue,value,type, resource, name, initialFocused=false
                 options={[
                     {
                         value: 'clinic_visit',
-                        label: 'Clinic visit',
+                        label: t('Clinic visit'),
                     },
                     {
                         value: 'telehealth',
-                        label: 'Telehealth',
+                        label: t('Telehealth'),
                     },
                     {
                         value: 'home_visit',
-                        label: 'Home visit',
+                        label: t('Home visit'),
                     },
                     {
                         value: 'physical_therapy_home_visit',
-                        label: 'Physical therapy home visit',
+                        label: t('Physical therapy home visit'),
 
                     },
                     {
                         value: 'physical_therapy_clinic_visit',
-                        label: 'Physical therapy clinic visit',
+                        label: t('Physical therapy clinic visit'),
 
                     },
                     {
                         value: 'laboratory_home_visit',
-                        label: 'Laboratory home visit',
+                        label: t('Laboratory home visit'),
 
                     },
                     {
                         value: 'laboratory_clinic_visit',
-                        label: 'Laboratory clinic visit',
+                        label: t('Laboratory clinic visit'),
 
                     },
                     {
                         value: 'nursing',
-                        label: 'Nursing',
+                        label: t('Nursing'),
 
                     },
                 ]}

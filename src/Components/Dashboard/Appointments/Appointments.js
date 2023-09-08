@@ -35,10 +35,29 @@ function Appointments() {
 
 
     const onStatusChange = (key,record)=>{
-        setModal({
-           ...record,
-            key
-        })
+        console.log(key,record, 'ddd')
+        if(key != 2) {
+            setModal({
+                ...record,
+                key
+            })
+        }
+        if(key == 2) {
+            setLoading(true)
+            postResource('Appointment','appointmentStatus', token, `${record.id}/switch-status`, {
+                status:key,
+
+            }).then(() => {
+
+                setModal(null)
+                setTableUpdate(tableUpdate+1)
+                setLoading(false)
+            }).finally(()=>{
+                setLoading(true)
+                setTimeout(()=> {setLoading(false)}, 3000)
+            })
+        }
+
 
     }
 
@@ -94,7 +113,7 @@ function Appointments() {
                     >
                         {
                             modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
-                                modal?.key === '2' ? <FinishedContent loading={loading}  onCancel={onCancel} /> :
+                                //modal?.key === '2' ? <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>:
                                 modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
                                 modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :

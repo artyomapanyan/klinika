@@ -11,6 +11,7 @@ import DoctorGeneralInfo from "./DoctorGeneralInfo/DoctorGeneralInfo";
 import {useSelector} from "react-redux";
 import DoctorWorkingHours from "./DoctorWorkingHours/DoctorWorkingHours";
 import {t} from "i18next";
+import dayjs from "dayjs";
 
 
 let resource = 'DoctorUpdateProfile';
@@ -94,7 +95,9 @@ function DoctorProfile() {
     const handleSave = () => {
         setSaveLoading(true)
         let values = formRefs?.general_information?.current?.getFieldValue();
-        updateResource(resource, '', values, token).then(response => {
+       //values.dob = values.dob.format('DD-MM-YYYY')
+        //console.log(values.dob)
+        updateResource(resource, '', values, token, ).then(response => {
             if(response?.id){
 
             }
@@ -129,7 +132,7 @@ function DoctorProfile() {
 
 
             {loading?<Preloader/>:<ClinicTabBars onChange={handleChange}>
-                <items key={'general_information'} tab={'General information'}  >
+                <items key={'general_information'} tab={t('General information')}  >
                     <DoctorGeneralInfo formRef={formRefs.general_information} data={data} saveLoading={saveLoading} setSaveLoading={setSaveLoading}/>
                 </items>
                 {/*<items key={'working_hours'} tab={'Working hours'} >*/}
