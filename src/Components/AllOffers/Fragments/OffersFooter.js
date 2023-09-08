@@ -17,9 +17,9 @@ function OffersFooter() {
                     <div className={'big_bold_text'}>
                         KLINIKA
                     </div>
-                    <div style={{fontSize:14, color:'#ebc8f3'}}>Find Your Best Healthcare</div>
-                    <div style={{fontSize:14, color:'#ebc8f3'}}>Professional</div>
-                    <div className={'white_text'}>Help</div>
+                    <div style={{fontSize:14, color:'#ebc8f3'}}>{t('Find Your Best Healthcare')}</div>
+                    <div style={{fontSize:14, color:'#ebc8f3'}}>{t('Professional')}</div>
+                    <div className={'white_text'}>{t('Help')}</div>
                 </Space>
                 <Space direction={'vertical'}>
                     <div className={'white_text'}>{t('Services')}</div>

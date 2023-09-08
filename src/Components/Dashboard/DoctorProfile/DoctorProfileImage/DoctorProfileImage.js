@@ -4,13 +4,10 @@ import delete_icon from "../../../../dist/icons/delete_icon.png";
 import upload_photos_icon from "../../../../dist/icons/upload_photos_icon.png";
 
 function DoctorProfileImage({formRef, data}) {
-    const [cover, setCover] = useState({
-        file: null,
-        src: null
-    });
+
     const [logo, setLogo] = useState({
         file: null,
-        src: null
+        src: data?.avatar?.url ? data?.avatar?.url : null
     });
     const handleDeleteClick = (e,type) => {
         e.preventDefault();
@@ -25,10 +22,10 @@ function DoctorProfileImage({formRef, data}) {
     }
     useEffect(()=>{
         formRef?.current?.setFieldsValue({
-            logo:logo.file,
-            cover:cover.file
+            //avatar:[logo.file],
+
         })
-    },[logo,cover])
+    },[logo])
     const preview = (file,type) => {
         const fr = new FileReader();
         fr.onload = () => {
@@ -50,7 +47,7 @@ function DoctorProfileImage({formRef, data}) {
 
     }
 
-    console.log(data)
+    //console.log(logo, data)
 
     return <Row className={'clinic-images-container1'} gutter={[10,38]}>
 

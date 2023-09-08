@@ -59,7 +59,7 @@ function ClinicOwnerTableTasks() {
                     <Avatar size={50} icon={<UserOutlined />} />
                     <div style={{display:"block"}}>
                         <h3 className={'h1'}>Darrell Steward</h3>
-                        <div>Clinic manager</div>
+                        <div>{t('Clinic manager')}</div>
                     </div>
 
                 </Space>

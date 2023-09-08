@@ -83,7 +83,7 @@ function PatientHeader({data}) {
                                         <img alt={'icons'} src={phoneWithFrame}/>
 
                                         <div className={'patient_head_text'} >
-                                            <div className={'addres_Insurance'}>Phone</div>
+                                            <div className={'addres_Insurance'}>{t('Phone')}</div>
                                             <div className={'text_norm'}>+{data?.patient?.phone_country_code} <span style={{fontWeight:700}}>{data?.patient?.phone_number}</span></div>
                                         </div>
                                     </div>

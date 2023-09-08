@@ -26,7 +26,6 @@ function AllOffers() {
         ...paramsToObject(searchParams.entries())
     })
 
-    console.log(params)
 
      const [resetState, setResetState] = useState(false)
 

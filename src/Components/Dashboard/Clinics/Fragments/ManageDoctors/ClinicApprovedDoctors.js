@@ -66,7 +66,7 @@ function ClinicApprovedDoctors({dataService}) {
                             render:(e, record)=> {
                                 return <div  style={{padding:2}}>{dataService?.has_telehealth_service ? <Button
                                     onClick={() => showModal(record.id, 'telehealth', ['telehealth_activated_at', 'telehealth_diagnosis_price'])}
-                                    type={'primary'} size={'large'}>Manage Working hours</Button> : null}</div>
+                                    type={'primary'} size={'large'}>{t('Manage Working hours')}</Button> : null}</div>
                             }
                         },
                         {

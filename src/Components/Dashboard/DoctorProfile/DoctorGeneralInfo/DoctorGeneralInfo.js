@@ -13,6 +13,8 @@ import {useSelector} from "react-redux";
 
 import Preloader from "../../../Preloader";
 import DoctorProfileImage from "../DoctorProfileImage/DoctorProfileImage";
+import {InboxOutlined} from "@ant-design/icons";
+import FileManager from "../../../Fragments/FileManager";
 
 
 let resource = 'DoctorUpdateProfile';
@@ -35,6 +37,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
     }, [autoFillState])
 
     const onFinish = (values) => {
+values.dob = values.dob.format('YYYY-MM-DD')
         setSaveLoading(true)
         updateResource(resource, '', values, token).then(response => {
                 if(response?.id){
@@ -54,7 +57,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
     const onAutoFillYes = () => {
         setAutoFillState(false)
     }
-
+//console.log(formRef.current.setFieldsValue('avatar'), 'dddffff')
 
 
     return(
@@ -92,6 +95,11 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                     <div className={'general_info_form'}>
                         <div >
                             <DoctorProfileImage formRef={formRef} data={data} />
+                            {/*<FileManager text1={'avatar'}*/}
+                            {/*             text2={'Download the file'}*/}
+                            {/*             name={'avatar'}*/}
+                            {/*             uploadIcon={<InboxOutlined/>}*/}
+                            {/*             initialFileList={[data?.avatar]} limit={1} formRef={formRef} type={'drag'}/>*/}
 
                         </div>
                         <div className={'clinics_select_col'}>
@@ -112,8 +120,10 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                                suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
                                                initialValue={data?.dob}
 
+
                                         //inputDisabled={true}
-                                               inputType={'date'} rules={[
+                                               inputType={'date'}
+                                               rules={[
 
                                         {
                                             validator:(rule,value)=>{
@@ -171,7 +181,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                     <div style={{width: '100%'}}>
                                         <FormInput label={t('')} name={'specialities'}
                                                    inputProps={{mode: 'multiple'}}
-                                                   suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>Specialties </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
+                                                   suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>{t('Specialties')} </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
 
                                                    inputType={'resourceSelect'}
                                                    rules={[{required: true}]}
@@ -193,7 +203,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                                 </Col>
 
                                 <Col lg={6}>
-                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                    <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
                                                initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}

@@ -8,6 +8,7 @@ import {useGetResourceSingle} from "../../Functions/api_calls";
 import user_avatar from "../../../dist/icons/user-avatar.png";
 import dayjs from "dayjs";
 import Preloader from "../../Preloader";
+import {t} from "i18next";
 
 let resource = 'Patient';
 function ShowPatient() {
@@ -47,32 +48,32 @@ function ShowPatient() {
             key: 'id',
         },
         {
-            title: 'Phone',
+            title: t('Phone'),
             dataIndex: 'phone',
             key: 'phone',
         },
         {
-            title: 'Email',
+            title: t('Email'),
             dataIndex: 'email',
             key: 'email',
         },
         {
-            title: 'Birthday',
+            title: t('Birthday'),
             dataIndex: 'birthday',
             key: 'birthday',
         },
         {
-            title: 'Gender',
+            title: t('Gender'),
             dataIndex: 'gender',
             key: 'gender',
         },
         {
-            title: 'Address',
+            title: t('Address'),
             dataIndex: 'address',
             key: 'address',
         },
         {
-            title: 'Insurance Company',
+            title: t('Insurance Company'),
             dataIndex: 'insurance_company',
             key: 'insurance_company',
         },

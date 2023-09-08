@@ -103,8 +103,8 @@ function Report() {
                     />
 
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
-                    <FileManager text1={'Gallery'}
-                                 text2={'Download files'}
+                    <FileManager text1={t('Gallery')}
+                                 text2={t('Download files')}
                                  name={'icon'}
                                  uploadIcon={<InboxOutlined/>}
                                  initialFileList={[data?.gallery]} limit={5} formRef={formRef} type={'drag'}/>

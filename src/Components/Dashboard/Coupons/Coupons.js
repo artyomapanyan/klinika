@@ -9,7 +9,7 @@ function Coupons() {
         <div>
             <ResourceTable resource={'Coupon'} tableColumns={[
                 {
-                    title:'Redeem code',
+                    title:t('Redeem code'),
                     dataIndex:'redeem_code',
                     key:'redeem_code',
                     sorter:true,
@@ -34,7 +34,7 @@ function Coupons() {
                 },
                 {
                     dataIndex:'money_redeemed_so_far',
-                    title:t('Money redeemed so far'),
+                    title:t('Money redeem so far'),
                     key:'money_redeemed_so_far',
                 },
                 {

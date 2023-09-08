@@ -213,7 +213,7 @@ export default {
                 },
                 {
                     key: 'bug-reports',
-                    label: t(`Bug Report Topics`),
+                    label: t(`Report topics`),
                     permission:'Taxonomy'
                 },
                 {
@@ -228,7 +228,7 @@ export default {
                 },
                 {
                     key: 'payment-methods',
-                    label: t(`Payment Methods`),
+                    label: t(`Payment methods`),
                     permission:'PaymentMethod'
                 },
                 {
@@ -403,7 +403,7 @@ export default {
                 },
                 {
                     key: 'bug-reports',
-                    label: t(`Bug Report Topics`),
+                    label: t(`Report topics`),
                     permission:'Taxonomy'
                 },
                 {
@@ -418,7 +418,7 @@ export default {
                 },
                 {
                     key: 'payment-methods',
-                    label: t(`Payment Methods`),
+                    label: t(`Payment methods`),
                     permission:'PaymentMethod'
                 },
                 {
@@ -594,7 +594,7 @@ export default {
                 },
                 {
                     key: 'bug-reports',
-                    label: t(`Bug Report Topics`),
+                    label: t(`Report topics`),
                     permission:'Taxonomy'
                 },
                 {
@@ -609,7 +609,7 @@ export default {
                 },
                 {
                     key: 'payment-methods',
-                    label: t(`Payment Methods`),
+                    label: t(`Payment methods`),
                     permission:'PaymentMethod'
                 },
                 {
@@ -805,7 +805,7 @@ export default {
                 },
                 {
                     key: 'bug-reports',
-                    label: t(`Bug Report Topics`),
+                    label: t(`Report topics`),
                     permission:'Taxonomy'
                 },
                 {
@@ -820,7 +820,7 @@ export default {
                 },
                 {
                     key: 'payment-methods',
-                    label: t(`Payment Methods`),
+                    label: t(`Payment methods`),
                     permission:'PaymentMethod'
                 },
                 {
@@ -939,22 +939,22 @@ export default {
         {
             key: 'doctor-flow',
             icon: <img alt={'icons'} src={dash3}/>,
-            label: 'Doctor flow',
+            label: t('Doctor flow'),
         },
         {
             key: 'clinic-manager',
             icon: <img alt={'icons'} src={dash3}/>,
-            label: 'Clinic Manager',
+            label: t('Clinic Manager'),
         },
         {
             key: 'doctor-reworked',
             icon: <img alt={'icons'} src={dash3}/>,
-            label: 'Doctor reworked',
+            label: t('Doctor reworked'),
         },
         {
             key: 'admin',
             icon: <img alt={'icons'} src={dash3}/>,
-            label: 'Super admin',
+            label: t('Super admin'),
         },
         /*{
             key: `/match-event-naturess`,

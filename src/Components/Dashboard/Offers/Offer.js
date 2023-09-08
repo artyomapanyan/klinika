@@ -113,7 +113,7 @@ function Offer() {
                 <div className={'add_edit_content'}>
                     <Row>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('Old price ')} name={'old_price'} inputType={'number'} initialValue={data?.old_price} rules={[
+                            <FormInput label={t('Old price')} name={'old_price'} inputType={'number'} initialValue={data?.old_price} rules={[
                                 {required: true},
                                 // {
                                 //     validator:(rule,value)=>{

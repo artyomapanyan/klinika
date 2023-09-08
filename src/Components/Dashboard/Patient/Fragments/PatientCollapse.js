@@ -116,7 +116,7 @@ function PatientCollapse({data, setData}) {
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width:'100%'}}>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                         <div style={{fontSize: 20, fontWeight: 700}}>
-                            Appointment Details
+                            {t('Appointment Details')}
                         </div>
                         <div style={{zIndex: 999, margin: '0 30px'}}>
                             {
@@ -128,8 +128,8 @@ function PatientCollapse({data, setData}) {
                     <div onClick={onCollepse} style={{cursor: 'pointer', paddingTop: 9}}>
                         {
                             collapseState ?
-                            <div><img alt={'icons'} src={arrowUpPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>Collapse</span></div> :
-                            <div><img alt={'icons'} src={arrowDownPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>Expend</span></div>
+                            <div><img alt={'icons'} src={arrowUpPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>{t('Collapse')}</span></div> :
+                            <div><img alt={'icons'} src={arrowDownPurple} style={{marginTop: -2}}/> <span className={'patient_collapse_icon'}>{t('Expend')}</span></div>
                         }
                     </div>
                     </div>

@@ -84,7 +84,7 @@ console.log(formState, 'fo')
 
             >
                 {
-                    patient ? <FormInput label={t('Select Patient (Search by phone number)')} name={'patient_id'}
+                    patient ? <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
                                          inputType={'resourceSelect'}
                                          rules={[{required: true}]}
                                          initialValue={null}

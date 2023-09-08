@@ -378,7 +378,7 @@ function Appointment({isPatient}) {
 
                                                    notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                                                        {
-                                                           searchCeys?.length < 5 ? <div>Not found</div> : <div>Number didn't find in the system. Please enter correct phone number.</div>
+                                                           searchCeys?.length < 5 ? <div>{t('Not found')}</div> : <div>{t('Number didnt find in the system. Please enter correct phone number.')}</div>
                                                        }
 
                                                        <Button onClick={()=>{
@@ -388,7 +388,7 @@ function Appointment({isPatient}) {
                                                                patient_id:0
                                                            }))
                                                        }}
-                                                               type={'secondary'} style={{border:"none"}}>Create new</Button> </div>
+                                                               type={'secondary'} style={{border:"none"}}>{t('Create new')}</Button> </div>
 
 
                                                }}

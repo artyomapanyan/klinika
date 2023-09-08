@@ -529,7 +529,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                            }}>
 
                                                <div>{
-                                                   searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                   searchCeys.length >= 5 ? <span>{t('Number didnt find in the system. Please enter correct phone number.')}</span> : t('Not found')
                                                }</div>
                                            </div>
                                        }}
@@ -911,15 +911,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                 <div className={'add_edit_content'}>
                     <Row gutter={[16, 16]}>
                         <Col lg={12} className="gutter-row">
-                            <FileManager text1={'Logo'}
-                                         text2={'Download the file'}
+                            <FileManager text1={t('Logo')}
+                                         text2={t('Download the file')}
                                          name={'logo'}
                                          uploadIcon={<InboxOutlined/>}
                                          initialFileList={[data?.logo]} limit={1} formRef={formRef} type={'drag'}/>
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FileManager text1={'Cover Pic'}
-                                         text2={'Download the file'}
+                            <FileManager text1={t('Cover Pic')}
+                                         text2={t('Download the file')}
                                          name={'cover'}
                                          uploadIcon={<InboxOutlined/>}
                                          initialFileList={[data?.cover]} limit={2} formRef={formRef} type={'drag'}/>
@@ -927,8 +927,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                     </Row>
 
 
-                    <FileManager text1={'Gallery'}
-                                 text2={'Download files'}
+                    <FileManager text1={t('Gallery')}
+                                 text2={t('Download files')}
                                  name={'gallery'}
                                  uploadIcon={<InboxOutlined/>}
                                  initialFileList={data?.gallery} limit={5} formRef={formRef} type={'drag'}/>

@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import {Button, Form, notification, Upload, message } from "antd";
+import {t} from "i18next";
 
 function FileManager({name, limit = 1, listType = 'picture', initialFileList = [],formRef,type, text1, text2, uploadIcon}) {
     const [fileList, setFileList] = useState(initialFileList.filter(e => e))
@@ -75,12 +76,12 @@ function FileManager({name, limit = 1, listType = 'picture', initialFileList = [
                         beforeUpload={beforeUpload}
 
                         {...fileInputProps}>
-                        <Button>Add</Button>
+                        <Button>{t('Add')}</Button>
                     </Upload>}
 
 
         </Form.Item>
-                <div style={{width:'100%', height:'69%',top:0,left:0, backgroundColor: '#00000005', position:"absolute",  zIndex:fileList.length>=limit?99:-1, borderRadius: 12}}>
+                <div style={{width:'100%', height:'1%',top:0,left:0, backgroundColor: '#00000005', position:"absolute",  zIndex:fileList.length>=limit?99:-1, borderRadius: 12}}>
 
 
                 </div>
