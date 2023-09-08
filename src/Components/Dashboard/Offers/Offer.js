@@ -244,7 +244,7 @@ function Offer() {
                             />
                             <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}
                                        inputProps={{
-                                           mode:'multiple',
+
                                            onChange:(e,dat)=> {
                                                setData((prevState)=>({
                                                    ...prevState,
@@ -270,7 +270,7 @@ function Offer() {
                                        rules={[{required: true}]}
                                        disabled={!data?.doctors}
                                        initialValue={data?.specialty_id?.id}
-                                       initialData={data?.specialty_id ?[data.specialty_id]:[]}
+                                       initialData={data?.specialty_id ? [data.specialty_id] : []}
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 

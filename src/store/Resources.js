@@ -1,3 +1,5 @@
+import {t} from "i18next";
+
 const Resource = {
     PostTypes: [
         {
@@ -106,19 +108,19 @@ const Resource = {
         },
         {
             key: '1',
-            label: 'Confirmed'
+            label: t('Confirmed')
         },
         {
             key: '2',
-            label: 'Finished'
+            label: t('Finished')
         },
         {
             key: '3',
-            label: 'Cancelled'
+            label: t('Cancelled')
         },
         {
             key: '4',
-            label: 'Rescheduled'
+            label: t('Rescheduled')
         },
         {
             key: '5',
@@ -141,33 +143,33 @@ const Resource = {
             },
             {
                 key: '1',
-                label: 'Confirmed'
+                label: t('Confirmed')
             },
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '3',
-                label: 'Cancelled'
+                label: t('Cancelled')
             },
         ],
         1: [
             {
                 key: '1',
-                label: 'Confirmed'
+                label: t('Confirmed')
             },
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '3',
-                label: 'Cancelled'
+                label: t('Cancelled')
             },
             {
                 key: '4',
-                label: 'Rescheduled'
+                label: t('Rescheduled')
             },
             {
                 key: '5',
@@ -177,7 +179,7 @@ const Resource = {
         2: [
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '6',
@@ -187,15 +189,15 @@ const Resource = {
         4: [
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '3',
-                label: 'Cancelled'
+                label: t('Cancelled')
             },
             {
                 key: '4',
-                label: 'Rescheduled'
+                label: t('Rescheduled')
             },
             {
                 key: '5',
@@ -204,7 +206,7 @@ const Resource = {
         ],
         3: [{
             key: '3',
-            label: 'Cancelled'
+            label: t('Cancelled')
         },],
         5: [{
             key: '5',
@@ -219,7 +221,7 @@ const Resource = {
         6: [
             {
                 key: '2',
-                label: 'Finished'
+                label: t('Finished')
             },
             {
                 key: '6',
@@ -235,19 +237,19 @@ const Resource = {
         },
         {
             key: '1',
-            label: 'Confirmed'
+            label: t('Confirmed')
         },
         {
             key: '2',
-            label: 'Finished'
+            label: t('Finished')
         },
         {
             key: '3',
-            label: 'Cancelled'
+            label: t('Cancelled')
         },
         {
             key: '4',
-            label: 'Rescheduled'
+            label: t('Rescheduled')
         },
         {
             key: '5',

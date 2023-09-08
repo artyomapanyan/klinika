@@ -3,7 +3,7 @@ import {Col, Form, Row} from "antd";
 import delete_icon from "../../../../dist/icons/delete_icon.png";
 import upload_photos_icon from "../../../../dist/icons/upload_photos_icon.png";
 
-function DoctorProfileImage({formRef}) {
+function DoctorProfileImage({formRef, data}) {
     const [cover, setCover] = useState({
         file: null,
         src: null
@@ -44,10 +44,14 @@ function DoctorProfileImage({formRef}) {
         fr.readAsDataURL(file);
     }
     const handleFileUploaded = (e,type) => {
+
         [...e.target.files].forEach((e)=>preview(e,type))
 
 
     }
+
+    console.log(data)
+
     return <Row className={'clinic-images-container1'} gutter={[10,38]}>
 
         <Col lg={4}>

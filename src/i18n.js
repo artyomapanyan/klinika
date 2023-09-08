@@ -1,4 +1,4 @@
-import i18n from "i18next";
+import i18n, {t} from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
@@ -44,6 +44,10 @@ i18n
                     Notifications: 'Notifications',
                     Actions: 'Actions',
                     Patients: 'Patients',
+                    Confirmed: 'Confirmed',
+                    Finished: 'Finished',
+                    Cancelled: 'Cancelled',
+                    Rescheduled: 'Rescheduled',
                 }
             },
             ar: {
@@ -80,6 +84,10 @@ i18n
                     Notifications: 'الإشعارات',
                     Actions: 'الإجراءات',
                     Patients: 'المرضى',
+                    Confirmed: 'تأكيد',
+                    Finished: 'إنتهاء',
+                    Cancelled: 'إلغاء',
+                    Rescheduled: 'إعادة جدولة',
                 }
             },
         },

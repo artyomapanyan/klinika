@@ -91,7 +91,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
                 >
                     <div className={'general_info_form'}>
                         <div >
-                            <DoctorProfileImage formRef={formRef}  />
+                            <DoctorProfileImage formRef={formRef} data={data} />
 
                         </div>
                         <div className={'clinics_select_col'}>
