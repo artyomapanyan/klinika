@@ -219,7 +219,7 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
                                     options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
                                         return {
                                             label: dayjs('2023-10-10' + e).format('h:mmA'),
-                                            value: dayjs('2023-10-10' + e).format('h:mmA'),
+                                            value: e,
                                         }
                                     })}
                                     optionType="button"
