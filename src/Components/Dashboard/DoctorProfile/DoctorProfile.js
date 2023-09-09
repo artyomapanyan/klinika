@@ -38,6 +38,8 @@ function DoctorProfile() {
 
     const [tab, setTab] = useState('general_information');
     const [saveLoading, setSaveLoading] = useState(false)
+    const [avatarDeleteType, setAvatarDeleteType] = useState(null)
+    const [allData, setAllData] = useState({})
 
 
      const {loadingState, dataState} = useGetResourceSingle('ClinicDoctor', params.id,)
@@ -94,10 +96,16 @@ function DoctorProfile() {
 
     const handleSave = () => {
         setSaveLoading(true)
-        let values = formRefs?.general_information?.current?.getFieldValue();
-       //values.dob = values.dob.format('DD-MM-YYYY')
-        //console.log(values.dob)
-        updateResource(resource, '', values, token, ).then(response => {
+
+        let values = {...formRefs?.general_information?.current?.getFieldValue()};
+
+       values.dob = dayjs(values.dob).format('YYYY-MM-DD')
+        if(avatarDeleteType) {
+            values.avatar_deleted = [allData?.avatar?.id]
+
+        }
+
+        updateResource(resource, '', values, token, true).then(response => {
             if(response?.id){
 
             }
@@ -133,7 +141,7 @@ function DoctorProfile() {
 
             {loading?<Preloader/>:<ClinicTabBars onChange={handleChange}>
                 <items key={'general_information'} tab={t('General information')}  >
-                    <DoctorGeneralInfo formRef={formRefs.general_information} data={data} saveLoading={saveLoading} setSaveLoading={setSaveLoading}/>
+                    <DoctorGeneralInfo setAvatarDeleteType={setAvatarDeleteType} formRef={formRefs.general_information} setAllData={setAllData} saveLoading={saveLoading} setSaveLoading={setSaveLoading}/>
                 </items>
                 {/*<items key={'working_hours'} tab={'Working hours'} >*/}
                 {/*    <DoctorWorkingHours workingHRefs={formRefs.working_hours} data={data}/>*/}

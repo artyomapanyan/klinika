@@ -18,7 +18,7 @@ import FileManager from "../../../Fragments/FileManager";
 
 
 let resource = 'DoctorUpdateProfile';
-function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
+function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteType, setAllData}) {
 
     let token = useSelector((state) => state.auth.token);
     const [data, setData] = useState({});
@@ -33,11 +33,12 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading}) {
         postResource(resource, 'GetDoctorProfile', token, '').then((response) => {
             setData(response)
             setLoading(false)
+            setAllData(response)
         })
     }, [autoFillState])
 
     const onFinish = (values) => {
-values.dob = values.dob.format('YYYY-MM-DD')
+//values.dob = values.dob.format('YYYY-MM-DD')
         setSaveLoading(true)
         updateResource(resource, '', values, token).then(response => {
                 if(response?.id){
@@ -94,7 +95,7 @@ values.dob = values.dob.format('YYYY-MM-DD')
                 >
                     <div className={'general_info_form'}>
                         <div >
-                            <DoctorProfileImage formRef={formRef} data={data} />
+                            <DoctorProfileImage formRef={formRef} data={data} setAvatarDeleteType={setAvatarDeleteType}/>
                             {/*<FileManager text1={'avatar'}*/}
                             {/*             text2={'Download the file'}*/}
                             {/*             name={'avatar'}*/}
