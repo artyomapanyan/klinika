@@ -144,7 +144,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         }
         setTimesIndex(prevState => prevState + count)
     }
-console.log(formState)
+
 
     return <div className={'drawer_cal_bog_div'}>
         <div className={'drawer_cal_top_div'}>
