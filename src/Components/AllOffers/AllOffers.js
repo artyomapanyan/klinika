@@ -47,9 +47,7 @@ function AllOffers() {
             page: (+prevState.page)+1
         }))
 
-    //     setDataLength((prevState)=>(
-    //         prevState + 5
-    // ))
+
 
     }
     const onChangeRadio = (e) => {
