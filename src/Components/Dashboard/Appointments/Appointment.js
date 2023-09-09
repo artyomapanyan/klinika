@@ -29,6 +29,8 @@ function Appointment({isPatient}) {
 
 
 
+
+
     const {loadingState, dataState} = useGetResourceSingle(!isPatient ? resource : 'Patient', params.id,{},isPatient ?(data)=>{
        setTimeout(()=>{
            handleValuesChange({patient_id:data.id})
@@ -366,9 +368,9 @@ function Appointment({isPatient}) {
                                                searchConfigs={{minLength: 5}}
                                                inputType={'resourceSelect'}
 
-                                               resource={'User'}
+                                               resource={role === 'doctor' ? 'Patient' : 'User'}
                                                resourceParams={{
-                                                   type: 'user',
+                                                   type: role === 'doctor' ? 'patients' : 'User',
                                                }}
                                                inputProps={{
                                                    onSearch:e=>{

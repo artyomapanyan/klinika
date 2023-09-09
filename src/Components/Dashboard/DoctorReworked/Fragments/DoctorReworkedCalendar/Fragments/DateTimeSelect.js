@@ -213,7 +213,7 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
                     </div>
                     <div align={'center'} className={'big_time_div'}>
                         {
-                           date ? availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>No available times</div> : <div></div> : <Form.Item name={'booked_time'}>
+                           date ? availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>{t('No available times')}</div> : <div></div> : <Form.Item name={'booked_time'}>
                                 <Radio.Group
                                     className={'hours_select'}
                                     options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
