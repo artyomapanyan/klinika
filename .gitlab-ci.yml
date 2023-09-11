@@ -20,6 +20,7 @@ deploy:
       if [[ -f /.dockerenv ]]; then
         echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
       fi
+      echo "10.0.0.5        https://gitlab.klinikatech.com" >> /etc/hosts
   script:
     - apt-get update -y
     - apt-get install -y rsync
