@@ -92,6 +92,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
                                 max={5000}
                                 onAfterChange={([val1, val2]) => setParams({
                                     ...params,
+                                    page:1,
                                     min_price: val1,
                                     max_price: val2
                                 })}

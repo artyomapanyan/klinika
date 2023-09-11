@@ -223,7 +223,7 @@ function Incoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
-     //console.log(data, 'd')
+     console.log(data, 'd')
 
     return (
         <div className={"new_invoice_big_div"}>
@@ -457,7 +457,7 @@ function Incoice() {
                                         </div>
                                     </div>
                                 </div> : <div className={'invoice_firsli_text_div'}>
-                                    Firstly please choose an appointment
+                                    {('Firstly please choose an appointment')}
                                 </div>
                             }
                         </div>
