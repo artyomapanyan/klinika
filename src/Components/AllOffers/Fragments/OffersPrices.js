@@ -102,7 +102,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
 
 
             </Col>
-            <Col lg={4}>
+            <Col lg={4} >
                 <div align={'center'} style={{cursor:'pointer'}} onClick={onLowHigh}>
                     <FunnelPlotOutlined style={{color:'#ce4e99', fontSize:20, paddingRight:10, }} />
                     <span style={{fontSize: 14}} >
@@ -113,7 +113,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
                     </span>
                 </div>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} className={'all_offers_filter_clinics'}>
                 <div align={'center'}>
                     {
                         currentUrl.includes('thank-you') ? <div></div> : <div>
@@ -137,12 +137,12 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
 
                 </div>
             </Col>
-            <Col lg={5}>
+            <Col lg={5} className={'all_offers_filter_input_div'}>
                 <div align={'center'}>
                     <Input className={'offers_search_input'} size="large" placeholder="Search" onChange={(e)=>changeInputSearch(e)} prefix={<SearchOutlined />} />
                 </div>
             </Col>
-            <Col lg={2} align={'center'}>
+            <Col lg={2} align={'center'} className={'all_offers_filter_input_div'}>
                 <div>
                     <Button type={"secondary"} style={{backgroundColor:'#F3F3F3', border:'none', color:'#8d8c8d', fontWeight:600, height:37}} onClick={onReset}>{t('Reset')}</Button>
                 </div>

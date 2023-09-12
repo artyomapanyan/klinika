@@ -29,10 +29,10 @@ function AppDoctor({setDataState, dataState, data}) {
             </Space>
             {
                 dataState?.doctor_id ? <div>
-                    <Space>
+                    <div className={'all_offers_app_div'}>
                         {t('Selected Doctor')} : <span className={'selected_text'}>{doctorName?.first}{doctorName?.last}</span>
-                        <Button type={'secondary'} onClick={onChangeDoctor} style={{borderRadius:15}}>Change Selected Doctor</Button>
-                    </Space>
+                        <Button type={'secondary'} onClick={onChangeDoctor} style={{borderRadius:15}}>{t('Change Selected Doctor')}</Button>
+                    </div>
                 </div> : <div style={{maxWidth:800}}>
                     <div >
                         {
@@ -40,7 +40,7 @@ function AppDoctor({setDataState, dataState, data}) {
                                 return<div key={el?.id} className={'doctor_conteiner' } onClick={() => onDoctor(el?.id)}>
                                     <Space>
                                         <Avatar  size={50} icon={<UserOutlined />} />
-                                        <Space style={{fontWeight: 600, marginTop:5, fontSize:20}}>{el?.first}{el?.last}</Space>
+                                        <div style={{fontWeight: 600, marginTop:5, fontSize:20}}>{el?.first} {el?.last}</div>
                                     </Space>
                                 </div>
 

@@ -6,14 +6,14 @@ function CongratulationsText({clinicRedux}) {
 
     return(
         <div>
-            <div style={{fontSize: 40, fontWeight: 600}}>
-                Congratulations
+            <div className={'congratulations_text'}>
+                {t('Congratulations')}
             </div>
             <div style={{lineHeight:1.5,fontSize:16, marginTop:15}}>
                 {clinicRedux?.description}
             </div>
             <div style={{fontWeight: 600,fontSize:16, marginTop:25}}>
-                Your booking:
+                {t('Your booking')}
             </div>
             <div style={{fontSize:16, marginTop:12}}>
                 {clinicRedux?.date}<span style={{color:'#ce4e99', fontWeight:600, marginLeft:15}}>{clinicRedux?.time}</span>

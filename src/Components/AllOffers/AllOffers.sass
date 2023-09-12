@@ -102,6 +102,8 @@
     background-color: #FFFFFF
     min-height: 620px
     border-radius: 12px
+    @media screen and (max-width: 420px)
+      height: 660px
   .offer_card_image_div
     height: 200px
     .offer_card_image
@@ -163,6 +165,9 @@
       width: 80%
     @media screen and (max-width: 1200px)
       width: 90%
+    @media screen and (max-width: 800px)
+      display: block
+
   .big_bold_text
     color: #FFFFFF
     font-size: 24px
@@ -175,6 +180,24 @@
     font-weight: 600
     font-size: 18px
     color: #ebc8f3
+  .all_offers_footer_2div
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    gap: 35px
+  .all_offers_footer_3div
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    gap: 35px
+    @media screen and (max-width: 800px)
+      margin-top: 20px
+.all_offers_filter_clinics
+  @media screen and (max-width: 500px)
+    margin-top: 10px
+.all_offers_filter_input_div
+  @media screen and (max-width: 500px)
+    margin-top: 10px
 .offers_search_input
   width: 200px
   background-color: #F3F3F3
@@ -187,6 +210,13 @@
   display: flex
   flex-direction: row
   justify-content: center
+  @media screen and (max-width: 800px)
+    width: 70%
+  @media screen and (max-width: 600px)
+    width: 80%
+  @media screen and (max-width: 500px)
+    width: 90%
+
 .offer_book_card_image_div
   width: 100%
 .offer_card_image
@@ -196,9 +226,13 @@
     border-radius: 12px
     object-fit: cover
 .avatar_and_price_div
-    display: flex
-    flex-direction: row
-    justify-content: space-between
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  @media screen and (max-width: 1050px)
+    display: block
+
+
 .offer_card_avatar
     padding: 20px
 .offer_pink_text
@@ -211,18 +245,21 @@
     align-items: center
     padding: 20px
 .price_div
-    width: 350px
-    border-radius: 40px
-    background-color: #ff0596
-    padding: 24px
-    margin-top: -5px
-    color: #FFFFFF
-    font-weight: 600
-    font-size: 16px
-    display: flex
-    flex-direction: row
-    justify-content: center
-    align-items: center
+  width: 350px
+  border-radius: 40px
+  background-color: #ff0596
+  padding: 24px
+  margin-top: -5px
+  color: #FFFFFF
+  font-weight: 600
+  font-size: 16px
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  @media screen and (max-width: 500px)
+    display: block
+    width: 250px
 .line
     border-top: 1px solid #FFFFFF
     width: 60px
@@ -232,12 +269,88 @@
   flex-direction: row
   justify-content: space-between
   gap: 50px
+  @media screen and (max-width: 1050px)
+    display: block
+
+.all_offers_app_div
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 10px
+  @media screen and (max-width: 700px)
+    display: block
+
+.personal_details_code_numbet_div
+  display: flex
+  @media screen and (max-width: 1000px)
+    display: block
+
+.personal_details_code_div
+  width: 35%
+  @media screen and (max-width: 1000px)
+    width: 100%
+
+.personal_details_number_div
+  width: 100%
+  margin: 0 10px
+  @media screen and (max-width: 1000px)
+    margin: 0 0
+
+.verify_code_form_big_div
+  display: flex
+  width: 100%
+  flex-direction: row
+  justify-content: space-between
+  @media screen and (max-width: 1000px)
+    display: block
+
+.verify_code_form_number_div
+  width: 50%
+  margin-left: 10px
+  @media screen and (max-width: 1000px)
+    width: 100%
+
+.space_compact
+  width: 40%
+  @media screen and (max-width: 1000px)
+    width: 100%
+
+.thank_you_image_div
+  padding: 80px
+  @media screen and (max-width: 600px)
+    padding: 60px
+  @media screen and (max-width: 530px)
+    padding: 50px
+  @media screen and (max-width: 500px)
+    padding: 40px
+  @media screen and (max-width: 450px)
+    padding: 20px
+
+.thank_you_image
+  width: 200px
+  @media screen and (max-width: 450px)
+    width: 170px
+
+.thank_you_congretulation_div
+  padding: 60px
+  @media screen and (max-width: 650px)
+    padding: 10px
 
 .clinic_card_div
   border: 1px solid #c9c5c5
   border-radius: 10px
-  width: 30%
+  width: 300px
   box-shadow: 0 0 10px 5px rgb(140 152 164 / 40%)
+  @media screen and (max-width: 420px)
+    width: 250px
+
+.congratulations_text
+  font-size: 40px
+  font-weight: 600
+  @media screen and (max-width: 700px)
+    font-size: 32px
+  @media screen and (max-width: 470px)
+    font-size: 24px
 
 .no_offers
   min-height: 400px
@@ -301,8 +414,7 @@
   border: 1px solid #ce4e99
   border-radius: 25px
   padding: 9px
-.space_compact
-  width: 40%
+
   .ant-space-compact
     width: 100% !important
 .selected_text

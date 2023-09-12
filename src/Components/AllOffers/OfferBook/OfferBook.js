@@ -1,10 +1,10 @@
 import React from "react";
 import off_head from "../../../dist/Img/off_head.png";
-import AuthHeader from "../../Auth/AuthHeader";
 import OffersFooter from "../Fragments/OffersFooter";
 import OfferBookContent from "./Fragment/OfferBookContent";
 import {useParams} from "react-router";
 import {useGetResourceSingle} from "../../Functions/api_calls";
+import AllOffersHeader from "../Fragments/AllOffersHeader";
 
 function OfferBook() {
     const params = useParams();
@@ -14,10 +14,10 @@ function OfferBook() {
     return(
         <div>
             <div className={'bac_div'}>
-                <img src={off_head} alt={'off_head'} style={{width:'120%'}}/>
+                <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
             </div>
             <div className={'offer_logo_div'}>
-                <AuthHeader headerState={true}/>
+                <AllOffersHeader headerState={true}/>
             </div>
             <div className={'menu_div'} style={{minHeight: 500}}>
                 <OfferBookContent />

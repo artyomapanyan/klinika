@@ -11,8 +11,7 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import Preloader from "../Preloader";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../functions";
-import AuthHeader from "../Auth/AuthHeader";
-import {DownOutlined} from "@ant-design/icons";
+
 import AllOffersHeader from "./Fragments/AllOffersHeader";
 
 
