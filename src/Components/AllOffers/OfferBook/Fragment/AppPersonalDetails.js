@@ -145,7 +145,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
 
 
-    //console.log(responseCodeState)
+
     return (
         <div>
 
@@ -197,7 +197,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
                         </Form>
                     </div>}
-                    {responseCodeState?.patient ? <div>
+                    {responseCodeState ? <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
                             <Form ref={formRef}>
                                 <FormInput inputDisabled={verifyResponse?.patient?.first} label={t('First Name')} name={'first'} initialValue={verifyResponse?.patient?.first} rules={[{required: true}]} />

@@ -40,17 +40,17 @@ function OffersFooter() {
                         <Button size={'large'} type={"primary"} style={{fontWeight:600, height:50}}>{t('Subscribe')}</Button>
                     </div>
                 </Space>
-                <Space direction={'vertical'}>
-                    <div className={'white_text'}>
-                        {t('Or You Can use our App!')}
-                    </div>
-                    <div>
-                        <img src={app_store} alt={'app_store'} style={{width:220, borderRadius: 12, border:'2px solid gray'}}/>
-                    </div>
-                    <div>
-                        <img src={playMarket} alt={'playMarket'} style={{width:220, borderRadius: 12, border:'2px solid gray'}}/>
-                    </div>
-                </Space>
+                {/*<Space direction={'vertical'}>*/}
+                {/*    <div className={'white_text'}>*/}
+                {/*        {t('Or You Can use our App!')}*/}
+                {/*    </div>*/}
+                {/*    <div>*/}
+                {/*        <img src={app_store} alt={'app_store'} style={{width:220, borderRadius: 12, border:'2px solid gray'}}/>*/}
+                {/*    </div>*/}
+                {/*    <div>*/}
+                {/*        <img src={playMarket} alt={'playMarket'} style={{width:220, borderRadius: 12, border:'2px solid gray'}}/>*/}
+                {/*    </div>*/}
+                {/*</Space>*/}
 
 
             </div>

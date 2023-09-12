@@ -8,7 +8,7 @@ function OfferBookDetails({data}) {
     return(
         <div className={'offer_details'}>
             <div>
-                <h2>Offer Details?</h2>
+                <h2>{t('Offer Details')}?</h2>
                 <div dangerouslySetInnerHTML={{__html: data?.content}} />
             </div>
 
@@ -25,7 +25,7 @@ function OfferBookDetails({data}) {
                         </div>
                         <div style={{marginTop: 25}}><h3 style={{fontWeight: 600}}>{t('Address')}:</h3></div>
                         <div style={{color: '#8d8c8c'}}>
-                            Asress
+                            {t('Asress')}
                         </div>
                     </div>
                 </div>

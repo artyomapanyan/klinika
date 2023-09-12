@@ -23,7 +23,7 @@ function BookAnAppointment({data}) {
     const [responseCodeState, setResponseCodeState] = useState();
 
     const onBooking = () => {
-        postResource('PublicAppointment', 'create', token, '', dataState).then(() => {
+        postResource('PublicAppointment', 'create', token, '', dataState).then((resource) => {
 
         })
         navigate('/thank-you');
