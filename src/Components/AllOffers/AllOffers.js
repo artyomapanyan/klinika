@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./AllOffers.sass"
 import off_head from "../../dist/Img/off_head.png";
 
-import {Button, Divider, Radio, Result, Row, Dropdown} from "antd";
+import {Button, Divider, Result, Row, Dropdown} from "antd";
 import OffersPrices from "./Fragments/OffersPrices";
 import {t} from "i18next";
 import OfferCard from "./Fragments/OfferCard";
