@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Col, Form, Row} from "antd";
+import {Col, Form, notification, Row} from "antd";
 import delete_icon from "../../../../dist/icons/delete_icon.png";
 import upload_photos_icon from "../../../../dist/icons/upload_photos_icon.png";
 
-function DoctorProfileImage({formRef, data}) {
+function DoctorProfileImage({formRef, data, setAvatarDeleteType}) {
 
     const [logo, setLogo] = useState({
         file: null,
@@ -16,13 +16,14 @@ function DoctorProfileImage({formRef, data}) {
                 file: null,
                 src: null
             })
-
+        setAvatarDeleteType(type)
+console.log(e.target,type)
 
 
     }
     useEffect(()=>{
         formRef?.current?.setFieldsValue({
-            //avatar:[logo.file],
+            avatar:[logo.file],
 
         })
     },[logo])
@@ -45,9 +46,11 @@ function DoctorProfileImage({formRef, data}) {
         [...e.target.files].forEach((e)=>preview(e,type))
 
 
+
     }
 
-    //console.log(logo, data)
+
+    console.log(data, 'data')
 
     return <Row className={'clinic-images-container1'} gutter={[10,38]}>
 

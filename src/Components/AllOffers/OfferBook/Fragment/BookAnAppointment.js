@@ -7,27 +7,36 @@ import AppPersonalDetails from "./AppPersonalDetails";
 import AppPaymentMethods from "./AppPaymentMethods";
 import {postResource} from "../../../Functions/api_calls";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router";
+import {useLocation, useNavigate, useParams} from "react-router";
 import {t} from "i18next";
+
 
 function BookAnAppointment({data}) {
     let token = useSelector((state) => state.auth.token);
     let params = useParams();
     let navigate = useNavigate();
     let dispatch = useDispatch()
+    const location = useLocation();
 
 
     const [dataState, setDataState] = useState({});
     const [date, setDate] = useState();
     const [dataTimes, setDataTimes] = useState();
     const [responseCodeState, setResponseCodeState] = useState();
+    const [loading, setLoading] = useState(false);
+
 
     const onBooking = () => {
-        postResource('PublicAppointment', 'create', token, '', dataState).then(() => {
+        setLoading(true)
+        postResource('PublicAppointment', 'create', token, '', dataState).then((response) => {
+            console.log(response)
+            setLoading(false)
+            document.location.href = response?.redirect
 
         })
-        navigate('/thank-you');
+
     }
+
 
 
     useEffect(() => {
@@ -89,8 +98,11 @@ function BookAnAppointment({data}) {
             </div>
             <Divider style={{background: '#e3e0e3'}}/>
             <div className={'app_btn_div'}>
-                <Button onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment_method_id  ? false : true}>{t('Book now')}</Button>
-            </div>
+
+                <Button loading={loading} onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment_method_id  ? false : true}>{t('Book now')}</Button>
+
+
+                </div>
         </div>
     )
 }

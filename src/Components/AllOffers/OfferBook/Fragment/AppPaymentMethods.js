@@ -40,7 +40,7 @@ function AppPaymentMethods({setDataState, dataState, responseCodeState, data}) {
                         {t('Selected Payment Method')}: <span className={'selected_text'}>{dataState?.payment_method_id}</span>
                         <Button type={'secondary'} onClick={onChangeDetails} style={{borderRadius:15}}>{t('Change Payment Method')}</Button>
                     </Space>
-                </div> : responseCodeState?.patient ? <div className={'date_carousel_div'}>
+                </div> : responseCodeState ? <div className={'date_carousel_div'}>
                     <div>
                         <Radio.Group onChange={onChange}>
                         {

@@ -77,10 +77,10 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
             </Space>
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time ? <div>
-                    <Space>
+                    <div className={'all_offers_app_div'}>
                         {t('Selected Time')} : <span className={'selected_text'}>{dataState?.time}</span>
                         <Button type={'secondary'} onClick={onChangeTime} style={{borderRadius:15}}>{t('Change Time')}</Button>
-                    </Space>
+                    </div>
                 </div> : (dataState?.doctor_id && dataState?.date) || dataState?.time ? <div className={'date_carousel_div'}>
                     <div style={{position:'absolute', width:'98%'}}>
                         <Slider {...settings}>

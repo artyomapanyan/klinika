@@ -92,10 +92,10 @@ function AppDate({setDataState, dataState, data, setDate}) {
             </Space>
             {
                 dataState?.doctor_id && dataState?.date ? <div>
-                    <Space>
+                    <div className={'all_offers_app_div'}>
                         {t('Selected Date')} : <span className={'selected_text'}>{dataState?.date}</span>
                         <Button type={'secondary'} onClick={onChangeDate} style={{borderRadius:15}}>{t('Change Date')}</Button>
-                    </Space>
+                    </div>
                 </div> : dataState?.doctor_id || dataState?.date ? <div className={'date_carousel_div'}>
                     <div style={{position:'absolute', width:'98%'}}>
                         <Slider {...settings}>

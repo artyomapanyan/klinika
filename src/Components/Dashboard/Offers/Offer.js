@@ -206,42 +206,6 @@ function Offer() {
                             </Form.Item>
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FormInput inputProps={{
-                                mode:'multiple',
-                                onChange:(e,dat)=> {
-                                    setData((prevState)=>({
-                                        ...prevState,
-                                        specialty_id: undefined,
-                                        sub_specialties: undefined,
-                                        category_id: undefined,
-                                        service_id: undefined,
-                                        sub_categories: undefined,
-                                        sub_services: undefined
-
-                                    }))
-
-                                    formRef?.current?.setFieldsValue({
-                                        specialty_id: undefined,
-                                        sub_specialties: undefined,
-                                        category_id: undefined,
-                                        service_id: undefined,
-                                        sub_categories: undefined,
-                                        sub_services: undefined
-
-                                    })
-
-                                }
-                            }}
-                                       disabled={!data?.clinic_id}
-                                       label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.doctors?.map(e=>e.id)}
-                                       initialData={data?.doctors??[]}
-                                       resource={'Doctor'}
-                                       resourceParams={{
-                                           clinic:data.clinic_id
-                                       }}
-                            />
                             <FormInput label={t('Specialty')} name={'specialty_id'} inputType={'resourceSelect'}
                                        inputProps={{
 
@@ -249,6 +213,7 @@ function Offer() {
                                                setData((prevState)=>({
                                                    ...prevState,
                                                    sub_specialties: undefined,
+                                                   doctors: undefined,
                                                    category_id: undefined,
                                                    service_id: undefined,
                                                    sub_categories: undefined,
@@ -258,6 +223,7 @@ function Offer() {
 
                                                formRef?.current?.setFieldsValue({
                                                    sub_specialties: undefined,
+                                                   doctors: undefined,
                                                    category_id: undefined,
                                                    service_id: undefined,
                                                    sub_categories: undefined,
@@ -268,10 +234,12 @@ function Offer() {
                                            }
                                        }}
                                        rules={[{required: true}]}
-                                       disabled={!data?.doctors}
+                                       disabled={!data?.clinic_id}
                                        initialValue={data?.specialty_id?.id}
                                        initialData={data?.specialty_id ? [data.specialty_id] : []}
-                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
+                                       resourceParams={{
+                                           clinic:data.clinic_id,
+                                           type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 
                             <FormInput inputProps={{
@@ -279,6 +247,7 @@ function Offer() {
                                 onChange:(e,dat)=> {
                                     setData((prevState)=>({
                                         ...prevState,
+                                        doctors: undefined,
                                         category_id: undefined,
                                         service_id: undefined,
                                         sub_categories: undefined,
@@ -287,6 +256,7 @@ function Offer() {
                                     }))
 
                                     formRef?.current?.setFieldsValue({
+                                        doctors: undefined,
                                         category_id: undefined,
                                         service_id: undefined,
                                         sub_categories: undefined,
@@ -301,8 +271,52 @@ function Offer() {
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
+                                       resourceParams={{
+                                           parent: data?.specialty_id,
+                                           type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
+
+
+                            <FormInput inputProps={{
+                                mode:'multiple',
+                                onChange:(e,dat)=> {
+                                    setData((prevState)=>({
+                                        ...prevState,
+
+
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    }))
+
+                                    formRef?.current?.setFieldsValue({
+
+
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    })
+
+                                }
+                            }}
+                                       disabled={!data?.sub_specialties || data?.sub_specialties?.length < 1}
+                                       label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.doctors?.map(e=>e.id)}
+                                       initialData={data?.doctors??[]}
+                                       resource={'Doctor'}
+                                       resourceParams={{
+                                           clinic:data?.clinic_id,
+                                           specialty: data?.specialty_id
+                                       }}
+                            />
+
+
+
 
                             <FormInput label={t('Category')} name={'category_id'} inputType={'resourceSelect'}
                                        inputProps={{
@@ -324,7 +338,7 @@ function Offer() {
                                            }
                                        }}
                                        rules={[{required: true}]}
-                                       disabled={!data?.sub_specialties}
+                                       disabled={!data?.doctors || data?.doctors?.length < 1}
                                        initialValue={data?.category?.id}
                                        initialData={data?.category ?[data.category]:[]}
                                        resource={'Category'}/>

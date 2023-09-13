@@ -36,7 +36,7 @@ function OfferCard({data, id}) {
                     </div>
                     <div className={'offer_card_stars'}>
                         <Rate disabled value={+data?.avg_rating} />
-                        <span style={{marginLeft:10}}>{data?.rating_count} Reviews</span>
+                        <span style={{marginLeft:10}}>{data?.rating_count} {t('Reviews')}</span>
                     </div>
                     <div align={'center'} >
                         <div style={{width: '90%'}}>

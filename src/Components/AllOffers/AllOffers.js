@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./AllOffers.sass"
 import off_head from "../../dist/Img/off_head.png";
 
-import {Button, Divider, Radio, Result, Row} from "antd";
+import {Button, Divider, Radio, Result, Row, Dropdown} from "antd";
 import OffersPrices from "./Fragments/OffersPrices";
 import {t} from "i18next";
 import OfferCard from "./Fragments/OfferCard";
@@ -11,7 +11,8 @@ import {useGetResourceIndex} from "../Functions/api_calls";
 import Preloader from "../Preloader";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../functions";
-import AuthHeader from "../Auth/AuthHeader";
+
+import AllOffersHeader from "./Fragments/AllOffersHeader";
 
 
 function AllOffers() {
@@ -53,9 +54,29 @@ function AllOffers() {
     const onChangeRadio = (e) => {
         setParams({
             ...params,
-            category: e?.target?.value
+            category: null,
+            sub_category: null
         })
     }
+
+    const onClick = (e) => {
+
+        setParams({
+            ...params,
+            sub_category: e?.key,
+            //category: null
+        })
+    }
+
+    const onDropBtnChange = (e) => {
+
+        setParams({
+            ...params,
+            category: e?.id,
+            sub_category: null
+        })
+    }
+
 
 
     return(
@@ -64,19 +85,58 @@ function AllOffers() {
                 <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
             </div>
             <div className={'offer_logo_div'}>
-                <AuthHeader headerState={true}/>
+                <AllOffersHeader headerState={true}/>
             </div>
             { resetState ? <Preloader /> :
              <div className={'menu_div'}>
                 <div className={'tab_div'} style={{boxShadow: '0 0 10px 5px rgb(140 152 164 / 40%)'}}>
-                    <Radio.Group onChange={onChangeRadio} defaultValue={params.category??''} className={'radio_grup'}>
-                        <Radio.Button value={''}>{t("All offers")}</Radio.Button>
+
+
+                        <Button  type={params?.category || params?.sub_category ?  'secondary' : 'primary'} onClick={onChangeRadio} className={'all_offer_btn_style'} style={{color:params?.category || params?.sub_category ? '#000000' : "#ffffff" }} >{t("All offers")}</Button>
                         {
                             addData?.PublicCategory?.items?.map((el) => {
-                                return <Radio.Button key={el?.id} value={el?.id} >{el?.name}</Radio.Button>
+                                let subCategories = el?.sub_categories?.map((e) => {
+                                    return {
+                                        label: e?.name,
+                                        key: e?.id,
+                                    }
+                                })
+                                return <Dropdown
+                                    key={el?.id}
+                                    menu={{
+                                        items: subCategories,
+                                        onClick
+                                    }}
+                                    placement="bottom"
+                                    arrow
+                                >
+
+                                        <Button style={{color: params?.category === el?.id ? "#ffffff" : '#000000'}} className={'all_offers_category_radio_button'} type={params?.category === el?.id ? 'primary' : 'secondary'} onClick={() => onDropBtnChange(el)}>{el?.name}</Button>
+
+
+                                </Dropdown>
+
+
+
+
+                                // <Dropdown
+                                //     key={el?.id}
+                                //    // icon={<DownOutlined />}
+                                //     //loading={loadings[1]}
+                                //     menu={{
+                                //         items: subCategories,
+                                //         onClick,
+                                //     }}
+                                //     type={"secondary"}
+                                //     //onClick={() => onDropBtnChange(el)}
+                                //
+                                // >
+                                //     {el?.name}
+                                // </Dropdown>
+                               // return <Radio.Button key={el?.id} value={el?.id} >{el?.name}</Radio.Button>
                             })
                         }
-                    </Radio.Group>
+
                     <Divider />
                     <div>
                         <OffersPrices currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
@@ -102,7 +162,7 @@ function AllOffers() {
                 </div>
             </div>}
             <div align={'center'} style={{marginTop:30}}>
-                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data.items.length}>{t('Load more')}</Button>
+                <Button type={'primary'} onClick={handleNextPage} disabled={data?.pagination?.total<=data?.items?.length}>{t('Load more')}</Button>
             </div>
             <div style={{width: '100%'}}>
                 <OffersFooter />

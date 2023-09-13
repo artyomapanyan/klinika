@@ -145,7 +145,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
 
 
-    //console.log(responseCodeState)
+
     return (
         <div>
 
@@ -159,14 +159,14 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                 <div>
 
                     {verifyState === 0 && <Form onFinish={onVerifyNumber} name={'send'}>
-                        <div style={{display:'flex'}}>
-                            <div style={{width:'35%'}}>
+                        <div className={'personal_details_code_numbet_div'}>
+                            <div className={'personal_details_code_div'}>
                                 <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                            rules={[{required: true}]}
                                            handleMapItems={handleMapItems}
                                            resource={'PublicCountry'}/>
                             </div>
-                            <div style={{width:'100%', marginLeft:10}}>
+                            <div className={'personal_details_number_div'}>
                                 <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} />
                             </div>
 
@@ -178,8 +178,8 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
                     {verifyState === 1 && <div>
                         <Form name={'verify_code'} onFinish={onVerifyCode}>
-                            <div style={{display: 'flex', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <div style={{width:'50%', marginLeft:10}}>
+                            <div className={'verify_code_form_big_div'}>
+                                <div  className={'verify_code_form_number_div'} >
                                     <Input value={`+${codeAndNumber?.phone_country_code}${codeAndNumber?.phone_number}`} style={{marginTop:7, height:46, borderRadius:12}}/>
                                     <div className={'change_number'} onClick={onSendSMSAgain}>{t('Change Number')}</div>
                                 </div>
@@ -197,7 +197,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
                         </Form>
                     </div>}
-                    {responseCodeState?.patient ? <div>
+                    {responseCodeState ? <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
                             <Form ref={formRef}>
                                 <FormInput inputDisabled={verifyResponse?.patient?.first} label={t('First Name')} name={'first'} initialValue={verifyResponse?.patient?.first} rules={[{required: true}]} />

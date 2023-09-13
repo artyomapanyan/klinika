@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../AllOffers.sass"
-import {Button, Col, Divider, Radio, Result, Row} from "antd";
+import {Button, Col, Divider, Dropdown, Radio, Result, Row} from "antd";
 import {t} from "i18next";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../../functions";
@@ -15,6 +15,7 @@ import img_thank_you from "../../../dist/Img/thank_you.png"
 import CongratulationsText from "./Fragments/CongratulationsText";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
+import AllOffersHeader from "../Fragments/AllOffersHeader";
 
 
 
@@ -50,21 +51,41 @@ function ThankYouOffer() {
             category: e?.target?.value
         })
     }
+
+    const onClick = (e) => {
+
+        setParams({
+            ...params,
+            sub_category: e?.key,
+            //category: null
+        })
+    }
+
+    const onDropBtnChange = (e) => {
+
+        setParams({
+            ...params,
+            category: e?.id,
+            sub_category: null
+        })
+    }
+
+
     return(
         <div>
             <div className={'bac_div'}>
-                <img src={off_head} alt={'off_head'} style={{width:'120%'}}/>
+                <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
             </div>
             <div className={'offer_logo_div'}>
-                <AuthHeader headerState={true}/>
+                <AllOffersHeader headerState={true}/>
             </div>
             <div className={'menu_div'}>
                 <div className={'tab_div'} style={{boxShadow: '0 0 10px 5px rgb(140 152 164 / 40%)'}}>
                     <Row>
-                        <Col lg={10} style={{padding:80}}>
-                            <img src={img_thank_you} alt={'img_thank_you'} style={{width:200}}/>
+                        <Col lg={10} className={'thank_you_image_div'}>
+                            <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image'}/>
                         </Col>
-                        <Col lg={14} style={{padding:60}}>
+                        <Col lg={14} className={'thank_you_congretulation_div'}>
                             <CongratulationsText clinicRedux={clinicRedux} />
                         </Col>
                     </Row>
@@ -84,14 +105,39 @@ function ThankYouOffer() {
             { resetState ? <Preloader /> :
                 <div className={'menu_div'} >
                     <div className={'tab_div'}>
-                        <Radio.Group onChange={onChangeRadio} defaultValue={params.category??''} className={'radio_grup'}>
-                            <Radio.Button value={''}>{t("All offers")}</Radio.Button>
-                            {
-                                addData?.PublicCategory?.items?.map((el) => {
-                                    return <Radio.Button key={el?.id} value={el?.id} >{el?.name}</Radio.Button>
+                        <Button  type={params?.category || params?.sub_category ?  'secondary' : 'primary'} onClick={onChangeRadio} className={'all_offer_btn_style'} style={{color:params?.category || params?.sub_category ? '#000000' : "#ffffff" }} >{t("All offers")}</Button>
+                        {
+                            addData?.PublicCategory?.items?.map((el) => {
+                                let subCategories = el?.sub_categories?.map((e) => {
+                                    return {
+                                        label: e?.name,
+                                        key: e?.id,
+                                    }
                                 })
-                            }
-                        </Radio.Group>
+                                return <Dropdown
+                                    key={el?.id}
+                                    menu={{
+                                        items: subCategories,
+                                        onClick
+                                    }}
+                                    placement="bottom"
+                                    arrow
+                                >
+
+                                    <Button style={{color: params?.category === el?.id ? "#ffffff" : '#000000'}} className={'all_offers_category_radio_button'} type={params?.category === el?.id ? 'primary' : 'secondary'} onClick={() => onDropBtnChange(el)}>{el?.name}</Button>
+
+
+                                </Dropdown>
+                            })
+                        }
+                        {/*<Radio.Group onChange={onChangeRadio} defaultValue={params.category??''} className={'radio_grup'}>*/}
+                        {/*    <Radio.Button value={''}>{t("All offers")}</Radio.Button>*/}
+                        {/*    {*/}
+                        {/*        addData?.PublicCategory?.items?.map((el) => {*/}
+                        {/*            return <Radio.Button key={el?.id} value={el?.id} >{el?.name}</Radio.Button>*/}
+                        {/*        })*/}
+                        {/*    }*/}
+                        {/*</Radio.Group>*/}
                         <Divider />
                         <div>
                             <OffersPrices currentUrl={currentUrl} filterClinic={filterClinic} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
@@ -104,7 +150,7 @@ function ThankYouOffer() {
                             {
                                 data?.items?.length < 1 ? <div className={'no_offers'}>
                                     <Result
-                                        title="No offers found"
+                                        title={t("No offers found")}
 
                                     />
                                 </div> : data?.items?.map((el) => {
@@ -117,7 +163,7 @@ function ThankYouOffer() {
                             <div style={{fontSize: 40, fontWeight: 600}}>
                                 Offers from other clinics
                             </div>
-                            <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >Show All</Button>
+                            <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >{t('Show All')}</Button>
                         </div>
                     </div>
 
