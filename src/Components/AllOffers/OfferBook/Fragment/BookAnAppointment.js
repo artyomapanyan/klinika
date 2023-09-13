@@ -9,8 +9,7 @@ import {postResource} from "../../../Functions/api_calls";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate, useParams} from "react-router";
 import {t} from "i18next";
-import {Link} from "react-router-dom";
-import Preloader from "../../../Preloader";
+
 
 function BookAnAppointment({data}) {
     let token = useSelector((state) => state.auth.token);

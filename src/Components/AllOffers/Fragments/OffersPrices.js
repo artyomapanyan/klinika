@@ -71,12 +71,12 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
 
     return(
         <Row className={'filter_div'}>
-            <Col lg={7}>
+            <Col lg={7} xs={24}>
                 <div className={'price'}>
                     <div className={'price_text'}>
                         {t('Price:')}
                     </div>
-                    <div className={'price_text'}>
+                    <div className={'price_text_0'}>
                         {params?.min_price ?? 0} SAR
                     </div>
                     <div className={'price_text'}>
@@ -86,7 +86,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
                         {params?.max_price ?? 5000} SAR
                     </div>
                 </div>
-                <div style={{width:'100%'}} align={'right'}>
+                <div style={{width:'100%'}} align={'center'}>
                     <div className={'slider_div'} >
                         <Slider range defaultValue={[0, 5000]}
                                 max={5000}
@@ -102,7 +102,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
 
 
             </Col>
-            <Col lg={4} >
+            <Col lg={4}  xs={24} >
                 <div align={'center'} style={{cursor:'pointer'}} onClick={onLowHigh}>
                     <FunnelPlotOutlined style={{color:'#ce4e99', fontSize:20, paddingRight:10, }} />
                     <span style={{fontSize: 14}} >
@@ -113,7 +113,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
                     </span>
                 </div>
             </Col>
-            <Col lg={6} className={'all_offers_filter_clinics'}>
+            <Col lg={6}  xs={24} className={'all_offers_filter_clinics'}>
                 <div align={'center'}>
                     {
                         currentUrl.includes('thank-you') ? <div></div> : <div>
@@ -137,12 +137,12 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
 
                 </div>
             </Col>
-            <Col lg={5} className={'all_offers_filter_input_div'}>
+            <Col lg={5}  xs={24} className={'all_offers_filter_input_div'}>
                 <div align={'center'}>
                     <Input className={'offers_search_input'} size="large" placeholder="Search" onChange={(e)=>changeInputSearch(e)} prefix={<SearchOutlined />} />
                 </div>
             </Col>
-            <Col lg={2} align={'center'} className={'all_offers_filter_input_div'}>
+            <Col lg={2}  xs={24} align={'center'} className={'all_offers_filter_input_div'}>
                 <div>
                     <Button type={"secondary"} style={{backgroundColor:'#F3F3F3', border:'none', color:'#8d8c8d', fontWeight:600, height:37}} onClick={onReset}>{t('Reset')}</Button>
                 </div>

@@ -8,12 +8,15 @@ import yellow_calendar from "../../../../../dist/icons/yellow_calendar.png";
 import map_icon from "../../../../../dist/icons/map_icon.png";
 import message_icon from "../../../../../dist/icons/message_icon.png";
 import Preloader from "../../../../Preloader";
+import {t} from "i18next";
+import {useNavigate} from "react-router";
 
 const count = 6;
 
 
 function DoctorReworkedNotifications() {
     let token = useSelector((state) => state.auth.token);
+    let navigate = useNavigate()
 
     const [data, setData] = useState([]);
     const [loadind, setLoading] = useState(false);
@@ -33,63 +36,9 @@ function DoctorReworkedNotifications() {
         })
     }
 
-    // let a = [
-    //     {id: '90e34d93-1b4f-4355-899c-32ab441972fc',
-    //         data: {
-    //             description: "Appointment at `Klinika Center` Clinic at 2022-05-20 02:30 Confirmed",
-    //             icon: "calendar-check",
-    //             icon_color: "#6DAF56",
-    //             title: "Appointment with multi multi"
-    //         },
-    //         created_at: {
-    //             iso_string: "2023-04-25T07:57:13+00:00"
-    //         }
-    //     },
-    //     {id: '90e34d93-1b4f-4355-899c-32ab441972fc',
-    //         data: {
-    //             description: "Appointment at `Klinika Center` Clinic at 2022-05-20 02:30 Confirmed",
-    //             icon: "yellow_calendar",
-    //             icon_color: "#6DAF56",
-    //             title: "Appointment with multi multi"
-    //         },
-    //         created_at: {
-    //             iso_string: "2023-04-25T07:57:13+00:00"
-    //         }
-    //     },
-    //     {id: '90e34d93-1b4f-4355-899c-32ab441972fc',
-    //         data: {
-    //             description: "Appointment at `Klinika Center` Clinic at 2022-05-20 02:30 Confirmed",
-    //             icon: "message_icon",
-    //             icon_color: "#6DAF56",
-    //             title: "Appointment with multi multi"
-    //         },
-    //         created_at: {
-    //             iso_string: "2023-04-25T07:57:13+00:00"
-    //         }
-    //     },
-    //     {id: '90e34d93-1b4f-4355-899c-32ab441972fc',
-    //         data: {
-    //             description: "Appointment at `Klinika Center` Clinic at 2022-05-20 02:30 Confirmed",
-    //             icon: "yellow_calendar",
-    //             icon_color: "#6DAF56",
-    //             title: "Appointment with multi multi"
-    //         },
-    //         created_at: {
-    //             iso_string: "2023-04-25T07:57:13+00:00"
-    //         }
-    //     },
-    //     // {id: '90e34d93-1b4f-4355-899c-32ab441972fc',
-    //     //     data: {
-    //     //         description: "Appointment at `Klinika Center` Clinic at 2022-05-20 02:30 Confirmed",
-    //     //         icon: "map_icon",
-    //     //         icon_color: "#6DAF56",
-    //     //         title: "Appointment with multi multi"
-    //     //     },
-    //     //     created_at: {
-    //     //         iso_string: "2023-04-25T07:57:13+00:00"
-    //     //     }
-    //     // },
-    // ]
+    const goAllNotifications = () => {
+        navigate('/dashboard/notifications')
+    }
 
 
 
@@ -97,7 +46,7 @@ function DoctorReworkedNotifications() {
         <div className={'dr_reworked_calendar'} style={{height: 613}}>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
                 <h1 className={'h1'}>Notifications</h1>
-                <div onClick={onMarkAlAsRead} className={'notification_tag'}>Mark all as read</div>
+                <div onClick={onMarkAlAsRead} className={'notification_tag'}>{t('Mark all as read')}</div>
             </div>
             <div className={'notification_content_btn_div'}>
 
@@ -133,7 +82,7 @@ function DoctorReworkedNotifications() {
                 }
                 <div className={'dashed_lini'}></div>
                 <div>
-                    <Button className={'notification_button'}><span className={'notification_button_text'}>Show all notifications</span>
+                    <Button onClick={goAllNotifications} className={'notification_button'}><span className={'notification_button_text'}>{t('Show all notifications')}</span>
                         <span
                             className={'notification_button_text_count'}>{data?.unread_notifications_count}</span></Button>
                 </div>
