@@ -90,7 +90,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
                     }
                 })
                 setDisabledDays(day)
-                //console.log(responses, day, 'hhhh')
+
 
             })
         }
