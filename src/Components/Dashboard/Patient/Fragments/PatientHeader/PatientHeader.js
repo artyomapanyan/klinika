@@ -22,7 +22,7 @@ function PatientHeader({data}) {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-console.log(data, 'data')
+
 
     return (
         <div className={'patient_head_div'}>
