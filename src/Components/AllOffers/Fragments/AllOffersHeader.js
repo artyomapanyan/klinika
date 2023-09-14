@@ -38,9 +38,7 @@ function AllOffersHeader({headerState}) {
                     <img src={logo} alt={'logo_klinika'}/>
                 </div> : <Button onClick={()=>navigate(-1)} style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
             }
-            <div className={'all_offers_header_lng'}
-                 //style={{marginLeft:headerState ? '10%' : '90%', cursor:"pointer"}}
-            >
+            <div className={'all_offers_header_lng'}>
                 <Dropdown
                     menu={{
                         items,
