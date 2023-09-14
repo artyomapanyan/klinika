@@ -15,8 +15,8 @@ function OfferCard({data, id}) {
         <Col lg={12} xl={8} xxl={8} sm={24}>
             <div className={'offer_card'}>
                 <div className={'offer_card_image_div'}>
-                    <div className={'offer_card_image'}>
-                        <img src={data?.logo ? data?.logo?.url : off_image_1} alt={"image"} className={'offer_card_image'}
+                    <div className={'offer_card_image_1'}>
+                        <img src={data?.logo ? data?.logo?.url : off_image_1} alt={"image"} className={'offer_card_image_1'}
                             onError={({ currentTarget }) => {
                             currentTarget.onerror = null; // prevents looping
                             currentTarget.src=off_image_1;}}

@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import "./AllOffers.sass"
 import off_head from "../../dist/Img/off_head.png";
+import mobile_filter_icon from "../../dist/icons/mobile_filter_icon.png";
 
-import {Button, Divider, Radio, Result, Row, Dropdown} from "antd";
+import {Button, Divider, Radio, Result, Row, Dropdown, Drawer} from "antd";
 import OffersPrices from "./Fragments/OffersPrices";
 import {t} from "i18next";
 import OfferCard from "./Fragments/OfferCard";
@@ -13,6 +14,8 @@ import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../functions";
 
 import AllOffersHeader from "./Fragments/AllOffersHeader";
+import AllOffersMobileHeader from "./Fragments/AllOffersMobileHeader";
+import OfferPriceMobile from "./Fragments/OfferPriceMobile";
 
 
 
@@ -29,6 +32,7 @@ function AllOffers() {
 
 
      const [resetState, setResetState] = useState(false)
+    const [open, setOpen] = useState(false);
 
     const {loadingState, dataState, addData} = useGetResourceIndex('PublicOffer', params,false,false,false,false, {
         PublicClinic:{per_page:5000},
@@ -79,71 +83,99 @@ function AllOffers() {
         })
     }
 
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    const onApply = () => {
+        setOpen(false);
+    }
+
 
 
     return(
-        <div>
-            <div className={'bac_div'}>
-                <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
+        <div style={{backgroundColor: '#f5f6fa'}}>
+            <div className={'header_img_lng'}>
+                <div className={'bac_div'}>
+                    <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
+                </div>
+                <div className={'offer_logo_div'}>
+                    <AllOffersHeader headerState={true}/>
+                </div>
             </div>
-            <div className={'offer_logo_div'}>
-                <AllOffersHeader headerState={true}/>
-            </div>
+
+
+
+
             { resetState ? <Preloader /> :
              <div className={'menu_div'}>
-                <div className={'tab_div'} style={{boxShadow: '0 0 10px 5px rgb(140 152 164 / 40%)'}}>
+
+                     <div className={'tab_div'}>
 
 
-                        <Button  type={params?.category || params?.sub_category ?  'secondary' : 'primary'} onClick={onChangeRadio} className={'all_offer_btn_style'} style={{color:params?.category || params?.sub_category ? '#000000' : "#ffffff" }} >{t("All offers")}</Button>
-                        {
-                            addData?.PublicCategory?.items?.map((el) => {
-                                let subCategories = el?.sub_categories?.map((e) => {
-                                    return {
-                                        label: e?.name,
-                                        key: e?.id,
-                                    }
-                                })
-                                return <Dropdown
-                                    key={el?.id}
-                                    menu={{
-                                        items: subCategories,
-                                        onClick
-                                    }}
-                                    placement="bottom"
-                                    arrow
-                                >
+                         <Button  type={params?.category || params?.sub_category ?  'secondary' : 'primary'} onClick={onChangeRadio} className={'all_offer_btn_style'} style={{color:params?.category || params?.sub_category ? '#000000' : "#ffffff" }} >{t("All offers")}</Button>
+                         {
+                             addData?.PublicCategory?.items?.map((el) => {
+                                 let subCategories = el?.sub_categories?.map((e) => {
+                                     return {
+                                         label: e?.name,
+                                         key: e?.id,
+                                     }
+                                 })
+                                 return <Dropdown
+                                     key={el?.id}
+                                     menu={{
+                                         items: subCategories,
+                                         onClick
+                                     }}
+                                     placement="bottom"
+                                     arrow
+                                 >
+                                     <Button style={{color: params?.category === el?.id ? "#ffffff" : '#000000'}} className={'all_offers_category_radio_button'} type={params?.category === el?.id ? 'primary' : 'secondary'} onClick={() => onDropBtnChange(el)}>{el?.name}</Button>
+                                 </Dropdown>
+                                 // <Dropdown
+                                 //     key={el?.id}
+                                 //    // icon={<DownOutlined />}
+                                 //     //loading={loadings[1]}
+                                 //     menu={{
+                                 //         items: subCategories,
+                                 //         onClick,
+                                 //     }}
+                                 //     type={"secondary"}
+                                 //     //onClick={() => onDropBtnChange(el)}
+                                 //
+                                 // >
+                                 //     {el?.name}
+                                 // </Dropdown>
+                                 // return <Radio.Button key={el?.id} value={el?.id} >{el?.name}</Radio.Button>
+                             })
+                         }
+                         <Divider />
+                         <div>
+                             <OffersPrices currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
+                         </div>
+                     </div>
 
-                                        <Button style={{color: params?.category === el?.id ? "#ffffff" : '#000000'}} className={'all_offers_category_radio_button'} type={params?.category === el?.id ? 'primary' : 'secondary'} onClick={() => onDropBtnChange(el)}>{el?.name}</Button>
+
+                 <div className={'tab_div_mobile'}>
+                     <AllOffersMobileHeader/>
+                     <div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>
+                         <img src={mobile_filter_icon} alt={'mobile_filter_icon'}/>
+                         <span className={'tab_div_mobile_filter_text'}>{t('Filter')}</span>
+                     </div>
+                 </div>
+
+                 <Drawer title="" placement="top" onClose={onClose} open={open} closeIcon={false} className={'all_offers_drawer'} height={415}>
+                     <OfferPriceMobile setOpen={setOpen} currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items} onApply={onApply}/>
+                 </Drawer>
 
 
-                                </Dropdown>
 
 
 
-
-                                // <Dropdown
-                                //     key={el?.id}
-                                //    // icon={<DownOutlined />}
-                                //     //loading={loadings[1]}
-                                //     menu={{
-                                //         items: subCategories,
-                                //         onClick,
-                                //     }}
-                                //     type={"secondary"}
-                                //     //onClick={() => onDropBtnChange(el)}
-                                //
-                                // >
-                                //     {el?.name}
-                                // </Dropdown>
-                               // return <Radio.Button key={el?.id} value={el?.id} >{el?.name}</Radio.Button>
-                            })
-                        }
-
-                    <Divider />
-                    <div>
-                        <OffersPrices currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
-                    </div>
-                </div>
                 <div className={'big_div_cards'}>
 
                     {loading ? <Preloader /> :    <Row gutter={[20, 20]} style={{marginTop:20}}>
