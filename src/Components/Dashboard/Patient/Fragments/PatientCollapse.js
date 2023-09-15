@@ -28,28 +28,28 @@ function PatientCollapse({data, setData}) {
 
     const onStatusChange = (key)=>{
 
-        if(key != 2) {
+
             setModal({
                 ...data,
                 key
             })
-        }
-        if(key == 2) {
-            setLoading(true)
-            postResource('Appointment','appointmentStatus', token, `${data.id}/switch-status`, {
-                status:key,
-            }).then(() => {
 
-                setModal(null)
-                setData((prevState)=>({
-                    ...prevState,
-                }))
-                setLoading(false)
-            }).finally(()=>{
-                setLoading(true)
-                window.location.reload()
-            })
-        }
+        // if(key == 2) {
+        //     setLoading(true)
+        //     postResource('Appointment','appointmentStatus', token, `${data.id}/switch-status`, {
+        //         status:key,
+        //     }).then(() => {
+        //
+        //         setModal(null)
+        //         setData((prevState)=>({
+        //             ...prevState,
+        //         }))
+        //         setLoading(false)
+        //     }).finally(()=>{
+        //         setLoading(true)
+        //         window.location.reload()
+        //     })
+        // }
 
     }
 
@@ -100,7 +100,7 @@ function PatientCollapse({data, setData}) {
                 >
                     {
                         modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
-                            //modal?.key === '2' ? <FinishedContent loading={loading}  onCancel={onCancel} /> :
+                            modal?.key === '2' ? <Confirmed loading={loading} onCancel={onCancel}/> :
                                 modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
                                     modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                         modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :

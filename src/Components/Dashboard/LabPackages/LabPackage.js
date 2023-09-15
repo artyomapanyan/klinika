@@ -30,6 +30,11 @@ function LabPackage() {
             ...prevState,
             ...values
         }))
+        console.log(values)
+
+        values?.description ? values.description = values?.description : values.description = ''
+
+
         if (params.id) {
             updateResource(resource, params.id, values, token,true).then(response => {
                 if(response?.id){

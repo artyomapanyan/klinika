@@ -32,6 +32,9 @@ function Post() {
             ...prevState,
             ...values
         }))
+
+        values?.content ? values.content = values?.content : values.content = ''
+
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){

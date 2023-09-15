@@ -39,6 +39,9 @@ function Offer() {
             ...prevState,
             ...values
         }))
+        values?.content ? values.content = values.content : values.content = ''
+
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
@@ -91,7 +94,7 @@ function Offer() {
      }
  }
 
- console.log(data)
+
 
     return(
         <div >
