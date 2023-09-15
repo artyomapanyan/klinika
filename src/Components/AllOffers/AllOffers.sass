@@ -35,6 +35,38 @@
       padding: 14px 16px
       box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
 
+
+  .tab_div_1
+    width: 75%
+    background-color: #FFFFFF
+    border-radius: 8px
+    opacity: 0.99
+    min-height: 100px
+    padding: 10px
+    box-shadow: 0px 1.43897px 2.21381px 0px rgba(0, 0, 0, 0.01), 0px 3.45805px 5.32008px 0px rgba(0, 0, 0, 0.01), 0px 6.51121px 10.01724px 0px rgba(0, 0, 0, 0.02), 0px 11.61488px 17.86905px 0px rgba(0, 0, 0, 0.02), 0px 21.72436px 33.42209px 0px rgba(0, 0, 0, 0.03)
+    @media screen and (max-width: 900px)
+      width: 75%
+      margin-top: 15px
+    @media screen and (max-width: 500px)
+      width: 90%
+      margin-top: 15px
+
+  .tab_div_mobile
+    display: none
+    opacity: 0.99
+    @media screen and (max-width: 900px)
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+      align-items: center
+      opacity: 0.99
+      background-color: #FFFFFF
+      width: 100%
+      padding: 14px 16px
+      box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
+
+
+
 .all_offers_mobile_dropDown_div
   margin: 0 16px
 
@@ -85,27 +117,32 @@
 
 .all_offers_category_radio_button
   border: none
-  font-size: 15px
-  font-weight: 600
-  padding-bottom: -3px
+  font-size: 18px
+  font-weight: 700
+  padding-top: -5px
+  height: 37px
   &:hover
     color: #FFFFFF !important
 
 .all_offer_btn_style
   border: none
-  font-size: 15px
-  font-weight: 600
-  padding-bottom: -3px
+  font-size: 18px
+  font-weight: 700
+  height: 36px
   &:hover
     color: #FFFFFF !important
 
 .all_offers_header_lng
-  margin-left: 45%
+  margin-left: 60%
   cursor: pointer
-  @media screen and (max-width: 700px)
-    margin-left: 25%
-  @media screen and (max-width: 500px)
-    margin-left: 10%
+  @media screen and (max-width: 1650px)
+    margin-left: 57%
+  @media screen and (max-width: 1400px)
+    margin-left: 55%
+  @media screen and (max-width: 1240px)
+    margin-left: 52%
+  @media screen and (max-width: 1130px)
+    margin-left: 50%
 
 .mobile_filter_line
   width: 100%
@@ -140,6 +177,7 @@
   font-weight: 600
 
 .price_text
+  font-size: 16px
   font-weight: 700
 .slider_div
   width: 65%
@@ -194,8 +232,12 @@
   opacity: 0.99
   width: 75%
   @media screen and (max-width: 500px)
-    width: 90%
+    width: 93%
   .offer_card
+
+    margin-letf: 4px
+    margin-right: 4px
+    margin-top: 13px
     box-shadow: 0px 1.43897px 2.21381px 0px rgba(0, 0, 0, 0.01), 0px 3.45805px 5.32008px 0px rgba(0, 0, 0, 0.01), 0px 6.51121px 10.01724px 0px rgba(0, 0, 0, 0.02), 0px 11.61488px 17.86905px 0px rgba(0, 0, 0, 0.02), 0px 21.72436px 33.42209px 0px rgba(0, 0, 0, 0.03)
 
     background-color: #FFFFFF
@@ -429,18 +471,30 @@
     width: 100%
 
 .thank_you_image_div
-  padding: 80px
-  @media screen and (max-width: 600px)
-    padding: 60px
-  @media screen and (max-width: 530px)
-    padding: 50px
-  @media screen and (max-width: 500px)
-    padding: 40px
-  @media screen and (max-width: 450px)
-    padding: 20px
+  display: flex
+  flex-direction: row
+  justify-content: center
+  padding: 50px
+
+  //@media screen and (max-width: 600px)
+  //  padding: 60px
+  //@media screen and (max-width: 530px)
+  //  padding: 50px
+  //@media screen and (max-width: 500px)
+  //  padding: 40px
+  //@media screen and (max-width: 450px)
+  //  padding: 20px
+
+.thank_you_img_text
+  display: flex
+  flex-direction: row
+  @media screen and (max-width: 1000px)
+    display: block
+
 
 .thank_you_image
   width: 200px
+  height: 200px
   @media screen and (max-width: 450px)
     width: 170px
 
@@ -545,12 +599,14 @@
   justify-content: center
   align-items: center
   .clinic_name_inn
-    width: 60%
+    width: 75%
     background-color: #FFFFFF
     border-radius: 8px
     opacity: 0.99
     min-height: 100px
     padding: 10px
+    @media screen and (max-width: 500px)
+      width: 90%
 .load_more_div
   margin-top: 30px
   display: flex

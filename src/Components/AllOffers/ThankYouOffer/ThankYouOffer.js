@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../AllOffers.sass"
-import {Button, Col, Divider, Dropdown, Radio, Result, Row} from "antd";
+import {Button, Col, Divider, Drawer, Dropdown, Radio, Result, Row} from "antd";
 import {t} from "i18next";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../../functions";
@@ -16,6 +16,9 @@ import CongratulationsText from "./Fragments/CongratulationsText";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import AllOffersHeader from "../Fragments/AllOffersHeader";
+import AllOffersMobileHeader from "../Fragments/AllOffersMobileHeader";
+import mobile_filter_icon from "../../../dist/icons/mobile_filter_icon.png";
+import OfferPriceMobile from "../Fragments/OfferPriceMobile";
 
 
 
@@ -42,6 +45,7 @@ function ThankYouOffer() {
     const {loading} = loadingState;
     const {data} = dataState;
     const [filterClinic, setFilterClinic] = useState('')
+    const [open, setOpen] = useState(false);
 
 
     useEffect(()=>setSearchParams(params),[params])
@@ -70,32 +74,62 @@ function ThankYouOffer() {
         })
     }
 
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    const onApply = () => {
+        setOpen(false);
+    }
+
 
     return(
         <div>
-            <div className={'bac_div'}>
-                <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
+            <div className={'header_img_lng'}>
+                <div className={'bac_div'}>
+                    <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
+                </div>
+                <div className={'offer_logo_div'}>
+                    <AllOffersHeader headerState={true}/>
+                </div>
             </div>
-            <div className={'offer_logo_div'}>
-                <AllOffersHeader headerState={true}/>
-            </div>
+
+
+
+
             <div className={'menu_div'}>
-                <div className={'tab_div'} style={{boxShadow: '0 0 10px 5px rgb(140 152 164 / 40%)'}}>
-                    <Row>
-                        <Col lg={10} className={'thank_you_image_div'}>
+                <div className={'tab_div_mobile'}>
+                    <AllOffersMobileHeader/>
+                    <div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>
+                        <img src={mobile_filter_icon} alt={'mobile_filter_icon'}/>
+                        <span className={'tab_div_mobile_filter_text'}>{t('Filter')}</span>
+                    </div>
+                </div>
+
+                <Drawer title="" placement="top" onClose={onClose} open={open} closeIcon={false} className={'all_offers_drawer'} height={414}>
+                    <OfferPriceMobile setOpen={setOpen} currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items} onApply={onApply}/>
+                </Drawer>
+
+
+                <div className={'tab_div_1'} >
+                    <div className={'thank_you_img_text'}>
+                        <div className={'thank_you_image_div'}>
                             <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image'}/>
-                        </Col>
-                        <Col lg={14} className={'thank_you_congretulation_div'}>
+                        </div>
+                        <div className={'thank_you_congretulation_div'}>
                             <CongratulationsText clinicRedux={clinicRedux} />
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
 
                 </div>
             </div>
             <div className={'clinic_name'}>
                 <div className={'clinic_name_inn'} >
                     <div style={{color:'#ce4e99', fontSize:32}}>
-                        Discover other offers from
+                        {t('Discover other offers from')}
                     </div>
                     <div style={{fontSize:40, fontWeight:600}}>
                         {clinicRedux?.name}
@@ -143,6 +177,11 @@ function ThankYouOffer() {
                             <OffersPrices currentUrl={currentUrl} filterClinic={filterClinic} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items}/>
                         </div>
                     </div>
+
+
+
+
+
                     <div className={'big_div_cards'}>
 
                         {loading ? <Preloader /> :    <Row gutter={[20, 20]} style={{marginTop:20}}>

@@ -32,9 +32,9 @@ function AllOffersHeader({headerState}) {
     };
 
     return (
-        <div style={{width:'100%', position:"absolute", top:40, display: "flex", flexDirection:"row", JustifyContent:'space-around'}}>
+        <div style={{width:'100%', position:"absolute", top:40, display: "flex", flexDirection:"row", JustifyContent:'space-around', alignItems: 'center'}}>
             {
-                headerState ? <div style={{marginLeft:'20%'}}>
+                headerState ? <div style={{marginLeft:'13%'}}>
                     <img src={logo} alt={'logo_klinika'}/>
                 </div> : <Button onClick={()=>navigate(-1)} style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
             }

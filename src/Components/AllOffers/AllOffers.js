@@ -168,7 +168,7 @@ function AllOffers() {
                      </div>
                  </div>
 
-                 <Drawer title="" placement="top" onClose={onClose} open={open} closeIcon={false} className={'all_offers_drawer'} height={415}>
+                 <Drawer title="" placement="top" onClose={onClose} open={open} closeIcon={false} className={'all_offers_drawer'} height={414}>
                      <OfferPriceMobile setOpen={setOpen} currentUrl={currentUrl} clinics={addData?.PublicClinic?.items} resetState={resetState} setResetState={setResetState} setParams={setParams} params={params} data={data?.items} onApply={onApply}/>
                  </Drawer>
 
@@ -178,7 +178,7 @@ function AllOffers() {
 
                 <div className={'big_div_cards'}>
 
-                    {loading ? <Preloader /> :    <Row gutter={[20, 20]} style={{marginTop:20}}>
+                    {loading ? <Preloader /> :    <Row gutter={[24, 14]} style={{marginTop:24}}>
 
                             {
                                 data?.items?.length < 1 ? <div className={'no_offers'}>
