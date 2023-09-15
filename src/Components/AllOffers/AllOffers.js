@@ -17,8 +17,6 @@ import AllOffersHeader from "./Fragments/AllOffersHeader";
 import AllOffersMobileHeader from "./Fragments/AllOffersMobileHeader";
 import OfferPriceMobile from "./Fragments/OfferPriceMobile";
 
-
-
 function AllOffers() {
     const currentUrl = window.location.href;
     const [dataLength, setDataLength] = useState(9)
