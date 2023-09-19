@@ -10,10 +10,14 @@ import Resources from "../../../../store/Resources";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
+import Preloader from "../../../Preloader";
 
 function AppDate({setDataState, dataState, data, setDate}) {
     let token = useSelector((state) => state.auth.token);
     const [dayOff, setDayOff] = useState([]);
+    const [loadingDate, setLoadingDate] = useState(false);
+    const [availableDay, setAvailableDay] = useState([]);
+
 
     useEffect(() => {
         if(dataState?.doctor_id) {
@@ -28,8 +32,36 @@ function AppDate({setDataState, dataState, data, setDate}) {
                     }
                 })
                 setDayOff(day)
+
+
             })
         }
+
+        if(dataState?.doctor_id) {
+            setLoadingDate(true)
+            let b = [...Array(10)?.keys()]?.map((el, key) => {
+                return dayjs().add(key, 'day').format('YYYY-MM-DD')
+            })
+
+
+
+            let s = []
+            for(let i = 0; i < b.length; i++) {
+                postResource('PublicClinicDoctorAvailableTimes','single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service:'clinic_visit', date:b[i]}).then(response => {
+                    //setTimes(response[0]);
+
+                    s.push(response)
+                    setLoadingDate(false)
+                })
+            }
+            setAvailableDay(s)
+
+            console.log(s, 's')
+
+
+        }
+
+
     }, [dataState?.doctor_id])
 
     const onDate = (date) => {
@@ -102,7 +134,7 @@ function AppDate({setDataState, dataState, data, setDate}) {
                             {[...Array(30).keys()].map((key)=>{
                                 const date = currentDate.add(key,'day')
 
-                                return !dayOff.includes(date.day())? <div key={key} onClick={()=>onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>
+                                return !dayOff.includes(date.day()) ? <div key={key} onClick={()=>onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>
                                     <div className={'date_div_inn'}>
                                         <div style={{fontSize:12, color:'gray'}}>{Resources.Days[date.day()]}</div>
                                         <Space>

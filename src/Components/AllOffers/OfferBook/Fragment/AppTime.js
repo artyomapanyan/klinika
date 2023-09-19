@@ -72,7 +72,7 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
         ]
     }
 
-    console.log(times)
+
 
     return(
         <div>
