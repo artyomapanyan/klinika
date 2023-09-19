@@ -96,7 +96,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                     verifyNumber: 'Verification code successfully sent to your phone number',
                 }))
             }
-            console.log(response, 'jjj')
+
             if(response === 'You entered an incorrect code'){
                 openNotification('bottomRight')
             }
@@ -143,7 +143,6 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     }
 
 
-console.log(responseCodeState)
 
 
     return (

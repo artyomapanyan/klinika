@@ -204,7 +204,7 @@ function Incoice() {
     const handleInvoiceSelect = (e, key,data) => {
 
         postResource('InvoiceItem', 'single', token, e).then((response) => {
-            console.log(response)
+
             const selected_item = data.find(u=>u.id===e);
             formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
             formRef?.current?.setFieldValue(['items', key, 'item_object'], {
@@ -223,7 +223,7 @@ function Incoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
-     console.log(data, 'd')
+
 
     return (
         <div className={"new_invoice_big_div"}>

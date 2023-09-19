@@ -30,7 +30,7 @@ function LabPackage() {
             ...prevState,
             ...values
         }))
-        console.log(values)
+
 
         values?.description ? values.description = values?.description : values.description = ''
 

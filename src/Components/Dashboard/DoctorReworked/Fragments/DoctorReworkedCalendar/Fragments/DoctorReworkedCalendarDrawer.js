@@ -68,7 +68,6 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
     }, [])
 
-console.log(formState, 'fo')
 
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''}>

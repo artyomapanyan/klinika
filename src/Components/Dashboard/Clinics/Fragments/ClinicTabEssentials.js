@@ -387,11 +387,17 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             values.insurance_companies = []
         }
 
+        if(values?.description) {
+            values.description = values.description
+        } else {
+            values.description = ''
+        }
 
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
+
 
 
         if (params.id) {

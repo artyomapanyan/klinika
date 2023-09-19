@@ -8,7 +8,7 @@ import {t} from "i18next";
 function AppPaymentMethods({setDataState, dataState, responseCodeState, data}) {
     const [paymentMethodState, setPaymentMethodState] = useState('')
 
-   // console.log(data)
+
 
 
 
