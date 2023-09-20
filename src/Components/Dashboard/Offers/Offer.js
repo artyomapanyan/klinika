@@ -39,7 +39,7 @@ function Offer() {
             ...prevState,
             ...values
         }))
-        values?.content ? values.content = values.content : values.content = ''
+        values?.content ? values.content = values.content : values.content = data.content
 
 
 
@@ -94,6 +94,8 @@ function Offer() {
      }
  }
 
+    let req = <div><span style={{color: 'red'}}>*</span> <span>{t('content')}</span></div>
+
 
 
     return(
@@ -109,7 +111,7 @@ function Offer() {
             >
                 <div className={'add_edit_content'}>
                     <FormInput label={t('title')} name={'title'} initialValue={data?.title} rules={[{required: true}]} />
-                    <Form.Item name={'content'} label={t('content')}>
+                    <Form.Item name={'content'} label={req}>
                         <DraftEditor initialValue={data?.content} formRef={formRef} name={'content'} />
                     </Form.Item>
                 </div>
@@ -237,11 +239,11 @@ function Offer() {
                                            }
                                        }}
                                        rules={[{required: true}]}
-                                       disabled={!data?.clinic_id}
+                                       disabled={!data?.clinic_id && !data?.clinic?.id}
                                        initialValue={data?.specialty_id?.id}
                                        initialData={data?.specialty_id ? [data.specialty_id] : []}
                                        resourceParams={{
-                                           clinic:data.clinic_id,
+                                           clinic: data?.clinic?.id ? data?.clinic?.id : data.clinic_id,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 
@@ -275,7 +277,7 @@ function Offer() {
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
                                        resourceParams={{
-                                           parent: data?.specialty_id,
+                                           parent: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
 
@@ -313,8 +315,8 @@ function Offer() {
                                        initialData={data?.doctors??[]}
                                        resource={'Doctor'}
                                        resourceParams={{
-                                           clinic:data?.clinic_id,
-                                           specialty: data?.specialty_id
+                                           clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
+                                           specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id
                                        }}
                             />
 
@@ -365,9 +367,9 @@ function Offer() {
                             }} label={t('Sub categories')} name={'sub_categories'} inputType={'resourceSelect'}
 
                                        rules={[{required: true}]}
-                                       disabled={!data?.category_id}
+                                       disabled={!data?.category_id && !data?.category?.id}
                                        resourceParams={{
-                                           category:data.category_id
+                                           category: data?.category?.id ? data?.category?.id : data.category_id
                                        }}
                                        initialValue={data?.sub_categories?.map(e=>e.id) ?? null}
                                        initialData={data?.sub_categories ??[]}
@@ -392,7 +394,7 @@ function Offer() {
                                        }}
                                        disabled={!data?.sub_categories}
                                        resourceParams={{
-                                           sub_categories:data.sub_categories
+                                           sub_categories:data.sub_categories?.map(el=>el?.id ? el?.id : el)
                                        }}
                                        rules={[{required: true}]}
                                        initialValue={data?.service?.id ? data?.service?.id : null}
@@ -401,9 +403,9 @@ function Offer() {
 
                             <FormInput inputProps={{mode:'multiple'}} label={t('Sub services')} name={'sub_services'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       disabled={!data?.service_id}
+                                       disabled={!data?.service_id && !data?.service?.id}
                                        resourceParams={{
-                                           service:data.service_id
+                                           service: data?.service?.id ? data?.service?.id : data.service_id
                                        }}
                                        initialValue={data?.sub_services?.map(e=>e.id)}
                                        initialData={data?.sub_services ??[]}

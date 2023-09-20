@@ -27,12 +27,12 @@ function Preferences() {
                        hideActions={true}
                        tableColumns={[
                            {
-                               title: 'Key',
+                               title: t('Key'),
                                dataIndex: 'key',
                                key: 'key'
                            },
                            {
-                               title: 'Value',
+                               title: t('Value'),
                                dataIndex: 'value',
                                key: 'value',
                                render:(i,record)=>record.type==='number'?<InputNumber defaultValue={record.value} onChange={(e)=>record.value=e}/>:
@@ -41,7 +41,7 @@ function Preferences() {
                                    record.value
                            },
                            {
-                               title: 'Save',
+                               title: t('Save'),
                                dataIndex: 'save',
                                key: 'save',
                                render:(i,record)=><Button type={'primary'} loading={loading[record.id]} onClick={()=>handleSave(record)}>{t('Save')}</Button>

@@ -75,9 +75,9 @@ function Translations(){
         confirm();
 
     };
-    const handleReset = (selectedKeys, confirm, ) => {
-
-        confirm();
+    const handleReset = (clearFilters, confirm) => {
+        clearFilters();
+        confirm(clearFilters)
 
     };
     const getColumnSearchProps = (dataIndex) => ({
@@ -109,7 +109,7 @@ function Translations(){
                         Search
                     </Button>
                     <Button
-                        onClick={() => handleReset(selectedKeys, confirm, dataIndex)}
+                        onClick={() => handleReset(clearFilters, confirm)}
                         size="small"
                         style={{
                             width: 90,
@@ -165,7 +165,7 @@ function Translations(){
                             title:t('Key'),
                             dataIndex:'key',
                             key:'key',
-                            // ...getColumnSearchProps('key'),
+                             ...getColumnSearchProps('key'),
                         },
                         {
                             title:t('Value'),

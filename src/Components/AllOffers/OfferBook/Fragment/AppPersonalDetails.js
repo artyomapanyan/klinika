@@ -160,7 +160,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                     {verifyState === 0 && <Form onFinish={onVerifyNumber} name={'send'}>
                         <div className={'personal_details_code_numbet_div'}>
                             <div className={'personal_details_code_div'}>
-                                <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                            rules={[{required: true}]}
                                            handleMapItems={handleMapItems}
                                            resource={'PublicCountry'}/>

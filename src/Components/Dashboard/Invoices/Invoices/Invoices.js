@@ -71,7 +71,7 @@ function Invoices() {
 
                                customHeader={(props)=> {
 
-                                   return <div  style={{display: 'flex', gap: 15, alignItems: 'center', justifyContent: 'right', width: '100%', marginBottom: -30, marginTop:15}}>
+                                   return <div  style={{display: 'flex', gap: 15, alignItems: 'center', justifyContent: 'flex-end', width: '100%', marginBottom: -30, marginTop:15}}>
 
                                        <Switch onChange={(e)=> onNew(e)}></Switch>  New
                                        <Switch  onChange={(e)=> onPayed(e)} ></Switch>  Payed

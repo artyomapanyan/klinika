@@ -149,8 +149,8 @@ function Doctor() {
                                        initialValue={data?.status}
                                        initialData={Resources.Status}
                             />
-                            <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: true}]} />
-                            <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} rules={[{required: true}]} />
+                            <FormInput inputType={'password'}  label={t('Password')} name={'password'} rules={[{required: true}]} />
+                            <FormInput inputType={'password'}  label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: true}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
@@ -193,7 +193,7 @@ function Doctor() {
 
                         </Col>
                     </Row>
-                    <FileManager text1={t('avatar')}
+                    <FileManager text1={t('Avatar')}
                                  text2={t('Download the file')}
                                  name={'avatar'}
                                  uploadIcon={<InboxOutlined/>}
