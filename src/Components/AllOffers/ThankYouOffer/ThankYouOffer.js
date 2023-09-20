@@ -21,7 +21,6 @@ import OfferPriceMobile from "../Fragments/OfferPriceMobile";
 
 
 
-
 function ThankYouOffer() {
     const currentUrl = window.location.href;
     let clinicRedux = useSelector((state) => state?.publicClinic);
