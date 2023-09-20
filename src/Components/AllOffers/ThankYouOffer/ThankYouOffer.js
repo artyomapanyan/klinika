@@ -200,7 +200,7 @@ function ThankYouOffer() {
 
                         <div className={'load_more_div'}>
                             <div style={{fontSize: 40, fontWeight: 600}}>
-                                Offers from other clinics
+                                {t('Offers from other clinics')}
                             </div>
                             <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >{t('Show All')}</Button>
                         </div>
