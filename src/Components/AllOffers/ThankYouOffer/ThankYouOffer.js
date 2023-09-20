@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import "../AllOffers.sass"
-import {Button, Col, Divider, Drawer, Dropdown, Radio, Result, Row} from "antd";
+import {Button, Divider, Drawer, Dropdown, Result, Row} from "antd";
 import {t} from "i18next";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../../functions";
 import {useGetResourceIndex} from "../../Functions/api_calls";
-import AuthHeader from "../../Auth/AuthHeader";
 import Preloader from "../../Preloader";
 import OffersPrices from "../Fragments/OffersPrices";
 import OfferCard from "../Fragments/OfferCard";

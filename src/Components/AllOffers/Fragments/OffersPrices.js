@@ -145,7 +145,7 @@ function OffersPrices({clinics, setParams, params,  setResetState, currentUrl}) 
             </Col>
             <Col lg={5}  xs={24} className={'all_offers_filter_input_div'}>
                 <div align={'center'}>
-                    <Input className={'offers_search_input'} size="large" placeholder="Search" onChange={(e)=>changeInputSearch(e)} prefix={<img src={search_icon_black} alt={'search_icon_black'}/>} />
+                    <Input className={'offers_search_input'} size="large" placeholder={t("Search")} onChange={(e)=>changeInputSearch(e)} prefix={<img src={search_icon_black} alt={'search_icon_black'}/>} />
                 </div>
             </Col>
             <Col lg={2}  xs={24} align={'center'} className={'all_offers_filter_input_div'}>

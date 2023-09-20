@@ -90,7 +90,7 @@ function Translations(){
             >
                 <Input
                     ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
+                    placeholder={t('Search')}
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
 
@@ -106,7 +106,7 @@ function Translations(){
 
                         }}
                     >
-                        Search
+                        {t('Search')}
                     </Button>
                     <Button
                         onClick={() => handleReset(clearFilters, confirm)}
@@ -116,7 +116,7 @@ function Translations(){
                             margin: '0 10px'
                         }}
                     >
-                        Reset
+                        {t('Reset')}
                     </Button>
 
                 </div>
