@@ -8,7 +8,7 @@ function OfferBookDetails({data}) {
     return(
         <div className={'offer_details'}>
             <div>
-                <h2>{t('Offer Details')}</h2>
+                <h2>{t('Offer_Details')}</h2>
                 <div dangerouslySetInnerHTML={{__html: data?.content}} />
             </div>
 

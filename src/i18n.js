@@ -12,6 +12,9 @@ i18n
             fallbackLng: "en",
             en: {
                 translation: {
+                    Discover_other_offers_from:'Discover other offers from',
+                    Your_booking:'Your booking',
+                    Congratulations:'Congratulations',
                     Offer_Details:'Offer Details',
                     SAR:'SAR',
                     Book_now:'Book now',
@@ -70,9 +73,12 @@ i18n
             },
             ar: {
                 translation: {
+                    Discover_other_offers_from:'إكتشف العروض الأخرى',
+                    Your_booking:'حجزك',
+                    Congratulations:'تهانينا',
                     Offer_Details:'تفاصيل العرض',
                     SAR:'ريال',
-                    Book_now:'حجز الان',
+                    Book_now:'احجز الان',
                     Add : "إضافة",
                     Dashboard: 'لوحة التحكم',
                     Countries: 'البلدان',
