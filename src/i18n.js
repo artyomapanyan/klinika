@@ -12,7 +12,9 @@ i18n
             fallbackLng: "en",
             en: {
                 translation: {
-
+                    Offer_Details:'Offer Details',
+                    SAR:'SAR',
+                    Book_now:'Book now',
                     Add :"add",
                     Dashboard: 'Dashboard',
                     Countries: 'Countries',
@@ -68,7 +70,9 @@ i18n
             },
             ar: {
                 translation: {
-
+                    Offer_Details:'تفاصيل العرض',
+                    SAR:'ريال',
+                    Book_now:'حجز الان',
                     Add : "إضافة",
                     Dashboard: 'لوحة التحكم',
                     Countries: 'البلدان',
