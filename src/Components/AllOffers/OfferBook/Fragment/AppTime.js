@@ -5,16 +5,20 @@ import Slider from "react-slick";
 import {useSelector} from "react-redux";
 import {postResource} from "../../../Functions/api_calls";
 import {t} from "i18next";
+import Preloader from "../../../Preloader";
 
 function AppTime({setDataState, dataState, data, setDataTimes}) {
     let token = useSelector((state) => state.auth.token);
 
     const [times, setTimes] = useState([])
+    const [timesLoading, setTimesLoading] = useState(false)
 
     useEffect(() => {
         if(dataState?.doctor_id && dataState?.date) {
+            setTimesLoading(true)
             postResource('PublicClinicDoctorAvailableTimes','single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service:'clinic_visit', date:dataState?.date}).then(response => {
                 setTimes(response[0]);
+                setTimesLoading(false)
             })
         }
     }, [dataState?.date])
@@ -69,11 +73,12 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
     }
 
 
+
     return(
         <div>
             <Space>
                 <CheckCircleOutlined style={{color:dataState?.time ?'#2ce310':'gray', fontSize:22}} />
-                <h2 style={{fontWeight: 600, marginTop:8}}>{t('time')}</h2>
+                <h2 style={{fontWeight: 600, marginTop:8}}>{t('Time')}</h2>
             </Space>
             {
                 dataState?.doctor_id && dataState?.date && dataState?.time ? <div>
@@ -83,7 +88,8 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
                     </div>
                 </div> : (dataState?.doctor_id && dataState?.date) || dataState?.time ? <div className={'date_carousel_div'}>
                     <div style={{position:'absolute', width:'98%'}}>
-                        <Slider {...settings}>
+                        {
+                            timesLoading ? <Preloader small={25} /> : times ? <Slider {...settings}>
                             {
                                 times?.map((time, key) => {
                                     return <div key={key} onClick={()=>onTime(time)} style={{width:100}} className={'date_div'} align={'center'}>
@@ -97,7 +103,10 @@ function AppTime({setDataState, dataState, data, setDataTimes}) {
                                 })
                             }
 
-                        </Slider>
+                            </Slider> : <div style={{fontWeight: 600, color: '#c26aa6'}}>
+                                {t('No available times')}
+                            </div>
+                        }
                     </div>
 
                 </div> :<div></div>

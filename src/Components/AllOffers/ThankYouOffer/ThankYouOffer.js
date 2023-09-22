@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import "../AllOffers.sass"
-import {Button, Col, Divider, Drawer, Dropdown, Radio, Result, Row} from "antd";
+import {Button, Divider, Drawer, Dropdown, Result, Row} from "antd";
 import {t} from "i18next";
 import {useSearchParams} from "react-router-dom";
 import {paramsToObject} from "../../../functions";
 import {useGetResourceIndex} from "../../Functions/api_calls";
-import AuthHeader from "../../Auth/AuthHeader";
 import Preloader from "../../Preloader";
 import OffersPrices from "../Fragments/OffersPrices";
 import OfferCard from "../Fragments/OfferCard";
@@ -19,7 +18,6 @@ import AllOffersHeader from "../Fragments/AllOffersHeader";
 import AllOffersMobileHeader from "../Fragments/AllOffersMobileHeader";
 import mobile_filter_icon from "../../../dist/icons/mobile_filter_icon.png";
 import OfferPriceMobile from "../Fragments/OfferPriceMobile";
-
 
 
 
@@ -200,7 +198,7 @@ function ThankYouOffer() {
 
                         <div className={'load_more_div'}>
                             <div style={{fontSize: 40, fontWeight: 600}}>
-                                Offers from other clinics
+                                {t('Offers from other clinics')}
                             </div>
                             <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >{t('Show All')}</Button>
                         </div>

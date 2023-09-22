@@ -129,7 +129,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                             />
                         </Form.Item>: <div></div>}
                         {
-                            noTimes[0]?.length < 1 ? <div align={'center'} style={{width:'100%', fontSize: 20, marginTop:20, marginBottom: 20, fontWeight: 500, color: '#F3A632'}}>There are no available times</div> :
+                            noTimes[0]?.length < 1 ? <div align={'center'} style={{width:'100%', fontSize: 20, marginTop:20, marginBottom: 20, fontWeight: 500, color: '#F3A632'}}>{t('There are no available times')}</div> :
                                 <div></div>
                         }
                     </div>

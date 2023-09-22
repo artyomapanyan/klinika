@@ -49,7 +49,6 @@ function Doctor() {
             ...values
         }))
 
-console.log(values)
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -98,7 +97,7 @@ console.log(values)
 
     return(
         <div>
-            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.first} ${data?.last}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
+            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor`)} - ${data?.first} ${data?.last}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Doctor`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -150,8 +149,8 @@ console.log(values)
                                        initialValue={data?.status}
                                        initialData={Resources.Status}
                             />
-                            <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: true}]} />
-                            <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} rules={[{required: true}]} />
+                            <FormInput inputType={'password'}  label={t('Password')} name={'password'} rules={[{required: true}]} />
+                            <FormInput inputType={'password'}  label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: true}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
@@ -194,7 +193,7 @@ console.log(values)
 
                         </Col>
                     </Row>
-                    <FileManager text1={t('avatar')}
+                    <FileManager text1={t('Avatar')}
                                  text2={t('Download the file')}
                                  name={'avatar'}
                                  uploadIcon={<InboxOutlined/>}

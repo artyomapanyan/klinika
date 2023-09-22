@@ -66,7 +66,7 @@ function OfferCard({data, id}) {
                                 <div style={{display:"block"}}>
                                     <h2 style={{fontWeight: 600}}>{data?.new_price} SAR</h2>
                                     <div>
-                                        <span style={{fontSize: 14, textDecoration: 'line-through'}}>{data?.old_price} SAR</span><span style={{marginLeft: 20, color:'#CD499B'}}>Save {(data?.old_price - data?.new_price).toFixed(1)} SAR</span>
+                                        <span style={{fontSize: 14, textDecoration: 'line-through'}}>{data?.old_price} SAR</span><span style={{margin: '0 20px', color:'#CD499B'}}>{t('Save')} {(data?.old_price - data?.new_price).toFixed(1)} SAR</span>
 
                                     </div>
                                 </div>

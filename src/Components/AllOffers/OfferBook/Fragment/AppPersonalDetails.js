@@ -96,7 +96,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                     verifyNumber: 'Verification code successfully sent to your phone number',
                 }))
             }
-            console.log(response, 'jjj')
+
             if(response === 'You entered an incorrect code'){
                 openNotification('bottomRight')
             }
@@ -145,7 +145,6 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
 
 
-
     return (
         <div>
 
@@ -161,7 +160,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                     {verifyState === 0 && <Form onFinish={onVerifyNumber} name={'send'}>
                         <div className={'personal_details_code_numbet_div'}>
                             <div className={'personal_details_code_div'}>
-                                <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                            rules={[{required: true}]}
                                            handleMapItems={handleMapItems}
                                            resource={'PublicCountry'}/>
@@ -170,13 +169,13 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                                 <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} />
                             </div>
 
-                            <Button loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>Send code</Button>
+                            <Button loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>{t('Send code')}</Button>
 
                         </div>
                     </Form>}
 
 
-                    {verifyState === 1 && <div>
+                    {responseCodeState ? <div></div> : verifyState === 1 && <div>
                         <Form name={'verify_code'} onFinish={onVerifyCode}>
                             <div className={'verify_code_form_big_div'}>
                                 <div  className={'verify_code_form_number_div'} >
@@ -192,7 +191,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                                 <div className={'space_compact'}>
                                     <FormInput label={t('Verify code')} name={'code'} />
                                 </div>
-                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>{t('Virify')}</Button>
+                                <Button loading={phoneLoading} style={{background: 'green', color: '#ffffff', marginTop:5, height:47}} htmlType={'submit'}>{t('Verify')}</Button>
                             </div>
 
                         </Form>
