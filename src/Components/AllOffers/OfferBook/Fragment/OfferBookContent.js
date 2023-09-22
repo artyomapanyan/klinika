@@ -51,8 +51,7 @@ function OfferBookContent() {
                             <div className={'price_div'}>
                                 <div style={{marginTop:8}}>
                                     <div className={'line'}></div>
-                                    <span style={{fontSize: 20}}>{data?.old_price}.0</span> <span style={{fontSize: 12}}>SAR</span><span style={{marginLeft: 10, color:'#ffffff', fontSize: 20}}>{data?.new_price}.0</span><span style={{fontSize: 12}}>SAR</span>
-
+                                    <span style={{fontSize: 20}}>{data?.old_price}.0</span> <span style={{fontSize: 12}}>{t('SAR')}</span><span style={{marginLeft: 10, color:'#ffffff', fontSize: 20}}>{data?.new_price}.0</span><span style={{fontSize: 12}}>{t('SAR')}</span>
                                 </div>
                                 <Divider type={'vertical'} style={{backgroundColor: '#ffffff', height: 25}} />
                                 <div style={{display: 'flex'}}>
@@ -67,7 +66,7 @@ function OfferBookContent() {
                 </div>
 
                 <div align={'center'} >
-                    <div className={'purple_text'}>{t('Offer Details')}</div>
+                    <div className={'purple_text'}>{t('Offer_Details')}</div>
                         <Divider style={{background:'#e3e0e3'}}/>
                 </div>
                 <div style={{width: '100%'}}>

@@ -1,29 +1,45 @@
-import React from "react";
-import off_head from "../../../dist/Img/off_head.png";
-import OffersFooter from "../Fragments/OffersFooter";
-import OfferBookContent from "./Fragment/OfferBookContent";
-import {useParams} from "react-router";
-import {useGetResourceSingle} from "../../Functions/api_calls";
-import AllOffersHeader from "../Fragments/AllOffersHeader";
+import React from 'react'
+import off_head from '../../../dist/Img/off_head.png'
+import OffersFooter from '../Fragments/OffersFooter'
+import OfferBookContent from './Fragment/OfferBookContent'
+import { useParams } from 'react-router'
+import { useGetResourceSingle } from '../../Functions/api_calls'
+import AllOffersHeader from '../Fragments/AllOffersHeader'
+import { useSelector } from 'react-redux'
 
 function OfferBook() {
-    const params = useParams();
-    const {loadingState, dataState} = useGetResourceSingle('PublicOffer', params.id)
-    const {data, setData} = dataState;
-    const {loading, setLoading} = loadingState
-    return(
-        <div>
-            <div className={'bac_div'}>
-                <img src={off_head} alt={'off_head'} style={{width:'100%'}}/>
-            </div>
-            <div className={'offer_logo_div'}>
-                <AllOffersHeader headerState={true}/>
-            </div>
-            <div className={'menu_div'} style={{minHeight: 500}}>
-                <OfferBookContent />
-            </div>
-            <OffersFooter />
-        </div>
-    )
+	let lngs = useSelector(state => state?.app?.current_locale)
+	const params = useParams()
+	const { loadingState, dataState } = useGetResourceSingle(
+		'PublicOffer',
+		params.id
+	)
+	const { data, setData } = dataState
+	const { loading, setLoading } = loadingState
+	return (
+		<div>
+			<div className={'bac_div'}>
+				<img src={off_head} alt={'off_head'} style={{ width: '100%' }} />
+			</div>
+
+			<div className={'offer_logo_div'}>
+				<AllOffersHeader headerState={true} />
+			</div>
+			<div
+				style={
+					lngs === 'en'
+						? {}
+						: {
+								direction: 'rtl'
+						  }
+				}
+			>
+				<div className={'menu_div'} style={{ minHeight: 500 }}>
+					<OfferBookContent />
+				</div>
+				<OffersFooter />
+			</div>
+		</div>
+	)
 }
-export default OfferBook;
+export default OfferBook

@@ -99,7 +99,7 @@ function BookAnAppointment({data}) {
             <Divider style={{background: '#e3e0e3'}}/>
             <div className={'app_btn_div'}>
 
-                <Button loading={loading} onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment_method_id  ? false : true}>{t('Book now')}</Button>
+                <Button loading={loading} onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment_method_id  ? false : true}>{t('Book_now')}</Button>
 
 
                 </div>
