@@ -128,7 +128,7 @@ function ClinicsOwner() {
                             <CounterProgress  />
                         </div>
                     </div>
-                    {/*<Col lg={6} md={12} sm={24} xs={24}>*/}
+                    {/*<Col lg={6} md={24} sm={24} >*/}
                     {/*    <div className="gutter_row">*/}
                     {/*        <CounterMultipleChart  data={multipleData}/>*/}
                     {/*    </div>*/}

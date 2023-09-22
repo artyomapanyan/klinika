@@ -29,6 +29,7 @@ function AllOffers() {
     })
 
 
+
      const [resetState, setResetState] = useState(false)
     const [open, setOpen] = useState(false);
 

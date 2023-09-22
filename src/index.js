@@ -46,7 +46,6 @@ axios.interceptors.response.use((response) => {
 })
 
 
-
 root.render(
     <BrowserRouter>
         <Provider store={store}>

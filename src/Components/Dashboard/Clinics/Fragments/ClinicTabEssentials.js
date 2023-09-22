@@ -447,6 +447,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     //         })
     //
     // },[])
+
     const handleMapItems = (item,name)=>{
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
         item.id = item.phone_code
@@ -463,7 +464,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         let searchData = item.phone_number + item.email;
         return [name, item, searchData]
     }
-
 
 
 

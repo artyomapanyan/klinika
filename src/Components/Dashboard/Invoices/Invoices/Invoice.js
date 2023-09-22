@@ -25,6 +25,7 @@ function Incoice() {
 
     const [searchCeys, setSearchCeys] = useState('')
 
+
     const handleFilterResponse = (data,timeout = 80) => {
 
         let total = 0;
@@ -49,7 +50,6 @@ function Incoice() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
-
 
 
 
@@ -201,6 +201,7 @@ function Incoice() {
     }
 
 
+
     const handleInvoiceSelect = (e, key,data) => {
 
         postResource('InvoiceItem', 'single', token, e).then((response) => {
@@ -218,7 +219,7 @@ function Incoice() {
 
         })
 
-        formRef?.current?.getFieldValue('sub_total')
+
     }
 
     formRef?.current?.getFieldValue('sub_total')
@@ -265,7 +266,7 @@ function Incoice() {
                                            }}>
                                                {/*<div>Not found</div>*/}
                                                <div>{
-                                                   searchCeys.length >= 5 ? <span>{t('Number did not find in the system. Please enter correct phone number.')}</span> : t('Not found')
+                                                   searchCeys.length >= 5 ? <span>{t('Number did not find in the system. Please enter correct phone number')}.</span> : t('Not found')
                                                }</div>
                                            </div>
                                        }}
@@ -310,7 +311,7 @@ function Incoice() {
                                                        justifyContent: "space-between"
                                                    }}>
                                                        <div>{
-                                                           searchCeys.length >= 5 ? <span>{t('Number didnt find in the system. Please enter correct phone number.')}</span> : t('Not found')
+                                                           searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
                                                        }</div>
                                                    </div>
                                                }}
@@ -457,7 +458,7 @@ function Incoice() {
                                         </div>
                                     </div>
                                 </div> : <div className={'invoice_firsli_text_div'}>
-                                    {('Firstly please choose an appointment')}
+                                    Firstly please choose an appointment
                                 </div>
                             }
                         </div>
