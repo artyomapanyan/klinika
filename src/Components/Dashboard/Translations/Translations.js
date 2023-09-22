@@ -142,7 +142,7 @@ function Translations(){
         <div style={{marginTop: -50}}>
             <div style={{marginBottom: 20, marginLeft: 20, fontSize: 20, fontWeight: 700}}>
                 {t('Translations')}
-                <Button style={{margin: '0 10px'}} onClick={showModal} type={'primary'} >add</Button>
+                <Button style={{margin: '0 10px'}} onClick={showModal} type={'primary'} >{t('Add')}</Button>
             </div>
 
             <Modal key={'modal_translation'+ Math.random().toString()} title="Add translation" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={false}>

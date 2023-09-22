@@ -72,9 +72,14 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
           e.is_day_off = false
         }
 
+        if(e.closes_at === '11:59 PM') {
+          e.closes_at = '23:59'
+        }
+
         return e
       })
       values.service = type;
+
 
       onFinish(values, prevValues)
     }
@@ -110,10 +115,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
     setSwitchChange(val)
   }
 
-  // console.log(clinichoursData, 'ddddddsssssaaaaa')
-  // let aaa = Object.values(clinichoursData).map((el)=> el.)
-  //
-  // console.log(aaa,'fff')
+
 
   return (loading ? <Preloader/> : <Form
     onValuesChange={handleValuesChange}
@@ -149,7 +151,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
       </Space>}
       <div>
         {switchChange ? <div className={'add_edit_content'} align={"center"}>
-          <h1 className={"h1"}>Working Hours is synced with the main working hours</h1>
+          <h1 className={"h1"}>{t('Working Hours is synced with the main working hours')}</h1>
         </div> : Object.keys(workingData)?.map((dataKey, iKey) => {
           let currentLabel = Resources.dateOptions?.map((el) => {
             return {
@@ -194,10 +196,6 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
 
-console.log(currentTimes?.findIndex(
-    e => e?.value === workingDay[key - 1]?.opens_at
-)+1)
-
                   let currentOptions =[...currentTimes]?.flat()
                   if (key > 0 && workingDay?.length) {
                     currentOptions = currentOptions?.slice(
@@ -227,7 +225,7 @@ console.log(currentTimes?.findIndex(
                       <Form.Item
                         label={t(``)}
                         name={['working_hours', dataKey, key, "closes_at"]}
-                        initialValue={el?.closes_at}
+                        initialValue={el?.closes_at === '00:00' ? currentLabel[currentLabel?.length -1].label : el?.closes_at}
                       >
                         <Select
                           className={'working_houre_margin'}
