@@ -70,7 +70,7 @@ i18n
             },
             ar: {
                 translation: {
-                    Offer_Details:'تفاصيل العرض',
+                    'Offer Details':'تفاصيل العرض',
                     SAR:'ريال',
                     Book_now:'حجز الان',
                     Add : "إضافة",
