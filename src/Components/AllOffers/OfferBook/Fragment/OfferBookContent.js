@@ -66,7 +66,7 @@ function OfferBookContent() {
                 </div>
 
                 <div align={'center'} >
-                    <div className={'purple_text'}>{t('Offer Details')}</div>
+                    {/*<div className={'purple_text'}>{t('Offer Details')}</div>*/}
                         <Divider style={{background:'#e3e0e3'}}/>
                 </div>
                 <div style={{width: '100%'}}>
