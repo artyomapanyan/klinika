@@ -311,7 +311,7 @@ function Incoice() {
                                                        justifyContent: "space-between"
                                                    }}>
                                                        <div>{
-                                                           searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                           searchCeys.length >= 5 ? <span>{t('Number did not find in the system. Please enter correct phone number')}.</span> : t('Not found')
                                                        }</div>
                                                    </div>
                                                }}
