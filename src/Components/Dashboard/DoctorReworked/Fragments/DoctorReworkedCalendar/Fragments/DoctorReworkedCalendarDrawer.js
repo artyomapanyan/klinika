@@ -14,7 +14,6 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     let token = useSelector((state) => state.auth.token);
     let role = useSelector((state) => state.auth.selected_role.key);
     const formRef = useRef();
-
     const [bookedAtState, setBookedAtState] = useState('');
     const [loading, setLoading] = useState(false);
     const [formState, setFormState] = useState({});
