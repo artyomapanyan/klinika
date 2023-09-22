@@ -8,6 +8,7 @@ import map_icon from "../../../../dist/icons/map_icon.png";
 import message_icon from "../../../../dist/icons/message_icon.png";
 import dayjs from "dayjs";
 import {Button} from "antd";
+import {t} from "i18next";
 
 function PatientNotifcation() {
     let token = useSelector((state) => state.auth.token);
@@ -130,7 +131,7 @@ function PatientNotifcation() {
                 }
                 <div className={'dashed_lini'}></div>
                 <div>
-                    <Button className={'notification_button'}><span className={'notification_button_text'}>Show all notifications</span>
+                    <Button className={'notification_button'}><span className={'notification_button_text'}>{t('Show all notifications')}</span>
                         <span
                             className={'notification_button_text_count'}>{data?.unread_notifications_count}</span></Button>
                 </div>

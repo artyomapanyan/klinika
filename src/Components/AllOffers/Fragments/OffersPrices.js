@@ -177,7 +177,7 @@ function OffersPrices({
 						<Input
 							className={'offers_search_input'}
 							size='large'
-							placeholder='Search'
+							placeholder={t('Search')}
 							onChange={e => changeInputSearch(e)}
 							prefix={<img src={search_icon_black} alt={'search_icon_black'} />}
 						/>
