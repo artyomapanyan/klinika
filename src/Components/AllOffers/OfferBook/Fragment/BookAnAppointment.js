@@ -24,14 +24,19 @@ function BookAnAppointment({data}) {
     const [dataTimes, setDataTimes] = useState();
     const [responseCodeState, setResponseCodeState] = useState();
     const [loading, setLoading] = useState(false);
+    const [namesState, setNamesState] = useState({});
 
 
     const onBooking = () => {
         setLoading(true)
+
         postResource('PublicAppointment', 'create', token, '', dataState).then((response) => {
 
             setLoading(false)
-            document.location.href = response?.redirect
+            if(response?.appointment?.id) {
+                document.location.href = response?.redirect
+            }
+
 
         })
 
@@ -90,7 +95,7 @@ function BookAnAppointment({data}) {
                     <AppTime data={data} setDataState={setDataState} dataState={dataState} setDataTimes={setDataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
-                    <AppPersonalDetails responseCodeState={responseCodeState} setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params} date={date} dataTimes={dataTimes}/>
+                    <AppPersonalDetails onBooking={onBooking} setNamesState={setNamesState} responseCodeState={responseCodeState} setDataState={setDataState} dataState={dataState} setResponseCodeState={setResponseCodeState} params={params} date={date} dataTimes={dataTimes}/>
                 </div>
                 <div className={'app_doctor'}>
                     <AppPaymentMethods data={data} setDataState={setDataState} dataState={dataState}  responseCodeState={responseCodeState}/>
@@ -99,7 +104,7 @@ function BookAnAppointment({data}) {
             <Divider style={{background: '#e3e0e3'}}/>
             <div className={'app_btn_div'}>
 
-                <Button loading={loading} onClick={onBooking} size={'large'} type={'primary'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment_method_id  ? false : true}>{t('Book_now')}</Button>
+                <Button loading={loading} onClick={onBooking} size={'large'} type={'primary'} disabled={namesState?.first && namesState?.last && namesState?.email && dataState?.doctor_id && dataState?.date && dataState?.time && dataState?.payment_method_id  ? false : true} htmlType={'submit'}>{t('Book_now')}</Button>
 
 
                 </div>

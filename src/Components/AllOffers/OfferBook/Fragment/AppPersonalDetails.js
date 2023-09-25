@@ -9,7 +9,7 @@ import {isNullOrUndef} from "chart.js/helpers";
 
 
 
-function AppPersonalDetails({setDataState, dataState, setResponseCodeState, responseCodeState, params, dataTimes, date}) {
+function AppPersonalDetails({setDataState, dataState, setResponseCodeState, responseCodeState, params, dataTimes, date, setNamesState}) {
     let token = useSelector((state) => state.auth.token);
     let formRef= useRef();
     let refObj = formRef?.current?.getFieldValue()
@@ -21,7 +21,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     const [codeStatus, setCodeStatus] = useState(null)
 
 
-
+//console.log(formRef?.current?.getFieldValue())
 
     useEffect(() => {
         if(dataState?.payment_method_id){
@@ -48,7 +48,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
             }
 
         }
-    }, [dataState?.payment_method_id])
+    }, [dataState?.payment_method_id, refObj])
 
     const onVerifyNumber = (values) => {
         setPhoneLoading(true)
@@ -97,10 +97,15 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
         setPhoneLoading(true)
         postResource('PublicOffer', 'CodeVerify', token, '', values).then((response) => {
-console.log(response, 'dfd')
+
             setResponseCodeState(response)
             setVerifyResponse(response)
             setPhoneLoading(false)
+            setNamesState({
+                first: response?.patient?.first,
+                last: response?.patient?.last,
+                email: response?.patient?.email,
+            })
 
             if(response?.message === 'Verification code successfully sent to your phone number'){
                 setDataState((prevState) => ({
@@ -160,8 +165,13 @@ console.log(response, 'dfd')
         setCodeAndNumberState((prevState)=>({
             ...prevState,
             ...changed
-            // phone_country_code: changed?.phone_country_code,
-            // phone_number: changed?.phone_number
+        }))
+    }
+
+    const handleNamesChange = (changed) => {
+        setNamesState((prevState)=>({
+            ...prevState,
+            ...changed
         }))
     }
 
@@ -222,7 +232,9 @@ console.log(response, 'dfd')
                     </div> :<div></div> }
                     {responseCodeState && typeof responseCodeState !== 'string' ? <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
-                            <Form ref={formRef}>
+                            <Form ref={formRef}
+                                  onValuesChange={handleNamesChange}
+                            >
                                 <FormInput inputDisabled={verifyResponse?.patient?.first} label={t('First Name')} name={'first'} initialValue={verifyResponse?.patient?.first} rules={[{required: true}]} />
                                 <FormInput inputDisabled={verifyResponse?.patient?.last} label={t('Last Name')} name={'last'} initialValue={verifyResponse?.patient?.last} rules={[{required: true}]} />
                                 <FormInput inputDisabled={verifyResponse?.patient?.email} label={t('Email')} name={'email'} initialValue={verifyResponse?.patient?.email} rules={[{required: true}]} />
