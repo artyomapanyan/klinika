@@ -20,7 +20,6 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     const [date, setDate1] = useState(null)
 
 
-
     const onNewAppointment = (values) => {
         setLoading(true)
         //values.doctor_id = role === 'doctor' ? authRedux?.user?.id : dataClinic.doctor.id
