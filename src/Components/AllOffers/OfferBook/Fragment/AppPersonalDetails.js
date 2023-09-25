@@ -190,7 +190,7 @@ console.log(response, 'dfd')
                                            resource={'PublicCountry'}/>
                             </div>
                             <div className={'personal_details_number_div'}>
-                                <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} />
+                                <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} rules={[{required: true}]}/>
                             </div>
 
                             <Button disabled={!codeAndNumberState?.phone_country_code || !codeAndNumberState?.phone_number} loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>{t('Send code')}</Button>
@@ -199,7 +199,7 @@ console.log(response, 'dfd')
                     </Form>}
 
 
-                    {!responseCodeState ? verifyState === 1 && <div>
+                    {!responseCodeState || typeof responseCodeState == 'string' ? verifyState === 1 && <div>
                         <Form name={'verify_code'} onFinish={onVerifyCode}>
                             <div className={'verify_code_form_big_div'}>
                                 <div  className={'verify_code_form_number_div'} >
@@ -220,7 +220,7 @@ console.log(response, 'dfd')
 
                         </Form>
                     </div> :<div></div> }
-                    {responseCodeState ? <div>
+                    {responseCodeState && typeof responseCodeState !== 'string' ? <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
                             <Form ref={formRef}>
                                 <FormInput inputDisabled={verifyResponse?.patient?.first} label={t('First Name')} name={'first'} initialValue={verifyResponse?.patient?.first} rules={[{required: true}]} />
