@@ -117,9 +117,13 @@ function ThankYouOffer() {
                 <div
 				style={
 					lngs === 'en'
-						? {}
+						? {display: 'flex',
+                            justifyContent: 'center', width: '100%'}
 						: {
-								direction: 'rtl'
+								direction: 'rtl',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            width: '100%'
 						  }
 				}
 			>
@@ -254,15 +258,15 @@ function ThankYouOffer() {
 							</div>
 						</div>
 
-						<div className={'tab_div_mobile'}>
-							<AllOffersMobileHeader />
-							<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>
-								<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />
-								<span className={'tab_div_mobile_filter_text'}>
-									{t('Filter')}
-								</span>
-							</div>
-						</div>
+						{/*<div className={'tab_div_mobile'}>*/}
+						{/*	<AllOffersMobileHeader />*/}
+						{/*	<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>*/}
+						{/*		<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />*/}
+						{/*		<span className={'tab_div_mobile_filter_text'}>*/}
+						{/*			{t('Filter')}*/}
+						{/*		</span>*/}
+						{/*	</div>*/}
+						{/*</div>*/}
 
 						<Drawer
 							title=''
@@ -302,13 +306,12 @@ function ThankYouOffer() {
 									)}
 								</Row>
 							)}
-							
-							<div className={'load_more_div'}>
-                            <div style={{fontSize: 40, fontWeight: 600}}>
-                                Offers from other clinics
+                            <div className={'load_more_div'}>
+                                <div style={{fontSize: 40, fontWeight: 600}}>
+                                    {t('Offers from other clinics')}
+                                </div>
+                                <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >{t('Show All')}</Button>
                             </div>
-                            <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >{t('Show All')}</Button>
-                        </div>
 						</div>
 					</div>
 				</div>

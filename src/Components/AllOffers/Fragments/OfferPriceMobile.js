@@ -77,7 +77,7 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
         <div style={{width: '100%'}}>
             <div style={{width: '100%', padding: 16}}>
                 <div align={'center'} style={{width: '100%'}}>
-                    <Input className={'offers_search_input_mobile'} size="large" placeholder="Search" onChange={(e)=>changeInputSearch(e)} prefix={<img src={search_icon_black} alt={'search_icon_black'}/>} />
+                    <Input className={'offers_search_input_mobile'} size="large" placeholder={t("Search")} onChange={(e)=>changeInputSearch(e)} prefix={<img src={search_icon_black} alt={'search_icon_black'}/>} />
                 </div>
                 <div style={{width: '100%', marginTop: 28}} >
 

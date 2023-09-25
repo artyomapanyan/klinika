@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useRef, useState} from "react";
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {createResource, postResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
@@ -205,6 +205,7 @@ function Incoice() {
     const handleInvoiceSelect = (e, key,data) => {
 
         postResource('InvoiceItem', 'single', token, e).then((response) => {
+
             const selected_item = data.find(u=>u.id===e);
             formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
             formRef?.current?.setFieldValue(['items', key, 'item_object'], {
@@ -222,6 +223,8 @@ function Incoice() {
     }
 
     formRef?.current?.getFieldValue('sub_total')
+
+
 
     return (
         <div className={"new_invoice_big_div"}>
@@ -308,7 +311,7 @@ function Incoice() {
                                                        justifyContent: "space-between"
                                                    }}>
                                                        <div>{
-                                                           searchCeys.length >= 5 ? <span>Number didn't find in the system. Please enter correct phone number.</span> : 'Not found'
+                                                           searchCeys.length >= 5 ? <span>{t('Number did not find in the system. Please enter correct phone number')}.</span> : t('Not found')
                                                        }</div>
                                                    </div>
                                                }}

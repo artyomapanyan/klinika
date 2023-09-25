@@ -13,6 +13,7 @@ function AppDoctor({setDataState, dataState, data}) {
     }
     const onChangeDoctor = () => {
         setDataState((prevState)=>({}))
+        window.location.reload()
     }
 
     const doctorName = data?.doctors?.find((el) => {

@@ -75,9 +75,9 @@ function Translations(){
         confirm();
 
     };
-    const handleReset = (selectedKeys, confirm, ) => {
-
-        confirm();
+    const handleReset = (clearFilters, confirm) => {
+        clearFilters();
+        confirm(clearFilters)
 
     };
     const getColumnSearchProps = (dataIndex) => ({
@@ -90,7 +90,7 @@ function Translations(){
             >
                 <Input
                     ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
+                    placeholder={t('Search')}
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
 
@@ -106,17 +106,17 @@ function Translations(){
 
                         }}
                     >
-                        Search
+                        {t('Search')}
                     </Button>
                     <Button
-                        onClick={() => handleReset(selectedKeys, confirm, dataIndex)}
+                        onClick={() => handleReset(clearFilters, confirm)}
                         size="small"
                         style={{
                             width: 90,
                             margin: '0 10px'
                         }}
                     >
-                        Reset
+                        {t('Reset')}
                     </Button>
 
                 </div>
@@ -142,7 +142,7 @@ function Translations(){
         <div style={{marginTop: -50}}>
             <div style={{marginBottom: 20, marginLeft: 20, fontSize: 20, fontWeight: 700}}>
                 {t('Translations')}
-                <Button style={{margin: '0 10px'}} onClick={showModal} type={'primary'} >add</Button>
+                <Button style={{margin: '0 10px'}} onClick={showModal} type={'primary'} >{t('Add')}</Button>
             </div>
 
             <Modal key={'modal_translation'+ Math.random().toString()} title="Add translation" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={false}>
@@ -165,7 +165,7 @@ function Translations(){
                             title:t('Key'),
                             dataIndex:'key',
                             key:'key',
-                            // ...getColumnSearchProps('key'),
+                             ...getColumnSearchProps('key'),
                         },
                         {
                             title:t('Value'),

@@ -91,34 +91,34 @@ function OfferBookContent() {
 								/>
 								<div style={{ display: 'flex' }}>
 									<div>{t('Claim Now')}</div>
-									{lngs === 'en' ? <RightOutlined /> : 
+									{lngs === 'en' ? <RightOutlined /> :
                                     <div style={{margin:'5px'}}>
                                     <LeftOutlined />
                                     </div>
                                     }
-									
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div align={'center'}>
-					<div className={'purple_text'}>{t('Offer_Details')}</div>
-					<Divider style={{ background: '#e3e0e3' }} />
-				</div>
-				<div style={{ width: '100%' }}>
-					<OfferBookDetails data={data} />
-				</div>
-				<div align={'center'}>
-					<div className={'purple_text'}>{t('Book an appointment')}</div>
-					<Divider style={{ background: '#e3e0e3' }} />
-				</div>
-				<div className={'app_border_div'}>
-					<BookAnAppointment data={data} />
-				</div>
-			</div>
-		</div>
-	)
+                <div align={'center'} >
+                    {/*<div className={'purple_text'}>{t('Offer Details')}</div>*/}
+                        <Divider style={{background:'#e3e0e3'}}/>
+                </div>
+                <div style={{width: '100%'}}>
+                    <OfferBookDetails data={data} />
+                </div>
+                <div align={'center'} >
+                    <div className={'purple_text'} >{t('Book an appointment')}</div>
+                    <Divider style={{background:'#e3e0e3'}}/>
+                </div>
+                <div className={'app_border_div'}>
+                    <BookAnAppointment data={data}/>
+                </div>
+            </div>
+        </div>
+    )
 }
-export default OfferBookContent
+export default OfferBookContent;

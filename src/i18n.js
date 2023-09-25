@@ -77,6 +77,7 @@ i18n
                     Your_booking:'حجزك',
                     Congratulations:'تهانينا',
                     Offer_Details:'تفاصيل العرض',
+                    'Offer Details':'تفاصيل العرض',
                     SAR:'ريال',
                     Book_now:'احجز الان',
                     Add : "إضافة",

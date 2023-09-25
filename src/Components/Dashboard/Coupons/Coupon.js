@@ -33,11 +33,16 @@ function Coupon() {
     const [changeValuesState, setChangeValuesState] = useState({})
 
 
-
     const onFinish = (values) => {
         setSaveLoading(true)
         values.expired_at = values?.expired_at?.format('DD-MM-YYYY')
         values.discount_by_percentage ? values.discount_by_percentage = true : values.discount_by_percentage = false
+
+        if(values?.description) {
+            values.description = values.description
+        } else {
+            values.description = ''
+        }
 
         setData((prevState)=>({
             ...prevState,

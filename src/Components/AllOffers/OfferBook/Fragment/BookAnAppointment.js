@@ -29,7 +29,7 @@ function BookAnAppointment({data}) {
     const onBooking = () => {
         setLoading(true)
         postResource('PublicAppointment', 'create', token, '', dataState).then((response) => {
-            console.log(response)
+
             setLoading(false)
             document.location.href = response?.redirect
 

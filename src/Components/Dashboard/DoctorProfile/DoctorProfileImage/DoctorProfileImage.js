@@ -17,7 +17,7 @@ function DoctorProfileImage({formRef, data, setAvatarDeleteType}) {
                 src: null
             })
         setAvatarDeleteType(type)
-console.log(e.target,type)
+
 
 
     }
@@ -50,7 +50,7 @@ console.log(e.target,type)
     }
 
 
-    console.log(data, 'data')
+
 
     return <Row className={'clinic-images-container1'} gutter={[10,38]}>
 
