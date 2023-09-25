@@ -19,7 +19,7 @@ function AppDate({setDataState, dataState, data, setDate}) {
     const [dayOff, setDayOff] = useState([]);
     const [sliderIndex, setSliderIndex] = useState(-1);
     const [loadingDate, setLoadingDate] = useState(false);
-    const [availableDay, setAvailableDay] = useState([]);
+
     const [daysData,setDaysData] = useState([])
 
 
