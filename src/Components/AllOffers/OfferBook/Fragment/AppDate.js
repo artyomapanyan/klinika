@@ -10,7 +10,7 @@ import Resources from "../../../../store/Resources";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
-import Preloader from "../../../Preloader";
+
 
 function AppDate({setDataState, dataState, data, setDate}) {
     let token = useSelector((state) => state.auth.token);
@@ -48,18 +48,18 @@ function AppDate({setDataState, dataState, data, setDate}) {
         }
 
 
-
-
     }, [dataState?.doctor_id])
+
+
     useEffect(()=>{
 
         //console.log(sliderIndex)
        let callableDays =  [...daysData].slice(sliderIndex,sliderIndex+5).filter(e=>!e.called)
         //console.log(callableDays,'sdsd')
-        setLoadingDate(true)
+        //setLoadingDate(true)
         Promise.all(callableDays.map((callableDay)=>{
           return   postResource('PublicClinicDoctorAvailableTimes','single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service:'clinic_visit', date:dayjs().add(callableDay.key, 'day').format('YYYY-MM-DD')}).then(response => {
-console.log(response, 'r')
+
                 return {
                     key:callableDay.key,
                     hasDays: response ? response[0]?.length : 0

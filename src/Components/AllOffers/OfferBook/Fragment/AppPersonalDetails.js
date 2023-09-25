@@ -5,6 +5,7 @@ import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
+import {isNullOrUndef} from "chart.js/helpers";
 
 
 
@@ -16,6 +17,8 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     const [verifyState, setVerifyState] = useState(0);
     const [codeAndNumber, setCodeAndNumber] = useState()
     const [verifyResponse, setVerifyResponse] = useState()
+    const [codeAndNumberState, setCodeAndNumberState] = useState({})
+    const [codeStatus, setCodeStatus] = useState(null)
 
 
 
@@ -50,8 +53,16 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     const onVerifyNumber = (values) => {
         setPhoneLoading(true)
         postResource('PublicOffer', 'PhoneVerify', token, '', values).then((response) => {
+
+
+            setCodeStatus(response)
             setPhoneLoading(false)
-            setVerifyState(1)
+            if(response?.errors === null) {
+                setVerifyState(1)
+            } else {
+                setVerifyState(0)
+            }
+
 
         })
         setCodeAndNumber(values)
@@ -70,7 +81,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     const openNotification = (placement) => {
         api.error({
             message: `Notification`,
-            description: 'You entered an incorrect code',
+            description: t('You entered an incorrect code'),
             placement,
         });
     };
@@ -86,6 +97,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
 
         setPhoneLoading(true)
         postResource('PublicOffer', 'CodeVerify', token, '', values).then((response) => {
+console.log(response, 'dfd')
             setResponseCodeState(response)
             setVerifyResponse(response)
             setPhoneLoading(false)
@@ -97,7 +109,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                 }))
             }
 
-            if(response === 'You entered an incorrect code'){
+            if(response === 'You entered an incorrect code' || response === 'لقد قمت بإدخال رمز غير صحيح'){
                 openNotification('bottomRight')
             }
 
@@ -143,6 +155,15 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     }
 
 
+    const handleValuesChange = (changed) => {
+
+        setCodeAndNumberState((prevState)=>({
+            ...prevState,
+            ...changed
+            // phone_country_code: changed?.phone_country_code,
+            // phone_number: changed?.phone_number
+        }))
+    }
 
 
     return (
@@ -157,7 +178,10 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
             {dataState?.doctor_id && dataState?.date && dataState?.time ? <div className={'date_carousel_div'}>
                 <div>
 
-                    {verifyState === 0 && <Form onFinish={onVerifyNumber} name={'send'}>
+                    {verifyState === 0 && <Form
+                        onFinish={onVerifyNumber}
+                        onValuesChange={handleValuesChange}
+                        name={'send'}>
                         <div className={'personal_details_code_numbet_div'}>
                             <div className={'personal_details_code_div'}>
                                 <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
@@ -169,13 +193,13 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                                 <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} />
                             </div>
 
-                            <Button loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>{t('Send code')}</Button>
+                            <Button disabled={!codeAndNumberState?.phone_country_code || !codeAndNumberState?.phone_number} loading={phoneLoading} style={{marginTop:5, height:47}} size={'large'} type={'primary'} htmlType={'submit'}>{t('Send code')}</Button>
 
                         </div>
                     </Form>}
 
 
-                    {responseCodeState ? <div></div> : verifyState === 1 && <div>
+                    {!responseCodeState ? verifyState === 1 && <div>
                         <Form name={'verify_code'} onFinish={onVerifyCode}>
                             <div className={'verify_code_form_big_div'}>
                                 <div  className={'verify_code_form_number_div'} >
@@ -195,7 +219,7 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
                             </div>
 
                         </Form>
-                    </div>}
+                    </div> :<div></div> }
                     {responseCodeState ? <div>
                         <Space style={{width: '100%'}} direction={"vertical"}>
                             <Form ref={formRef}>

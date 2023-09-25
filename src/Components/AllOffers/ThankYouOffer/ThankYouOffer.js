@@ -117,9 +117,13 @@ function ThankYouOffer() {
                 <div
 				style={
 					lngs === 'en'
-						? {}
+						? {display: 'flex',
+                            justifyContent: 'center', width: '100%'}
 						: {
-								direction: 'rtl'
+								direction: 'rtl',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            width: '100%'
 						  }
 				}
 			>
@@ -254,15 +258,15 @@ function ThankYouOffer() {
 							</div>
 						</div>
 
-						<div className={'tab_div_mobile'}>
-							<AllOffersMobileHeader />
-							<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>
-								<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />
-								<span className={'tab_div_mobile_filter_text'}>
-									{t('Filter')}
-								</span>
-							</div>
-						</div>
+						{/*<div className={'tab_div_mobile'}>*/}
+						{/*	<AllOffersMobileHeader />*/}
+						{/*	<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>*/}
+						{/*		<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />*/}
+						{/*		<span className={'tab_div_mobile_filter_text'}>*/}
+						{/*			{t('Filter')}*/}
+						{/*		</span>*/}
+						{/*	</div>*/}
+						{/*</div>*/}
 
 						<Drawer
 							title=''
