@@ -306,6 +306,12 @@ function ThankYouOffer() {
 									)}
 								</Row>
 							)}
+                            <div className={'load_more_div'}>
+                                <div style={{fontSize: 40, fontWeight: 600}}>
+                                    {t('Offers from other clinics')}
+                                </div>
+                                <Button size={'large'} type={'primary'} onClick={()=> navigate('/offers')} >{t('Show All')}</Button>
+                            </div>
 						</div>
 					</div>
 				</div>
