@@ -12,19 +12,21 @@ import {useSelector} from "react-redux";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
 
+
 function AppDate({setDataState, dataState, data, setDate}) {
     let token = useSelector((state) => state.auth.token);
     let sliderRef = useRef()
     const [dayOff, setDayOff] = useState([]);
     const [sliderIndex, setSliderIndex] = useState(-1);
     const [loadingDate, setLoadingDate] = useState(false);
-    const [availableDay, setAvailableDay] = useState([]);
+
     const [daysData,setDaysData] = useState([])
 
 
 
     useEffect(() => {
         if(dataState?.doctor_id) {
+            setLoadingDate(true)
             postResource('PublicClinicDoctorWorkingHours','single', token,  dataState?.doctor_id+ '/' + data?.clinic?.id, {service:'clinic_visit'}).then(response => {
                 const res = response?.working_hours
                 let day = [];
@@ -42,24 +44,25 @@ function AppDate({setDataState, dataState, data, setDate}) {
                 })))
                 setSliderIndex(0)
                 setDayOff(day)
+                setLoadingDate(false)
 
 
             })
         }
 
 
-
-
     }, [dataState?.doctor_id])
+
+
     useEffect(()=>{
 
         //console.log(sliderIndex)
        let callableDays =  [...daysData].slice(sliderIndex,sliderIndex+5).filter(e=>!e.called)
-        //console.log(callableDays,'sdsd')
-        setLoadingDate(true)
+        // console.log(callableDays,daysData,'sdsd')
+        //setLoadingDate(true)
         Promise.all(callableDays.map((callableDay)=>{
           return   postResource('PublicClinicDoctorAvailableTimes','single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service:'clinic_visit', date:dayjs().add(callableDay.key, 'day').format('YYYY-MM-DD')}).then(response => {
-console.log(response, 'r')
+
                 return {
                     key:callableDay.key,
                     hasDays: response ? response[0]?.length : 0
@@ -154,25 +157,28 @@ console.log(response, 'r')
                         <Button type={'secondary'} onClick={onChangeDate} style={{borderRadius:15}}>{t('Change Date')}</Button>
                     </div>
                 </div> : dataState?.doctor_id || dataState?.date ? <div className={'date_carousel_div'}>
-                    <div style={{position:'absolute', width:'98%'}}>
-                        <Slider {...settings} ref={sliderRef} afterChange={(e)=>setSliderIndex(e)}>
-                            {daysData.map(({key,disabled,called},i)=>{
-                                const date = currentDate.add(key,'day')
-                                return  <div key={key} onClick={()=>called && !disabled && onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>
-                                    <div className={disabled ? 'disabled_date' : 'date_div_inn'}>
-                                        <div style={{fontSize:12, color:'gray'}}>{Resources.Days[date.day()]}</div>
-                                        <Space>
-                                            <CalendarOutlined style={{color:'gray'}}/>
-                                            <Spin spinning={!called}><div>{date.format('DD-MM-YYYY')}</div>  </Spin>
-                                            {/*{disabled?<div>Disabled</div>:null}*/}
-                                        </Space>
+                    {
+                        loadingDate ? <Preloader small={10}/> : <div style={{position:'absolute', width:'98%'}}>
+                            <Slider {...settings} ref={sliderRef} afterChange={(e)=>setSliderIndex(e)}>
+                                {daysData.map(({key,disabled,called},i)=>{
+                                    const date = currentDate.add(key,'day')
+                                    return  <div key={key} onClick={()=>called && !disabled && onDate(date)} style={{width:50}} className={'date_div'} align={'center'}>
+                                        <div className={disabled ? 'disabled_date' : 'date_div_inn'}>
+                                            <div style={{fontSize:12, color:'gray'}}>{Resources.Days[date.day()]}</div>
+                                            <Space>
+                                                <CalendarOutlined style={{color:'gray'}}/>
+                                                <Spin spinning={!called}><div>{date.format('DD-MM-YYYY')}</div>  </Spin>
+                                                {/*{disabled?<div>Disabled</div>:null}*/}
+                                            </Space>
+                                        </div>
                                     </div>
-                                </div>
 
-                            })}
+                                })}
 
-                        </Slider>
-                    </div>
+                            </Slider>
+                        </div>
+                    }
+
 
                 </div> :<div></div>
             }
