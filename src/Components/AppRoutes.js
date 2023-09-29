@@ -11,6 +11,9 @@ import OfferBook from "./AllOffers/OfferBook/OfferBook";
 import ThankYouOffer from "./AllOffers/ThankYouOffer/ThankYouOffer";
 import OfferMap from "./AllOffers/ThankYouOffer/Fragments/OfferMap";
 
+/**offer new version */
+import OfferBookNew from "./AllOffers/OfferBookNew/OfferBookNew";
+
 
 
 function AppRoutes(){
@@ -21,10 +24,15 @@ function AppRoutes(){
                 <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
                 <Route path={'login'} element={<Login/>}></Route>
                 <Route path={'offers'} element={<AllOffers/>}></Route>
-                <Route path={'offers/:id'} element={<OfferBook/>}></Route>
+             {/** <Route path={'offers/:id'} element={<OfferBook/>}></Route>*/}   
+                <Route path={'offers/:id'} element={<OfferBookNew/>}></Route>
+
+              
                 <Route path={'thank-you'} element={<ThankYouOffer/>}></Route>
                 <Route path={'maps'} element={<OfferMap/>}></Route>
-
+                 
+          
+             
 
 
             </Routes>
