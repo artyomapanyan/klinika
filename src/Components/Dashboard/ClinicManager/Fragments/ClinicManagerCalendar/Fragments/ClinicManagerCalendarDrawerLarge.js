@@ -87,7 +87,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                     </div>
                 </Col>
                 <Col lg={12}>
-                    <div align={'right'} style={{marginTop:42}}>
+                    <div align={'right'} style={{marginTop:40}}>
                         <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} />{t('Back to short form')}</Button>
                     </div>
                     <div >
@@ -114,14 +114,14 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             ]} />
                             <FormInput label={t('Nationality number')} name={'nationality_number'} rules={[
                                 {required: true},
-                                {
-                                    validator:(rule,value)=>{
-                                        if(value?.length < 10){
-                                            return Promise.reject('min length 10')
-                                        }
-                                        return Promise.resolve();
-                                    }
-                                }
+                                // {
+                                //     validator:(rule,value)=>{
+                                //         if(value?.length < 10){
+                                //             return Promise.reject('min length 10')
+                                //         }
+                                //         return Promise.resolve();
+                                //     }
+                                // }
 
 
                             ]} />

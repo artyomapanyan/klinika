@@ -7,6 +7,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
+        status:200,
         pagination:{
             pageSize:15,
             current:1,
@@ -49,6 +50,29 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                     }
                     setData((prevState)=>({
                         items:options.loadMore && params.page!=1?[...prevState.items,...responses[0].items]:responses[0].items,
+                        status:responses[0]?.response?.status,
+                        pagination:{
+                            pageSize:responses[0].per_page,
+                            current:responses[0].current_page,
+                            total:responses[0].total_items,
+                            last_page:responses[0].last_page
+                        }
+                    }))
+                    if(dataResources.length && !isSecondCall){
+                        let dataObj = {}
+                        dataResources.forEach((e,key)=>{
+                            dataObj[e] = responses[key+1]
+                        })
+                        setAddData(dataObj)
+                    }
+                }
+                if(responses[0]?.response?.data){
+                    if(getAll){
+                        getAll(responses[0]?.response?.data?.data?.items)
+                    }
+                    setData((prevState)=>({
+                        items:options.loadMore && params.page!=1?[...prevState.items,...responses[0]?.response?.data?.data?.items]:responses[0]?.response?.data?.data?.items,
+                        status:responses[0]?.response?.status,
                         pagination:{
                             pageSize:responses[0].per_page,
                             current:responses[0].current_page,
@@ -71,6 +95,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
         }else if(resourceData){
             setData({
                 items:resourceData,
+                status:200,
                 pagination:{
                     pageSize:15,
                     current:1,

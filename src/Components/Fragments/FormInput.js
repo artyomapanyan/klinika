@@ -34,6 +34,7 @@ function FormInput({
                        castomReq,
                        placeholder,
                        disableClear,
+                       handleStatus,
 
 
                    }) {
@@ -110,7 +111,9 @@ function FormInput({
                                                 resource={resource} initialData={initialData}
                                                 resourceData={resourceData}
                                                 handleMapItems={handleMapItems}
+                                                handleStatus={handleStatus}
                                                 inputProps={{
+
                                                     onFocus: () => setFocused(true),
                                                     onChange: (e,data) => {
                                                         setValue(e)

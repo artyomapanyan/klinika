@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react'
 import {Select, Spin, Form} from "antd";
 import {useGetResourceIndex} from "../Functions/api_calls";
 import {makeUnique} from "../../functions";
+import {useDispatch} from "react-redux";
 
 function ResourceSelectPaginated({
                                      resourceSelectStyle,
@@ -24,11 +25,13 @@ function ResourceSelectPaginated({
                                      customSearchKey,
                                    resourceData,
                                    disabled,
-                                   handleMapItems = null
+                                   handleMapItems = null,
+                                     handleStatus=null
                                  }) {
   const timeout = useRef(null);
   const [params, setParams] = useState({page: 1, ...resourceParams})
   const [localData, setLocalData] = useState(initialData)
+    let dispatch = useDispatch()
 
   const [isInitedState, setIsInitedState] = useState(false)
 
@@ -57,9 +60,18 @@ function ResourceSelectPaginated({
             setLocalData(initialData)
         }
     },[initialData])
-  const handleGenerateOptions = (data) => {
-      if(data) {
-          return data?.map((item, key) => {
+  const handleGenerateOptions = (data1) => {
+
+      if(data1) {
+          if (handleStatus) {
+              dispatch({
+                  type:'STATUS_CODE',
+                  payload: data?.status ? data?.status : 200
+              })
+          }
+
+          return data1?.map((item, key) => {
+
               let name = item?.name ?? item?.title
               if (resource === 'User' || resource === 'Doctor') {
                   name = `${item?.first} ${item?.last} ${item?.phone_number??''}`
@@ -68,9 +80,10 @@ function ResourceSelectPaginated({
                   name = `${item?.doctor?.first} ${item?.doctor?.last}`
               }
               if (handleMapItems) {
-                  let [newName, newItem,searchData] = handleMapItems(item, name,data)
+                  let [newName, newItem,searchData] = handleMapItems(item, name,data1, )
                   name = newName;
-                  item = newItem
+                  item = newItem;
+
                   if(typeof item==='object'){
                       item.searchData = searchData;
                   }
@@ -78,14 +91,22 @@ function ResourceSelectPaginated({
               }
 
 
-              return name ? <Select.Option key={key} value={item.id} name={item.searchData??name}>{name}</Select.Option> : null
+
+
+              return name ? <Select.Option key={key} value={item.id}  name={item.searchData??name}>{name}</Select.Option> : null
           })
       }
 
   }
   useEffect(() => {
+
     setLocalData(makeUnique([...localData, ...(data?.items ?? [])], 'id'))
+
+
   }, [data])
+
+
+
 
   const handleScroll = (event) => {
     let target = event.target

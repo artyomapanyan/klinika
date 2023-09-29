@@ -292,7 +292,7 @@ import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useRef, useState} from "react";
 import {createResource, updateResource} from "../../../Functions/api_calls";
-import {Button, Col, Form, Input, Row, Space, Switch} from "antd";
+import {Button, Checkbox, Col, Form, Input, Row, Space, Switch} from "antd";
 import Resources from "../../../../store/Resources";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -465,7 +465,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name, item, searchData]
     }
 
-
+console.log(role)
 
     return(
         <div >
@@ -587,16 +587,25 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                     role === 'super' || role === 'admin' ? <div className={'add_edit_content'}>
                         <Row gutter={[16, 16]}>
                             <Col lg={12} className="gutter-row">
-                                <Form.Item
-                                    label={t(`Clinic Visit`)}
-                                    name="has_clinic_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_clinic_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
+                                <div style={{display: 'flex'}}>
+                                    {/*{*/}
+                                    {/*    role === 'super' ? <Form.Item>*/}
+                                    {/*        <Checkbox ></Checkbox>*/}
+                                    {/*    </Form.Item> : <div></div>*/}
+                                    {/*}*/}
+
+                                    <Form.Item
+                                        label={t(`Clinic Visit`)}
+                                        name="has_clinic_visit_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_clinic_visit_service}
+                                    >
+                                        <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                    </Form.Item>
+                                </div>
+
                                 {
                                     data?.has_clinic_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
