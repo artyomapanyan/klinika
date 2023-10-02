@@ -68,7 +68,7 @@ function SubCategory() {
 
     return (
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Sub Category - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Sub Category`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Sub Category`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Sub Category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

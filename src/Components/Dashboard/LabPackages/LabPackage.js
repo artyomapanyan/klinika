@@ -77,7 +77,7 @@ function LabPackage() {
     let res = "Taxonomy"
     return (
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Lab Package - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Package`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing lab package`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Package`)}</h3>}
 
             {loading ? <Preloader/> : <Form
 

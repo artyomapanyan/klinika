@@ -228,7 +228,7 @@ function Incoice() {
 
     return (
         <div className={"new_invoice_big_div"}>
-            {data?.id ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice - ${data?.invoice_number}`)}</h3> :
+            {data?.id ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice`)} - {data?.invoice_number}</h3> :
                 <h3 className={'create_apdate_btns'}>{t(`Add new Invoice`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"

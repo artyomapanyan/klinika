@@ -67,7 +67,7 @@ function Country() {
 
     return (
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Country - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Country`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing country`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Country`)}</h3>}
             {loading ? <Preloader/> : <Form
 
                 name="edit"

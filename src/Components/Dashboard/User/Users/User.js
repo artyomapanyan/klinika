@@ -87,7 +87,7 @@ function User() {
 
     return(
         <div>
-            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing User - ${data?.first} ${data?.last}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new User`)}</h3>}
+            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing User`)} - {data?.first} {data?.last}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new User`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

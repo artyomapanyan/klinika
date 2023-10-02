@@ -73,7 +73,7 @@ function LabPackageCategory() {
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing City - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Package Category`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing lab package category`)} - {data?.title}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new lab package category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

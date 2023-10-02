@@ -68,7 +68,7 @@ function Category() {
 
     return (
         <div >
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Category - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Category`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing category`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

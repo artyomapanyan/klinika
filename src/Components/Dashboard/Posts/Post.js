@@ -75,7 +75,7 @@ function Post() {
 
     return(
         <div>
-            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Lab Test - ${data?.title}`)}</h3> : <h3  className={'create_apdate_btns'}>{t(`Add new Lab Test`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing post`)} - {data?.title}</h3> : <h3  className={'create_apdate_btns'}>{t(`Add new post`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

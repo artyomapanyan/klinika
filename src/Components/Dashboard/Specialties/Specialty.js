@@ -81,7 +81,7 @@ function Specialty() {
 const res = 'Specialty';
     return (
         <div>
-            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Specialty - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Specialty`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Specialty`)} - {data?.title}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Specialty`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

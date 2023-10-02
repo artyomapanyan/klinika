@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Form, Modal, Spin} from "antd";
+import {Button, Form, Modal, Spin, Tooltip} from "antd";
 import {t} from "i18next";
 import ResourceTable from "../../Fragments/ResourceTable";
 import {CheckCircleOutlined, MedicineBoxOutlined} from "@ant-design/icons";
@@ -105,7 +105,6 @@ function Appointments() {
 
     }
 
-    console.log(aaa)
 
     return(
         <div >
@@ -190,7 +189,7 @@ function Appointments() {
                         title:t('Offer'),
                         key:'offer',
                         render:(e, record)=> {
-                            return<div>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</div>
+                            return<Tooltip title={record?.offer?.title}>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</Tooltip>
                         }
                     },
 
