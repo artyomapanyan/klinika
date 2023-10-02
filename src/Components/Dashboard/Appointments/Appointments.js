@@ -20,6 +20,7 @@ import search_icon_darkPurpole from "../../../dist/icons/search_icon_darkPurpole
 import DateFilterElement from "../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
 import SelectFilterElement from "../../Fragments/TableFilterElements/SelectFilterElement";
+import PermCheck from "../../Fragments/PermCheck";
 
 const resource = 'Appointment';
 function Appointments() {
@@ -31,6 +32,8 @@ function Appointments() {
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
     const [tableUpdate,setTableUpdate] = useState(0)
+    const [aaa,setaaa] = useState(PermCheck(`${resource}:update`))
+
 
 
 
@@ -101,6 +104,8 @@ function Appointments() {
         navigate(ResourceLinks[resource] + record.id+'/doctor')
 
     }
+
+    console.log(aaa)
 
     return(
         <div >
@@ -206,7 +211,7 @@ function Appointments() {
                        key:'status',
                         render: (e, record) => {
                             return loading ? <Preloader small={15}/> : <Spin spinning={loading}>
-                            <ColorSelect appointmentloading={loading} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
+                            <ColorSelect appointmentloading={loading} colorSelectDisabled={!aaa}  items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
                             </Spin>
                             }
 
