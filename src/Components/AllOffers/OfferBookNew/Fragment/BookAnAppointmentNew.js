@@ -25,9 +25,8 @@ function BookAnAppointment({ data }) {
 	const [loading, setLoading] = useState(false)
 	const [namesState, setNamesState] = useState({})
 	const [show, setShow] = useState(false)
-	const [showpay, setShowpay] = useState(false)
 	const [showthank, setShowthank] = useState(false)
-	const [shownames, setShowNames] = useState(false)
+	const [showPayment, setShowPayment] = useState(false)
 
 	const onBooking = () => {
 		setLoading(true)
@@ -37,7 +36,10 @@ function BookAnAppointment({ data }) {
 				setLoading(false)
 				if (response?.appointment?.id) {
 					console.log('booking confirmed')
-					setShowthank(true)
+					//setShowthank(true)
+					console.log('document.location.href ', document.location.href)
+					console.log('response?.redirect ', response?.redirect)
+
 					document.location.href = response?.redirect
 				}
 			}
@@ -75,14 +77,11 @@ function BookAnAppointment({ data }) {
 		}
 
 		if (responseCodeState?.patient) {
-			setShowpay(true)
+		//	setShowpay(true)
 		}
-		if(namesState?.first&&namesState?.last&&namesState?.email){
-			setShowNames(true)
-		}
-	}, [dataState?.date, dataState?.time,namesState])
+		
+	}, [dataState?.date, dataState?.time, namesState])
 
-	
 	return (
 		<div>
 			<div>
@@ -109,20 +108,24 @@ function BookAnAppointment({ data }) {
 									dataState={dataState}
 									date={date}
 									setDate={setDate}
+									setDataTimes={setDataTimes}
 								/>
 							</div>
 							<div>
-								<AppTime
+								{/**
+								 * <AppTime
 									data={data}
 									setDataState={setDataState}
 									dataState={dataState}
 									setDataTimes={setDataTimes}
 								/>
+								 * 
+								 */}
 							</div>
 						</div>
 					</>
 				)}
-				{showpay === true && showthank == true ? (
+				{ showthank == true ? (
 					''
 				) : (
 					<div>
@@ -136,51 +139,50 @@ function BookAnAppointment({ data }) {
 							params={params}
 							date={date}
 							dataTimes={dataTimes}
-							shownames={shownames}
+							showPayment={showPayment}
+							setShowPayment={setShowPayment}
 						/>
 					</div>
 				)}
-				{showthank == true ? (
-					''
+				{showPayment == true ? (
+					<div>
+					<AppPaymentMethods
+						data={data}
+						setDataState={setDataState}
+						dataState={dataState}
+						responseCodeState={responseCodeState}
+					/>
+				</div>
 				) : (
-					<>
-						<div>
-							<AppPaymentMethods
-								data={data}
-								setDataState={setDataState}
-								dataState={dataState}
-								responseCodeState={responseCodeState}
-							/>
-						</div>
-					
-					</>
+					''
 				)}
-					<div className={'app_btn'}>
-							<Button
-								loading={loading}
-								onClick={onBooking}
-								size={'large'}
-								type={'primary'}
-								style={{ marginTop: '20px' }}
-								disabled={
-									namesState?.first &&
-									namesState?.last &&
-									namesState?.email &&
-									dataState?.doctor_id &&
-									dataState?.date &&
-									dataState?.time &&
-									dataState?.payment_method_id
-										? false
-										: true
-								}
-								htmlType={'submit'}
-							>
-								{t('Book_now')}
-							</Button>
-						</div>
+				
+				<div className={'app_btn'}>
+					<Button
+						loading={loading}
+						onClick={onBooking}
+						size={'large'}
+						type={'primary'}
+						style={{ marginTop: '20px' }}
+						disabled={
+							namesState?.first &&
+							namesState?.last &&
+							namesState?.email &&
+							dataState?.doctor_id &&
+							dataState?.date &&
+							dataState?.time &&
+							dataState?.payment_method_id
+								? false
+								: true
+						}
+						htmlType={'submit'}
+					>
+						{t('Book_now')}
+					</Button>
+				</div>
 			</div>
 
-		{/*	{showthank == true ? <ThankYouOffer /> : ''} */}
+			{/** 	{showthank == true ? <ThankYouOffer /> : ''} */}
 		</div>
 	)
 }

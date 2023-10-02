@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { postResource } from '../../../Functions/api_calls'
 import { t } from 'i18next'
 import Loader from '../../../Loader'
-import { RightOutlined, LeftOutlined } from '@ant-design/icons'
+
 
 
 function AppTime({ setDataState, dataState, data, setDataTimes }) {
@@ -25,6 +25,7 @@ function AppTime({ setDataState, dataState, data, setDataTimes }) {
 				dataState?.doctor_id + '/' + data?.clinic?.id,
 				{ service: 'clinic_visit', date: dataState?.date }
 			).then(response => {
+				console.log('times',response)
 				setTimes(response[0])
 				setTimesLoading(false)
 			})
@@ -38,6 +39,7 @@ function AppTime({ setDataState, dataState, data, setDataTimes }) {
 		}))
 		setDataTimes({ time: time })
 	}
+	
 	const onChangeTime = () => {
 		setDataState(prevState => ({
 			...prevState,

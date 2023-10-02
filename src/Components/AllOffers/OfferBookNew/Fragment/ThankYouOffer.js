@@ -1,5 +1,33 @@
+import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router";
+import {useSearchParams} from "react-router-dom";
+import {useGetResourceIndex} from "../../../Functions/api_calls";
+import {paramsToObject} from "../../../../functions";
+
 import img_thank_you from '../../../../dist/Img/thank_you.png'
+
 function ThankYouOffer() {
+	const currentUrl = window.location.href;
+    let clinicRedux = useSelector((state) => state?.publicClinic);
+    let navigate = useNavigate();
+    let lngs = useSelector(state => state?.app?.current_locale)
+
+    let [searchParams, setSearchParams] = useSearchParams();
+    const [params, setParams] = useState({
+        clinic: clinicRedux?.id,
+     //   ...paramsToObject(searchParams.entries())
+    })
+
+    const [resetState, setResetState] = useState(false)
+
+    const {loadingState, dataState, addData} = useGetResourceIndex('PublicOffer', params,false,false,false,false, {
+        PublicClinic:{per_page:5000},
+        PublicCategory:{},
+    })
+
+
+ 
 	return (
 		<div className={'thank_div'} >
 			<img

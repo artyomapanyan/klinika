@@ -16,7 +16,8 @@ function AppPersonalDetails({
 	dataTimes,
 	date,
 	setNamesState,
-	shownames
+	showPayment,
+	setShowPayment
 }) {
 	let token = useSelector(state => state.auth.token)
 	let formRef = useRef()
@@ -174,7 +175,11 @@ function AppPersonalDetails({
 			...changed
 		}))
 	}
-  console.log('shownames11',shownames)
+
+	const handleShowPayment = () => {
+		setShowPayment(true)
+	}
+
 	return (
 		<div>
 			{contextHolder}
@@ -182,9 +187,9 @@ function AppPersonalDetails({
 			{dataState?.doctor_id && dataState?.date && dataState?.time ? (
 				<>
 					<Space>
-						<h2 style={{ fontWeight: 600, }}>Your Information</h2>
+						<h2 style={{ fontWeight: 600 }}>Your Information</h2>
 					</Space>
-					<div >
+					<div>
 						<div>
 							{verifyState === 0 && (
 								<Form
@@ -193,7 +198,7 @@ function AppPersonalDetails({
 									name={'send'}
 								>
 									<div>
-										<div >
+										<div>
 											<FormInput
 												label={t('Country Code')}
 												name={'phone_country_code'}
@@ -243,28 +248,32 @@ function AppPersonalDetails({
 															borderRadius: 12
 														}}
 													/>
-													
 												</div>
-												<div style={{display:'flex',justifyContent:'space-between',marginTop:'10px'}}>
-												<div onClick={onSendSMSAgain}>
+												<div
+													style={{
+														display: 'flex',
+														justifyContent: 'space-between',
+														marginTop: '10px'
+													}}
+												>
+													<div onClick={onSendSMSAgain}>
 														{t('Change Number')}
 													</div>
-												<div>
-													{mins === 0 && secs === 0 ? (
-														<div
-															style={{ color: 'red' }}
-															onClick={onSendSMSAgain}
-														>
-															{t('Send Again')}
-														</div>
-													) : (
-														<p>{`${mins.toString().padStart(2, '0')}:${secs
-															.toString()
-															.padStart(2, '0')}`}</p>
-													)}
+													<div>
+														{mins === 0 && secs === 0 ? (
+															<div
+																style={{ color: 'red' }}
+																onClick={onSendSMSAgain}
+															>
+																{t('Send Again')}
+															</div>
+														) : (
+															<p>{`${mins.toString().padStart(2, '0')}:${secs
+																.toString()
+																.padStart(2, '0')}`}</p>
+														)}
+													</div>
 												</div>
-												</div>
-												
 
 												<div style={{ display: 'flex' }}>
 													<FormInput label={t('Verify code')} name={'code'} />
@@ -289,8 +298,10 @@ function AppPersonalDetails({
 							) : (
 								<div></div>
 							)}
-							
-							{responseCodeState && typeof responseCodeState !== 'string' ? (
+
+							{responseCodeState &&
+							typeof responseCodeState !== 'string' &&
+							showPayment === false ? (
 								<div>
 									<Space style={{ width: '100%' }} direction={'vertical'}>
 										<Form ref={formRef} onValuesChange={handleNamesChange}>
@@ -316,6 +327,14 @@ function AppPersonalDetails({
 												rules={[{ required: true }]}
 											/>
 										</Form>
+										<Button
+											onClick={handleShowPayment}
+											size={'large'}
+											type={'primary'}
+											style={{ marginTop: '0px' }}
+										>
+											continue
+										</Button>
 									</Space>
 								</div>
 							) : (
