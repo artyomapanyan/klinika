@@ -381,6 +381,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
         }
 
+
+
         if(values?.insurance_companies) {
             values.insurance_companies = values?.insurance_companies
         } else {
@@ -465,7 +467,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name, item, searchData]
     }
 
-console.log(role)
+console.log(data)
 
     return(
         <div >
@@ -583,28 +585,30 @@ console.log(role)
 
                 </div>
 
-                {
-                    role === 'super' || role === 'admin' ? <div className={'add_edit_content'}>
+                <div className={'add_edit_content'}>
                         <Row gutter={[16, 16]}>
                             <Col lg={12} className="gutter-row">
-                                <div style={{display: 'flex'}}>
-                                    {/*{*/}
-                                    {/*    role === 'super' ? <Form.Item>*/}
-                                    {/*        <Checkbox ></Checkbox>*/}
-                                    {/*    </Form.Item> : <div></div>*/}
-                                    {/*}*/}
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_clinic_visit_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_clinic_visit_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
 
                                     <Form.Item
                                         label={t(`Clinic Visit`)}
                                         name="has_clinic_visit_service"
                                         className={'right-label'}
-                                        style={{fontSize:20, fontWeight:600}}
+                                        style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0,}}
                                         valuePropName="checked"
                                         initialValue={data?.has_clinic_visit_service}
                                     >
-                                        <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                        <Switch  disabled={role !== 'super' && !data?.enable_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
-                                </div>
+
 
                                 {
                                     data?.has_clinic_visit_service ? <div style={{marginLeft:60}}>
@@ -616,7 +620,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.clinic_visit?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -628,25 +632,36 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.clinic_visit?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
                                         <div style={{width:200}}>
-                                            <FormInput  label={t('Duration')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_clinic_visit_service}  label={t('Duration')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>
                                         </div>
                                     </div> : <div></div>
                                 }
 
-                                <Form.Item
-                                    label={t(`Telehealth`)}
-                                    name="has_telehealth_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_telehealth_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} title={'dsad'} />
-                                </Form.Item>
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_telehealth_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_telehealth_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_telehealth_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
+                                    <Form.Item
+                                        label={t(`Telehealth`)}
+                                        name="has_telehealth_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_telehealth_service}
+                                    >
+                                        <Switch disabled={role !== 'super' && !data?.enable_telehealth_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} title={'dsad'} />
+                                    </Form.Item>
+
+
                                 {
                                     data?.has_telehealth_service ? <div style={{marginLeft:60}}>
                                         <div>
@@ -657,7 +672,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.telehealth?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_telehealth_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -669,25 +684,36 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.telehealth?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_telehealth_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
                                         <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
-                                            <FormInput  label={t('Duration')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_telehealth_service}  label={t('Service Fee')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_telehealth_service}  label={t('Duration')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>
                                         </div>
                                     </div> : <div></div>
                                 }
-                                <Form.Item
-                                    label={t(`Home Visit`)}
-                                    name="has_home_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_home_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_home_visit_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_home_visit_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
+                                    <Form.Item
+                                        label={t(`Home Visit`)}
+                                        name="has_home_visit_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_home_visit_service}
+                                    >
+                                        <Switch disabled={role !== 'super' && !data?.enable_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                    </Form.Item>
+
+
                                 {
                                     data?.has_home_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
@@ -698,7 +724,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.home_visit?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -710,25 +736,36 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.home_visit?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
                                         <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
-                                            <FormInput  label={t('Duration')} inputDisabled={true} name={["service_settings","home_visit","duration"]}  initialValue={60}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_home_visit_service}  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_home_visit_service} label={t('Duration')}  name={["service_settings","home_visit","duration"]}  initialValue={data?.service_settings?.home_visit?.duration ? data?.service_settings?.home_visit?.duration : 60}/>
                                         </div>
                                     </div> : <div></div>
                                 }
-                                <Form.Item
-                                    label={t(`Laboratory Home Visit`)}
-                                    name="has_laboratory_home_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_laboratory_home_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_laboratory_home_visit_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_laboratory_home_visit_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_laboratory_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
+                                    <Form.Item
+                                        label={t(`Laboratory Home Visit`)}
+                                        name="has_laboratory_home_visit_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_laboratory_home_visit_service}
+                                    >
+                                        <Switch disabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                    </Form.Item>
+
+
                                 {
                                     data?.has_laboratory_home_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
@@ -739,7 +776,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.laboratory_home_visit?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -751,26 +788,37 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.laboratory_home_visit?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
                                         <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} label={t('Service Fee')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
                                         </div>
                                     </div> : <div></div>
                                 }
                             </Col>
                             <Col lg={12} className="gutter-row">
-                                <Form.Item
-                                    label={t(`Laboratory Clinic Visit`)}
-                                    name="has_laboratory_clinic_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_laboratory_clinic_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_laboratory_clinic_visit_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_laboratory_clinic_visit_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_laboratory_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
+                                    <Form.Item
+                                        label={t(`Laboratory Clinic Visit`)}
+                                        name="has_laboratory_clinic_visit_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_laboratory_clinic_visit_service}
+                                    >
+                                        <Switch disabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                    </Form.Item>
+
+
                                 {
                                     data?.has_laboratory_clinic_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
@@ -781,7 +829,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.laboratory_clinic_visit?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -793,22 +841,33 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.laboratory_clinic_visit?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
 
                                     </div> : <div></div>
                                 }
-                                <Form.Item
-                                    label={t(`Nursing`)}
-                                    name="has_nursing_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_nursing_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_nursing_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_nursing_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_nursing_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
+                                    <Form.Item
+                                        label={t(`Nursing`)}
+                                        name="has_nursing_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600, marginTop:role === 'super' ? -30 : 0}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_nursing_service}
+                                    >
+                                        <Switch disabled={role !== 'super' && !data?.enable_nursing_service} checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />
+                                    </Form.Item>
+
+
                                 {
                                     data?.has_nursing_service ? <div style={{marginLeft:60}}>
                                         <div>
@@ -819,7 +878,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.nursing?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_nursing_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -831,25 +890,36 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.nursing?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_nursing_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
                                         <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
-                                            <FormInput  label={t('Duration')} name={["service_settings","nursing","duration"]} inputType={'number'} inputDisabled={true} initialValue={60}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Duration')} name={["service_settings","nursing","duration"]} inputType={'number'}  initialValue={data?.service_settings?.nursing?.duration ? data?.service_settings?.nursing?.duration : 60}/>
                                         </div>
                                     </div> : <div></div>
                                 }
-                                <Form.Item
-                                    label={t(`Physical Therapy Home Visit`)}
-                                    name="has_physical_therapy_home_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_physical_therapy_home_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_physical_therapy_home_visit_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_physical_therapy_home_visit_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_physical_therapy_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
+                                    <Form.Item
+                                        label={t(`Physical Therapy Home Visit`)}
+                                        name="has_physical_therapy_home_visit_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_physical_therapy_home_visit_service}
+                                    >
+                                        <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                    </Form.Item>
+
+
                                 {
                                     data?.has_physical_therapy_home_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
@@ -860,7 +930,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.physical_therapy_home_visit?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -872,25 +942,36 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.physical_therapy_home_visit?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
                                         <div style={{width:200}}>
-                                            <FormInput  label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
-                                            <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'} inputDisabled={true} initialValue={60}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service}  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'}  initialValue={data?.service_settings?.physical_therapy_home_visit?.duration ? data?.service_settings?.physical_therapy_home_visit?.duration : 60}/>
                                         </div>
                                     </div> : <div></div>
                                 }
-                                <Form.Item
-                                    label={t(`Physical Therapy Clinic Visit`)}
-                                    name="has_physical_therapy_clinic_visit_service"
-                                    className={'right-label'}
-                                    style={{fontSize:20, fontWeight:600}}
-                                    valuePropName="checked"
-                                    initialValue={data?.has_physical_therapy_clinic_visit_service}
-                                >
-                                    <Switch checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
-                                </Form.Item>
+
+                                    {
+                                        role === 'super' ? <Form.Item name={'enable_physical_therapy_clinic_visit_service'}
+                                                                      valuePropName='checked'
+                                                                      initialValue={data?.enable_physical_therapy_clinic_visit_service}
+                                        >
+                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                        </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_physical_therapy_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
+                                    }
+                                    <Form.Item
+                                        label={t(`Physical Therapy Clinic Visit`)}
+                                        name="has_physical_therapy_clinic_visit_service"
+                                        className={'right-label'}
+                                        style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
+                                        valuePropName="checked"
+                                        initialValue={data?.has_physical_therapy_clinic_visit_service}
+                                    >
+                                        <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                    </Form.Item>
+
+
                                 {
                                     data?.has_physical_therapy_clinic_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
@@ -901,7 +982,7 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.physical_therapy_clinic_visit?.has_insurance_company}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
 
                                         </div>
@@ -913,18 +994,17 @@ console.log(role)
                                                 valuePropName="checked"
                                                 initialValue={data?.service_settings?.physical_therapy_clinic_visit?.enable_vat_calculation}
                                             >
-                                                <Switch size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                                <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
                                         </div>
                                         <div style={{width:200}}>
-                                            <FormInput  label={t('Duration')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service} label={t('Duration')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>
                                         </div>
                                     </div> : <div></div>
                                 }
                             </Col>
                         </Row>
-                    </div> : <div></div>
-                }
+                    </div>
 
 
 
