@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { t } from 'i18next'
 import { Avatar, Divider } from 'antd'
 import off_image_1 from '../../../../dist/Img/off_image_1.jpg'
@@ -10,16 +10,40 @@ import { useSelector } from 'react-redux'
 
 function OfferBookDetails({ data }) {
 	let lngs = useSelector(state => state?.app?.current_locale)
+	const [isMobile, setIsMobile] = useState(false)
+		//choose the screen size
+		const handleResize = () => {
+			if (window.innerWidth < 720) {
+				setIsMobile(true)
+			} else {
+				setIsMobile(false)
+			}
+		}
+	
+		// create an event listener
+		useEffect(() => {
+			window.addEventListener('resize', handleResize)
+		})
+	
 	return (
 		<div className={'offer_book_div'}>
-			<h2 className={'offer_book_title'}>{data?.title}</h2>
+			<div className={'offer_desc'}>
+				<h2 className={'offer_book_title'}>{data?.title}</h2>
 
-			<div
-				className={'offer_book_desc'}
-				dangerouslySetInnerHTML={{ __html: data?.content }}
-			/>
+				<div
+					className={'offer_book_desc'}
+					dangerouslySetInnerHTML={{ __html: data?.content }}
+				/>
+			</div>
 
-			<Divider className={'offer_book_divider'} />
+			{isMobile ? (
+					''
+				) : (
+					<div>
+					<Divider />
+				</div>
+				)}
+		
 
 			<div>
 				<div className={'offer_clinic_div'}>

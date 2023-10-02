@@ -29,31 +29,36 @@ function OfferBookContent() {
 			{loading ? (
 				<Preloader />
 			) : (
-				<div className={'offer_book_card'} style={{ width: '900px' }}>
+				<div className={'offer_book_card_new'}>
 					<div className={'offer_book_card_image_div'}>
 						{data?.cover?.url ? (
 							<>
 								<img
 									src={data?.cover?.url}
 									alt='avatar'
-									className={'offer_card_image'}
+									className={'offer_card_image_new'}
 								/>
 							</>
 						) : (
 							<img
 								src={clinic2}
 								alt={'clinic2'}
-								className={'offer_card_image'}
+								className={'offer_card_image_new'}
 							/>
 						)}
 
-						<div className={'offer_details'}>
+						<div className={'offer_details_new'}>
 							<OfferBookDetailsNew data={data} />
 
 							<div className={'offer_section'}>
-								<OfferPrice data={data} />
-
-								<OfferHours data={data} />
+								<div className={'offer_order'}>
+									
+										<OfferPrice data={data} />
+									
+									
+										<OfferHours data={data} />
+								
+								</div>
 
 								<div className={'offer_appointment_sec'}>
 									<BookAnAppointmentNew data={data} />

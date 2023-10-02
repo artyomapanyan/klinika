@@ -28,6 +28,22 @@ function BookAnAppointment({ data }) {
 	const [showthank, setShowthank] = useState(false)
 	const [showPayment, setShowPayment] = useState(false)
 
+	const [isMobile, setIsMobile] = useState(false)
+
+	//choose the screen size
+	const handleResize = () => {
+		if (window.innerWidth < 600) {
+			setIsMobile(true)
+		} else {
+			setIsMobile(false)
+		}
+	}
+
+	// create an event listener
+	useEffect(() => {
+		window.addEventListener('resize', handleResize)
+	})
+
 	const onBooking = () => {
 		setLoading(true)
 
@@ -77,9 +93,8 @@ function BookAnAppointment({ data }) {
 		}
 
 		if (responseCodeState?.patient) {
-		//	setShowpay(true)
+			//	setShowpay(true)
 		}
-		
 	}, [dataState?.date, dataState?.time, namesState])
 
 	return (
@@ -89,16 +104,22 @@ function BookAnAppointment({ data }) {
 					''
 				) : (
 					<>
-						<div>
-							<p className={'appointment_title'}>Select doctor and date</p>
-						</div>
-						<div>
-							<AppDoctor
-								data={data}
-								setDataState={setDataState}
-								dataState={dataState}
-							/>
-						</div>
+						{isMobile ? (
+							''
+						) : (
+							<>
+								<div>
+									<p className={'appointment_title'}>Select doctor and date</p>
+								</div>
+								<div>
+									<AppDoctor
+										data={data}
+										setDataState={setDataState}
+										dataState={dataState}
+									/>
+								</div>
+							</>
+						)}
 
 						<div className={'calendar_div'}>
 							<div className={'calendar_date_div'}>
@@ -125,7 +146,7 @@ function BookAnAppointment({ data }) {
 						</div>
 					</>
 				)}
-				{ showthank == true ? (
+				{showthank == true ? (
 					''
 				) : (
 					<div>
@@ -146,40 +167,46 @@ function BookAnAppointment({ data }) {
 				)}
 				{showPayment == true ? (
 					<div>
-					<AppPaymentMethods
-						data={data}
-						setDataState={setDataState}
-						dataState={dataState}
-						responseCodeState={responseCodeState}
-					/>
-				</div>
+						<AppPaymentMethods
+							data={data}
+							setDataState={setDataState}
+							dataState={dataState}
+							responseCodeState={responseCodeState}
+						/>
+					</div>
 				) : (
 					''
 				)}
-				
-				<div className={'app_btn'}>
-					<Button
-						loading={loading}
-						onClick={onBooking}
-						size={'large'}
-						type={'primary'}
-						style={{ marginTop: '20px' }}
-						disabled={
-							namesState?.first &&
-							namesState?.last &&
-							namesState?.email &&
-							dataState?.doctor_id &&
-							dataState?.date &&
-							dataState?.time &&
-							dataState?.payment_method_id
-								? false
-								: true
-						}
-						htmlType={'submit'}
-					>
-						{t('Book_now')}
-					</Button>
-				</div>
+
+				{isMobile ? (
+					''
+				) : (
+					<>
+						<div className={'app_btn'}>
+							<Button
+								loading={loading}
+								onClick={onBooking}
+								size={'large'}
+								type={'primary'}
+								style={{ marginTop: '20px' }}
+								disabled={
+									namesState?.first &&
+									namesState?.last &&
+									namesState?.email &&
+									dataState?.doctor_id &&
+									dataState?.date &&
+									dataState?.time &&
+									dataState?.payment_method_id
+										? false
+										: true
+								}
+								htmlType={'submit'}
+							>
+								{t('Book_now')}
+							</Button>
+						</div>
+					</>
+				)}
 			</div>
 
 			{/** 	{showthank == true ? <ThankYouOffer /> : ''} */}
