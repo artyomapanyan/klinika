@@ -89,12 +89,14 @@ function BookAnAppointment({ data }) {
 					''
 				) : (
 					<>
-						<div className={'tab_div_mobile_new_offer'}>
+						<div
+						 className={'tab_div_mobile_new_offer'}
+						 >
 							<div>
 								<div>
 									<p className={'appointment_title'}>Select doctor and date</p>
 								</div>
-								<div>
+								<div >
 									<AppDoctor
 										data={data}
 										setDataState={setDataState}
@@ -189,7 +191,7 @@ function BookAnAppointment({ data }) {
 					</div>
 				</div>
 			</div>
-
+		
 			{/** 	{showthank == true ? <ThankYouOffer /> : ''} */}
 		</div>
 	)

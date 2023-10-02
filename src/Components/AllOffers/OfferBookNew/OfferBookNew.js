@@ -12,10 +12,20 @@ function OfferBookNew() {
 
 	return (
 		<>
-			
-			<div>
-			
+			{/*<div
+				style={{
+					backgroundColor: 'black',
+					width: '100%',
+					position: 'sticky',
+					top: '0%',
+					zIndex: '999',
+					padding: '10px'
+				}}
+			>
+				back to offers
+			</div>*/}
 
+			<div>
 				<div className={'offer_logo_div_new'}>
 					<AllOffersHeader headerState={true} />
 				</div>
@@ -28,7 +38,6 @@ function OfferBookNew() {
 							  }
 					}
 				>
-				
 					<div className={'menu_div_new'} style={{ minHeight: 500 }}>
 						<OfferBookContentNew />
 					</div>

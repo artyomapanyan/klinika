@@ -63,6 +63,7 @@ function OfferBookContent() {
 					</div>
 				</div>
 			</div>
+			
 			{loading ? (
 				<Preloader />
 			) : (
@@ -118,3 +119,25 @@ function OfferBookContent() {
 	)
 }
 export default OfferBookContent
+
+/**
+ * <div
+				style={{
+					position: 'sticky',
+					bottom: '10px',
+					left:'0px',
+					width: '100%',
+					height: '40px',
+					zIndex: '999'
+				}}
+			>
+				<div>
+					<div className={'tab_div_mobile_new_appointment'}>
+							<div className={'select_mobile_appointment'}>
+								<p>Select doctor and time</p>
+							</div>
+						</div>
+				</div>
+			</div>
+ * 
+ */
