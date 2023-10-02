@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Divider, Space, Spin } from 'antd'
-import { CalendarOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import { RightOutlined, LeftOutlined } from '@ant-design/icons'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'

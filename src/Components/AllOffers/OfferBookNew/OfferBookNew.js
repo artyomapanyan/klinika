@@ -14,9 +14,7 @@ function OfferBookNew() {
 		<>
 			
 			<div>
-			{/**	<div className={'tab_div_mobile_new'}>
-					<AllOffersMobileHeader />
-				</div>**/}
+			
 
 				<div className={'offer_logo_div_new'}>
 					<AllOffersHeader headerState={true} />

@@ -648,7 +648,6 @@
   display: flex
   flex-direction: column
   justify-content: space-between
- 
 
 .offer_card_image_new
   width: 100%
@@ -664,7 +663,9 @@
   padding: 10px
   @media screen and (max-width: 500px)
     width: 100%px  
-    height:160px 
+    height:160px  
+    margin-top: 0px  
+  
 
 .offer_appointment_sec
   margin-top: 50px
@@ -1112,11 +1113,6 @@ hr
   justify-content: center
   align-items: center
 
-.offer_order
-  display:flex
-  flex-direction: column
-  @media screen and (max-width: 600px)
-    flex-direction: column-reverse
 
 .offer_desc
   @media screen and (max-width: 600px)
@@ -1137,4 +1133,24 @@ hr
  
 
  
-    
+.tab_div_mobile_new_offer
+    display: flex
+    opacity: 0.99
+    flex-direction: row
+    justify-content: center
+    align-items: center
+   
+    @media screen and (max-width: 600px)
+      display: none
+  
+.tab_div_mobile_new_offer_arrow
+    display: none
+    opacity: 0.99
+    @media screen and (max-width: 600px)
+      display: flex
+      justify-content: center
+      align-items: center
+      width:40px
+      height:40px
+      background-color:#774D9D
+      border-radius:12px

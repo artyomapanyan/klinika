@@ -28,21 +28,6 @@ function BookAnAppointment({ data }) {
 	const [showthank, setShowthank] = useState(false)
 	const [showPayment, setShowPayment] = useState(false)
 
-	const [isMobile, setIsMobile] = useState(false)
-
-	//choose the screen size
-	const handleResize = () => {
-		if (window.innerWidth < 600) {
-			setIsMobile(true)
-		} else {
-			setIsMobile(false)
-		}
-	}
-
-	// create an event listener
-	useEffect(() => {
-		window.addEventListener('resize', handleResize)
-	})
 
 	const onBooking = () => {
 		setLoading(true)
@@ -104,10 +89,8 @@ function BookAnAppointment({ data }) {
 					''
 				) : (
 					<>
-						{isMobile ? (
-							''
-						) : (
-							<>
+						<div className={'tab_div_mobile_new_offer'}>
+							<div>
 								<div>
 									<p className={'appointment_title'}>Select doctor and date</p>
 								</div>
@@ -118,8 +101,8 @@ function BookAnAppointment({ data }) {
 										dataState={dataState}
 									/>
 								</div>
-							</>
-						)}
+							</div>
+						</div>
 
 						<div className={'calendar_div'}>
 							<div className={'calendar_date_div'}>
@@ -178,10 +161,8 @@ function BookAnAppointment({ data }) {
 					''
 				)}
 
-				{isMobile ? (
-					''
-				) : (
-					<>
+				<div className={'tab_div_mobile_new_offer'}>
+					<div>
 						<div className={'app_btn'}>
 							<Button
 								loading={loading}
@@ -205,8 +186,8 @@ function BookAnAppointment({ data }) {
 								{t('Book_now')}
 							</Button>
 						</div>
-					</>
-				)}
+					</div>
+				</div>
 			</div>
 
 			{/** 	{showthank == true ? <ThankYouOffer /> : ''} */}
