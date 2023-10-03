@@ -5,12 +5,14 @@ deploy:
   stage: deploy
   image: node:16
   variables:
+    SSH_DEST_DEV: forge@10.0.0.3:/var/www/devapps/front.klinikatech.com/
     SSH_DEST_STAGING: forge@10.0.0.3:/var/www/front.klinikatech.com/
     SSH_DEST_MAIN: root@10.0.0.2:/var/www/new.klinikatech.com/
   when: manual
   only:
     - main
     - staging
+    - dev
   before_script:
     - |
       which ssh-agent || ( apt-get update -y && apt-get install openssh-client coreutils -y --no-install-recommends )
@@ -26,4 +28,4 @@ deploy:
     - apt-get install -y rsync
     - npm install
     - if [ "$CI_COMMIT_BRANCH" = "main" ]; then npm run build:prod; else npm run build:dev; fi
-    - if [ "$CI_COMMIT_BRANCH" = "main" ]; then rsync -avz --del ./build/ $SSH_DEST_MAIN; else rsync -avz --del ./build/ $SSH_DEST_STAGING; fi
+    - if [ "$CI_COMMIT_BRANCH" = "main" ]; then rsync -avz --del ./build/ $SSH_DEST_MAIN; elif [ "$CI_COMMIT_BRANCH" = "stage" ]; rsync -avz --del ./build/ $SSH_DEST_STAGING; else rsync -avz --del ./build/ $SSH_DEST_DEV; fi
