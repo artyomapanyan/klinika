@@ -153,7 +153,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 	const settings = {
 		infinite: false,
 		speed: 500,
-		slidesToShow: 4,
+		slidesToShow: 6,
 		slidesToScroll: 3,
 		responsive: [
 			{
@@ -186,7 +186,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 				width='32px'
 				height='36px'
 				background='#774D9D'
-				right='-2px'
+				right='-5px'
 				left=''
 				top='70px'
 				borderRadius='10px'
@@ -197,7 +197,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 				width='32px'
 				height='36px'
 				background='#774D9D'
-				left='200px'
+				left='294px'
 				top='30px'
 				borderRadius='10px'
 			/>
@@ -240,7 +240,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 				width='30px'
 				height='35px'
 				background='#BF539E'
-				right='0px'
+				right='-10px'
 				top='40px'
 				borderRadius='10px'
 				paddingRight='10'
@@ -251,7 +251,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 				width='30px'
 				height='35px'
 				background='#BF539E'
-				left='200px'
+				left='290px'
 				top='0px'
 				borderRadius='10px'
 				paddingRight='10'
@@ -270,25 +270,32 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 		<div>
 			{dataState?.doctor_id ? (
 				<>
-					<div className={'calendar_content'}>
+					<div className={'calendar_content'} style={{backgroundColor:'#BF539E'}}>
 						<div
 							style={{
 								display: 'flex',
 								justifyContent: 'space-between'
 							}}
 						>
+							<div>
 							<h2 className={'calendar_title'}>Pick Date</h2>
-							<LeftOutlined
+							</div>
+							
+                             <div style={{display:'flex'}}>
+							 <LeftOutlined
 								style={{ fontSize: '15px', color: 'white' }}
 								onClick={prevMonth}
 							/>
-							<h2 className={'calendar_month'} style={{ marginTop: '4px' }}>
+							<h2 className={'calendar_month'} style={{ marginTop: '4px',marginLeft:'12px',marginRight:'12px' }}>
 								{months[today.month()]}
 							</h2>
 							<RightOutlined
 								style={{ fontSize: '15px', color: 'white' }}
 								onClick={nextMonth}
 							/>
+							 </div>
+							
+
 						</div>
 
 						{loadingDate ? (
@@ -296,6 +303,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 						) : (
 							<div>
 								<Slider
+								id='other_css'
 									{...settings}
 									ref={sliderRef}
 									afterChange={e => setSliderIndex(e)}
@@ -327,7 +335,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 														<>
 															<Spin spinning={!called}>
 																<div className={'calendar_day_content'}>
-																	<div>{date.format('DD')}</div>
+																	<div style={{margin:'8px'}}>{date.format('DD')}</div>
 																</div>
 															</Spin>
 														</>
@@ -341,7 +349,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 						)}
 					</div>
 					<div className={'time_div'}>
-						<div className={'calendar_content'}>
+						<div className={'calendar_content_new'}>
 							<h2 className={'calendar_title'}>Select Time</h2>
 							{timesLoading ? (
 								<Loader small={25} />
@@ -363,7 +371,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 													onClick={() => onTime(time)}
 													style={{ width: 100 }}
 													className={'date_div'}
-													align={'center'}
+													
 												>
 													<div className={'calendar_time'}>
 														<div>

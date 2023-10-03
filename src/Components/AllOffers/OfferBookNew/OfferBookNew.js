@@ -4,7 +4,7 @@ import OffersFooter from '../Fragments/OffersFooter'
 import OfferBookContentNew from './Fragment/OfferBookContentNew'
 import AllOffersHeader from '../Fragments/AllOffersHeader'
 import { useSelector } from 'react-redux'
-import AllOffersMobileHeader from '../Fragments/AllOffersMobileHeader'
+import NavbarOffersHeader from '../OfferBookNew/Fragment/NavbarOffersHeader'
 import mobile_filter_icon from '../../../dist/icons/mobile_filter_icon.png'
 
 function OfferBookNew() {
@@ -27,7 +27,7 @@ function OfferBookNew() {
 
 			<div>
 				<div className={'offer_logo_div_new'}>
-					<AllOffersHeader headerState={true} />
+					<NavbarOffersHeader headerState={true} />
 				</div>
 				<div
 					style={
@@ -42,7 +42,7 @@ function OfferBookNew() {
 						<OfferBookContentNew />
 					</div>
 
-					<OffersFooter />
+					{/**<OffersFooter />**/}
 				</div>
 			</div>
 		</>

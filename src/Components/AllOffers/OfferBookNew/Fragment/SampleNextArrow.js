@@ -17,7 +17,6 @@ function SampleNextArrow(props) {
 		<div
 			className={className}
 			style={{
-				...style,
 				display: 'absolute',
 				height: height,
 				width: width,
@@ -31,7 +30,9 @@ function SampleNextArrow(props) {
 				alignItems: 'center',
 				justifyContent: 'center',
 				padding: paddingRight,
-				marginLeft: '30px'
+				marginLeft: '30px',
+				color:'white',
+				fontFamily:'monospace'
 			}}
 			onClick={onClick}
 		/>

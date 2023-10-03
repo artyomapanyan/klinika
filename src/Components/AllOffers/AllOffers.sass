@@ -753,7 +753,6 @@ hr
   border-top: 2px dotted #E1E2E9
   color: #E1E2E9
   background-color: #fff
-  height: 1px
   width: 100%
 
 
@@ -882,7 +881,7 @@ hr
 .calendar_div
   background-color:#774D9D
   border-radius:12px
-  width:240px
+  width:100%
  
 .calendar_date_div
   background-color:#BF539E
@@ -890,6 +889,9 @@ hr
   border-bottom-right-radius:20px  
 
 .calendar_content
+  padding:10px
+
+.calendar_content_new
   padding:5px
   
 .calendar_title
@@ -901,14 +903,14 @@ hr
   color:#F3A632
 
 .calendar_time 
-  font-size:10px
+  font-size:14px
   font-weight:600
   color:#FFFFFF
-  padding-top:10px
-  padding-bottom:15px
+  padding:8px
   background-color:#BF539E 
-  border-radius:10px
-  
+  border-radius:12px
+  width:63px
+  height:35px
  
 .disabled_date_div
   font-size:5px
@@ -1032,11 +1034,10 @@ hr
 
 .calendar_day_content
   height:40px
+  width:82px 
   display: flex
-  flex-direction: column
-  justify-content: space-between
   align-items: center
-  padding:12px
+  margin-left: inherit
 
 
 .date_carousel_container
@@ -1045,7 +1046,7 @@ hr
   border-radius:20px
  
 .calendar_month
-  font-size:14px
+  font-size:16px
   font-weight:700
   color:#FFFFFF
 
@@ -1065,10 +1066,11 @@ hr
   background-color:#774D9D
   border-bottom-left-radius:20px
   border-bottom-right-radius:20px
+  padding: 10px
 
 .offer_logo_div_new
   opacity: 0.99
-  height: 150px
+  height: 100px
   @media screen and (max-width: 500px)
       display: none
 
@@ -1087,7 +1089,7 @@ hr
       box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
 
 .offer_book_card_new
-  width: 70%
+  width: 80%
   opacity: 0.99
   display: flex
   flex-direction: row
@@ -1113,7 +1115,6 @@ hr
   justify-content: center
   align-items: center
 
-
 .offer_desc
   @media screen and (max-width: 600px)
     padding-left:10px
@@ -1132,7 +1133,6 @@ hr
    background-color:#FFFFFF 
  
 
- 
 .tab_div_mobile_new_offer
     display: block
     opacity: 0.99
@@ -1171,5 +1171,43 @@ hr
   @media screen and (max-width: 400px)
   display:none
   
-
    
+.slick-prev,
+.slick-next 
+
+.custom-prevArrow,
+.custom-nextArrow 
+  position: relative
+  z-index: 99999
+  top: -10px
+
+.custom-prevArrow 
+  left: -10px
+
+.custom-nextArrow 
+  right: -10px
+
+.custom-prevArrow:hover
+.custom-nextArrow:hover 
+  fill: red
+  cursor: pointer
+
+.slick-next:before  
+    font-family: monospace !important
+    font-size: 28px !important
+
+.slick-prev:before  
+    font-family: monospace !important
+    font-size: 28px !important
+
+
+.navbar_offer_new
+  background-color: #FFFFFF
+  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
+
+
+.back_offer
+  color:#BF539E
+  font-size:14px
+  font-weight:400px
+  cursor:pointer
