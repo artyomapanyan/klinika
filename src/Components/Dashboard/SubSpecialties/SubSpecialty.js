@@ -79,7 +79,7 @@ function SubSpecialty() {
     }
     const res = 'SubSpecialty'
 
-    console.log(data)
+
 
     return (
         <div>

@@ -185,7 +185,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             inputValues[i] = '';
         }
         setInputValues([...inputValues]);
-        console.log(inputValues)
+
         if(i < 4 && myVal !== '') {
             myRefs[i].current.focus();
         }
@@ -193,7 +193,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             return val !== '';
         });
         if(overAll){
-            console.log('bolore lracvac en');
+
         }
 
         setOverAllState(overAll)
@@ -207,7 +207,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const onSendCode = () => {
         setLoading(true)
         postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
-            console.log(response)
+
             setLoading(false)
             setSendCodeState(true)
         })
@@ -232,14 +232,14 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     }
     const onRadioChange = (e) => {
-        console.log(e.target.value)
+
         setServisTypeAndTime(prevState => ({
             ...prevState,
             time: e?.target?.value
         }))
     }
 
-    console.log(servisTypeAndTime, 'servisTypeAndTime')
+
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>

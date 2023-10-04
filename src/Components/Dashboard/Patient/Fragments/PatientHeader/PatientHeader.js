@@ -109,9 +109,9 @@ function PatientHeader({data}) {
                                     </div>
 
                                 </div>
-                                <div className={'private_note_text'} align={'center'} >Private notes</div>
+                                <div className={'private_note_text'} align={'center'} >{t('Private notes')}</div>
                             </div>
-                            <Modal className={'medications_modal'} title="Private notes" footer={false} width={640} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                            <Modal className={'medications_modal'} title={t("Private notes")} footer={false} width={640} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                                 <PrivateNotesModal data={data}/>
 
                             </Modal>

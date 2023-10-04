@@ -4,7 +4,7 @@ import {postResource} from "../Functions/api_calls";
 import {Switch} from "antd";
 
 
-function SwitchStatus({items=[],initialValue,onChange=null, resource, record,name}){
+function SwitchStatus({items=[],initialValue,onChange=null, resource, record,name, switchDisabled=false}){
     let token = useSelector((state) => state?.auth?.token);
 
     const [value,setValue] = useState(initialValue);
@@ -27,7 +27,7 @@ function SwitchStatus({items=[],initialValue,onChange=null, resource, record,nam
 
 
     return(
-        <div className={'d'}><Switch onChange={onClick}  defaultChecked={record?.status == '2' ? true : false}/></div>
+        <div className={'d'}><Switch disabled={switchDisabled} onChange={onClick}  defaultChecked={record?.status == '2' ? true : false}/></div>
 
 
     )
