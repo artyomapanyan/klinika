@@ -36,7 +36,6 @@ function Offers() {
 
 
                            tableColumns={[
-
                 {
                     title:('Title'),
                     dataIndex:'title',
