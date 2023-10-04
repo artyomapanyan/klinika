@@ -9,7 +9,7 @@ function OfferCard({ data, id }) {
 	let lngs = useSelector((state) => state?.app?.current_locale);
 	const navigate = useNavigate()
 	const onBookNow = () => {
-		navigate(`/offers/${id}`)
+  	  navigate(`/offers/${id}`)
 	}
 
 

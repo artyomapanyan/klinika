@@ -18,7 +18,7 @@ import AllOffersMobileHeader from './Fragments/AllOffersMobileHeader'
 import OfferPriceMobile from './Fragments/OfferPriceMobile'
 import { useSelector } from 'react-redux'
 
-function AllOffers() {
+function  AllOffers() {
 	let lngs = useSelector(state => state?.app?.current_locale)
 	const currentUrl = window.location.href
 	const [dataLength, setDataLength] = useState(9)
