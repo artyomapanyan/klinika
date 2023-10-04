@@ -1,28 +1,17 @@
-import React, {useEffect, useRef} from 'react'
+import React, { useRef} from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
-import Resource from "../../../store/Resources";
-import ColorSelect from "../../Fragments/ColorSelect";
 import {useSelector} from "react-redux";
 import './Offers.sass'
-import new_sorter_icon from "../../../dist/icons/new_sorter_icon.png";
 import dayjs from "dayjs";
 import SwitchStatus from "../../Fragments/SwitchStatus";
-import {Input} from "antd";
+
 
 const resource='Offer'
 function Offers() {
     let reduxInfo = useSelector((state) => state?.auth);
     let tableRef = useRef()
-
-
-    // useEffect(()=> {
-    //     let aaa = document.getElementsByClassName('ant-table-filter-column')[0]
-    //     aaa.innerHTML = '<input />'
-    //     console.log(aaa)
-    // }, [])
-
 
 
 
