@@ -14,7 +14,6 @@ function Offers() {
     let tableRef = useRef()
 
 
-
     return(
         <div className={'offers_big_div'} ref={tableRef}>
             <ResourceTable resource={resource}
