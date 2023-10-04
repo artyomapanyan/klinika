@@ -56,10 +56,10 @@ function AppDate({setDataState, dataState, data, setDate}) {
 
     useEffect(()=>{
 
-        //console.log(sliderIndex)
+
        let callableDays =  [...daysData].slice(sliderIndex,sliderIndex+5).filter(e=>!e.called)
-        // console.log(callableDays,daysData,'sdsd')
-        //setLoadingDate(true)
+
+
         Promise.all(callableDays.map((callableDay)=>{
           return   postResource('PublicClinicDoctorAvailableTimes','single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service:'clinic_visit', date:dayjs().add(callableDay.key, 'day').format('YYYY-MM-DD')}).then(response => {
 
