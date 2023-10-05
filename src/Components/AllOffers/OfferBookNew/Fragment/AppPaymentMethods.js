@@ -110,10 +110,8 @@ function AppPaymentMethods({
 						<Space>
 							<h2 className={'appointment_title'}>Select payment method</h2>
 						</Space>
-						{data?.clinic?.payment_methods.map(item => {
-							return (
-								<>
-									<div className={'payment_section'}>
+						{data?.clinic?.payment_methods.map((item, key) => {
+							return <div key={key} className={'payment_section'}>
 										<div
 											onClick={() => onpay(item.id)}
 											className={'payment_container'}
@@ -121,8 +119,7 @@ function AppPaymentMethods({
 											{item.title}
 										</div>
 									</div>
-								</>
-							)
+
 						})}
 					</div>
 				</>

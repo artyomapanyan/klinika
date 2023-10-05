@@ -69,23 +69,13 @@ function OfferBookContent() {
 			) : (
 				<div className={'offer_book_card_new'}>
 					<div className={'offer_book_card_image_div'}>
-						{data?.cover?.url ? (
-							<>
+
 								<img
-									src={data?.cover?.url}
-									alt='avatar'
+									src={data?.cover?.url ? data?.cover?.url : clinic2}
+									alt='cover'
 									className={'offer_card_image_new'}
 								/>
-							</>
-						) : (
-							<>
-								<img
-									src={clinic2}
-									alt={'clinic2'}
-									className={'offer_card_image_new'}
-								/>
-							</>
-						)}
+
 
 						<div className={'offer_details_new'}>
 							<OfferBookDetailsNew data={data} />

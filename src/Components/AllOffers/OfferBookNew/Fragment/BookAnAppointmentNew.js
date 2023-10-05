@@ -10,13 +10,15 @@ import { useLocation, useNavigate, useParams } from 'react-router'
 import { t } from 'i18next'
 import ThankYouOffer from './ThankYouOffer'
 import { Button, Divider } from 'antd'
+import DateTimeSelect
+	from "../../../Dashboard/DoctorReworked/Fragments/DoctorReworkedCalendar/Fragments/DateTimeSelect";
+import AllOfferCalendar from "./AllOfferCalendar";
 
 function BookAnAppointment({ data }) {
 	let token = useSelector(state => state.auth.token)
 	let params = useParams()
-	let navigate = useNavigate()
 	let dispatch = useDispatch()
-	const location = useLocation()
+
 
 	const [dataState, setDataState] = useState({})
 	const [date, setDate] = useState()
@@ -74,13 +76,24 @@ function BookAnAppointment({ data }) {
 			})
 		}
 		if (dataState?.doctor_id && dataState?.date && dataState?.time) {
-			setShow(true)
+			// setShow(true)
 		}
 
 		if (responseCodeState?.patient) {
 			//	setShowpay(true)
 		}
 	}, [dataState?.date, dataState?.time, namesState])
+
+	const onShowCalendar = () => {
+		setShow(true)
+	}
+
+	const handleShowPayment = () => {
+		setShowPayment(true)
+	}
+
+
+	console.log(showPayment)
 
 	return (
 		<div>
@@ -94,7 +107,7 @@ function BookAnAppointment({ data }) {
 						 >
 							<div>
 								<div>
-									<p className={'appointment_title'}>Select doctor and date</p>
+									<p className={'appointment_title'}>{t('Select doctor and date')}</p>
 								</div>
 								<div >
 									<AppDoctor
@@ -108,32 +121,36 @@ function BookAnAppointment({ data }) {
 
 						<div className={'calendar_div'}>
 							<div className={'calendar_date_div'}>
-								<AppDate
-									data={data}
-									setDataState={setDataState}
-									dataState={dataState}
-									date={date}
-									setDate={setDate}
-									setDataTimes={setDataTimes}
-								/>
+								{/*<AppDate*/}
+								{/*	data={data}*/}
+								{/*	setDataState={setDataState}*/}
+								{/*	dataState={dataState}*/}
+								{/*	date={date}*/}
+								{/*	setDate={setDate}*/}
+								{/*	setDataTimes={setDataTimes}*/}
+								{/*/>*/}
+								{
+									dataState?.doctor_id ? <AllOfferCalendar show={show} setDataTimes={setDataTimes} setDataState={setDataState} dataState={dataState} data={data} date={date} setDate={setDate}/> : <div></div>
+								}
+
+
 							</div>
-							<div>
-								{/**
-								 * <AppTime
-									data={data}
-									setDataState={setDataState}
-									dataState={dataState}
-									setDataTimes={setDataTimes}
-								/>
-								 * 
-								 */}
-							</div>
+
 						</div>
 					</>
 				)}
-				{showthank == true ? (
-					''
-				) : (
+				{
+					dataState?.doctor_id ? show ? <div></div> : <div>
+						<div style={{marginTop: 10}}>
+							<Button onClick={onShowCalendar} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>Continue</Button>
+						</div>
+						<div style={{marginTop: 10}}>
+							<Button type={'secondary'} style={{width: '100%'}}>Cancel</Button>
+						</div>
+					</div> : <div></div>
+				}
+
+				{
 					<div>
 						<AppPersonalDetails
 							onBooking={onBooking}
@@ -147,9 +164,20 @@ function BookAnAppointment({ data }) {
 							dataTimes={dataTimes}
 							showPayment={showPayment}
 							setShowPayment={setShowPayment}
+							show={show}
 						/>
 					</div>
-				)}
+				}
+				{
+					!showPayment && !show ? <div></div> : <div>
+						<div style={{marginTop: 10}}>
+							<Button onClick={handleShowPayment} disabled={namesState?.first && namesState?.last && namesState?.email ? false : true} type={'primary'} style={{width: '100%'}}>Continue</Button>
+						</div>
+						<div style={{marginTop: 10}}>
+							<Button type={'secondary'} style={{width: '100%'}}>Cancel</Button>
+						</div>
+					</div>
+				}
 				{showPayment == true ? (
 					<div>
 						<AppPaymentMethods
@@ -164,8 +192,15 @@ function BookAnAppointment({ data }) {
 				)}
 
 				<div className={'tab_div_mobile_new_offer'}>
+
 					<div>
 						<div className={'app_btn'}>
+
+
+
+
+
+
 							<Button
 								loading={loading}
 								onClick={onBooking}
@@ -187,6 +222,10 @@ function BookAnAppointment({ data }) {
 							>
 								{t('Book_now')}
 							</Button>
+							<div style={{marginTop: 10}}>
+								<Button type={'secondary'} style={{width: '100%'}}>Cancel</Button>
+							</div>
+
 						</div>
 					</div>
 				</div>

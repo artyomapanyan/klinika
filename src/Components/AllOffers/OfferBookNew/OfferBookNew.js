@@ -25,7 +25,7 @@ function OfferBookNew() {
 				back to offers
 			</div>*/}
 
-			<div style={{paddingBottom:'100px'}}>
+			<div >
 				<div className={'offer_logo_div_new'}>
 					<NavbarOffersHeader headerState={true} />
 				</div>

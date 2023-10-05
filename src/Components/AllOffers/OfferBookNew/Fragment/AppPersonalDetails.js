@@ -17,7 +17,8 @@ function AppPersonalDetails({
 	date,
 	setNamesState,
 	showPayment,
-	setShowPayment
+	setShowPayment,
+	show
 }) {
 	let token = useSelector(state => state.auth.token)
 	let formRef = useRef()
@@ -36,7 +37,7 @@ function AppPersonalDetails({
 			if (verifyResponse?.patient?.id) {
 				setDataState(prevState => ({
 					...prevState,
-					booked_at: date?.date + ' ' + dataTimes?.time,
+					booked_at: date.format('YYYY-MM-DD') + ' ' + dataTimes,
 					code: codeAndNumber?.code,
 					patient_id: verifyResponse?.patient?.id,
 					offer_id: params.id
@@ -176,18 +177,16 @@ function AppPersonalDetails({
 		}))
 	}
 
-	const handleShowPayment = () => {
-		setShowPayment(true)
-	}
+
 
 	return (
 		<div>
 			{contextHolder}
 
-			{dataState?.doctor_id && dataState?.date && dataState?.time ? (
+			{show ? (
 				<>
 					<Space>
-						<h2 style={{ fontWeight: 600 }}>Your Information</h2>
+						<h2 style={{ fontWeight: 600 }}>{t('Your Information')}</h2>
 					</Space>
 					<div>
 						<div>
@@ -327,14 +326,14 @@ function AppPersonalDetails({
 												rules={[{ required: true }]}
 											/>
 										</Form>
-										<Button
-											onClick={handleShowPayment}
-											size={'large'}
-											type={'primary'}
-											style={{ marginTop: '0px' }}
-										>
-											continue
-										</Button>
+										{/*<Button*/}
+										{/*	onClick={handleShowPayment}*/}
+										{/*	size={'large'}*/}
+										{/*	type={'primary'}*/}
+										{/*	style={{ marginTop: '0px' }}*/}
+										{/*>*/}
+										{/*	continue*/}
+										{/*</Button>*/}
 									</Space>
 								</div>
 							) : (

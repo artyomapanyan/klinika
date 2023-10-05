@@ -24,8 +24,8 @@ function AppRoutes(){
                 <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
                 <Route path={'login'} element={<Login/>}></Route>
                 <Route path={'offers'} element={<AllOffers/>}></Route>
-           {/*** <Route path={'offers/:id'} element={<OfferBook/>}></Route> */} 
-            <Route path={'offers/:id'} element={<OfferBookNew/>}></Route>  
+            {/*<Route path={'offers/:id'} element={<OfferBook/>}></Route>*/}
+            <Route path={'offers/:id'} element={<OfferBookNew/>}></Route>
 
               
                 <Route path={'thank-you'} element={<ThankYouOffer/>}></Route>

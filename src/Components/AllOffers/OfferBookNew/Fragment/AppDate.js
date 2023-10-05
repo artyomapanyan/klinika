@@ -86,7 +86,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 
 	useEffect(() => {
 		let callableDays = [...daysData]
-			.slice(sliderIndex, sliderIndex + 5)
+			.slice(sliderIndex, sliderIndex + 6)
 			.filter(e => !e.called)
 
 		Promise.all(
@@ -350,7 +350,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 					</div>
 					<div className={'time_div'}>
 						<div className={'calendar_content_new'}>
-							<h2 className={'calendar_title'}>Select Time</h2>
+							<h2 className={'calendar_title'}>{t('Select Time')}</h2>
 							{timesLoading ? (
 								<Loader small={25} />
 							) : (

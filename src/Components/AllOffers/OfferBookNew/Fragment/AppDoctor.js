@@ -24,6 +24,7 @@ function AppDoctor({ setDataState, dataState, data }) {
 
 	return (
 		<div>
+
 			{dataState?.doctor_id ? (
 				<div className={'doctor_selected'}>
 					<Space>
@@ -43,7 +44,7 @@ function AppDoctor({ setDataState, dataState, data }) {
 					<div className={'doctor_container'}>
 						{data?.doctors?.map(el => {
 							return (
-								<div key={el?.id} onClick={() => onDoctor(el?.id)}>
+								<div key={el?.id} onClick={() => onDoctor(el?.id)} style={{cursor: 'pointer'}}>
 									<Space>
 										<Avatar
 											size={40}
