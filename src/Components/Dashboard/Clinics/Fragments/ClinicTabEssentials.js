@@ -333,7 +333,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
     const onFinish = (values) => {
 
-        console.log(values,'values')
+
         setSaveLoading(true)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
         values.has_telehealth_service = values.has_telehealth_service === true
@@ -345,17 +345,18 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         values.has_physical_therapy_home_visit_service = values.has_physical_therapy_home_visit_service === true
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
-        //values.enable_telehealth_service ? values.enable_telehealth_service = true : values.enable_telehealth_service = 0
-        values.enable_telehealth_service = values.enable_telehealth_service ? true : false;
-        values.enable_home_visit_service = values.enable_home_visit_service ? true : false;
-        values.enable_clinic_visit_service = values.enable_clinic_visit_service ? true : false;
-        values.enable_laboratory_home_visit_service = values.enable_laboratory_home_visit_service ? true : false;
-        values.enable_laboratory_clinic_visit_service = values.enable_laboratory_clinic_visit_service ? true : false;
-        values.enable_nursing_service = values.enable_nursing_service ? true : false;
-        values.enable_physical_therapy_home_visit_service = values.enable_physical_therapy_home_visit_service ? true : false;
-        values.enable_physical_therapy_clinic_visit_service = values.enable_physical_therapy_clinic_visit_service ? true : false;
 
-        console.log(values,'changedValues')
+        //values.enable_telehealth_service = values.enable_telehealth_service ? true : false;
+        values.enable_telehealth_service = values.enable_telehealth_service === true;
+        values.enable_home_visit_service = values.enable_home_visit_service === true;
+        values.enable_clinic_visit_service = values.enable_clinic_visit_service === true;
+        values.enable_laboratory_home_visit_service = values.enable_laboratory_home_visit_service === true;
+        values.enable_laboratory_clinic_visit_service = values.enable_laboratory_clinic_visit_service === true;
+        values.enable_nursing_service = values.enable_nursing_service === true;
+        values.enable_physical_therapy_home_visit_service = values.enable_physical_therapy_home_visit_service === true;
+        values.enable_physical_therapy_clinic_visit_service = values.enable_physical_therapy_clinic_visit_service === true;
+
+
 
         if(values.has_clinic_visit_service) {
             values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
@@ -445,7 +446,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...prevState,
             ...e
         }))
-        console.log(e,'changed')
+
         setChangeValuesState(e)
         if(Object.keys(e).length > 0) {
             dispatch({
@@ -481,7 +482,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
 
 
-    console.log(role,'role')
+
     return(
         <div >
             {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic`)} - {data?.name}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
@@ -607,7 +608,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_clinic_visit_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
 
@@ -660,7 +661,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_telehealth_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_telehealth_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -712,7 +713,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_home_visit_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -764,7 +765,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_laboratory_home_visit_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_laboratory_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -817,7 +818,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_laboratory_clinic_visit_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_laboratory_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -866,7 +867,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_nursing_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_nursing_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -918,7 +919,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_physical_therapy_home_visit_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_physical_therapy_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -970,7 +971,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_physical_therapy_clinic_visit_service}
                                         >
-                                            <Checkbox style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Switch size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Switch> {('Enable service')}
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_physical_therapy_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
