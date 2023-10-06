@@ -344,14 +344,14 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         values.has_physical_therapy_home_visit_service = values.has_physical_therapy_home_visit_service === true
         values.has_physical_therapy_clinic_visit_service = values.has_physical_therapy_clinic_visit_service === true
 
-        values.enable_telehealth_service ? values.enable_telehealth_service = true : values.enable_telehealth_service = false
-        values.enable_home_visit_service ? values.enable_home_visit_service = true : values.enable_home_visit_service = false
-        values.enable_clinic_visit_service ? values.enable_clinic_visit_service = true : values.enable_clinic_visit_service = false
-        values.enable_laboratory_home_visit_service ? values.enable_laboratory_home_visit_service = true : values.enable_laboratory_home_visit_service = false
-        values.enable_laboratory_clinic_visit_service ? values.enable_laboratory_clinic_visit_service = true : values.enable_laboratory_clinic_visit_service = false
+        values.enable_telehealth_service ? values.enable_telehealth_service = true : values.enable_telehealth_service = 0
+        values.enable_home_visit_service ? values.enable_home_visit_service = true : values.enable_home_visit_service = 0
+        values.enable_clinic_visit_service ? values.enable_clinic_visit_service = true : values.enable_clinic_visit_service = 0
+        values.enable_laboratory_home_visit_service ? values.enable_laboratory_home_visit_service = true : values.enable_laboratory_home_visit_service = 0
+        values.enable_laboratory_clinic_visit_service ? values.enable_laboratory_clinic_visit_service = true : values.enable_laboratory_clinic_visit_service = 0
         values.enable_nursing_service ? values.enable_nursing_service = true : values.enable_nursing_service = false
-        values.enable_physical_therapy_home_visit_service ? values.enable_physical_therapy_home_visit_service = true : values.enable_physical_therapy_home_visit_service = false
-        values.enable_physical_therapy_clinic_visit_service ? values.enable_physical_therapy_clinic_visit_service = true : values.enable_physical_therapy_clinic_visit_service = false
+        values.enable_physical_therapy_home_visit_service ? values.enable_physical_therapy_home_visit_service = true : values.enable_physical_therapy_home_visit_service = 0
+        values.enable_physical_therapy_clinic_visit_service ? values.enable_physical_therapy_clinic_visit_service = true : values.enable_physical_therapy_clinic_visit_service = 0
 
 
 
