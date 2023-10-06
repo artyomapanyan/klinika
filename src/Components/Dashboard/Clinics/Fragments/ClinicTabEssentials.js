@@ -333,6 +333,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
     const onFinish = (values) => {
 
+        console.log(values,'values')
         setSaveLoading(true)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
         values.has_telehealth_service = values.has_telehealth_service === true
@@ -347,16 +348,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         //values.enable_telehealth_service ? values.enable_telehealth_service = true : values.enable_telehealth_service = 0
         values.enable_telehealth_service = !!values.enable_telehealth_service
         console.log(values.enable_telehealth_service, 'aaa')
-
-        values.enable_home_visit_service ? values.enable_home_visit_service = true : values.enable_home_visit_service = 0
-        values.enable_clinic_visit_service ? values.enable_clinic_visit_service = true : values.enable_clinic_visit_service = 0
-        values.enable_laboratory_home_visit_service ? values.enable_laboratory_home_visit_service = true : values.enable_laboratory_home_visit_service = 0
-        values.enable_laboratory_clinic_visit_service ? values.enable_laboratory_clinic_visit_service = true : values.enable_laboratory_clinic_visit_service = 0
+        values.enable_home_visit_service ? values.enable_home_visit_service = true : values.enable_home_visit_service = false;
+        values.enable_clinic_visit_service ? values.enable_clinic_visit_service = true : values.enable_clinic_visit_service = false
+        values.enable_laboratory_home_visit_service ? values.enable_laboratory_home_visit_service = true : values.enable_laboratory_home_visit_service = false
+        values.enable_laboratory_clinic_visit_service ? values.enable_laboratory_clinic_visit_service = true : values.enable_laboratory_clinic_visit_service = false
         values.enable_nursing_service ? values.enable_nursing_service = true : values.enable_nursing_service = false
-        values.enable_physical_therapy_home_visit_service ? values.enable_physical_therapy_home_visit_service = true : values.enable_physical_therapy_home_visit_service = 0
-        values.enable_physical_therapy_clinic_visit_service ? values.enable_physical_therapy_clinic_visit_service = true : values.enable_physical_therapy_clinic_visit_service = 0
+        values.enable_physical_therapy_home_visit_service ? values.enable_physical_therapy_home_visit_service = true : values.enable_physical_therapy_home_visit_service = false
+        values.enable_physical_therapy_clinic_visit_service ? values.enable_physical_therapy_clinic_visit_service = true : values.enable_physical_therapy_clinic_visit_service = false
 
-        console.log(values)
+        console.log(values,'changedValues')
 
         if(values.has_clinic_visit_service) {
             values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
@@ -446,6 +446,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...prevState,
             ...e
         }))
+        console.log(e,'changed')
         setChangeValuesState(e)
         if(Object.keys(e).length > 0) {
             dispatch({
@@ -481,6 +482,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
 
 
+    console.log(role,'role')
     return(
         <div >
             {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic`)} - {data?.name}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
