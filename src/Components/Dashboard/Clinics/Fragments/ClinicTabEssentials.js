@@ -353,7 +353,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         values.enable_physical_therapy_home_visit_service ? values.enable_physical_therapy_home_visit_service = true : values.enable_physical_therapy_home_visit_service = 0
         values.enable_physical_therapy_clinic_visit_service ? values.enable_physical_therapy_clinic_visit_service = true : values.enable_physical_therapy_clinic_visit_service = 0
 
-
+        console.log(values)
 
         if(values.has_clinic_visit_service) {
             values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
@@ -409,7 +409,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...values
         }))
 
-console.log(values)
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
