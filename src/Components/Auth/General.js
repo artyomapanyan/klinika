@@ -78,7 +78,7 @@ function General(){
                             <Form.Item>
 
                             <a className="login-form-forgot" href="/forgot">
-                                {t('Forgot password')}
+                                {t('Forgot password?')}
                             </a>
                         </Form.Item>
                                 <Form.Item>
