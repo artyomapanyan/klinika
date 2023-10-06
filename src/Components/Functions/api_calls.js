@@ -230,23 +230,7 @@ function handleGenerateFD(values,method){
     }
     return formData
 }
-export const updateResource = (resource,id,values,token,withFormData=false)=>{
-    let formData = {}
-    if(withFormData){
-        formData = handleGenerateFD(values,"PUT")
-    }else{
-        formData = values;
-    }
 
-    return  axios.request({
-            url:api[resource].update.url+id,
-            method:withFormData?'POST':api[resource].update.method,
-            data:formData,
-            headers: {
-                'Authorization': token,
-            }
-        })
-}
 export const deleteResource = (resource,id,token)=>{
     return  axios.request({
         url:api[resource].delete.url+id,
@@ -301,6 +285,23 @@ export const createResource = (resource,values,token,withFormData=false)=>{
     return  axios.request({
         url:api[resource].create.url,
         method:api[resource].create.method,
+        data:formData,
+        headers: {
+            'Authorization': token,
+        }
+    })
+}
+export const updateResource = (resource,id,values,token,withFormData=false)=>{
+    let formData = {}
+    if(withFormData){
+        formData = handleGenerateFD(values,"PUT")
+    }else{
+        formData = values;
+    }
+
+    return  axios.request({
+        url:api[resource].update.url+id,
+        method:withFormData?'POST':api[resource].update.method,
         data:formData,
         headers: {
             'Authorization': token,
