@@ -183,8 +183,8 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
             </div>
             <div>
                 <div>
-                    <div className={'big_date_div'}>
-                        {console.log(loadingDate, dayOff, 'fffffffffffffdddddddddddddd')}
+                    <div className={'big_date_div'} style={{padding: 0}}>
+
                         {[...[...Array(6).keys()]].map((e, key) => {
 
                             return  <Button key={key}
@@ -232,7 +232,7 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
                     <div className={'top_div_title'}>
                         {t('Select Time')}
                     </div>
-                    <div align={'center'} className={'big_time_div'}>
+                    <div align={'center'} className={'big_time_div'} style={{height: 70}}>
                         {
                             date ? availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>{t('No available times')}</div> : <div></div> :
                                 <Radio.Group
@@ -251,7 +251,7 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
                              : <div></div>
                         }
 
-                        <Button className={'next_btn_time'} onClick={() => handleChangeTime(8)}>
+                        <Button className={'next_btn_time'} style={{marginTop: 0}} onClick={() => handleChangeTime(8)}>
                             <img alt={'arrow_right_white'} src={arrow_right_white}/>
                         </Button>
 

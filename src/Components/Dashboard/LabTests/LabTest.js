@@ -82,11 +82,19 @@ function LabTest() {
                 <div className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'name'} rules={[{required: true}]} initialValue={data?.name}/>
 
-                    <FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}
-                              // rules={[{required: true}]}
+                    {/*<FormInput inputProps={{mode:'multiple'}} label={t('Category')} name={'categories'} inputType={'resourceSelect'}*/}
+                    {/*          // rules={[{required: true}]}*/}
+                    {/*           initialValue={data?.categories?.map(e=>e.id)??[]}*/}
+                    {/*           initialData={data?.categories??[]}*/}
+                    {/*           resource={'Category'}*/}
+                    {/*/>*/}
+                    <FormInput inputProps={{mode:'multiple'}} label={t('Lab test category')} name={'categories'} inputType={'resourceSelect'}
+                               rules={[{required: true}]}
                                initialValue={data?.categories?.map(e=>e.id)??[]}
                                initialData={data?.categories??[]}
-                               resource={'Category'}
+                               resource={'Taxonomy'}
+                               searchByTitle={true}
+                               resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
                     />
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}

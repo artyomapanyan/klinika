@@ -636,7 +636,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","clinic_visit","enable_vat_calculation"]}
@@ -646,7 +647,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
                                         <div style={{width:200}}>
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_clinic_visit_service}  label={t('Duration')} name={["service_settings","clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.clinic_visit?.duration}/>
                                         </div>
@@ -688,7 +690,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","telehealth","enable_vat_calculation"]}
@@ -698,9 +701,13 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_telehealth_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
                                         <div style={{width:200}}>
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_telehealth_service}  label={t('Service Fee')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
+                                            {
+                                                role === 'super' ? <FormInput inputDisabled={role !== 'super' && !data?.enable_telehealth_service}  label={t('Service Fee')} name={["service_settings","telehealth","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.fixed_diagnoses_price}/>
+                                                    : <div></div>
+                                            }
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_telehealth_service}  label={t('Duration')} name={["service_settings","telehealth","duration"]} inputType={'number'} initialValue={data?.service_settings?.telehealth?.duration}/>
                                         </div>
                                     </div> : <div></div>
@@ -740,7 +747,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","home_visit","enable_vat_calculation"]}
@@ -750,9 +758,14 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
                                         <div style={{width:200}}>
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_home_visit_service}  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                            {
+                                                role === 'super' ? <FormInput inputDisabled={role !== 'super' && !data?.enable_home_visit_service}  label={t('Service Fee')} name={["service_settings","home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                                    : <div></div>
+                                            }
+
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_home_visit_service} label={t('Duration')}  name={["service_settings","home_visit","duration"]}  initialValue={data?.service_settings?.home_visit?.duration ? data?.service_settings?.home_visit?.duration : 60}/>
                                         </div>
                                     </div> : <div></div>
@@ -792,7 +805,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","laboratory_home_visit","enable_vat_calculation"]}
@@ -802,9 +816,14 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
                                         <div style={{width:200}}>
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} label={t('Service Fee')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                            {
+                                                role === 'super' ? <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} label={t('Service Fee')} name={["service_settings","laboratory_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.home_visit?.fixed_diagnoses_price}/>
+                                                    : <div></div>
+                                            }
+
                                         </div>
                                     </div> : <div></div>
                                 }
@@ -845,7 +864,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","laboratory_clinic_visit","enable_vat_calculation"]}
@@ -855,7 +875,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
 
                                     </div> : <div></div>
                                 }
@@ -894,7 +915,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","nursing","enable_vat_calculation"]}
@@ -904,9 +926,14 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_nursing_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
                                         <div style={{width:200}}>
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
+                                            {
+                                                role === 'super' ? <FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Service Fee')} name={["service_settings","nursing","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.fixed_diagnoses_price}/>
+                                                    : <div></div>
+                                            }
+
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Duration')} name={["service_settings","nursing","duration"]} inputType={'number'}  initialValue={data?.service_settings?.nursing?.duration ? data?.service_settings?.nursing?.duration : 60}/>
                                         </div>
                                     </div> : <div></div>
@@ -946,7 +973,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","physical_therapy_home_visit","enable_vat_calculation"]}
@@ -956,9 +984,14 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
                                         <div style={{width:200}}>
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
+                                            {
+                                                role === 'super' ? <FormInput inputDisabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} label={t('Service Fee')} name={["service_settings","physical_therapy_home_visit","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_home_visit?.fixed_diagnoses_price}/>
+                                                    : <div></div>
+                                            }
+
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service}  label={t('Duration')} name={["service_settings","physical_therapy_home_visit","duration"]} inputType={'number'}  initialValue={data?.service_settings?.physical_therapy_home_visit?.duration ? data?.service_settings?.physical_therapy_home_visit?.duration : 60}/>
                                         </div>
                                     </div> : <div></div>
@@ -998,7 +1031,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </Form.Item>
 
                                         </div>
-                                        <div>
+                                        {
+                                            role === 'super' ? <div>
                                             <Form.Item
                                                 label={t(`Enable vat calculation`)}
                                                 name={["service_settings","physical_therapy_clinic_visit","enable_vat_calculation"]}
@@ -1008,7 +1042,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             >
                                                 <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service} size={'small'} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                             </Form.Item>
-                                        </div>
+                                            </div> : <div></div>
+                                        }
                                         <div style={{width:200}}>
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service} label={t('Duration')} name={["service_settings","physical_therapy_clinic_visit","duration"]} inputType={'number'} initialValue={data?.service_settings?.physical_therapy_clinic_visit?.duration}/>
                                         </div>

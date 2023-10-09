@@ -16,21 +16,24 @@ function AppPersonalDetails({
 	dataTimes,
 	date,
 	setNamesState,
+	namesState,
 	showPayment,
 	setShowPayment,
-	show
+	show,verifyState,setVerifyState
 }) {
 	let token = useSelector(state => state.auth.token)
 	let formRef = useRef()
 	let refObj = formRef?.current?.getFieldValue()
 	const [phoneLoading, setPhoneLoading] = useState(false)
-	const [verifyState, setVerifyState] = useState(0)
+	//const [verifyState, setVerifyState] = useState(0)
 	const [codeAndNumber, setCodeAndNumber] = useState()
 	const [verifyResponse, setVerifyResponse] = useState()
 	const [codeAndNumberState, setCodeAndNumberState] = useState({})
 	const [codeStatus, setCodeStatus] = useState(null)
+	const [changeVerifyCode, setChangeVerifyCode] = useState('')
+	const [sendAgain, setSendAgain] = useState({})
+	const [patientFormState, setPatientFormState] = useState({})
 
-	//console.log(formRef?.current?.getFieldValue())
 
 	useEffect(() => {
 		if (dataState?.payment_method_id) {
@@ -47,19 +50,20 @@ function AppPersonalDetails({
 					...prevState,
 					offer_id: params.id,
 					code: codeAndNumber?.code,
-					booked_at: date?.date + ' ' + dataTimes?.time,
+					booked_at: date?.format('YYYY-MM-DD') + ' ' + dataTimes,
 					patient: {
-						...refObj,
+						...namesState,
 						phone_number: codeAndNumber?.phone_number,
 						phone_country_code: codeAndNumber?.phone_country_code
 					}
 				}))
 			}
 		}
-	}, [dataState?.payment_method_id, refObj])
+	}, [dataState?.payment_method_id, namesState])
 
 	const onVerifyNumber = values => {
 		setPhoneLoading(true)
+		setSendAgain(values)
 		postResource('PublicOffer', 'PhoneVerify', token, '', values).then(
 			response => {
 				setCodeStatus(response)
@@ -72,6 +76,22 @@ function AppPersonalDetails({
 			}
 		)
 		setCodeAndNumber(values)
+	}
+
+	const onSendAgain = values => {
+		setPhoneLoading(true)
+		postResource('PublicOffer', 'PhoneVerify', token, '', sendAgain).then(
+			response => {
+				setCodeStatus(response)
+				setPhoneLoading(false)
+				if (response?.errors === null) {
+					setVerifyState(1)
+				} else {
+					setVerifyState(0)
+				}
+			}
+		)
+		setTime([1, 59])
 	}
 
 	const [api, contextHolder] = notification.useNotification()
@@ -170,6 +190,10 @@ function AppPersonalDetails({
 		}))
 	}
 
+	const onChangeVerifyCode = (changed) => {
+		setChangeVerifyCode(changed)
+	}
+
 	const handleNamesChange = changed => {
 		setNamesState(prevState => ({
 			...prevState,
@@ -177,10 +201,10 @@ function AppPersonalDetails({
 		}))
 	}
 
-
+console.log(namesState, 'aaa')
 
 	return (
-		<div>
+		<div className={'all_offer_details_big_div'}>
 			{contextHolder}
 
 			{show ? (
@@ -196,10 +220,10 @@ function AppPersonalDetails({
 									onValuesChange={handleValuesChange}
 									name={'send'}
 								>
-									<div>
-										<div>
+									<div style={{display: 'flex'}}>
+										<div style={{ width: '40%'}} className={'all_offer_code'}>
 											<FormInput
-												label={t('Country Code')}
+												label={t('Code')}
 												name={'phone_country_code'}
 												inputType={'resourceSelect'}
 												rules={[{ required: true }]}
@@ -207,7 +231,7 @@ function AppPersonalDetails({
 												resource={'PublicCountry'}
 											/>
 										</div>
-										<div>
+										<div style={{ width: '60%'}}>
 											<FormInput
 												label={t('Phone number')}
 												name={'phone_number'}
@@ -216,79 +240,95 @@ function AppPersonalDetails({
 											/>
 										</div>
 
-										<Button
-											disabled={
-												!codeAndNumberState?.phone_country_code ||
-												!codeAndNumberState?.phone_number
-											}
-											loading={phoneLoading}
-											style={{ marginTop: 5, height: 47 }}
-											size={'large'}
-											type={'primary'}
-											htmlType={'submit'}
-										>
-											{t('Send code')}
-										</Button>
+
 									</div>
+									<Button
+										disabled={
+											!codeAndNumberState?.phone_country_code ||
+											!codeAndNumberState?.phone_number
+										}
+										loading={phoneLoading}
+										style={{ marginTop: 5, width: '100%'}}
+										type={'primary'}
+										htmlType={'submit'}
+									>
+										{t('Send code')}
+									</Button>
 								</Form>
 							)}
 
 							{!responseCodeState || typeof responseCodeState == 'string' ? (
 								verifyState === 1 && (
 									<div>
-										<Form name={'verify_code'} onFinish={onVerifyCode}>
+										<Form name={'verify_code'} onValuesChange={onChangeVerifyCode} onFinish={onVerifyCode}>
 											<div>
 												<div>
 													<Input
-														value={`+${codeAndNumber?.phone_country_code}${codeAndNumber?.phone_number}`}
+														value={`+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
 														style={{
 															marginTop: 7,
 															height: 46,
-															borderRadius: 12
+															borderRadius: 12,
+															background: '#F5F6FA',
+															border: 'none'
 														}}
 													/>
 												</div>
 												<div
 													style={{
 														display: 'flex',
-														justifyContent: 'space-between',
-														marginTop: '10px'
+														justifyContent: 'flex-end',
+														marginTop: '10px',
+														width: '100%'
 													}}
+
 												>
-													<div onClick={onSendSMSAgain}>
+													<div onClick={onSendSMSAgain} style={{cursor: 'pointer'}} align={'right'}>
 														{t('Change Number')}
 													</div>
-													<div>
-														{mins === 0 && secs === 0 ? (
+
+												</div>
+
+												<div style={{ display: 'flex', width: '100%' }}>
+
+													<div style={{width: '40%', display: 'flex', flexDirection: 'row', paddingTop: 10}}>
+														{mins == 0 && secs == 0 ? (
 															<div
-																style={{ color: 'red' }}
-																onClick={onSendSMSAgain}
+																style={{ color: '#BF539E', cursor: 'pointer'}}
+																onClick={onSendAgain}
 															>
 																{t('Send Again')}
 															</div>
 														) : (
-															<p>{`${mins.toString().padStart(2, '0')}:${secs
-																.toString()
-																.padStart(2, '0')}`}</p>
+															<div align={'center'}>
+																<div style={{color: '#BF539E'}}>{t('Resend code')}</div>
+																<div>{t('after')} {`${mins.toString().padStart(2, '0')}:${secs
+																	.toString()
+																	.padStart(2, '0')}`}</div>
+															</div>
+
 														)}
 													</div>
-												</div>
+													<div style={{width: '50%'}}>
+														<FormInput label={t('Verify code')} name={'code'} />
+													</div>
+													<div style={{width: '20%'}}>
+														<Button
+															disabled={!changeVerifyCode?.code}
+															loading={phoneLoading}
+															style={{
+																background: '',
+																marginTop: 5,
+																height: 47
+															}}
+															type={'primary'}
+															htmlType={'submit'}
+														>
+															{t('Verify')}
+														</Button>
+													</div>
 
-												<div style={{ display: 'flex' }}>
-													<FormInput label={t('Verify code')} name={'code'} />
-													<Button
-														loading={phoneLoading}
-														style={{
-															background: '',
-															color: 'white',
-															marginTop: 5,
-															height: 47
-														}}
-														type={'primary'}
-														htmlType={'submit'}
-													>
-														{t('Verify')}
-													</Button>
+
 												</div>
 											</div>
 										</Form>

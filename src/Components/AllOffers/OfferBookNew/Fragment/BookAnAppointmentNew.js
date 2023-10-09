@@ -29,6 +29,8 @@ function BookAnAppointment({ data }) {
 	const [show, setShow] = useState(false)
 	const [showthank, setShowthank] = useState(false)
 	const [showPayment, setShowPayment] = useState(false)
+	const [showButtons, setShowButtons] = useState(true)
+	const [verify, setVerify] = useState(0)
 
 
 	const onBooking = () => {
@@ -90,10 +92,32 @@ function BookAnAppointment({ data }) {
 
 	const handleShowPayment = () => {
 		setShowPayment(true)
+		setShowButtons(false)
+
 	}
 
+	const onCancel = () => {
 
-	console.log(showPayment)
+		setShow(false)
+		setShowPayment(false)
+		setVerify(0)
+		setResponseCodeState(null)
+		setNamesState({})
+		setDataState({})
+	}
+	const onCancelAll = () => {
+
+		setShow(false)
+		setShowPayment(false)
+		setVerify(0)
+		setResponseCodeState(null)
+		setNamesState({})
+		setDataState({})
+		setShowButtons(true)
+	}
+
+console.log(dataState, 'sss')
+
 
 	return (
 		<div>
@@ -142,10 +166,10 @@ function BookAnAppointment({ data }) {
 				{
 					dataState?.doctor_id ? show ? <div></div> : <div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={onShowCalendar} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>Continue</Button>
+							<Button onClick={onShowCalendar} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}1</Button>
 						</div>
 						<div style={{marginTop: 10}}>
-							<Button type={'secondary'} style={{width: '100%'}}>Cancel</Button>
+							<Button onClick={onCancel} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
 						</div>
 					</div> : <div></div>
 				}
@@ -155,6 +179,7 @@ function BookAnAppointment({ data }) {
 						<AppPersonalDetails
 							onBooking={onBooking}
 							setNamesState={setNamesState}
+							namesState={namesState}
 							responseCodeState={responseCodeState}
 							setDataState={setDataState}
 							dataState={dataState}
@@ -165,18 +190,20 @@ function BookAnAppointment({ data }) {
 							showPayment={showPayment}
 							setShowPayment={setShowPayment}
 							show={show}
+							verifyState={verify}
+							setVerifyState={setVerify}
 						/>
 					</div>
 				}
 				{
-					!showPayment && !show ? <div></div> : <div>
+					!showPayment && !show ? <div></div> : showButtons ? <div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={handleShowPayment} disabled={namesState?.first && namesState?.last && namesState?.email ? false : true} type={'primary'} style={{width: '100%'}}>Continue</Button>
+							<Button onClick={handleShowPayment} disabled={namesState?.first && namesState?.last && namesState?.email ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}2</Button>
 						</div>
 						<div style={{marginTop: 10}}>
-							<Button type={'secondary'} style={{width: '100%'}}>Cancel</Button>
+							<Button onClick={onCancel} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
 						</div>
-					</div>
+					</div> : <div></div>
 				}
 				{showPayment == true ? (
 					<div>
@@ -190,43 +217,46 @@ function BookAnAppointment({ data }) {
 				) : (
 					''
 				)}
+				{
+					<div>
+
+					</div>
+				}
 
 				<div className={'tab_div_mobile_new_offer'}>
 
 					<div>
-						<div className={'app_btn'}>
+						{
+							dataState?.payment_method_id ? <div>
 
+								<Button
+									loading={loading}
+									onClick={onBooking}
+									type={'primary'}
+									className={'all_offers_book_btns'}
+									style={{ marginTop: '20px'}}
+									// disabled={
+									// 	namesState?.first &&
+									// 	namesState?.last &&
+									// 	namesState?.email &&
+									// 	dataState?.doctor_id &&
+									// 	dataState?.date &&
+									// 	dataState?.time &&
+									// 	dataState?.payment_method_id
+									// 		? false
+									// 		: true
+									// }
+									htmlType={'submit'}
+								>
+									{t('Book_now')}
+								</Button>
+								<div style={{marginTop: 10}}>
+									<Button onClick={onCancelAll} type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>
+								</div>
 
+							</div> : <div></div>
+						}
 
-
-
-
-							<Button
-								loading={loading}
-								onClick={onBooking}
-								size={'large'}
-								type={'primary'}
-								style={{ marginTop: '20px' }}
-								disabled={
-									namesState?.first &&
-									namesState?.last &&
-									namesState?.email &&
-									dataState?.doctor_id &&
-									dataState?.date &&
-									dataState?.time &&
-									dataState?.payment_method_id
-										? false
-										: true
-								}
-								htmlType={'submit'}
-							>
-								{t('Book_now')}
-							</Button>
-							<div style={{marginTop: 10}}>
-								<Button type={'secondary'} style={{width: '100%'}}>Cancel</Button>
-							</div>
-
-						</div>
 					</div>
 				</div>
 			</div>

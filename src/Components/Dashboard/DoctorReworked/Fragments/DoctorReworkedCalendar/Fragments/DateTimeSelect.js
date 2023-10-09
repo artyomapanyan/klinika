@@ -145,7 +145,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         setTimesIndex(prevState => prevState + count)
     }
 
-console.log(disabledDays)
+
     return <div className={'drawer_cal_bog_div'}>
         <div className={'drawer_cal_top_div'}>
             <div className={'drawer_cal_head_div'}>

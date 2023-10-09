@@ -26,7 +26,8 @@ function ResourceSelectPaginated({
                                    resourceData,
                                    disabled,
                                    handleMapItems = null,
-                                     handleStatus=null
+                                     handleStatus=null,
+                                     searchByTitle=false
                                  }) {
   const timeout = useRef(null);
   const [params, setParams] = useState({page: 1, ...resourceParams})
@@ -145,6 +146,13 @@ function ResourceSelectPaginated({
               }
           }
         setLocalData([])
+          if(searchByTitle) {
+              setParams((prevState)=>({
+                  ...prevState,
+                  page: 1, [customSearchKey??'title']: e,
+
+              }))
+          }
         setParams((prevState)=>({
             ...prevState,
           page: 1, [customSearchKey??'name']: e,
