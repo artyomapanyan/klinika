@@ -40,7 +40,7 @@ function OfferBookContent() {
 						alignItems: 'center'
 					}}
 				>
-					<img src={data?.cover?.url} alt={'clinic1'} className={'offer_card_image'} />
+					<img src={data?.cover?.url ? data?.cover?.url : clinic1} alt={'clinic1'} className={'offer_card_image'} />
 				</Badge.Ribbon>
 				<div className={'avatar_and_price_div'}>
 					<div className={'offer_card_avatar'}>
