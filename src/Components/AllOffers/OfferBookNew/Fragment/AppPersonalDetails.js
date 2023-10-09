@@ -201,7 +201,7 @@ function AppPersonalDetails({
 		}))
 	}
 
-console.log(namesState, 'aaa')
+
 
 	return (
 		<div className={'all_offer_details_big_div'}>

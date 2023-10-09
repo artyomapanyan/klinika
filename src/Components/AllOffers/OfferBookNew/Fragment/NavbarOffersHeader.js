@@ -40,7 +40,7 @@ function NavbarOffersHeader({headerState}) {
                     headerState ? <div >
                         <div style={{display:'flex',alignItems: 'center'}}>
                             <img src={logo} alt={'logo_klinika'}/>
-                            <div className={'back_offer'} onClick={()=>navigate(-1)}>{t('Back to all offers')}</div>
+                            <div className={'back_offer'} onClick={()=>navigate('/offers')}>{t('Back to all offers')}</div>
                         </div>
 
                     </div> : <Button onClick={()=>navigate(-1)} style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>

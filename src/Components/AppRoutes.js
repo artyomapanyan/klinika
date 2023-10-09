@@ -13,6 +13,7 @@ import OfferMap from "./AllOffers/ThankYouOffer/Fragments/OfferMap";
 
 /**offer new version */
 import OfferBookNew from "./AllOffers/OfferBookNew/OfferBookNew";
+import NewThankYouOffer from "./AllOffers/NewThankYouOffer/NewThankYouOffer";
 
 
 
@@ -28,7 +29,8 @@ function AppRoutes(){
             <Route path={'offers/:id'} element={<OfferBookNew/>}></Route>
 
               
-                <Route path={'thank-you'} element={<ThankYouOffer/>}></Route>
+                {/*<Route path={'thank-you'} element={<ThankYouOffer/>}></Route>*/}
+            <Route path={'offers/:id/thank-you'} element={<NewThankYouOffer/>}></Route>
                 <Route path={'maps'} element={<OfferMap/>}></Route>
                  
           

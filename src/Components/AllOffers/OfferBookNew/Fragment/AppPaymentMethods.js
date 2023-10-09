@@ -42,7 +42,7 @@ function AppPaymentMethods({
 			payment_method_id: e
 		}))
 	}
-console.log(data, 'data')
+
 	return (
 		<div>
 

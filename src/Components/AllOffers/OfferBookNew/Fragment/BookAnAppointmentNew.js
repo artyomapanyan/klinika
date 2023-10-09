@@ -13,6 +13,7 @@ import { Button, Divider } from 'antd'
 import DateTimeSelect
 	from "../../../Dashboard/DoctorReworked/Fragments/DoctorReworkedCalendar/Fragments/DateTimeSelect";
 import AllOfferCalendar from "./AllOfferCalendar";
+import img_thank_you from "../../../../dist/Img/thank_you.png";
 
 function BookAnAppointment({ data }) {
 	let token = useSelector(state => state.auth.token)
@@ -33,16 +34,18 @@ function BookAnAppointment({ data }) {
 	const [verify, setVerify] = useState(0)
 
 
+
 	const onBooking = () => {
 		setLoading(true)
 
 		postResource('PublicAppointment', 'create', token, '', dataState).then(
 			response => {
 				setLoading(false)
+				console.log(response)
+
+
 				if (response?.appointment?.id) {
-					console.log('booking confirmed')
 					//setShowthank(true)
-					console.log('document.location.href ', document.location.href)
 					console.log('response?.redirect ', response?.redirect)
 
 					document.location.href = response?.redirect
@@ -116,7 +119,7 @@ function BookAnAppointment({ data }) {
 		setShowButtons(true)
 	}
 
-console.log(dataState, 'sss')
+
 
 
 	return (
@@ -166,7 +169,7 @@ console.log(dataState, 'sss')
 				{
 					dataState?.doctor_id ? show ? <div></div> : <div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={onShowCalendar} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}1</Button>
+							<Button onClick={onShowCalendar} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
 						</div>
 						<div style={{marginTop: 10}}>
 							<Button onClick={onCancel} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
@@ -198,7 +201,7 @@ console.log(dataState, 'sss')
 				{
 					!showPayment && !show ? <div></div> : showButtons ? <div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={handleShowPayment} disabled={namesState?.first && namesState?.last && namesState?.email ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}2</Button>
+							<Button onClick={handleShowPayment} disabled={namesState?.first && namesState?.last && namesState?.email ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
 						</div>
 						<div style={{marginTop: 10}}>
 							<Button onClick={onCancel} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
@@ -217,11 +220,7 @@ console.log(dataState, 'sss')
 				) : (
 					''
 				)}
-				{
-					<div>
 
-					</div>
-				}
 
 				<div className={'tab_div_mobile_new_offer'}>
 
