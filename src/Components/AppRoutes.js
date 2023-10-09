@@ -28,7 +28,6 @@ function AppRoutes(){
             <Route path={'offers/:id'} element={<OfferBook/>}></Route>
             {/*<Route path={'offers/:id'} element={<OfferBookNew/>}></Route>*/}
 
-              
                 <Route path={'thank-you'} element={<ThankYouOffer/>}></Route>
             {/*<Route path={'offers/:id/thank-you'} element={<NewThankYouOffer/>}></Route>*/}
                 <Route path={'maps'} element={<OfferMap/>}></Route>
