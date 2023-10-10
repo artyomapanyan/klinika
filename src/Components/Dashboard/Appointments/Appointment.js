@@ -333,7 +333,6 @@ function Appointment({isPatient}) {
 
 
 
-
     return (
         <div>
             <h3 className={'create_apdate_btns'}>{t(`Add new Appointment`)}</h3>
