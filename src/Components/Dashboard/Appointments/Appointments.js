@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Form, Modal, Spin} from "antd";
+import {Button, Form, Modal, Spin, Tooltip} from "antd";
 import {t} from "i18next";
 import ResourceTable from "../../Fragments/ResourceTable";
 import {CheckCircleOutlined, MedicineBoxOutlined} from "@ant-design/icons";
@@ -20,6 +20,7 @@ import search_icon_darkPurpole from "../../../dist/icons/search_icon_darkPurpole
 import DateFilterElement from "../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
 import SelectFilterElement from "../../Fragments/TableFilterElements/SelectFilterElement";
+import PermCheck from "../../Fragments/PermCheck";
 
 const resource = 'Appointment';
 function Appointments() {
@@ -31,6 +32,8 @@ function Appointments() {
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)
     const [tableUpdate,setTableUpdate] = useState(0)
+    const [aaa,setaaa] = useState(PermCheck(`${resource}:update`))
+
 
 
 
@@ -101,6 +104,7 @@ function Appointments() {
         navigate(ResourceLinks[resource] + record.id+'/doctor')
 
     }
+
 
     return(
         <div >
@@ -185,7 +189,7 @@ function Appointments() {
                         title:t('Offer'),
                         key:'offer',
                         render:(e, record)=> {
-                            return<div>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</div>
+                            return<Tooltip title={record?.offer?.title}>{record.offer ? <CheckCircleOutlined style={{color: 'green'}}/> : ""}</Tooltip>
                         }
                     },
 
@@ -206,7 +210,7 @@ function Appointments() {
                        key:'status',
                         render: (e, record) => {
                             return loading ? <Preloader small={15}/> : <Spin spinning={loading}>
-                            <ColorSelect appointmentloading={loading} items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
+                            <ColorSelect appointmentloading={loading} colorSelectDisabled={!aaa}  items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
                             </Spin>
                             }
 

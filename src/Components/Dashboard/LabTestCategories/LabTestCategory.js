@@ -71,7 +71,7 @@ function LabTestCategory() {
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing City - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Lab Test Category`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing lab test category`)} - {data?.title}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new lab test category`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

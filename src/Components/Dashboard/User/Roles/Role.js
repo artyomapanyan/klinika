@@ -93,7 +93,7 @@ function Role() {
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Role - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Role`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Role`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Role`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

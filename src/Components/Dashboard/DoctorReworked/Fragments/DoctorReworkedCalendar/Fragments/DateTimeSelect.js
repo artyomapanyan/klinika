@@ -150,7 +150,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         <div className={'drawer_cal_top_div'}>
             <div className={'drawer_cal_head_div'}>
                 <div className={'top_div_title'}>
-                    Pick Date
+                    {t('Pick Date')}
                 </div>
                 <div className={'next_prev_div'}>
                     <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== dayjs().format('DD-MM-YYYY')} onClick={() => handleChangeMonth(-1)}>

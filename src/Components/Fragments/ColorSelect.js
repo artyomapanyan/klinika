@@ -72,17 +72,17 @@ function ColorSelect({items=[],initialValue,onChange=null, resource, record,name
                 loading ? <Preloader/> : <Dropdown
                     menu={{
                         onClick,
-                        items: items.filter((el) => el.key !== value)
+                        items: items?.filter((el) => el?.key !== value)
 
                     }}
-                    disabled={colorSelectDisabled ? colorSelectDisabled : items.length < 2}
+                    disabled={colorSelectDisabled ? colorSelectDisabled : items?.length < 2}
                     trigger={['click']}
 
                 >
-                    <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor: `${colors.find(el => (el.key == value))?.name}`, padding:10, fontSize:14,  borderRadius:30, height: height ? 28 : null,  width: 143 , display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-                        <div style={{color:"#FFFFFF", fontWeight:700}}>{items.find(e=>e.key===value)?.label}</div>
+                    <Space direction={'horizontal'} style={{cursor:"pointer", backgroundColor: `${colors?.find(el => (el?.key == value))?.name}`, padding:10, fontSize:14,  borderRadius:30, height: height ? 28 : null,  width: 143 , display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                        <div style={{color:"#FFFFFF", fontWeight:700}}>{items?.find(e=>e?.key===value)?.label}</div>
                         {
-                            items.length < 2 ? <div></div> :<div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
+                            items.length < 2 || colorSelectDisabled ? <div></div> :<div style={{color:"#FFFFFF", fontWeight:700}}><DownOutlined /></div>
                         }
 
                     </Space>

@@ -78,14 +78,14 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     />
                     <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[
                         {required: true},
-                        {
-                            validator:(rule,value)=>{
-                                if(value?.length < 10){
-                                    return Promise.reject('min length 10')
-                                }
-                                return Promise.resolve();
-                            }
-                        }
+                        // {
+                        //     validator:(rule,value)=>{
+                        //         if(value?.length < 10){
+                        //             return Promise.reject('min length 10')
+                        //         }
+                        //         return Promise.resolve();
+                        //     }
+                        // }
 
 
                     ]} />
@@ -105,7 +105,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                                }}
                                resource={'Country'}/>
                     <FormInput label={t('Date of Birth')} name={'dob'}
-                               inputDisabled={data?.patient_id}
+                               //inputDisabled={data?.patient_id}
                                initialValue={data?.dob}
                                inputType={'date'} rules={[
                         {required: !data?.patient_id},

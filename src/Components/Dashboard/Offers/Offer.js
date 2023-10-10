@@ -12,6 +12,8 @@ import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
 import CancelComponent from "../../Fragments/CancelComponent";
 import dayjs from "dayjs";
+import {InboxOutlined} from "@ant-design/icons";
+import FileManager from "../../Fragments/FileManager";
 
 const resource = 'Offer';
 
@@ -100,7 +102,7 @@ function Offer() {
 
     return(
         <div >
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Doctor - ${data?.name}`)}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new offer`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing offer`)} - {data?.title}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new offer`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -413,6 +415,11 @@ function Offer() {
                             />
                         </Col>
                     </Row>
+                    <FileManager text1={t('Cover')}
+                                 text2={t('Download the file')}
+                                 name={'cover'}
+                                 uploadIcon={<InboxOutlined/>}
+                                 initialFileList={[data?.cover]} limit={1} formRef={formRef} type={'drag'}/>
                 </div>
                 <Space className={'create_apdate_btns'}>
                     <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>

@@ -6,7 +6,8 @@ import publicClinic from "./publicClinic";
 import owner from "./owner";
 import dashboardMenuState from "./dashboardMenuState";
 import drCalendarDate from "./drCalendarDate";
+import statusCode from "./statusCode";
 
 export default combineReducers({
-    auth,  globalState, app, publicClinic, owner, dashboardMenuState, drCalendarDate
+    auth,  globalState, app, publicClinic, owner, dashboardMenuState, drCalendarDate, statusCode
 })

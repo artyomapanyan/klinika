@@ -74,7 +74,7 @@ function Report() {
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Request - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Request`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing request`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new request`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

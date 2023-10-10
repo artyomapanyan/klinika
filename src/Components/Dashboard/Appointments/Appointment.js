@@ -284,8 +284,9 @@ function Appointment({isPatient}) {
                     phone_country_code: foundUser?.phone_country_code,
                     phone_number: foundUser?.phone_number,
                     email: foundUser?.email,
-                    country_id: foundUser?.country_id,
-                    dob: dayjs(foundUser?.dob),
+                    country_id: foundUser?.nationality?.id,
+                    nationality: foundUser?.nationality,
+                    dob: dayjs(foundUser?.dob?.iso_string),
                     gender: foundUser?.gender,
                     nationality_number: foundUser?.nationality_number,
                     status: foundUser?.status,
@@ -305,8 +306,6 @@ function Appointment({isPatient}) {
         }
 
     }
-
-
 
 
 
@@ -453,11 +452,12 @@ function Appointment({isPatient}) {
                                                                name={['patient','password_confirmation']}
                                                                rules={[{required: !data?.patient_id}]}/>
 
-                                                    <FormInput label={t('Country')} name={['patient','country_id']}
+                                                    <FormInput label={t('Nationality')} name={['patient','country_id']}
                                                                inputType={'resourceSelect'}
                                                                initialValue={formRef?.current?.getFieldValue(['patient','country_id'])}
                                                                rules={[{required: !data?.patient_id}]}
                                                                disabled={data?.patient_id}
+                                                               initialData={formRef?.current?.getFieldValue(['patient','nationality']) ? [formRef?.current?.getFieldValue(['patient','nationality'])] : []}
                                                                resource={'Country'}/>
                                                 </Col>
                                                 <Col lg={12} className="gutter-row">
@@ -608,7 +608,9 @@ function Appointment({isPatient}) {
                                                                            disabled={!data.specialty_id && true}
                                                                            resourceParams={{
                                                                                specialty: data?.specialty_id,
-                                                                               clinic: data?.clinic_id
+                                                                               clinic: data?.clinic_id,
+                                                                               is_approved: 1,
+                                                                               service_type: data?.service_type
                                                                            }}
                                                                            customSearchKey={'name'}
                                                                            initialValue={null}

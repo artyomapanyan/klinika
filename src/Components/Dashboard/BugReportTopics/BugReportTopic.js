@@ -79,7 +79,7 @@ function BugReportTopic() {
 
     return (
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing Report - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Report`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Report`)} - {data?.title}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Report`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

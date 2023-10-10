@@ -7,6 +7,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
     const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         items:[],
+        status:200,
         pagination:{
             pageSize:15,
             current:1,
@@ -49,6 +50,29 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
                     }
                     setData((prevState)=>({
                         items:options.loadMore && params.page!=1?[...prevState.items,...responses[0].items]:responses[0].items,
+                        status:responses[0]?.response?.status,
+                        pagination:{
+                            pageSize:responses[0].per_page,
+                            current:responses[0].current_page,
+                            total:responses[0].total_items,
+                            last_page:responses[0].last_page
+                        }
+                    }))
+                    if(dataResources.length && !isSecondCall){
+                        let dataObj = {}
+                        dataResources.forEach((e,key)=>{
+                            dataObj[e] = responses[key+1]
+                        })
+                        setAddData(dataObj)
+                    }
+                }
+                if(responses[0]?.response?.data){
+                    if(getAll){
+                        getAll(responses[0]?.response?.data?.data?.items)
+                    }
+                    setData((prevState)=>({
+                        items:options.loadMore && params.page!=1?[...prevState.items,...responses[0]?.response?.data?.data?.items]:responses[0]?.response?.data?.data?.items,
+                        status:responses[0]?.response?.status,
                         pagination:{
                             pageSize:responses[0].per_page,
                             current:responses[0].current_page,
@@ -71,6 +95,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
         }else if(resourceData){
             setData({
                 items:resourceData,
+                status:200,
                 pagination:{
                     pageSize:15,
                     current:1,
@@ -192,7 +217,7 @@ function handleGenerateFD(values,method){
             }else{
                 values[name] = values[name]===true?1:values[name]===false?0: values[name]
                 if(values[name] && typeof values[name] === "object"){
-                    console.log(values[name],'sss')
+
 
                     hGOD(formData,name,values[name])
                 }else{
@@ -205,23 +230,7 @@ function handleGenerateFD(values,method){
     }
     return formData
 }
-export const updateResource = (resource,id,values,token,withFormData=false)=>{
-    let formData = {}
-    if(withFormData){
-        formData = handleGenerateFD(values,"PUT")
-    }else{
-        formData = values;
-    }
 
-    return  axios.request({
-            url:api[resource].update.url+id,
-            method:withFormData?'POST':api[resource].update.method,
-            data:formData,
-            headers: {
-                'Authorization': token,
-            }
-        })
-}
 export const deleteResource = (resource,id,token)=>{
     return  axios.request({
         url:api[resource].delete.url+id,
@@ -276,6 +285,23 @@ export const createResource = (resource,values,token,withFormData=false)=>{
     return  axios.request({
         url:api[resource].create.url,
         method:api[resource].create.method,
+        data:formData,
+        headers: {
+            'Authorization': token,
+        }
+    })
+}
+export const updateResource = (resource,id,values,token,withFormData=false)=>{
+    let formData = {}
+    if(withFormData){
+        formData = handleGenerateFD(values,"PUT")
+    }else{
+        formData = values;
+    }
+
+    return  axios.request({
+        url:api[resource].update.url+id,
+        method:withFormData?'POST':api[resource].update.method,
         data:formData,
         headers: {
             'Authorization': token,

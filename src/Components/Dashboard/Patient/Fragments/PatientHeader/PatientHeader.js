@@ -23,6 +23,7 @@ function PatientHeader({data}) {
         setIsModalOpen(false);
     };
 
+    console.log(data)
 
     return (
         <div className={'patient_head_div'}>
@@ -52,7 +53,7 @@ function PatientHeader({data}) {
                             <div className={'patient_head_text'} style={{height: 110, justifyContent: "space-between"}}>
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Addres')}</div>
-                                    <div className={'text_norm'}>{data?.patient?.address?.country?.name} {data?.patient?.address?.region?.name} {data?.patient?.address?.city?.name} {data?.patient?.address?.address1}</div>
+                                    <div className={'text_norm'}>{data?.patient?.address?.address1 ? `${data?.patient?.address?.country?.name} ${data?.patient?.address?.region?.name} ${data?.patient?.address?.city?.name} ${data?.patient?.address?.address1}` : `${t('Аddress not specified')}`}</div>
                                 </div>
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Insurance')}</div>
@@ -108,9 +109,9 @@ function PatientHeader({data}) {
                                     </div>
 
                                 </div>
-                                <div className={'private_note_text'} align={'center'} >Private notes</div>
+                                <div className={'private_note_text'} align={'center'} >{t('Private notes')}</div>
                             </div>
-                            <Modal className={'medications_modal'} title="Private notes" footer={false} width={640} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                            <Modal className={'medications_modal'} title={t("Private notes")} footer={false} width={640} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                                 <PrivateNotesModal data={data}/>
 
                             </Modal>

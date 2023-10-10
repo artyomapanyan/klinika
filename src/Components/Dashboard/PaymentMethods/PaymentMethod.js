@@ -76,7 +76,7 @@ function PaymentMethod() {
 
     return(
         <div>
-            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Payment Method - ${data?.title}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Payment Method`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Payment Method`)} - {data?.title}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Payment Method`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

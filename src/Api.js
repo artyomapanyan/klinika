@@ -256,6 +256,20 @@ let api = {
         }
     },
     {
+        url: 'patients/send-verification-code',
+        resource: 'PatientsVerificationCode',
+        custom: {
+            PatientsPhoneVerify:{
+                url: `${endpoint}${version}/patients/send-verification-code`,
+                method: 'POST',
+            },
+            PatientCodeVerify:{
+                url: `${endpoint}${version}/patients/verify-code`,
+                method: 'POST',
+            },
+        }
+    },
+    {
         url: 'public/clinics',
         resource: 'PublicClinic',
     },
@@ -480,6 +494,10 @@ let api = {
     {
         url: 'prescriptions',
         resource: 'prescriptions',
+    },
+    {
+        url: 'patients/search',
+        resource: 'PatientSearch',
     },
     {
         url: 'patients',

@@ -69,7 +69,7 @@ function City() {
 
     return(
         <div>
-            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing City - ${data?.name}`)}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new City`)}</h3>}
+            {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing City`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new City`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

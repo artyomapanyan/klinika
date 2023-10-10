@@ -9,8 +9,9 @@ function OfferCard({ data, id }) {
 	let lngs = useSelector((state) => state?.app?.current_locale);
 	const navigate = useNavigate()
 	const onBookNow = () => {
-		navigate(`/offers/${id}`)
+  	  navigate(`/offers/${id}`)
 	}
+
 
 	return (
 		<Col lg={12} xl={8} xxl={8} sm={24}>
@@ -18,7 +19,7 @@ function OfferCard({ data, id }) {
 				<div className={'offer_card_image_div'}>
 					<div className={'offer_card_image_1'}>
 						<img
-							src={data?.logo ? data?.logo?.url : off_image_1}
+							src={data?.cover ? data?.cover?.url : off_image_1}
 							alt={'image'}
 							className={'offer_card_image_1'}
 							onError={({ currentTarget }) => {

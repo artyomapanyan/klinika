@@ -34,6 +34,8 @@ function FormInput({
                        castomReq,
                        placeholder,
                        disableClear,
+                       handleStatus,
+                       searchByTitle,
 
 
                    }) {
@@ -105,12 +107,15 @@ function FormInput({
                                                 searchConfigs={searchConfigs}
                                                 resourceParams={resourceParams}
                                                 customSearchKey={customSearchKey}
+                                                searchByTitle={searchByTitle}
                                                 initialValue={initialValue}
                                                 formItemClass={`input-placeholder ${focused || value || value===0 ? 'input-focused' : ''}`}
                                                 resource={resource} initialData={initialData}
                                                 resourceData={resourceData}
                                                 handleMapItems={handleMapItems}
+                                                handleStatus={handleStatus}
                                                 inputProps={{
+
                                                     onFocus: () => setFocused(true),
                                                     onChange: (e,data) => {
                                                         setValue(e)
