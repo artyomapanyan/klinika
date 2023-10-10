@@ -332,6 +332,8 @@ function Appointment({isPatient}) {
     }
 
 
+
+
     return (
         <div>
             <h3 className={'create_apdate_btns'}>{t(`Add new Appointment`)}</h3>
@@ -607,7 +609,9 @@ function Appointment({isPatient}) {
                                                                            disabled={!data.specialty_id && true}
                                                                            resourceParams={{
                                                                                specialty: data?.specialty_id,
-                                                                               clinic: data?.clinic_id
+                                                                               clinic: data?.clinic_id,
+                                                                               is_approved: 1,
+                                                                               service_type: data?.service_type
                                                                            }}
                                                                            customSearchKey={'name'}
                                                                            initialValue={null}
