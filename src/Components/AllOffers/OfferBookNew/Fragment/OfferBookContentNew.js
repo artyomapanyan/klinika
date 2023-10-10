@@ -13,12 +13,21 @@ import off_image_1 from '../../../../dist/Img/off_image_1.jpg'
 import Preloader from '../../../Preloader'
 import { useNavigate } from 'react-router'
 import { RightOutlined, LeftOutlined } from '@ant-design/icons'
+import {Button, Drawer} from "antd";
 
 function OfferBookContent() {
 	const params = useParams()
 	let lngs = useSelector(state => state?.app?.current_locale)
 	const [isMobile, setIsMobile] = useState(false)
 	const navigate = useNavigate()
+	const [open, setOpen] = useState(false);
+
+	const showDrawer = () => {
+		setOpen(true);
+	};
+	const onClose = () => {
+		setOpen(false);
+	};
 
 	const onClick = () => {
 		navigate(-1)
@@ -78,7 +87,7 @@ function OfferBookContent() {
 
 
 						<div className={'offer_details_new'}>
-							<OfferBookDetailsNew data={data} />
+							<OfferBookDetailsNew data={data} showDrawer={showDrawer} />
 
 							<div className={'offer_section'}>
 								<div>
@@ -100,6 +109,25 @@ function OfferBookContent() {
 								<div className={'offer_appointment_sec'}>
 									<BookAnAppointmentNew data={data} />
 								</div>
+
+
+								<div>
+
+									<Drawer
+
+										placement={'bottom'}
+										closable={false}
+										onClose={onClose}
+										open={open}
+										height={600}
+										style={{borderRadius: 12}}
+
+
+									>
+										<BookAnAppointmentNew data={data} />
+									</Drawer>
+								</div>
+
 							</div>
 						</div>
 					</div>

@@ -169,10 +169,10 @@ function BookAnAppointment({ data }) {
 				{
 					dataState?.doctor_id ? show ? <div></div> : <div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={onShowCalendar} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
+							<Button onClick={onShowCalendar} className={'all_offers_book_btns'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
 						</div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={onCancel} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
+							<Button onClick={onCancel} className={'all_offers_book_btns'} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
 						</div>
 					</div> : <div></div>
 				}
@@ -201,10 +201,10 @@ function BookAnAppointment({ data }) {
 				{
 					!showPayment && !show ? <div></div> : showButtons ? <div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={handleShowPayment} disabled={namesState?.first && namesState?.last && namesState?.email ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
+							<Button onClick={handleShowPayment} className={'all_offers_book_btns'} disabled={namesState?.first && namesState?.last && namesState?.email ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
 						</div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={onCancel} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
+							<Button onClick={onCancel} className={'all_offers_book_btns'} type={'secondary'} style={{width: '100%'}}>{t('Cancel')}</Button>
 						</div>
 					</div> : <div></div>
 				}

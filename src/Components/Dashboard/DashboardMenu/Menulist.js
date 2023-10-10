@@ -14,6 +14,7 @@ import {
     RedEnvelopeOutlined, UserOutlined
 } from "@ant-design/icons";
 import {t} from "i18next";
+import PermCheck from "../../Fragments/PermCheck";
 
 export default {
     'clinic-manager':[
@@ -738,24 +739,19 @@ export default {
 
 
     default:[
-        /* {
-             key: `/`,
-             label: t("dashboard"),
-             icon: <img alt={'icons'} src={dash1}/>,
-         },
-         {
-             key: `/match-event-natures`,
-             label: t(`Schedlue`),
-             icon: <img alt={'icons'} src={dash2}/>,
-         },
-         {
-             key: `/-categories`,
-             label: t(`Offers`),
-             icon: <img alt={'icons'} src={dash3}/>,
-         },*/
+        // {
+        //     key: 'super-admin',
+        //     icon: <img alt={'icons'} src={dash1}/>,
+        //     label: t('Dashboard'),
+        // },
+        {
+            key: 'clinic-manager',
+            icon: <img alt={'icons'} src={dash1}/>,
+            label: t(`Dashboard`),
+        },
         {
             label: t(`Inputs`),
-            icon: <img alt={'icons'} src={dash1}/>,
+            icon: <ProfileOutlined style={{color:'#ce4e99', fontSize:20}} />,
             key:'inputs',
             children: [
                 {
@@ -835,7 +831,7 @@ export default {
                 },
                 {
                     key: 'posts',
-                    label: t(`Posts`),
+                    label: t('Posts'),
                     permission:'Post'
                 },
                 {
@@ -871,6 +867,7 @@ export default {
                 },
             ]
         },
+
         {
             label: t(`Accounts`),
             icon: <img alt={'icons'} src={dash2}/>,
@@ -885,13 +882,9 @@ export default {
                     label: t(`Clinics`),
                     permission:'Clinic'
                 },
-            ]
-        },
-        {
-            key: 'appointments',
-            icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
-            label: t(`Appointments`),
-        },
+           ]
+       },
+
         {
             label: t(`Invoices`),
             icon: <DollarOutlined style={{color:'#ce4e99', fontSize:20}}  />,
@@ -901,6 +894,12 @@ export default {
                     key: 'invoice-items',
                     label:  t(`Invoice Items`),
                     permission:'InvoiceItem'
+                },
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoices',
+                    label:  t(`Invoices`),
+                    permission:'Invoice'
                 },
             ]
         },
@@ -922,6 +921,19 @@ export default {
                 },
             ]
         },
+        {
+            key: 'appointments',
+            icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Appointments`),
+        },
+        {
+            key: 'notifications',
+            icon: <BellOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Notifications`),
+        },
+
+
+
         // {
         //     key: 'clinics',
         //     icon: <img alt={'Clinic_icon'} src={Clinic_icon}/>,
@@ -930,32 +942,32 @@ export default {
         // },
 
 
-        {
-            key: 'clinics-owner',
-            icon: <img alt={'icons'} src={dash3}/>,
-            label: `Clinics owner`,
-
-        },
-        {
-            key: 'doctor-flow',
-            icon: <img alt={'icons'} src={dash3}/>,
-            label: t('Doctor flow'),
-        },
-        {
-            key: 'clinic-manager',
-            icon: <img alt={'icons'} src={dash3}/>,
-            label: t('Clinic Manager'),
-        },
-        {
-            key: 'doctor-reworked',
-            icon: <img alt={'icons'} src={dash3}/>,
-            label: t('Doctor reworked'),
-        },
-        {
-            key: 'admin',
-            icon: <img alt={'icons'} src={dash3}/>,
-            label: t('Super admin'),
-        },
+        // {
+        //     key: 'clinics-owner',
+        //     icon: <img alt={'icons'} src={dash3}/>,
+        //     label: `Clinics owner`,
+        //
+        // },
+        // {
+        //     key: 'doctor-flow',
+        //     icon: <img alt={'icons'} src={dash3}/>,
+        //     label: t('Doctor flow'),
+        // },
+        // {
+        //     key: 'clinic-manager',
+        //     icon: <img alt={'icons'} src={dash3}/>,
+        //     label: t('Clinic Manager'),
+        // },
+        // {
+        //     key: 'doctor-reworked',
+        //     icon: <img alt={'icons'} src={dash3}/>,
+        //     label: t('Doctor reworked'),
+        // },
+        // {
+        //     key: 'admin',
+        //     icon: <img alt={'icons'} src={dash3}/>,
+        //     label: t('Super admin'),
+        // },
         /*{
             key: `/match-event-naturess`,
             label: t(`Reviews`),

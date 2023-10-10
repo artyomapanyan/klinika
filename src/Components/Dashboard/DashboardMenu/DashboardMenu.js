@@ -26,8 +26,9 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
 
 
     const handleFilterMenus = (item)=>{
-        if(item.children){
-            item.children = item.children.map(handleFilterMenus).filter(e=>e)
+        if(item?.children){
+            item.children = item.children.map(handleFilterMenus).filter(e=>e);
+            //item = item?.children?.length < 1 ? false : item;
             return item
         }else if(item.permission){
             return permissions.includes(item.permission+':viewAny')?item:false
@@ -40,11 +41,11 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
 
 
     const selectedItem = useMemo(()=>{
-       return  items.find(e=>{
+       return  items?.find(e=>{
            if(pathname.includes(e.key)){
                return true
            }else{
-               return e.children?.find(u=>pathname.includes(u.key));
+               return e?.children?.find(u=>pathname.includes(u.key));
            }
 
        })
