@@ -9,7 +9,6 @@ import SwitchStatus from "../../Fragments/SwitchStatus";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 
-
 const resource='Offer'
 
 function Offers() {
