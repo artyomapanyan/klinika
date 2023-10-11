@@ -743,12 +743,22 @@ export default {
         //     key: 'super-admin',
         //     icon: <img alt={'icons'} src={dash1}/>,
         //     label: t('Dashboard'),
+        //     permission:'Dashboard-super',
+        //     customPerm:'DashboardSuper'
         // },
-        {
-            key: 'clinic-manager',
-            icon: <img alt={'icons'} src={dash1}/>,
-            label: t(`Dashboard`),
-        },
+        // {
+        //     key: 'clinic-manager',
+        //     icon: <img alt={'icons'} src={dash1}/>,
+        //     label: t(`Dashboard`),
+        //     customPerm:'DashboardManager'
+        // },
+        // {
+        //     key: 'doctor-reworked',
+        //     icon: <img alt={'icons'} src={dash1}/>,
+        //     label: t(`Dashboard`),
+        //     customPerm:'DashboardDoctor'
+        //
+        // },
         {
             label: t(`Inputs`),
             icon: <ProfileOutlined style={{color:'#ce4e99', fontSize:20}} />,
