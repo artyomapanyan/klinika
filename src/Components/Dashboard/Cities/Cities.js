@@ -3,11 +3,18 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function Cities() {
     return(
         <div>
-            <ResourceTable resource={'City'} tableColumns={[
+            <ResourceTable resource={'City'}
+                           except={{
+                               delete: PermCheck(`City:delete`) ? false : true,
+                               edit: PermCheck(`City:update`) ? false : true
+                           }}
+
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

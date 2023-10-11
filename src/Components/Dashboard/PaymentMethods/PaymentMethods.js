@@ -6,12 +6,17 @@ import DateParser from "../../Fragments/DateParser";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import PermCheck from "../../Fragments/PermCheck";
 
 const resource = 'PaymentMethod'
 function PaymentMethods() {
 
     return (<div>
         <ResourceTable resource={resource}
+                       except={{
+                           delete: PermCheck(`PaymentMethod:delete`) ? false : true,
+                           edit: PermCheck(`PaymentMethod:update`) ? false : true
+                       }}
                        tableParams={{type: Resources.TaxonomyTypes.REPORT_TOPIC}}
                        exportButton={false}
                        tableColumns={[

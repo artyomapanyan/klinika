@@ -5,11 +5,18 @@ import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
 import Resource from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
+import PermCheck from "../../Fragments/PermCheck";
 const resource = 'Doctor';
 function Doctors() {
     return(
         <div>
-            <ResourceTable resource={resource} eyeShow={true} tableColumns={[
+            <ResourceTable resource={resource}
+                           except={{
+                               delete: PermCheck(`Doctor:delete`) ? false : true,
+                               edit: PermCheck(`Doctor:update`) ? false : true
+                           }}
+                           eyeShow={true}
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',
