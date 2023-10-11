@@ -32,7 +32,7 @@ function AppPersonalDetails({
 	const [codeStatus, setCodeStatus] = useState(null)
 	const [changeVerifyCode, setChangeVerifyCode] = useState('')
 	const [sendAgain, setSendAgain] = useState({})
-	const [patientFormState, setPatientFormState] = useState({})
+
 
 
 	useEffect(() => {

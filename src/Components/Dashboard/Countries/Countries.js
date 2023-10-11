@@ -8,7 +8,8 @@ function Countries(){
     return(
        <ResourceTable resource={'Country'}
                       except={{
-                          delete: PermCheck(`Country:delete`) ? false : true
+                          delete: PermCheck(`Country:delete`) ? false : true,
+                          edit: PermCheck(`Country:update`) ? false : true
                       }}
 
                       tableColumns={[
