@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
-import { CheckCircleOutlined } from '@ant-design/icons'
+
 import { Button, Form, Input, Space, notification } from 'antd'
 import { postResource } from '../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import { t } from 'i18next'
 import FormInput from '../../../Fragments/FormInput'
-import { isNullOrUndef } from 'chart.js/helpers'
+
 
 function AppPersonalDetails({
 	setDataState,
