@@ -29,3 +29,4 @@ deploy:
     - npm install
     - if [ "$CI_COMMIT_BRANCH" = "main" ]; then npm run build:prod; elif [ "$CI_COMMIT_BRANCH" = "staging" ];then npm run build:staging; else npm run build:dev; fi
     - if [ "$CI_COMMIT_BRANCH" = "main" ]; then rsync -avz --del ./build/ $SSH_DEST_MAIN; elif [ "$CI_COMMIT_BRANCH" = "staging" ];then rsync -avz --del ./build/ $SSH_DEST_STAGING; else rsync -avz --del ./build/ $SSH_DEST_DEV; fi
+    - ssh root@10.0.0.2 "rsync -vraz --delete --chmod=g+w  /var/www/new.klinikatech.com/ 10.0.0.9:/var/www/new.klinikatech.com/"
