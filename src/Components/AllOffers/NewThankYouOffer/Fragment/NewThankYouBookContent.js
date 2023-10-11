@@ -11,13 +11,22 @@ import OfferPrice from "../../OfferBookNew/Fragment/OfferPrice";
 import BookAnAppointmentNew from "../../OfferBookNew/Fragment/BookAnAppointmentNew";
 import img_thank_you from "../../../../dist/Img/thank_you.png";
 import {t} from "i18next";
-import {Button} from "antd";
+import {Button, Drawer} from "antd";
+import ThankYouOfferDetailsNew from "./ThankYouOfferDetailsNew";
 
 function NewThankYouBookContent() {
     const params = useParams()
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
     const navigate = useNavigate()
+    const [open, setOpen] = useState(true);
+
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
 
 
     const { loadingState, dataState } = useGetResourceSingle(
@@ -86,7 +95,7 @@ function NewThankYouBookContent() {
 
 
                         <div className={'offer_details_new'}>
-                            <OfferBookDetailsNew data={data} />
+                            <ThankYouOfferDetailsNew data={data} showDrawer={showDrawer}/>
 
                             <div className={'offer_section'}>
                                 <div>
@@ -117,6 +126,38 @@ function NewThankYouBookContent() {
                                             <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
                                         </div>
                                     </div>
+                                </div>
+
+
+
+
+                                <div>
+
+                                    <Drawer
+
+                                        placement={'bottom'}
+                                        closable={false}
+                                        onClose={onClose}
+                                        open={open}
+                                        height={400}
+                                        style={{borderRadius: '12px 12px 0 0'}}
+
+
+                                    >
+                                        <div >
+                                            {/*<BookAnAppointmentNew data={data} />*/}
+                                            <div align={'center'} style={{padding: 24}}>
+                                                <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                <div className={'thank_you_bold_text'}>{t('You book an offer!')}</div>
+                                                <div className={'thank_you_smoll_text'}>
+                                                    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception.')}
+                                                </div>
+                                                <div style={{marginTop: 10}}>
+                                                    <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Drawer>
                                 </div>
                             </div>
                         </div>

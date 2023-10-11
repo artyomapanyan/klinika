@@ -220,7 +220,7 @@ function AppPersonalDetails({
 									onValuesChange={handleValuesChange}
 									name={'send'}
 								>
-									<div style={{display: 'flex'}}>
+									<div style={{display: 'flex', gap: 10}}>
 										<div style={{ width: '40%'}} className={'all_offer_code'}>
 											<FormInput
 												label={t('Code')}
@@ -289,9 +289,9 @@ function AppPersonalDetails({
 
 												</div>
 
-												<div style={{ display: 'flex', width: '100%' }}>
+												<div style={{ display: 'flex', width: '100%', gap: 10, justifyContent: 'space-between' }}>
 
-													<div style={{width: '40%', display: 'flex', flexDirection: 'row', paddingTop: 10}}>
+													<div style={{width:'30%', display: 'flex', flexDirection: 'row', paddingTop: 10}}>
 														{mins == 0 && secs == 0 ? (
 															<div
 																style={{ color: '#BF539E', cursor: 'pointer'}}
@@ -309,7 +309,7 @@ function AppPersonalDetails({
 
 														)}
 													</div>
-													<div style={{width: '50%'}}>
+													<div style={{width: '40%'}}>
 														<FormInput label={t('Verify code')} name={'code'} />
 													</div>
 													<div style={{width: '20%'}}>

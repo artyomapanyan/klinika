@@ -41,12 +41,12 @@ function BookAnAppointment({ data }) {
 		postResource('PublicAppointment', 'create', token, '', dataState).then(
 			response => {
 				setLoading(false)
-				console.log(response)
+
 
 
 				if (response?.appointment?.id) {
 					//setShowthank(true)
-					console.log('response?.redirect ', response?.redirect)
+					//console.log('response?.redirect ', response?.redirect)
 
 					document.location.href = response?.redirect
 				}
