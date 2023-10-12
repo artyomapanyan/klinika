@@ -3,11 +3,18 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function Categories() {
     return(
         <div>
-            <ResourceTable resource={'Category'} tableColumns={[
+            <ResourceTable resource={'Category'}
+                           except={{
+                               delete: PermCheck(`Category:delete`) ? false : true,
+                               edit: PermCheck(`Category:update`) ? false : true
+                           }}
+
+                           tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',

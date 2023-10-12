@@ -2,11 +2,18 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function Services() {
     return (
         <div>
-            <ResourceTable resource={'Service'} tableColumns={[
+            <ResourceTable resource={'Service'}
+                           except={{
+                               delete: PermCheck(`Service:delete`) ? false : true,
+                               edit: PermCheck(`Service:update`) ? false : true
+                           }}
+
+                           tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { t } from 'i18next'
-import { Avatar, Divider } from 'antd'
+import {Avatar, Button, Divider} from 'antd'
 import off_image_1 from '../../../../dist/Img/off_image_1.jpg'
 import Group from '../../../../dist/Img/Group.png'
 import map from '../../../../dist/Img/map.png'
@@ -8,7 +8,7 @@ import global from '../../../../dist/Img/global-line.png'
 import OfferMap from './OfferMap'
 import { useSelector } from 'react-redux'
 
-function OfferBookDetails({ data }) {
+function OfferBookDetails({ data, showDrawer }) {
 	let lngs = useSelector(state => state?.app?.current_locale)
 	const [isMobile, setIsMobile] = useState(false)
 		//choose the screen size
@@ -135,10 +135,19 @@ function OfferBookDetails({ data }) {
 									</div>
 								</>
 							)}
+
 						</div>
 					</div>
 				</div>
 			</div>
+			{
+				<div className={'bottom_drawer_div'}>
+					<Button type="primary" onClick={showDrawer} style={{width: '100%', height: 56}}>
+						{t('Select doctor and time')}
+					</Button>
+				</div>
+			}
+
 		</div>
 	)
 }

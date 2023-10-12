@@ -3,11 +3,17 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function Coupons() {
     return(
         <div>
-            <ResourceTable resource={'Coupon'} tableColumns={[
+            <ResourceTable resource={'Coupon'}
+                           except={{
+                               delete: PermCheck(`Coupon:delete`) ? false : true,
+                               edit: PermCheck(`Coupon:update`) ? false : true
+                           }}
+                           tableColumns={[
                 {
                     title:t('Redeem code'),
                     dataIndex:'redeem_code',

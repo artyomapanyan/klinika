@@ -3,10 +3,17 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function Regions() {
 
-    return(<ResourceTable resource={'Region'} tableColumns={[
+    return(<ResourceTable resource={'Region'}
+                          except={{
+                              delete: PermCheck(`Region:delete`) ? false : true,
+                              edit: PermCheck(`Region:update`) ? false : true
+                          }}
+
+                          tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',

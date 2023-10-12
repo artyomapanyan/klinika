@@ -178,7 +178,7 @@ function Translations(){
                             title:t('Submit'),
                             dataIndex:'submit',
                             key:'submit',
-                            render:(i,record)=><Button onClick={()=>handleSaveTranslation(record)}>Save</Button>
+                            render:(i,record)=><Button onClick={()=>handleSaveTranslation(record)}>{t('Save')}</Button>
                         },
                     ]}
                     dataSource={filteredTranslations}/>

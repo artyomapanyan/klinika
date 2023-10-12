@@ -27,7 +27,7 @@ function Appointment({isPatient}) {
     let token = useSelector((state) => state.auth.token);
     let role = useSelector((state) => state.auth.selected_role?.key);
 
-
+console.log(formRef?.current?.getFieldValue())
 
 
 
@@ -454,7 +454,7 @@ function Appointment({isPatient}) {
 
                                                     <FormInput label={t('Nationality')} name={['patient','country_id']}
                                                                inputType={'resourceSelect'}
-                                                               initialValue={formRef?.current?.getFieldValue(['patient','country_id'])}
+                                                               initialValue={formRef?.current?.getFieldValue(['patient','nationality', 'id'])}
                                                                rules={[{required: !data?.patient_id}]}
                                                                disabled={data?.patient_id}
                                                                initialData={formRef?.current?.getFieldValue(['patient','nationality']) ? [formRef?.current?.getFieldValue(['patient','nationality'])] : []}

@@ -5,12 +5,18 @@ import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
 import Resource from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
+import PermCheck from "../../Fragments/PermCheck";
 
 const resource='LabPackage'
 function LabPackages() {
     return(
         <div>
-            <ResourceTable resource={resource} tableColumns={[
+            <ResourceTable resource={resource}
+                           except={{
+                               delete: PermCheck(`LabPackage:delete`) ? false : true,
+                               edit: PermCheck(`LabPackage:update`) ? false : true
+                           }}
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

@@ -90,11 +90,14 @@ function HeaderAccountDropdown({setAuthOpen}) {
     }
     useEffect(()=>{
         postResource('Role','list',auth.token).then((data)=>{
+            if(data?.items){
+                dispatch({
+                    type: 'ROLES_UPDATE',
+                    payload: data.items
+                })
+            }
 
-            dispatch({
-                type: 'ROLES_UPDATE',
-                payload: data.items
-            })
+
         })
     },[app.current_locale])
 
@@ -182,7 +185,7 @@ function HeaderAccountDropdown({setAuthOpen}) {
 
                         <h3 style={{fontWeight: 700}}>{t("Select Role :")}</h3>
 
-                        {roles.map((el, i) =>{
+                        {roles?.map((el, i) =>{
                             return<Button key={el?.id} className={'btn_roles'} type ={auth?.selected_role?.id===el?.id?'primary':'default'}  onClick={()=>onRoleChange(el)} >
                             <div >
                                 <div className={"head_account_drop_text"}>{el?.name}</div>

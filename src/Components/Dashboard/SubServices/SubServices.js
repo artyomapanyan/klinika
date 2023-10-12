@@ -2,11 +2,17 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function SubServices() {
     return (
         <div>
-            <ResourceTable resource={'SubService'} tableColumns={[
+            <ResourceTable resource={'SubService'}
+                           except={{
+                               delete: PermCheck(`SubService:delete`) ? false : true,
+                               edit: PermCheck(`SubService:update`) ? false : true
+                           }}
+                           tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',

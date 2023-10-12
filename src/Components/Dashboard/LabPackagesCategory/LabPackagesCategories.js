@@ -4,11 +4,16 @@ import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import DateParser from "../../Fragments/DateParser";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import PermCheck from "../../Fragments/PermCheck";
 
 function LabPackagesCategories() {
     return(
         <div>
             <ResourceTable resource={'Taxonomy'}
+                           except={{
+                               delete: PermCheck(`Taxonomy:delete`) ? false : true,
+                               edit: PermCheck(`Taxonomy:update`) ? false : true
+                           }}
                            resourceLink={'LabPackageCategory'}
                            tableParams={{type:Resources.TaxonomyTypes.LAB_PACKAGE_CATEGORY}}
                            tableColumns={[

@@ -15,6 +15,7 @@ import new_sorter_icon from "../../../../dist/icons/new_sorter_icon.png";
 import printIcon from "../../../../dist/icons/printIcon.svg";
 
 import ResourceTableHeader from "../../../Fragments/ResourceTableHeader";
+import PermCheck from "../../../Fragments/PermCheck";
 
 let resource = 'Invoice'
 function Invoices() {
@@ -67,6 +68,10 @@ function Invoices() {
             <InvoicesGraphics />
             <div className={'invoices_table'}>
                 <ResourceTable resource={resource}
+                               except={{
+                                   delete: PermCheck(`Invoice:delete`) ? false : true,
+                                   edit: PermCheck(`Invoice:update`) ? false : true
+                               }}
                                updateTable={updateTable}
 
                                customHeader={(props)=> {

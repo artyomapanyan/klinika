@@ -3,10 +3,17 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 function Posts() {
     return(
         <div>
-            <ResourceTable resource={'Post'} tableColumns={[
+            <ResourceTable resource={'Post'}
+                           except={{
+                               delete: PermCheck(`Post:delete`) ? false : true,
+                               edit: PermCheck(`Post:update`) ? false : true
+                           }}
+
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

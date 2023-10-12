@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import SwitchStatus from "../../Fragments/SwitchStatus";
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
+import PermCheck from "../../Fragments/PermCheck";
 
 
 const resource='Offer'
@@ -19,9 +20,14 @@ function Offers() {
     return(
         <div>
             <ResourceTable resource={resource}
+                           // except={{
+                           //     delete: reduxInfo?.selected_role?.key === 'doctor' ? true : false,
+                           //     edit: reduxInfo?.selected_role?.key === 'doctor' ? true : false
+                           // }}
+
                            except={{
-                               delete: reduxInfo?.selected_role?.key === 'doctor' ? true : false,
-                               edit: reduxInfo?.selected_role?.key === 'doctor' ? true : false
+                               delete: PermCheck(`Offer:delete`) ? false : true,
+                               edit: PermCheck(`Offer:update`) ? false : true
                            }}
 
 
