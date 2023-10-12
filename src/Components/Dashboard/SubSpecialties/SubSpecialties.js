@@ -3,11 +3,16 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import Resources from "../../../store/Resources";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function SubSpecialties() {
     return(
         <div>
             <ResourceTable resource={'Taxonomy'}
+                           except={{
+                               delete: PermCheck(`Taxonomy:delete`) ? false : true,
+                               edit: PermCheck(`Taxonomy:update`) ? false : true
+                           }}
                            resourceLink={'SubSpecialty'}
                            tableParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                            tableColumns={[

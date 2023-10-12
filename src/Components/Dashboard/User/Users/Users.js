@@ -3,10 +3,16 @@ import ResourceTable from "../../../Fragments/ResourceTable";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../../Fragments/DateParser";
+import PermCheck from "../../../Fragments/PermCheck";
 function Users() {
     return(
         <div>
-            <ResourceTable resource={'User'} tableColumns={[
+            <ResourceTable resource={'User'}
+                           except={{
+                               delete: PermCheck(`User:delete`) ? false : true,
+                               edit: PermCheck(`User:update`) ? false : true
+                           }}
+                           tableColumns={[
                 {
                     title:'ID',
                     dataIndex:'id',

@@ -3,7 +3,7 @@ import './AllOffers.sass'
 import off_head from '../../dist/Img/off_head.png'
 import mobile_filter_icon from '../../dist/icons/mobile_filter_icon.png'
 
-import { Button, Divider, Radio, Result, Row, Dropdown, Drawer } from 'antd'
+import {Button, Divider, Radio, Result, Row, Dropdown, Drawer, TreeSelect, Space} from 'antd'
 import OffersPrices from './Fragments/OffersPrices'
 import { t } from 'i18next'
 import OfferCard from './Fragments/OfferCard'
@@ -17,6 +17,8 @@ import AllOffersHeader from './Fragments/AllOffersHeader'
 import AllOffersMobileHeader from './Fragments/AllOffersMobileHeader'
 import OfferPriceMobile from './Fragments/OfferPriceMobile'
 import { useSelector } from 'react-redux'
+import subCategories from "../Dashboard/SubCategories/SubCategories";
+import {DownOutlined} from "@ant-design/icons";
 
 function  AllOffers() {
 	let lngs = useSelector(state => state?.app?.current_locale)
@@ -98,6 +100,31 @@ function  AllOffers() {
 		setOpen(false)
 	}
 
+
+
+
+
+
+	// let aaa = addData?.PublicCategory?.items.map((el) => {
+	// 	return {
+	// 		title: el?.name,
+	// 		value: el?.id,
+	// 		children: el?.sub_categories?.map((e) => {
+	// 			//console.log(e, 'ddd')
+	// 			return {
+	// 				title: e?.name,
+	// 				value: el.id + '-' + e.id,
+	// 			}
+	// 		})
+	// 	}
+	// });
+	//
+	// const onChangeaaa = (val) => {
+	// 	console.log(val)
+	// }
+
+
+
 	return (
 		<div style={{ backgroundColor: '#f5f6fa' }}>
 			<div className={'header_img_lng'}>
@@ -127,6 +154,42 @@ function  AllOffers() {
 				>
 					<div className={'menu_div'}>
 						<div className={'tab_div'}>
+
+
+
+
+							{/*<div>*/}
+							{/*	<div className={'treeSelect'} >*/}
+
+
+
+
+							{/*		<TreeSelect*/}
+							{/*			style={{*/}
+							{/*				width: 198,*/}
+							{/*				height: 48,*/}
+							{/*				backgroundColor: '#000000'*/}
+							{/*			}}*/}
+							{/*			//value={value}*/}
+							{/*			dropdownStyle={{*/}
+							{/*				maxHeight: 400,*/}
+							{/*				overflow: 'auto',*/}
+							{/*				minWidth: 300,*/}
+							{/*			}}*/}
+
+							{/*			treeData={aaa}*/}
+							{/*			placeholder="Please select"*/}
+							{/*			placement={'bottomLeft'}*/}
+							{/*			onChange={onChangeaaa}*/}
+							{/*		/>*/}
+							{/*	</div>*/}
+
+							{/*</div>*/}
+
+
+
+
+
 							<Button
 								type={
 									params?.category || params?.sub_category

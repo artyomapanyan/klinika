@@ -27,7 +27,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
 
     const handleFilterMenus = (item)=>{
         //console.log(item.key)
-        console.log(item,permissions.includes(item.permission+':viewAny'),permissions )
+        //console.log(item,permissions.includes(item.permission+':viewAny'),permissions )
         if(item?.children){
             item.children = item.children.map(handleFilterMenus).filter(e=>e);
             item = item?.children?.length < 1 ? false : item;

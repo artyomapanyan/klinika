@@ -9,6 +9,7 @@ function Cities() {
     return(
         <div>
             <ResourceTable resource={'City'}
+
                            except={{
                                delete: PermCheck(`City:delete`) ? false : true,
                                edit: PermCheck(`City:update`) ? false : true

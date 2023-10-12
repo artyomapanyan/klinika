@@ -5,6 +5,7 @@ import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilt
 import ResourceTable from "../../../Fragments/ResourceTable";
 import DateParser from "../../../Fragments/DateParser";
 import {useSelector} from "react-redux";
+import PermCheck from "../../../Fragments/PermCheck";
 
 
 function InvoiceItems() {
@@ -14,9 +15,13 @@ function InvoiceItems() {
         <div>
             <ResourceTable resource={'InvoiceItem'}
                            except={{
-                               edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-                               delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-            }}
+                               delete: PermCheck(`InvoiceItem:delete`) ? false : true,
+                               edit: PermCheck(`InvoiceItem:update`) ? false : true
+                           }}
+            //                except={{
+            //                    edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+            //                    delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+            // }}
 
                            tableColumns={[
                 {
