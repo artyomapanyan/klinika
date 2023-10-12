@@ -89,7 +89,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
 
 
                     ]} />
-                    <FormInput label={t('Country')} name={'country_id'}
+                    <FormInput label={t('Nationality')} name={'country_id'}
                                inputType={'resourceSelect'}
                                initialData={data?.countries??[]}
                                rules={[{required: true}]}

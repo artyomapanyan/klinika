@@ -26,6 +26,8 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
         return [name, item]
     }
 
+    console.log(data)
+
     return(
         <div className={language === 'ar' ? 'KM_drawer' : ''}>
             <Form
@@ -39,9 +41,8 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                 }))}
                 ref={formRef}
             >
-            <Row gutter={[15, 15]}>
-                <Col lg={12}>
-                    <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems: 'center'}}>
+                <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems: 'center'}}>
+                    <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems: 'center', width: '50%'}}>
                         <Space >
                             <Avatar size={50} icon={<UserOutlined />} style={{marginTop: 20}} />
                             <div style={{display:"block", marginTop: 26}}>
@@ -52,6 +53,15 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                         </Space>
                         <Tag color="#ce4e99" size={'large'} style={{fontSize:14, fontWeight:600, height: 30, marginTop:20,  padding:'4px 10px', borderRadius:10}}>{data.time}</Tag>
                     </div>
+                    <div align={'right'}>
+                        <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} />{t('Back to short form')}</Button>
+                    </div>
+                </div>
+
+            <Row gutter={[15, 15]}>
+
+                <Col lg={12}>
+
                     <div>
 
                             <FormInput label={t('First name')} name={'first'}   rules={[{required: true}]} />
@@ -87,13 +97,11 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                     </div>
                 </Col>
                 <Col lg={12}>
-                    <div align={'right'} style={{marginTop:40}}>
-                        <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} />{t('Back to short form')}</Button>
-                    </div>
+
                     <div >
 
                             {/*<FormInput label={t('Address')} name={'address'}  rules={[{required: true}]} />*/}
-                            <FormInput label={t('Country')} name={'country_id'}
+                            <FormInput label={t('Nationality')} name={'country_id'}
                                        inputType={'resourceSelect'}
                                        initialValue={data?.country_id}
                                        rules={[{required: true}]}
@@ -132,10 +140,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                        resource={'InsuranceCompany'}
                                        resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
                             />
-                            {/*<FileManager text1={'Insurance Card Back'}
-                                         text2={'upload image'}
-                                         uploadIcon={<img alt={'icons'} src={addimage}/>}
-                                         name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>*/}
+
 
                             <div >
                                 <Button loading={loading} style={{width:'100%',}} size={'large'}  type={'secondary'} onClick={()=>setOpen(false)} >{t('Cancel')}</Button>
