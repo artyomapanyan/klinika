@@ -95,7 +95,7 @@ function Clinics({resourceLink=null,}) {
         //
         // </div>
         <div>
-            <ResourceTable resource={resource} eyeShow={PermCheck(`${resource}:update`) ? true : false}
+            <ResourceTable resource={resource} eyeShow={PermCheck(`${resource}:view`) ? true : false}
                            except={{
                                edit: PermCheck(`${resource}:update`) ? false : true,
                                delete: PermCheck(`${resource}:delete`) ? false : true
