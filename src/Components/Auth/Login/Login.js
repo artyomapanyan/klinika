@@ -91,6 +91,8 @@ function Login() {
                                 return navigate('/dashboard/super-admin')
                             case 'admin':
                                 return navigate('/dashboard/admin')
+                            case 'receptionist':
+                                return navigate('/dashboard/receptionist')
                             default:
                                 return  navigate('/dashboard')
 
