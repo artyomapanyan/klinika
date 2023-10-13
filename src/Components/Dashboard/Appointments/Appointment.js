@@ -49,6 +49,10 @@ console.log(formRef?.current?.getFieldValue())
     const [searchCeys, setSearchCeys] = useState('')
 
 
+    const [lo, setLo] = useState(false)
+
+
+
 
     const [changeValuesState, setChangeValuesState] = useState({})
 
@@ -304,6 +308,8 @@ console.log(formRef?.current?.getFieldValue())
                 payload: true
             })
         }
+        //setLo(true)
+        //setTimeout(() => {setLo(false)},500)
 
     }
 
@@ -376,6 +382,10 @@ console.log(formRef?.current?.getFieldValue())
                                                        setSearchCeys(e)
                                                        return phoneNumberRef.current = e
                                                    },
+                                                   onChange:e=>{
+                                                       setLo(true)
+                                                       setTimeout(() => {setLo(false)},500)
+                                                   },
 
                                                    notFoundContent:<div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                                                        {
@@ -388,6 +398,8 @@ console.log(formRef?.current?.getFieldValue())
                                                                ...prevState,
                                                                patient_id:0
                                                            }))
+
+
                                                        }}
                                                                type={'secondary'} style={{border:"none"}}>{t('Create new')}</Button> </div>
 
@@ -405,103 +417,109 @@ console.log(formRef?.current?.getFieldValue())
                             </div>
                             {
                                 data?.patient_id || data?.patient_id === 0 || data?.id ? <div>
-                                    <div className={'add_edit_content'}>
+                                    {
+                                        lo ? <Preloader/> : <div className={'add_edit_content'}>
 
-                                        <div>
-                                            <Row>
-                                                <Col lg={6} className="gutter-row">
-                                                    <FormInput label={t('Country Code')} name={['patient','phone_country_code']}
-                                                               inputType={'resourceSelect'}
-                                                               rules={[{required: true}]}
-                                                               initialValue={formRef?.current?.getFieldValue(['patient','phone_country_code'])}
-                                                               handleMapItems={handleMapItems}
-                                                               disabled={data?.patient_id}
-                                                               customSearchKey={'phone_code'}
-                                                               resource={'Country'}/>
-                                                </Col>
-                                                <Col lg={18} className="gutter-row">
-                                                    <FormInput label={t('Phone number')}
-                                                               inputDisabled={data?.patient_id}
-                                                               name={['patient','phone_number']}
-                                                               maxLength={10}
-                                                                initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : phoneNumberRef?.current}
+                                            <div>
+                                                <Row>
+                                                    <Col lg={6} className="gutter-row">
+                                                        <FormInput label={t('Country Code')} name={['patient','phone_country_code']}
+                                                                   inputType={'resourceSelect'}
+                                                                   rules={[{required: true}]}
+                                                                   initialValue={formRef?.current?.getFieldValue(['patient','phone_country_code'])}
+                                                                   handleMapItems={handleMapItems}
+                                                                   disabled={data?.patient_id}
+                                                                   customSearchKey={'phone_code'}
+                                                                   resource={'Country'}/>
+                                                    </Col>
+                                                    <Col lg={18} className="gutter-row">
+                                                        <FormInput label={t('Phone number')}
+                                                                   inputDisabled={data?.patient_id}
+                                                                   name={['patient','phone_number']}
+                                                                   maxLength={10}
+                                                                   initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : phoneNumberRef?.current}
 
-                                                               rules={[{required: true}]}/>
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col lg={12} className="gutter-row">
-                                                    <FormInput label={t('First Name')} inputDisabled={data?.patient_id}
-                                                               name={['patient','first']}
+                                                                   rules={[{required: true}]}/>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col lg={12} className="gutter-row">
+                                                        <FormInput label={t('First Name')} inputDisabled={data?.patient_id}
+                                                                   name={['patient','first']}
 
-                                                               rules={[{required: true}]}/>
-                                                    <FormInput label={t('Last Name')} inputDisabled={data?.patient_id}
-                                                               name={['patient','last']}
+                                                                   rules={[{required: true}]}/>
+                                                        <FormInput label={t('Last Name')} inputDisabled={data?.patient_id}
+                                                                   name={['patient','last']}
 
-                                                               rules={[{required: true}]}/>
-                                                    <FormInput label={t('Email')} inputDisabled={data?.patient_id}
-                                                               name={['patient','email']}
+                                                                   rules={[{required: true}]}/>
+                                                        <FormInput label={t('Email')} inputDisabled={data?.patient_id}
+                                                                   name={['patient','email']}
 
-                                                               rules={[{required: true}]}/>
-                                                    <FormInput label={'Password'} inputDisabled={data?.patient_id}
-                                                               name={['patient','password']} initialValue={''}
-                                                               rules={[{required: !data?.patient_id}]}/>
+                                                                   rules={[{required: true}]}/>
+                                                        <FormInput label={'Password'} inputDisabled={data?.patient_id}
+                                                                   name={['patient','password']} initialValue={''}
+                                                                   rules={[{required: !data?.patient_id}]}/>
 
-                                                    <FormInput label={'Password Confirmation'}
-                                                               inputDisabled={data?.patient_id} initialValue={''}
-                                                               name={['patient','password_confirmation']}
-                                                               rules={[{required: !data?.patient_id}]}/>
+                                                        <FormInput label={'Password Confirmation'}
+                                                                   inputDisabled={data?.patient_id} initialValue={''}
+                                                                   name={['patient','password_confirmation']}
+                                                                   rules={[{required: !data?.patient_id}]}/>
 
-                                                    <FormInput label={t('Nationality')} name={['patient','country_id']}
-                                                               inputType={'resourceSelect'}
-                                                               initialValue={formRef?.current?.getFieldValue(['patient','nationality', 'id'])}
-                                                               rules={[{required: !data?.patient_id}]}
-                                                               disabled={data?.patient_id}
-                                                               initialData={formRef?.current?.getFieldValue(['patient','nationality']) ? [formRef?.current?.getFieldValue(['patient','nationality'])] : []}
-                                                               resource={'Country'}/>
-                                                </Col>
-                                                <Col lg={12} className="gutter-row">
+                                                        <FormInput label={t('Nationality')} name={['patient','country_id']}
+                                                                                          inputType={'resourceSelect'}
+                                                                                          initialValue={formRef?.current?.getFieldValue(['patient','nationality', 'id'])}
+                                                                                          rules={[{required: !data?.patient_id}]}
+                                                                                          disabled={data?.patient_id}
+                                                                                          initialData={formRef?.current?.getFieldValue(['patient','nationality']) ? [formRef?.current?.getFieldValue(['patient','nationality'])] : []}
+                                                                                          resource={'Country'}/>
 
-                                                    <FormInput label={t('Date of Birth')} name={['patient','dob']}
-                                                               inputDisabled={data?.patient_id}
-                                                               initialValue={formRef?.current?.getFieldValue(['patient','dob'])}
-                                                               inputType={'date'} rules={[
-                                                        {required: !data?.patient_id},
-                                                        // {
-                                                        //     validator:(rule,value)=>{
-                                                        //         if(dayjs().diff(value,'year')<18){
-                                                        //             return Promise.reject('min age 18')
-                                                        //         }
-                                                        //         return Promise.resolve();
-                                                        //     }
-                                                        // }
-                                                    ]}/>
-                                                    <FormInput label={t('Gender')} name={['patient','gender']}
-                                                               disabled={data?.patient_id}
-                                                               inputType={'resourceSelect'}
-                                                               initialValue={formRef?.current?.getFieldValue(['patient','gender'])}
-                                                               initialData={Resources?.Gender}
-                                                               rules={[{required: !data?.patient_id}]}/>
 
-                                                    <FormInput label={t('Nationality Number')}
-                                                               inputDisabled={data?.patient_id}
-                                                               name={['patient',"nationality_number"]}
-                                                               />
 
-                                                    <FormInput label={t('Status')} disabled={data?.patient_id}
-                                                               name={['patient','status']} inputType={'resourceSelect'}
-                                                               rules={[{required: !data?.patient_id}]}
-                                                               initialValue={formRef?.current?.getFieldValue(['patient','status'])}
-                                                               initialData={Resources.Status}
-                                                    />
-                                                    <FormInput label={t('Bio')} inputDisabled={data?.patient_id}
-                                                               name={['patient','bio']} inputType={'textArea'}
-                                                    />
-                                                </Col>
-                                            </Row>
+                                                    </Col>
+                                                    <Col lg={12} className="gutter-row">
+
+                                                        <FormInput label={t('Date of Birth')} name={['patient','dob']}
+                                                                   inputDisabled={data?.patient_id}
+                                                                   initialValue={formRef?.current?.getFieldValue(['patient','dob'])}
+                                                                   inputType={'date'} rules={[
+                                                            {required: !data?.patient_id},
+                                                            // {
+                                                            //     validator:(rule,value)=>{
+                                                            //         if(dayjs().diff(value,'year')<18){
+                                                            //             return Promise.reject('min age 18')
+                                                            //         }
+                                                            //         return Promise.resolve();
+                                                            //     }
+                                                            // }
+                                                        ]}/>
+                                                        <FormInput label={t('Gender')} name={['patient','gender']}
+                                                                   disabled={data?.patient_id}
+                                                                   inputType={'resourceSelect'}
+                                                                   initialValue={formRef?.current?.getFieldValue(['patient','gender'])}
+                                                                   initialData={Resources?.Gender}
+                                                                   rules={[{required: !data?.patient_id}]}/>
+
+                                                        <FormInput label={t('Nationality Number')}
+                                                                   inputDisabled={data?.patient_id}
+                                                                   name={['patient',"nationality_number"]}
+                                                        />
+
+                                                        <FormInput label={t('Status')} disabled={data?.patient_id}
+                                                                   name={['patient','status']} inputType={'resourceSelect'}
+                                                                   rules={[{required: !data?.patient_id}]}
+                                                                   initialValue={formRef?.current?.getFieldValue(['patient','status'])}
+                                                                   initialData={Resources.Status}
+                                                        />
+                                                        <FormInput label={t('Bio')} inputDisabled={data?.patient_id}
+                                                                   name={['patient','bio']} inputType={'textArea'}
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            </div>
+
                                         </div>
+                                    }
 
-                                    </div>
 
 
                                     <div className={'add_edit_content'}>

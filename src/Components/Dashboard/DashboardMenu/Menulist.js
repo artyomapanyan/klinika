@@ -728,6 +728,22 @@ export default {
 
     ],
 
+    'receptionist': [
+
+        {
+            key: 'appointments',
+            icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
+            label: t(`Appointments`),
+        },
+        {
+            icon:<DollarOutlined style={{color:'#ce4e99', fontSize:20}}/>,
+            key: 'invoices',
+            label:  t(`Invoices`),
+            permission:'Invoice'
+        },
+
+    ],
+
 
 
 
