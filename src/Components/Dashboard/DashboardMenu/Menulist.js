@@ -731,9 +731,9 @@ export default {
     'receptionist': [
 
         {
-            key: 'appointments',
-            icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
-            label: t(`Appointments`),
+            key: 'receptionist',
+            icon: <img alt={'icons'} src={dash1}/>,
+            label: t(`Dashboard`),
         },
         {
             icon:<DollarOutlined style={{color:'#ce4e99', fontSize:20}}/>,

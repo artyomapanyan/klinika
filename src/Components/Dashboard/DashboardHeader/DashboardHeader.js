@@ -6,9 +6,11 @@ import {LeftOutlined} from "@ant-design/icons";
 import {useLocation} from "react-router";
 import ClinicOwnerHeader from "../ClinicsOwner/Fragments/ClinicOwnerHeader";
 import {t} from "i18next";
+import {useSelector} from "react-redux";
 
 
 function DashboardHeader() {
+    let role = useSelector((state) => state?.auth?.selected_role?.key);
     const {pathname} = useLocation()
     const [loading,setLoading] = useState(false);
 
@@ -26,12 +28,14 @@ function DashboardHeader() {
             case pathname.includes('/invoices/'):
                 return <div></div>
             case pathname.includes('/invoices'):
-                return <ClinicOwnerHeader />
+                return role === 'receptionist' ? <div style={{ margin: '40px 24px', fontSize: 40, fontWeight: 400 }}>{t('Invoices')}</div> : <ClinicOwnerHeader />
             case pathname.includes('/patients'):
                 return   <div>
                     <Button style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}><LeftOutlined /></Button>
                     <span style={{fontSize:24, fontWeight:700, fontFamily: "Inter"}}>{t('Patient Card')}</span>
                 </div>
+            case pathname.includes('/receptionist'):
+                return <div style={{ margin: '40px 24px', fontSize: 40, fontWeight: 400 }}>{t('Dashboard')}</div>
             default:
 
                 return null

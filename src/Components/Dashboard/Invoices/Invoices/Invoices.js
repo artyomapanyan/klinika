@@ -20,7 +20,7 @@ import PermCheck from "../../../Fragments/PermCheck";
 let resource = 'Invoice'
 function Invoices() {
     let token = useSelector((state) => state.auth.token);
-    let reduxInfo = useSelector((state) => state?.auth);
+    let role = useSelector((state) => state?.auth?.selected_role?.key);
     const [pdfState, setPdfState] = useState(false);
     const [updateTable,setUpdateTable] = useState({})
 
@@ -65,7 +65,10 @@ function Invoices() {
     return(
         <div style={{marginTop: -20, zIndex: 999}}>
             {/*<ClinicOwnerHeader dashboardText={true}/>*/}
-            <InvoicesGraphics />
+            {
+                role === 'receptionist' ? <div></div> : <InvoicesGraphics />
+            }
+
             <div className={'invoices_table'}>
                 <ResourceTable resource={resource}
                                except={{
