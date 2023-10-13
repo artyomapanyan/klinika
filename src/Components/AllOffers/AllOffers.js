@@ -102,7 +102,6 @@ function  AllOffers() {
 
 
 
-
 	// let aaa = addData?.PublicCategory?.items.map((el) => {
 	// 	return {
 	// 		title: el?.name,
