@@ -89,9 +89,9 @@ function Invoices() {
 
                                andStatus={true}
                                invoiceSwitches={true}
-                               except={{
-                                   delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-                               }}
+                               // except={{
+                               //     delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+                               // }}
                                //addBtn={reduxInfo?.selected_role?.key !== 'clinic-owner' ? true : false}
                                resourceTablemarginTop={true}
                                containermargin={true}
