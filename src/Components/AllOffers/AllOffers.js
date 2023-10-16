@@ -105,23 +105,37 @@ function  AllOffers() {
 
 
 
-	// let aaa = addData?.PublicCategory?.items.map((el) => {
-	// 	return {
-	// 		title: el?.name,
-	// 		value: el?.id,
-	// 		children: el?.sub_categories?.map((e) => {
-	// 			//console.log(e, 'ddd')
-	// 			return {
-	// 				title: e?.name,
-	// 				value: el.id + '-' + e.id,
-	// 			}
-	// 		})
-	// 	}
-	// });
-	//
-	// const onChangeaaa = (val) => {
-	// 	console.log(val)
-	// }
+	let aaa = addData?.PublicCategory?.items.map((el) => {
+		return {
+			title: el?.name,
+			value: el?.id,
+			children: el?.sub_categories?.map((e) => {
+				//console.log(e, 'ddd')
+				return {
+					title: e?.name,
+					value: el.id + '-' + e.id,
+				}
+			})
+		}
+	});
+
+	const onChangeaaa = (val) => {
+		console.log(val)
+		if(val) {
+			if(val.toString().includes('-')) {
+				setParams({
+					...params,
+					sub_category: val
+				})
+			} else {
+				setParams({
+					...params,
+					category: val,
+				})
+			}
+		}
+
+	}
 
 
 
@@ -157,6 +171,7 @@ function  AllOffers() {
 
 
 
+						{/*new categries*/}
 
 							{/*<div>*/}
 							{/*	<div className={'treeSelect'} >*/}
@@ -167,9 +182,9 @@ function  AllOffers() {
 							{/*		<TreeSelect*/}
 							{/*			style={{*/}
 							{/*				width: 198,*/}
-							{/*				height: 48,*/}
-							{/*				backgroundColor: '#000000'*/}
+
 							{/*			}}*/}
+							{/*			size={'large'}*/}
 							{/*			//value={value}*/}
 							{/*			dropdownStyle={{*/}
 							{/*				maxHeight: 400,*/}
