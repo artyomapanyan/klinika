@@ -19,7 +19,7 @@ function NewThankYouBookContent() {
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
     const navigate = useNavigate()
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(window.innerWidth <= 600 ? true : false);
 
     const showDrawer = () => {
         setOpen(true);
@@ -130,35 +130,35 @@ function NewThankYouBookContent() {
 
 
 
+                                <div className={'thank_you_drawer'}>
 
-                                <div>
+                                        <Drawer
 
-                                    <Drawer
-
-                                        placement={'bottom'}
-                                        closable={false}
-                                        onClose={onClose}
-                                        open={open}
-                                        height={400}
-                                        style={{borderRadius: '12px 12px 0 0'}}
+                                            placement={'bottom'}
+                                            closable={false}
+                                            onClose={onClose}
+                                            open={open}
+                                            height={400}
+                                            style={{borderRadius: '12px 12px 0 0'}}
 
 
-                                    >
-                                        <div >
-                                            {/*<BookAnAppointmentNew data={data} />*/}
-                                            <div align={'center'} style={{padding: 24}}>
-                                                <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
-                                                <div className={'thank_you_bold_text'}>{t('You book an offer!')}</div>
-                                                <div className={'thank_you_smoll_text'}>
-                                                    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception.')}
-                                                </div>
-                                                <div style={{marginTop: 10}}>
-                                                    <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                        >
+                                            <div >
+                                                {/*<BookAnAppointmentNew data={data} />*/}
+                                                <div align={'center'} style={{padding: 24}}>
+                                                    <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                    <div className={'thank_you_bold_text'}>{t('You book an offer!')}</div>
+                                                    <div className={'thank_you_smoll_text'}>
+                                                        {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception.')}
+                                                    </div>
+                                                    <div style={{marginTop: 10}}>
+                                                        <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </Drawer>
-                                </div>
+                                        </Drawer>
+                                    </div>
+
                             </div>
                         </div>
                     </div>

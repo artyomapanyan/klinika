@@ -839,15 +839,35 @@ hr
   border-radius: 12px
   padding: 12px
   background-color: #FFFFFF
-  border-radius: 8px
   opacity: 0.99
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
+  cursor: pointer
+  margin-top: 10px
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  height: 72px
+  border: none
+
 
 .doctor_selected
   padding: 12px
+  border-radius: 12px  12px 0 0
   background-color: #774D9D
-  border-top-left-radius: 12px
-  border-top-right-radius: 12px
+  margin-top: 10px
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  height: 72px
+  border: none
+  &:disabled
+    background-color: #7c4d98
+    border: 1px solid #7c4d98
+
 
 .doctor_name_selected
   font-weight: 700
@@ -1351,3 +1371,14 @@ hr
     order: 0 !important
 :where(.css-dev-only-do-not-override-bf62cc).ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher
     order: 1 !important
+
+.collepse_offer_calendar
+  .ant-collapse-header
+    padding: 0 !important
+  .ant-collapse-content-box
+    padding: 0 !important
+
+.thank_you_drawer
+  display: none
+  @media screen and (max-width: 800px)
+    display: block

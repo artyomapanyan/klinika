@@ -165,8 +165,8 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
 
 
 
-    return <div className={'drawer_cal_bog_div'}>
-        <div className={'drawer_cal_top_div'}>
+    return <div className={'drawer_cal_bog_div'} >
+        <div className={''} style={{backgroundColor: '#BF539E', height: 160,}} >
             <div className={'drawer_cal_head_div'}>
                 <div className={'top_div_title'}>
                     {t('Pick Date')}

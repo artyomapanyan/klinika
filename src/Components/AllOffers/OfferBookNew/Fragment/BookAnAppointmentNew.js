@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router'
 import { t } from 'i18next'
 import ThankYouOffer from './ThankYouOffer'
-import { Button, Divider } from 'antd'
+import {Avatar, Button, Collapse, Divider, Space} from 'antd'
 import DateTimeSelect
 	from "../../../Dashboard/DoctorReworked/Fragments/DoctorReworkedCalendar/Fragments/DateTimeSelect";
 import AllOfferCalendar from "./AllOfferCalendar";
 import img_thank_you from "../../../../dist/Img/thank_you.png";
+import {UserOutlined} from "@ant-design/icons";
+import gold_star from "../../../../dist/icons/gold_star.png";
 
 function BookAnAppointment({ data }) {
 	let token = useSelector(state => state.auth.token)
@@ -32,6 +34,8 @@ function BookAnAppointment({ data }) {
 	const [showPayment, setShowPayment] = useState(false)
 	const [showButtons, setShowButtons] = useState(true)
 	const [verify, setVerify] = useState(0)
+	const [doctorKey, setDoctorKey] = useState('')
+	const [doctorId, setDoctorId] = useState('')
 
 
 
@@ -107,6 +111,7 @@ function BookAnAppointment({ data }) {
 		setResponseCodeState(null)
 		setNamesState({})
 		setDataState({})
+		setDoctorId('')
 	}
 	const onCancelAll = () => {
 
@@ -117,7 +122,77 @@ function BookAnAppointment({ data }) {
 		setNamesState({})
 		setDataState({})
 		setShowButtons(true)
+		setDoctorId('')
 	}
+
+	const onDoctor = id => {
+		setDoctorId(id)
+		setDataState({})
+		setDataState(prevState => ({
+			...prevState,
+			doctor_id: id
+		}))
+	}
+
+	const collapseChange = (key) => {
+		//console.log(key)
+		let endKey = key.splice(key?.length - 2, key?.length - 1)
+		console.log(endKey.toString())
+		setDoctorKey(endKey.toString())
+	}
+
+	console.log(dataState)
+
+	const item = data?.doctors?.map((el, key) => {
+
+		return {
+			key: key,
+			label: <Button disabled={[el?.id].includes(doctorId)}  className={dataState?.doctor_id === el?.id ? 'doctor_selected' : 'doctor_container'} key={el?.id} onClick={() => onDoctor(el?.id)}>
+
+						<Space>
+							<Avatar
+								size={40}
+								icon={el?.avatar ? <img src={el?.avatar?.url} alt={'image'}/> : <UserOutlined/>}
+								className={'doctor_avatar'}
+							/>
+							<div className={'doctor_name'}>
+								{el?.first} {el?.last}
+							</div>
+						</Space>
+						<div>
+							<div style={{display: 'flex', gap: 8}}>
+								<div style={{height: 25, borderRight: '1px solid #a7a8a730'}}></div>
+								<div style={{color: dataState?.doctor_id === el?.id ? '#ffffff' : '#000000', fontSize: 12, display: 'flex', gap: 8}}>
+									<div><img alt={'gold_star'} src={gold_star}/></div>
+
+									<div style={{marginTop: 2}}>0</div>
+								</div>
+
+							</div>
+						</div>
+					</Button>,
+			children: <div style={{}}>
+				 			{
+				 				dataState?.doctor_id ? <AllOfferCalendar show={show} setDataTimes={setDataTimes} setDataState={setDataState} dataState={dataState} data={data} date={date} setDate={setDate}/> : <div></div>
+				 			}
+				 		</div>,
+	}
+	})
+
+
+	// 	[
+	// 	{
+	// 		key: doctorKey,
+	// 		label: 'This is panel header 1',
+	// 		children: <div>
+	// 			{
+	// 				dataState?.doctor_id ? <AllOfferCalendar show={show} setDataTimes={setDataTimes} setDataState={setDataState} dataState={dataState} data={data} date={date} setDate={setDate}/> : <div></div>
+	// 			}
+	// 		</div>,
+	// 	},
+	// ]
+
+
 
 
 
@@ -136,12 +211,43 @@ function BookAnAppointment({ data }) {
 								<div>
 									<p className={'appointment_title'}>{t('Select doctor and date')}</p>
 								</div>
-								<div >
-									<AppDoctor
-										data={data}
-										setDataState={setDataState}
-										dataState={dataState}
-									/>
+								<div className={'collepse_offer_calendar'}>
+									{/*<AppDoctor*/}
+									{/*	data={data}*/}
+									{/*	setDataState={setDataState}*/}
+									{/*	dataState={dataState}*/}
+									{/*/>*/}
+
+
+									{/*{data?.doctors?.map((el, key) => {*/}
+
+									{/*	return (*/}
+									{/*		<div className={'doctor_container'} key={el?.id} onClick={() => onDoctor(el?.id)}>*/}
+
+									{/*				<Space>*/}
+									{/*					<Avatar*/}
+									{/*						size={40}*/}
+									{/*						icon={el?.avatar ? <img src={el?.avatar?.url} alt={'image'} /> : <UserOutlined />}*/}
+									{/*						className={'doctor_avatar'}*/}
+									{/*					/>*/}
+									{/*					<div className={'doctor_name'}>*/}
+									{/*						{el?.first} {el?.last}*/}
+									{/*					</div>*/}
+									{/*				</Space>*/}
+									{/*			*/}
+									{/*		</div>*/}
+									{/*	)*/}
+									{/*})}*/}
+
+									<Collapse  destroyInactivePanel={true}  items={item} onChange={collapseChange} expandIcon={()=>''} bordered={false}
+											  // activeKey={doctorKey}
+											   //collapsible={a.includes('disabled') ? '' : 'disabled'}
+
+											   ghost={true}
+									>
+									</Collapse >
+
+
 								</div>
 							</div>
 						</div>
@@ -156,9 +262,11 @@ function BookAnAppointment({ data }) {
 								{/*	setDate={setDate}*/}
 								{/*	setDataTimes={setDataTimes}*/}
 								{/*/>*/}
-								{
-									dataState?.doctor_id ? <AllOfferCalendar show={show} setDataTimes={setDataTimes} setDataState={setDataState} dataState={dataState} data={data} date={date} setDate={setDate}/> : <div></div>
-								}
+
+
+								{/*{*/}
+								{/*	dataState?.doctor_id ? <AllOfferCalendar show={show} setDataTimes={setDataTimes} setDataState={setDataState} dataState={dataState} data={data} date={date} setDate={setDate}/> : <div></div>*/}
+								{/*}*/}
 
 
 							</div>
