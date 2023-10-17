@@ -59,7 +59,7 @@ function AllOfferCalendar({
                 })).filter(v=>!prevState.find(u=>u.key===v.key))]))
 
             }
-            console.log(startDate)
+
             setStartDate((prevState) => prevState.add(count, unit))
         }
 
@@ -76,6 +76,7 @@ function AllOfferCalendar({
         setDate(e)
 
         if (e) {
+            setTimeLoading(true)
             postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + "/" + data?.clinic?.id, {
                 service: 'clinic_visit',
                 date: dayjs(e).format('YYYY-MM-DD')
@@ -83,7 +84,7 @@ function AllOfferCalendar({
                 setAvailableTimes(response?.flat() ?? [])
                 // setTimesIndex(0)
                 // setAvailableTimes(response?.flat()??[])
-                // setTimeLoading(false)
+                 setTimeLoading(false)
             })
         }
 
@@ -134,7 +135,7 @@ function AllOfferCalendar({
             callableDays =  [...daysData].filter(e => !e.called)
         }
 
-        console.log(daysData)
+        //console.log(daysData)
 
         Promise.all(callableDays.map((callableDay) => {
             return postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {
@@ -148,7 +149,7 @@ function AllOfferCalendar({
 
             })
         })).then(responses => {
-            console.log(responses, 'dssdsdsdsd')
+
             setDaysData(prevState => prevState.map(e => {
                 let data = responses.find(u => e.key == u.key);
                 if (data) {
@@ -185,7 +186,7 @@ function AllOfferCalendar({
         setDataTimes(e.target.value)
     }
 
-
+console.log(dataState)
     return <div className={'drawer_cal_bog_div'}>
         <div className={''} style={{backgroundColor: '#BF539E', height: 160,}}>
             <div className={'drawer_cal_head_div'}>
@@ -259,8 +260,9 @@ function AllOfferCalendar({
                     </div>
                     <div align={'center'} className={'big_time_div'} style={{height: 70}}>
                         {
-                            date ? availableTimes.length === 0 ? isClicked ?
-                                        <div className={'no_available_times'}>{t('No available times')}</div> : <div></div> :
+                            dataState?.date ?
+                                // availableTimes.length === 0 ?
+                                //         <div className={'no_available_times'}>{t('No available times')}</div>  :
                                     <Radio.Group
                                         className={'hours_select'}
                                         onChange={timeChange}
@@ -274,7 +276,7 @@ function AllOfferCalendar({
                                         buttonStyle="solid"
 
                                     />
-                                : <div></div>
+                                : <div className={'no_available_times'}>{t('Select a date')}</div>
                         }
 
                         <Button className={'next_btn_time'} style={{marginTop: 0}} onClick={() => handleChangeTime(8)}>

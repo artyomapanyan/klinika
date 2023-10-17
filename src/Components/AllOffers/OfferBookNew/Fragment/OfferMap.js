@@ -52,7 +52,7 @@ function OfferMap({data}) {
 					<Marker
 						onMouseUp={onDragMarker}
 						onLoad={onLoadMarker}
-						draggable
+						//draggable
 						position={initialPosition}
 					/>
 				</GoogleMap>
