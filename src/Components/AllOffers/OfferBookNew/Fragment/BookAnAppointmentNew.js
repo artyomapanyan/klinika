@@ -141,7 +141,7 @@ function BookAnAppointment({ data }) {
 		setDoctorKey(endKey.toString())
 	}
 
-	console.log(dataState)
+
 
 	const item = data?.doctors?.map((el, key) => {
 
@@ -155,7 +155,7 @@ function BookAnAppointment({ data }) {
 								icon={el?.avatar ? <img src={el?.avatar?.url} alt={'image'}/> : <UserOutlined/>}
 								className={'doctor_avatar'}
 							/>
-							<div className={'doctor_name'}>
+							<div className={'doctor_name'} style={{color: dataState?.doctor_id === el?.id ? '#ffffff' : '#000000'}}>
 								{el?.first} {el?.last}
 							</div>
 						</Space>

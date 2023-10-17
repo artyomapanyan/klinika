@@ -2,15 +2,27 @@ import {useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import dayjs from "dayjs";
 import {postResource} from "../../../Functions/api_calls";
-import {Button, Form, Radio, Spin} from "antd";
+import {Button, Radio, Spin} from "antd";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import {t} from "i18next";
 import {GMBK} from "../../../../functions";
 import Resources from "../../../../store/Resources";
 import arrow_right_white from "../../../../dist/icons/arrow_right_white.png";
-import Preloader from "../../../Preloader";
 
-function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  setDate1, dataClinic,        setDataState, dataState, data, setDate, setDataTimes}) {
+
+function AllOfferCalendar({
+                              setBookedAtState,
+                              formState,
+                              bookedAtState,
+                              date,
+                              setDate1,
+                              dataClinic,
+                              setDataState,
+                              dataState,
+                              data,
+                              setDate,
+                              setDataTimes
+                          }) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
@@ -23,8 +35,7 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
 
     const [timesIndex, setTimesIndex] = useState(0)
     const [isClicked, setIsClicked] = useState(false)
-    const [disabledDays, setDisabledDays] = useState([])
-
+    const [daysData, setDaysData] = useState([])
 
 
 //new
@@ -33,24 +44,26 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
     const [loadingDate, setLoadingDate] = useState(false);
 
 
+    const handleChangeDay = (count,unit) => {
 
-
-    const handleChangeMonth = (count) => {
-        if(startDate.add(count, 'month') < dayjs()){
-            setStartDate(dayjs())
-        }else{
-            setStartDate((prevState) => prevState.add(count, 'month'))
-        }
-    }
-    const handleChangeDay = (count) => {
-        if (startDate.add(count, 'day') < dayjs()) {
+        if (startDate.add(count, unit) < dayjs()) {
             setStartDate(dayjs())
         } else {
-            setStartDate((prevState) => prevState.add(count, 'day'))
+            let startCopy = startDate.clone().add(count, unit);
+            if (daysData.find(e => e.key === startCopy.diff(dayjs(), 'days'))) {
+
+            } else {
+                setDaysData((prevState) => ([...prevState, ...[...Array(6).keys()].map((key) => ({
+                    key: startCopy.clone().add(key, 'day').format('YYYY-MM-DD'),
+                    disabled: dayOff.includes(startCopy.clone().add(key, 'day').day())
+                })).filter(v=>!prevState.find(u=>u.key===v.key))]))
+
+            }
+            console.log(startDate)
+            setStartDate((prevState) => prevState.add(count, unit))
         }
 
     }
-
 
 
     const onDateClick = (e) => {
@@ -62,66 +75,44 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
         }))
         setDate(e)
 
-        if(e) {
-                postResource('PublicClinicDoctorAvailableTimes', 'single', token,  dataState?.doctor_id+"/"+data?.clinic?.id, {
-                    service:'clinic_visit',
-                    date: dayjs(e).format('YYYY-MM-DD')
-                }).then((response) => {
-                    setAvailableTimes(response?.flat() ?? [])
-                    // setTimesIndex(0)
-                    // setAvailableTimes(response?.flat()??[])
-                    // setTimeLoading(false)
-                })
-            }
+        if (e) {
+            postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + "/" + data?.clinic?.id, {
+                service: 'clinic_visit',
+                date: dayjs(e).format('YYYY-MM-DD')
+            }).then((response) => {
+                setAvailableTimes(response?.flat() ?? [])
+                // setTimesIndex(0)
+                // setAvailableTimes(response?.flat()??[])
+                // setTimeLoading(false)
+            })
+        }
 
-
-
-        // setDate1(e)
-        // setTimeLoading(true)
-        // if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(formState?.service_type)) {
-        //     postResource('Clinic', 'ClinicsAvailableTimes', token, (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-        //         date: dayjs(e).format('YYYY-MM-DD'),
-        //         service: formState?.service_type,
-        //     }).then((res) => {
-        //         setAvailableTimes(res?.flat()??[])
-        //         setTimeLoading(false)
-        //
-        //     })
-        // } else {
-        //     postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, (role === 'doctor' ? authRedux?.user?.id : dataClinic?.doctor?.id) + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-        //         service: formState?.service_type,
-        //         date: dayjs(e).format('YYYY-MM-DD')
-        //     }).then((response) => {
-        //
-        //         setTimesIndex(0)
-        //         setAvailableTimes(response?.flat()??[])
-        //         setTimeLoading(false)
-        //     })
-        // }
-        // setBookedAtState(dayjs(e).format('YYYY-MM-DD'))
-        // setIsClicked(true)
     }
 
 
-
-
+    const currentDate = dayjs();
 
 
     useEffect(() => {
-        if(dataState?.doctor_id) {
+        if (dataState?.doctor_id) {
             setLoadingDate(true)
-            postResource('PublicClinicDoctorWorkingHours','single', token,  dataState?.doctor_id+ '/' + data?.clinic?.id, {service:'clinic_visit'}).then(response => {
+            postResource('PublicClinicDoctorWorkingHours', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service: 'clinic_visit'}).then(response => {
                 const res = response?.working_hours
 
                 let day = [];
                 Object.keys(res)?.forEach((key) => {
-                    if(res[key][0]?.is_day_off){
+                    if (res[key][0]?.is_day_off) {
                         day.push(key)
                     }
                 })
 
                 setDayOff(day)
                 setLoadingDate(false)
+
+                setDaysData([...Array(6).keys()].map(key => ({
+                    key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
+                    disabled: day.includes(currentDate.add(key, 'day').day())
+                })))
 
 
             })
@@ -131,18 +122,49 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
     }, [dataState?.doctor_id])
 
 
+    useEffect(() => {
 
+        let callableDays =[]
+        if(!daysData.length){
+            callableDays = [...Array(6).keys()].map(key => ({
+                key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
+                disabled: dayOff.includes(currentDate.add(key, 'day').day())
+            }))
+        }else{
+            callableDays =  [...daysData].filter(e => !e.called)
+        }
 
+        console.log(daysData)
 
+        Promise.all(callableDays.map((callableDay) => {
+            return postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {
+                service: 'clinic_visit',
+                date: callableDay.key
+            }).then(response => {
+                return {
+                    key: callableDay.key,
+                    hasDays: response ? response[0]?.length : 0
+                }
 
+            })
+        })).then(responses => {
+            console.log(responses, 'dssdsdsdsd')
+            setDaysData(prevState => prevState.map(e => {
+                let data = responses.find(u => e.key == u.key);
+                if (data) {
+                    e.disabled = !data.hasDays
+                    e.called = true
+                }
 
+                return e
+            }))
+        })
 
-
-
+    }, [dataState?.doctor_id, startDate])
 
 
     useEffect(() => {
-        if(formState?.patient_id && formState?.clinic_id && formState?.service_type && formState?.specialty_id && bookedAtState) {
+        if (formState?.patient_id && formState?.clinic_id && formState?.service_type && formState?.specialty_id && bookedAtState) {
             onDateClick(date)
         }
     }, [formState?.clinic_id, formState?.service_type])
@@ -156,7 +178,7 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
 
     const timeChange = (e) => {
 
-        setDataState((prevState)=>({
+        setDataState((prevState) => ({
             ...prevState,
             time: e.target.value,
         }))
@@ -164,20 +186,23 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
     }
 
 
-
-    return <div className={'drawer_cal_bog_div'} >
-        <div className={''} style={{backgroundColor: '#BF539E', height: 160,}} >
+    return <div className={'drawer_cal_bog_div'}>
+        <div className={''} style={{backgroundColor: '#BF539E', height: 160,}}>
             <div className={'drawer_cal_head_div'}>
                 <div className={'top_div_title'}>
                     {t('Pick Date')}
                 </div>
                 <div className={'next_prev_div'}>
-                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== dayjs().format('DD-MM-YYYY')} onClick={() => handleChangeMonth(-1)}>
-                        {language === 'en' ? <LeftOutlined style={{color: '#ffffff'}}/> : <RightOutlined style={{color: '#ffffff'}}/>}
+                    <Button className={'next_prev_btn'}
+                            disabled={startDate.format('DD-MM-YYYY') == dayjs().format('DD-MM-YYYY')}
+                            onClick={() => handleChangeDay(-1,'month')}>
+                        {language === 'en' ? <LeftOutlined style={{color: '#ffffff'}}/> :
+                            <RightOutlined style={{color: '#ffffff'}}/>}
                     </Button>
                     <div className={'top_div_title'}>{t(GMBK(startDate.month()))}</div>
-                    <Button className={'next_prev_btn'} onClick={() => handleChangeMonth(1)}>
-                        {language === 'en' ? <RightOutlined style={{color: '#ffffff'}}/> : <LeftOutlined style={{color: '#ffffff'}}/>}
+                    <Button className={'next_prev_btn'} onClick={() => handleChangeDay(1,'month')}>
+                        {language === 'en' ? <RightOutlined style={{color: '#ffffff'}}/> :
+                            <LeftOutlined style={{color: '#ffffff'}}/>}
                     </Button>
                 </div>
             </div>
@@ -185,13 +210,13 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
                 <div>
                     <div className={'big_date_div'} style={{padding: 0}}>
 
-                        {[...[...Array(6).keys()]].map((e, key) => {
-
-                            return  <Button key={key}
-                                            loading={loadingDate}
-                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase())}
-                                            className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
-                                            onClick={() => onDateClick(startDate.add(key, 'day'))}>
+                        {[...Array(6).keys()].map((key) => {
+                            let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
+                            return <Button key={key}
+                                           loading={!e?.called}
+                                           disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}
+                                           className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
+                                           onClick={() => onDateClick(startDate.add(key, 'day'))}>
                                 <div className={'date_div_in_map'} style={{fontWeight: 400}}>
                                     {Resources.Days[startDate.add(key, 'day').day()]}
                                 </div>
@@ -205,15 +230,15 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
                         }
                         {
                             startDate.format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY') ?
-                                <Button className={'next_btn'} onClick={() => handleChangeDay(6)}>
+                                <Button className={'next_btn'} onClick={() => handleChangeDay(6,'day')}>
                                     <img alt={'arrow_right_white'} src={arrow_right_white}/>
                                 </Button> : <div>
                                     <Button className={'Next_btn_small'} disabled={startDate == dayjs()}
-                                            onClick={() => handleChangeDay(-6)}>
+                                            onClick={() => handleChangeDay(-6,'day')}>
                                         <img style={{transform: 'rotateY(180deg)'}} alt={'arrow_right_white'}
                                              src={arrow_right_white}/>
                                     </Button>
-                                    <Button className={'Next_btn_small'} onClick={() => handleChangeDay(6)}>
+                                    <Button className={'Next_btn_small'} onClick={() => handleChangeDay(6,'day')}>
                                         <img alt={'arrow_right_white'} src={arrow_right_white}/>
                                     </Button>
                                 </div>
@@ -234,21 +259,22 @@ function AllOfferCalendar({setBookedAtState, formState, bookedAtState, date,  se
                     </div>
                     <div align={'center'} className={'big_time_div'} style={{height: 70}}>
                         {
-                            date ? availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>{t('No available times')}</div> : <div></div> :
-                                <Radio.Group
-                                    className={'hours_select'}
-                                    onChange={timeChange}
-                                    options={availableTimes?.slice(timesIndex, timesIndex + 8)?.map((e) => {
-                                        return {
-                                            label: dayjs('2023-10-10' + e).format('h:mmA'),
-                                            value: e,
-                                        }
-                                    })}
-                                    optionType="button"
-                                    buttonStyle="solid"
+                            date ? availableTimes.length === 0 ? isClicked ?
+                                        <div className={'no_available_times'}>{t('No available times')}</div> : <div></div> :
+                                    <Radio.Group
+                                        className={'hours_select'}
+                                        onChange={timeChange}
+                                        options={availableTimes?.slice(timesIndex, timesIndex + 8)?.map((e) => {
+                                            return {
+                                                label: dayjs('2023-10-10' + e).format('h:mmA'),
+                                                value: e,
+                                            }
+                                        })}
+                                        optionType="button"
+                                        buttonStyle="solid"
 
-                                />
-                             : <div></div>
+                                    />
+                                : <div></div>
                         }
 
                         <Button className={'next_btn_time'} style={{marginTop: 0}} onClick={() => handleChangeTime(8)}>
