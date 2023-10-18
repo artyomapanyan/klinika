@@ -36,6 +36,7 @@ function AllOfferCalendar({
     const [timesIndex, setTimesIndex] = useState(0)
     const [isClicked, setIsClicked] = useState(false)
     const [daysData, setDaysData] = useState([])
+    const [timeCount, setTimeCount] = useState()
 
 
 //new
@@ -152,6 +153,7 @@ function AllOfferCalendar({
 
             setDaysData(prevState => prevState.map(e => {
                 let data = responses.find(u => e.key == u.key);
+
                 if (data) {
                     e.disabled = !data.hasDays
                     e.called = true
@@ -164,6 +166,8 @@ function AllOfferCalendar({
     }, [dataState?.doctor_id, startDate])
 
 
+
+
     useEffect(() => {
         if (formState?.patient_id && formState?.clinic_id && formState?.service_type && formState?.specialty_id && bookedAtState) {
             onDateClick(date)
@@ -171,11 +175,15 @@ function AllOfferCalendar({
     }, [formState?.clinic_id, formState?.service_type])
 
     const handleChangeTime = (count) => {
+        setTimeCount(count)
         if (timesIndex + count < 0 || timesIndex + count >= availableTimes.length) {
             return setTimesIndex(0)
         }
         setTimesIndex(prevState => prevState + count)
+
     }
+
+
 
     const timeChange = (e) => {
 
@@ -186,7 +194,7 @@ function AllOfferCalendar({
         setDataTimes(e.target.value)
     }
 
-console.log(dataState)
+//console.log(dataState)
     return <div className={'drawer_cal_bog_div'}>
         <div className={''} style={{backgroundColor: '#BF539E', height: 160,}}>
             <div className={'drawer_cal_head_div'}>
@@ -213,6 +221,7 @@ console.log(dataState)
 
                         {[...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
+                            console.log(e,daysData, 'e')
                             return <Button key={key}
                                            loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}
@@ -279,9 +288,21 @@ console.log(dataState)
                                 : <div className={'no_available_times'}>{t('Select a date')}</div>
                         }
 
-                        <Button className={'next_btn_time'} style={{marginTop: 0}} onClick={() => handleChangeTime(8)}>
-                            <img alt={'arrow_right_white'} src={arrow_right_white}/>
-                        </Button>
+                        {
+                            timesIndex !== 0 ? <div>
+                                <Button className={'Next_btn_small'} style={{backgroundColor: '#ffffff10',border: '1px solid #774D9D10'}} disabled={startDate == dayjs()}
+                                        onClick={() => handleChangeTime(-8)}>
+                                    <img style={{transform: 'rotateY(180deg)'}} alt={'arrow_right_white'}
+                                         src={arrow_right_white}/>
+                                </Button>
+                                <Button style={{backgroundColor: '#ffffff10',border: '1px solid #774D9D10'}} disabled={timesIndex + timeCount >= availableTimes.length} className={'Next_btn_small'} onClick={() => handleChangeTime(8)}>
+                                    <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                </Button>
+                            </div> : <Button  className={'next_btn_time'} style={{marginTop: 0}} onClick={() => handleChangeTime(8)}>
+                                <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                            </Button>
+                        }
+
 
                     </div>
                 </div>
