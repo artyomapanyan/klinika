@@ -137,7 +137,7 @@ function BookAnAppointment({ data }) {
 	const collapseChange = (key) => {
 		//console.log(key)
 		let endKey = key.splice(key?.length - 2, key?.length - 1)
-		console.log(endKey.toString())
+
 		setDoctorKey(endKey.toString())
 	}
 
@@ -240,7 +240,7 @@ function BookAnAppointment({ data }) {
 									{/*})}*/}
 
 									<Collapse  destroyInactivePanel={true}  items={item} onChange={collapseChange} expandIcon={()=>''} bordered={false}
-											  // activeKey={doctorKey}
+											  //activeKey={doctorKey}
 											   //collapsible={a.includes('disabled') ? '' : 'disabled'}
 
 											   ghost={true}
@@ -280,7 +280,7 @@ function BookAnAppointment({ data }) {
 							<Button onClick={onShowCalendar} className={'all_offers_book_btns'} disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true} type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
 						</div>
 						<div style={{marginTop: 10}}>
-							<Button onClick={onCancel} className={'all_offers_book_btns'} type={'secondary'} style={{width: '100%', border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}>{t('Cancel')}</Button>
+							<Button disabled={!show} onClick={onCancel} className={'all_offers_book_btns'} type={'secondary'} style={{width: '100%', border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}>{t('Cancel')}</Button>
 						</div>
 					</div> : <div></div>
 				}
