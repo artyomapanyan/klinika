@@ -156,8 +156,7 @@ function AllOfferCalendar({
 
             setDaysData(prevState => prevState.map(e => {
                 let data = responses.find(u => e.key == u.key);
-
-                if (data) {
+                if (data?.key) {
                     e.disabled = !data.hasDays
                     e.called = true
                 }
@@ -168,7 +167,6 @@ function AllOfferCalendar({
 
     }, [dataState?.doctor_id, startDate])
 
-console.log(daysData, '1')
 
 
     useEffect(() => {
@@ -224,7 +222,7 @@ console.log(daysData, '1')
 
                         {[...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
-                            console.log(e,daysData, 'e2')
+                            //console.log(e,daysData, 'e2')
                             return <Button key={key}
                                            loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}
