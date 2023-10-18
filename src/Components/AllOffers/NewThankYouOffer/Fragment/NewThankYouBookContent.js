@@ -57,7 +57,7 @@ function NewThankYouBookContent() {
 
 
     const ogOffer = () => {
-        navigate(-1)
+        navigate('/offers')
     }
 
 

@@ -45,7 +45,7 @@ function OffersPrices({
 	}
 
 	const changeInputSearch = e => {
-		if (e?.target?.value?.length >= 3) {
+		if (e?.target?.value?.length >= 1) {
 			setTimeout(() => {
 				setParams({
 					...params,

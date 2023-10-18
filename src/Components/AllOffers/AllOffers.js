@@ -24,16 +24,28 @@ function  AllOffers() {
 	let lngs = useSelector(state => state?.app?.current_locale)
 	const currentUrl = window.location.href
 	const [dataLength, setDataLength] = useState(9)
-	let [searchParams, setSearchParams] = useSearchParams()
+	let [searchParams, setSearchParams] = useSearchParams({})
 	const [params, setParams] = useState({
 		order_by: 'new_price',
 		page: 1,
 		per_page: 15,
-		...paramsToObject(searchParams.entries())
+		//...paramsToObject(searchParams.entries())
 	})
 
 	const [resetState, setResetState] = useState(false)
 	const [open, setOpen] = useState(false)
+
+
+
+	useEffect(() => {
+		//setSearchParams({})
+		// setParams({
+		// 	order_by: 'new_price',
+		// 	page: 1,
+		// 	per_page: 15
+		// })
+
+	}, [])
 
 	const { loadingState, dataState, addData } = useGetResourceIndex(
 		'PublicOffer',
@@ -136,6 +148,8 @@ function  AllOffers() {
 		}
 
 	}
+
+
 
 
 
