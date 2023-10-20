@@ -48,7 +48,7 @@ function AppPaymentMethods({
 
 					<div>
 						<Space>
-							<h2 className={'appointment_title'}>Select payment method</h2>
+							<h2 className={'appointment_title'}>{('Select payment method')}</h2>
 						</Space>
 						{data?.clinic?.payment_methods.map((item, key) => {
 							return <div key={key} className={'payment_section'}>

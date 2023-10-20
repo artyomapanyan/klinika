@@ -239,10 +239,10 @@ function BookAnAppointment({ data }) {
 									{/*	)*/}
 									{/*})}*/}
 
-									<Collapse  destroyInactivePanel={true}  items={item} onChange={collapseChange} expandIcon={()=>''} bordered={false}
-											  //activeKey={doctorKey}
-											   //collapsible={a.includes('disabled') ? '' : 'disabled'}
-
+									<Collapse  destroyInactivePanel={true}
+											   items={item}
+											   onChange={collapseChange} expandIcon={()=>''}
+											   bordered={false}
 											   ghost={true}
 									>
 									</Collapse >
@@ -342,17 +342,7 @@ function BookAnAppointment({ data }) {
 									type={'primary'}
 									className={'all_offers_book_btns'}
 									style={{ marginTop: '20px'}}
-									// disabled={
-									// 	namesState?.first &&
-									// 	namesState?.last &&
-									// 	namesState?.email &&
-									// 	dataState?.doctor_id &&
-									// 	dataState?.date &&
-									// 	dataState?.time &&
-									// 	dataState?.payment_method_id
-									// 		? false
-									// 		: true
-									// }
+
 									htmlType={'submit'}
 								>
 									{t('Book_now')}

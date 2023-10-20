@@ -62,8 +62,14 @@
       opacity: 0.99
       background-color: #FFFFFF
       width: 100%
-      padding: 14px 16px
+      padding: 14px 0px 16px 0px
       box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
+    .ant-select-selector
+      border: none
+    .tree_seleqt_title_name
+      display: none
+    .select_title_length
+      display: none
 
 
 
@@ -80,9 +86,12 @@
   align-items: center
 
 .tab_div_mobile_filter_drp
-  margin-right: 2px
+  //margin-right: 2px
+  margin-top: 10px
   .tab_div_mobile_filter_text
     margin: 0 8px
+    font-size: 14px
+    color: #97929E
 
 .all_offers_drawer
   .ant-drawer-body
@@ -152,7 +161,7 @@
   width: 100%
   display: flex
   flex-direction: row
-  justify-content: space-around
+  justify-content: space-between
 .ant-dropdown-menu
   max-height: 300px
   overflow: auto
@@ -163,10 +172,10 @@
   align-items: center
   margin-top: 28px
   width: 100%
-  .price_text_mobile
-    background-color: #F5F5F8
-    padding: 8px 20px
-    border-radius: 12px
+.price_text_mobile
+  background-color: #F5F5F8
+  padding: 8px 20px
+  border-radius: 12px
 .price
   display: flex
   flex-direction: row
@@ -1364,6 +1373,61 @@ hr
 
   .ant-select-suffix
     color: #FFFFFF
+  .select_title_length
+    display: none
+
+
+.ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode
+  //color: #7c4d98 !important
+  padding: 8px
+
+
+.ant-select-tree-title
+  //color: #984d67 !important
+.ant-select-tree-indent-unit
+  width: 0px !important
+
+.ASDF
+  color: #774D9D
+  font-weight: 700
+  font-size: 18px
+  font-family: Roboto
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+    //color: #FFFFFF
+
+.selected_ASDF
+  color: #ffffff
+  font-weight: 700
+  font-size: 18px
+  font-family: Roboto
+  background-color: #774D9D
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+    color: #774D9D
+
+
+.ASDF_children
+  font-weight: 400
+  font-size: 18px
+  font-family: Roboto
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+//color: #FFFFFF
+
+.selected_ASDF_children
+  color: #ffffff
+  font-weight: 700
+  font-size: 18px
+  font-family: Roboto
+  background-color: #774D9D
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+    color: #774D9D
 
 
 
@@ -1371,6 +1435,14 @@ hr
     order: 0 !important
 :where(.css-dev-only-do-not-override-bf62cc).ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher
     order: 1 !important
+
+:where(.css-dev-only-do-not-override-bf62cc).ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected
+  background-color: #F8F2FE00 !important
+:where(.css-dev-only-do-not-override-bf62cc).ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover
+  background-color: #F8F2FE00 !important
+
+.ant-tree-select-dropdown
+  padding: 0 !important
 
 .collepse_offer_calendar
   .ant-collapse-header

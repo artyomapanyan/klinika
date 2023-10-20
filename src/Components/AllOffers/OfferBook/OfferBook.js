@@ -1,5 +1,5 @@
 import React from 'react'
-import off_head from '../../../dist/Img/off_head.png'
+
 import OffersFooter from '../Fragments/OffersFooter'
 import OfferBookContent from './Fragment/OfferBookContent'
 import { useParams } from 'react-router'
