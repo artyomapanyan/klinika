@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
-import {changeLanguage} from "i18next";
+import {changeLanguage, t} from "i18next";
 import logo from "../../../dist/Img/logo_klinika.png";
 import {Button, Dropdown, Space} from "antd";
 import {ArrowLeftOutlined, DownOutlined} from "@ant-design/icons";
@@ -17,7 +17,7 @@ function AllOffersHeader({headerState}) {
             key: 'en',
         },
         {
-            label: 'Arabic',
+            label: t('Arabic'),
             key: 'ar',
         },
 
@@ -49,7 +49,7 @@ function AllOffersHeader({headerState}) {
                     style={{color: 'white'}}
                 >
                     <Space style={{color: headerState ? "#ce4e99" : 'white', fontWeight: 700}}>
-                        {lngs === "ar" ? "Arabic" : "English"}
+                        {lngs === "ar" ? `${t("Arabic")}` : "English"}
                         <DownOutlined />
                     </Space>
 

@@ -87,7 +87,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                             {data?.clinic?.location?.address1?.en && (
                                 <>
                                     <div>
-                                        <span className={'clinic_location_name'}>Location</span>
+                                        <span className={'clinic_location_name'}>{t('Location')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
                                                 {data?.clinic?.location?.address1?.en}
@@ -102,7 +102,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                                 <>
                                     <hr />
                                     <div>
-                                        <span className={'clinic_location_name'}>Website</span>
+                                        <span className={'clinic_location_name'}>{t('Website')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
                                                 {data?.clinic?.website}
@@ -120,7 +120,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                                 <>
                                     <hr />
                                     <div>
-                                        <span className={'clinic_location_name'}>Phone</span>
+                                        <span className={'clinic_location_name'}>{t('Phone')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
                                                 {data?.clinic?.phone_number}

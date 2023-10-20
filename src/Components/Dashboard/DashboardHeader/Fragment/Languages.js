@@ -1,7 +1,7 @@
 import {Dropdown, Space} from "antd";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {changeLanguage} from "i18next";
+import {changeLanguage, t} from "i18next";
 import Eglend from "../../../../dist/Img/Eglend.png";
 import Arabia from "../../../../dist/Img/Arabia.png";
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
@@ -29,7 +29,7 @@ function Languages() {
             key: 'en',
         },
         {
-            label: [<img key={Math.random()} src={Arabia} alt={'Arabia'} style={{width:22}}/>,"  ", "Arabic"],
+            label: [<img key={Math.random()} src={Arabia} alt={'Arabia'} style={{width:22}}/>,"  ", `${t("Arabic")}`],
             key: 'ar',
         },
 

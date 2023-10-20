@@ -6,6 +6,7 @@ import {useGetResourceIndex} from "../../../Functions/api_calls";
 import {paramsToObject} from "../../../../functions";
 
 import img_thank_you from '../../../../dist/Img/thank_you.png'
+import {t} from "i18next";
 
 function ThankYouOffer() {
 	const currentUrl = window.location.href;
@@ -35,12 +36,11 @@ function ThankYouOffer() {
 				alt={'img_thank_you'}
 				className={'thank_image'}
 			/>
-			<p className={'thank_offer_title'}>You book an offer!</p>
+			<p className={'thank_offer_title'}>{t('You book an offer!')}</p>
 			<p className={'thank_offer_description'}>
-				A brief instruction on what to do next, that the manager will contact
-				him and remind him about the reception.
+				{t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception.')}
 			</p>
-			<button className={'button_style_cancel'}>Close</button>
+			<button className={'button_style_cancel'}>{t('Close')}</button>
 		</div>
 	)
 }

@@ -99,7 +99,7 @@ function AppTime({ setDataState, dataState, data, setDataTimes }) {
 							<Loader small={25} />
 						) : times ? (
 							<>
-									<div><h2 className={'calendar_title'}>Select Time</h2></div>
+									<div><h2 className={'calendar_title'}>{t('Select Time')}</h2></div>
 									<Slider {...settings}>
 								{times?.map((time, key) => {
 									

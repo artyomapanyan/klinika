@@ -1,4 +1,4 @@
-import {changeLanguage} from "i18next";
+import {changeLanguage, t} from "i18next";
 import {Button, Dropdown, Space} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {ArrowLeftOutlined, DownOutlined} from "@ant-design/icons";
@@ -17,7 +17,7 @@ function AuthHeader({headerState}) {
             key: 'en',
         },
         {
-            label: 'Arabic',
+            label: t('Arabic'),
             key: 'ar',
         },
 
@@ -48,7 +48,7 @@ function AuthHeader({headerState}) {
                     style={{color: 'white'}}
                 >
                     <Space style={{color: headerState ? "#ce4e99" : 'white', fontWeight: 700}}>
-                        {lngs === "ar" ? "Arabic" : "English"}
+                        {lngs === "ar" ? `${t("Arabic")}` : "English"}
                         <DownOutlined />
                     </Space>
 

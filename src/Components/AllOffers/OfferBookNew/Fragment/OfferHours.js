@@ -25,7 +25,7 @@ function OfferHours({ data }) {
 			<div>
 				<p className={'offer_hours_p'}>
 					{
-						dayjs(endDate) < dayjs() ? 'expired' : `${days} ${t('days')} ${hours} ${t('hours left')}`
+						dayjs(endDate) < dayjs() ? `${t('expired')}` : `${days} ${t('days')} ${hours} ${t('hours')} ${t('left')}`
 					}
 
 				</p>
