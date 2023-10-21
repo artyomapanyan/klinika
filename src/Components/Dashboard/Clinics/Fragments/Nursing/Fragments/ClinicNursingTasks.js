@@ -102,7 +102,7 @@ function LabPackagesTable() {
                         }
                     ]}
                 />}
-                <NursingModal isModalOpen={isModalOpen} onCreate={onCreate}  handleClose={showModal} nursingState={nursingState} loading={loading} />
+                <NursingModal isModalOpen={isModalOpen} onCreate={onCreate} clinicId={params?.id}  handleClose={showModal} nursingState={nursingState} loading={loading} />
             </div>
         </div>
     )

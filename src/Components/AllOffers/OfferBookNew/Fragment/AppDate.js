@@ -278,7 +278,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 							}}
 						>
 							<div>
-							<h2 className={'calendar_title'}>Pick Date</h2>
+							<h2 className={'calendar_title'}>{t('Pick Date')}</h2>
 							</div>
 							
                              <div style={{display:'flex'}}>

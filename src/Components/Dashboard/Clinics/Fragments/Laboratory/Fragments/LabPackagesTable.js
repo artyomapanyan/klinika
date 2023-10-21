@@ -101,7 +101,7 @@ function LabPackagesTable() {
                         }
                     ]}
                 />}
-                <LabPackageModal isModalOpen={isModalOpen} onCreate={onCreate}  handleClose={showModal} labPackagesState={labPackagesState} loading={loading} />
+                <LabPackageModal isModalOpen={isModalOpen} onCreate={onCreate} clinicId={params.id} handleClose={showModal} labPackagesState={labPackagesState} loading={loading} />
             </div>
         </div>
     )

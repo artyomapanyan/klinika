@@ -4,7 +4,7 @@ import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
 
 
-function LabPackageModal({isModalOpen,onCreate,labPackagesState, loading,handleClose}) {
+function LabPackageModal({isModalOpen,onCreate,labPackagesState, clinicId, loading,handleClose}) {
     const formRef = useRef();
 
     const handleOk =()=>{
@@ -29,7 +29,10 @@ function LabPackageModal({isModalOpen,onCreate,labPackagesState, loading,handleC
                                        inputType={'resourceSelect'}
                                        initialValue={isModalOpen?.lab_package?.id}
                                        initialData={isModalOpen.lab_package?[isModalOpen?.lab_package]:[]}
-                                       resourceData={labPackagesState}
+                                       //resourceData={labPackagesState}
+                                       resourceParams={{
+                                           doesnt_have_clinic: clinicId
+                                       }}
                                        resource={'LabPackage'}/>
 
                             <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')}

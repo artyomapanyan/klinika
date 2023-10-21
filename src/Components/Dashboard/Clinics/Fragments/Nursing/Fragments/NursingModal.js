@@ -4,7 +4,7 @@ import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
 
 
-function NursingModal({isModalOpen,onCreate,nursingState, loading,handleClose}) {
+function NursingModal({isModalOpen,onCreate,nursingState, clinicId, loading,handleClose}) {
     const formRef = useRef();
 
     const handleOk =()=>{
@@ -29,7 +29,10 @@ function NursingModal({isModalOpen,onCreate,nursingState, loading,handleClose}) 
                                    inputType={'resourceSelect'}
                                    initialValue={isModalOpen?.nursing_task?.id}
                                    initialData={isModalOpen.nursing_task?[isModalOpen?.nursing_task]:[]}
-                                   resourceData={nursingState}
+                                   //resourceData={nursingState}
+                                   resourceParams={{
+                                       doesnt_have_clinic: clinicId
+                                   }}
                                    resource={'NursingTask'}/>
 
                         <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')}
