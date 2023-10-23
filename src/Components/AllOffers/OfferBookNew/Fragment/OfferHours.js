@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 function OfferHours({ data }) {
 
 
-	const startDate = new Date(data.begins_at.iso_string)
-	const endDate = new Date(data.expired_at.iso_string)
+	const startDate = dayjs(data.begins_at.iso_string)
+	const endDate = dayjs(data.expired_at.iso_string).add(1, 'day')
 	const totalSeconds = (endDate - new Date()) / 1000
 	const days = Math.floor(totalSeconds / 3600 / 24)
 	const hours = Math.floor(totalSeconds / 3600) % 24
