@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, Dropdown, Input, Row, Slider, Space} from "antd";
 import {t} from "i18next";
 import low_to_high_icon from "../../../dist/icons/low_to_high_icon.png";
@@ -16,13 +16,38 @@ function OffersTopPrice({
                       }) {
     let redux = useSelector(state => state)
     const [lowHighState, setLowHighState] = useState(false)
+    const [items, setItems] = useState([])
 
-    const items = clinics?.map(el => {
-        return {
-            key: el?.id,
-            label: el?.name
-        }
-    })
+
+
+    useEffect(() =>{
+
+            if(clinics) {
+                let it = [
+                    {
+                        key: '',
+                        label: 'All Clinics'
+                    },
+                    ...clinics?.map(el => {
+                        return {
+                            key: el?.id,
+                            label: el?.name
+                        }
+
+                    })
+
+                ]
+                setItems(it)
+
+            }
+
+
+    }, [clinics])
+
+
+
+
+
 
     const onClick = ({ key }) => {
         setParams({
