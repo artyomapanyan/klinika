@@ -325,12 +325,52 @@ function  AllOffers() {
 								<AllOffersMobileHeader />
 							</div>
 							<div style={{display: 'flex', gap: 10, flexDirection: 'row', alignItem: 'center'}}>
-								<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>
-									<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />
-									<span className={'tab_div_mobile_filter_text'}>
+								{/*<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>*/}
+								{/*	<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />*/}
+								{/*	<span className={'tab_div_mobile_filter_text'}>*/}
+								{/*	{t('Filter')}*/}
+								{/*</span>*/}
+								{/*</div>*/}
+
+								<Dropdown
+									dropdownRender={()=>{
+										return <div
+											// title=''
+											// placement='top'
+											// onClose={onClose}
+											// open={open}
+											// closeIcon={false}
+											 className={'all_offers_drawer'}
+											 style={{background: '#ffffff', width: '100%', marginTop: 10, boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.12)'}}
+
+											// height={414}
+										>
+											<OfferPriceMobile
+												setOpen={setOpen}
+												currentUrl={currentUrl}
+												clinics={addData?.PublicClinic?.items}
+												resetState={resetState}
+												setResetState={setResetState}
+												setParams={setParams}
+												params={params}
+												data={data?.items}
+												onApply={onApply}
+											/>
+										</div>
+									}}
+									trigger={['click']}
+									overlayStyle={{width: '100%'}}
+									placement={'bottom'}
+								>
+									<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>
+										<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />
+										<span className={'tab_div_mobile_filter_text'}>
 									{t('Filter')}
 								</span>
-								</div>
+									</div>
+								</Dropdown>
+
+
 								<TreeSelect
 
 									style={{
@@ -364,27 +404,27 @@ function  AllOffers() {
 
 						</div>
 
-						<Drawer
-							title=''
-							placement='top'
-							onClose={onClose}
-							open={open}
-							closeIcon={false}
-							className={'all_offers_drawer'}
-							height={414}
-						>
-							<OfferPriceMobile
-								setOpen={setOpen}
-								currentUrl={currentUrl}
-								clinics={addData?.PublicClinic?.items}
-								resetState={resetState}
-								setResetState={setResetState}
-								setParams={setParams}
-								params={params}
-								data={data?.items}
-								onApply={onApply}
-							/>
-						</Drawer>
+						{/*<Drawer*/}
+						{/*	title=''*/}
+						{/*	placement='top'*/}
+						{/*	onClose={onClose}*/}
+						{/*	open={open}*/}
+						{/*	closeIcon={false}*/}
+						{/*	className={'all_offers_drawer'}*/}
+						{/*	height={414}*/}
+						{/*>*/}
+						{/*	<OfferPriceMobile*/}
+						{/*		setOpen={setOpen}*/}
+						{/*		currentUrl={currentUrl}*/}
+						{/*		clinics={addData?.PublicClinic?.items}*/}
+						{/*		resetState={resetState}*/}
+						{/*		setResetState={setResetState}*/}
+						{/*		setParams={setParams}*/}
+						{/*		params={params}*/}
+						{/*		data={data?.items}*/}
+						{/*		onApply={onApply}*/}
+						{/*	/>*/}
+						{/*</Drawer>*/}
 
 						<div className={'big_div_cards'}>
 							{loading ? (
