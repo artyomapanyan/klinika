@@ -18,9 +18,9 @@ function OfferBook() {
 	const { loading, setLoading } = loadingState
 	return (
 		<div>
-			<div className={'bac_div'}>
-				<img src={off_head} alt={'off_head'} style={{ width: '100%' }} />
-			</div>
+			{/*<div className={'bac_div'}>*/}
+			{/*	<img src={off_head} alt={'off_head'} style={{ width: '100%' }} />*/}
+			{/*</div>*/}
 
 			<div className={'offer_logo_div'}>
 				<AllOffersHeader headerState={true} />

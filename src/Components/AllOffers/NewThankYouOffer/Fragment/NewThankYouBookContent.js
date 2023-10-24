@@ -118,9 +118,9 @@ function NewThankYouBookContent() {
                                     {/*<BookAnAppointmentNew data={data} />*/}
                                     <div align={'center'} style={{padding: 24}}>
                                         <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
-                                        <div className={'thank_you_bold_text'}>{t('You book an offer!')}</div>
+                                        <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
                                         <div className={'thank_you_smoll_text'}>
-                                            {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception.')}
+                                            {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.
                                         </div>
                                         <div style={{marginTop: 10}}>
                                             <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
