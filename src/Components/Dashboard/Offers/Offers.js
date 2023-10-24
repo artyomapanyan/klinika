@@ -60,9 +60,9 @@ function Offers() {
                                    render:(e, record)=>{
                                        return <div>
                                            <div style={{width: 60,position:"absolute", borderBottom: '1px solid #635D6B', height:11}}></div>
-                                           <div style={{color:'#635D6B'}}>{record?.old_price} <span style={{fontSize:10}}>SAR</span></div>
+                                           <div style={{color:'#635D6B'}}>{record?.old_price} <span style={{fontSize:10}}>{t('SAR')}</span></div>
 
-                                           <div style={{fontWeight:700}}>{record?.new_price}<span style={{fontSize:10}}>SAR</span></div>
+                                           <div style={{fontWeight:700}}>{record?.new_price}<span style={{fontSize:10}}>{t('SAR')}</span></div>
                                        </div>
                                    }
                                },

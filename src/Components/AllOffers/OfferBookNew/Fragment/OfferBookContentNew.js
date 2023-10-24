@@ -85,6 +85,8 @@ function OfferBookContent() {
 									className={'offer_card_image_new'}
 								/>
 
+						<h2 className={'offer_book_title1'}>{data?.title}</h2>
+
 
 						<div className={'offer_details_new'}>
 							<OfferBookDetailsNew data={data} showDrawer={showDrawer} />

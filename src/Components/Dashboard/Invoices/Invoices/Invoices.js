@@ -142,7 +142,7 @@ function Invoices() {
                                        title:t('Price'),
                                        key:'total_price',
                                        render:(e, record) => {
-                                           return <div>{record?.total_price} SAR</div>
+                                           return <div>{record?.total_price} {t('SAR')}</div>
                                        }
                                    },
                                    {

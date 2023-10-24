@@ -38,6 +38,8 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
         setOpen(false)
     }
 
+
+
     const changeInputSearch = (e) => {
         if(e?.target?.value?.length >= 3) {
             setTimeout(() => {
@@ -101,7 +103,7 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
                                 {t('Price from')}
                             </div>
                             <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
-                                {params?.min_price ?? 0} SAR
+                                {params?.min_price ?? 0} {t('SAR')}
                             </div>
                         </div>
 
@@ -113,7 +115,7 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
                                 {t('Price to')}
                             </div>
                             <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
-                                {params?.max_price ?? 5000} SAR
+                                {params?.max_price ?? 5000} {t('SAR')}
                             </div>
 
                         </div>

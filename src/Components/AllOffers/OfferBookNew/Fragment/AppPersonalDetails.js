@@ -24,8 +24,8 @@ function AppPersonalDetails({
 	let token = useSelector(state => state.auth.token)
 	let formRef = useRef()
 	let refObj = formRef?.current?.getFieldValue()
+	let language = useSelector((state) => state.app.current_locale)
 	const [phoneLoading, setPhoneLoading] = useState(false)
-	//const [verifyState, setVerifyState] = useState(0)
 	const [codeAndNumber, setCodeAndNumber] = useState()
 	const [verifyResponse, setVerifyResponse] = useState()
 	const [codeAndNumberState, setCodeAndNumberState] = useState({})
@@ -264,7 +264,7 @@ function AppPersonalDetails({
 											<div>
 												<div>
 													<Input
-														value={`+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
+														value={language === 'en' ? `+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}` : `${codeAndNumber?.phone_number} ${codeAndNumber?.phone_country_code}+`}
 														style={{
 															marginTop: 7,
 															height: 46,

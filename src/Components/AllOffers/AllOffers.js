@@ -39,6 +39,8 @@ function  AllOffers() {
 	const [resetState, setResetState] = useState(false)
 	const [open, setOpen] = useState(false)
 
+	const [items, setItems] = useState([])
+
 
 
 
@@ -97,55 +99,67 @@ function  AllOffers() {
 		})
 	}
 
-	const showDrawer = () => {
-		setOpen(true)
-	}
-	const onClose = () => {
-		setOpen(false)
-	}
+
 
 	const onApply = () => {
 		setOpen(false)
 	}
 
 
+	useEffect(() =>{
 
+		if(addData?.PublicCategory) {
+			let tree = [
+				{
+					className: 'ASDF',
+					value: ' ',
+					title: 'All Clinics'
+				},
+				...addData?.PublicCategory?.items.map((el) => {
+					return {
+						className: treeValue == el?.id ? 'selected_ASDF' : 'ASDF',
+						title: <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
+							<span className={'tree_seleqt_title_name'}>{el?.name}</span>
+							<span className={'select_title_length'}
+								  style={{ padding: '0 5px',
+									  fontSize: 12,
+									  color: '#000000',
+									  fontWeight: 400,
+									  background: '#F5F6FA',
+									  borderRadius: 4,
+									  marginTop: 3,
+									  marginRight: 8,
+									  marginLeft: 8
 
-
-
-	let treeSelectData = addData?.PublicCategory?.items.map((el) => {
-		return {
-			className: treeValue == el?.id ? 'selected_ASDF' : 'ASDF',
-			title: <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
-						<span className={'tree_seleqt_title_name'}>{el?.name}</span>
-						<span className={'select_title_length'}
-							  style={{ padding: '0 5px',
-										fontSize: 12,
-										color: '#000000',
-										fontWeight: 400,
-										background: '#F5F6FA',
-								  		borderRadius: 4,
-								  		marginTop: 3,
-								  		marginRight: 8,
-								  		marginLeft: 8
-
-						}}
-						>
+								  }}
+							>
 							{el?.sub_categories.length}
 						</span>
-			       </div>,
-			value: el?.id,
-			icon: <DownOutlined />,
-			children: el?.sub_categories?.map((e) => {
-				return {
-					style: { borderBottom: e[e?.length] = '2px solid #774D9D'},
-					className: treeValue == e?.id + '-' + e.id ? 'selected_ASDF_children' : 'ASDF_children',
-					title: <span className={'tree_seleqt_title_name'}>{e?.name}</span>,
-					value: el.id + '-' + e.id,
-				}
-			})
+						</div>,
+						value: el?.id,
+						icon: <DownOutlined />,
+						children: el?.sub_categories?.map((e) => {
+							return {
+								style: { borderBottom: e[e?.length] = '2px solid #774D9D'},
+								className: treeValue == e?.id + '-' + e.id ? 'selected_ASDF_children' : 'ASDF_children',
+								title: <span className={'tree_seleqt_title_name'}>{e?.name}</span>,
+								value: el.id + '-' + e.id,
+							}
+						})
+					}
+				})
+
+			]
+			setItems(tree)
+
 		}
-	});
+
+
+	}, [addData?.PublicCategory])
+
+
+
+
 
 	const onChangeaaa = (val) => {
 
@@ -225,7 +239,7 @@ function  AllOffers() {
 											//overflow: 'auto',
 											minWidth: 300,
 										}}
-										treeData={treeSelectData}
+										treeData={items}
 										placeholder={t("Select Categories")}
 										placement={'bottomLeft'}
 										onChange={onChangeaaa}
@@ -362,7 +376,7 @@ function  AllOffers() {
 									overlayStyle={{width: '100%'}}
 									placement={'bottom'}
 								>
-									<div className={'tab_div_mobile_filter_drp'} onClick={showDrawer}>
+									<div className={'tab_div_mobile_filter_drp'} >
 										<img src={mobile_filter_icon} alt={'mobile_filter_icon'} />
 										<span className={'tab_div_mobile_filter_text'}>
 									{t('Filter')}
@@ -389,7 +403,7 @@ function  AllOffers() {
 										marginRight: -30,
 										borderRadius: 0
 									}}
-									treeData={treeSelectData}
+									treeData={items}
 									placeholder={<StepForwardOutlined />}
 									placement={'bottomLeft'}
 									onChange={onChangeaaa}

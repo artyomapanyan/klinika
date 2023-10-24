@@ -176,6 +176,8 @@
   background-color: #F5F5F8
   padding: 8px 20px
   border-radius: 12px
+
+
 .price
   display: flex
   flex-direction: row
@@ -474,6 +476,7 @@
   @media screen and (max-width: 1000px)
     width: 100%
 
+
 .personal_details_number_div
   width: 100%
   margin: 0 10px
@@ -682,7 +685,7 @@
     
 .offer_section
   width: 360px 
-  margin-top: 20px 
+  //margin-top: 20px
   padding: 10px
   @media screen and (max-width: 800px)
     width: 100%
@@ -705,8 +708,17 @@
   font-weight: 700
   font-size: 28px
   @media screen and (max-width: 600px)
+
+    display: none
+
+.offer_book_title1
+  display: none
+  @media screen and (max-width: 600px)
     font-size: 20px
     width: 100%
+    margin: 10px 10px 0 10px
+    display: block
+
 
 .offer_book_desc
   font-weight: 400
@@ -804,6 +816,7 @@ hr
   width: 80%
 
 .offer_price_div
+  margin-top: 20px
   display: flex
   flex-direction: column
  
@@ -1349,6 +1362,7 @@ hr
 .all_offer_code
   .input-placeholder .ant-form-item-label > label
     top: 1px
+    margin-right: 25px
 
 
 .all_offers_book_btns
@@ -1471,3 +1485,5 @@ hr
   display: none
   @media screen and (max-width: 800px)
     display: block
+
+

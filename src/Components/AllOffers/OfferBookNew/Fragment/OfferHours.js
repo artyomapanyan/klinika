@@ -2,9 +2,10 @@ import React from 'react'
 import { Progress } from 'antd'
 import {t} from "i18next";
 import dayjs from "dayjs";
+import {useSelector} from "react-redux";
 
 function OfferHours({ data }) {
-
+	let language = useSelector((state) => state.app.current_locale)
 
 	const startDate = dayjs(data.begins_at.iso_string)
 	const endDate = dayjs(data.expired_at.iso_string).add(1, 'day')
@@ -25,7 +26,7 @@ function OfferHours({ data }) {
 			<div>
 				<p className={'offer_hours_p'}>
 					{
-						dayjs(endDate) < dayjs() ? `${t('expired')}` : `${days} ${t('days')} ${hours} ${t('hours')} ${t('left')}`
+						dayjs(endDate) < dayjs() ? `${t('expired')}` : language === 'en' ? `${days} ${t('days')} ${hours} ${t('hours')} ${t('left')}` : `${t('left')} ${days} ${t('days')} ${hours} ${t('hours')}`
 					}
 
 				</p>

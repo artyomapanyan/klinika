@@ -34,7 +34,7 @@ function OfferBookDetails({ data, showDrawer }) {
 		setLengthState(300)
 	}
 
-	console.log(data.content)
+
 
 	return (
 		<div className={'offer_book_div'}>

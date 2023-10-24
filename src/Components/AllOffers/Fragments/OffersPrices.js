@@ -146,19 +146,19 @@ function OffersPrices({
 							{t('Price from')}
 						</div>
 						<div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
-							{params?.min_price ?? 0} SAR
+							{params?.min_price ?? 0} {t('SAR')}
 						</div>
 					</div>
 
 					<div className={'price_text'}>
-						<img src={Line_42} alt={'Line_42'}/>
+						<img src={Line_42} alt={'Line_42'} className={'arrow_img'} style={{transform: redux.app.current_locale === 'en' ? 'rotate(0)' : 'rotate(180deg)'}}/>
 					</div>
 					<div className={'price_text_mobile'}>
 						<div style={{fontSize: 12, color: '#635D6B'}}>
 							{t('Price to')}
 						</div>
 						<div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
-							{params?.max_price ?? 5000} SAR
+							{params?.max_price ?? 5000} {t('SAR')}
 						</div>
 
 					</div>
