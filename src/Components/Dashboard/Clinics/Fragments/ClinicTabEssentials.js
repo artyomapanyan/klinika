@@ -327,10 +327,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     const [changeValuesState, setChangeValuesState] = useState({})
     const [searchCeys, setSearchCeys] = useState('')
 
-
-
-
-
     const onFinish = (values) => {
 
 
