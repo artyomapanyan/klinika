@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 function OfferBookDetails({ data, showDrawer }) {
 	let lngs = useSelector(state => state?.app?.current_locale)
 	const [isMobile, setIsMobile] = useState(false)
+	const [lengthState, setLengthState] = useState(300)
 		//choose the screen size
 		const handleResize = () => {
 			if (window.innerWidth < 720) {
@@ -24,7 +25,17 @@ function OfferBookDetails({ data, showDrawer }) {
 		useEffect(() => {
 			window.addEventListener('resize', handleResize)
 		})
-	
+
+	const onLoadMore = () => {
+		setLengthState(data?.content?.length)
+	}
+
+	const onShowLess = () => {
+		setLengthState(300)
+	}
+
+	console.log(data.content)
+
 	return (
 		<div className={'offer_book_div'}>
 			<div className={'offer_desc'}>
@@ -32,8 +43,13 @@ function OfferBookDetails({ data, showDrawer }) {
 
 				<div
 					className={'offer_book_desc'}
-					dangerouslySetInnerHTML={{ __html: data?.content }}
+					dangerouslySetInnerHTML={{ __html: data?.content?.slice(0, lengthState) + `${lengthState < data?.content?.length ? '...' : ''}`}}
 				/>
+
+				{
+					data?.content?.length > 300 ? lengthState < data?.content?.length ? <div className={'read_more_less'} onClick={onLoadMore}>{t('Read more')}</div> : <div className={'read_more_less'} onClick={onShowLess}>{t('Show less')}</div> : <div></div>
+				}
+
 			</div>
 
 			{isMobile ? (
