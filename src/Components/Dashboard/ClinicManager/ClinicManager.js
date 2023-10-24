@@ -6,6 +6,7 @@ import ClinicManagerCalendar from "./Fragments/ClinicManagerCalendar/ClinicManag
 import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointmentsTable/ClinicManagerAppointmentsTable";
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
+import NursLabCalendar from "./NursingLaboratoryCalendar/NursLabCalendar";
 
 
 function ClinicManager() {
@@ -43,6 +44,9 @@ function ClinicManager() {
                 <div>
                     <ClinicManagerCalendar />
                 </div>
+                {/*<div>*/}
+                {/*    <NursLabCalendar />*/}
+                {/*</div>*/}
                 <div>
                     <ClinicManagerAppointmentsTable />
                 </div>
