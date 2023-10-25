@@ -27,7 +27,7 @@ function LaboratoryTestsTable() {
 
     },[isModalOpen])
     useEffect(()=>{
-        postResource('LabTest','list',token,null,{per_page:5000}).then(responses => {
+        postResource('LabTest','list',token,null,).then(responses => {
             labTestData.current = responses.items
         })
 
@@ -69,7 +69,7 @@ function LaboratoryTestsTable() {
                 <h1 className={'h1'}>{t(`Tests`)}</h1>
 
                 {loading ? <Preloader/> : <ResourceTable
-                    paginationResourceTable={false}
+                    //paginationResourceTable={false}
                     noHeader={true}
                     customTableButton={{
                         title:'Add New Test',

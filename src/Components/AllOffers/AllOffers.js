@@ -113,7 +113,7 @@ function  AllOffers() {
 				{
 					className: 'ASDF',
 					value: ' ',
-					title: 'All Clinics'
+					title: t('All Categories')
 				},
 				...addData?.PublicCategory?.items.map((el) => {
 					return {

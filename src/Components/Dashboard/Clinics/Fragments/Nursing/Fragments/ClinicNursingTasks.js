@@ -27,7 +27,7 @@ function LabPackagesTable() {
 
     },[isModalOpen])
     useEffect(()=>{
-        postResource('NursingTask','list',token,null,{per_page:5000}).then(responses => {
+        postResource('NursingTask','list',token,null,).then(responses => {
             nursingData.current = responses.items
         })
 
@@ -69,7 +69,7 @@ function LabPackagesTable() {
                 <h1 className={'h1'}>{t(`Nursing Tasks`)}</h1>
 
                 {loading ? <Preloader/> : <ResourceTable
-                    paginationResourceTable={false}
+                    //paginationResourceTable={false}
                     noHeader={true}
                     customTableButton={{
                         title:'Add New Nursing Task',
