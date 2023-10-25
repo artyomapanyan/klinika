@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
 
-import { Button, Form, Input, Space, notification } from 'antd'
+import {Button, Form, Input, Space, notification, ConfigProvider} from 'antd'
 import { postResource } from '../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import { t } from 'i18next'
@@ -263,18 +263,21 @@ function AppPersonalDetails({
 									<div>
 										<Form name={'verify_code'} onValuesChange={onChangeVerifyCode} onFinish={onVerifyCode}>
 											<div>
-												<div>
-													<Input
-														value={language === 'en' ? `+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}` : `${codeAndNumber?.phone_number} ${codeAndNumber?.phone_country_code}+`}
-														style={{
-															marginTop: 7,
-															height: 46,
-															borderRadius: 12,
-															background: '#F5F6FA',
-															border: 'none',
+												<div className={'input_RTL'}>
 
-														}}
-													/>
+														<Input
+															value={`+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
+															style={{
+																marginTop: 7,
+																height: 46,
+																borderRadius: 12,
+																background: '#F5F6FA',
+																border: 'none',
+
+															}}/>
+
+
+
 												</div>
 												<div
 													style={{

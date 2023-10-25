@@ -18,7 +18,7 @@ import {UserOutlined} from "@ant-design/icons";
 import gold_star from "../../../../dist/icons/gold_star.png";
 import Preloader from "../../../Preloader";
 
-function BookAnAppointment({data,}) {
+function BookAnAppointment({data, setOpen}) {
     let token = useSelector(state => state.auth.token)
     let params = useParams()
     let dispatch = useDispatch()
@@ -38,7 +38,6 @@ function BookAnAppointment({data,}) {
     const [doctorKey, setDoctorKey] = useState('')
     const [doctorId, setDoctorId] = useState('')
     const [a, seta] = useState(true)
-
 
 
 
@@ -327,12 +326,12 @@ function BookAnAppointment({data,}) {
                                     type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
                         </div>
                         <div style={{marginTop: 10}}>
-                            <Button className={'all_offers_book_btns'} type={'secondary'} style={{
+                            <Button onClick={()=>setOpen(false)} className={'all_offers_book_btns'} type={'secondary'} style={{
                                 width: '100%',
                                 border: 'none',
                                 backgroundColor: '#F5F6FA',
                                 color: '#000000'
-                            }}>{t('Cancel')}123</Button>
+                            }}>{t('Cancel')}</Button>
                         </div>
                     </div>
                 }

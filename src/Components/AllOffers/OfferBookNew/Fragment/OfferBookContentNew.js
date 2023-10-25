@@ -24,6 +24,8 @@ function OfferBookContent() {
 
 
 
+
+
 	const showDrawer = () => {
 		setOpen(true);
 	};
@@ -59,6 +61,8 @@ function OfferBookContent() {
 
 	const { loading } = loadingState
 	const { data, setData } = dataState
+
+
 
 	return (
 		<>
@@ -116,14 +120,13 @@ function OfferBookContent() {
 								</div>
 
 								<div className={'offer_appointment_sec'}>
-									<BookAnAppointmentNew data={data} />
+									<BookAnAppointmentNew data={data} setOpen={setOpen} />
 								</div>
 
 
 								<div>
 
 									<Drawer
-										destroyOnClose={true}
 										placement={'bottom'}
 										closable={false}
 										onClose={onClose}
@@ -132,8 +135,9 @@ function OfferBookContent() {
 										style={{borderRadius: '12px 12px 0 0'}}
 
 
+
 									>
-										<BookAnAppointmentNew data={data} />
+										<BookAnAppointmentNew data={data} setOpen={setOpen} />
 									</Drawer>
 								</div>
 
