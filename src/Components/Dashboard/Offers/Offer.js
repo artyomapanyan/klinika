@@ -23,7 +23,9 @@ function Offer() {
     const navigate = useNavigate();
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
-    const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
+    const {loadingState, dataState} = useGetResourceSingle(resource, params.id, {
+        ignore_timezone:'1'
+    })
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
@@ -35,7 +37,7 @@ function Offer() {
         setSaveLoading(true)
         values.expired_at = values?.expired_at?.format('YYYY-MM-DD')
         values.begins_at = values?.begins_at?.format('YYYY-MM-DD')
-        values.top === true ? values.top = true : values.top = false;
+        values.top =values.top === true ? true : false;
 
         setData((prevState)=>({
             ...prevState,
@@ -98,7 +100,7 @@ function Offer() {
 
     let req = <div><span style={{color: 'red'}}>*</span> <span>{t('content')}</span></div>
 
-
+console.log(data)
 
     return(
         <div >
@@ -144,7 +146,7 @@ function Offer() {
                                 // }
 
                             ]} />
-                            <FormInput label={t('Begins at')} name={'begins_at'}  initialValue={data?.begins_at} inputType={'date'} rules={[
+                            <FormInput label={t('Begins at')} name={'begins_at'}  initialValue={data?.begins_at?.date} inputType={'date'} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{
@@ -159,7 +161,7 @@ function Offer() {
                                 }
                             ]} />
 
-                            <FormInput label={t('Expired at')} name={'expired_at'} initialValue={data?.expired_at} inputType={'date'} rules={[
+                            <FormInput label={t('Expired at')} name={'expired_at'} initialValue={data?.expired_at?.date} inputType={'date'} rules={[
                                 {required: true},
                                 {
                                     validator:(rule,value)=>{

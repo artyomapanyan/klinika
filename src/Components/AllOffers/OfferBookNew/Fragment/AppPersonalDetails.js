@@ -238,6 +238,7 @@ function AppPersonalDetails({
 												maxLength={10}
 												rules={[{ required: true }]}
 											/>
+
 										</div>
 
 
@@ -391,45 +392,4 @@ function AppPersonalDetails({
 
 export default AppPersonalDetails
 
-/**
- * 
- * {shownames == true ? (
-								''
-							) : (
-								<>
-									{responseCodeState &&
-									typeof responseCodeState !== 'string' ? (
-										<div>
-											<Space style={{ width: '100%' }} direction={'vertical'}>
-												<Form ref={formRef} onValuesChange={handleNamesChange}>
-													<FormInput
-														inputDisabled={verifyResponse?.patient?.first}
-														label={t('First Name')}
-														name={'first'}
-														initialValue={verifyResponse?.patient?.first}
-														rules={[{ required: true }]}
-													/>
-													<FormInput
-														inputDisabled={verifyResponse?.patient?.last}
-														label={t('Last Name')}
-														name={'last'}
-														initialValue={verifyResponse?.patient?.last}
-														rules={[{ required: true }]}
-													/>
-													<FormInput
-														inputDisabled={verifyResponse?.patient?.email}
-														label={t('Email')}
-														name={'email'}
-														initialValue={verifyResponse?.patient?.email}
-														rules={[{ required: true }]}
-													/>
-												</Form>
-											</Space>
-										</div>
-									) : (
-										<div></div>
-									)}
-								</>
-							)}
- * 
- */
+

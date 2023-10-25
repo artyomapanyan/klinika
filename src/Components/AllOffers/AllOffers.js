@@ -347,6 +347,8 @@ function  AllOffers() {
 								{/*</div>*/}
 
 								<Dropdown
+									open={open}
+									onOpenChange={(e)=>setOpen(e)}
 									dropdownRender={()=>{
 										return <div
 											// title=''
@@ -367,11 +369,13 @@ function  AllOffers() {
 												setResetState={setResetState}
 												setParams={setParams}
 												params={params}
+
 												data={data?.items}
 												onApply={onApply}
 											/>
 										</div>
 									}}
+
 									trigger={['click']}
 									overlayStyle={{width: '100%'}}
 									placement={'bottom'}

@@ -138,12 +138,12 @@ export const useGetResourceSingle = (resource,id,additionals={},filterResponse =
             id?axios.request({
                 url:api[resource].single.url+id,
                 method:api[resource].single.method,
-                headers: headers
-
+                headers: headers,
+                params:additionals,
             }):{},
             ...dataResources.map(resourceKey=>axios.request({
-                url:api[resourceKey].list.url,
-                method:api[resourceKey].list.method,
+                url:id ? api[resource].single.url+id : api[resourceKey].list.url,
+                method:id ? api[resource].single.url+id :api[resourceKey].list.method,
                 params:additionals[resourceKey],
                 headers: {
                     'Authorization': token,
