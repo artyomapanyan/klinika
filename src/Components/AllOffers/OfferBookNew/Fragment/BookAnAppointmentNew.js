@@ -18,7 +18,7 @@ import {UserOutlined} from "@ant-design/icons";
 import gold_star from "../../../../dist/icons/gold_star.png";
 import Preloader from "../../../Preloader";
 
-function BookAnAppointment({data}) {
+function BookAnAppointment({data,}) {
     let token = useSelector(state => state.auth.token)
     let params = useParams()
     let dispatch = useDispatch()
@@ -38,6 +38,8 @@ function BookAnAppointment({data}) {
     const [doctorKey, setDoctorKey] = useState('')
     const [doctorId, setDoctorId] = useState('')
     const [a, seta] = useState(true)
+
+
 
 
     const onBooking = () => {
@@ -146,7 +148,6 @@ function BookAnAppointment({data}) {
 
     }
     const collapseChange = (key) => {
-        console.log('antd key=', key);
 
         let endKey = key.splice(key?.length - 2, key?.length - 1);
 
@@ -205,6 +206,7 @@ function BookAnAppointment({data}) {
             </div>,
         }
     });
+
 
 
     // 	[
@@ -317,6 +319,23 @@ function BookAnAppointment({data}) {
                         </div>
                     </>
                 )}
+                {
+                    dataState?.doctor_id ? <div></div> : <div>
+                        <div style={{marginTop: 10}}>
+                            <Button className={'all_offers_book_btns'}
+                                    disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true}
+                                    type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
+                        </div>
+                        <div style={{marginTop: 10}}>
+                            <Button className={'all_offers_book_btns'} type={'secondary'} style={{
+                                width: '100%',
+                                border: 'none',
+                                backgroundColor: '#F5F6FA',
+                                color: '#000000'
+                            }}>{t('Cancel')}123</Button>
+                        </div>
+                    </div>
+                }
                 {
                     dataState?.doctor_id ? show ? <div></div> : <div>
                         <div style={{marginTop: 10}}>

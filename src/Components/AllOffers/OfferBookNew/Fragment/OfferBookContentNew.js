@@ -22,6 +22,8 @@ function OfferBookContent() {
 	const navigate = useNavigate()
 	const [open, setOpen] = useState(false);
 
+
+
 	const showDrawer = () => {
 		setOpen(true);
 	};
@@ -51,11 +53,16 @@ function OfferBookContent() {
 		params.id
 	)
 
+
+
+
+
 	const { loading } = loadingState
 	const { data, setData } = dataState
 
 	return (
 		<>
+
 			<div
 				style={{
 					position: 'absolute',
@@ -116,7 +123,7 @@ function OfferBookContent() {
 								<div>
 
 									<Drawer
-
+										destroyOnClose={true}
 										placement={'bottom'}
 										closable={false}
 										onClose={onClose}

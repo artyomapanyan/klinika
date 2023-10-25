@@ -1362,7 +1362,15 @@ hr
 .all_offer_code
   .input-placeholder .ant-form-item-label > label
     top: 1px
-    margin-right: 25px
+    @media screen and (max-width: 500px)
+      top: 1px
+      margin-right: 29px
+
+.all_offer_phone_number
+  .flying-label > label
+    margin-right: 7px
+  @media screen and (max-width: 500px)
+    margin-right: 0px
 
 
 .all_offers_book_btns

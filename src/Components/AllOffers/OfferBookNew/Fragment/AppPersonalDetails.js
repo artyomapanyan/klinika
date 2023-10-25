@@ -231,7 +231,7 @@ function AppPersonalDetails({
 												resource={'PublicCountry'}
 											/>
 										</div>
-										<div style={{ width: '60%'}}>
+										<div style={{ width: '60%'}} className={'all_offer_phone_number'}>
 											<FormInput
 												label={t('Phone number')}
 												name={'phone_number'}
@@ -271,7 +271,8 @@ function AppPersonalDetails({
 															height: 46,
 															borderRadius: 12,
 															background: '#F5F6FA',
-															border: 'none'
+															border: 'none',
+
 														}}
 													/>
 												</div>
