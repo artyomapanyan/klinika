@@ -242,15 +242,14 @@ function AllOfferCalendar({
                         {
                             startDate.format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY') ?
                                 <Button className={'next_btn'} onClick={() => handleChangeDay(6,'day')}>
-                                    <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                    <img alt={'arrow_right_white'} src={arrow_right_white} style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
                                 </Button> : <div>
                                     <Button className={'Next_btn_small'} disabled={startDate == dayjs()}
                                             onClick={() => handleChangeDay(-6,'day')}>
-                                        <img style={{transform: 'rotateY(180deg)'}} alt={'arrow_right_white'}
-                                             src={arrow_right_white}/>
+                                        <img style={{transform: language === 'ar' ? 'rotateY(0deg)' : 'rotateY(180deg)'}} alt={'arrow_right_white'} src={arrow_right_white}/>
                                     </Button>
                                     <Button className={'Next_btn_small'} onClick={() => handleChangeDay(6,'day')}>
-                                        <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                        <img alt={'arrow_right_white'} src={arrow_right_white} style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
                                     </Button>
                                 </div>
                         }
@@ -293,14 +292,13 @@ function AllOfferCalendar({
                             timesIndex !== 0 ? <div>
                                 <Button className={'Next_btn_small'} style={{backgroundColor: '#ffffff10',border: '1px solid #774D9D10'}} disabled={startDate == dayjs()}
                                         onClick={() => handleChangeTime(-8)}>
-                                    <img style={{transform: 'rotateY(180deg)'}} alt={'arrow_right_white'}
-                                         src={arrow_right_white}/>
+                                    <img style={{transform: language === 'ar' ? 'rotateY(0deg)' : 'rotateY(180deg)'}} alt={'arrow_right_white'} src={arrow_right_white}/>
                                 </Button>
                                 <Button style={{backgroundColor: '#ffffff10',border: '1px solid #774D9D10'}} disabled={timesIndex + timeCount >= availableTimes.length} className={'Next_btn_small'} onClick={() => handleChangeTime(8)}>
-                                    <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                    <img alt={'arrow_right_white'} src={arrow_right_white} style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
                                 </Button>
                             </div> : <Button  className={'next_btn_time'} style={{marginTop: 0}} onClick={() => handleChangeTime(8)}>
-                                <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                <img alt={'arrow_right_white'} src={arrow_right_white} style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
                             </Button>
                         }
 
