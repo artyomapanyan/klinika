@@ -368,7 +368,16 @@ function AppPersonalDetails({
 												label={t('Email')}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
-												rules={[{ required: true }]}
+												rules={[{ required: true },
+													{
+													    validator:(rule,value)=>{
+													        if(!value.includes('@') || !value.includes('.')){
+													            return Promise.reject('enter valid email')
+													        }
+													        return Promise.resolve();
+													    }
+													}
+													]}
 											/>
 										</Form>
 										{/*<Button*/}

@@ -23,9 +23,8 @@ function Offer() {
     const navigate = useNavigate();
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
-    const {loadingState, dataState} = useGetResourceSingle(resource, params.id, {
-        ignore_timezone:'1'
-    })
+    const {loadingState, dataState} = useGetResourceSingle(resource, params.id,
+        {}, null, null, {ignore_timezone: '1'})
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
