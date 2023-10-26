@@ -21,7 +21,7 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
             let it = [
                 {
                     key: '',
-                    label: 'All Clinics'
+                    label: t('All Clinics')
                 },
                 ...clinics?.map(el => {
                     return {

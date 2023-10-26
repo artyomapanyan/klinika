@@ -26,7 +26,7 @@ function OffersTopPrice({
                 let it = [
                     {
                         key: '',
-                        label: 'All Clinics'
+                        label: t('All Clinics')
                     },
                     ...clinics?.map(el => {
                         return {
