@@ -74,7 +74,7 @@ function OfferBookContent() {
 	const { loading } = loadingState
 	const { data, setData } = dataState
 
-console.log(response404?.status)
+
 
 	return (
 		<>
