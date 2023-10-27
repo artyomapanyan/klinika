@@ -2,12 +2,19 @@ import ResourceTable from "../../../Fragments/ResourceTable";
 import {t} from "i18next";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
 import DateParser from "../../../Fragments/DateParser";
+import PermCheck from "../../../Fragments/PermCheck";
 
 
 function Roles() {
     return (
         <div>
-            <ResourceTable resource={'Role'} exportButton={false} tableColumns={[
+            <ResourceTable resource={'Role'}
+                           except={{
+                               delete: PermCheck(`Role:delete`) ? false : true,
+                               edit: PermCheck(`Role:update`) ? false : true
+                           }}
+                           exportButton={false}
+                           tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',

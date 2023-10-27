@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, Dropdown, Input, Row, Slider, Space} from "antd";
 import {t} from "i18next";
 import {CaretDownOutlined, DownOutlined, SearchOutlined} from "@ant-design/icons";
@@ -6,16 +6,45 @@ import Line_42 from "../../../dist/icons/Line_42.png";
 import low_to_high_icon from "../../../dist/icons/low_to_high_icon.png";
 import all_offers_clinic_icon from "../../../dist/icons/all_offers_clinic_icon.png";
 import search_icon_black from "../../../dist/icons/search_icon_black.png";
+import {useSelector} from "react-redux";
 
 function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUrl, onApply, setOpen}) {
+    let lngs = useSelector(state => state?.app?.current_locale)
     const [lowHighState, setLowHighState] = useState(false)
+    const [items, setItems] = useState([])
 
-    const items = clinics?.map((el) => {
-        return{
-            key: el?.id,
-            label: el?.name,
+
+
+    useEffect(() =>{
+
+        if(clinics) {
+            let it = [
+                {
+                    key: '',
+                    label: t('All Clinics')
+                },
+                ...clinics?.map(el => {
+                    return {
+                        key: el?.id,
+                        label: el?.name
+                    }
+
+                })
+
+            ]
+            setItems(it)
+
         }
-    })
+
+
+    }, [clinics])
+
+    // const items = clinics?.map((el) => {
+    //     return{
+    //         key: el?.id,
+    //         label: el?.name,
+    //     }
+    // })
 
     const onClick = ({key}) => {
         setParams({
@@ -37,6 +66,8 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
         }, 100)
         setOpen(false)
     }
+
+
 
     const changeInputSearch = (e) => {
         if(e?.target?.value?.length >= 3) {
@@ -95,34 +126,68 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
                             />
                         </div>
                     </div>
-                    <div className={'price_mobile'}>
-                        <div className={'price_text_mobile'}>
-                            <div style={{fontSize: 12, color: '#635D6B'}}>
-                                {t('Price from')}
-                            </div>
-                            <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
-                                {params?.min_price ?? 0} SAR
-                            </div>
-                        </div>
+                    {
+                        lngs === 'ar' ? <div className={'price_mobile'}>
+                                            <div className={'price_text_mobile'}>
+                                                <div style={{fontSize: 12, color: '#635D6B'}}>
+                                                    {t('Price to')}
+                                                </div>
+                                                <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
+                                                    {params?.max_price ?? 5000} {t('SAR')}
+                                                </div>
 
-                        <div className={'price_text'}>
-                            <img src={Line_42} alt={'Line_42'}/>
-                        </div>
-                        <div className={'price_text_mobile'}>
-                            <div style={{fontSize: 12, color: '#635D6B'}}>
-                                {t('Price to')}
-                            </div>
-                            <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
-                                {params?.max_price ?? 5000} SAR
-                            </div>
+                                            </div>
 
-                        </div>
-                    </div>
+                                            <div className={'price_text'}>
+                                                <img src={Line_42} alt={'Line_42'}  style={{transform: 'rotate(180deg)'}}/>
+                                            </div>
+
+
+                                            <div className={'price_text_mobile'}>
+                                                <div style={{fontSize: 12, color: '#635D6B'}}>
+                                                    {t('Price from')}
+                                                </div>
+                                                <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
+                                                    {params?.min_price ?? 0} {t('SAR')}
+                                                </div>
+                                            </div>
+                                        </div> : <div className={'price_mobile'}>
+                                                    <div className={'price_text_mobile'}>
+                                                        <div style={{fontSize: 12, color: '#635D6B'}}>
+                                                            {t('Price from')}
+                                                        </div>
+                                                        <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
+                                                            {params?.min_price ?? 0} {t('SAR')}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className={'price_text'}>
+                                                        <img src={Line_42} alt={'Line_42'}/>
+                                                    </div>
+                                                    <div className={'price_text_mobile'}>
+                                                        <div style={{fontSize: 12, color: '#635D6B'}}>
+                                                            {t('Price to')}
+                                                        </div>
+                                                        <div style={{fontSize: 16, fontWeight: 600, marginTop: 4}}>
+                                                            {params?.max_price ?? 5000} {t('SAR')}
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                    }
+
 
 
                 </div>
                 <div className={'mobile_filter_line'}></div>
-                <div style={{marginTop: 28}}>
+                <div style={
+                    lngs === 'en'
+                        ? {width: '100%', marginTop: 28}
+                        : {
+                            direction: 'rtl',
+                            marginTop: 28
+                        }
+                }>
                     <div style={{cursor:'pointer'}} onClick={onLowHigh}>
                         <img src={low_to_high_icon} alt={'low_to_high_icon'}/>
                         <span style={{fontSize: 14, margin: '0 10px'}} >
@@ -133,11 +198,17 @@ function OfferPriceMobile({clinics, setParams, params,  setResetState, currentUr
                     </span>
                     </div>
                 </div>
-                <div>
+                <div style={
+                    lngs === 'en'
+                        ? {width: '100%'}
+                        : {
+                            direction: 'rtl'
+                        }
+                }>
                     <div style={{marginTop: 28}}>
                         {
                             currentUrl.includes('thank-you') ? <div></div> : <div style={{width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                <img src={all_offers_clinic_icon} alt={'all_offers_clinic_icon'}/>
+                                <img src={all_offers_clinic_icon} alt={'all_offers_clinic_icon'} style={{marginLeft: lngs === 'en' ? 0 : 10}}/>
                                 <Dropdown
                                     menu={{
                                         items,

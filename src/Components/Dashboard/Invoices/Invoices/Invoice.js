@@ -449,7 +449,7 @@ function Incoice() {
                                     <div className={'invoice_add_total_div'}>
                                         <div></div>
                                         <div className={'invoice_total_div'}>
-                                            <div style={{marginTop: 15, width: 70}}> Total (sar)</div>
+                                            <div style={{marginTop: 15, width: 70}}>{t('Total')} (${t('sar')})</div>
                                             <div style={{width: '90%'}}>
                                                 <FormInput label={t('Sub Total')} name={'sub_total'}
                                                            inputType={'number'} initialValue={data?.items?.amount}/>

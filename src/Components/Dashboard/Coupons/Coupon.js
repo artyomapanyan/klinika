@@ -133,7 +133,7 @@ function Coupon() {
                                         </Row> :
                                         <Row style={{paddingTop:10}}>
                                             <Col lg={1} className={'percentable'}>
-                                                <div style={{fontWeight:600}}>SAR</div>
+                                                <div style={{fontWeight:600}}>{t('SAR')}</div>
                                             </Col>
                                             <Col lg={23}>
                                                 <FormInput  inputNumberStyle={{width:'100%', borderRadius:'0px 6px 6px 0px'}} label={t('Discount amount')} name={'discount_amount'} inputType={'number'} initialValue={data?.discount_amount} rules={[{required: true}]} />

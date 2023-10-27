@@ -1,5 +1,5 @@
 import React from 'react'
-import off_head from '../../../dist/Img/off_head.png'
+
 import OffersFooter from '../Fragments/OffersFooter'
 import OfferBookContent from './Fragment/OfferBookContent'
 import { useParams } from 'react-router'
@@ -18,9 +18,9 @@ function OfferBook() {
 	const { loading, setLoading } = loadingState
 	return (
 		<div>
-			<div className={'bac_div'}>
-				<img src={off_head} alt={'off_head'} style={{ width: '100%' }} />
-			</div>
+			{/*<div className={'bac_div'}>*/}
+			{/*	<img src={off_head} alt={'off_head'} style={{ width: '100%' }} />*/}
+			{/*</div>*/}
 
 			<div className={'offer_logo_div'}>
 				<AllOffersHeader headerState={true} />

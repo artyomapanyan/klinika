@@ -222,7 +222,7 @@ function ClinicManagerAppointmentsTable() {
                                 sorter:true,
                                 defaultSortOrder: 'descend',
                                 render:(e, record) => {
-                                    return <div className={'table_bold_text'}>{dayjs(record?.booked_at?.iso_string).format('DD.MM.YY')}</div>
+                                    return <div className={'table_bold_text'}>{record?.booked_at ? dayjs(record?.booked_at?.iso_string).format('DD.MM.YY') : '-'}</div>
                                 }
                             },
                             {
@@ -230,7 +230,7 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'time',
                                 key: 'time',
                                 render:(e, record) => {
-                                    return <div className={'table_normal_text'}>{dayjs(record?.booked_at?.iso_string).format('h:mm A')}</div>
+                                    return <div className={'table_normal_text'}>{record?.booked_at ? dayjs(record?.booked_at?.iso_string).format('h:mm A') : '-'}</div>
                                 }
                             },
                             {

@@ -3,9 +3,16 @@ import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 function Countries(){
     return(
-       <ResourceTable resource={'Country'} tableColumns={[
+       <ResourceTable resource={'Country'}
+                      except={{
+                          delete: PermCheck(`Country:delete`) ? false : true,
+                          edit: PermCheck(`Country:update`) ? false : true
+                      }}
+
+                      tableColumns={[
            {
                dataIndex:'id',
                title:'ID',

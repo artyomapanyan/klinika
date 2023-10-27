@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
-import { CheckCircleOutlined } from '@ant-design/icons'
-import { Button, Form, Input, Space, notification } from 'antd'
+
+import {Button, Form, Input, Space, notification, ConfigProvider} from 'antd'
 import { postResource } from '../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import { t } from 'i18next'
 import FormInput from '../../../Fragments/FormInput'
-import { isNullOrUndef } from 'chart.js/helpers'
+
 
 function AppPersonalDetails({
 	setDataState,
@@ -24,15 +24,15 @@ function AppPersonalDetails({
 	let token = useSelector(state => state.auth.token)
 	let formRef = useRef()
 	let refObj = formRef?.current?.getFieldValue()
+	let language = useSelector((state) => state.app.current_locale)
 	const [phoneLoading, setPhoneLoading] = useState(false)
-	//const [verifyState, setVerifyState] = useState(0)
 	const [codeAndNumber, setCodeAndNumber] = useState()
 	const [verifyResponse, setVerifyResponse] = useState()
 	const [codeAndNumberState, setCodeAndNumberState] = useState({})
 	const [codeStatus, setCodeStatus] = useState(null)
 	const [changeVerifyCode, setChangeVerifyCode] = useState('')
 	const [sendAgain, setSendAgain] = useState({})
-	const [patientFormState, setPatientFormState] = useState({})
+
 
 
 	useEffect(() => {
@@ -220,7 +220,7 @@ function AppPersonalDetails({
 									onValuesChange={handleValuesChange}
 									name={'send'}
 								>
-									<div style={{display: 'flex'}}>
+									<div style={{display: 'flex', gap: 10}}>
 										<div style={{ width: '40%'}} className={'all_offer_code'}>
 											<FormInput
 												label={t('Code')}
@@ -231,13 +231,14 @@ function AppPersonalDetails({
 												resource={'PublicCountry'}
 											/>
 										</div>
-										<div style={{ width: '60%'}}>
+										<div style={{ width: '60%'}} className={'all_offer_phone_number'}>
 											<FormInput
 												label={t('Phone number')}
 												name={'phone_number'}
 												maxLength={10}
 												rules={[{ required: true }]}
 											/>
+
 										</div>
 
 
@@ -262,17 +263,21 @@ function AppPersonalDetails({
 									<div>
 										<Form name={'verify_code'} onValuesChange={onChangeVerifyCode} onFinish={onVerifyCode}>
 											<div>
-												<div>
-													<Input
-														value={`+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
-														style={{
-															marginTop: 7,
-															height: 46,
-															borderRadius: 12,
-															background: '#F5F6FA',
-															border: 'none'
-														}}
-													/>
+												<div className={'input_RTL'}>
+
+														<Input
+															value={`+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
+															style={{
+																marginTop: 7,
+																height: 46,
+																borderRadius: 12,
+																background: '#F5F6FA',
+																border: 'none',
+
+															}}/>
+
+
+
 												</div>
 												<div
 													style={{
@@ -289,9 +294,9 @@ function AppPersonalDetails({
 
 												</div>
 
-												<div style={{ display: 'flex', width: '100%' }}>
+												<div style={{ display: 'flex', width: '100%', gap: 10, justifyContent: 'space-between' }}>
 
-													<div style={{width: '40%', display: 'flex', flexDirection: 'row', paddingTop: 10}}>
+													<div style={{width:'30%', display: 'flex', flexDirection: 'row', paddingTop: 10}}>
 														{mins == 0 && secs == 0 ? (
 															<div
 																style={{ color: '#BF539E', cursor: 'pointer'}}
@@ -309,7 +314,7 @@ function AppPersonalDetails({
 
 														)}
 													</div>
-													<div style={{width: '50%'}}>
+													<div style={{width: '40%'}}>
 														<FormInput label={t('Verify code')} name={'code'} />
 													</div>
 													<div style={{width: '20%'}}>
@@ -363,7 +368,16 @@ function AppPersonalDetails({
 												label={t('Email')}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
-												rules={[{ required: true }]}
+												rules={[{ required: true },
+													{
+													    validator:(rule,value)=>{
+													        if(!value.includes('@') || !value.includes('.')){
+													            return Promise.reject('enter valid email')
+													        }
+													        return Promise.resolve();
+													    }
+													}
+													]}
 											/>
 										</Form>
 										{/*<Button*/}
@@ -391,45 +405,4 @@ function AppPersonalDetails({
 
 export default AppPersonalDetails
 
-/**
- * 
- * {shownames == true ? (
-								''
-							) : (
-								<>
-									{responseCodeState &&
-									typeof responseCodeState !== 'string' ? (
-										<div>
-											<Space style={{ width: '100%' }} direction={'vertical'}>
-												<Form ref={formRef} onValuesChange={handleNamesChange}>
-													<FormInput
-														inputDisabled={verifyResponse?.patient?.first}
-														label={t('First Name')}
-														name={'first'}
-														initialValue={verifyResponse?.patient?.first}
-														rules={[{ required: true }]}
-													/>
-													<FormInput
-														inputDisabled={verifyResponse?.patient?.last}
-														label={t('Last Name')}
-														name={'last'}
-														initialValue={verifyResponse?.patient?.last}
-														rules={[{ required: true }]}
-													/>
-													<FormInput
-														inputDisabled={verifyResponse?.patient?.email}
-														label={t('Email')}
-														name={'email'}
-														initialValue={verifyResponse?.patient?.email}
-														rules={[{ required: true }]}
-													/>
-												</Form>
-											</Space>
-										</div>
-									) : (
-										<div></div>
-									)}
-								</>
-							)}
- * 
- */
+

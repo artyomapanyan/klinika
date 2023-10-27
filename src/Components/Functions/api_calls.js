@@ -120,7 +120,7 @@ export const useGetResourceIndex = (resource,params, isInited = false ,needsInit
 
     return {loadingState,dataState, addData}
 }
-export const useGetResourceSingle = (resource,id,additionals={},filterResponse = null,lang=axios.defaults.headers.common['Accept-Language'])=>{
+export const useGetResourceSingle = (resource,id,additionals={},filterResponse = null,lang=axios.defaults.headers.common['Accept-Language'], add={})=>{
     const [loading, setLoading] = useState(true)
     const [data,setData] = useState({})
     const [addData,setAddData] = useState({})
@@ -138,8 +138,8 @@ export const useGetResourceSingle = (resource,id,additionals={},filterResponse =
             id?axios.request({
                 url:api[resource].single.url+id,
                 method:api[resource].single.method,
-                headers: headers
-
+                headers: headers,
+                params:add,
             }):{},
             ...dataResources.map(resourceKey=>axios.request({
                 url:api[resourceKey].list.url,

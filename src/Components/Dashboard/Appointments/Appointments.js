@@ -201,7 +201,9 @@ function Appointments() {
                         filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
                         sorter:true,
                         defaultSortOrder:'descend',
-                        render:(i )=> dayjs(i).format('YYYY-MM-DD h:mm A')
+                        render:(i, record )=> {
+                            return record?.booked_at ? dayjs(record?.booked_at?.iso_string).format('YYYY-MM-DD h:mm A') : '-'
+                        }
 
                     },
                     {

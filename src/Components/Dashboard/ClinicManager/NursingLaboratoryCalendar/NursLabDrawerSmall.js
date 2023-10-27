@@ -1,15 +1,13 @@
-import React from 'react';
+import {useSelector} from "react-redux";
 import {Avatar, Button, Form, Space, Tag} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import FormInput from "../../../../../Fragments/FormInput";
+import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
-import Resources from "../../../../../../store/Resources";
+import Resources from "../../../../store/Resources";
 import dayjs from "dayjs";
-import {useSelector} from "react-redux";
+import React from "react";
 
-
-
-function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment,setData}) {
+function NursLabDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment,setData}) {
     let language = useSelector((state) => state?.app?.current_locale);
     const onFinish = (values) => {
 
@@ -105,7 +103,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                                }}
                                resource={'Country'}/>
                     <FormInput label={t('Date of Birth')} name={'dob'}
-                               //inputDisabled={data?.patient_id}
+                        //inputDisabled={data?.patient_id}
                                initialValue={data?.dob}
                                inputType={'date'} rules={[
                         {required: !data?.patient_id},
@@ -128,7 +126,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     </div>
                     <div>
                         <Button onClick={()=>setOpen(false)} style={{width: '100%', marginTop: 15, border: "none"}} size={'large'} type={'secondary'}
-                                >{t('Cancel')}</Button>
+                        >{t('Cancel')}</Button>
                     </div>
                 </Form>
             </div>
@@ -136,4 +134,4 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
     )
 }
 
-export default ClinicManagerCalendarDrawerSmall;
+export default NursLabDrawerSmall;

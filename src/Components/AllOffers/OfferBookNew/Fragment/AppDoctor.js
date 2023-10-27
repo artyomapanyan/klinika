@@ -2,6 +2,7 @@ import React from 'react'
 import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Space } from 'antd'
 import { t } from 'i18next'
+import off_image_1 from "../../../../dist/Img/off_image_1.jpg";
 
 function AppDoctor({ setDataState, dataState, data }) {
 	//const [doctorName, setDoctorName] = useState('')
@@ -41,24 +42,26 @@ function AppDoctor({ setDataState, dataState, data }) {
 				</div>
 			) : (
 				<div>
-					<div className={'doctor_container'}>
+
 						{data?.doctors?.map(el => {
 							return (
-								<div key={el?.id} onClick={() => onDoctor(el?.id)} style={{cursor: 'pointer'}}>
-									<Space>
-										<Avatar
-											size={40}
-											icon={<UserOutlined />}
-											className={'doctor_avatar'}
-										/>
-										<div className={'doctor_name'}>
-											{el?.first} {el?.last}
-										</div>
-									</Space>
+								<div className={'doctor_container'} key={el?.id} onClick={() => onDoctor(el?.id)}>
+									<div >
+										<Space>
+											<Avatar
+												size={40}
+												icon={el?.avatar ? <img src={el?.avatar?.url} alt={'image'} /> : <UserOutlined />}
+												className={'doctor_avatar'}
+											/>
+											<div className={'doctor_name'}>
+												{el?.first} {el?.last}
+											</div>
+										</Space>
+									</div>
 								</div>
 							)
 						})}
-					</div>
+
 				</div>
 			)}
 		</div>

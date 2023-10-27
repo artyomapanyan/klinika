@@ -297,6 +297,7 @@ function DashboardRoutes(){
         <Route path={'appointments/:id/doctor'} element={<Patient />}/>
         <Route path={'clinics-owner'} element={<AuthCheck roleKey={'clinic-owner'} ><ClinicsOwner /></AuthCheck>}/>
         <Route path={'clinic-manager'} element={<AuthCheck roleKey={'clinic-manager'} ><ClinicManager /></AuthCheck>}/>
+        <Route path={'receptionist'} element={<AuthCheck roleKey={'receptionist'} ><ClinicManager /></AuthCheck>}/>
         <Route path={'doctor-reworked'} element={<AuthCheck roleKey={'doctor'} ><DoctorReworked /></AuthCheck>}/>
         <Route path={'super-admin'} element={<AuthCheck roleKey={'super' || 'super-admin'} ><SuperAdmin /></AuthCheck>}/>
         <Route path={'admin'} element={<AuthCheck roleKey={'admin'} ><SuperAdmin /></AuthCheck>}/>

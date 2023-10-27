@@ -15,11 +15,12 @@ import new_sorter_icon from "../../../../dist/icons/new_sorter_icon.png";
 import printIcon from "../../../../dist/icons/printIcon.svg";
 
 import ResourceTableHeader from "../../../Fragments/ResourceTableHeader";
+import PermCheck from "../../../Fragments/PermCheck";
 
 let resource = 'Invoice'
 function Invoices() {
     let token = useSelector((state) => state.auth.token);
-    let reduxInfo = useSelector((state) => state?.auth);
+    let role = useSelector((state) => state?.auth?.selected_role?.key);
     const [pdfState, setPdfState] = useState(false);
     const [updateTable,setUpdateTable] = useState({})
 
@@ -64,9 +65,16 @@ function Invoices() {
     return(
         <div style={{marginTop: -20, zIndex: 999}}>
             {/*<ClinicOwnerHeader dashboardText={true}/>*/}
-            <InvoicesGraphics />
+            {
+                role === 'receptionist' ? <div></div> : <InvoicesGraphics />
+            }
+
             <div className={'invoices_table'}>
                 <ResourceTable resource={resource}
+                               except={{
+                                   delete: PermCheck(`Invoice:delete`) ? false : true,
+                                   edit: PermCheck(`Invoice:update`) ? false : true
+                               }}
                                updateTable={updateTable}
 
                                customHeader={(props)=> {
@@ -84,9 +92,9 @@ function Invoices() {
 
                                andStatus={true}
                                invoiceSwitches={true}
-                               except={{
-                                   delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-                               }}
+                               // except={{
+                               //     delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
+                               // }}
                                //addBtn={reduxInfo?.selected_role?.key !== 'clinic-owner' ? true : false}
                                resourceTablemarginTop={true}
                                containermargin={true}
@@ -134,7 +142,7 @@ function Invoices() {
                                        title:t('Price'),
                                        key:'total_price',
                                        render:(e, record) => {
-                                           return <div>{record?.total_price} SAR</div>
+                                           return <div>{record?.total_price} {t('SAR')}</div>
                                        }
                                    },
                                    {

@@ -164,7 +164,7 @@ function PatientCollapse({data, setData}) {
                         </div>
                         <div>
                             <div className={'collapse_content_head'}>{t('Payment')}</div>
-                            <div className={'collapse_content_foot'}>{data?.primaryInvoice?.total_price} SAR
+                            <div className={'collapse_content_foot'}>{data?.primaryInvoice?.total_price} {t('SAR')}
                                 {<Tag className={'ant_tag'} style={{color: data?.primaryInvoice?.status == 2 ? '#6DAF56' : '#ee4e4e', backgroundColor: data?.primaryInvoice?.status == 2 ? '#6DAF5630' : '#f6d7d7', margin: '0 8px', fontSize: 11}}>
                                     { data?.primaryInvoice?.status == 2 ? "Paid" : "No payed"}
                                 </Tag>}

@@ -5,12 +5,19 @@ import DateParser from "../../Fragments/DateParser";
 import Resource from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
 import React from "react";
+import PermCheck from "../../Fragments/PermCheck";
 
 const resource='NursingTask'
 function NursingTasks() {
     return (
         <div>
-            <ResourceTable resource={resource} tableColumns={[
+            <ResourceTable resource={resource}
+                           except={{
+                               delete: PermCheck(`NursingTask:delete`) ? false : true,
+                               edit: PermCheck(`NursingTask:update`) ? false : true
+                           }}
+
+                           tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',

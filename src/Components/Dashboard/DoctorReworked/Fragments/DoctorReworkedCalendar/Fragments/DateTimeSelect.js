@@ -209,7 +209,7 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
             <div className={'drawer_cal_bottom_div'}>
                 <div className={'drawer_cal_foot_div'}>
                     <div className={'top_div_title'}>
-                        Select Time
+                        {t('Select Time')}
                     </div>
                     <div align={'center'} className={'big_time_div'}>
                         {

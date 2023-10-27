@@ -282,13 +282,13 @@ function ResourceTable ({
                         <Button style={{marginLeft:10}} className={addButtonChange ? 'resource_table_btn' : ''} icon={<PlusOutlined/>} type={'primary'} onClick={onAddNew}>{addButtonChange ? t('Add') : ''}</Button>
                     </Tooltip>: <div></div> : <div></div>}
                     {
-                        exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
-                            : null
+                        PermCheck(`${resource}:export`) ?  exportButton ? <Button className={'resource_table_btn'} onClick={handleExportExcel} type={'secondary'}>{t("Export to Excel")}</Button>
+                            : null : null
                     }
 
-                    {
-                        exportDatabase ? <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button> : null
-                    }
+                    {/*{*/}
+                    {/*    exportDatabase ? <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button> : null*/}
+                    {/*}*/}
 
 
                 </div>

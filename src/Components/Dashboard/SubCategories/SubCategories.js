@@ -2,11 +2,18 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import DateParser from "../../Fragments/DateParser";
+import PermCheck from "../../Fragments/PermCheck";
 
 function SubCategories() {
     return(
         <div>
-            <ResourceTable resource={'SubCategory'} tableColumns={[
+            <ResourceTable resource={'SubCategory'}
+                           except={{
+                               delete: PermCheck(`SubCategory:delete`) ? false : true,
+                               edit: PermCheck(`SubCategory:update`) ? false : true
+                           }}
+
+                           tableColumns={[
                 {
                     dataIndex:'id',
                     title:'ID',

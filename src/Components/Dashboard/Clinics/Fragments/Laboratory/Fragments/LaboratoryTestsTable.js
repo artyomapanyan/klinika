@@ -17,6 +17,8 @@ function LaboratoryTestsTable() {
     const [labTestState, setLabTestState] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // const [searchValue, setSearchValue] = useState('')
+
     useEffect(()=>{
         if(isModalOpen){
             let ids = testData.map(e=>e.lab_test?.id)
@@ -25,7 +27,7 @@ function LaboratoryTestsTable() {
 
     },[isModalOpen])
     useEffect(()=>{
-        postResource('LabTest','list',token,null,{per_page:5000}).then(responses => {
+        postResource('LabTest','list',token,null,).then(responses => {
             labTestData.current = responses.items
         })
 
@@ -67,7 +69,7 @@ function LaboratoryTestsTable() {
                 <h1 className={'h1'}>{t(`Tests`)}</h1>
 
                 {loading ? <Preloader/> : <ResourceTable
-                    paginationResourceTable={false}
+                    //paginationResourceTable={false}
                     noHeader={true}
                     customTableButton={{
                         title:'Add New Test',
@@ -100,7 +102,7 @@ function LaboratoryTestsTable() {
                         }
                     ]}
                 />}
-                <LabTestsModal isModalOpen={isModalOpen} onCreate={onCreate}  handleClose={showModal} labTestState={labTestState} loading={loading} />
+                <LabTestsModal isModalOpen={isModalOpen} onCreate={onCreate} clinicId={params.id}  handleClose={showModal} labTestState={labTestState} loading={loading}  />
             </div>
         </div>
     )

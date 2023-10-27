@@ -1,14 +1,13 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {Form, Modal, Spin} from "antd";
 import {t} from "i18next";
 import FormInput from "../../../../../Fragments/FormInput";
+import Resources from "../../../../../../store/Resources";
 
 
 
-function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose}) {
+function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose, clinicId}) {
     const formRef = useRef();
-
-
 
     const handleOk =()=>{
         formRef.current.submit();
@@ -18,7 +17,7 @@ function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose})
     return(
         <Modal title={t("Add New Lab test")} open={isModalOpen} onOk={handleOk} onCancel={()=>handleClose(false)} okText={t("Save")} >
             <Spin spinning={loading}>
-                {isModalOpen?<Form
+                {isModalOpen ? <Form
                     key={isModalOpen?.id+(new Date())}
 
                     name="edit"
@@ -31,10 +30,16 @@ function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose})
                                    name={'lab_test_id'}
                                    rules={[{required: true}]}
                                    inputType={'resourceSelect'}
+                                   resourceParams={{
+                                       doesnt_have_clinic: clinicId
+                                   }}
+
                                    initialValue={isModalOpen?.lab_test?.id}
                                    initialData={isModalOpen.lab_test?[isModalOpen?.lab_test]:[]}
-                                   resourceData={labTestState}
+                                   //resourceData={labTestState}
                                    resource={'LabTest'}/>
+                        
+
 
                         <FormInput inputNumberStyle={{width:'100%'}} label={t('Price')}
                                    name={'price'}

@@ -17,7 +17,7 @@ function NavbarOffersHeader({headerState}) {
             key: 'en',
         },
         {
-            label: 'Arabic',
+            label: t('Arabic'),
             key: 'ar',
         },
 
@@ -55,7 +55,7 @@ function NavbarOffersHeader({headerState}) {
                         style={{color: 'white'}}
                     >
                         <Space style={{color: headerState ? "#ce4e99" : 'white', fontWeight: 700}}>
-                            {lngs === "ar" ? "Arabic" : "English"}
+                            {lngs === "ar" ? `${t("Arabic")}` : "English"}
                             <DownOutlined />
                         </Space>
 

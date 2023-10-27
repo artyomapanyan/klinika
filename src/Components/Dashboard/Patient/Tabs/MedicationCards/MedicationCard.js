@@ -3,6 +3,7 @@ import closeLightGray from "../../../../../dist/icons/close-lightGray.svg";
 import {EditOutlined} from "@ant-design/icons";
 import {deleteResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import {t} from "i18next";
 
 function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true}) {
     let token = useSelector((state) => state?.auth?.token);
@@ -24,7 +25,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
                             <div style={{fontSize: 16, fontWeight: 700}}>{el?.name}</div>
                             <div  style={{fontSize:14, fontWeight:400}}>
                                 #{el?.queuePrescription?.id} {' '}
-                                {el?.queue_type === 1 ? 'After' : el?.queue_type === 2 ? 'Before' : el?.queue_type === 3 ? 'Same day' : ""} {' '}
+                                {el?.queue_type === 1 ? `${t('After')}` : el?.queue_type === 2 ? `${t('Before')}` : el?.queue_type === 3 ? `${t('Same day')}` : ""} {' '}
                                 {el?.gap ? `${el?.gap} days` : ''}
                             </div>
                         </div>

@@ -1,30 +1,39 @@
 import React from 'react'
 import { Progress } from 'antd'
+import {t} from "i18next";
+import dayjs from "dayjs";
+import {useSelector} from "react-redux";
 
 function OfferHours({ data }) {
-	//console.log('data hours',data)
-	//console.log('data hours start',data.begins_at.date)
-	//console.log('data hours end',data.expired_at.date)
+	let language = useSelector((state) => state.app.current_locale)
 
-	const startDate = new Date(data.begins_at.date)
-	const endDate = new Date(data.expired_at.date)
-	const totalSeconds = (endDate - startDate) / 1000
+	const startDate = dayjs(data?.begins_at?.iso_string)
+	const endDate = dayjs(data?.expired_at?.iso_string).add(1, 'day')
+	const totalSeconds = (endDate - new Date()) / 1000
 	const days = Math.floor(totalSeconds / 3600 / 24)
 	const hours = Math.floor(totalSeconds / 3600) % 24
 
-	//console.log('startDate',startDate)
-	//console.log('endDate',endDate)
+	let hoursAll = (endDate - startDate) / 1000 / 3600
+	let hoursthisDay = (endDate - new Date()) / 1000 / 3600
+	let percent = hoursthisDay * 100 / hoursAll
+
+
+
+
 
 	return (
 		<div className={'offer_hours_div'}>
 			<div>
 				<p className={'offer_hours_p'}>
-					{days} days {hours} hours left
+					{
+						dayjs(endDate) < dayjs() ? `${t('expired')}` : language === 'en' ? `${days} ${t('days')} ${hours} ${t('hours')} ${t('left')}` : `${t('left')} ${days} ${t('days')} ${hours} ${t('hours')}`
+					}
+
 				</p>
 			</div>
 			<div>
 				<Progress
-					percent={50}
+					percent={dayjs(endDate) < dayjs() ? 100 : 100 - percent}
 					showInfo={false}
 					trailColor='#E1E2E9'
 					strokeColor='#4FB873'

@@ -62,8 +62,14 @@
       opacity: 0.99
       background-color: #FFFFFF
       width: 100%
-      padding: 14px 16px
+      padding: 14px 0px 16px 0px
       box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
+    .ant-select-selector
+      border: none
+    .tree_seleqt_title_name
+      display: none
+    .select_title_length
+      display: none
 
 
 
@@ -80,9 +86,12 @@
   align-items: center
 
 .tab_div_mobile_filter_drp
-  margin-right: 2px
+  //margin-right: 2px
+  margin-top: 10px
   .tab_div_mobile_filter_text
     margin: 0 8px
+    font-size: 14px
+    color: #97929E
 
 .all_offers_drawer
   .ant-drawer-body
@@ -152,7 +161,7 @@
   width: 100%
   display: flex
   flex-direction: row
-  justify-content: space-around
+  justify-content: space-between
 .ant-dropdown-menu
   max-height: 300px
   overflow: auto
@@ -163,10 +172,12 @@
   align-items: center
   margin-top: 28px
   width: 100%
-  .price_text_mobile
-    background-color: #F5F5F8
-    padding: 8px 20px
-    border-radius: 12px
+.price_text_mobile
+  background-color: #F5F5F8
+  padding: 8px 20px
+  border-radius: 12px
+
+
 .price
   display: flex
   flex-direction: row
@@ -465,6 +476,7 @@
   @media screen and (max-width: 1000px)
     width: 100%
 
+
 .personal_details_number_div
   width: 100%
   margin: 0 10px
@@ -673,9 +685,9 @@
     
 .offer_section
   width: 360px 
-  margin-top: 20px 
+  //margin-top: 20px
   padding: 10px
-  @media screen and (max-width: 500px)
+  @media screen and (max-width: 800px)
     width: 100%
     height: 160px
     margin-top: 0px  
@@ -683,19 +695,31 @@
 
 .offer_appointment_sec
   margin-top: 50px
+  @media screen and (max-width: 600px)
+    display: none
 
 .offer_book_div
-  width: 640px
+  width: 40%
   margin-top: 20px
-  @media screen and (max-width: 600px)
+  @media screen and (max-width: 800px)
     width: 100%
   
 .offer_book_title
   font-weight: 700
   font-size: 28px
   @media screen and (max-width: 600px)
-    font-size: 20px
+
+    display: none
+
+.offer_book_title1
+  display: none
+  @media screen and (max-width: 600px)
+    font-size: 22px
+    font-weight: 700
     width: 100%
+    margin: 10px 10px 0 10px
+    display: block
+
 
 .offer_book_desc
   font-weight: 400
@@ -704,6 +728,16 @@
   @media screen and (max-width: 600px)
     font-size: 14px
     width: 100%
+
+.read_more_less
+  font-family: Inter
+  font-size: 14px
+  font-style: normal
+  font-weight: 700
+  line-height: 18px
+  color: #774d9d
+  cursor: pointer
+
   
 
 .divider_offer
@@ -783,6 +817,7 @@ hr
   width: 80%
 
 .offer_price_div
+  margin-top: 20px
   display: flex
   flex-direction: column
  
@@ -837,15 +872,35 @@ hr
   border-radius: 12px
   padding: 12px
   background-color: #FFFFFF
-  border-radius: 8px
   opacity: 0.99
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
+  cursor: pointer
+  margin-top: 10px
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  height: 72px
+  border: none
+
 
 .doctor_selected
   padding: 12px
+  border-radius: 12px  12px 0 0
   background-color: #774D9D
-  border-top-left-radius: 12px
-  border-top-right-radius: 12px
+  margin-top: 10px
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  height: 72px
+  border: none
+  &:disabled
+    background-color: #7c4d98
+    border: 1px solid #7c4d98
+
 
 .doctor_name_selected
   font-weight: 700
@@ -1176,8 +1231,8 @@ hr
     display: block
     opacity: 0.99
      
-    @media screen and (max-width: 600px)
-      display: none
+    //@media screen and (max-width: 600px)
+    //  display: none
   
 .tab_div_mobile_new_offer_arrow
     display: none
@@ -1305,9 +1360,22 @@ hr
     border: none !important
     background-color: rgba(245, 246, 250, 1) !important
 
+.input_RTL
+  .ant-input-rtl
+    direction: ltr !important
+
 .all_offer_code
   .input-placeholder .ant-form-item-label > label
     top: 1px
+    @media screen and (max-width: 500px)
+      top: 1px
+      margin-right: 29px
+
+.all_offer_phone_number
+  .flying-label > label
+    margin-right: 7px
+  @media screen and (max-width: 500px)
+    margin-right: 0px
 
 
 .all_offers_book_btns
@@ -1316,3 +1384,119 @@ hr
   border-radius: 12px
   font-size: 16px
   font-weight: 700
+
+.bottom_drawer_div
+  width: 100%
+  box-shadow: 0px -4px 16px -4px rgba(14, 7, 7, 0.12)
+  margin-top: 20px
+  padding: 12px
+  display: none
+  @media screen and (max-width: 600px)
+    display: block
+
+.offers_book_padding_bottom
+  padding-bottom: 80px
+  @media screen and (max-width: 800px)
+    padding-bottom: 0px
+
+.treeSelect
+  .ant-select-selector
+    background-color : #bd3183 !important
+  .ant-select-selection-placeholder
+    color: #FFFFFF
+  .ant-select-selection-item
+    margin-top: 4px
+    color: #FFFFFF
+
+  .ant-select-suffix
+    color: #FFFFFF
+  .select_title_length
+    display: none
+
+
+.ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode
+  //color: #7c4d98 !important
+  padding: 8px
+
+
+
+.ant-select-tree-title
+  //color: #984d67 !important
+.ant-select-tree-indent-unit
+  width: 0px !important
+
+.ASDF
+  color: #774D9D
+  font-weight: 700
+  font-size: 18px
+  font-family: Roboto
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+    //color: #FFFFFF
+
+.selected_ASDF
+  color: #ffffff
+  font-weight: 700
+  font-size: 18px
+  font-family: Roboto
+  background-color: #774D9D
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+    color: #774D9D
+
+
+.ASDF_children
+  font-weight: 400
+  font-size: 18px
+  font-family: Roboto
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+//color: #FFFFFF
+
+.selected_ASDF_children
+  color: #ffffff
+  font-weight: 700
+  font-size: 18px
+  font-family: Roboto
+  background-color: #774D9D
+  border-bottom: 1px solid #D7DAE8
+  &:hover
+    background-color: #F8F2FE
+    color: #774D9D
+
+
+
+.ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode
+    order: 0 !important
+.ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher
+    order: 1 !important
+
+.ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected
+  background-color: #F8F2FE00 !important
+.ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover
+  background-color: #F8F2FE00 !important
+
+.ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected
+  background-color: #7c4d9800
+
+.ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode-active .ant-select-tree-node-content-wrapper
+  outline: 0px solid #7c4d98
+
+.ant-tree-select-dropdown
+  padding: 0 !important
+
+.collepse_offer_calendar
+  .ant-collapse-header
+    padding: 0 !important
+  .ant-collapse-content-box
+    padding: 0 !important
+
+.thank_you_drawer
+  display: none
+  @media screen and (max-width: 800px)
+    display: block
+
+

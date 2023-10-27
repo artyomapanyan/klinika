@@ -22,7 +22,7 @@ function NewThankYouOffer() {
 				back to offers
 			</div>*/}
 
-            <div style={{paddingBottom: 100}}>
+            <div className={'offers_book_padding_bottom'}>
                 <div className={'offer_logo_div_new'}>
                     <NavbarOffersHeader headerState={true} />
                 </div>

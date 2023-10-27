@@ -23,7 +23,7 @@ function ClinicOwnerHeader({ noClinicSelect = false, dashboardText=false }) {
 						let itm = [
 							{
 								key:'all',
-								label:'All Clinics'
+								label: t('All Clinics')
 							},
 							...reduxInfo.map((el, key) => {
 								if (key === 0) {
@@ -41,6 +41,8 @@ function ClinicOwnerHeader({ noClinicSelect = false, dashboardText=false }) {
 								}
 							})
 						]
+
+					console.log(itm)
 
 					setItems(itm)
 				}

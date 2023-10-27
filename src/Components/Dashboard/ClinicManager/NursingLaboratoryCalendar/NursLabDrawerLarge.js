@@ -1,14 +1,13 @@
+import React, {useRef, useState} from "react";
+import {useSelector} from "react-redux";
 import {Avatar, Button, Col, Form, Row, Space, Tag} from "antd";
 import {LeftOutlined, UserOutlined} from "@ant-design/icons";
-import FormInput from "../../../../../Fragments/FormInput";
 import {t} from "i18next";
-import React, {useRef, useState} from "react";
-import Resources from "../../../../../../store/Resources";
+import FormInput from "../../../Fragments/FormInput";
+import Resources from "../../../../store/Resources";
 import dayjs from "dayjs";
-import {useSelector} from "react-redux";
 
-
-function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData}) {
+function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData}) {
     const formRef = useRef();
     let language = useSelector((state) => state?.app?.current_locale);
     const [loading, setLoading] = useState(false)
@@ -26,6 +25,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
         return [name, item]
     }
 
+    console.log(data)
 
     return(
         <div className={language === 'ar' ? 'KM_drawer' : ''}>
@@ -57,11 +57,11 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                     </div>
                 </div>
 
-            <Row gutter={[15, 15]}>
+                <Row gutter={[15, 15]}>
 
-                <Col lg={12}>
+                    <Col lg={12}>
 
-                    <div>
+                        <div>
 
                             <FormInput label={t('First name')} name={'first'}   rules={[{required: true}]} />
                             <FormInput label={t('Last name')} name={'last'} rules={[{required: true}]} />
@@ -85,7 +85,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                        initialValue={data?.gender}
                             />
 
-                             {/*   <FileManager text1={'Insurance Card Front'}
+                            {/*   <FileManager text1={'Insurance Card Front'}
                                              text2={'upload image'}
                                              uploadIcon={<img alt={'icons'} src={addimage}/>}
                                              name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>*/}
@@ -93,11 +93,11 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                                 <Button loading={loading} style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                             </div>
 
-                    </div>
-                </Col>
-                <Col lg={12}>
+                        </div>
+                    </Col>
+                    <Col lg={12}>
 
-                    <div >
+                        <div >
 
                             {/*<FormInput label={t('Address')} name={'address'}  rules={[{required: true}]} />*/}
                             <FormInput label={t('Nationality')} name={'country_id'}
@@ -146,13 +146,13 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             </div>
 
 
-                    </div>
+                        </div>
 
-                </Col>
-            </Row>
-        </Form>
+                    </Col>
+                </Row>
+            </Form>
 
         </div>
     )
 }
-export default ClinicManagerCalendarDrawerLarge;
+export default NursLabDrawerLarge;
