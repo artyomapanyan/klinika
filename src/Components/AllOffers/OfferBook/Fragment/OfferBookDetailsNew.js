@@ -25,7 +25,7 @@ function OfferBookDetails({data}) {
                         </div>
                         <div style={{marginTop: 25}}><h3 style={{fontWeight: 600}}>{t('Address')}:</h3></div>
                         <div style={{color: '#8d8c8c'}}>
-                            {t('Asress')}
+                            {t('Address')}
                         </div>
                     </div>
                 </div>

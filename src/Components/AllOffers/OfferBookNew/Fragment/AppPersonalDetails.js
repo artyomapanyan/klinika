@@ -210,7 +210,10 @@ function AppPersonalDetails({
 			{show ? (
 				<>
 					<Space>
-						<h2 style={{ fontWeight: 600 }}>{t('Your Information')}</h2>
+						{
+							!showPayment ? <h2 style={{ fontWeight: 600 }}>{t('Your Information')}</h2> : <div></div>
+						}
+
 					</Space>
 					<div>
 						<div>
@@ -266,7 +269,7 @@ function AppPersonalDetails({
 												<div className={'input_RTL'}>
 
 														<Input
-															value={`+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
+															value={language === 'ar' ? `${codeAndNumber?.phone_number} ${codeAndNumber?.phone_country_code}+` : `+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
 															style={{
 																marginTop: 7,
 																height: 46,
