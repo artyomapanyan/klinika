@@ -6,7 +6,7 @@ import {GMBK} from "../../../../../../functions";
 import React from "react";
 import arrow_next from "../../../../../../dist/icons/arrow-next.svg";
 import arrow_prev from "../../../../../../dist/icons/arrow-prev.svg";
-function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDates}) {
+function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDates, calendarTitle=true}) {
     dayjs.extend(customParseFormat);
     const customWeekStartEndFormat = (value) =>
         `${dayjs(value).startOf('week').format('DD MMM')} - ${dayjs(value)
@@ -16,6 +16,12 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
 
     let data = [t('Specialty Load'),
         t('HCP Load'),
+        t('Day off'),
+        //'Holidays/Weekend'
+    ]
+
+    let data1 = [t('Overall load'),
+        t('Cabinet load'),
         t('Day off'),
         //'Holidays/Weekend'
     ]
@@ -32,8 +38,11 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:24}}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
-                {t("Appointments")} :
-                {!hideData && data.map((itemKey,key)=><Space  key={key} className={`withDot WD-color-clinic-man-calendar-${key}`}>{itemKey}</Space>)}
+                {
+                    calendarTitle ? `${t("Appointments")} :` : `${t("Tests and Nursing")} :`
+                }
+
+                {!hideData && (calendarTitle ? data : data1).map((itemKey,key)=><Space  key={key} className={`withDot WD-color-clinic-man-calendar-${key}`}>{itemKey}</Space>)}
             </Space>
             <div>
                 <Space className={'arrow_button'}>

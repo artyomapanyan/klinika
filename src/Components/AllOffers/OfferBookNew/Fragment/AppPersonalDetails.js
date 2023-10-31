@@ -288,22 +288,24 @@ function AppPersonalDetails({
 													}}
 
 												>
-													<div onClick={onSendSMSAgain} style={{cursor: 'pointer'}} align={'right'}>
+													<Button type={'secondary'} size={'small'} onClick={onSendSMSAgain} style={{borderRadius: 8}} align={'right'}>
 														{t('Change Number')}
-													</div>
+													</Button>
 
 												</div>
 
-												<div style={{ display: 'flex', width: '100%', gap: 10, justifyContent: 'space-between' }}>
+												<div style={{ display: 'flex', width: '100%', gap: 10, justifyContent: 'space-between', marginTop: 10 }}>
 
 													<div style={{width:'30%', display: 'flex', flexDirection: 'row', paddingTop: 10}}>
 														{mins == 0 && secs == 0 ? (
-															<div
-																style={{ color: '#BF539E', cursor: 'pointer'}}
+															<Button
+																type={'secondary'}
+																style={{marginTop:5, borderRadius: 8}}
 																onClick={onSendAgain}
+																size={'small'}
 															>
 																{t('Send Again')}
-															</div>
+															</Button>
 														) : (
 															<div align={'center'}>
 																<div style={{color: '#BF539E'}}>{t('Resend code')}</div>

@@ -51,12 +51,12 @@ function OfferCard({ data, id }) {
 					</div>
 					<div className={'offer_card_big_text'}>{data?.title}</div>
 					<div className={'offer_card_smoll_text'}>{data?.category?.name}</div>
-					<div className={'offer_card_stars'}>
-						<Rate disabled value={+data?.avg_rating} />
-						<span style={{ marginLeft: 10 }}>
-							{data?.rating_count} {t('Reviews')}
-						</span>
-					</div>
+					{/*<div className={'offer_card_stars'}>*/}
+					{/*	<Rate disabled value={+data?.avg_rating} />*/}
+					{/*	<span style={{ marginLeft: 10 }}>*/}
+					{/*		{data?.rating_count} {t('Reviews')}*/}
+					{/*	</span>*/}
+					{/*</div>*/}
 					<div align={'center'}>
 						<div style={{ width: '90%' }}>
 							<Divider style={{ background: '#aaa6ab' }} />

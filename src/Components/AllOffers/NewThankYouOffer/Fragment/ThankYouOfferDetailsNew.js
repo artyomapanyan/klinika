@@ -77,7 +77,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                     <div className={'offer_clinic_container'}>
                         <p className={'offer_clinic_name'}>{data?.clinic?.name}</p>
                         <p className={'offer_clinic_address'}>
-                            {data?.clinic?.location?.address1?.en}
+                            {data?.clinic?.location?.region?.name}, {data?.clinic?.location?.city?.name}
                         </p>
                     </div>
                 </div>
@@ -96,13 +96,13 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                         }
                     >
                         <div className={'clinic_location_div'}>
-                            {data?.clinic?.location?.address1?.en && (
+                            {data?.clinic?.location?.address1 && (
                                 <>
                                     <div>
                                         <span className={'clinic_location_name'}>{t('Location')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
-                                                {data?.clinic?.location?.address1?.en}
+                                                {data?.clinic?.location?.address1}
                                             </p>
                                             <Avatar size={20} src={<img src={map} alt='avatar' />} />
                                         </div>
@@ -135,6 +135,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                                         <span className={'clinic_location_name'}>{t('Phone')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
+                                                + {data?.clinic?.phone_country_code} {' '}
                                                 {data?.clinic?.phone_number}
                                             </p>
                                             <p>

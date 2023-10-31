@@ -68,7 +68,7 @@ function NursLabCalendar() {
     return (
         <section className={'table_conteiner'}>
             <Spin spinning={loading}>
-                <ClinicManagerCalendarHead date={date} setDate={setDate}/>
+                <ClinicManagerCalendarHead date={date} setDate={setDate} calendarTitle={false}/>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="d-flex justify-content-center w-100">
