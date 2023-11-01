@@ -19,11 +19,11 @@ function AppPersonalDetails({
 	namesState,
 	showPayment,
 	setShowPayment,
-	show,verifyState,setVerifyState
+	show,verifyState,setVerifyState,personalForm
 }) {
 	let token = useSelector(state => state.auth.token)
-	let formRef = useRef()
-	let refObj = formRef?.current?.getFieldValue()
+
+
 	let language = useSelector((state) => state.app.current_locale)
 	const [phoneLoading, setPhoneLoading] = useState(false)
 	const [codeAndNumber, setCodeAndNumber] = useState()
@@ -362,7 +362,11 @@ function AppPersonalDetails({
 							showPayment === false ? (
 								<div>
 									<Space style={{ width: '100%' }} direction={'vertical'}>
-										<Form ref={formRef} onValuesChange={handleNamesChange} validateMessages={validateMessages}>
+										<Form ref={personalForm} onValuesChange={handleNamesChange}
+											  validateMessages={validateMessages}
+											  id={'personal_form'}
+
+										>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.first}
 												label={t('First Name')}
@@ -382,10 +386,12 @@ function AppPersonalDetails({
 												label={redStar}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
+
 												rules={[
 													{
 														type: 'email',
-													}
+													},
+
 													// {
 													//     validator:(rule,value)=>{
 													//         if(!value.includes('@') || !value.includes('.')){
@@ -396,6 +402,7 @@ function AppPersonalDetails({
 													// }
 													]}
 											/>
+
 										</Form>
 										{/*<Button*/}
 										{/*	onClick={handleShowPayment}*/}

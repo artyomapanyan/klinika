@@ -44,9 +44,9 @@ function ClinicManager() {
                 <div>
                     <ClinicManagerCalendar />
                 </div>
-                <div>
-                    <NursLabCalendar />
-                </div>
+                {/*<div>*/}
+                {/*    <NursLabCalendar />*/}
+                {/*</div>*/}
                 <div>
                     <ClinicManagerAppointmentsTable />
                 </div>

@@ -13,7 +13,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
         setBtnCollapsed(!btnCollapsed)
     }
 
-
+    //console.log(item)
 
     return(
         <>
@@ -21,7 +21,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
             <tr>
                 <td>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
-                        <span className={'cl_manager_collapse_specialty'}>{item?.speciality}</span>
+                        <span className={'cl_manager_collapse_specialty'}>{item?.service}</span>
                         <img src={arrowDownPurple} alt={'arrowDownPurple'}/>
                     </Button>
                 </td>

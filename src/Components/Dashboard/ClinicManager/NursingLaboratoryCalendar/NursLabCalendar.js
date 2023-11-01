@@ -23,15 +23,15 @@ function NursLabCalendar() {
     let token = useSelector((state) => state.auth.token);
     useEffect(() => {
         setLoading(true)
-        postResource('ClinicManager', 'DoctorWorkload', token, '', {
+        postResource('ClinicManager', 'ClinicWorkload', token, '', {
             from: date[0].format('YYYY-MM-DD'),
             to: date[1].format('YYYY-MM-DD')
         }).then((response) => {
-            console.log(response)
+
             setData({
-                clinic_id:response.clinic.id,
-                clinic:response.clinic,
-                workload:Object.values(response.workload)
+                //clinic_id:response.clinic.id,
+                //clinic:response.clinic,
+                workload:Object.values(response)
             })
             setLoading(false)
 
@@ -46,24 +46,24 @@ function NursLabCalendar() {
             if(!search?.length){
                 return e
             }
-            if(!e.speciality){
+            if(!e.service){
                 return null
             }
-            let speciality = [e.speciality].filter(doc=>{
+            let service = [e.service].filter(doc=>{
                 return doc.toLowerCase().includes(search.toLowerCase())
             })
-            if(speciality.length===0){
+            if(service.length===0){
                 return null
             }
             return {
                 ...e,
-                speciality:speciality
+                service:service
             }
         }).filter(e=>e)
 
     },[search,data])
 
-    console.log(filteredData, data)
+    console.log(data, 'data')
 
     return (
         <section className={'table_conteiner'}>

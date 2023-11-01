@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import AppDoctor from './AppDoctor'
 import AppDate from './AppDate'
 import AppTime from './AppTime'
@@ -38,6 +38,7 @@ function BookAnAppointment({data, setOpen}) {
     const [doctorKey, setDoctorKey] = useState('')
     const [doctorId, setDoctorId] = useState('')
     const [a, seta] = useState(true)
+    const personalForm = useRef();
 
 
 
@@ -99,8 +100,18 @@ function BookAnAppointment({data, setOpen}) {
     }
 
     const handleShowPayment = () => {
-        setShowPayment(true)
-        setShowButtons(false)
+        personalForm.current.validateFields({
+            validateOnly: true
+        }).then(
+            () => {
+                setShowPayment(true)
+                setShowButtons(false)
+            },
+            () => {
+
+            },
+        );
+
 
     }
 
@@ -370,6 +381,7 @@ function BookAnAppointment({data, setOpen}) {
                             setShowPayment={setShowPayment}
                             show={show}
                             verifyState={verify}
+                            personalForm={personalForm}
                             setVerifyState={setVerify}
                         />
                     </div>
@@ -378,6 +390,8 @@ function BookAnAppointment({data, setOpen}) {
                     !showPayment && !show ? <div></div> : showButtons ? <div>
                         <div style={{marginTop: 10}}>
                             <Button onClick={handleShowPayment} className={'all_offers_book_btns'}
+                                    form={'personal_form'}
+                                    htmlType={'submit'}
                                     disabled={namesState?.first && namesState?.last && namesState?.email ? false : true}
                                     type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
                         </div>
