@@ -201,6 +201,15 @@ function AppPersonalDetails({
 		}))
 	}
 
+	const validateMessages = {
+
+		types: {
+			email: '${label} is not a valid email!',
+		},
+
+	};
+
+	const redStar = <div><span style={{color: 'red'}}>*</span> <span>{t('Email')}</span></div>
 
 
 	return (
@@ -353,7 +362,7 @@ function AppPersonalDetails({
 							showPayment === false ? (
 								<div>
 									<Space style={{ width: '100%' }} direction={'vertical'}>
-										<Form ref={formRef} onValuesChange={handleNamesChange}>
+										<Form ref={formRef} onValuesChange={handleNamesChange} validateMessages={validateMessages}>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.first}
 												label={t('First Name')}
@@ -370,18 +379,21 @@ function AppPersonalDetails({
 											/>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.email}
-												label={t('Email')}
+												label={redStar}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
-												rules={[{ required: true },
+												rules={[
 													{
-													    validator:(rule,value)=>{
-													        if(!value.includes('@') || !value.includes('.')){
-													            return Promise.reject('enter valid email')
-													        }
-													        return Promise.resolve();
-													    }
+														type: 'email',
 													}
+													// {
+													//     validator:(rule,value)=>{
+													//         if(!value.includes('@') || !value.includes('.')){
+													//             return Promise.reject('enter valid email')
+													//         }
+													//         return Promise.resolve();
+													//     }
+													// }
 													]}
 											/>
 										</Form>
