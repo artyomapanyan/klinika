@@ -7,6 +7,7 @@ import ClinicManagerCalendarInnCollapse
 import NursLabCalendarInnCollapse from "./NursLabCalendarInnCollapse";
 import dayjs from "dayjs";
 import NursLabCollapseModal from "./NursLabCollapseModal";
+import {t} from "i18next";
 
 function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
     const [btnCollapsed, setBtnCollapsed] = useState(false);
@@ -17,7 +18,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
         setBtnCollapsed(!btnCollapsed)
     }
 
-    console.log(item)
+    console.log(item, 'item')
 
     return(
         <>
@@ -25,8 +26,8 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
             <tr>
                 <td>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
-                        <span className={'cl_manager_collapse_specialty'}>{item?.service}</span>
-                        <img src={arrowDownPurple} alt={'arrowDownPurple'}/>
+                        <span className={'cl_manager_collapse_specialty'}>{t(item?.service)}</span>
+                        {/*<img src={arrowDownPurple} alt={'arrowDownPurple'}/>*/}
                     </Button>
                 </td>
                 {Object.keys(item?.availability??{}).map((key, k)=>   {
@@ -47,7 +48,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
             </tr>
             </tbody>
             <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
-                {selectedDate ? <NursLabCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} item={item} clinic={clinic} specialty={item?.sernice} clinicID={clinicID}   setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
+                {selectedDate ? <NursLabCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} item={item} clinic={clinic} specialty={item?.service} clinicID={clinicID}   setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
 
             {/*{*/}

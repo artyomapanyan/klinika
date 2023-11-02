@@ -29,11 +29,12 @@ function NursLabCalendar() {
         }).then((response) => {
 
             setData({
-                //clinic_id:response.clinic.id,
-                //clinic:response.clinic,
-                workload:Object.values(response)
+                clinic_id:response.clinic.id,
+                clinic:response.clinic,
+                workload:Object.values(response.workload)
             })
             setLoading(false)
+
 
         })
 

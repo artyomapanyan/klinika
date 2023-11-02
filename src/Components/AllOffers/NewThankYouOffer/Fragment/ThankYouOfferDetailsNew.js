@@ -135,8 +135,9 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                                         <span className={'clinic_location_name'}>{t('Phone')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
-                                                + {data?.clinic?.phone_country_code} {' '}
-                                                {data?.clinic?.phone_number}
+                                                {
+                                                    lngs === 'ar' ?  `${data?.clinic?.phone_number} ${data?.clinic?.phone_country_code} +` : `+ ${data?.clinic?.phone_country_code} ${data?.clinic?.phone_number}`
+                                                }
                                             </p>
                                             <p>
                                                 <Avatar

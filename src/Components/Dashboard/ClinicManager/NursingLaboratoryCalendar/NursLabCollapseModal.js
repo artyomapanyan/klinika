@@ -55,12 +55,12 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                 setLoading(true)
                 postResource('Clinic', 'ClinicsAvailableTimes', token, 1, {
                     date: selectedDate,
-                    service: 'nursing',
+                    service: item?.service,
                 }).then(response => {
                     setLoading(false)
                     setTimes(response.flat())
                     setNoTimes(response)
-                    console.log(response)
+                    console.log(response, 'kkk')
 
                 })
 
@@ -132,8 +132,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
             ...(additional ?? {}),
             ...data,
             speciality_id,
-            service_type: 'nursing',
-            clinic_id: 1,
+            service_type: item?.service,
+            clinic_id: clinicID,
             //doctor_id: doctor.id,
             booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm')
 
@@ -306,15 +306,37 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
                             <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
 
-                            <FormInput label={t('Nursing tasks')}
-                                       name={'nursing_tasks'}
-                                       inputProps={{mode: 'multiple'}}
-                                       rules={[{required: true}]}
-                                       resourceParams={{
-                                           clinic: 1
-                                       }}
-                                       inputType={'resourceSelect'}
-                                       resource={'NursingTask'}/>
+                                {
+                                    item?.service === 'nursing' ? <FormInput label={t('Nursing tasks')}
+                                                                             name={'nursing_tasks'}
+                                                                             inputProps={{mode: 'multiple'}}
+                                                                             rules={[{required: true}]}
+                                                                             resourceParams={{
+                                                                                 clinic: clinicID
+                                                                             }}
+                                                                             inputType={'resourceSelect'}
+                                                                             resource={'NursingTask'}
+                                    /> : <div>
+                                        <FormInput label={t('Lab Tests')}
+                                                   name={'lab_test_id'}
+                                                   rules={[{required: true}]}
+                                                   inputType={'resourceSelect'}
+                                                   resourceParams={{
+                                                       clinic: clinicID
+                                                   }}
+                                                   resource={'LabTest'}/>
+
+                                        <FormInput label={t('Lab Packages')}
+                                                   name={'lab_package_id'}
+                                                   rules={[{required: true}]}
+                                                   inputType={'resourceSelect'}
+                                                   resourceParams={{
+                                                       clinic: clinicID
+                                                   }}
+                                                   resource={'LabPackage'}/>
+                                    </div>
+                                }
+
 
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
@@ -434,19 +456,19 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
             </div>
 
 
-            {/*<Drawer size={size} title={t("Add User")} placement="right" onClose={() => setOpen(false)} open={open}>*/}
-            {/*    {*/}
-            {/*        size === "default" ?*/}
-            {/*            <NursLabDrawerSmall setData={setData} data={data} doctor={doctor} specialty={specialty}*/}
-            {/*                                              handleCreateAppointment={handleCreateAppointment}*/}
-            {/*                                              openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :*/}
-            {/*            <NursLabDrawerLarge setData={setData} data={data} doctor={doctor} specialty={specialty}*/}
-            {/*                                              handleCreateAppointment={handleCreateAppointment}*/}
-            {/*                                              setOpen={setOpen} openDrawer={openDrawer}/>*/}
-            {/*    }*/}
+            <Drawer size={size} title={t("Add User")} placement="right" onClose={() => setOpen(false)} open={open}>
+                {
+                    size === "default" ?
+                        <NursLabDrawerSmall setData={setData} data={data}  specialty={specialty}
+                                                          handleCreateAppointment={handleCreateAppointment}
+                                                          openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
+                        <NursLabDrawerLarge setData={setData} data={data}  specialty={specialty}
+                                                          handleCreateAppointment={handleCreateAppointment}
+                                                          setOpen={setOpen} openDrawer={openDrawer}/>
+                }
 
 
-            {/*</Drawer>*/}
+            </Drawer>
 
         </div>
     )

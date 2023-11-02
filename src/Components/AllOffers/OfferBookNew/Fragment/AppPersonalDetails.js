@@ -392,26 +392,11 @@ function AppPersonalDetails({
 														type: 'email',
 													},
 
-													// {
-													//     validator:(rule,value)=>{
-													//         if(!value.includes('@') || !value.includes('.')){
-													//             return Promise.reject('enter valid email')
-													//         }
-													//         return Promise.resolve();
-													//     }
-													// }
 													]}
 											/>
 
 										</Form>
-										{/*<Button*/}
-										{/*	onClick={handleShowPayment}*/}
-										{/*	size={'large'}*/}
-										{/*	type={'primary'}*/}
-										{/*	style={{ marginTop: '0px' }}*/}
-										{/*>*/}
-										{/*	continue*/}
-										{/*</Button>*/}
+
 									</Space>
 								</div>
 							) : (

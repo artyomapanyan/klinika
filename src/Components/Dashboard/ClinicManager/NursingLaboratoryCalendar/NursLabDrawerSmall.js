@@ -7,7 +7,7 @@ import Resources from "../../../../store/Resources";
 import dayjs from "dayjs";
 import React from "react";
 
-function NursLabDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment,setData}) {
+function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCreateAppointment,setData}) {
     let language = useSelector((state) => state?.app?.current_locale);
     const onFinish = (values) => {
 
@@ -26,7 +26,7 @@ function NursLabDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,ha
                 <Space>
                     <Avatar size={50} icon={<UserOutlined/>}/>
                     <div style={{display: "block"}}>
-                        <h3 className={'h1'}>{doctor.first} {doctor.last}</h3>
+                        {/*<h3 className={'h1'}>{doctor.first} {doctor.last}</h3>*/}
                         <div>{specialty}</div>
                     </div>
                 </Space>
