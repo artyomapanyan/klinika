@@ -138,7 +138,7 @@ function AllOfferCalendar({
             callableDays =  [...daysData].filter(e => !e.called)
         }
 
-        //console.log(daysData)
+
 
         Promise.all(callableDays.map((callableDay) => {
             return postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {
@@ -195,7 +195,7 @@ function AllOfferCalendar({
         setDataTimes(e.target.value)
     }
 
-//console.log(dataState)
+
     return <div className={'drawer_cal_bog_div'}>
         <div className={''} style={{backgroundColor: '#BF539E', height: 160,}}>
             <div className={'drawer_cal_head_div'}>
@@ -222,7 +222,7 @@ function AllOfferCalendar({
 
                         {[...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
-                            //console.log(e,daysData, 'e2')
+
                             return <Button key={key}
                                            loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}

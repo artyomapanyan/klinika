@@ -13,7 +13,7 @@ function SwitchStatus({items=[],initialValue,onChange=null, resource, record,nam
 
 
     const onClick = (e) => {
-        console.log(e)
+
             setLoading(true)
             postResource(resource,'updateField',token,record.id,{
                 key:name,

@@ -28,7 +28,7 @@ function AppPaymentMethods({
 	}
 
 	const onChange = e => {
-		console.log('ddd')
+
 		setPaymentMethodState(e.target.value)
 		setDataState(prevState => ({
 			...prevState,

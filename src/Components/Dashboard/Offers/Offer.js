@@ -99,7 +99,7 @@ function Offer() {
 
     let req = <div><span style={{color: 'red'}}>*</span> <span>{t('content')}</span></div>
 
-console.log(data)
+
 
     return(
         <div >

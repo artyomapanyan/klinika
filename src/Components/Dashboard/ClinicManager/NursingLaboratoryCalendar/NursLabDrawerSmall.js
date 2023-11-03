@@ -21,7 +21,7 @@ function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCrea
         return [name, item]
     }
 
-    console.log(data, 'd')
+
 
     return (
         <div className={language === 'ar' ? 'KM_drawer' : ''}>

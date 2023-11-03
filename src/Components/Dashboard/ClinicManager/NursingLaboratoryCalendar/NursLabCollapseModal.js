@@ -46,7 +46,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     const [loading403, setLoading403] = useState(false);
 
 
-    console.log(item, clinicID)
+
 
     useEffect(() => {
 
@@ -60,7 +60,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                     setLoading(false)
                     setTimes(response.flat())
                     setNoTimes(response)
-                    console.log(response, 'kkk')
+
 
                 })
 
@@ -153,7 +153,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
     }
 
-    console.log(data, 'data')
+
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)

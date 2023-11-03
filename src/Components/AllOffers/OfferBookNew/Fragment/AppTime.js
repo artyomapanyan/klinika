@@ -25,7 +25,7 @@ function AppTime({ setDataState, dataState, data, setDataTimes }) {
 				dataState?.doctor_id + '/' + data?.clinic?.id,
 				{ service: 'clinic_visit', date: dataState?.date }
 			).then(response => {
-				console.log('times',response)
+
 				setTimes(response[0])
 				setTimesLoading(false)
 			})

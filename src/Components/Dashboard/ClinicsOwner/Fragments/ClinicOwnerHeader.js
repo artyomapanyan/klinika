@@ -42,7 +42,7 @@ function ClinicOwnerHeader({ noClinicSelect = false, dashboardText=false }) {
 							})
 						]
 
-					console.log(itm)
+
 
 					setItems(itm)
 				}

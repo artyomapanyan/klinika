@@ -74,7 +74,6 @@ function AppDate({setDataState, dataState, data, setDate}) {
             })
         })).then(responses=>{
 
-            //console.log(responses)
             setDaysData(prevState => prevState.map(e=>{
                 let data = responses.find(u=>e.key===u.key);
                 if(data){
