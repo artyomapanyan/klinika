@@ -728,21 +728,21 @@ export default {
 
     ],
 
-    // 'receptionist': [
-    //
-    //     {
-    //         key: 'receptionist',
-    //         icon: <img alt={'icons'} src={dash1}/>,
-    //         label: t(`Dashboard`),
-    //     },
-    //     {
-    //         icon:<DollarOutlined style={{color:'#ce4e99', fontSize:20}}/>,
-    //         key: 'invoices',
-    //         label:  t(`Invoices`),
-    //         permission:'Invoice'
-    //     },
-    //
-    // ],
+    'receptionist': [
+
+        {
+            key: 'receptionist',
+            icon: <img alt={'icons'} src={dash1}/>,
+            label: t(`Dashboard`),
+        },
+        {
+            icon:<DollarOutlined style={{color:'#ce4e99', fontSize:20}}/>,
+            key: 'invoices',
+            label:  t(`Invoices`),
+            permission:'Invoice'
+        },
+
+    ],
 
 
 
