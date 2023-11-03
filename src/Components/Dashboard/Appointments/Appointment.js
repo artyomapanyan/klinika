@@ -27,7 +27,7 @@ function Appointment({isPatient}) {
     let token = useSelector((state) => state.auth.token);
     let role = useSelector((state) => state.auth.selected_role?.key);
 
-console.log(formRef?.current?.getFieldValue())
+
 
 
 

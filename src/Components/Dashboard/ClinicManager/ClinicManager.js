@@ -41,12 +41,14 @@ function ClinicManager() {
                     </Row>
                 }
 
-                <div>
+                <div style={{marginTop: role === 'receptionist' ? -20 : 0}}>
                     <ClinicManagerCalendar />
                 </div>
-                {/*<div>*/}
-                {/*    <NursLabCalendar />*/}
-                {/*</div>*/}
+                <div>
+                    {
+                        role === 'receptionist' ? <NursLabCalendar /> : <div></div>
+                    }
+                </div>
                 <div>
                     <ClinicManagerAppointmentsTable />
                 </div>

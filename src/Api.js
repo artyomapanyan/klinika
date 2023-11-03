@@ -379,6 +379,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/manager/doctors-workload/`,
                 method: 'GET',
             },
+            ClinicWorkload: {
+                url: `${endpoint}${version}/dashboard/manager/clinic-workload/`,
+                method: 'GET',
+            },
         },
     },
     {

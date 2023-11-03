@@ -36,6 +36,7 @@ function OfferBookDetails({ data, showDrawer }) {
 
 
 
+
 	return (
 		<div className={'offer_book_div'}>
 			<div className={'offer_desc'}>
@@ -81,7 +82,7 @@ function OfferBookDetails({ data, showDrawer }) {
 					<div className={'offer_clinic_container'}>
 						<p className={'offer_clinic_name'}>{data?.clinic?.name}</p>
 						<p className={'offer_clinic_address'}>
-							{data?.clinic?.location?.address1?.en}
+							{data?.clinic?.location?.region?.name}, {data?.clinic?.location?.city?.name}
 						</p>
 					</div>
 				</div>
@@ -100,13 +101,13 @@ function OfferBookDetails({ data, showDrawer }) {
 						}
 					>
 						<div className={'clinic_location_div'}>
-							{data?.clinic?.location?.address1?.en && (
+							{data?.clinic?.location?.address1 && (
 								<>
 									<div>
 										<span className={'clinic_location_name'}>{t('Location')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
-												{data?.clinic?.location?.address1?.en}
+												{data?.clinic?.location?.address1}
 											</p>
 											<Avatar size={20} src={<img src={map} alt='avatar' />} />
 										</div>
@@ -139,7 +140,10 @@ function OfferBookDetails({ data, showDrawer }) {
 										<span className={'clinic_location_name'}>{t('Phone')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
-												{data?.clinic?.phone_number}
+												{
+													lngs === 'ar' ?  `${data?.clinic?.phone_number} ${data?.clinic?.phone_country_code} +` : `+ ${data?.clinic?.phone_country_code} ${data?.clinic?.phone_number}`
+												}
+
 											</p>
 											<p>
 												<Avatar

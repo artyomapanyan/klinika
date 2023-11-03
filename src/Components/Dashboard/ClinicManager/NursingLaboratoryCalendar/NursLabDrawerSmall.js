@@ -7,7 +7,7 @@ import Resources from "../../../../store/Resources";
 import dayjs from "dayjs";
 import React from "react";
 
-function NursLabDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment,setData}) {
+function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCreateAppointment,setData}) {
     let language = useSelector((state) => state?.app?.current_locale);
     const onFinish = (values) => {
 
@@ -20,14 +20,17 @@ function NursLabDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,ha
         item.id = +item.phone_code
         return [name, item]
     }
+
+
+
     return (
         <div className={language === 'ar' ? 'KM_drawer' : ''}>
             <div style={{padding: 1, marginTop: 1}}>
                 <Space>
-                    <Avatar size={50} icon={<UserOutlined/>}/>
+                    {/*<Avatar size={50} icon={<UserOutlined/>}/>*/}
                     <div style={{display: "block"}}>
-                        <h3 className={'h1'}>{doctor.first} {doctor.last}</h3>
-                        <div>{specialty}</div>
+                        {/*<h3 className={'h1'}>{doctor.first} {doctor.last}</h3>*/}
+                        <div style={{marginLeft: 7, fontSize: 20, fontWeight: 700}}>{t(specialty)}</div>
                     </div>
                 </Space>
                 <Tag color="#ce4e99" size={'large'} style={{
@@ -58,7 +61,7 @@ function NursLabDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,ha
                         <div style={{width: 80}}>
                             <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={966}
+                                       initialValue={data?.phone_country_code}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        resource={'Country'}

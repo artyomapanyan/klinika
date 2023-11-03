@@ -110,7 +110,7 @@ function OfferBookContent() {
 							<div className={'offer_book_card_image_div'}>
 
 								<img
-									src={data?.cover?.url ? data?.cover?.url : clinic2}
+									src={data?.cover?.url ? data?.cover?.url : off_image_1}
 									alt='cover'
 									className={'offer_card_image_new'}
 								/>

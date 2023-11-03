@@ -19,11 +19,11 @@ function AppPersonalDetails({
 	namesState,
 	showPayment,
 	setShowPayment,
-	show,verifyState,setVerifyState
+	show,verifyState,setVerifyState,personalForm
 }) {
 	let token = useSelector(state => state.auth.token)
-	let formRef = useRef()
-	let refObj = formRef?.current?.getFieldValue()
+
+
 	let language = useSelector((state) => state.app.current_locale)
 	const [phoneLoading, setPhoneLoading] = useState(false)
 	const [codeAndNumber, setCodeAndNumber] = useState()
@@ -201,6 +201,15 @@ function AppPersonalDetails({
 		}))
 	}
 
+	const validateMessages = {
+
+		types: {
+			email: '${label} is not a valid email!',
+		},
+
+	};
+
+	const redStar = <div><span style={{color: 'red'}}>*</span> <span>{t('Email')}</span></div>
 
 
 	return (
@@ -210,7 +219,10 @@ function AppPersonalDetails({
 			{show ? (
 				<>
 					<Space>
-						<h2 style={{ fontWeight: 600 }}>{t('Your Information')}</h2>
+						{
+							!showPayment ? <h2 style={{ fontWeight: 600 }}>{t('Your Information')}</h2> : <div></div>
+						}
+
 					</Space>
 					<div>
 						<div>
@@ -266,7 +278,7 @@ function AppPersonalDetails({
 												<div className={'input_RTL'}>
 
 														<Input
-															value={`+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
+															value={language === 'ar' ? `${codeAndNumber?.phone_number} ${codeAndNumber?.phone_country_code}+` : `+${codeAndNumber?.phone_country_code} ${codeAndNumber?.phone_number}`}
 															style={{
 																marginTop: 7,
 																height: 46,
@@ -288,22 +300,24 @@ function AppPersonalDetails({
 													}}
 
 												>
-													<div onClick={onSendSMSAgain} style={{cursor: 'pointer'}} align={'right'}>
+													<Button type={'secondary'} size={'small'} onClick={onSendSMSAgain} style={{borderRadius: 8}} align={'right'}>
 														{t('Change Number')}
-													</div>
+													</Button>
 
 												</div>
 
-												<div style={{ display: 'flex', width: '100%', gap: 10, justifyContent: 'space-between' }}>
+												<div style={{ display: 'flex', width: '100%', gap: 10, justifyContent: 'space-between', marginTop: 10 }}>
 
 													<div style={{width:'30%', display: 'flex', flexDirection: 'row', paddingTop: 10}}>
 														{mins == 0 && secs == 0 ? (
-															<div
-																style={{ color: '#BF539E', cursor: 'pointer'}}
+															<Button
+																type={'secondary'}
+																style={{marginTop:5, borderRadius: 8}}
 																onClick={onSendAgain}
+																size={'small'}
 															>
 																{t('Send Again')}
-															</div>
+															</Button>
 														) : (
 															<div align={'center'}>
 																<div style={{color: '#BF539E'}}>{t('Resend code')}</div>
@@ -348,7 +362,11 @@ function AppPersonalDetails({
 							showPayment === false ? (
 								<div>
 									<Space style={{ width: '100%' }} direction={'vertical'}>
-										<Form ref={formRef} onValuesChange={handleNamesChange}>
+										<Form ref={personalForm} onValuesChange={handleNamesChange}
+											  validateMessages={validateMessages}
+											  id={'personal_form'}
+
+										>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.first}
 												label={t('First Name')}
@@ -365,29 +383,20 @@ function AppPersonalDetails({
 											/>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.email}
-												label={t('Email')}
+												label={redStar}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
-												rules={[{ required: true },
+
+												rules={[
 													{
-													    validator:(rule,value)=>{
-													        if(!value.includes('@') || !value.includes('.')){
-													            return Promise.reject('enter valid email')
-													        }
-													        return Promise.resolve();
-													    }
-													}
+														type: 'email',
+													},
+
 													]}
 											/>
+
 										</Form>
-										{/*<Button*/}
-										{/*	onClick={handleShowPayment}*/}
-										{/*	size={'large'}*/}
-										{/*	type={'primary'}*/}
-										{/*	style={{ marginTop: '0px' }}*/}
-										{/*>*/}
-										{/*	continue*/}
-										{/*</Button>*/}
+
 									</Space>
 								</div>
 							) : (

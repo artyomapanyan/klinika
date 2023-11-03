@@ -17,10 +17,10 @@ import ClinicManagerCalendarDrawerLarge
 import NursLabDrawerSmall from "./NursLabDrawerSmall";
 import NursLabDrawerLarge from "./NursLabDrawerLarge";
 
-function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate, setUpdate}) {
+function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate, setUpdate}) {
     let language = useSelector((state) => state?.app?.current_locale);
     let statusCode = useSelector((state) => state?.statusCode);
-    const {doctor} = docItem;
+    //const {doctor} = docItem;
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [finishLoading, setFinishLoading] = useState(false);
@@ -50,38 +50,40 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
 
     useEffect(() => {
 
-        if(data.service_type){
-            if(data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit') {
+        if(item.service){
+
                 setLoading(true)
-                postResource('Clinic', 'ClinicsAvailableTimes', token, clinicID, {
+                postResource('Clinic', 'ClinicsAvailableTimes', token, 1, {
                     date: selectedDate,
-                    service: data.service_type,
+                    service: item?.service,
                 }).then(response => {
                     setLoading(false)
                     setTimes(response.flat())
                     setNoTimes(response)
 
+
                 })
-            } else {
-                setLoading(true)
-                postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
-                    service: data.service_type,
-                    date: selectedDate
-                }).then(response => {
-                    setLoading(false)
-                    setTimes(response.flat())
-                    setNoTimes(response)
-                })
-            }
+
+            // else {
+            //     setLoading(true)
+            //     postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, item?.doctor.id + "/" + clinicID, {
+            //         service: data.service_type,
+            //         date: selectedDate
+            //     }).then(response => {
+            //         setLoading(false)
+            //         setTimes(response.flat())
+            //         setNoTimes(response)
+            //     })
+            // }
 
         }
 
-    }, [selectedDate, docItem,data.service_type])
+    }, [selectedDate,data.service_type])
 
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_test_id', 'lab_package_id', 'nursing_tasks']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {
@@ -130,8 +132,9 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
             ...(additional ?? {}),
             ...data,
             speciality_id,
+            service_type: item?.service,
             clinic_id: clinicID,
-            doctor_id: doctor.id,
+            //doctor_id: doctor.id,
             booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm')
 
         }).then(e => {
@@ -144,20 +147,24 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
                 setUpdate((prevState) =>prevState+1)
             }
 
+        }).finally(()=>{
+            setFinishLoading(false)
         })
 
     }
+
 
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)
 
         postResource('Appointment', 'create', token, '', {
+            ...data,
             patient_id: verifyPatient?.patient?.id,
-            service_type: servisTypeAndTime?.service_type,
+            service_type: item?.service,
             specialty_id: speciality_id,
             clinic_id: clinicID,
-            doctor_id: doctor.id,
+            //doctor_id: doctor.id,
             booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
 
         }).then(e => {
@@ -170,6 +177,8 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
                 setUpdate((prevState) =>prevState+1)
             }
 
+        }).finally(()=>{
+            setLoading403(false)
         })
 
     }
@@ -275,33 +284,65 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
                                 <div></div>
                         }
                     </div>
-                    <div >
-                        <Space>
-                            <Avatar size={56} src={doctor?.avatar?.url} icon={<UserOutlined/>}/>
-                            <div style={{display: "block"}}>
-                                <div className={'cl_manager_modal_dr_name'}>{doctor.first} {doctor.last}</div>
-                                <div className={'cl_manager_modal_stecialty_name'}>{specialty}</div>
-                            </div>
-                        </Space>
-                    </div>
+                    {/*<div >*/}
+                    {/*    <Space>*/}
+                    {/*        <Avatar size={56} src={doctor?.avatar?.url} icon={<UserOutlined/>}/>*/}
+                    {/*        <div style={{display: "block"}}>*/}
+                    {/*            <div className={'cl_manager_modal_dr_name'}>{doctor.first} {doctor.last}</div>*/}
+                    {/*            <div className={'cl_manager_modal_stecialty_name'}>{specialty}</div>*/}
+                    {/*        </div>*/}
+                    {/*    </Space>*/}
+                    {/*</div>*/}
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
 
-                            <FormInput label={t('Service Type')} name={'service_type'}
-                                       inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={null}
-                                       inputProps={{
-                                           onChange:(e)=> setServisTypeAndTime(prevState => ({
-                                               ...prevState,
-                                               service_type: e
-                                           }))
-                                       }}
-                                       initialData={getServiceTypes(clinic.services).filter((el) => {
-                                           return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
-                                       })}/>
+                            {/*<FormInput label={t('Service Type')} name={'service_type'}*/}
+                            {/*           inputType={'resourceSelect'}*/}
+                            {/*           rules={[{required: true}]}*/}
+                            {/*           initialValue={null}*/}
+                            {/*           inputProps={{*/}
+                            {/*               onChange:(e)=> setServisTypeAndTime(prevState => ({*/}
+                            {/*                   ...prevState,*/}
+                            {/*                   service_type: e*/}
+                            {/*               }))*/}
+                            {/*           }}*/}
+                            {/*           initialData={getServiceTypes(clinic.services).filter((el) => {*/}
+                            {/*               return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'*/}
+                            {/*           })}/>*/}
 
                             <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
+
+                                {
+                                    item?.service === 'nursing' ? <FormInput label={t('Nursing tasks')}
+                                                                             name={'nursing_tasks'}
+                                                                             inputProps={{mode: 'multiple'}}
+                                                                             rules={[{required: true}]}
+                                                                             resourceParams={{
+                                                                                 clinic: clinicID
+                                                                             }}
+                                                                             inputType={'resourceSelect'}
+                                                                             resource={'NursingTask'}
+                                    /> : <div>
+                                        <FormInput label={t('Lab Tests')}
+                                                   name={'lab_test_id'}
+                                                   rules={[{required: true}]}
+                                                   inputType={'resourceSelect'}
+                                                   resourceParams={{
+                                                       clinic: clinicID
+                                                   }}
+                                                   resource={'LabTest'}/>
+
+                                        <FormInput label={t('Lab Packages')}
+                                                   name={'lab_package_id'}
+                                                   rules={[{required: true}]}
+                                                   inputType={'resourceSelect'}
+                                                   resourceParams={{
+                                                       clinic: clinicID
+                                                   }}
+                                                   resource={'LabPackage'}/>
+                                    </div>
+                                }
+
 
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
@@ -343,7 +384,7 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
                                        }}
                                        resourceParams={{
                                            phone_country_code: data?.phone_country_code,
-                                           clinic_id: clinicID
+                                           clinic_id: 1
                                        }}
                                        initialData={[]}
                                        handleMapItems={(item, name, status) => searchByNumber(item, name, status)}
@@ -404,7 +445,7 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
 
                         </div>
                         <div style={{ marginTop: 24}}>
-                            {t("Client didn't get a message")}? <span style={{color: '#BF539E', fontWeight: 700}}>{t('Resend')}</span>
+                            {t("Client didn't get a message")}? <span onClick={onSendCode} style={{color: '#BF539E', fontWeight: 700, cursor: 'pointer'}}>{t('Resend')}</span>
                         </div>
                         {
                             overAllState ? <Button style={{width: '100%', marginTop:24}} type={'primary'} onClick={onVerify}>{t('Verify')}</Button> : <div></div>
@@ -424,10 +465,10 @@ function NursLabCollapseModal({setDate,docItem, specialty, selectedDate, clinicI
             <Drawer size={size} title={t("Add User")} placement="right" onClose={() => setOpen(false)} open={open}>
                 {
                     size === "default" ?
-                        <NursLabDrawerSmall setData={setData} data={data} doctor={doctor} specialty={specialty}
+                        <NursLabDrawerSmall setData={setData} data={data}  specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
-                        <NursLabDrawerLarge setData={setData} data={data} doctor={doctor} specialty={specialty}
+                        <NursLabDrawerLarge setData={setData} data={data}  specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           setOpen={setOpen} openDrawer={openDrawer}/>
                 }

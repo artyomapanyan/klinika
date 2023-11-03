@@ -53,7 +53,7 @@ function AppDate({ setDataState, dataState, data, setDate, setDataTimes }) {
 				dataState?.doctor_id + '/' + data?.clinic?.id,
 				{ service: 'clinic_visit' }
 			).then(response => {
-				console.log('response', response)
+
 				const res = response?.working_hours
 				let day = []
 				let time = []

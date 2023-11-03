@@ -58,7 +58,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
     const onAutoFillYes = () => {
         setAutoFillState(false)
     }
-//console.log(formRef.current.setFieldsValue('avatar'), 'dddffff')
+
 
 
     return(

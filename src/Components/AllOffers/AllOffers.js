@@ -33,6 +33,7 @@ function  AllOffers() {
 		order_by: 'new_price',
 		page: 1,
 		per_page: 15,
+		order: 'desc'
 		//...paramsToObject(searchParams.entries())
 	})
 
@@ -54,7 +55,8 @@ function  AllOffers() {
 		false,
 		{
 			PublicClinic: { per_page: 5000 },
-			PublicCategory: {}
+			PublicCategory: {},
+
 		},
 		{
 			loadMore: true

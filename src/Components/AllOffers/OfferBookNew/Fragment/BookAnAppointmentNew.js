@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import AppDoctor from './AppDoctor'
 import AppDate from './AppDate'
 import AppTime from './AppTime'
@@ -38,6 +38,7 @@ function BookAnAppointment({data, setOpen}) {
     const [doctorKey, setDoctorKey] = useState('')
     const [doctorId, setDoctorId] = useState('')
     const [a, seta] = useState(true)
+    const personalForm = useRef();
 
 
 
@@ -99,8 +100,18 @@ function BookAnAppointment({data, setOpen}) {
     }
 
     const handleShowPayment = () => {
-        setShowPayment(true)
-        setShowButtons(false)
+        personalForm.current.validateFields({
+            validateOnly: true
+        }).then(
+            () => {
+                setShowPayment(true)
+                setShowButtons(false)
+            },
+            () => {
+
+            },
+        );
+
 
     }
 
@@ -179,20 +190,20 @@ function BookAnAppointment({data, setOpen}) {
                     </div>
                 </Space>
                 <div>
-                    <div style={{display: 'flex', gap: 8}}>
-                        <div style={{height: 25, borderRight: '1px solid #a7a8a730'}}></div>
-                        <div style={{
-                            color: dataState?.doctor_id === el?.id ? '#ffffff' : '#000000',
-                            fontSize: 12,
-                            display: 'flex',
-                            gap: 8
-                        }}>
-                            <div><img alt={'gold_star'} src={gold_star}/></div>
+                    {/*<div style={{display: 'flex', gap: 8}}>*/}
+                    {/*    <div style={{height: 25, borderRight: '1px solid #a7a8a730'}}></div>*/}
+                    {/*    <div style={{*/}
+                    {/*        color: dataState?.doctor_id === el?.id ? '#ffffff' : '#000000',*/}
+                    {/*        fontSize: 12,*/}
+                    {/*        display: 'flex',*/}
+                    {/*        gap: 8*/}
+                    {/*    }}>*/}
+                    {/*        <div><img alt={'gold_star'} src={gold_star}/></div>*/}
 
-                            <div style={{marginTop: 2}}>0</div>
-                        </div>
+                    {/*        <div style={{marginTop: 2}}>0</div>*/}
+                    {/*    </div>*/}
 
-                    </div>
+                    {/*</div>*/}
                 </div>
             </Button>,
             children: <div key={doctorKey}>
@@ -370,6 +381,7 @@ function BookAnAppointment({data, setOpen}) {
                             setShowPayment={setShowPayment}
                             show={show}
                             verifyState={verify}
+                            personalForm={personalForm}
                             setVerifyState={setVerify}
                         />
                     </div>
@@ -378,6 +390,8 @@ function BookAnAppointment({data, setOpen}) {
                     !showPayment && !show ? <div></div> : showButtons ? <div>
                         <div style={{marginTop: 10}}>
                             <Button onClick={handleShowPayment} className={'all_offers_book_btns'}
+                                    form={'personal_form'}
+                                    htmlType={'submit'}
                                     disabled={namesState?.first && namesState?.last && namesState?.email ? false : true}
                                     type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
                         </div>

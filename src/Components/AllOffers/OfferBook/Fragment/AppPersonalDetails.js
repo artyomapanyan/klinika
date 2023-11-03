@@ -21,7 +21,6 @@ function AppPersonalDetails({setDataState, dataState, setResponseCodeState, resp
     const [codeStatus, setCodeStatus] = useState(null)
 
 
-//console.log(formRef?.current?.getFieldValue())
 
     useEffect(() => {
         if(dataState?.payment_method_id){

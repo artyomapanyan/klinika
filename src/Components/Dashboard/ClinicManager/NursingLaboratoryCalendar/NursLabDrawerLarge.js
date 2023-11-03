@@ -25,7 +25,7 @@ function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCrea
         return [name, item]
     }
 
-    console.log(data)
+
 
     return(
         <div className={language === 'ar' ? 'KM_drawer' : ''}>
@@ -43,14 +43,14 @@ function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCrea
                 <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems: 'center'}}>
                     <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems: 'center', width: '50%'}}>
                         <Space >
-                            <Avatar size={50} icon={<UserOutlined />} style={{marginTop: 20}} />
-                            <div style={{display:"block", marginTop: 26}}>
-                                <div className={'dr_manager_divider_dr_name'}>{doctor.first} {doctor.last}</div>
+                            {/*<Avatar size={50} icon={<UserOutlined />} style={{marginTop: 20}} />*/}
+                            <div style={{display:"block", marginBottom: 10 }}>
+                                {/*<div className={'dr_manager_divider_dr_name'}>{doctor.first} {doctor.last}</div>*/}
 
-                                <div>{specialty}</div>
+                                <div style={{marginLeft: 7, fontSize: 20, fontWeight: 700}}>{t(specialty)}</div>
                             </div>
                         </Space>
-                        <Tag color="#ce4e99" size={'large'} style={{fontSize:14, fontWeight:600, height: 30, marginTop:20,  padding:'4px 10px', borderRadius:10}}>{data.time}</Tag>
+                        <Tag color="#ce4e99" size={'large'} style={{fontSize:14, fontWeight:600, height: 30,  padding:'4px 10px', borderRadius:10, }}>{data.time}</Tag>
                     </div>
                     <div align={'right'}>
                         <Button onClick={openDrawer} style={{color:'#774D9D', border:"none", fontSize:18, fontWeight: 600}}><LeftOutlined color={'#774D9D'} />{t('Back to short form')}</Button>
@@ -70,7 +70,7 @@ function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCrea
                                 <div style={{width:110}}>
                                     <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={966}
+                                               initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}

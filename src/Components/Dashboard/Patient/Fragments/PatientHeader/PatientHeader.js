@@ -23,7 +23,7 @@ function PatientHeader({data}) {
         setIsModalOpen(false);
     };
 
-    console.log(data)
+
 
     return (
         <div className={'patient_head_div'}>

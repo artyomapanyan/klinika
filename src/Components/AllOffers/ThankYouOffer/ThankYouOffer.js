@@ -85,7 +85,7 @@ function ThankYouOffer() {
     const onApply = () => {
         setOpen(false);
     }
-  console.log('thank you compoonent')
+
 
     return(
         <div>
