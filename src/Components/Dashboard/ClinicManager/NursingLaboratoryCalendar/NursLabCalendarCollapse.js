@@ -20,6 +20,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
 
 
 
+
     return(
         <>
             <tbody>
@@ -31,7 +32,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
                     </Button>
                 </td>
                 {Object.keys(item?.availability??{}).map((key, k)=>   {
-                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: 'pointer'}} onClick={thisDate > key || item.availability[key] === null ? null : () => setSelectedDate(key)}>
+                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || item?.availability[key] === null ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key] === null ? null : () => setSelectedDate(key)}>
 
                         <div className={"progressPurple"} style={{background: item.availability[key] === null ? 'url('+gray_grid+')' : '#774d9d20'}}>
                             <div className="progress-bar "

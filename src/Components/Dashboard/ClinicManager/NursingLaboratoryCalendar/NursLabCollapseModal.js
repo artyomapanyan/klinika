@@ -83,7 +83,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_test_id', 'lab_package_id', 'nursing_tasks']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {

@@ -30,7 +30,7 @@ function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCrea
                     {/*<Avatar size={50} icon={<UserOutlined/>}/>*/}
                     <div style={{display: "block"}}>
                         {/*<h3 className={'h1'}>{doctor.first} {doctor.last}</h3>*/}
-                        <div>{t(specialty)}</div>
+                        <div style={{marginLeft: 7, fontSize: 20, fontWeight: 700}}>{t(specialty)}</div>
                     </div>
                 </Space>
                 <Tag color="#ce4e99" size={'large'} style={{
