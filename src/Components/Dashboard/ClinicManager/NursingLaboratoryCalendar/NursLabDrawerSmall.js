@@ -20,14 +20,17 @@ function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCrea
         item.id = +item.phone_code
         return [name, item]
     }
+
+    console.log(data, 'd')
+
     return (
         <div className={language === 'ar' ? 'KM_drawer' : ''}>
             <div style={{padding: 1, marginTop: 1}}>
                 <Space>
-                    <Avatar size={50} icon={<UserOutlined/>}/>
+                    {/*<Avatar size={50} icon={<UserOutlined/>}/>*/}
                     <div style={{display: "block"}}>
                         {/*<h3 className={'h1'}>{doctor.first} {doctor.last}</h3>*/}
-                        <div>{specialty}</div>
+                        <div>{t(specialty)}</div>
                     </div>
                 </Space>
                 <Tag color="#ce4e99" size={'large'} style={{
@@ -58,7 +61,7 @@ function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCrea
                         <div style={{width: 80}}>
                             <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={966}
+                                       initialValue={data?.phone_country_code}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        resource={'Country'}

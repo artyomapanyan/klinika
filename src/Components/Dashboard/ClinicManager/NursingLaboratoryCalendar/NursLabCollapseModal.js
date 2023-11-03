@@ -147,17 +147,21 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                 setUpdate((prevState) =>prevState+1)
             }
 
+        }).finally(()=>{
+            setFinishLoading(false)
         })
 
     }
 
+    console.log(data, 'data')
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)
 
         postResource('Appointment', 'create', token, '', {
+            ...data,
             patient_id: verifyPatient?.patient?.id,
-            service_type: servisTypeAndTime?.service_type,
+            service_type: item?.service,
             specialty_id: speciality_id,
             clinic_id: clinicID,
             //doctor_id: doctor.id,
@@ -173,6 +177,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                 setUpdate((prevState) =>prevState+1)
             }
 
+        }).finally(()=>{
+            setLoading403(false)
         })
 
     }
@@ -439,7 +445,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
                         </div>
                         <div style={{ marginTop: 24}}>
-                            {t("Client didn't get a message")}? <span style={{color: '#BF539E', fontWeight: 700}}>{t('Resend')}</span>
+                            {t("Client didn't get a message")}? <span onClick={onSendCode} style={{color: '#BF539E', fontWeight: 700, cursor: 'pointer'}}>{t('Resend')}</span>
                         </div>
                         {
                             overAllState ? <Button style={{width: '100%', marginTop:24}} type={'primary'} onClick={onVerify}>{t('Verify')}</Button> : <div></div>

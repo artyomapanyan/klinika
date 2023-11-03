@@ -64,7 +64,7 @@ function NursLabCalendar() {
 
     },[search,data])
 
-    console.log(data, 'data')
+
 
     return (
         <section className={'table_conteiner'}>

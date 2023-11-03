@@ -7,8 +7,8 @@ import {useSelector} from "react-redux";
 function OfferHours({ data }) {
 	let language = useSelector((state) => state.app.current_locale)
 
-	const startDate = dayjs(data?.begins_at?.iso_string)
-	const endDate = dayjs(data?.expired_at?.iso_string).add(1, 'day')
+	const startDate = dayjs(data?.begins_at?.date)
+	const endDate = dayjs(data?.expired_at?.date).add(1, 'day')
 	const totalSeconds = (endDate - new Date()) / 1000
 	const days = Math.floor(totalSeconds / 3600 / 24)
 	const hours = Math.floor(totalSeconds / 3600) % 24
