@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import clinic2 from '../../../../dist/Img/clinic2.png'
+
 import '../../AllOffers.sass'
 import OfferBookDetailsNew from './OfferBookDetailsNew'
 import {postResource, useGetResourceSingle} from '../../../Functions/api_calls'
@@ -12,8 +12,8 @@ import OfferHours from './OfferHours.js'
 import off_image_1 from '../../../../dist/Img/off_image_1.jpg'
 import Preloader from '../../../Preloader'
 import { useNavigate } from 'react-router'
-import { RightOutlined, LeftOutlined } from '@ant-design/icons'
-import {Button, Drawer, Result} from "antd";
+import {  LeftOutlined } from '@ant-design/icons'
+import { Drawer, Result} from "antd";
 
 function OfferBookContent() {
 	const params = useParams()
