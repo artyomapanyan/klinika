@@ -44,10 +44,10 @@ function SuperAdminCurrentMonth() {
                                 </div>:
                                 data?.incomes >= data?.incomes_prev_month ? <div style={{color:"#6DAF56"}}>
                                     <img alt={'icons'} src={arrowGreen}/>
-                                    {`${data?.percentage}% / + ${data?.incomes - data?.incomes_prev_month}`}
+                                    {`${data?.percentage?.toFixed(1)}% / + ${data?.incomes - data?.incomes_prev_month}`}
                                 </div> : <div style={{color:"rgba(207, 83, 62, 1)"}}>
                                     <img alt={'icons'} src={arrowRed}/>
-                                    {`${data?.percentage}% / - ${data?.incomes_prev_month - data?.incomes}`}
+                                    {`${data?.percentage?.toFixed(1)}% / - ${data?.incomes_prev_month - data?.incomes}`}
                                 </div>
                         }
                     </div>
