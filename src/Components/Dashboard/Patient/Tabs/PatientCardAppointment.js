@@ -27,6 +27,8 @@ function PatientCardAppointment({bigData, id, setBigData}) {
     const [loading, setLoading] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
+    const [editState, setEditState] = useState(false)
+    const [fileChangeState, setFileChangeState] = useState({})
     const showModal = (data) => {
         setIsModalOpen(data??{});
     };
@@ -55,11 +57,11 @@ function PatientCardAppointment({bigData, id, setBigData}) {
             setLoadingSubmit(false)
 
         })
+        setEditState(false)
     }
 
 
     const onFileCreate = (values) => {
-
         postResource1('Appointment', 'NotePurpose', token, `${id}/upload-files`, values, null, true).then((response) => {
             setBigData(response)
             setLoadingSubmit(false)
@@ -68,13 +70,18 @@ function PatientCardAppointment({bigData, id, setBigData}) {
 
     }
 
+    // useEffect(() => {
+    //     if(fileChangeState) {
+    //         onFileCreate(fileChangeState)
+    //     }
+    // }, [fileChangeState])
+
 
 
     return(
         <Layout.Content>
             {
                 loading ? <Preloader /> : <Row gutter={[40,0]}>
-                    <Col lg={24}>   <h1 className={'h1'}>{t('Doctor Notes')}</h1></Col>
                     <Col lg={24}>
                         <Row gutter={[40,0]}>
                             <Col lg={16}>
@@ -82,16 +89,40 @@ function PatientCardAppointment({bigData, id, setBigData}) {
                                     <Form
                                             onFinish={onFinish}
                                         >
-                                            <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
-                                                <TextArea placeholder={t("Patients condition")} rows={8}/>
-                                            </Form.Item>
-                                            <div align={'right'}>
-                                                <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                        <h1 className={'h1'}>{t('Doctor Notes')}</h1>
+                                        {
+                                            editState ? <div></div> : <div>
+                                                {
+                                                    loadingSubmit ? <Preloader small={50}/> : <div className={'dr_notes_text_div'}>
+                                                        {bigData?.appointment_doctor_notes}
+                                                    </div>
+                                                }
+
+                                                <div align={'right'} style={{padding: 16}}>
+                                                    <Button onClick={()=>setEditState(true)} loading={loadingSubmit} style={{fontWeight: 700}}  type={'secondary'}>{t('Edit')}</Button>
+                                                </div>
                                             </div>
-                                            <h1 className={'h1'}>{t('Purpose')}</h1>
-                                            <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
-                                                <TextArea placeholder={t("Add notes here")} rows={8} />
-                                            </Form.Item>
+                                        }
+
+
+                                        {
+                                            !editState ? <div></div> : <div className={'Purpose_textarea_div'}>
+                                                <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
+                                                    <TextArea placeholder={t("Patients condition")} rows={8}/>
+                                                </Form.Item>
+                                                <div align={'right'}>
+                                                    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                                </div>
+
+                                            </div>
+                                        }
+                                        <h1 className={'h1'}>{t('Purpose')}</h1>
+                                            <div className={'Purpose_textarea_div'}>
+                                                <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
+                                                    <TextArea placeholder={t("Add notes here")} rows={8} />
+                                                </Form.Item>
+                                            </div>
+
                                         <div align={'right'}>
                                             <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
                                         </div>
@@ -147,14 +178,16 @@ function PatientCardAppointment({bigData, id, setBigData}) {
                                     <h1 className={'h1'}>{t('Files and Images')}</h1>
                                     <Form ref={formRef}
                                         onFinish={onFileCreate}
+                                          onValuesChange={(e) => setFileChangeState(e)}
+
                                     >
                                         <FileManager text1={'Drag here or Select'}
                                                      text2={'files and images'}
                                                      uploadIcon={<img alt={'icons'} src={addimage}/>}
                                                      limit={5}
-                                                     name={'files'} initialFileList={bigData?.files} formRef={formRef} />
+                                                     name={'files'} initialFileList={bigData?.files} formRef={formRef} type={'drag'} />
 
-                                        <Button htmlType={'submit'}>{t('Save')}</Button>
+                                        <Button  htmlType={'submit'}>{t('Save')}</Button>
                                     </Form>
 
                                 </div>

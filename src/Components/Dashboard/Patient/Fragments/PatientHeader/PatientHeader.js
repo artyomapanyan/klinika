@@ -9,7 +9,7 @@ import PrivateNotesModal from "./PrivateNotesModal";
 import dayjs from "dayjs";
 import {t} from "i18next";
 
-function PatientHeader({data}) {
+function PatientHeader({data, setData}) {
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,15 +57,14 @@ function PatientHeader({data}) {
                                 </div>
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Insurance')}</div>
-                                    <Space className={'text_norm'}>{data?.patient?.insurance_company?.name}  <span style={{fontWeight:700}}>#{data?.patient?.insurance_company?.id}
-                                    </span>
-                                        {/*<Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',*/}
-                                        {/*    color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >*/}
-                                        {/*    {*/}
-                                        {/*        dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'*/}
-                                        {/*    }*/}
+                                    <Space className={'text_norm'}>{data?.patient?.insurance_company?.name}
+                                        <Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',
+                                            color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >
+                                            {
+                                                dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'
+                                            }
 
-                                        {/*</Tag>*/}
+                                        </Tag>
                                     </Space>
                                 </div>
                             </div>
@@ -112,7 +111,7 @@ function PatientHeader({data}) {
                                 <div className={'private_note_text'} align={'center'} >{t('Private notes')}</div>
                             </div>
                             <Modal className={'medications_modal'} title={t("Private notes")} footer={false} width={640} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                <PrivateNotesModal data={data}/>
+                                <PrivateNotesModal data={data} setData={setData}/>
 
                             </Modal>
                         </div>

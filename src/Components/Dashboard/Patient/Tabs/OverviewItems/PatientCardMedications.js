@@ -7,6 +7,7 @@ import {useParams} from "react-router";
 import {postResource} from "../../../../Functions/api_calls";
 import AddMedications from "../CardAppointmentItems/AddMedications";
 import Preloader from "../../../../Preloader";
+import {t} from "i18next";
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
@@ -84,7 +85,7 @@ function PatientCardMedications({tab}) {
             {
                 loading ? <Preloader /> : <Card
                     title="Current medications"
-                    extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>Add</span></Button>}
+                    extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>{t('Add')}</span></Button>}
                     style={{ padding:20}}
                 >
                     <List
@@ -98,7 +99,7 @@ function PatientCardMedications({tab}) {
                                     title={<div style={{fontWeight: 700}}>{e?.name}</div>}
                                     description={<div><span style={{color: '#000000'}}>{`${e?.frequency} times/day /`}</span>{`${e?.dose} pcs `}</div>}
                                 />
-                                <div>{e?.duration} days</div>
+                                <div>{e?.duration} {t('days')}</div>
 
                             </List.Item>
                         }}

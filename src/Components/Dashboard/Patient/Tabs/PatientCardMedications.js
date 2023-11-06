@@ -23,7 +23,8 @@ function PatientCardMedications({tab}) {
     useEffect(() => {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
-                appointment: params.id
+                appointment: params.id,
+                per_page: 50
             }
         ).then((response) => {
             setPrescriptions(response?.items)
@@ -54,6 +55,8 @@ function PatientCardMedications({tab}) {
 
     //.filter((e) => e?.name?.toLowerCase().includes(search?.toLowerCase()))
 
+
+
     return(
         <div style={{padding:40}}>
             {
@@ -67,7 +70,7 @@ function PatientCardMedications({tab}) {
                        return dayjs(el?.end_date?.iso_string) >= dayjs()
                     }).map((el) => {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
-                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
+                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
 
                     })
                 }
@@ -84,11 +87,11 @@ function PatientCardMedications({tab}) {
 
                      {
 
-                         prescriptions.filter((el) => {
+                         prescriptions?.filter((el) => {
                              return dayjs(el?.end_date?.iso_string) < dayjs()
-                         }).map((el) => {
+                         })?.filter((el) => el?.name?.toLowerCase().includes(searchPrescriptions?.toLowerCase()))?.map((el) => {
                              return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
-                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
+                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
 
                          })
                      }

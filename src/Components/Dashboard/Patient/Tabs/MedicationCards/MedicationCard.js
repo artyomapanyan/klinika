@@ -18,7 +18,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
 
 
     return(
-            <Col lg={8} style={{marginTop:16}} >
+            <Col xxl={8} xl={12} lg={12} md={12} sm={24} xs={24} style={{marginTop:16}} >
                 <div className={'patient_card'}>
                     <div className={'patient_card_header'}>
                         <div>
@@ -30,7 +30,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
                             </div>
                         </div>
                         {
-                            add_update_btns ? <div>
+                            add_update_btns ? <div style={{display: 'flex'}}>
                                 <Button className={'patient_card_x'} onClick={()=>showModal(el)}><EditOutlined style={{color: '#bdbbbb'}}/></Button>
                                 <Button className={'patient_card_x'} onClick={deletePrescription}><img alt={'icons'} src={closeLightGray}/></Button>
                             </div> : <div></div>
@@ -44,31 +44,31 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
 
                     <Row>
                         <Col lg={7} align={language === 'en' ? 'left' : 'right'}>
-                            <div className={"medication_card_text1"}>Frequency</div>
-                            <div className={"medication_card_text2"}>{el?.frequency} times/day</div>
+                            <div className={"medication_card_text1"}>{t('Frequency')}</div>
+                            <div className={"medication_card_text2"}>{el?.frequency} {t('times / day')}</div>
                         </Col>
                         <Col lg={1} align={'center'}>
-                            <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
+                            <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45, margin: '0 10px'}} />
                         </Col>
                         <Col lg={7} align={'center'}>
-                            <div className={"medication_card_text1"}>Dose</div>
+                            <div className={"medication_card_text1"}>{t('Dose')}</div>
                             <div className={"medication_card_text2"}>{el?.dose} pcs</div>
                         </Col>
                         <Col lg={1} align={'center'}>
-                            <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45}} />
+                            <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45,  margin: '0 10px'}} />
                         </Col>
 
                         <Col lg={7} align={language === 'en' ? 'right' : 'left'}>
-                            <div className={"medication_card_text1"}>Duration</div>
-                            <div className={"medication_card_text2"}>{el?.duration} days</div>
+                            <div className={"medication_card_text1"}>{t('Duration')}</div>
+                            <div className={"medication_card_text2"}>{el?.duration} {t('days')}</div>
                         </Col>
                     </Row>
 
                     <div style={{borderBottom: '1px solid #cbc9cb', marginTop: 12, marginBottom: 12}}></div>
 
                     <div>
-                        <div className={"medication_card_text1"}>Note</div>
-                        <div className={"medication_card_text2"}>{el?.note ? el?.note : 'No note'}</div>
+                        <div className={"medication_card_text1"}>{t('Note')}</div>
+                        <div className={"medication_card_text2"}>{el?.note ? el?.note : t('No note')}</div>
                     </div>
                 </div>
             </Col>
