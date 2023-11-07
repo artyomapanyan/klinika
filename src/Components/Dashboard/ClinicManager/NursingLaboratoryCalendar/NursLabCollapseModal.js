@@ -384,7 +384,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                        }}
                                        resourceParams={{
                                            phone_country_code: data?.phone_country_code,
-                                           clinic_id: 1
+                                           clinic_id: clinicID
                                        }}
                                        initialData={[]}
                                        handleMapItems={(item, name, status) => searchByNumber(item, name, status)}

@@ -217,14 +217,14 @@ function Appointments() {
                             }
 
                        },
-                                   (selectedRole === 'super' || selectedRole === 'admin' ?
-                                       {
-                        dataIndex:'doctor',
-                        title:t('Doctor'),
-                        key:'doctor',
-                        render:(i, record )=> <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><MedicineBoxOutlined style={{color: '#c98a1e'}} /></Button>
-
-                    } : {} ),
+                    //                (selectedRole === 'super' || selectedRole === 'admin' ?
+                    //                    {
+                    //     dataIndex:'doctor',
+                    //     title:t('Doctor'),
+                    //     key:'doctor',
+                    //     render:(i, record )=> <Button style={{border:'none'}} onClick={() => onResourceShow(record)} ><MedicineBoxOutlined style={{color: '#c98a1e'}} /></Button>
+                    //
+                    // } : {} ),
                 ]} title={t('Appointments')}/>
             </div>
             </Spin>
