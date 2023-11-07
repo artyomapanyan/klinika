@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import NavbarOffersHeader from "../OfferBookNew/Fragment/NavbarOffersHeader";
-import OfferBookContentNew from "../OfferBookNew/Fragment/OfferBookContentNew";
+
 import React from "react";
 import NewThankYouBookContent from "./Fragment/NewThankYouBookContent";
 
