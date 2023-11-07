@@ -105,7 +105,7 @@ function VideoCall({data}) {
                             <div>
                                 <div className={'video_call_grey_text'}>{t('Purpose')}</div>
                                 <div className={'video_call_bold_text'}>
-                                    {t('Fever, issue with nose and skin')}
+                                    {data?.purpose}
                                 </div>
                             </div>
 

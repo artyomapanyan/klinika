@@ -12,7 +12,7 @@ let resource = 'Appointment';
 
 
 
-function PrivateNotesModal({data}) {
+function PrivateNotesModal({data, setData}) {
     let token = useSelector((state) => state.auth.token);
     let roleForPrivateNotes = useSelector((state) => state);
     const [notes, setNotes] = useState(JSON.parse(data.private_notes));
@@ -36,7 +36,10 @@ function PrivateNotesModal({data}) {
         }
 
 
+
+
     }
+
     const handleSubmit = (notes,isDelete) => {
        return postResource(resource, 'PrivateNotes', token, `${data.id}/${isDelete?'update':'add'}-private-notes`, {
             private_notes: notes
@@ -44,6 +47,10 @@ function PrivateNotesModal({data}) {
            method:isDelete?'PUT':'POST'
        }).then((response) => {
             setNotes(JSON.parse(response.private_notes))
+           setData(prevState => ({
+               ...prevState,
+               private_notes: JSON.stringify(notes)
+           }))
             formRef.current.resetFields()
            return response
 
@@ -86,7 +93,7 @@ function PrivateNotesModal({data}) {
                             <FormInput label={t('Name')} name={'note'} rules={[{required: true}]} maxLength={200}/>
                         </div>
                         <div style={{width: '20%'}}>
-                            <Button type={'primary'} className={'private_notes_add_btn'} htmlType={'submit'} loading={buttonLoading}>Add</Button>
+                            <Button type={'primary'} className={'private_notes_add_btn'} htmlType={'submit'} loading={buttonLoading}>{t('Add')}</Button>
                         </div>
 
                     </div> : <div></div>

@@ -53,7 +53,6 @@ function Patient() {
     }
 
 
-
     return(
         <div style={{marginBottom: 100, marginTop: -120}} >
             <div>
@@ -63,7 +62,7 @@ function Patient() {
             {
                 loading ? <Preloader /> : <div>
                     <div style={{background:"#ffffff", margin:'0 24px', borderRadius: 12}}>
-                        <PatientHeader data={data} />
+                        <PatientHeader data={data} setData={setData} />
 
                         <PatientCollapse data={data} setData={setData} />
                     </div>
