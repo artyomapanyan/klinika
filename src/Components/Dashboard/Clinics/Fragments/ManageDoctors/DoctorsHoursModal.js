@@ -72,11 +72,21 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     },[type,id]);
 
     const onFinish = (values,prevValues) => {
+        console.log(values)
+
         setLoading(true)
         setData((prevState)=>({
             ...prevState,
             ...prevValues?.working_hours
         }))
+
+        // if(values?.status === false) {
+        //     values?.working_hours?.map((el) => {
+        //         console.log(el, 'kkk')
+        //        //return el?.is_day_off = false
+        //     })
+        //
+        // }
 
         if (params.id) {
             updateResource('ClinicDoctorWorkingHoursTable', id, values, token, ).then(response => {
