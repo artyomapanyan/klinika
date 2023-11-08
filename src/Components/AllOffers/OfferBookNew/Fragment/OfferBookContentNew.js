@@ -27,8 +27,6 @@ function OfferBookContent() {
 
 
 
-
-
 	const showDrawer = () => {
 		setOpen(true);
 	};
