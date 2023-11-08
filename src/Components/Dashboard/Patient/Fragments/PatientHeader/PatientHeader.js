@@ -59,13 +59,13 @@ function PatientHeader({data, setData}) {
                                     <div className={'addres_Insurance'}>{t('Insurance')}</div>
                                     {
                                         data?.patient?.insurance_company ? <Space className={'text_norm'}>{data?.patient?.insurance_company?.name}
-                                            <Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',
-                                                color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >
-                                                {
-                                                    dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'
-                                                }
+                                            {/*<Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',*/}
+                                            {/*    color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >*/}
+                                            {/*    {*/}
+                                            {/*        dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'*/}
+                                            {/*    }*/}
 
-                                            </Tag>
+                                            {/*</Tag>*/}
                                         </Space> : <div style={{margin: '0 25px'}}>-</div>
                                     }
 

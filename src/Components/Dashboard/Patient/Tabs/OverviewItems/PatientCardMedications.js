@@ -11,7 +11,7 @@ import {t} from "i18next";
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
-function PatientCardMedications({tab}) {
+function PatientCardMedications({tab, dataClinic}) {
 
     // const [initLoading, setInitLoading] = useState(true);
     // const [loading, setLoading] = useState(false);
@@ -57,6 +57,7 @@ function PatientCardMedications({tab}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
+    const [prescriptionPerPage, setPrescriptionPerPage] = useState(3)
     const showModal = (data) => {
         setIsModalOpen(data??{});
     };
@@ -69,16 +70,19 @@ function PatientCardMedications({tab}) {
     useEffect(() => {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
-                appointment: params.id
+                appointment: params.id,
+                per_page: prescriptionPerPage
             }
         ).then((response) => {
             setPrescriptions(response?.items)
             setLoading(false)
 
         })
-    }, [tab, addDeleteState])
+    }, [tab, addDeleteState, prescriptionPerPage])
 
-
+    const onLoadMore = () => {
+        setPrescriptionPerPage(prescriptionPerPage + 3)
+    }
 
     return(
         <div className={'current_medications_card'}>
@@ -93,9 +97,11 @@ function PatientCardMedications({tab}) {
                         // loading={initLoading}
                         itemLayout="horizontal"
                         dataSource={prescriptions}
+                        //style={{overflow: 'auto', height: 220}}
                         renderItem={(e) => {
-                            return<List.Item>
+                            return<List.Item >
                                 <List.Item.Meta
+
                                     title={<div style={{fontWeight: 700}}>{e?.name}</div>}
                                     description={<div><span style={{color: '#000000'}}>{`${e?.frequency} times/day /`}</span>{`${e?.dose} pcs `}</div>}
                                 />
@@ -104,13 +110,23 @@ function PatientCardMedications({tab}) {
                             </List.Item>
                         }}
                     />
-                    {/*{*/}
-                    {/*    !loading ? (*/}
-                    {/*        <div>*/}
-                    {/*            <Tag style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>and more 2 items</Tag>*/}
-                    {/*        </div>*/}
-                    {/*    ) : null*/}
-                    {/*}*/}
+                    <div style={{display: 'flex'}}>
+                        {
+                            dataClinic?.prescriptions?.length >= prescriptionPerPage ? (
+                                <div style={{paddingTop: 10}}>
+                                    <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
+                                </div>
+                            ) : null
+                        }
+                        {
+                            prescriptionPerPage > 3 ? (
+                                <div style={{paddingTop: 10}}>
+                                    <Tag onClick={()=>setPrescriptionPerPage(prescriptionPerPage - 3)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
+                                </div>
+                            ) : null
+                        }
+                    </div>
+
                 </Card>
             }
 
