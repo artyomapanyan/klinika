@@ -12,10 +12,10 @@ function AllOffersHeader({headerState}) {
     const navigate = useNavigate()
 
     const items = [
-        {
-            label: 'English',
-            key: 'en',
-        },
+        // {
+        //     label: 'English',
+        //     key: 'en',
+        // },
         {
             label: t('Arabic'),
             key: 'ar',
