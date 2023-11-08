@@ -53,7 +53,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
         if(item.service){
 
                 setLoading(true)
-                postResource('Clinic', 'ClinicsAvailableTimes', token, 1, {
+                postResource('Clinic', 'ClinicsAvailableTimes', token, clinicID, {
                     date: selectedDate,
                     service: item?.service,
                 }).then(response => {

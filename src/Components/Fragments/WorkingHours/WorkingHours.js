@@ -43,6 +43,8 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
     })
   }, [doctorData])
 
+
+
   useEffect(() => {
     if (data.length !== 0) {
       setWorkingData(handleFilterData(data))
@@ -55,7 +57,6 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   const onFormFinish = (values) => {
-
     if(values?.sync_with_main) {
       onFinish(values)
     } else {
@@ -78,6 +79,18 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
         return e
       })
+
+      if(values?.status === false) {
+        values.working_hours = working_hours?.map(e => {
+          if(e.is_day_off === false){
+            e.is_day_off = true
+          }
+
+
+          return e
+        })
+      }
+
       values.service = type;
 
 
@@ -86,10 +99,14 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
   }
 
+
+
   const handleValuesChange = (e, v) => {
+    console.log(e, v, 'rf')
     setWorkingData((prevState) => ({
       ...(prevState?.working_hours ?? []), ...v.working_hours
     }))
+
 
   }
   const handleUpdateWorkState = (data, key) => {
