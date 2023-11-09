@@ -18,6 +18,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
     let {pathname} = useLocation();
     const permissions = useSelector(state=>state.auth.user.permissions);
     const selected_role = useSelector(state=>state.auth.selected_role);
+    const locale = useSelector(state=>state?.app?.current_locale??'');
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +45,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
     }
     const items = useMemo(()=>{
         return (Menulist[selected_role.key]??Menulist.default).map(handleFilterMenus).filter((e)=>e)
-    },[permissions,selected_role]);
+    },[permissions,selected_role,locale]);
 
 
     const selectedItem = useMemo(()=>{

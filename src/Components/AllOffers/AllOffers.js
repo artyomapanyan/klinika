@@ -5,7 +5,7 @@ import mobile_filter_icon from '../../dist/icons/mobile_filter_icon.png'
 
 import {Button, Divider, Radio, Result, Row, Dropdown, Drawer, TreeSelect, Space} from 'antd'
 import OffersPrices from './Fragments/OffersPrices'
-import { t } from 'i18next'
+import {changeLanguage, t} from 'i18next'
 import OfferCard from './Fragments/OfferCard'
 import OffersFooter from './Fragments/OffersFooter'
 import { useGetResourceIndex } from '../Functions/api_calls'
@@ -16,15 +16,18 @@ import { paramsToObject } from '../../functions'
 import AllOffersHeader from './Fragments/AllOffersHeader'
 import AllOffersMobileHeader from './Fragments/AllOffersMobileHeader'
 import OfferPriceMobile from './Fragments/OfferPriceMobile'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import subCategories from "../Dashboard/SubCategories/SubCategories";
 import {CarryOutOutlined, DownOutlined, StepForwardOutlined} from "@ant-design/icons";
 import arrowDownPurple from "../../dist/icons/purple_arrow_down1.png";
 import OffersTopPrice from "./Fragments/OffersTopPrice";
 import low_to_high_icon from "../../dist/icons/purple_htree_line.png";
+import {i18n} from "../../i18n";
+import axios from "axios";
 
 function  AllOffers() {
 	let lngs = useSelector(state => state?.app?.current_locale)
+	let dispatch = useDispatch()
 
 	const currentUrl = window.location.href
 	const [treeValue, setTreeValue] = useState('')
@@ -33,8 +36,8 @@ function  AllOffers() {
 		order_by: 'new_price',
 		page: 1,
 		per_page: 15,
-		order: 'desc'
-		//...paramsToObject(searchParams.entries())
+		order: 'desc',
+		...paramsToObject(searchParams.entries())
 	})
 
 	const [resetState, setResetState] = useState(false)
@@ -42,7 +45,7 @@ function  AllOffers() {
 
 	const [items, setItems] = useState([])
 
-
+	console.log(paramsToObject(searchParams.entries()))
 
 
 
@@ -65,6 +68,7 @@ function  AllOffers() {
 
 	const { loading } = loadingState
 	const { data } = dataState
+
 
 	useEffect(() => setSearchParams(params), [params])
 	const handleNextPage = () => {
@@ -183,6 +187,16 @@ function  AllOffers() {
 		}
 
 	}
+	useEffect(()=>{
+		if(lngs!=='ar'){
+			changeLanguage('ar')
+			dispatch({
+				type:'LANGUAGE_STATE',
+				payload:'ar'
+			})
+			window.location.reload()
+		}
+	},[])
 
 
 
@@ -331,6 +345,7 @@ function  AllOffers() {
 									setParams={setParams}
 									params={params}
 									data={data?.items}
+									search={paramsToObject(searchParams.entries())}
 								/>
 							</div>
 

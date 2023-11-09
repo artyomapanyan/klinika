@@ -308,3 +308,5 @@ export const updateResource = (resource,id,values,token,withFormData=false)=>{
         }
     })
 }
+
+
