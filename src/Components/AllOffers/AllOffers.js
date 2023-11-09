@@ -38,6 +38,7 @@ function  AllOffers() {
 		order_by: 'new_price',
 		page: 1,
 		per_page: 15,
+		order: 'desc',
 		...paramsToObject(searchParams.entries())
 	})
 
@@ -180,7 +181,7 @@ function  AllOffers() {
 				setParams({
 					...params,
 					category: val,
-					sub_category: null
+					//sub_category: null
 				})
 			}
 		}
@@ -199,7 +200,7 @@ function  AllOffers() {
 		}
 	},[])
 
-
+	console.log(params, 'par')
 
 	return (
 		<div style={{ backgroundColor: '#f5f6fa' }}>
