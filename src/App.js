@@ -28,6 +28,11 @@ function App() {
         })
     },[dispatch])
 
+    useEffect(()=>{
+        i18n.changeLanguage(languageState?.includes('en')?'en':'ar')
+    },[])
+
+
     useEffect(() => {
         window.addEventListener('error', e => {
             if (e.message === 'ResizeObserver loop limit exceeded') {

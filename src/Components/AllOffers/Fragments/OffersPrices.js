@@ -13,7 +13,8 @@ function OffersPrices({
 	setParams,
 	params,
 	setResetState,
-	currentUrl
+	currentUrl,
+	search
 }) {
 	let redux = useSelector(state => state)
 	const [lowHighState, setLowHighState] = useState(false)
@@ -118,7 +119,7 @@ function OffersPrices({
 
 					<div style={{width:'80%'}} align={'center'}>
 						<div className={'slider_div_mobile'} >
-							<Slider range defaultValue={[0, 5000]}
+							<Slider range defaultValue={[search?.min_price ?? 0, search?.max_price ?? 5000]}
 									max={5000}
 									onAfterChange={([val1, val2]) => setParams({
 										...params,

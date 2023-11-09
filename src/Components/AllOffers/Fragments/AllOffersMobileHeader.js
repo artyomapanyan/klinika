@@ -37,20 +37,20 @@ function AllOffersMobileHeader() {
                 <img src={logo} alt={'logo_klinika'}/>
 
             <div className={"all_offers_mobile_dropDown_div"}>
-                <Dropdown
-                    menu={{
-                        items,
-                        onClick,
-                    }}
-                    trigger={['click']}
-                    style={{color: 'white'}}
-                >
-                    <Space style={{color: "#ce4e99", fontWeight: 700}}>
-                        {lngs === "ar" ? `${t("Arabic")}` : "English"}
-                        <DownOutlined />
-                    </Space>
+                {/*<Dropdown*/}
+                {/*    menu={{*/}
+                {/*        items,*/}
+                {/*        onClick,*/}
+                {/*    }}*/}
+                {/*    trigger={['click']}*/}
+                {/*    style={{color: 'white'}}*/}
+                {/*>*/}
+                {/*    <Space style={{color: "#ce4e99", fontWeight: 700}}>*/}
+                {/*        {lngs === "ar" ? `${t("Arabic")}` : "English"}*/}
+                {/*        <DownOutlined />*/}
+                {/*    </Space>*/}
 
-                </Dropdown>
+                {/*</Dropdown>*/}
             </div>
 
 
