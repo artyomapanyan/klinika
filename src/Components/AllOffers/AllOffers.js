@@ -16,6 +16,7 @@ import { paramsToObject } from '../../functions'
 import AllOffersHeader from './Fragments/AllOffersHeader'
 import AllOffersMobileHeader from './Fragments/AllOffersMobileHeader'
 import OfferPriceMobile from './Fragments/OfferPriceMobile'
+
 import {useDispatch, useSelector} from 'react-redux'
 import subCategories from "../Dashboard/SubCategories/SubCategories";
 import {CarryOutOutlined, DownOutlined, StepForwardOutlined} from "@ant-design/icons";
@@ -24,6 +25,7 @@ import OffersTopPrice from "./Fragments/OffersTopPrice";
 import low_to_high_icon from "../../dist/icons/purple_htree_line.png";
 import {i18n} from "../../i18n";
 import axios from "axios";
+
 
 function  AllOffers() {
 	let lngs = useSelector(state => state?.app?.current_locale)
@@ -36,7 +38,6 @@ function  AllOffers() {
 		order_by: 'new_price',
 		page: 1,
 		per_page: 15,
-		order: 'desc',
 		...paramsToObject(searchParams.entries())
 	})
 
@@ -45,7 +46,7 @@ function  AllOffers() {
 
 	const [items, setItems] = useState([])
 
-	console.log(paramsToObject(searchParams.entries()))
+
 
 
 
@@ -58,8 +59,7 @@ function  AllOffers() {
 		false,
 		{
 			PublicClinic: { per_page: 5000 },
-			PublicCategory: {},
-
+			PublicCategory: {}
 		},
 		{
 			loadMore: true
@@ -68,7 +68,6 @@ function  AllOffers() {
 
 	const { loading } = loadingState
 	const { data } = dataState
-
 
 	useEffect(() => setSearchParams(params), [params])
 	const handleNextPage = () => {
@@ -187,6 +186,8 @@ function  AllOffers() {
 		}
 
 	}
+
+
 	useEffect(()=>{
 		if(lngs!=='ar'){
 			changeLanguage('ar')
@@ -197,8 +198,6 @@ function  AllOffers() {
 			window.location.reload()
 		}
 	},[])
-
-
 
 
 

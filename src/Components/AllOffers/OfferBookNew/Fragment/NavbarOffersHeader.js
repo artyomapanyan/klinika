@@ -46,20 +46,20 @@ function NavbarOffersHeader({headerState}) {
                     </div> : <Button onClick={()=>navigate(-1)} style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
                 }
                 <div className={'all_offers_header_lng'}>
-                    <Dropdown
-                        menu={{
-                            items,
-                            onClick,
-                        }}
-                        trigger={['click']}
-                        style={{color: 'white'}}
-                    >
-                        <Space style={{color: headerState ? "#ce4e99" : 'white', fontWeight: 700}}>
-                            {lngs === "ar" ? `${t("Arabic")}` : "English"}
-                            <DownOutlined />
-                        </Space>
+                    {/*<Dropdown*/}
+                    {/*    menu={{*/}
+                    {/*        items,*/}
+                    {/*        onClick,*/}
+                    {/*    }}*/}
+                    {/*    trigger={['click']}*/}
+                    {/*    style={{color: 'white'}}*/}
+                    {/*>*/}
+                    {/*    <Space style={{color: headerState ? "#ce4e99" : 'white', fontWeight: 700}}>*/}
+                    {/*        {lngs === "ar" ? `${t("Arabic")}` : "English"}*/}
+                    {/*        <DownOutlined />*/}
+                    {/*    </Space>*/}
 
-                    </Dropdown>
+                    {/*</Dropdown>*/}
                 </div>
             </div>
         </div>

@@ -4,12 +4,10 @@ import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterE
 import {t} from "i18next";
 import {useSelector} from "react-redux";
 import './Offers.sass'
-import dayjs from "dayjs";
-import SwitchStatus from "../../Fragments/SwitchStatus";
+
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import PermCheck from "../../Fragments/PermCheck";
-
 
 const resource='Offer'
 
