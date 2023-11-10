@@ -40,7 +40,7 @@ function OffersPrices({
 			order_by: 'new_price',
 			page: 1,
 			per_page: 15,
-			order: 'desc'
+			order: 'desc',
 		})
 		setTimeout(() => {
 			setResetState(false)

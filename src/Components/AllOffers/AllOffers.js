@@ -167,21 +167,26 @@ function  AllOffers() {
 
 
 
-	const onChangeaaa = (val) => {
-
+	const onChangeaaa = (val, a, c, f) => {
+		console.log(val, a, c, f)
 		setTreeValue(val)
 		if(val) {
 			if(val.toString().includes('-')) {
 				setParams({
 					...params,
 					sub_category: val.slice(val.indexOf('-')+1, val.length),
+					category: '',
+					name: a[0].props.children
 
-				})
+				},
+
+				)
 			} else {
 				setParams({
 					...params,
 					category: val,
-					//sub_category: null
+					sub_category: '',
+					name: a[0].props.children[0].props.children
 				})
 			}
 		}
@@ -256,7 +261,7 @@ function  AllOffers() {
 											minWidth: 300,
 										}}
 										treeData={items}
-										placeholder={t("Select Categories")}
+										placeholder={params?.name ? params?.name : t("Select Categories")}
 										placement={'bottomLeft'}
 										onChange={onChangeaaa}
 										switcherIcon={()=><img src={arrowDownPurple} alt={'arrowDownPurple'}/>}
