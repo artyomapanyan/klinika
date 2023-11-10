@@ -18,7 +18,7 @@ import AllOffersMobileHeader from './Fragments/AllOffersMobileHeader'
 import OfferPriceMobile from './Fragments/OfferPriceMobile'
 
 import {useDispatch, useSelector} from 'react-redux'
-import subCategories from "../Dashboard/SubCategories/SubCategories";
+
 import {CarryOutOutlined, DownOutlined, StepForwardOutlined} from "@ant-design/icons";
 import arrowDownPurple from "../../dist/icons/purple_arrow_down1.png";
 import OffersTopPrice from "./Fragments/OffersTopPrice";
