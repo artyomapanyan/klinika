@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData,timeLimits}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData,timeLimits, switchStatus = false}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
@@ -80,16 +80,19 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
         return e
       })
 
-      if(values?.status === false) {
-        values.working_hours = working_hours?.map(e => {
-          if(e.is_day_off === false){
-            e.is_day_off = true
-          }
+      if(switchStatus) {
+        if(values?.status === false) {
+          values.working_hours = working_hours?.map(e => {
+            if(e.is_day_off === false){
+              e.is_day_off = true
+            }
 
 
-          return e
-        })
+            return e
+          })
+        }
       }
+
 
       values.service = type;
 
