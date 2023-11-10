@@ -119,7 +119,9 @@ function  AllOffers() {
 				{
 					className: 'ASDF',
 					value: ' ',
-					title: t('All Categories')
+					title: t('All Categories'),
+
+
 				},
 				...addData?.PublicCategory?.items.map((el) => {
 					return {
@@ -167,8 +169,8 @@ function  AllOffers() {
 
 
 
-	const onChangeaaa = (val, a, c, f) => {
-		console.log(val, a, c, f)
+	const onChangeaaa = (val, a) => {
+
 		setTreeValue(val)
 		if(val) {
 			if(val.toString().includes('-')) {
@@ -176,7 +178,7 @@ function  AllOffers() {
 					...params,
 					sub_category: val.slice(val.indexOf('-')+1, val.length),
 					category: '',
-					name: a[0].props.children
+					name: a[0]?.props?.children ? a[0]?.props?.children : ''
 
 				},
 
@@ -186,7 +188,7 @@ function  AllOffers() {
 					...params,
 					category: val,
 					sub_category: '',
-					name: a[0].props.children[0].props.children
+					name: a[0]?.props?.children[0]?.props?.children ? a[0]?.props?.children[0]?.props?.children : ''
 				})
 			}
 		}
@@ -205,7 +207,7 @@ function  AllOffers() {
 		}
 	},[])
 
-	console.log(params, 'par')
+
 
 	return (
 		<div style={{ backgroundColor: '#f5f6fa' }}>
