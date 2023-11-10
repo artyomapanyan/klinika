@@ -39,7 +39,8 @@ function OffersPrices({
 		setParams({
 			order_by: 'new_price',
 			page: 1,
-			per_page: 15
+			per_page: 15,
+			order: 'desc',
 		})
 		setTimeout(() => {
 			setResetState(false)
