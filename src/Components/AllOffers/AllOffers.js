@@ -124,7 +124,7 @@ function  AllOffers() {
 				},
 				...addData?.PublicCategory?.items.map((el) => {
 					return {
-						className: treeValue == el?.id ? 'selected_ASDF' : 'ASDF',
+						className: params.category == el?.id ? 'selected_ASDF' : 'ASDF',
 						title: <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between',}}>
 							<span className={'tree_seleqt_title_name'}>{el?.name}</span>
 							<span className={'select_title_length'}
@@ -148,7 +148,7 @@ function  AllOffers() {
 						children: el?.sub_categories?.map((e) => {
 							return {
 								style: { borderBottom: e[e?.length] = '2px solid #774D9D'},
-								className: treeValue == e?.id + '-' + e.id ? 'selected_ASDF_children' : 'ASDF_children',
+								className: params.category == e?.id + '-' + e.id ? 'selected_ASDF_children' : 'ASDF_children',
 								title: <span className={'tree_seleqt_title_name'}>{e?.name}</span>,
 								value: el.id + '-' + e.id,
 							}
@@ -171,26 +171,23 @@ function  AllOffers() {
 	const onChangeaaa = (val, a) => {
 
 		setTreeValue(val)
-		if(val) {
-			if(val.toString().includes('-')) {
-				setParams({
-					...params,
-					sub_category: val.slice(val.indexOf('-')+1, val.length),
-					category: '',
-					name: a[0]?.props?.children ? a[0]?.props?.children : ''
+		console.log(val)
 
-				},
 
-				)
-			} else {
-				setParams({
-					...params,
-					category: val,
-					sub_category: '',
-					name: a[0]?.props?.children[0]?.props?.children ? a[0]?.props?.children[0]?.props?.children : ''
-				})
-			}
-		}
+		setParams({
+			...params,
+			category_val: val,
+			...(typeof val ==='string' && val?.includes('-')?{
+				category:val.split('-')[0],
+				sub_category:val.split('-')[1],
+
+			}:{
+				category:val
+			})
+		})
+	}
+	const generateCategoryPlaceholder = (value)=>{
+		console.log(items)
 
 	}
 
@@ -207,6 +204,7 @@ function  AllOffers() {
 	},[])
 
 
+	//console.log(items?.find(el => (console.log(el))), 'el')
 
 	return (
 		<div style={{ backgroundColor: '#f5f6fa' }}>
@@ -262,7 +260,9 @@ function  AllOffers() {
 											minWidth: 300,
 										}}
 										treeData={items}
-										placeholder={params?.name ? params?.name : t("Select Categories")}
+
+										value={params?.category_val}
+										placeholder={t("Select Categories")}
 										placement={'bottomLeft'}
 										onChange={onChangeaaa}
 										switcherIcon={()=><img src={arrowDownPurple} alt={'arrowDownPurple'}/>}
