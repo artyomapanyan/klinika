@@ -23,8 +23,7 @@ import {CarryOutOutlined, DownOutlined, StepForwardOutlined} from "@ant-design/i
 import arrowDownPurple from "../../dist/icons/purple_arrow_down1.png";
 import OffersTopPrice from "./Fragments/OffersTopPrice";
 import low_to_high_icon from "../../dist/icons/purple_htree_line.png";
-import {i18n} from "../../i18n";
-import axios from "axios";
+
 
 
 function  AllOffers() {
