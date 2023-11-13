@@ -12,8 +12,8 @@ import Resources from "../../../../../store/Resources";
 const resource = "ClinicDoctor";
 const res = "Clinic";
 const excludedGet = {
-    'physical_therapy_home_visit':'home_visit',
-    'physical_therapy_clinic_visit' : 'clinic_visit'
+    'physical_therapy_home_visit':'physical_therapy_home_visit',
+    'physical_therapy_clinic_visit' : 'physical_therapy_clinic_visit'
 }
 function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     let token = useSelector((state) => state.auth.token);
