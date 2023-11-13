@@ -408,13 +408,14 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...values
         }))
 
-        if(values?.service_settings?.clinic_visit?.duration) {
+
+        if(values?.service_settings?.clinic_visit?.duration && values?.service_settings?.laboratory_clinic_visit?.duration) {
             values.service_settings.laboratory_clinic_visit.duration = values?.service_settings?.clinic_visit?.duration
 
-        }if(values?.service_settings?.home_visit?.duration) {
+        }if(values?.service_settings?.home_visit?.duration && values?.service_settings?.laboratory_home_visit?.duration) {
             values.service_settings.laboratory_home_visit.duration = values?.service_settings?.home_visit?.duration
         }
-        console.log(values)
+
 
 
 
@@ -485,7 +486,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name, item, searchData]
     }
 
-    console.log(changeValuesState?.service_settings?.clinic_visit?.duration, 'k')
+
 
     return(
         <div >
