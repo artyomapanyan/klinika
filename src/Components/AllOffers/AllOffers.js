@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './AllOffers.sass'
 import off_head from '../../dist/Img/off_head.png'
 import mobile_filter_icon from '../../dist/icons/mobile_filter_icon.png'
@@ -19,7 +19,7 @@ import OfferPriceMobile from './Fragments/OfferPriceMobile'
 
 import {useDispatch, useSelector} from 'react-redux'
 
-import {CarryOutOutlined, DownOutlined, StepForwardOutlined} from "@ant-design/icons";
+import { DownOutlined, StepForwardOutlined} from "@ant-design/icons";
 import arrowDownPurple from "../../dist/icons/purple_arrow_down1.png";
 import OffersTopPrice from "./Fragments/OffersTopPrice";
 import low_to_high_icon from "../../dist/icons/purple_htree_line.png";
