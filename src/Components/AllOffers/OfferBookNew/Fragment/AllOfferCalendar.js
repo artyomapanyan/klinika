@@ -102,6 +102,14 @@ function AllOfferCalendar({
 
     const currentDate = dayjs();
 
+//     useEffect(() => {
+//         postResource('AvailableDayByDoctorAndClinic', 'single', token, dataState?.doctor_id + "/" + data?.clinic?.id, {
+//             service: 'clinic_visit',
+//         }).then((response) => {
+// console.log(response)
+//         })
+//     }, [])
+
     const f = () => {
         if (dataState?.doctor_id) {
             setLoadingDate(true)
@@ -150,7 +158,7 @@ function AllOfferCalendar({
                 service: 'clinic_visit',
                 date: callableDay.key
             }).then((response) => {
-
+                console.log(response, 'res')
                 return {
                     key: callableDay.key,
                     hasDays: response ? response[0]?.length : 0,
