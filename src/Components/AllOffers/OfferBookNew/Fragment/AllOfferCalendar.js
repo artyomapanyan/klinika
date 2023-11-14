@@ -102,8 +102,7 @@ function AllOfferCalendar({
 
     const currentDate = dayjs();
 
-
-    useEffect(() => {
+    const f = () => {
         if (dataState?.doctor_id) {
             setLoadingDate(true)
             postResource('PublicClinicDoctorWorkingHours', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service: 'clinic_visit'}).then(response => {
@@ -132,20 +131,9 @@ function AllOfferCalendar({
 
             })
         }
-
-
-    }, [dataState?.doctor_id])
-
-    const sleep = (t) => {
-        return new Promise (resolve => {
-           setTimeout(() => {
-               resolve();
-           }, t);
-        });
     }
 
-    useEffect(() => {
-
+    const f1 = () => {
         let callableDays =[]
         if(!daysData.length){
             callableDays = [...Array(6).keys()].map(key => ({
@@ -166,7 +154,6 @@ function AllOfferCalendar({
                 return {
                     key: callableDay.key,
                     hasDays: response ? response[0]?.length : 0,
-                    called: false
                 }
 
             })
@@ -204,6 +191,110 @@ function AllOfferCalendar({
             // })]
             // )
         })
+    }
+
+
+    useEffect(() => {
+
+
+        // if (dataState?.doctor_id) {
+        //     setLoadingDate(true)
+        //     postResource('PublicClinicDoctorWorkingHours', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service: 'clinic_visit'}).then(response => {
+        //         const res = response?.working_hours
+        //
+        //         let day = [];
+        //         Object.keys(res)?.forEach((key) => {
+        //             if (res[key][0]?.is_day_off) {
+        //                 day.push(key)
+        //             }
+        //         })
+        //
+        //         setDayOff(day)
+        //         setLoadingDate(false)
+        //         daysData = [...Array(6).keys()].map(key => ({
+        //             key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
+        //             disabled: day.includes(currentDate.add(key, 'day').day())
+        //         }));
+        //         setDaysData(daysData);
+        //
+        //         // setDaysData([...Array(6).keys()].map(key => ({
+        //         //     key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
+        //         //     disabled: day.includes(currentDate.add(key, 'day').day())
+        //         // })))
+        //
+        //
+        //     })
+        // }
+
+        f();
+        f1();
+    }, [dataState?.doctor_id])
+
+
+
+        useEffect(() => {
+            f1();
+        }, [startDate])
+
+    useEffect(() => {
+//         f();
+//         let callableDays =[]
+//         if(!daysData.length){
+//             callableDays = [...Array(6).keys()].map(key => ({
+//                 key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
+//                 disabled: dayOff.includes(currentDate.add(key, 'day').day())
+//             }))
+//         }else{
+//             callableDays =  [...daysData].filter(e => !e.called)
+//         }
+//
+//
+//         Promise.all(callableDays.map((callableDay, i) => {
+//             return postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {
+//                 service: 'clinic_visit',
+//                 date: callableDay.key
+//             }).then((response) => {
+//                 console.log(i, callableDay.key, 'i')
+//                 return {
+//                     key: callableDay.key,
+//                     hasDays: response ? response[0]?.length : 0,
+//                 }
+//
+//             })
+//
+//         })).then(responses => {
+//             console.log('all')
+//             console.log(daysData, 'daysData')
+// //daysData
+//             setDaysData(daysData.map(e => {
+//                 console.log(e.called, 'e')
+//                 let data = responses.find(u => e.key == u.key);
+//                 // let data = daysData.find(u => e.key == u.key);
+//                 console.log(data, 'data')
+//                 if(data?.key) {
+//                     e.disabled = !data.hasDays;
+//
+//                 }
+//                 e.called = true;
+//
+//
+//                 return e
+//             }));
+//
+//
+//             // setDaysData(prevState =>[...prevState.map(e => {
+//             //     let data = responses.find(u => e.key == u.key);
+//             //     e.disabled = !data.hasDays;
+//             //     e.called = true;
+//             //     // if (data?.key) {
+//             //     //     e.disabled = !data.hasDays;
+//             //     //     e.called = true;
+//             //     // }
+//             //
+//             //     return e
+//             // })]
+//             // )
+//         })
 
     }, [dataState?.doctor_id, startDate])
 
