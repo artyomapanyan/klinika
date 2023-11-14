@@ -182,9 +182,9 @@ function AllOfferCalendar({
                 console.log(data, 'data')
                 if(data?.key) {
                     e.disabled = !data.hasDays;
-                    e.called = true;
-                }
 
+                }
+                e.called = true;
 
 
                 return e
