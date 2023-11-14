@@ -544,7 +544,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                        resource={'User'}/>
                             <FormInput
 
-                                       label={t('Manager, search by phone number')} name={'managers'} inputType={'resourceSelect'}
+                                       label={t('Manager or Receptionist, search by phone number')} name={'managers'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        inputProps={{
                                            onSearch:e=>setSearchCeys(e),

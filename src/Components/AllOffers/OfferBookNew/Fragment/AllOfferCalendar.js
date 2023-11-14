@@ -125,6 +125,13 @@ function AllOfferCalendar({
 
     }, [dataState?.doctor_id])
 
+    const sleep = (t) => {
+        return new Promise (resolve => {
+           setTimeout(() => {
+               resolve();
+           }, t);
+        });
+    }
 
     useEffect(() => {
 
@@ -139,30 +146,33 @@ function AllOfferCalendar({
         }
 
 
-
-        Promise.all(callableDays.map((callableDay) => {
+        Promise.all(callableDays.map((callableDay, i) => {
             return postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {
                 service: 'clinic_visit',
                 date: callableDay.key
-            }).then(response => {
+            }).then((response) => {
+                console.log(i, callableDay.key, 'i')
                 return {
                     key: callableDay.key,
                     hasDays: response ? response[0]?.length : 0
                 }
 
             })
+
         })).then(responses => {
-
-
-            setDaysData(prevState => prevState.map(e => {
+            console.log('all')
+            setDaysData(prevState =>[...prevState.map(e => {
                 let data = responses.find(u => e.key == u.key);
-                if (data?.key) {
-                    e.disabled = !data.hasDays
-                    e.called = true
-                }
+                e.disabled = !data.hasDays;
+                e.called = true;
+                // if (data?.key) {
+                //     e.disabled = !data.hasDays;
+                //     e.called = true;
+                // }
 
                 return e
-            }))
+            })]
+            )
         })
 
     }, [dataState?.doctor_id, startDate])
@@ -222,7 +232,7 @@ function AllOfferCalendar({
 
                         {[...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
-
+                            console.log(e)
                             return <Button key={key}
                                            loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}
