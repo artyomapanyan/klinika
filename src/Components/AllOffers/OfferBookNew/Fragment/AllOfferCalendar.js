@@ -35,7 +35,7 @@ function AllOfferCalendar({
 
     const [timesIndex, setTimesIndex] = useState(0)
     //const [isClicked, setIsClicked] = useState(false)
-    const [daysData, setDaysData] = useState([])
+    let [daysData, setDaysData] = useState([])
     const [timeCount, setTimeCount] = useState()
 
 
@@ -56,10 +56,16 @@ function AllOfferCalendar({
             if (daysData.find(e => e.key === startCopy.diff(dayjs(), 'days'))) {
 
             } else {
-                setDaysData((prevState) => ([...prevState, ...[...Array(6).keys()].map((key) => ({
+                daysData = [...daysData, ...[...Array(6).keys()].map((key) => ({
                     key: startCopy.clone().add(key, 'day').format('YYYY-MM-DD'),
                     disabled: dayOff.includes(startCopy.clone().add(key, 'day').day())
-                })).filter(v=>!prevState.find(u=>u.key===v.key))]))
+                })).filter(v=>!daysData.find(u=>u.key===v.key))];
+                setDaysData(daysData);
+
+                // setDaysData((prevState) => ([...prevState, ...[...Array(6).keys()].map((key) => ({
+                //     key: startCopy.clone().add(key, 'day').format('YYYY-MM-DD'),
+                //     disabled: dayOff.includes(startCopy.clone().add(key, 'day').day())
+                // })).filter(v=>!prevState.find(u=>u.key===v.key))]))
 
             }
 
@@ -112,11 +118,16 @@ function AllOfferCalendar({
 
                 setDayOff(day)
                 setLoadingDate(false)
-
-                setDaysData([...Array(6).keys()].map(key => ({
+                daysData = [...Array(6).keys()].map(key => ({
                     key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
                     disabled: day.includes(currentDate.add(key, 'day').day())
-                })))
+                }));
+                setDaysData(daysData);
+
+                // setDaysData([...Array(6).keys()].map(key => ({
+                //     key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
+                //     disabled: day.includes(currentDate.add(key, 'day').day())
+                // })))
 
 
             })
@@ -161,18 +172,37 @@ function AllOfferCalendar({
 
         })).then(responses => {
             console.log('all')
-            setDaysData(prevState =>[...prevState.map(e => {
+            console.log(daysData, 'daysData')
+            console.log(responses, 'responses')
+//daysData
+            setDaysData(daysData.map(e => {
+                console.log(e.called, 'e')
                 let data = responses.find(u => e.key == u.key);
-                e.disabled = !data.hasDays;
-                e.called = true;
-                // if (data?.key) {
-                //     e.disabled = !data.hasDays;
-                //     e.called = true;
-                // }
+                // let data = daysData.find(u => e.key == u.key);
+                console.log(data, 'data')
+                if(data?.key) {
+                    e.disabled = !data.hasDays;
+                    e.called = true;
+                }
+
+
 
                 return e
-            })]
-            )
+            }));
+
+
+            // setDaysData(prevState =>[...prevState.map(e => {
+            //     let data = responses.find(u => e.key == u.key);
+            //     e.disabled = !data.hasDays;
+            //     e.called = true;
+            //     // if (data?.key) {
+            //     //     e.disabled = !data.hasDays;
+            //     //     e.called = true;
+            //     // }
+            //
+            //     return e
+            // })]
+            // )
         })
 
     }, [dataState?.doctor_id, startDate])
