@@ -90,6 +90,7 @@ function AllOfferCalendar({
                 service: 'clinic_visit',
                 date: dayjs(e).format('YYYY-MM-DD')
             }).then((response) => {
+                console.log(response, 'res')
                 setAvailableTimes(response?.flat() ?? [])
                 // setTimesIndex(0)
                 // setAvailableTimes(response?.flat()??[])
@@ -98,7 +99,6 @@ function AllOfferCalendar({
         }
 
     }
-
 
     const currentDate = dayjs();
 
@@ -150,7 +150,7 @@ function AllOfferCalendar({
                 service: 'clinic_visit',
                 date: callableDay.key
             }).then((response) => {
-                console.log(i, callableDay.key, 'i')
+
                 return {
                     key: callableDay.key,
                     hasDays: response ? response[0]?.length : 0,
@@ -159,20 +159,15 @@ function AllOfferCalendar({
             })
 
         })).then(responses => {
-            console.log('all')
-            console.log(daysData, 'daysData')
-//daysData
+
+
             setDaysData(daysData.map(e => {
-                console.log(e.called, 'e')
                 let data = responses.find(u => e.key == u.key);
-                // let data = daysData.find(u => e.key == u.key);
-                console.log(data, 'data')
                 if(data?.key) {
                     e.disabled = !data.hasDays;
 
                 }
                 e.called = true;
-
 
                 return e
             }));
@@ -236,7 +231,8 @@ function AllOfferCalendar({
             f1();
         }, [startDate])
 
-    useEffect(() => {
+
+//useEffect(() => {
 //         f();
 //         let callableDays =[]
 //         if(!daysData.length){
@@ -296,7 +292,7 @@ function AllOfferCalendar({
 //             // )
 //         })
 
-    }, [dataState?.doctor_id, startDate])
+//    }, [dataState?.doctor_id, startDate])
 
 
 
@@ -353,7 +349,6 @@ function AllOfferCalendar({
 
                         {[...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
-                            console.log(e)
                             return <Button key={key}
                                            loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}
@@ -407,6 +402,7 @@ function AllOfferCalendar({
                                         className={'hours_select'}
                                         onChange={timeChange}
                                         options={availableTimes?.slice(timesIndex, timesIndex + 8)?.map((e) => {
+
                                             return {
                                                 label: dayjs('2023-10-10' + e).format('h:mmA'),
                                                 value: e,
