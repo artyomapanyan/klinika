@@ -165,7 +165,8 @@ function AllOfferCalendar({
                 console.log(i, callableDay.key, 'i')
                 return {
                     key: callableDay.key,
-                    hasDays: response ? response[0]?.length : 0
+                    hasDays: response ? response[0]?.length : 0,
+                    called: false
                 }
 
             })
@@ -173,7 +174,6 @@ function AllOfferCalendar({
         })).then(responses => {
             console.log('all')
             console.log(daysData, 'daysData')
-            console.log(responses, 'responses')
 //daysData
             setDaysData(daysData.map(e => {
                 console.log(e.called, 'e')
