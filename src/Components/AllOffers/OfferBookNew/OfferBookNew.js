@@ -1,14 +1,26 @@
-import React from 'react'
-import off_head from '../../../dist/Img/off_head.png'
-import OffersFooter from '../Fragments/OffersFooter'
+import React, {useEffect} from 'react'
+
 import OfferBookContentNew from './Fragment/OfferBookContentNew'
-import AllOffersHeader from '../Fragments/AllOffersHeader'
-import { useSelector } from 'react-redux'
+
+import {useDispatch, useSelector} from 'react-redux'
 import NavbarOffersHeader from '../OfferBookNew/Fragment/NavbarOffersHeader'
-import mobile_filter_icon from '../../../dist/icons/mobile_filter_icon.png'
+
+import {changeLanguage} from "i18next";
 
 function OfferBookNew() {
 	let lngs = useSelector(state => state?.app?.current_locale)
+	let dispatch = useDispatch()
+
+	useEffect(()=>{
+		if(lngs!=='ar'){
+			changeLanguage('ar')
+			dispatch({
+				type:'LANGUAGE_STATE',
+				payload:'ar'
+			})
+			window.location.reload()
+		}
+	},[])
 
 	return (
 		<>
