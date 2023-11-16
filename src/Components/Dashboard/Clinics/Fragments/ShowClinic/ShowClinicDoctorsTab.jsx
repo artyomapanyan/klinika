@@ -15,10 +15,15 @@ const ShowClinicDoctorsTab = ({dataState}) => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
 
+
+
     useEffect(() => {
         setLoading(true)
-        postResource('ClinicDoctor', 'list', token, dataState?.id).then((response) => {
-            console.log(response, 'ddd')
+        postResource('ClinicDoctor', 'list', token, '', {
+            clinic:dataState?.data?.id,
+
+        }).then((response) => {
+
             setData(response.items?.map((el) => {
                return {
                    key: el.id,
