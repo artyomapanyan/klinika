@@ -485,7 +485,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name, item, searchData]
     }
 
-    console.log(changeValuesState?.service_settings?.clinic_visit?.duration, 'k')
+
 
     return(
         <div >
