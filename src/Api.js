@@ -294,6 +294,10 @@ let api = {
         resource: 'PublicClinicDoctorAvailableTimes',
     },
     {
+        url: 'public/clinic-doctors/available-from-by-doctor-and-clinic',
+        resource: 'AvailableDayByDoctorAndClinic',
+    },
+    {
         url: 'public/appointments/store-from-offers',
         resource: 'PublicAppointment',
     },

@@ -1,10 +1,23 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import NavbarOffersHeader from "../OfferBookNew/Fragment/NavbarOffersHeader";
-import React from "react";
+import React, {useEffect} from "react";
 import NewThankYouBookContent from "./Fragment/NewThankYouBookContent";
+import {changeLanguage} from "i18next";
 
 function NewThankYouOffer() {
     let lngs = useSelector(state => state?.app?.current_locale)
+    let dispatch = useDispatch()
+
+    useEffect(()=>{
+        if(lngs!=='ar'){
+            changeLanguage('ar')
+            dispatch({
+                type:'LANGUAGE_STATE',
+                payload:'ar'
+            })
+            window.location.reload()
+        }
+    },[])
 
     return (
         <div>
