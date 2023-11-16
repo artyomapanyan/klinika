@@ -105,7 +105,6 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   const handleValuesChange = (e, v) => {
-    console.log(e, v, 'rf')
     setWorkingData((prevState) => ({
       ...(prevState?.working_hours ?? []), ...v.working_hours
     }))
@@ -134,6 +133,12 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
   const onChangeSwitch = (val) => {
     setSwitchChange(val)
   }
+
+  function getIsDayOff(day) {
+    return day in data ? data[day][0].is_day_off : undefined
+  }
+
+
 
 
 
@@ -194,6 +199,9 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
           }
 
 
+
+
+
           return workingDay && <div key={iKey}>
 
             <Row>
@@ -209,7 +217,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
                     valuePropName={'checked'}
                     initialValue={workingDay[0]?.is_day_off}
                   >
-                    <Switch checkedChildren="Open" unCheckedChildren="Closed"/>
+                    <Switch checkedChildren="Open" unCheckedChildren="Closed" disabled={switchStatus ? getIsDayOff(workingDay[0]?.day) : false} />
                   </Form.Item>
                 </div>
               </Col>

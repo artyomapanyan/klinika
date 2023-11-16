@@ -18,7 +18,7 @@ const ShowClinicDoctorsTab = ({dataState}) => {
     useEffect(() => {
         setLoading(true)
         postResource('ClinicDoctor', 'list', token, dataState?.id).then((response) => {
-
+            console.log(response, 'ddd')
             setData(response.items?.map((el) => {
                return {
                    key: el.id,
@@ -66,7 +66,7 @@ const ShowClinicDoctorsTab = ({dataState}) => {
   return (
     <div style={{width: '100%'}}>
         {
-            loading ? <Preloader /> : <Table rowKey={e => e.id} dataSource={data} columns={columns} style={{width: '100%'}} pagination={false}/>
+            loading ? <Preloader /> : <Table rowKey={data?.key} dataSource={data} columns={columns} style={{width: '100%'}} pagination={false}/>
         }
 
 
