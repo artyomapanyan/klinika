@@ -73,7 +73,7 @@ function AllOfferCalendar({
         }
 
     }
-    console.log('ssssssss')
+
 
     const onDateClick = (e) => {
 
