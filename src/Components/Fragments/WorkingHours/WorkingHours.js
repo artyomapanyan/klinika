@@ -12,11 +12,13 @@ import dayjs from "dayjs";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData,timeLimits, switchStatus = false}) {
+function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData,timeLimits, switchStatus = false, clinicHoursesDataNew}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
   const [switchChange, setSwitchChange] = useState(false)
+
+
 
   const customWorkingHouers = {
     monday: [{day: 'monday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
@@ -135,7 +137,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
   }
 
   function getIsDayOff(day) {
-    return day in data ? data[day][0].is_day_off : undefined
+    return day in clinicHoursesDataNew ? clinicHoursesDataNew[day][0].is_day_off : undefined
   }
 
 
