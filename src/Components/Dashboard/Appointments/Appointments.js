@@ -121,6 +121,7 @@ function Appointments() {
                                 modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                modal?.key === '0' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '7' ? <Confirmed loading={loading} onCancel={onCancel}/>  : null
                         }
 
