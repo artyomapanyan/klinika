@@ -8,7 +8,6 @@ import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
 import NursLabCalendar from "./NursingLaboratoryCalendar/NursLabCalendar";
 
-
 function ClinicManager() {
     let ownerClinics = useSelector((state) => state?.owner);
     let role = useSelector((state) => state?.auth?.selected_role?.key);
