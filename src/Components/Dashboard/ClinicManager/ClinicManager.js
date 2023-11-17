@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Col, Row} from "antd";
 import StatusesChart from "../../Fragments/Charts/StatusesChart";
 import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";
@@ -7,11 +7,37 @@ import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointment
 import Preloader from "../../Preloader";
 import {useSelector} from "react-redux";
 import NursLabCalendar from "./NursingLaboratoryCalendar/NursLabCalendar";
+import {postResource} from "../../Functions/api_calls";
+import dayjs from "dayjs";
 
 
 function ClinicManager() {
     let ownerClinics = useSelector((state) => state?.owner);
     let role = useSelector((state) => state?.auth?.selected_role?.key);
+
+    let token = useSelector((state) => state.auth.token);
+
+    const [date, setDate] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
+    const [loading, setLoading] = useState(false)
+    const [labNursState, setLabNursState] = useState({})
+
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('ClinicManager', 'ClinicWorkload', token, '', {
+            from: date[0].format('YYYY-MM-DD'),
+            to: date[1].format('YYYY-MM-DD')
+        }).then((response) => {
+            setLabNursState(response)
+            setLoading(false)
+
+
+
+        })
+
+    }, [])
+
+
 
     return(
         <div>
@@ -46,7 +72,7 @@ function ClinicManager() {
                 </div>
                 <div>
                     {
-                        role === 'receptionist' ? <NursLabCalendar /> : <div></div>
+                        loading ? <Preloader/> : Array.isArray(labNursState?.workload) ? <div></div> : role === 'receptionist' ? <NursLabCalendar /> : <div></div>
                     }
                 </div>
                 <div>
