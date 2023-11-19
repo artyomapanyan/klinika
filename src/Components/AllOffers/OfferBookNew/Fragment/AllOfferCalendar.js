@@ -63,8 +63,8 @@ function AllOfferCalendar({
 
 
     const handleChangeDay = (count, unit) => {
-        if (startDate.add(count, unit) < dayjs()) {
-            setStartDate(dayjs())
+        if (startDate.add(count, unit) < getStartDate) {
+            setStartDate(getStartDate)
         } else {
             let startCopy = startDate.clone().add(count, unit);
             if (daysData.find(e => e.key === startCopy.diff(dayjs(), 'days'))) {
@@ -151,6 +151,8 @@ function AllOfferCalendar({
     }
 
     const f1 = () => {
+        if(dataState?.doctor_id) {
+
         let callableDays = []
         if (!daysData.length) {
             callableDays = [...Array(6).keys()].map(key => ({
@@ -205,47 +207,38 @@ function AllOfferCalendar({
             // })]
             // )
         })
+            }
     }
 
 
     useEffect(() => {
+        console.log("useEffect triggered for doctor_id:", dataState?.doctor_id);
+
+        // Make sure the state is in the initial state when the component mounts
+        setStartDate(dayjs());
+        setGetStartDate(dayjs());
+        setFirstCall(false);
+        setTimesIndex(0);
+        setDaysData([]);
+        setAvailableTimes([]);
+        setDayOff([]);
+        setLoadingDate(false);
+
+        // Make the request for the new doctor
         (async () => {
-            await createAvailableDate()
+            console.log("Before createAvailableDate");
+            await createAvailableDate();
+            console.log("After createAvailableDate");
+
+            console.log("Before f");
             f();
+            console.log("After f");
+
+            console.log("Before f1");
             f1();
+            console.log("After f1");
         })();
-
-        // if (dataState?.doctor_id) {
-        //     setLoadingDate(true)
-        //     postResource('PublicClinicDoctorWorkingHours', 'single', token, dataState?.doctor_id + '/' + data?.clinic?.id, {service: 'clinic_visit'}).then(response => {
-        //         const res = response?.working_hours
-        //
-        //         let day = [];
-        //         Object.keys(res)?.forEach((key) => {
-        //             if (res[key][0]?.is_day_off) {
-        //                 day.push(key)
-        //             }
-        //         })
-        //
-        //         setDayOff(day)
-        //         setLoadingDate(false)
-        //         daysData = [...Array(6).keys()].map(key => ({
-        //             key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
-        //             disabled: day.includes(currentDate.add(key, 'day').day())
-        //         }));
-        //         setDaysData(daysData);
-        //
-        //         // setDaysData([...Array(6).keys()].map(key => ({
-        //         //     key: currentDate.add(key, 'day').format('YYYY-MM-DD'),
-        //         //     disabled: day.includes(currentDate.add(key, 'day').day())
-        //         // })))
-        //
-        //
-        //     })
-        // }
-
-
-    }, [dataState?.doctor_id])
+    }, []);
 
 
     useEffect(() => {
@@ -254,7 +247,6 @@ function AllOfferCalendar({
         }
 
     }, [startDate])
-
 
 //useEffect(() => {
 //         f();
@@ -353,7 +345,7 @@ function AllOfferCalendar({
                 </div>
                 <div className={'next_prev_div'}>
                     <Button className={'next_prev_btn'}
-                            disabled={startDate.format('DD-MM-YYYY') == dayjs().format('DD-MM-YYYY')}
+                            disabled={startDate.format('DD-MM-YYYY') == getStartDate.format('DD-MM-YYYY')}
                             onClick={() => handleChangeDay(-1, 'month')}>
                         {language === 'en' ? <LeftOutlined style={{color: '#ffffff'}}/> :
                             <RightOutlined style={{color: '#ffffff'}}/>}
@@ -371,6 +363,7 @@ function AllOfferCalendar({
 
                         {[...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
+
                             return <Button key={key}
                                            loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}

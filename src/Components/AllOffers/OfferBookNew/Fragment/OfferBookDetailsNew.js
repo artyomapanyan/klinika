@@ -7,6 +7,7 @@ import map from '../../../../dist/Img/map.png'
 import global from '../../../../dist/Img/global-line.png'
 import OfferMap from './OfferMap'
 import { useSelector } from 'react-redux'
+import clinic_logo from "../../../../dist/Img/clinic1.jpg";
 
 function OfferBookDetails({ data, showDrawer }) {
 	let lngs = useSelector(state => state?.app?.current_locale)
@@ -69,7 +70,7 @@ function OfferBookDetails({ data, showDrawer }) {
 							size={40}
 							src={
 								<img
-									src={data?.clinic?.logo?.url}
+									src={data?.clinic?.logo?.url ? data?.clinic?.logo?.url : clinic_logo}
 									alt='avatar'
 									onError={({ currentTarget }) => {
 										currentTarget.onerror = null // prevents looping

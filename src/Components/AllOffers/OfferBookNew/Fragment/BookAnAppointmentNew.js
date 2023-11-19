@@ -17,6 +17,7 @@ import img_thank_you from "../../../../dist/Img/thank_you.png";
 import {UserOutlined} from "@ant-design/icons";
 import gold_star from "../../../../dist/icons/gold_star.png";
 import Preloader from "../../../Preloader";
+import {log10} from "chart.js/helpers";
 
 function BookAnAppointment({data, setOpen}) {
     let token = useSelector(state => state.auth.token)
@@ -139,6 +140,7 @@ function BookAnAppointment({data, setOpen}) {
         setDoctorId('')
     }
 
+
     const onDoctor = id => {
         setDoctorId(id)
         setDataState({})
@@ -158,22 +160,24 @@ function BookAnAppointment({data, setOpen}) {
 
     }
     const collapseChange = (key) => {
+        let key1 = [...key]
 
-        let endKey = key.splice(key?.length - 2, key?.length - 1);
+
+        // let endKey = key1.splice(key1?.length - 2, key1?.length - 1);
+        let endKey = key1[key1.length - 1];
 
         setDoctorKey(endKey.toString());
-
 
     }
 
 
 
 
-
     const item = data?.doctors?.map((el, key) => {
 
+
         return {
-            key: key,
+            key: key.toString(),
             label: <Button disabled={[el?.id].includes(doctorId)}
                            className={dataState?.doctor_id === el?.id ? 'doctor_selected' : 'doctor_container'}
                            key={el?.id} onClick={() => onDoctor(el?.id)}>
@@ -206,10 +210,11 @@ function BookAnAppointment({data, setOpen}) {
                     {/*</div>*/}
                 </div>
             </Button>,
-            children: <div key={doctorKey}>
+            children: <div key={key}>
+
                 {
                     dataState?.doctor_id ?
-                        <AllOfferCalendar show={show} setDataTimes={setDataTimes} setDataState={setDataState}
+                        <AllOfferCalendar setDataTimes={setDataTimes} setDataState={setDataState}
                                           dataState={dataState} data={data} date={date} setDate={setDate}/> :
                         <div></div>
                 }
@@ -287,12 +292,14 @@ function BookAnAppointment({data, setOpen}) {
                                 {/*</div>*/}
                                 {
                                     a ? <div className={'collepse_offer_calendar'}>
-                                        <Collapse destroyInactivePanel={true}
+                                        <Collapse destroyInactivePanel={false}
                                                   items={item}
                                                   onChange={collapseChange}
                                                   expandIcon={() => ''}
                                                   bordered={false}
                                                   ghost={true}
+                                                  activeKey={doctorKey}
+
                                         >
                                         </Collapse>
 

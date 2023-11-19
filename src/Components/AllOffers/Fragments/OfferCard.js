@@ -1,6 +1,7 @@
 import React from 'react'
 import { Avatar, Button, Col, Divider, Rate, Space } from 'antd'
 import off_image_1 from '../../../dist/Img/off_image_1.jpg'
+import clinic_logo from '../../../dist/Img/clinic1.jpg'
 import { useNavigate } from 'react-router'
 import { t } from 'i18next'
 import { useSelector } from 'react-redux'
@@ -68,7 +69,7 @@ function OfferCard({ data, id }) {
 								size={50}
 								src={
 									<img
-										src={data?.clinic?.logo?.url}
+										src={data?.clinic?.logo?.url ? data?.clinic?.logo?.url : clinic_logo}
 										alt='avatar'
 										onError={({ currentTarget }) => {
 											currentTarget.onerror = null // prevents looping
