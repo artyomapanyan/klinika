@@ -3,7 +3,7 @@ import './AllOffers.sass'
 import off_head from '../../dist/Img/off_head.png'
 import mobile_filter_icon from '../../dist/icons/mobile_filter_icon.png'
 
-import {Button, Divider, Result, Row, Dropdown, Drawer, TreeSelect, Space} from 'antd'
+import {Button, Divider, Result, Row, Dropdown, Drawer, TreeSelect} from 'antd'
 import OffersPrices from './Fragments/OffersPrices'
 import {changeLanguage, t} from 'i18next'
 import OfferCard from './Fragments/OfferCard'
