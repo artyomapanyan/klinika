@@ -27,17 +27,18 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
             <tr>
                 <td>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
-                        <span className={'cl_manager_collapse_specialty'}>{t(item?.service)}</span>
+                        <span className={'cl_manager_collapse_specialty'}>{t(item?.service.replaceAll('_', ' '))}</span>
                         {/*<img src={arrowDownPurple} alt={'arrowDownPurple'}/>*/}
                     </Button>
                 </td>
                 {Object.keys(item?.availability??{}).map((key, k)=>   {
                     return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || item?.availability[key] === null ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key] === null ? null : () => setSelectedDate(key)}>
 
-                        <div className={"progressPurple"} style={{background: item.availability[key] === null ? 'url('+gray_grid+')' : '#774d9d20'}}>
+                        <div className={"progressPurple"} style={{background: item.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
+
                             <div className="progress-bar "
                                  role="progressbar"
-                                 style={{width: item.availability[key]+'%', background: item.availability[key] === null ? 'url('+gray_grid+')' : '#774d9d'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
+                                 style={{width: item.availability[key]+'%', background: item.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF56'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
                                  aria-valuemax="100">
                             </div>
                             {

@@ -67,7 +67,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 }).then(response => {
                     setLoading(false)
                     setTimes(response.flat())
-                    setNoTimes(response)
+                    setNoTimes(response.flat())
                 })
             }
 

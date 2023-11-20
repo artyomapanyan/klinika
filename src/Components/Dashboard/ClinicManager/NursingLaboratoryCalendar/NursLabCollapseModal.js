@@ -48,6 +48,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
 
+
     useEffect(() => {
 
         if(item.service){
@@ -217,12 +218,17 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const onSendCode = () => {
-        setLoading(true)
-        postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_test_id', 'lab_package_id', 'nursing_tasks']).then(e => {
+            setLoading(true)
+            postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
 
-            setLoading(false)
-            setSendCodeState(true)
+                setLoading(false)
+                setSendCodeState(true)
+            })
+        }).catch((c) => {
+
         })
+
     }
 
     const onVerify = () => {
@@ -293,8 +299,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                     {/*        </div>*/}
                     {/*    </Space>*/}
                     {/*</div>*/}
-                    {
-                        !sendCodeState ? <div  style={{marginTop: 20}}>
+
 
                             {/*<FormInput label={t('Service Type')} name={'service_type'}*/}
                             {/*           inputType={'resourceSelect'}*/}
@@ -314,36 +319,44 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
                                 {
                                     item?.service === 'nursing' ? <FormInput label={t('Nursing tasks')}
+                                                                             disableClear={true}
                                                                              name={'nursing_tasks'}
                                                                              inputProps={{mode: 'multiple'}}
                                                                              rules={[{required: true}]}
                                                                              resourceParams={{
                                                                                  clinic: clinicID
                                                                              }}
+
                                                                              inputType={'resourceSelect'}
                                                                              resource={'NursingTask'}
                                     /> : <div>
                                         <FormInput label={t('Lab Tests')}
+                                                   disableClear={true}
                                                    name={'lab_test_id'}
                                                    rules={[{required: true}]}
                                                    inputType={'resourceSelect'}
                                                    resourceParams={{
                                                        clinic: clinicID
                                                    }}
+
+
                                                    resource={'LabTest'}/>
 
                                         <FormInput label={t('Lab Packages')}
+                                                   disableClear={true}
                                                    name={'lab_package_id'}
                                                    rules={[{required: true}]}
                                                    inputType={'resourceSelect'}
                                                    resourceParams={{
                                                        clinic: clinicID
                                                    }}
+
                                                    resource={'LabPackage'}/>
                                     </div>
                                 }
 
-
+                    {
+                        !sendCodeState ? <div  style={{marginTop: 20}}>
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}
@@ -432,6 +445,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                         </Space>
                         <Button onClick={handleCreateNewApp} loading={loading403} type={'primary'} htmlType={'submit'} style={{width: '100%', height: '44px', marginTop:24}}>{t("Book")}</Button>
                     </div> : <Form className={"verify_form"}>
+
                         <div style={{backgroundColor: '#774D9B', marginTop:36, borderRadius: 4, padding: 12, color: '#ffffff', fontWeight: 400, fontSize: 14}}>
                             {t('This user already registered in KLINIKA system. App sent request for permissions to personal \n' +
                                 '                            information. Please enter code from user or wait when user accept your request in app')}

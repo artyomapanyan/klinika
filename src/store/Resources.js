@@ -204,10 +204,16 @@ const Resource = {
                 label: t('Absent')
             },
         ],
-        3: [{
+        3: [
+            {
             key: '3',
             label: t('Cancelled')
-        },],
+            },
+            {
+                key: '0',
+                label: t('New')
+            },
+        ],
         5: [{
             key: '5',
             label: t('Absent')
@@ -216,6 +222,10 @@ const Resource = {
             {
                 key: '7',
                 label: t('Revoked')
+            },
+            {
+                key: '0',
+                label: t('New')
             },
         ],
         6: [
