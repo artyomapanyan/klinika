@@ -125,6 +125,7 @@ function BookAnAppointment({data, setOpen}) {
         setNamesState({})
         setDataState({})
         setDoctorId('')
+        setDoctorKey('')
     }
 
 
@@ -138,6 +139,8 @@ function BookAnAppointment({data, setOpen}) {
         setDataState({})
         setShowButtons(true)
         setDoctorId('')
+        setDoctorKey('')
+
     }
 
 
@@ -148,11 +151,13 @@ function BookAnAppointment({data, setOpen}) {
             ...prevState,
             doctor_id: id
         }))
+
     }
     const onCancel0 = () => {
         setDataState({})
         setDoctorId('')
         seta(false)
+        setDoctorKey('')
         setTimeout(()=>{
             seta(true)
         }, 100)

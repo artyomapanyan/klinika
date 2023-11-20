@@ -53,6 +53,11 @@ function AllOfferCalendar({
                 startDate = dayjs(response?.date)
                 setStartDate(startDate);
                 setGetStartDate(dayjs(response?.date))
+                setDataState(prevState => ({
+                    ...prevState,
+                    date: dayjs(response?.date)?.format('YYYY-MM-DD')
+                }))
+                setDate(dayjs(response?.date))
                 resolve();
             }).catch(reject)
         })
@@ -88,7 +93,7 @@ function AllOfferCalendar({
 
     }
 
-
+    console.log(dataState?.date)
     const onDateClick = (e) => {
 
 
@@ -113,6 +118,31 @@ function AllOfferCalendar({
         }
 
     }
+
+    // useEffect(() => {
+    //     (async () => {
+    //         await createAvailableDate();
+    //         setDataState(prevState => ({
+    //             ...prevState,
+    //             date: dataState?.date
+    //         }))
+    //         setDate(dayjs(dataState?.date))
+    //
+    //         if (dataState?.date) {
+    //             setTimeLoading(true)
+    //             postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + "/" + data?.clinic?.id, {
+    //                 service: 'clinic_visit',
+    //                 date: dataState?.date
+    //             }).then((response) => {
+    //                 console.log('sdfsdf')
+    //                 setAvailableTimes(response?.flat() ?? [])
+    //                 // setTimesIndex(0)
+    //                 // setAvailableTimes(response?.flat()??[])
+    //                 setTimeLoading(false)
+    //             })
+    //         }
+    //     })();
+    // }, [])
 
    // const currentDate = dayjs();
 
@@ -193,6 +223,8 @@ function AllOfferCalendar({
             }));
             setFirstCall(true)
 
+
+
             // setDaysData(prevState =>[...prevState.map(e => {
             //     let data = responses.find(u => e.key == u.key);
             //     e.disabled = !data.hasDays;
@@ -207,26 +239,30 @@ function AllOfferCalendar({
             // )
         })
             }
+
     }
 
 
     useEffect(() => {
 
         // Make sure the state is in the initial state when the component mounts
-        setStartDate(dayjs());
-        setGetStartDate(dayjs());
-        setFirstCall(false);
-        setTimesIndex(0);
-        setDaysData([]);
-        setAvailableTimes([]);
-        setDayOff([]);
-        setLoadingDate(false);
+        // setStartDate(dayjs());
+        // setGetStartDate(dayjs());
+        // setFirstCall(false);
+        // setTimesIndex(0);
+        // setDaysData([]);
+        // setAvailableTimes([]);
+        // setDayOff([]);
+        // setLoadingDate(false);
 
         // Make the request for the new doctor
+
+
         (async () => {
             await createAvailableDate();
             f();
             f1();
+
         })();
     }, []);
 

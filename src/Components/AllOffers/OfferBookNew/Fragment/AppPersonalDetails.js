@@ -360,7 +360,7 @@ function AppPersonalDetails({
 							{responseCodeState &&
 							typeof responseCodeState !== 'string' &&
 							showPayment === false ? (
-								<div>
+								<div className={'all_offers_personal_det_inputs'}>
 									<Space style={{ width: '100%' }} direction={'vertical'}>
 										<Form ref={personalForm} onValuesChange={handleNamesChange}
 											  validateMessages={validateMessages}
@@ -394,6 +394,17 @@ function AppPersonalDetails({
 
 													]}
 											/>
+											<FormInput label={t('Nationality')} name={'country_id'}
+													   disabled={verifyResponse?.patient?.nationality?.id}
+													   inputType={'resourceSelect'}
+													   rules={[{required: true}]}
+													   initialValue={verifyResponse?.patient?.nationality?.id}
+													   initialData={verifyResponse?.patient?.nationality ? [verifyResponse?.patient?.nationality] : []}
+													   resource={'PublicCountry'}/>
+											{/*<FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}*/}
+											{/*		   rules={[{required: true}]}*/}
+											{/*		   handleMapItems={handleMapItems}*/}
+											{/*		   resource={'PublicCountry'}/>*/}
 
 										</Form>
 
