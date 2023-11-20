@@ -171,10 +171,9 @@ function AllOfferCalendar({
                 service: 'clinic_visit',
                 date: callableDay.key
             }).then((response) => {
-
                 return {
                     key: callableDay.key,
-                    hasDays: response ? response[0]?.length : 0,
+                    hasDays: response ? response?.flat()?.length : 0,
                 }
 
             })
@@ -212,7 +211,6 @@ function AllOfferCalendar({
 
 
     useEffect(() => {
-        console.log("useEffect triggered for doctor_id:", dataState?.doctor_id);
 
         // Make sure the state is in the initial state when the component mounts
         setStartDate(dayjs());
@@ -226,17 +224,9 @@ function AllOfferCalendar({
 
         // Make the request for the new doctor
         (async () => {
-            console.log("Before createAvailableDate");
             await createAvailableDate();
-            console.log("After createAvailableDate");
-
-            console.log("Before f");
             f();
-            console.log("After f");
-
-            console.log("Before f1");
             f1();
-            console.log("After f1");
         })();
     }, []);
 
