@@ -47,8 +47,6 @@ function AllOfferCalendar({
     const [loadingCalled, setLoadingCalled] = useState(false);
 
 
-    let initialDate = ''
-    console.log(initial?.id, 'ino')
 
 
     const createAvailableDate = () => {
@@ -99,7 +97,7 @@ function AllOfferCalendar({
 
     }
 
-    console.log(dataState)
+
     const onDateClick = (e) => {
 
 
@@ -396,7 +394,7 @@ function AllOfferCalendar({
 
                         {[...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
-                            console.log(e)
+
                             return <Button key={key}
                                            loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}

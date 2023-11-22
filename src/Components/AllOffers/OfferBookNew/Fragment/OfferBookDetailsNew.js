@@ -7,7 +7,7 @@ import map from '../../../../dist/Img/map.png'
 import global from '../../../../dist/Img/global-line.png'
 import OfferMap from './OfferMap'
 import { useSelector } from 'react-redux'
-import clinic_logo from "../../../../dist/Img/clinic1.jpg";
+import clinic_logo from "../../../../dist/Img/faik_clinic_logo.png";
 
 function OfferBookDetails({ data, showDrawer }) {
 	let lngs = useSelector(state => state?.app?.current_locale)

@@ -401,10 +401,6 @@ function AppPersonalDetails({
 													   initialValue={verifyResponse?.patient?.nationality?.id}
 													   initialData={verifyResponse?.patient?.nationality ? [verifyResponse?.patient?.nationality] : []}
 													   resource={'PublicCountry'}/>
-											{/*<FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}*/}
-											{/*		   rules={[{required: true}]}*/}
-											{/*		   handleMapItems={handleMapItems}*/}
-											{/*		   resource={'PublicCountry'}/>*/}
 
 										</Form>
 

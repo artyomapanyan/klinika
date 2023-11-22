@@ -24,6 +24,8 @@ function OfferBookContent() {
 	const [open, setOpen] = useState(false);
 	const [response404, setResponse404] = useState({});
 
+	const [totalState, setTotalState] = useState(false);
+
 
 
 
@@ -71,7 +73,6 @@ function OfferBookContent() {
 
 	const { loading } = loadingState
 	const { data, setData } = dataState
-
 
 
 	return (
@@ -125,19 +126,19 @@ function OfferBookContent() {
 												<div>
 													<OfferHours data={data} />
 													<div style={{ marginTop: '10px' }}>
-														<OfferPrice data={data} />
+														<OfferPrice data={data} totalState={totalState}/>
 													</div>
 												</div>
 											) : (
 												<div>
-													<OfferPrice data={data} />
-													<OfferHours data={data} />
+													<OfferPrice data={data} totalState={totalState} />
+													{/*<OfferHours data={data} />*/}
 												</div>
 											)}
 										</div>
 
 										<div className={'offer_appointment_sec'}>
-											<BookAnAppointmentNew data={data} setOpen={setOpen} />
+											<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState} />
 										</div>
 
 
@@ -154,7 +155,7 @@ function OfferBookContent() {
 
 
 											>
-												<BookAnAppointmentNew data={data} setOpen={setOpen} />
+												<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState}/>
 											</Drawer>
 										</div>
 

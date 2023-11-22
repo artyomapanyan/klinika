@@ -19,7 +19,7 @@ import gold_star from "../../../../dist/icons/gold_star.png";
 import Preloader from "../../../Preloader";
 import {log10} from "chart.js/helpers";
 
-function BookAnAppointment({data, setOpen}) {
+function BookAnAppointment({data, setOpen, setTotalState}) {
     let token = useSelector(state => state.auth.token)
     let params = useParams()
     let dispatch = useDispatch()
@@ -109,6 +109,7 @@ function BookAnAppointment({data, setOpen}) {
             () => {
                 setShowPayment(true)
                 setShowButtons(false)
+                setTotalState(true)
             },
             () => {
 
@@ -179,7 +180,7 @@ function BookAnAppointment({data, setOpen}) {
     //
     // }
 
-    console.log(dataState, 'fdfdfdfdfdf')
+
 
 
     const item = data?.doctors?.map((el, key) => {
