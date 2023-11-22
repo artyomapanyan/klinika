@@ -41,6 +41,8 @@ function BookAnAppointment({data, setOpen}) {
     const [a, seta] = useState(true)
     const personalForm = useRef();
 
+    const [changeCount, setChangeCount] = useState(1)
+
 
 
     const onBooking = () => {
@@ -144,13 +146,14 @@ function BookAnAppointment({data, setOpen}) {
     }
 
 
-    const onDoctor = id => {
+    const onDoctor = (id, key) => {
         setDoctorId(id)
-        setDataState({})
+        //setDataState({})
         setDataState(prevState => ({
             ...prevState,
             doctor_id: id
-        }))
+        }));
+        setDoctorKey(key.toString());
 
     }
     const onCancel0 = () => {
@@ -164,28 +167,29 @@ function BookAnAppointment({data, setOpen}) {
 
 
     }
-    const collapseChange = (key) => {
-        let key1 = [...key]
+    // const collapseChange = (key) => {
+    //     let key1 = [...key]
+    //
+    //
+    //     // let endKey = key1.splice(key1?.length - 2, key1?.length - 1);
+    //     let endKey = key1[key1.length - 1];
+    //
+    //     setDoctorKey(endKey.toString());
+    //
+    //
+    // }
 
-
-        // let endKey = key1.splice(key1?.length - 2, key1?.length - 1);
-        let endKey = key1[key1.length - 1];
-
-        setDoctorKey(endKey.toString());
-
-    }
-
-
+    console.log(dataState, 'fdfdfdfdfdf')
 
 
     const item = data?.doctors?.map((el, key) => {
 
 
         return {
-            key: key.toString(),
+            key: key,
             label: <Button disabled={[el?.id].includes(doctorId)}
                            className={dataState?.doctor_id === el?.id ? 'doctor_selected' : 'doctor_container'}
-                           key={el?.id} onClick={() => onDoctor(el?.id)}>
+                           key={el?.id} onClick={() => onDoctor(el?.id, key)}>
 
                 <Space>
                     <Avatar
@@ -218,9 +222,9 @@ function BookAnAppointment({data, setOpen}) {
             children: <div key={key}>
 
                 {
-                    dataState?.doctor_id ?
+                    dataState?.doctor_id === el?.id ?
                         <AllOfferCalendar setDataTimes={setDataTimes} setDataState={setDataState}
-                                          dataState={dataState} data={data} date={date} setDate={setDate}/> :
+                                          dataState={dataState} data={data} date={date} setDate={setDate}  /> :
                         <div></div>
                 }
             </div>,
@@ -299,7 +303,7 @@ function BookAnAppointment({data, setOpen}) {
                                     a ? <div className={'collepse_offer_calendar'}>
                                         <Collapse destroyInactivePanel={false}
                                                   items={item}
-                                                  onChange={collapseChange}
+                                                  //onChange={collapseChange}
                                                   expandIcon={() => ''}
                                                   bordered={false}
                                                   ghost={true}
