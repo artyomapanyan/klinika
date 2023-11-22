@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar, Button, Col, Divider, Rate, Space } from 'antd'
 import off_image_1 from '../../../dist/Img/off_image_1.jpg'
-import clinic_logo from '../../../dist/Img/clinic1.jpg'
+import clinic_logo from '../../../dist/Img/faik_clinic_logo.png'
 import { useNavigate } from 'react-router'
 import { t } from 'i18next'
 import { useSelector } from 'react-redux'

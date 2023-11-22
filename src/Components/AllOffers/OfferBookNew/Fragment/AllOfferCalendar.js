@@ -18,7 +18,8 @@ function AllOfferCalendar({
                               dataState,
                               data,
                               setDate,
-                              setDataTimes
+                              setDataTimes,
+                              initial
                           }) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
@@ -43,6 +44,9 @@ function AllOfferCalendar({
     const [availableTimes, setAvailableTimes] = useState([])
     const [dayOff, setDayOff] = useState([]);
     const [loadingDate, setLoadingDate] = useState(false);
+    const [loadingCalled, setLoadingCalled] = useState(false);
+
+
 
 
     const createAvailableDate = () => {
@@ -53,6 +57,11 @@ function AllOfferCalendar({
                 startDate = dayjs(response?.date)
                 setStartDate(startDate);
                 setGetStartDate(dayjs(response?.date))
+                setDataState(prevState => ({
+                    ...prevState,
+                    date: dayjs(response?.date)?.format('YYYY-MM-DD')
+                }))
+                setDate(dayjs(response?.date))
                 resolve();
             }).catch(reject)
         })
@@ -112,6 +121,41 @@ function AllOfferCalendar({
         }
 
     }
+
+    const f2 = () => {
+        setDataState(prevState => ({
+            ...prevState,
+            date: startDate?.format('YYYY-MM-DD')
+        }))
+        setDate(startDate)
+
+
+        setTimeLoading(true)
+        postResource('PublicClinicDoctorAvailableTimes', 'single', token, dataState?.doctor_id + "/" + data?.clinic?.id, {
+            service: 'clinic_visit',
+            date: startDate?.format('YYYY-MM-DD')
+        }).then((response) => {
+            if(response) {
+                setAvailableTimes(response?.flat() ?? [])
+            }
+            setTimeLoading(false)
+        })
+    }
+
+    // useEffect(() => {
+    //     if (firstCall) {
+    //         (async () => {
+    //             await createAvailableDate();
+    //             f2();
+    //
+    //         })();
+    //
+    //
+    //     }
+    //
+    // }, [dataState?.doctor_id])
+
+
 
    // const currentDate = dayjs();
 
@@ -187,10 +231,14 @@ function AllOfferCalendar({
 
                 }
                 e.called = true;
-
+                if(e?.called) {
+                    setLoadingCalled(true)
+                }
                 return e
             }));
             setFirstCall(true)
+
+
 
             // setDaysData(prevState =>[...prevState.map(e => {
             //     let data = responses.find(u => e.key == u.key);
@@ -206,27 +254,21 @@ function AllOfferCalendar({
             // )
         })
             }
+
     }
 
 
+
+
     useEffect(() => {
-
-        // Make sure the state is in the initial state when the component mounts
-        setStartDate(dayjs());
-        setGetStartDate(dayjs());
-        setFirstCall(false);
-        setTimesIndex(0);
-        setDaysData([]);
-        setAvailableTimes([]);
-        setDayOff([]);
-        setLoadingDate(false);
-
-        // Make the request for the new doctor
         (async () => {
             await createAvailableDate();
+            f2();
             f();
             f1();
+
         })();
+
     }, []);
 
 
@@ -234,7 +276,6 @@ function AllOfferCalendar({
         if (firstCall) {
             f1();
         }
-
     }, [startDate])
 
 //useEffect(() => {
@@ -394,7 +435,7 @@ function AllOfferCalendar({
             </div>
         </div>
 
-        <Spin spinning={timeLoading}>
+        <Spin spinning={timeLoading || !loadingCalled}>
             <div className={'drawer_cal_bottom_div'}>
                 <div className={'drawer_cal_foot_div'}>
                     <div className={'top_div_title'}>
