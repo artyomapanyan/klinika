@@ -50,6 +50,7 @@ function Appointment({isPatient}) {
 
 
     const [lo, setLo] = useState(false)
+    const [startDay, setStartDay] = useState(dayjs())
 
 
 
@@ -321,10 +322,21 @@ function Appointment({isPatient}) {
         return [name,item]
     }
 
+    useEffect(() => {
+        if(data?.doctor_id && data?.clinic_id && data?.service_type) {
+            postResource('AvailableDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {
+                service: data?.service_type,
+            }).then((response) => {
+                console.log(response)
+                setStartDay(response?.date)
+            })
+        }
+
+    }, [data?.doctor_id])
 
     const disabledDate = (current) => {
 
-        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs(startDay).day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
     };
 
 

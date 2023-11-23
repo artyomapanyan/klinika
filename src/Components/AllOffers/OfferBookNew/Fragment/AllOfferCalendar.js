@@ -8,6 +8,7 @@ import {t} from "i18next";
 import {GMBK} from "../../../../functions";
 import Resources from "../../../../store/Resources";
 import arrow_right_white from "../../../../dist/icons/arrow_right_white.png";
+import Preloader from "../../../Preloader";
 
 
 function AllOfferCalendar({
@@ -396,18 +397,23 @@ function AllOfferCalendar({
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
 
                             return <Button key={key}
-                                           loading={!e?.called}
+                                           //loading={!e?.called}
                                            disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}
                                            className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                            onClick={() => onDateClick(startDate.add(key, 'day'))}>
-                                <div className={'date_div_in_map'} style={{fontWeight: 400}}>
-                                    {Resources.Days[startDate.add(key, 'day').day()]}
-                                </div>
-                                <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
-                                <div key={key} className={'date_div_in_map'}>
+                                {
+                                    !e?.called ? <Spin /> : <div>
+                                        <div className={'date_div_in_map'} style={{fontWeight: 400}}>
+                                            {Resources.Days[startDate.add(key, 'day').day()]}
+                                        </div>
+                                        <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
+                                        <div key={key} className={'date_div_in_map'}>
 
-                                    {startDate.add(key, 'day').format('DD')}
-                                </div>
+                                            {startDate.add(key, 'day').format('DD')}
+                                        </div>
+                                    </div>
+                                }
+
                             </Button>
                         })
                         }
