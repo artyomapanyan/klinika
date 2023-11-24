@@ -333,6 +333,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
         setSaveLoading(true)
         values.license_number_expired_at = values?.license_number_expired_at?.format('YYYY-MM-DD')
+
         values.has_telehealth_service = values.has_telehealth_service === true
         values.has_home_visit_service = values.has_home_visit_service === true
         values.has_clinic_visit_service = values.has_clinic_visit_service === true
@@ -352,63 +353,65 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         values.enable_physical_therapy_home_visit_service = values.enable_physical_therapy_home_visit_service === true;
         values.enable_physical_therapy_clinic_visit_service = values.enable_physical_therapy_clinic_visit_service === true;
 
-        if(!values.enable_clinic_visit_service) {
-            values.has_clinic_visit_service = false
-        }
-        if(!values.enable_telehealth_service) {
-            values.has_telehealth_service = false
-        }
-        if(!values.enable_home_visit_service) {
-            values.has_home_visit_service = false
-        }
-        if(!values.enable_laboratory_home_visit_service) {
-            values.has_laboratory_home_visit_service = false
-        }
-        if(!values.enable_laboratory_clinic_visit_service) {
-            values.has_laboratory_clinic_visit_service = false
-        }
-        if(!values.enable_nursing_service) {
-            values.has_nursing_service = false
-        }
-        if(!values.enable_physical_therapy_home_visit_service) {
-            values.has_physical_therapy_home_visit_service = false
-        }
-        if(!values.enable_physical_therapy_clinic_visit_service) {
-            values.has_physical_therapy_clinic_visit_service = false
-        }
+        // if(!values.enable_clinic_visit_service) {
+        //     values.has_clinic_visit_service = false
+        // }
+        // if(!values.enable_telehealth_service) {
+        //     values.has_telehealth_service = false
+        // }
+        // if(!values.enable_home_visit_service) {
+        //     values.has_home_visit_service = false
+        // }
+        // if(!values.enable_laboratory_home_visit_service) {
+        //     values.has_laboratory_home_visit_service = false
+        // }
+        // if(!values.enable_laboratory_clinic_visit_service) {
+        //     values.has_laboratory_clinic_visit_service = false
+        // }
+        // if(!values.enable_nursing_service) {
+        //     values.has_nursing_service = false
+        // }
+        // if(!values.enable_physical_therapy_home_visit_service) {
+        //     values.has_physical_therapy_home_visit_service = false
+        // }
+        // if(!values.enable_physical_therapy_clinic_visit_service) {
+        //     values.has_physical_therapy_clinic_visit_service = false
+        // }
+
+        console.log(values, 'gggggg')
 
 
-        if(values.has_clinic_visit_service) {
+        if(values.has_clinic_visit_service && values.enable_clinic_visit_service) {
             values.service_settings.clinic_visit.duration  = values.service_settings.clinic_visit.duration ?? 0
             values.service_settings.clinic_visit.has_insurance_company = values.service_settings.clinic_visit.has_insurance_company === true
             values.service_settings.clinic_visit.enable_vat_calculation = values.service_settings.clinic_visit.enable_vat_calculation === true
         }
-        if(values.has_home_visit_service){
+        if(values.has_home_visit_service && values.enable_home_visit_service){
             values.service_settings.home_visit.has_insurance_company = values.service_settings.home_visit.has_insurance_company === true
             values.service_settings.home_visit.enable_vat_calculation = values.service_settings.home_visit.enable_vat_calculation === true
         }
 
-        if(values.has_laboratory_clinic_visit_service) {
+        if(values.has_laboratory_clinic_visit_service && values.enable_laboratory_clinic_visit_service) {
             values.service_settings.laboratory_clinic_visit.has_insurance_company = values.service_settings.laboratory_clinic_visit.has_insurance_company === true
             values.service_settings.laboratory_clinic_visit.enable_vat_calculation = values.service_settings.laboratory_clinic_visit.enable_vat_calculation === true
         }
-        if(values.has_laboratory_home_visit_service) {
+        if(values.has_laboratory_home_visit_service && values.enable_laboratory_home_visit_service) {
             values.service_settings.laboratory_home_visit.has_insurance_company = values.service_settings.laboratory_home_visit.has_insurance_company === true
             values.service_settings.laboratory_home_visit.enable_vat_calculation = values.service_settings.laboratory_home_visit.enable_vat_calculation === true
         }
-        if(values.has_nursing_service) {
+        if(values.has_nursing_service && values.enable_nursing_service) {
             values.service_settings.nursing.has_insurance_company = values.service_settings.nursing.has_insurance_company === true
             values.service_settings.nursing.enable_vat_calculation = values.service_settings.nursing.enable_vat_calculation === true
         }
-        if(values.has_physical_therapy_clinic_visit_service) {
+        if(values.has_physical_therapy_clinic_visit_service && values.enable_physical_therapy_clinic_visit_service) {
             values.service_settings.physical_therapy_clinic_visit.has_insurance_company = values.service_settings.physical_therapy_clinic_visit.has_insurance_company === true
             values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation = values.service_settings.physical_therapy_clinic_visit.enable_vat_calculation === true
         }
-        if(values.has_physical_therapy_home_visit_service) {
+        if(values.has_physical_therapy_home_visit_service && values.enable_physical_therapy_home_visit_service) {
             values.service_settings.physical_therapy_home_visit.has_insurance_company = values.service_settings.physical_therapy_home_visit.has_insurance_company === true
             values.service_settings.physical_therapy_home_visit.enable_vat_calculation = values.service_settings.physical_therapy_home_visit.enable_vat_calculation === true
         }
-        if(values.has_telehealth_service) {
+        if(values.has_telehealth_service && values.enable_telehealth_service) {
             values.service_settings.telehealth.has_insurance_company = values.service_settings.telehealth.has_insurance_company === true
             values.service_settings.telehealth.enable_vat_calculation = values.service_settings.telehealth.enable_vat_calculation === true
         }
@@ -441,8 +444,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         }
 
 
-
-
+        console.log(values)
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
@@ -509,8 +511,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name, item, searchData]
     }
 
-
-    console.log(data?.enable_clinic_visit_service)
 
     return(
         <div >
@@ -646,7 +646,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_clinic_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0,}}
-                                        valuePropName={!data?.enable_clinic_visit_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_clinic_visit_service ? "checked" : undefined}
                                         initialValue={data?.has_clinic_visit_service}
                                     >
                                         <Switch  disabled={role !== 'super' && !data?.enable_clinic_visit_service || !data?.enable_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
@@ -700,7 +700,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_telehealth_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName={!data?.enable_telehealth_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_telehealth_service ? "checked" : undefined}
                                         initialValue={data?.has_telehealth_service}
                                     >
                                         <Switch disabled={role !== 'super' && !data?.enable_telehealth_service || !data?.enable_telehealth_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} title={'dsad'} />
@@ -757,7 +757,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_home_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName={!data?.enable_home_visit_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_home_visit_service ? "checked" : undefined}
                                         initialValue={data?.has_home_visit_service}
                                     >
                                         <Switch disabled={role !== 'super' && !data?.enable_home_visit_service || !data?.enable_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
@@ -815,7 +815,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_laboratory_home_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName={!data?.enable_laboratory_home_visit_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_laboratory_home_visit_service ? "checked" : undefined}
                                         initialValue={data?.has_laboratory_home_visit_service}
                                     >
                                         <Switch disabled={role !== 'super' && !data?.enable_laboratory_home_visit_service || !data?.enable_laboratory_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
@@ -883,7 +883,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_laboratory_clinic_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName={!data?.enable_laboratory_clinic_visit_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_laboratory_clinic_visit_service ? "checked" : undefined}
                                         initialValue={data?.has_laboratory_clinic_visit_service}
                                     >
                                         <Switch disabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service || !data?.enable_laboratory_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
@@ -944,7 +944,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_nursing_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop:role === 'super' ? -30 : 0}}
-                                        valuePropName={!data?.enable_nursing_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_nursing_service ? "checked" : undefined}
                                         initialValue={data?.has_nursing_service}
                                     >
                                         <Switch disabled={role !== 'super' && !data?.enable_nursing_service || !data?.enable_nursing_service} checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />
@@ -1004,7 +1004,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_physical_therapy_home_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName={!data?.enable_physical_therapy_home_visit_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_physical_therapy_home_visit_service ? "checked" : undefined}
                                         initialValue={data?.has_physical_therapy_home_visit_service}
                                     >
                                         <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service || !data?.enable_physical_therapy_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
@@ -1062,7 +1062,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_physical_therapy_clinic_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName={!data?.enable_physical_therapy_clinic_visit_service ? "unchecked" : "checked"}
+                                        valuePropName={data?.enable_physical_therapy_clinic_visit_service ? "checked" : undefined}
                                         initialValue={data?.has_physical_therapy_clinic_visit_service}
                                     >
                                         <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service || !data?.enable_physical_therapy_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
