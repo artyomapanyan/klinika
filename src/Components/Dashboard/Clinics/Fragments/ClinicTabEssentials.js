@@ -324,6 +324,8 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
     const [searchCeys, setSearchCeys] = useState('')
+    const [changeValuesSwitchState, setChangeValuesSwitchState] = useState(data)
+
 
 
     const onFinish = (values) => {
@@ -350,6 +352,30 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         values.enable_physical_therapy_home_visit_service = values.enable_physical_therapy_home_visit_service === true;
         values.enable_physical_therapy_clinic_visit_service = values.enable_physical_therapy_clinic_visit_service === true;
 
+        if(!values.enable_clinic_visit_service) {
+            values.has_clinic_visit_service = false
+        }
+        if(!values.enable_telehealth_service) {
+            values.has_telehealth_service = false
+        }
+        if(!values.enable_home_visit_service) {
+            values.has_home_visit_service = false
+        }
+        if(!values.enable_laboratory_home_visit_service) {
+            values.has_laboratory_home_visit_service = false
+        }
+        if(!values.enable_laboratory_clinic_visit_service) {
+            values.has_laboratory_clinic_visit_service = false
+        }
+        if(!values.enable_nursing_service) {
+            values.has_nursing_service = false
+        }
+        if(!values.enable_physical_therapy_home_visit_service) {
+            values.has_physical_therapy_home_visit_service = false
+        }
+        if(!values.enable_physical_therapy_clinic_visit_service) {
+            values.has_physical_therapy_clinic_visit_service = false
+        }
 
 
         if(values.has_clinic_visit_service) {
@@ -458,14 +484,13 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                 payload: true
             })
         }
+        setChangeValuesSwitchState((prevState)=>({
+            ...prevState,
+            ...e
+        }))
+
     }
-    // useEffect(()=>{
-    //
-    //         postResource('Country','list',token,null,{per_page:5000}).then(responses => {
-    //             setCountryCode(responses)
-    //         })
-    //
-    // },[])
+    //console.log(data)
 
     const handleMapItems = (item,name)=>{
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
@@ -485,6 +510,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     }
 
 
+    console.log(data?.enable_clinic_visit_service)
 
     return(
         <div >
@@ -611,7 +637,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_clinic_visit_service}
                                         >
-                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{t('Enable service')}</Checkbox>
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
 
@@ -620,15 +646,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_clinic_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0,}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_clinic_visit_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_clinic_visit_service}
                                     >
-                                        <Switch  disabled={role !== 'super' && !data?.enable_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                        <Switch  disabled={role !== 'super' && !data?.enable_clinic_visit_service || !data?.enable_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_clinic_visit_service ? <div style={{marginLeft:60}}>
+                                    data?.has_clinic_visit_service && data?.enable_clinic_visit_service && changeValuesSwitchState?.has_clinic_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
@@ -666,7 +692,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_telehealth_service}
                                         >
-                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{t('Enable service')}</Checkbox>
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_telehealth_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -674,15 +700,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_telehealth_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_telehealth_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_telehealth_service}
                                     >
-                                        <Switch disabled={role !== 'super' && !data?.enable_telehealth_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} title={'dsad'} />
+                                        <Switch disabled={role !== 'super' && !data?.enable_telehealth_service || !data?.enable_telehealth_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} title={'dsad'} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_telehealth_service ? <div style={{marginLeft:60}}>
+                                    data?.has_telehealth_service && data?.enable_telehealth_service && changeValuesSwitchState?.has_telehealth_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
@@ -723,7 +749,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_home_visit_service}
                                         >
-                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{t('Enable service')}</Checkbox>
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -731,15 +757,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_home_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_home_visit_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_home_visit_service}
                                     >
-                                        <Switch disabled={role !== 'super' && !data?.enable_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                        <Switch disabled={role !== 'super' && !data?.enable_home_visit_service || !data?.enable_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_home_visit_service ? <div style={{marginLeft:60}}>
+                                    data?.has_home_visit_service && data?.enable_home_visit_service && changeValuesSwitchState?.has_home_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
@@ -789,15 +815,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_laboratory_home_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_laboratory_home_visit_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_laboratory_home_visit_service}
                                     >
-                                        <Switch disabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                        <Switch disabled={role !== 'super' && !data?.enable_laboratory_home_visit_service || !data?.enable_laboratory_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_laboratory_home_visit_service ? <div style={{marginLeft:60}}>
+                                    data?.has_laboratory_home_visit_service && data?.enable_laboratory_home_visit_service && changeValuesSwitchState?.has_laboratory_home_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
@@ -857,15 +883,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_laboratory_clinic_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_laboratory_clinic_visit_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_laboratory_clinic_visit_service}
                                     >
-                                        <Switch disabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                        <Switch disabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service || !data?.enable_laboratory_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_laboratory_clinic_visit_service ? <div style={{marginLeft:60}}>
+                                    data?.has_laboratory_clinic_visit_service && data?.enable_laboratory_clinic_visit_service && changeValuesSwitchState?.has_laboratory_clinic_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
@@ -918,15 +944,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_nursing_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop:role === 'super' ? -30 : 0}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_nursing_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_nursing_service}
                                     >
-                                        <Switch disabled={role !== 'super' && !data?.enable_nursing_service} checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />
+                                        <Switch disabled={role !== 'super' && !data?.enable_nursing_service || !data?.enable_nursing_service} checkedChildren={<CheckOutlined />}  unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_nursing_service ? <div style={{marginLeft:60}}>
+                                    data?.has_nursing_service && data?.enable_nursing_service && changeValuesSwitchState?.has_nursing_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
@@ -970,7 +996,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_physical_therapy_home_visit_service}
                                         >
-                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{t('Enable service')}</Checkbox>
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_physical_therapy_home_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -978,15 +1004,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_physical_therapy_home_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_physical_therapy_home_visit_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_physical_therapy_home_visit_service}
                                     >
-                                        <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                        <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_home_visit_service || !data?.enable_physical_therapy_home_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_physical_therapy_home_visit_service ? <div style={{marginLeft:60}}>
+                                    data?.has_physical_therapy_home_visit_service && data?.enable_physical_therapy_home_visit_service && changeValuesSwitchState?.has_physical_therapy_home_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
@@ -1028,7 +1054,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                                       valuePropName='checked'
                                                                       initialValue={data?.enable_physical_therapy_clinic_visit_service}
                                         >
-                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{('Enable service')}</Checkbox>
+                                            <Checkbox size={'small'} style={{fontWeight: 600}}>{t('Enable service')}</Checkbox>
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_physical_therapy_clinic_visit_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
@@ -1036,15 +1062,15 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         name="has_physical_therapy_clinic_visit_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop: role === 'super' ? -30 : 0}}
-                                        valuePropName="checked"
+                                        valuePropName={!data?.enable_physical_therapy_clinic_visit_service ? "unchecked" : "checked"}
                                         initialValue={data?.has_physical_therapy_clinic_visit_service}
                                     >
-                                        <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
+                                        <Switch disabled={role !== 'super' && !data?.enable_physical_therapy_clinic_visit_service || !data?.enable_physical_therapy_clinic_visit_service} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />} />
                                     </Form.Item>
 
 
                                 {
-                                    data?.has_physical_therapy_clinic_visit_service ? <div style={{marginLeft:60}}>
+                                    data?.has_physical_therapy_clinic_visit_service && data?.enable_physical_therapy_clinic_visit_service && changeValuesSwitchState?.has_physical_therapy_clinic_visit_service ? <div style={{marginLeft:60}}>
                                         <div>
                                             <Form.Item
                                                 label={t(`Allows insurance companies`)}
