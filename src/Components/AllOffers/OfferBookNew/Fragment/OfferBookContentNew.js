@@ -132,7 +132,7 @@ function OfferBookContent() {
 											) : (
 												<div>
 													<OfferPrice data={data} totalState={totalState} />
-													{/*<OfferHours data={data} />*/}
+													<OfferHours data={data} />
 												</div>
 											)}
 										</div>
