@@ -38,7 +38,6 @@ function ClinicManager() {
     }, [])
 
 
-
     return(
         <div>
             {!ownerClinics?.month_key?<Preloader/>:<div style={{margin:20}} className={'clinics_owner'}>
