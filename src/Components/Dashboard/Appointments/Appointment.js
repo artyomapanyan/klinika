@@ -188,7 +188,7 @@ function Appointment({isPatient}) {
                 if(responce) {
                     setAvailableTimesState(responce?.map((el) => {
                         return {
-                            label: 'Break Time',
+                            label: el?.length > 0 ? 'Break Time' : '',
                             options: el?.map((el1) => {
                                 return {
                                     lebel: el1,
@@ -327,7 +327,6 @@ function Appointment({isPatient}) {
             postResource('AvailableDayByDoctorAndClinic', 'single', token, data?.doctor_id + "/" + data?.clinic_id, {
                 service: data?.service_type,
             }).then((response) => {
-                console.log(response)
                 setStartDay(response?.date)
             })
         }

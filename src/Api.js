@@ -504,6 +504,10 @@ let api = {
         resource: 'prescriptions',
     },
     {
+        url: 'risk-factors',
+        resource: 'RiskFactors',
+    },
+    {
         url: 'patients/search',
         resource: 'PatientSearch',
     },
