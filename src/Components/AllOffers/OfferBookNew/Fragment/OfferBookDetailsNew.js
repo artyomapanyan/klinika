@@ -43,16 +43,17 @@ function OfferBookDetails({ data, showDrawer }) {
 			<div className={'offer_desc'}>
 				<h2 className={'offer_book_title'}>{data?.title}</h2>
 
+
 				<div
 					className={'offer_book_desc'}
-					dangerouslySetInnerHTML={{ __html: data?.content?.slice(0, lengthState) + `${lengthState < data?.content?.length ? '...' : ''}`}}
+					dangerouslySetInnerHTML={{ __html: data?.content == 'undefined' ? '' : data?.content?.slice(0, lengthState) + `${lengthState < data?.content?.length ? '...' : ''}`}}
 				/>
 
 				{
 					data?.content?.length > 300 ? lengthState < data?.content?.length ? <div className={'read_more_less'} onClick={onLoadMore}>{t('Read more')}</div> : <div className={'read_more_less'} onClick={onShowLess}>{t('Show less')}</div> : <div></div>
 				}
 
-			</div>
+				</div>
 
 			{isMobile ? (
 					''

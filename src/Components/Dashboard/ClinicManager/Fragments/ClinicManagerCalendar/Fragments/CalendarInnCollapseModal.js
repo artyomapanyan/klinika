@@ -409,7 +409,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
                 </div>
                 <div style={{ marginTop: 24}}>
-                    {t("Client didn't get a message")}? <span style={{color: '#BF539E', fontWeight: 700}}>{t('Resend')}</span>
+                    {t("Client didn't get a message")}? <span onClick={onSendCode} style={{color: '#BF539E', fontWeight: 700, cursor: 'pointer'}}>{t('Resend')}</span>
                 </div>
                         {
                             overAllState ? <Button style={{width: '100%', marginTop:24}} type={'primary'} onClick={onVerify}>{t('Verify')}</Button> : <div></div>
