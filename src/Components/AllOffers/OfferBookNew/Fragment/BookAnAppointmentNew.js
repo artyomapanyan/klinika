@@ -43,6 +43,10 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
 
     const [changeCount, setChangeCount] = useState(1)
 
+    const [codeAndNumberState, setCodeAndNumberState] = useState({
+        phone_country_code: '966'
+    })
+
 
 
     const onBooking = () => {
@@ -129,6 +133,9 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
         setDataState({})
         setDoctorId('')
         setDoctorKey('')
+        setCodeAndNumberState(prevState => ({
+            phone_country_code: '966'
+        }))
     }
 
 
@@ -143,6 +150,9 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
         setShowButtons(true)
         setDoctorId('')
         setDoctorKey('')
+        setCodeAndNumberState(prevState => ({
+            phone_country_code: '966'
+        }))
 
     }
 
@@ -162,6 +172,9 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
         setDoctorId('')
         seta(false)
         setDoctorKey('')
+        setCodeAndNumberState(prevState => ({
+            phone_country_code: '966'
+        }))
         setTimeout(()=>{
             seta(true)
         }, 100)
@@ -400,6 +413,8 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
                             verifyState={verify}
                             personalForm={personalForm}
                             setVerifyState={setVerify}
+                            codeAndNumberState={codeAndNumberState}
+                            setCodeAndNumberState={setCodeAndNumberState}
                         />
                     </div>
                 }

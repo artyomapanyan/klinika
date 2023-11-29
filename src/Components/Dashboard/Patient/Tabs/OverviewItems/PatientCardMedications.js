@@ -88,42 +88,47 @@ function PatientCardMedications({tab, dataClinic}) {
         <div className={'current_medications_card'}>
             {
                 loading ? <Preloader /> : <Card
-                    title="Current medications"
+                    title={<div className={'cards_title'}>{t('Current medications')}</div>}
                     extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>{t('Add')}</span></Button>}
-                    style={{ padding:20}}
+                    style={{ padding:15}}
                 >
                     <List
                         className="demo-loadmore-list"
-                        // loading={initLoading}
+                         //loading={initLoading}
                         itemLayout="horizontal"
                         dataSource={prescriptions}
-                        //style={{overflow: 'auto', height: 220}}
+                        style={{overflow: 'auto', height: dataClinic?.prescriptions?.length > prescriptionPerPage ? 220 : 250}}
                         renderItem={(e) => {
                             return<List.Item >
                                 <List.Item.Meta
+                                    style={{padding:-10}}
 
                                     title={<div style={{fontWeight: 700}}>{e?.name}</div>}
-                                    description={<div><span style={{color: '#000000'}}>{`${e?.frequency} times/day /`}</span>{`${e?.dose} pcs `}</div>}
+                                    description={<div ><span style={{color: '#000000', fontSize: 13}}>{`${e?.frequency} times/day /`}</span><span className={{fontSize: 13}}>{`${e?.dose} pcs `}</span></div>}
                                 />
-                                <div>{e?.duration} {t('days')}</div>
+                                <div style={{marginRight: 5}}>{e?.duration} {t('days')}</div>
 
                             </List.Item>
                         }}
                     />
+                    {/*{*/}
+                    {/*    dataClinic?.prescriptions?.length <= prescriptionPerPage ? <div style={{borderBottom: '1px solid #e8eaed'}}></div> : <div></div>*/}
+                    {/*}*/}
+
                     <div style={{display: 'flex'}}>
                         {
-                            dataClinic?.prescriptions?.length >= prescriptionPerPage ? (
-                                <div style={{paddingTop: 10}}>
+                            dataClinic?.prescriptions?.length > prescriptionPerPage ? (
+                                <div style={{paddingTop: 5}}>
                                     <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
                                 </div>
-                            ) : null
+                            ) : <div></div>
                         }
                         {
                             prescriptionPerPage > 3 ? (
-                                <div style={{paddingTop: 10}}>
+                                <div style={{paddingTop: 5}}>
                                     <Tag onClick={()=>setPrescriptionPerPage(prescriptionPerPage - 3)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
                                 </div>
-                            ) : null
+                            ) : <div></div>
                         }
                     </div>
 
