@@ -212,7 +212,7 @@ function Appointment({isPatient}) {
                 if(res) {
                     setAvailableTimesState(res?.map((el) => {
                         return {
-                            label: 'Break Time',
+                            label: el?.length > 0 ? 'Break Time' : '',
                             options: el?.map((el1) => {
                                 return {
                                     lebel: el1,
