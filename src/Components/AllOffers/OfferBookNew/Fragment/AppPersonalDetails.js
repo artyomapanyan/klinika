@@ -20,6 +20,7 @@ function AppPersonalDetails({
 	showPayment,
 	setShowPayment,
 	show,verifyState,setVerifyState,personalForm,
+	codeAndNumberState, setCodeAndNumberState
 }) {
 	let token = useSelector(state => state.auth.token)
 
@@ -28,9 +29,7 @@ function AppPersonalDetails({
 	const [phoneLoading, setPhoneLoading] = useState(false)
 	const [codeAndNumber, setCodeAndNumber] = useState()
 	const [verifyResponse, setVerifyResponse] = useState()
-	const [codeAndNumberState, setCodeAndNumberState] = useState({
-		phone_country_code: '966'
-	})
+
 	const [codeStatus, setCodeStatus] = useState(null)
 	const [changeVerifyCode, setChangeVerifyCode] = useState('')
 	const [sendAgain, setSendAgain] = useState({})
