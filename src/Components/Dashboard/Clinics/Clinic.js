@@ -77,24 +77,24 @@ function Clinic() {
                 {params.id ? <items key={'working'} tab={'Working hours'}>
                     <ClinicWorkingHours loadingState={loadingState} dataState={dataState} tab={tab}/>
                 </items> : null}
-                {params.id && dataState.data.has_telehealth_service ? <items key={'Telehealth'} tab={'Telehealth'}>
+                {params.id && dataState.data.has_telehealth_service && dataState.data.enable_telehealth_service ? <items key={'Telehealth'} tab={'Telehealth'}>
                     <Telehealth loadingState={loadingState} dataState={dataState} tab={tab}/>
                 </items> : null}
-                {dataState.data.has_clinic_visit_service && params.id ?
+                {dataState.data.has_clinic_visit_service && dataState.data.enable_clinic_visit_service && params.id ?
                     <items key={'clinic_visit'} tab={'Clinic Visit'} disabled={!params.id}>
                         <ClinicVisit tab={tab}/>
                     </items> : null}
-                {dataState.data.has_home_visit_service && params.id ?
+                {dataState.data.has_home_visit_service && dataState.data.enable_home_visit_service && params.id ?
                     <items key={'home_visit'} tab={'Home Visit'} disabled={!params.id}>
                         <HomeVisit tab={tab}/>
                     </items> : null}
 
 
 
-                {dataState.data.has_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                {dataState.data.has_laboratory_clinic_visit_service && dataState.data.enable_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
                         <Laboratory tab={tab}/>
                     </items> : null}
-                {dataState.data.has_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
+                {dataState.data.has_nursing_service && dataState.data.enable_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing tab={tab}/>
                     </items> : null}
                 </ClinicTabBars>}

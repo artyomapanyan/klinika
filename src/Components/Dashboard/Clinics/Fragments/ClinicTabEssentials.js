@@ -373,7 +373,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         //     values.has_physical_therapy_clinic_visit_service = false
         // }
 
-        console.log(values, 'gggggg')
+
 
 
         if(values.has_clinic_visit_service && values.enable_clinic_visit_service) {
@@ -439,7 +439,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         }
 
 
-        console.log(values)
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
@@ -486,8 +486,10 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...e
         }))
 
+        console.log(e)
+
     }
-    //console.log(data)
+    console.log(changeValuesSwitchState, 'svotch')
 
     const handleMapItems = (item,name)=>{
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
