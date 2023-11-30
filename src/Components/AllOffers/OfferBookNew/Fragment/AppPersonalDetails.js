@@ -63,10 +63,11 @@ function AppPersonalDetails({
 	}, [dataState?.payment_method_id, namesState])
 
 	const onVerifyNumber = (values) => {
-		console.log(values)
-		if(values?.phone_country_code === "(966) السعودية") {
+
+		if(values?.phone_country_code.includes('966')) {
 			values.phone_country_code = '966'
 		}
+
 		setPhoneLoading(true)
 		setSendAgain(values)
 		postResource('PublicOffer', 'PhoneVerify', token, '', values).then(
