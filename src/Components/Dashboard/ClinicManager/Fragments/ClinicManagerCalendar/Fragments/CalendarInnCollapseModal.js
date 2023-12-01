@@ -41,6 +41,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const [verifyPatient, setVerifyPatient] = useState({});
     const [servisTypeAndTime, setServisTypeAndTime] = useState({});
     const [loading403, setLoading403] = useState(false);
+    // const [availableServices, setAvailableServices] = useState([]);
+    // const [loadingAvailableServices, setLoadingAvailableServices] = useState(false);
 
 
 
@@ -240,6 +242,49 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     }
 
 
+    // useEffect(() => {
+    //     setLoadingAvailableServices(true)
+    //
+    //     let aaa = getServiceTypes(clinic.services).filter((el) => {
+    //         return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
+    //     })
+    //
+    //     console.log(aaa, 'aaa')
+    //
+    //     Promise.all(aaa?.map((callableDay, i) => {
+    //         return postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
+    //             service: callableDay.id,
+    //             date: selectedDate
+    //         }).then((response) => {
+    //             return {
+    //                 id: callableDay.id,
+    //                 name: callableDay?.name,
+    //                 hasDays: response,
+    //             }
+    //         })
+    //
+    //     })).then(responses => {
+    //
+    //         let filterResponses = responses?.flat()?.filter((e) => {
+    //             return e?.hasDays?.length > 0
+    //         })
+    //
+    //         console.log(responses,filterResponses, 'responses')
+    //
+    //         setAvailableServices(filterResponses)
+    //         setLoadingAvailableServices(false)
+    //
+    //
+    //
+    //     })
+    //
+    //
+    //
+    // }, [])
+
+
+
+
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
@@ -284,19 +329,30 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
 
-                            <FormInput label={t('Service Type')} name={'service_type'}
-                                       inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={null}
-                                       inputProps={{
-                                           onChange:(e)=> setServisTypeAndTime(prevState => ({
-                                               ...prevState,
-                                               service_type: e
-                                           }))
-                                       }}
-                                       initialData={getServiceTypes(clinic.services).filter((el) => {
-                                           return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
-                                       })}/>
+                                 <FormInput label={t('Service Type')} name={'service_type'}
+                                            inputType={'resourceSelect'}
+                                            rules={[{required: true}]}
+                                            initialValue={null}
+                                            inputProps={{
+                                                onChange:(e)=> setServisTypeAndTime(prevState => ({
+                                                    ...prevState,
+                                                    service_type: e
+                                                }))
+                                            }}
+                                            initialData={getServiceTypes(clinic.services).filter((el) => {
+                                                return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
+                                            })}/>
+
+
+
+                            {/*<FormInput label={t('Offers')} name={'offer_id'}*/}
+                            {/*            inputType={'resourceSelect'}*/}
+                            {/*            initialValue={null}*/}
+                            {/*            initialData={[]}*/}
+                            {/*            resource={'Offer'}/>*/}
+
+
+
 
                             <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
 
@@ -401,7 +457,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
                 </div>
                 <div style={{ marginTop: 24}}>
-                    {t("Client didn't get a message")}? <span style={{color: '#BF539E', fontWeight: 700}}>{t('Resend')}</span>
+                    {t("Client didn't get a message")}? <span onClick={onSendCode} style={{color: '#BF539E', fontWeight: 700, cursor: 'pointer'}}>{t('Resend')}</span>
                 </div>
                         {
                             overAllState ? <Button style={{width: '100%', marginTop:24}} type={'primary'} onClick={onVerify}>{t('Verify')}</Button> : <div></div>

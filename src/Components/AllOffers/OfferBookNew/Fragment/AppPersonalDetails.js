@@ -19,7 +19,8 @@ function AppPersonalDetails({
 	namesState,
 	showPayment,
 	setShowPayment,
-	show,verifyState,setVerifyState,personalForm
+	show,verifyState,setVerifyState,personalForm,
+	codeAndNumberState, setCodeAndNumberState
 }) {
 	let token = useSelector(state => state.auth.token)
 
@@ -28,7 +29,7 @@ function AppPersonalDetails({
 	const [phoneLoading, setPhoneLoading] = useState(false)
 	const [codeAndNumber, setCodeAndNumber] = useState()
 	const [verifyResponse, setVerifyResponse] = useState()
-	const [codeAndNumberState, setCodeAndNumberState] = useState({})
+
 	const [codeStatus, setCodeStatus] = useState(null)
 	const [changeVerifyCode, setChangeVerifyCode] = useState('')
 	const [sendAgain, setSendAgain] = useState({})
@@ -61,7 +62,11 @@ function AppPersonalDetails({
 		}
 	}, [dataState?.payment_method_id, namesState])
 
-	const onVerifyNumber = values => {
+	const onVerifyNumber = (values) => {
+
+		if(values?.phone_country_code.includes('966')) {
+			values.phone_country_code = '966'
+		}
 		setPhoneLoading(true)
 		setSendAgain(values)
 		postResource('PublicOffer', 'PhoneVerify', token, '', values).then(
@@ -211,7 +216,7 @@ function AppPersonalDetails({
 
 	const redStar = <div><span style={{color: 'red'}}>*</span> <span>{t('Email')}</span></div>
 
-
+	console.log(codeAndNumberState)
 	return (
 		<div className={'all_offer_details_big_div'}>
 			{contextHolder}
@@ -240,6 +245,7 @@ function AppPersonalDetails({
 												inputType={'resourceSelect'}
 												rules={[{ required: true }]}
 												handleMapItems={handleMapItems}
+												initialValue={`(${codeAndNumberState?.phone_country_code}) السعودية`}
 												resource={'PublicCountry'}
 											/>
 										</div>
