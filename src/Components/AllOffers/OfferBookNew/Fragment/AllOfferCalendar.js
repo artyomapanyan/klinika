@@ -103,7 +103,8 @@ function AllOfferCalendar({
 
         setDataState(prevState => ({
             ...prevState,
-            date: e?.format('YYYY-MM-DD')
+            date: e?.format('YYYY-MM-DD'),
+            time: ''
         }))
         setDate(e)
         setTimesIndex(0)
@@ -265,11 +266,16 @@ function AllOfferCalendar({
     useEffect(() => {
         (async () => {
             await createAvailableDate();
+            setDataState((prevState) => ({
+                ...prevState,
+                time: '',
+            }))
             f2();
             f();
             f1();
 
         })();
+
 
     }, []);
 
@@ -366,6 +372,8 @@ function AllOfferCalendar({
         }))
         setDataTimes(e.target.value)
     }
+
+    console.log(dataState)
 
 
 
