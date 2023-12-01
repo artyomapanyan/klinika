@@ -106,6 +106,7 @@ function AllOfferCalendar({
             date: e?.format('YYYY-MM-DD')
         }))
         setDate(e)
+        setTimesIndex(0)
 
         if (e) {
             setTimeLoading(true)

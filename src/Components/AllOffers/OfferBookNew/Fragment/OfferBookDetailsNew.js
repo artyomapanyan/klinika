@@ -36,7 +36,7 @@ function OfferBookDetails({ data, showDrawer }) {
 	}
 
 
-
+	console.log(data?.clinic?.location)
 
 	return (
 		<div className={'offer_book_div'}>
@@ -105,7 +105,7 @@ function OfferBookDetails({ data, showDrawer }) {
 						<div className={'clinic_location_div'}>
 							{data?.clinic?.location?.address1 && (
 								<>
-									<div>
+									<a href={`https://www.google.com/maps/search/?api=1&query=${data?.clinic?.location?.latitude},${data?.clinic?.location?.longitude}`} style={{textDecoration: 'none'}}>
 										<span className={'clinic_location_name'}>{t('Location')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
@@ -113,14 +113,14 @@ function OfferBookDetails({ data, showDrawer }) {
 											</p>
 											<Avatar size={20} src={<img src={map} alt='avatar' />} />
 										</div>
-									</div>
+									</a>
 								</>
 							)}
 
 							{data?.clinic?.website && (
 								<>
 									<hr />
-									<div>
+									<div style={{cursor: 'pointer'}} onClick={()=>document.location.href = data?.clinic?.website}>
 										<span className={'clinic_location_name'}>{t('Website')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
@@ -138,7 +138,7 @@ function OfferBookDetails({ data, showDrawer }) {
 							{data?.clinic?.phone_number && (
 								<>
 									<hr />
-									<div>
+									<a href={`tel:+${data?.clinic?.phone_country_code}${data?.clinic?.phone_number}`} style={{textDecoration: 'none'}}>
 										<span className={'clinic_location_name'}>{t('Phone')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
@@ -154,7 +154,7 @@ function OfferBookDetails({ data, showDrawer }) {
 												/>
 											</p>
 										</div>
-									</div>
+									</a>
 								</>
 							)}
 
