@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import {changeLanguage, t} from "i18next";
 import logo from "../../../dist/Img/logo_klinika.png";
 import {Button, Dropdown, Space} from "antd";
-import {ArrowLeftOutlined, DownOutlined} from "@ant-design/icons";
+import {ArrowLeftOutlined} from "@ant-design/icons";
 import React from "react";
 
 function AllOffersHeader({headerState}) {
