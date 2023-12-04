@@ -38,10 +38,10 @@ function OffersFooter() {
             <div className={'footer_content_div'}>
 
 
-                <div style={{cursor: 'pointer', display: 'flex'}} onClick={goLandingPage}>
-                    <img src={Logo_short} alt={'Logo_short'} className={'footer_site_logo'} />
+                <div style={{cursor: 'pointer', display: 'flex'}} >
+                    <img onClick={goLandingPage} src={Logo_short} alt={'Logo_short'} className={'footer_site_logo'} />
                     <div>
-                        <Space direction={'vertical'} style={{margin: 10}}>
+                        <Space direction={'vertical'} style={{margin: 10}} onClick={goLandingPage}>
                             <div className={'big_bold_text'} style={{}}>
                                 KLINIKA
                             </div>
