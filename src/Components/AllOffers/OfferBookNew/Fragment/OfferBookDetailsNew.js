@@ -37,13 +37,13 @@ function OfferBookDetails({ data, showDrawer }) {
 
 	const goLandingPage = () => {
 		window.open(
-			'https://klinikatech.com/',
+			data?.clinic?.website,
 			'_blank' // <- This is what makes it open in a new window.
 		)
 	}
 
 
-	console.log(data?.clinic?.location)
+
 
 	return (
 		<div className={'offer_book_div'}>
