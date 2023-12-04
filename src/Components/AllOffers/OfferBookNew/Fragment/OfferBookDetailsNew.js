@@ -35,6 +35,13 @@ function OfferBookDetails({ data, showDrawer }) {
 		setLengthState(300)
 	}
 
+	const goLandingPage = () => {
+		window.open(
+			'https://klinikatech.com/',
+			'_blank' // <- This is what makes it open in a new window.
+		)
+	}
+
 
 	console.log(data?.clinic?.location)
 
@@ -105,7 +112,7 @@ function OfferBookDetails({ data, showDrawer }) {
 						<div className={'clinic_location_div'}>
 							{data?.clinic?.location?.address1 && (
 								<>
-									<a href={`https://www.google.com/maps/search/?api=1&query=${data?.clinic?.location?.latitude},${data?.clinic?.location?.longitude}`} style={{textDecoration: 'none'}}>
+									<a href={`https://www.google.com/maps/search/?api=1&query=${data?.clinic?.location?.latitude},${data?.clinic?.location?.longitude}`} target="_blank" style={{textDecoration: 'none'}}>
 										<span className={'clinic_location_name'}>{t('Location')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
@@ -120,7 +127,7 @@ function OfferBookDetails({ data, showDrawer }) {
 							{data?.clinic?.website && (
 								<>
 									<hr />
-									<div style={{cursor: 'pointer'}} onClick={()=>document.location.href = data?.clinic?.website}>
+									<div style={{cursor: 'pointer'}} onClick={goLandingPage}>
 										<span className={'clinic_location_name'}>{t('Website')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>

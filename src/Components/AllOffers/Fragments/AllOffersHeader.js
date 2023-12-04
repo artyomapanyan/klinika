@@ -32,7 +32,11 @@ function AllOffersHeader({headerState}) {
     };
 
     const goHome = () => {
-        document.location.href = 'https://klinikatech.com/'
+        window.open(
+            'https://klinikatech.com/',
+            '_blank' // <- This is what makes it open in a new window.
+        )
+        //document.location.href = 'https://klinikatech.com/'
     }
 
     return (

@@ -314,7 +314,7 @@
     display: flex
     flex-direction: row
     justify-content: space-between
-    width: 60%
+    width: 70%
     @media screen and (max-width: 1545px)
       width: 70%
     @media screen and (max-width: 1320px)
@@ -323,20 +323,38 @@
     //  width: 90%
     @media screen and (max-width: 600px)
       //display: block
-      width: 90%
-    @media screen and (max-width: 400px)
       width: 95%
+    @media screen and (max-width: 400px)
+      width: 98%
 
   .footer_site_logo
     width: 70px
     @media screen and (max-width: 600px)
       width: 50px
 
+  .hidden_url_small
+    display: none
+    @media screen and (max-width: 1040px)
+      display: flex
+      flex-direction: row
+      align-items: center
+      margin-left: 25px
+
+  .hidden_url_big
+    display: flex
+    flex-direction: row
+    align-items: center
+    margin-top: 10px
+    @media screen and (max-width: 1040px)
+      display: none
+
+
 
   .big_bold_text
     color: #FFFFFF
     font-size: 24px
     font-weight: 700
+
   .white_text
     font-weight: 600
     font-size: 18px
@@ -350,6 +368,7 @@
     flex-direction: row
     justify-content: space-between
     gap: 35px
+    align-items: center
   .all_offers_footer_3div
     display: flex
     flex-direction: row
@@ -357,12 +376,18 @@
     gap: 35px
     //@media screen and (max-width: 800px)
     //  margin-top: 20px
+  .app_play_logos_div
+    display: flex
+    gap: 10px
+    @media screen and (max-width: 600px)
+      display: block
   .logo_app_store
     width: 220px
     border-radius: 12px
     border: 2px solid gray
     cursor: pointer
-    @media screen and (max-width: 600px)
+    margin-bottom: 5px
+    @media screen and (max-width: 800px)
       width: 150px
     @media screen and (max-width: 410px)
       width: 140px

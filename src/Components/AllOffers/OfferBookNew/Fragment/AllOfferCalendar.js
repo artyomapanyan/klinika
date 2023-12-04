@@ -39,6 +39,7 @@ function AllOfferCalendar({
     const [timesIndex, setTimesIndex] = useState(0)
     let [daysData, setDaysData] = useState([])
     const [timeCount, setTimeCount] = useState()
+    const [radioValue, setRadioValue] = useState('')
 
 
 //new
@@ -97,6 +98,15 @@ function AllOfferCalendar({
 
     }
 
+    const timeChange = (e) => {
+        setDataState((prevState) => ({
+            ...prevState,
+            time: e.target.value,
+        }))
+        setDataTimes(e.target.value)
+        setRadioValue(e.target.value)
+    }
+
 
     const onDateClick = (e) => {
 
@@ -108,6 +118,7 @@ function AllOfferCalendar({
         }))
         setDate(e)
         setTimesIndex(0)
+        setRadioValue('')
 
         if (e) {
             setTimeLoading(true)
@@ -145,22 +156,7 @@ function AllOfferCalendar({
         })
     }
 
-    // useEffect(() => {
-    //     if (firstCall) {
-    //         (async () => {
-    //             await createAvailableDate();
-    //             f2();
-    //
-    //         })();
-    //
-    //
-    //     }
-    //
-    // }, [dataState?.doctor_id])
 
-
-
-   // const currentDate = dayjs();
 
 
     const f = () => {
@@ -364,16 +360,9 @@ function AllOfferCalendar({
     }
 
 
-    const timeChange = (e) => {
 
-        setDataState((prevState) => ({
-            ...prevState,
-            time: e.target.value,
-        }))
-        setDataTimes(e.target.value)
-    }
 
-    console.log(dataState)
+
 
 
 
@@ -464,6 +453,7 @@ function AllOfferCalendar({
                                 <Radio.Group
                                     className={'hours_select'}
                                     onChange={timeChange}
+                                    value={radioValue}
                                     options={availableTimes?.slice(timesIndex, timesIndex + 8)?.map((e) => {
 
                                         return {
