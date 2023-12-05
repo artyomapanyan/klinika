@@ -206,7 +206,7 @@
 
 .slider_div_mobile
   width: 100%
-  
+
   .ant-slider
     .ant-slider-track
       background-color: #ce4e99
@@ -314,20 +314,47 @@
     display: flex
     flex-direction: row
     justify-content: space-between
-    width: 60%
+    width: 70%
     @media screen and (max-width: 1545px)
       width: 70%
     @media screen and (max-width: 1320px)
       width: 80%
-    @media screen and (max-width: 1200px)
-      width: 90%
-    @media screen and (max-width: 800px)
-      display: block
+    //@media screen and (max-width: 1200px)
+    //  width: 90%
+    @media screen and (max-width: 600px)
+      //display: block
+      width: 95%
+    @media screen and (max-width: 400px)
+      width: 98%
+
+  .footer_site_logo
+    width: 70px
+    @media screen and (max-width: 600px)
+      width: 50px
+
+  .hidden_url_small
+    display: none
+    @media screen and (max-width: 1040px)
+      display: flex
+      flex-direction: row
+      align-items: center
+      margin-left: 25px
+
+  .hidden_url_big
+    display: flex
+    flex-direction: row
+    align-items: center
+    margin-top: 10px
+    @media screen and (max-width: 1040px)
+      display: none
+
+
 
   .big_bold_text
     color: #FFFFFF
     font-size: 24px
     font-weight: 700
+
   .white_text
     font-weight: 600
     font-size: 18px
@@ -341,13 +368,31 @@
     flex-direction: row
     justify-content: space-between
     gap: 35px
+    align-items: center
   .all_offers_footer_3div
     display: flex
     flex-direction: row
     justify-content: space-between
     gap: 35px
+  //@media screen and (max-width: 800px)
+  //  margin-top: 20px
+  .app_play_logos_div
+    display: flex
+    gap: 10px
+    @media screen and (max-width: 600px)
+      display: block
+  .logo_app_store
+    width: 220px
+    border-radius: 12px
+    border: 2px solid gray
+    cursor: pointer
+    margin-bottom: 5px
     @media screen and (max-width: 800px)
-      margin-top: 20px
+      width: 150px
+    @media screen and (max-width: 410px)
+      width: 140px
+
+
 .all_offers_filter_clinics
   @media screen and (max-width: 500px)
     margin-top: 10px
@@ -400,16 +445,16 @@
 
 
 .offer_card_avatar
-    padding: 20px
+  padding: 20px
 .offer_pink_text
-    color: #ce4e99
-    font-size: 12px
-    margin-top: 10px
-    font-weight: 600
+  color: #ce4e99
+  font-size: 12px
+  margin-top: 10px
+  font-weight: 600
 .big_price_div
-    display: flex
-    align-items: center
-    padding: 20px
+  display: flex
+  align-items: center
+  padding: 20px
 .price_div
   width: 350px
   border-radius: 40px
@@ -438,9 +483,9 @@
     margin-top: 10px
 
 .line
-    border-top: 1px solid #FFFFFF
-    width: 60px
-    margin-bottom: -11px
+  border-top: 1px solid #FFFFFF
+  width: 60px
+  margin-bottom: -11px
 .offer_details
   display: flex
   flex-direction: row
@@ -508,14 +553,14 @@
   justify-content: center
   padding: 50px
 
-  //@media screen and (max-width: 600px)
-  //  padding: 60px
-  //@media screen and (max-width: 530px)
-  //  padding: 50px
-  //@media screen and (max-width: 500px)
-  //  padding: 40px
-  //@media screen and (max-width: 450px)
-  //  padding: 20px
+//@media screen and (max-width: 600px)
+//  padding: 60px
+//@media screen and (max-width: 530px)
+//  padding: 50px
+//@media screen and (max-width: 500px)
+//  padding: 40px
+//@media screen and (max-width: 450px)
+//  padding: 20px
 
 .thank_you_img_text
   display: flex
@@ -601,13 +646,13 @@
   width: 100%
   margin-top: 10px
 .doctor_conteiner:hover
-    border: 1px solid #d5d2d5
-    border-radius: 38px
-    padding: 8px 25px
-    width: 100%
-    margin-top: 10px
-    box-shadow: 0 0 10px 5px rgb(140 152 164 / 40%)
-    cursor: pointer
+  border: 1px solid #d5d2d5
+  border-radius: 38px
+  padding: 8px 25px
+  width: 100%
+  margin-top: 10px
+  box-shadow: 0 0 10px 5px rgb(140 152 164 / 40%)
+  cursor: pointer
 .date_carousel_div
   position: relative
   padding: 10px
@@ -668,7 +713,7 @@
   justify-content: space-between
   width: 100%
 
- 
+
 .menu_div_new
   width: 100%
   display: flex
@@ -681,17 +726,17 @@
   box-shadow: 0px 1.43897px 2.21381px 0px rgba(0, 0, 0, 0.01), 0px 3.45805px 5.32008px 0px rgba(0, 0, 0, 0.01), 0px 6.51121px 10.01724px 0px rgba(0, 0, 0, 0.02), 0px 11.61488px 17.86905px 0px rgba(0, 0, 0, 0.02), 0px 21.72436px 33.42209px 0px rgba(0, 0, 0, 0.03)
   //object-fit: cover
   @media screen and (max-width: 500px)
-    height: 220px  
-    
+    height: 220px
+
 .offer_section
-  width: 360px 
+  width: 360px
   //margin-top: 20px
   padding: 10px
   @media screen and (max-width: 800px)
     width: 100%
     height: 160px
-    margin-top: 0px  
-  
+    margin-top: 0px
+
 
 .offer_appointment_sec
   margin-top: 50px
@@ -703,7 +748,7 @@
   margin-top: 20px
   @media screen and (max-width: 800px)
     width: 100%
-  
+
 .offer_book_title
   font-weight: 700
   font-size: 28px
@@ -739,7 +784,7 @@
   color: #774d9d
   cursor: pointer
 
-  
+
 
 .divider_offer
   background-color: #E1E2E9
@@ -784,11 +829,11 @@
     width: 100%
 
 .clinic_location_div
-  width: 328px 
+  width: 328px
   padding-left: 20px
   @media screen and (max-width: 600px)
     padding-left: 0px
-    width: 100% 
+    width: 100%
     margin-top: 10px
 
 .clinic_location_name
@@ -797,7 +842,7 @@
   color: #000000
   opacity: 50%
 
-hr 
+hr
   border: none
   border-top: 2px dotted #E1E2E9
   color: #E1E2E9
@@ -821,12 +866,12 @@ hr
   margin-top: 20px
   display: flex
   flex-direction: column
- 
+
 .offer_new_price
   font-size: 18px
   font-weight: 700
   color: #42394D
-  //margin-right: 5px
+//margin-right: 5px
 
 .offer_old_price
   font-size: 17px
@@ -864,7 +909,7 @@ hr
   height: 70px
   @media screen and (max-width: 600px)
     width: 100%
-  
+
 .offer_hours_p
   font-weight: 400
   font-size: 14px
@@ -914,7 +959,7 @@ hr
   font-weight: 700
   font-size: 14px
   color: #FFFFFF
-  
+
 .doctor_name
   font-weight: 700
   font-size: 14px
@@ -925,7 +970,7 @@ hr
 
 .button_container
   cursor: pointer
-  margin-top: 30px 
+  margin-top: 30px
 
 .button_style
   background-color: #BF539E
@@ -935,7 +980,7 @@ hr
   width: 100%
   cursor: pointer
   border: none
-  
+
 .button_style_cancel
   background-color: #F5F6FA
   border-radius: 12px
@@ -945,21 +990,21 @@ hr
   border: none
   margin-top: 10px
   color: #635D6B
-  
+
 .offer_form
   display: flex
   flex-direction: row
   justify-content: space-between
-  
+
 .offer_form_input
   font-size: 15px
   background-color: #F5F6FA
-  
+
 .calendar_div
   background-color: #774D9D
   border-radius: 12px
   width: 100%
- 
+
 .calendar_date_div
   background-color: #BF539E
   border-bottom-left-radius: 20px
@@ -970,7 +1015,7 @@ hr
 
 .calendar_content_new
   padding: 5px
-  
+
 .calendar_title
   font-size: 18px
   font-weight: 700
@@ -979,7 +1024,7 @@ hr
 .selected_date
   color: #F3A632
 
-.calendar_time 
+.calendar_time
   font-size: 14px
   font-weight: 600
   color: #FFFFFF
@@ -988,12 +1033,12 @@ hr
   border-radius: 12px
   width: 63px
   height: 35px
- 
+
 .disabled_date_div
   font-size: 5px
   background-color: #BF539E
   color: #FFFFFF
-  
+
 .calendar_days_div
   font-size: 12px
 
@@ -1001,10 +1046,10 @@ hr
   font-size: 14px
   font-weight: 700
   color: #FFFFFF
- 
+
 .calendar_days_container
   color: #FFFFFF
-  
+
 
 .payment_container
   border-radius: 12px
@@ -1056,7 +1101,7 @@ hr
   flex-direction: column
   justify-content: center
   align-items: center
- 
+
 .payment_icon
   width: 25px
   height: 15px
@@ -1068,7 +1113,7 @@ hr
 
 .payment_conatiner_div
   display: flex
-  
+
 .payment_section
   margin-top: 10px
 
@@ -1107,7 +1152,7 @@ hr
   flex-direction: row
   justify-content: center
   align-items: center
- 
+
 .date_carousel_calendar
   position: relative
   padding: 30px
@@ -1142,7 +1187,7 @@ hr
   position: relative
   padding-bottom: 1px
   border-radius: 20px
- 
+
 .calendar_month
   font-size: 16px
   font-weight: 700
@@ -1174,21 +1219,21 @@ hr
   align-items: center
 
   @media screen and (max-width: 500px)
-      display: none
+    display: none
 
 .tab_div_mobile_new
-    display: none
+  display: none
+  opacity: 0.99
+  @media screen and (max-width: 900px)
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
     opacity: 0.99
-    @media screen and (max-width: 900px)
-      display: flex
-      flex-direction: row
-      justify-content: space-between
-      align-items: center
-      opacity: 0.99
-      background-color: #FFFFFF
-      width: 100%
-      padding: 14px 16px
-      box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
+    background-color: #FFFFFF
+    width: 100%
+    padding: 14px 16px
+    box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
 
 .offer_book_card_new
   width: 80%
@@ -1223,36 +1268,36 @@ hr
     padding-right: 10px
 
 
-.book_mobile  
+.book_mobile
   display: none
   @media screen and (max-width: 600px)
     display: block
     background-color: #774D9D
 
 @media (max-width: 600px)
- .book_mobile  
-   display: none
-   background-color: #FFFFFF
- 
+  .book_mobile
+    display: none
+    background-color: #FFFFFF
+
 
 .tab_div_mobile_new_offer
-    display: block
-    opacity: 0.99
-     
-    //@media screen and (max-width: 600px)
-    //  display: none
-  
+  display: block
+  opacity: 0.99
+
+//@media screen and (max-width: 600px)
+//  display: none
+
 .tab_div_mobile_new_offer_arrow
-    display: none
-    opacity: 0.99
-    @media screen and (max-width: 600px)
-      display: flex
-      justify-content: center
-      align-items: center
-      width: 40px
-      height: 40px
-      background-color: #774D9D
-      border-radius: 12px
+  display: none
+  opacity: 0.99
+  @media screen and (max-width: 600px)
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 40px
+    height: 40px
+    background-color: #774D9D
+    border-radius: 12px
 
 .tab_div_mobile_new_appointment
   display: none
@@ -1272,35 +1317,35 @@ hr
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
   @media screen and (max-width: 400px)
   display: none
-  
-   
+
+
 .slick-prev,
-.slick-next 
+.slick-next
 
 .custom-prevArrow,
-.custom-nextArrow 
+.custom-nextArrow
   position: relative
   z-index: 99999
   top: -10px
 
-.custom-prevArrow 
+.custom-prevArrow
   left: -10px
 
-.custom-nextArrow 
+.custom-nextArrow
   right: -10px
 
 .custom-prevArrow:hover
-.custom-nextArrow:hover 
+.custom-nextArrow:hover
   fill: red
   cursor: pointer
 
-.slick-next:before  
-    font-family: monospace !important
-    font-size: 28px !important
+.slick-next:before
+  font-family: monospace !important
+  font-size: 28px !important
 
-.slick-prev:before  
-    font-family: monospace !important
-    font-size: 28px !important
+.slick-prev:before
+  font-family: monospace !important
+  font-size: 28px !important
 
 
 .navbar_offer_new
@@ -1370,7 +1415,7 @@ hr
 
 .input_RTL
   .ant-input-rtl
-    //direction: ltr !important
+//direction: ltr !important
 
 .all_offers_personal_det_inputs
   .ant-form-item-required
@@ -1433,7 +1478,7 @@ hr
 
 
 .ant-select-tree-title
-  //color: #984d67 !important
+//color: #984d67 !important
 .ant-select-tree-indent-unit
   width: 0px !important
 
@@ -1445,7 +1490,7 @@ hr
   border-bottom: 1px solid #D7DAE8
   &:hover
     background-color: #F8F2FE
-    //color: #FFFFFF
+//color: #FFFFFF
 
 .selected_ASDF
   color: #ffffff
@@ -1482,9 +1527,9 @@ hr
 
 
 .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode
-    order: 0 !important
+  order: 0 !important
 .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher
-    order: 1 !important
+  order: 1 !important
 
 .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected
   background-color: #F8F2FE00 !important
