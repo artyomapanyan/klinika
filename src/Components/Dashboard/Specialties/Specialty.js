@@ -34,6 +34,9 @@ function Specialty() {
         setSaveLoading(true)
         values.type = Resources.TaxonomyTypes.SPECIALTY
         values.has_parent = 0
+        values.title = JSON.stringify(values.title)
+
+        console.log(values)
         setData((prevState)=>({
             ...prevState,
             ...values
@@ -91,7 +94,15 @@ const res = 'Specialty';
                 className={'add_create_form'}
             >
                 <div  className={"add_edit_content"}>
-                    <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
+                    <div style={{display: 'flex', gap: 20}}>
+                        <div style={{width: '50%'}}>
+                            <FormInput label={t('Title')} name={['title', 'en']} initialValue={data?.title} rules={[{required: true}]}/>
+                        </div>
+                        <div style={{width: '50%'}} >
+                            <FormInput label={t('Title ar')} name={['title', 'ar']} initialValue={data?.title} rules={[{required: true}]}/>
+                        </div>
+                    </div>
+
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}
