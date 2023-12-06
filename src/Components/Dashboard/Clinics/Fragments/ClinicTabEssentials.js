@@ -302,12 +302,7 @@ import MyMapComponent from "./MapComponent";
 import CancelComponent from "../../../Fragments/CancelComponent";
 
 
-
-
-
 const resource = 'Clinic';
-
-
 
 function ClinicTabEssentials({loadingState, dataState,addDataState}) {
     let dispatch = useDispatch()
@@ -378,7 +373,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         //     values.has_physical_therapy_clinic_visit_service = false
         // }
 
-        console.log(values, 'gggggg')
+
 
 
         if(values.has_clinic_visit_service && values.enable_clinic_visit_service) {
@@ -444,7 +439,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         }
 
 
-        console.log(values)
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
@@ -491,8 +486,10 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...e
         }))
 
+        console.log(e)
+
     }
-    //console.log(data)
+    console.log(changeValuesSwitchState, 'svotch')
 
     const handleMapItems = (item,name)=>{
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
@@ -533,7 +530,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                 <div style={{width:'35%'}}>
                                     <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={data?.phone_country_code}
+                                               initialValue={data?.phone_country_code ? data?.phone_country_code : '966'}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>
@@ -855,7 +852,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                                     : <div></div>
                                             }
 
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} label={t('Bookings per slot')} name={["service_settings","laboratory_home_visit","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.laboratory_home_visit?.bookings_per_slot ? data?.service_settings?.laboratory_home_visit?.bookings_per_slot : 1}/>
+                                            {/*<FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} label={t('Bookings per slot')} name={["service_settings","laboratory_home_visit","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.laboratory_home_visit?.bookings_per_slot ? data?.service_settings?.laboratory_home_visit?.bookings_per_slot : 1}/>*/}
                                             <Form.Item
                                                 name={["service_settings","laboratory_home_visit","duration"]}
 
@@ -918,7 +915,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             </div> : <div></div>
                                         }
                                         <div style={{width: 200}}>
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} label={t('Bookings per slot')} name={["service_settings","laboratory_clinic_visit","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.laboratory_clinic_visit?.bookings_per_slot ? data?.service_settings?.laboratory_clinic_visit?.bookings_per_slot : 1}/>
+                                            {/*<FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} label={t('Bookings per slot')} name={["service_settings","laboratory_clinic_visit","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.laboratory_clinic_visit?.bookings_per_slot ? data?.service_settings?.laboratory_clinic_visit?.bookings_per_slot : 1}/>*/}
 
                                             <Form.Item
                                                 name={["service_settings","laboratory_clinic_visit","duration"]}
@@ -985,7 +982,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             }
 
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Duration')} name={["service_settings","nursing","duration"]} inputType={'number'}  initialValue={data?.service_settings?.nursing?.duration ? data?.service_settings?.nursing?.duration : 60}/>
-                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Bookings per slot')} name={["service_settings","nursing","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.bookings_per_slot ? data?.service_settings?.nursing?.bookings_per_slot : 1}/>
+                                            {/*<FormInput inputDisabled={role !== 'super' && !data?.enable_nursing_service} label={t('Bookings per slot')} name={["service_settings","nursing","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.nursing?.bookings_per_slot ? data?.service_settings?.nursing?.bookings_per_slot : 1}/>*/}
 
                                         </div>
                                     </div> : <div></div>

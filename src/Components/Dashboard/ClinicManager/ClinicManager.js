@@ -38,7 +38,6 @@ function ClinicManager() {
     }, [])
 
 
-
     return(
         <div>
             {!ownerClinics?.month_key?<Preloader/>:<div style={{margin:20}} className={'clinics_owner'}>
@@ -70,11 +69,11 @@ function ClinicManager() {
                 <div style={{marginTop: role === 'receptionist' ? -20 : 0}}>
                     <ClinicManagerCalendar />
                 </div>
-                <div>
-                    {
-                        loading ? <Preloader/> : Array.isArray(labNursState?.workload) ? <div></div> : role === 'receptionist' ? <NursLabCalendar /> : <div></div>
-                    }
-                </div>
+                {/*<div>*/}
+                {/*    {*/}
+                {/*        loading ? <Preloader/> : Array.isArray(labNursState?.workload) ? <div></div> : role === 'receptionist' ? <NursLabCalendar /> : <div></div>*/}
+                {/*    }*/}
+                {/*</div>*/}
                 <div>
                     <ClinicManagerAppointmentsTable />
                 </div>

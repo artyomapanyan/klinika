@@ -212,7 +212,7 @@ function Appointment({isPatient}) {
                 if(res) {
                     setAvailableTimesState(res?.map((el) => {
                         return {
-                            label: 'Break Time',
+                            label: el?.length > 0 ? 'Break Time' : '',
                             options: el?.map((el1) => {
                                 return {
                                     lebel: el1,
@@ -437,7 +437,7 @@ function Appointment({isPatient}) {
                                                         <FormInput label={t('Country Code')} name={['patient','phone_country_code']}
                                                                    inputType={'resourceSelect'}
                                                                    rules={[{required: true}]}
-                                                                   initialValue={formRef?.current?.getFieldValue(['patient','phone_country_code'])}
+                                                                   initialValue={formRef?.current?.getFieldValue(['patient','phone_country_code']) ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : '966'}
                                                                    handleMapItems={handleMapItems}
                                                                    disabled={data?.patient_id}
                                                                    customSearchKey={'phone_code'}
@@ -448,7 +448,7 @@ function Appointment({isPatient}) {
                                                                    inputDisabled={data?.patient_id}
                                                                    name={['patient','phone_number']}
                                                                    maxLength={10}
-                                                                   initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : phoneNumberRef?.current}
+                                                                   initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_number']) : phoneNumberRef?.current}
 
                                                                    rules={[{required: true}]}/>
                                                     </Col>

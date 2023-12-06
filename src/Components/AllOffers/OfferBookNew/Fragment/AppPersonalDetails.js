@@ -217,7 +217,7 @@ function AppPersonalDetails({
 
 	const redStar = <div><span style={{color: 'red'}}>*</span> <span>{t('Email')}</span></div>
 
-	console.log(codeAndNumberState)
+
 	return (
 		<div className={'all_offer_details_big_div'}>
 			{contextHolder}

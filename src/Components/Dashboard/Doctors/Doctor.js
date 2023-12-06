@@ -145,12 +145,13 @@ function Doctor() {
                                        initialData={Resources?.Gender}
                             />
                             <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.status}
+                                       //rules={[{required: true}]}
+                                       disableClear={true}
+                                       initialValue={data?.status ? data?.status : 2}
                                        initialData={Resources.Status}
                             />
-                            <FormInput inputType={'password'}  label={t('Password')} name={'password'} rules={[{required: true}]} />
-                            <FormInput inputType={'password'}  label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: true}]} />
+                            <FormInput inputType={'password'}  label={t('Password')} name={'password'} rules={[{required: !params.id}]} />
+                            <FormInput inputType={'password'}  label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
@@ -164,7 +165,7 @@ function Doctor() {
                             <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
                                     <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
-                                               initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : null}
+                                               initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : '966'}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>

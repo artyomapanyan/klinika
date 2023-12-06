@@ -39,6 +39,7 @@ function AllOfferCalendar({
     const [timesIndex, setTimesIndex] = useState(0)
     let [daysData, setDaysData] = useState([])
     const [timeCount, setTimeCount] = useState()
+    const [radioValue, setRadioValue] = useState('')
 
 
 //new
@@ -71,7 +72,6 @@ function AllOfferCalendar({
 
 
 
-
     const handleChangeDay = (count, unit) => {
         if (startDate.add(count, unit) < getStartDate) {
             setStartDate(getStartDate)
@@ -98,15 +98,27 @@ function AllOfferCalendar({
 
     }
 
+    const timeChange = (e) => {
+        setDataState((prevState) => ({
+            ...prevState,
+            time: e.target.value,
+        }))
+        setDataTimes(e.target.value)
+        setRadioValue(e.target.value)
+    }
+
 
     const onDateClick = (e) => {
 
 
         setDataState(prevState => ({
             ...prevState,
-            date: e?.format('YYYY-MM-DD')
+            date: e?.format('YYYY-MM-DD'),
+            time: ''
         }))
         setDate(e)
+        setTimesIndex(0)
+        setRadioValue('')
 
         if (e) {
             setTimeLoading(true)
@@ -144,22 +156,7 @@ function AllOfferCalendar({
         })
     }
 
-    // useEffect(() => {
-    //     if (firstCall) {
-    //         (async () => {
-    //             await createAvailableDate();
-    //             f2();
-    //
-    //         })();
-    //
-    //
-    //     }
-    //
-    // }, [dataState?.doctor_id])
 
-
-
-   // const currentDate = dayjs();
 
 
     const f = () => {
@@ -233,11 +230,12 @@ function AllOfferCalendar({
 
                 }
                 e.called = true;
-                if(e?.called) {
-                    setLoadingCalled(true)
-                }
+                // if(e?.called) {
+                //     setLoadingCalled(true)
+                // }
                 return e
             }));
+            setLoadingCalled(true)
             setFirstCall(true)
 
 
@@ -260,16 +258,21 @@ function AllOfferCalendar({
     }
 
 
-
+    console.log(loadingCalled)
 
     useEffect(() => {
         (async () => {
             await createAvailableDate();
+            setDataState((prevState) => ({
+                ...prevState,
+                time: '',
+            }))
             f2();
             f();
             f1();
 
         })();
+
 
     }, []);
 
@@ -358,14 +361,9 @@ function AllOfferCalendar({
     }
 
 
-    const timeChange = (e) => {
 
-        setDataState((prevState) => ({
-            ...prevState,
-            time: e.target.value,
-        }))
-        setDataTimes(e.target.value)
-    }
+
+
 
 
 
@@ -402,7 +400,7 @@ function AllOfferCalendar({
                                            className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                            onClick={() => onDateClick(startDate.add(key, 'day'))}>
                                 {
-                                    !e?.called ? <Spin /> : <div>
+                                    !loadingCalled ? <Spin /> : <div>
                                         <div className={'date_div_in_map'} style={{fontWeight: 400}}>
                                             {Resources.Days[startDate.add(key, 'day').day()]}
                                         </div>
@@ -456,6 +454,7 @@ function AllOfferCalendar({
                                 <Radio.Group
                                     className={'hours_select'}
                                     onChange={timeChange}
+                                    value={radioValue}
                                     options={availableTimes?.slice(timesIndex, timesIndex + 8)?.map((e) => {
 
                                         return {

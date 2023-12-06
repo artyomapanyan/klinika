@@ -31,11 +31,19 @@ function AllOffersHeader({headerState}) {
         window.location.reload()
     };
 
+    const goHome = () => {
+        window.open(
+            'https://klinikatech.com/',
+            '_blank' // <- This is what makes it open in a new window.
+        )
+        //document.location.href = 'https://klinikatech.com/'
+    }
+
     return (
         
         <div style={{width:'100%', position:"absolute", top:40, display: "flex", flexDirection:"row", JustifyContent:'space-around', alignItems: 'center'}}>
             {
-                headerState ? <div style={{marginLeft:'13%'}}>
+                headerState ? <div style={{marginLeft:'13%', cursor: 'pointer'}} onClick={goHome}>
                     <img src={logo} alt={'logo_klinika'}/>
                 </div> : <Button onClick={()=>navigate(-1)} style={{left:'3%', height: 48, width: 48, backgroundColor:'#FFFFFF3D', color:'white', fontWeight: 900, border:'none'}}><ArrowLeftOutlined /></Button>
             }
