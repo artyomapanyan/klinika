@@ -175,6 +175,7 @@ function  AllOffers() {
 			if(val.toString().includes('-')) {
 				setParams({
 						...params,
+						page: 1,
 						sub_category: val.slice(val.indexOf('-')+1, val.length),
 						category: '',
 						name: a[0]?.props?.children ? a[0]?.props?.children : ''
@@ -185,6 +186,7 @@ function  AllOffers() {
 			} else {
 				setParams({
 					...params,
+					page: 1,
 					category: val,
 					sub_category: '',
 					name: a[0]?.props?.children[0]?.props?.children ? a[0]?.props?.children[0]?.props?.children : ''
@@ -492,7 +494,7 @@ function  AllOffers() {
 				<Button
 					type={'primary'}
 					onClick={handleNextPage}
-					disabled={data?.pagination?.total <= data?.items?.length}
+					disabled={data?.pagination?.total <= data?.items?.length || loading}
 				>
 					{t('Load more')}
 				</Button>

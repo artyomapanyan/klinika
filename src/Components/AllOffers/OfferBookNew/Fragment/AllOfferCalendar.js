@@ -230,11 +230,12 @@ function AllOfferCalendar({
 
                 }
                 e.called = true;
-                if(e?.called) {
-                    setLoadingCalled(true)
-                }
+                // if(e?.called) {
+                //     setLoadingCalled(true)
+                // }
                 return e
             }));
+            setLoadingCalled(true)
             setFirstCall(true)
 
 
@@ -257,7 +258,7 @@ function AllOfferCalendar({
     }
 
 
-
+    console.log(loadingCalled)
 
     useEffect(() => {
         (async () => {
@@ -399,7 +400,7 @@ function AllOfferCalendar({
                                            className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                            onClick={() => onDateClick(startDate.add(key, 'day'))}>
                                 {
-                                    !e?.called ? <Spin /> : <div>
+                                    !loadingCalled ? <Spin /> : <div>
                                         <div className={'date_div_in_map'} style={{fontWeight: 400}}>
                                             {Resources.Days[startDate.add(key, 'day').day()]}
                                         </div>

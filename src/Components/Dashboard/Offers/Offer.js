@@ -44,6 +44,10 @@ function Offer() {
         }))
         values?.content ? values.content = values.content : values.content = data.content
 
+        if(values?.content) {
+            values.content = values.content.replace('background-color:', '')
+        }
+
 
 
         if (params.id) {
