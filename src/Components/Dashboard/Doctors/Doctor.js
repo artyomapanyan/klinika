@@ -210,7 +210,7 @@ function Doctor() {
                                        initialData={Resources.Status}
                             />
                             <FormInput inputType={'password'} label={t('Password')} name={'password'} rules={[{required: !params.id}]} />
-                            <FormInput  label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
+                            <FormInput inputType={'password'} label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
