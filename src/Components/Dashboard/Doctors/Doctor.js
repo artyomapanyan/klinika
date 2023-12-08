@@ -18,6 +18,7 @@ import FileManager from "../../Fragments/FileManager";
 const resource = 'Doctor';
 
 function Doctor() {
+    let language = useSelector((state) => state.app.current_locale)
     let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
@@ -38,16 +39,44 @@ function Doctor() {
 
         if(values?.phone_country_code) {
             if(values.phone_country_code.length > 3) {
-                values.phone_country_code = values?.phone_country_code?.slice(1, values?.phone_country_code?.indexOf(')'))
+                values.phone_country_code = values?.phone_country_code?.slice(values?.phone_country_code.indexOf('(')+1, values?.phone_country_code?.indexOf(')'))
             }
         }
 
+        if(values?.password) {
+            values.password = values.password
 
+        } else {
+            values.password = ''
+        }
+
+        if(values?.password_confirmation) {
+            values.password_confirmation = values.password_confirmation
+        } else {
+            values.password_confirmation = ''
+        }
+
+        // if(values?.bio) {
+        //     values.bio = JSON.stringify(values.bio)
+        // }
+        //
+        // let nullDescription = {
+        //     en: '',
+        //     ar: ''
+        // }
+        //
+        // if(values?.bio === '{}'){
+        //     values.bio = JSON.stringify(nullDescription)
+        // }
+        // values.first = JSON.stringify(values.first)
+        // values.last = JSON.stringify(values.last)
 
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
+
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
@@ -97,7 +126,7 @@ function Doctor() {
 
     return(
         <div>
-            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - ${data?.first} ${data?.last}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
+            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - {data?.first} {data?.last}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -108,17 +137,47 @@ function Doctor() {
             >
 
                 <div className={'add_edit_content'}>
-                    <Row>
-                        <Col lg={12} className="gutter-row">
+
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
+                    {/*        <FormInput label={t('First name en')} name={['first', 'en']} initialValue={data?.translations?.first?.en} rules={[{required: true}]} />*/}
+
+                    {/*    </div>*/}
+                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
+                    {/*        <FormInput label={t('First name ar')} name={['first', 'ar']} initialValue={data?.translations?.first?.ar} rules={[{required: true}]} />*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
+                    {/*        <FormInput label={t('Last name')} name={['last', 'en']} initialValue={data?.translations?.last?.en} rules={[{required: true}]} />*/}
+
+                    {/*    </div>*/}
+                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
+                    {/*        <FormInput label={t('Last name')} name={['last', 'ar']} initialValue={data?.translations?.last?.ar} rules={[{required: true}]} />*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div dir='ltr' style={{width: '50%'}}>*/}
+                    {/*        <FormInput label={t('Bio en')} name={['bio', 'en']} inputType={'textArea'} initialValue={data?.translations?.bio?.en}/>*/}
+                    {/*    </div>*/}
+                    {/*    <div dir='rtl' style={{width: '50%'}}>*/}
+                    {/*        <FormInput rtl={true} label={t('Bio ar')} name={['bio', 'ar']} inputType={'textArea'} initialValue={data?.translations?.bio?.ar}/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
+                    <div style={{display: 'flex', gap: 20}}>
+                        <div className={'input_ltr'} style={{width: '50%'}}>
                             <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
-                        </Col>
-                        <Col lg={12} className="gutter-row">
+
+                        </div>
+                        <div style={{width: '50%'}}>
                             <FormInput label={t('Last name')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
-                        </Col>
-                    </Row>
-                    <div className="gutter-row">
-                        <FormInput label={t('Bio')} name={'Bio'} inputType={'textArea'} initialValue={data?.bio}/>
+                        </div>
                     </div>
+                    <FormInput label={t('Bio')} name={'bio'} inputType={'textArea'} initialValue={data?.bio}/>
+
 
                 </div>
 
@@ -150,8 +209,8 @@ function Doctor() {
                                        initialValue={data?.status ? data?.status : 2}
                                        initialData={Resources.Status}
                             />
-                            <FormInput inputType={'password'}  label={t('Password')} name={'password'} rules={[{required: !params.id}]} />
-                            <FormInput inputType={'password'}  label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
+                            <FormInput inputType={'password'} label={t('Password')} name={'password'} rules={[{required: !params.id}]} />
+                            <FormInput  label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
@@ -165,7 +224,7 @@ function Doctor() {
                             <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
                                     <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
-                                               initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : '966'}
+                                               initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>

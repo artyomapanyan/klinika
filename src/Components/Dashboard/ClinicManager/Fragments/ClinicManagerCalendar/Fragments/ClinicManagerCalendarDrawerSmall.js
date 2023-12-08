@@ -22,6 +22,9 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
         item.id = +item.phone_code
         return [name, item]
     }
+
+
+
     return (
         <div className={language === 'ar' ? 'KM_drawer' : ''}>
             <div style={{padding: 1, marginTop: 1}}>
@@ -56,20 +59,19 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                     <FormInput label={t('First name')} name={'first'} rules={[{required: true}]}/>
                     <FormInput label={t('Last name')} name={'last'} rules={[{required: true}]}/>
                     <FormInput label={t('Email')}  name={'email'} rules={[{required: true}]}/>
-                    <div style={{display: "flex", gap: 20, width: '100%'}}>
-                        <div style={{width: 80}}>
+                    <div style={{display: "flex", gap: 10, width: '100%'}}>
+                        <div style={{width: 110}}>
                             <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                       disableClear={true}
                                        rules={[{required: true}]}
-                                       initialValue={966}
+                                       initialValue={data?.phone_country_code}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        resource={'Country'}
                             />
                         </div>
                         <div style={{ width: '100%'}}>
-                            <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} rules={[
-                                {required: true},
-                            ]}/>
+                            <FormInput label={t('Phone number')} name={'phone_number'} maxLength={10} rules={[{required: true}]}/>
                         </div>
                     </div>
                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}

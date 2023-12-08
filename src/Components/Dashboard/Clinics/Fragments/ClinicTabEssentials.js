@@ -305,6 +305,7 @@ import CancelComponent from "../../../Fragments/CancelComponent";
 const resource = 'Clinic';
 
 function ClinicTabEssentials({loadingState, dataState,addDataState}) {
+    let language = useSelector((state) => state.app.current_locale)
     let dispatch = useDispatch()
     const params = useParams();
     const navigate = useNavigate();
@@ -419,11 +420,29 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             values.insurance_companies = []
         }
 
-        if(values?.description) {
-            values.description = values.description
-        } else {
-            values.description = ''
+
+        // if(values?.description) {
+        //     values.description = JSON.stringify(values.description)
+        // }
+        //
+        // let nullDescription = {
+        //     en: '',
+        //     ar: ''
+        // }
+        //
+        // if(values?.description === '{}'){
+        //     values.description = JSON.stringify(nullDescription)
+        // }
+        //
+        // values.name = JSON.stringify(values?.name)
+
+
+        if(values?.phone_country_code) {
+            if(values.phone_country_code.length > 3) {
+                values.phone_country_code = values?.phone_country_code?.slice(values?.phone_country_code.indexOf('(')+1, values?.phone_country_code?.indexOf(')'))
+            }
         }
+
 
         setData((prevState)=>({
             ...prevState,
@@ -437,7 +456,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         }if(values?.service_settings?.home_visit?.duration && values?.service_settings?.laboratory_home_visit?.duration) {
             values.service_settings.laboratory_home_visit.duration = values?.service_settings?.home_visit?.duration
         }
-
 
 
 
@@ -486,10 +504,10 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             ...e
         }))
 
-        console.log(e)
+
 
     }
-    console.log(changeValuesSwitchState, 'svotch')
+
 
     const handleMapItems = (item,name)=>{
         name = item.phone_code?`(${item.phone_code}) ${item.name}`:null
@@ -508,6 +526,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name, item, searchData]
     }
 
+//language === 'ar' ? data?.translations?.name?.ar : data?.translations?.name?.en
 
     return(
         <div >
@@ -520,6 +539,26 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
             >
                 <div className={'add_edit_content'}>
                     <FormInput label={t('Clinic Name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
+                    {/*        <FormInput label={t('Clinic Name en')} name={['name', 'en']} initialValue={data?.translations?.name?.en} rules={[{required: true}]}/>*/}
+
+                    {/*    </div>*/}
+                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
+                    {/*        <FormInput  label={t('Clinic Name ar')} name={['name', 'ar']} initialValue={data?.translations?.name?.ar} rules={[{required: true}]}/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div dir='ltr' style={{width: '50%'}}>*/}
+                    {/*        <FormInput label={t('Description en')} name={['description', 'en']} inputType={'textArea'} initialValue={data?.translations?.description?.en}/>*/}
+                    {/*    </div>*/}
+                    {/*    <div dir='rtl' style={{width: '50%'}}>*/}
+                    {/*        <FormInput rtl={true} label={t('Description ar')} name={['description', 'ar']} inputType={'textArea'} initialValue={data?.translations?.description?.ar}/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                 </div>
                 <div className={'add_edit_content'}>
@@ -528,9 +567,9 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                             <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
                             <div style={{display:"flex"}}>
                                 <div style={{width:'35%'}}>
-                                    <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                    <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
-                                               initialValue={data?.phone_country_code ? data?.phone_country_code : '966'}
+                                               initialValue={data?.phone_country_code ? data?.phone_country_code : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>

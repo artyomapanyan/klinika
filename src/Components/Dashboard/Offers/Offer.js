@@ -38,15 +38,38 @@ function Offer() {
         values.begins_at = values?.begins_at?.format('YYYY-MM-DD')
         values.top =values.top === true ? true : false;
 
+
+
+
+
+        // let a = {
+        //     en: values?.content_en,
+        //     ar: values?.content_ar
+        //
+        // }
+        //
+        // values.content = JSON.stringify(a)
+        //
+        // let nullDescription = {
+        //     en: '',
+        //     ar: ''
+        // }
+        //
+        // if(values?.content === '{}'){
+        //     values.content = JSON.stringify(nullDescription)
+        // }
+        // values.title = JSON.stringify(values.title)
+        values?.content ? values.content = values.content : values.content = data.content
         setData((prevState)=>({
             ...prevState,
             ...values
         }))
-        values?.content ? values.content = values.content : values.content = data.content
 
         if(values?.content) {
             values.content = values.content.replace('background-color:', '')
         }
+
+
 
 
 
@@ -101,9 +124,6 @@ function Offer() {
      }
  }
 
-    let req = <div><span style={{color: 'red'}}>*</span> <span>{t('content')}</span></div>
-
-
 
     return(
         <div >
@@ -117,8 +137,31 @@ function Offer() {
                 className={'add_create_form'}
             >
                 <div className={'add_edit_content'}>
-                    <FormInput label={t('title')} name={'title'} initialValue={data?.title} rules={[{required: true}]} />
-                    <Form.Item name={'content'} label={req}>
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
+                    {/*        <FormInput label={t('Title en')} name={['title', 'en']} initialValue={data?.translations?.title?.en} rules={[{required: true}]}/>*/}
+                    {/*    </div>*/}
+                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
+                    {/*        <FormInput  label={t('Title ar')} name={['title', 'ar']} initialValue={data?.translations?.title?.ar} rules={[{required: true}]}/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
+                    <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
+
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
+                    {/*        <Form.Item name={'content_en'} label={t('content en')} rules={[{required: true,},]} initialValue={data?.translations?.content?.en}>*/}
+                    {/*            <DraftEditor initialValue={data?.translations?.content?.en} formRef={formRef} name={'content_en'} />*/}
+                    {/*        </Form.Item>*/}
+                    {/*    </div>*/}
+                    {/*    <div style={{width: '50%'}} dir="rtl" className={'rtl_editor'} >*/}
+                    {/*        <Form.Item name={'content_ar'} label={t('content ar')} rules={[{required: true,},]} initialValue={data?.translations?.content?.ar}>*/}
+                    {/*            <DraftEditor initialValue={data?.translations?.content?.ar} formRef={formRef} name={'content_ar'} dir={'rtl'} />*/}
+                    {/*        </Form.Item>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+
+                    <Form.Item name={'content'} label={'content'} rules={[{required: true,},]} initialValue={data?.content}>
                         <DraftEditor initialValue={data?.content} formRef={formRef} name={'content'} />
                     </Form.Item>
                 </div>

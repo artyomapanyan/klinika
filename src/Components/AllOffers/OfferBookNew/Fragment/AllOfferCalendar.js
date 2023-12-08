@@ -258,7 +258,7 @@ function AllOfferCalendar({
     }
 
 
-    console.log(loadingCalled)
+
 
     useEffect(() => {
         (async () => {

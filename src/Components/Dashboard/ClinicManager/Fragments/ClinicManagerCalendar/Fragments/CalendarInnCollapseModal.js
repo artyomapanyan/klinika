@@ -124,6 +124,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const handleCreateAppointment = (values, additional) => {
         setFinishLoading(true)
 
+
         postResource('Appointment', 'create', token, '', {
             ...values,
             ...(additional ?? {}),
@@ -239,6 +240,15 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             ...prevState,
             time: e?.target?.value
         }))
+
+        if(data?.phone_country_code?.length > 3) {
+            setData(prevState => ({
+                ...prevState,
+                phone_country_code: prevState?.phone_country_code?.slice(prevState?.phone_country_code?.indexOf('(')+1, prevState?.phone_country_code?.indexOf(')'))
+            }))
+        }
+
+
     }
 
 
@@ -249,7 +259,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
         })
 
-        console.log(serviceTypes, 'serviceTypes')
+
 
         Promise.all(serviceTypes?.map((callableDay, i) => {
             return postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
@@ -269,7 +279,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 return e?.hasDays?.length > 0 && e?.hasDays[0]?.length > 0
             })
 
-            console.log(responses,filterResponses, 'responses')
+
 
             setAvailableServices(filterResponses)
             setLoadingAvailableServices(false)
@@ -354,7 +364,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.appointment?.patient?.phone_country_code ? data?.appointment?.patient?.phone_country_code : '966'}
+                                       initialValue={data?.appointment?.patient?.phone_country_code ? data?.appointment?.patient?.phone_country_code : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        inputProps={{
@@ -390,7 +400,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                                <Button type={'secondary'} style={{border: "none"}}  onClick={openDrawer}>{t('Create new')}</Button></div>
                                        }}
                                        resourceParams={{
-                                           phone_country_code: data?.phone_country_code ? data?.phone_country_code : '966',
+                                           phone_country_code: data?.phone_country_code ? data?.phone_country_code?.length > 3 ? data?.phone_country_code?.slice(data?.phone_country_code?.indexOf('(')+1, data?.phone_country_code?.indexOf(')')) : data?.phone_country_code : '966',
                                            clinic_id: clinicID
                                        }}
                                        initialData={[]}
