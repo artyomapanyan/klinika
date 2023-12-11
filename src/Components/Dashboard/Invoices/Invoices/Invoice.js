@@ -15,8 +15,9 @@ import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const resource = 'Invoice';
 
-function Incoice() {
+function Invoice() {
     let dispatch = useDispatch()
+    let language = useSelector((state) => state.app.current_locale)
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -63,6 +64,14 @@ function Incoice() {
             ...prevState,
             ...values
         }))
+
+        if(values?.phone_country_code) {
+            if(values.phone_country_code.length > 3) {
+                values.phone_country_code = values?.phone_country_code?.slice(values?.phone_country_code.indexOf('(')+1, values?.phone_country_code?.indexOf(')'))
+            }
+        }
+
+
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if (response?.id) {
@@ -242,9 +251,10 @@ function Incoice() {
                     <div style={{display: "flex", gap: 20}}>
                         <div style={{width: '30%'}}>
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
+                                       disableClear={true}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.appointment?.patient?.phone_country_code}
+                                       initialValue={data?.appointment?.patient?.phone_country_code ? data?.appointment?.patient?.phone_country_code : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        resource={'Country'}/>
@@ -253,7 +263,7 @@ function Incoice() {
                             <FormInput label={t('Select Patient and choose an appointment (Search By phone number)')}
                                        name={'appointment_id'}
                                        inputType={'resourceSelect'}
-                                       disabled={!data?.phone_country_code}
+                                       //disabled={!data?.phone_country_code}
                                 //rules={[{required: true}]}
                                        searchConfigs={{minLength: 3}}
                                        initialValue={data?.appointment?.id}
@@ -271,7 +281,7 @@ function Incoice() {
                                            </div>
                                        }}
                                        resourceParams={{
-                                           phone_country_code:data?.phone_country_code??data?.appointment?.clinic?.phone_country_code
+                                           phone_country_code:data?.phone_country_code ? data?.phone_country_code : 966
                                        }}
 
                                        initialData={data?.appointment ? [data?.appointment] : []}
@@ -500,4 +510,4 @@ function Incoice() {
     )
 }
 
-export default Incoice;
+export default Invoice;

@@ -39,6 +39,11 @@ function Users() {
                     key:'phone_number',
 
                 },
+                // {
+                //     title:t('Clinics'),
+                //     dataIndex:'clinic_names',
+                //     key:'clinic_names',
+                // },
                 {
                     dataIndex:['updated_at','iso_string'],
                     title:t('Create date'),
