@@ -7,6 +7,7 @@ import map from "../../../../dist/Img/map.png";
 import global from "../../../../dist/Img/global-line.png";
 import Group from "../../../../dist/Img/Group.png";
 import {t} from "i18next";
+import clinic_logo from "../../../../dist/Img/faik_clinic_logo.png";
 
 function ThankYouOfferDetailsNew({ data, showDrawer }) {
     let lngs = useSelector(state => state?.app?.current_locale)
@@ -64,7 +65,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                             size={40}
                             src={
                                 <img
-                                    src={data?.clinic?.logo?.url}
+                                    src={data?.clinic?.logo?.url ? data?.clinic?.logo?.url : clinic_logo}
                                     alt='avatar'
                                     onError={({ currentTarget }) => {
                                         currentTarget.onerror = null // prevents looping
@@ -98,7 +99,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                         <div className={'clinic_location_div'}>
                             {data?.clinic?.location?.address1 && (
                                 <>
-                                    <div>
+                                    <a href={`https://www.google.com/maps/search/?api=1&query=${data?.clinic?.location?.latitude},${data?.clinic?.location?.longitude}`} style={{textDecoration: 'none'}}>
                                         <span className={'clinic_location_name'}>{t('Location')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
@@ -106,14 +107,14 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                                             </p>
                                             <Avatar size={20} src={<img src={map} alt='avatar' />} />
                                         </div>
-                                    </div>
+                                    </a>
                                 </>
                             )}
 
                             {data?.clinic?.website && (
                                 <>
                                     <hr />
-                                    <div>
+                                    <div style={{cursor: 'pointer'}} onClick={()=>document.location.href = data?.clinic?.website}>
                                         <span className={'clinic_location_name'}>{t('Website')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
@@ -131,7 +132,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                             {data?.clinic?.phone_number && (
                                 <>
                                     <hr />
-                                    <div>
+                                    <a href={`tel:+${data?.clinic?.phone_country_code}${data?.clinic?.phone_number}`} style={{textDecoration: 'none'}}>
                                         <span className={'clinic_location_name'}>{t('Phone')}</span>
                                         <div className={'clinic_div'}>
                                             <p className={'clinic_content_name'}>
@@ -146,7 +147,7 @@ function ThankYouOfferDetailsNew({ data, showDrawer }) {
                                                 />
                                             </p>
                                         </div>
-                                    </div>
+                                    </a>
                                 </>
                             )}
 

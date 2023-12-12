@@ -18,6 +18,8 @@ import {UserOutlined} from "@ant-design/icons";
 import gold_star from "../../../../dist/icons/gold_star.png";
 import Preloader from "../../../Preloader";
 import {log10} from "chart.js/helpers";
+import HCP_Male from "../../../../dist/icons/HCP_Male.png";
+import HCP_Female from "../../../../dist/icons/HCP_Female.png";
 
 function BookAnAppointment({data, setOpen, setTotalState}) {
     let token = useSelector(state => state.auth.token)
@@ -208,7 +210,7 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
                 <Space>
                     <Avatar
                         size={40}
-                        icon={el?.avatar ? <img src={el?.avatar?.url} alt={'image'}/> : <UserOutlined/>}
+                        icon={el?.avatar ? <img src={el?.avatar?.url} alt={'image'}/> : el?.gender == 1 ? <img src={HCP_Male} alt={'HCP_Male'} /> : <img src={HCP_Female} alt={'HCP_Female'} />}
                         className={'doctor_avatar'}
                     />
                     <div className={'doctor_name'}

@@ -41,8 +41,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const [verifyPatient, setVerifyPatient] = useState({});
     const [servisTypeAndTime, setServisTypeAndTime] = useState({});
     const [loading403, setLoading403] = useState(false);
-    // const [availableServices, setAvailableServices] = useState([]);
-    // const [loadingAvailableServices, setLoadingAvailableServices] = useState(false);
+    const [availableServices, setAvailableServices] = useState([]);
+    const [loadingAvailableServices, setLoadingAvailableServices] = useState(false);
 
 
 
@@ -123,6 +123,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     const handleCreateAppointment = (values, additional) => {
         setFinishLoading(true)
+
 
         postResource('Appointment', 'create', token, '', {
             ...values,
@@ -239,48 +240,51 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             ...prevState,
             time: e?.target?.value
         }))
+
+        if(data?.phone_country_code?.length > 3) {
+            setData(prevState => ({
+                ...prevState,
+                phone_country_code: prevState?.phone_country_code?.slice(prevState?.phone_country_code?.indexOf('(')+1, prevState?.phone_country_code?.indexOf(')'))
+            }))
+        }
+
+
     }
 
 
-    // useEffect(() => {
-    //     setLoadingAvailableServices(true)
-    //
-    //     let aaa = getServiceTypes(clinic.services).filter((el) => {
-    //         return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
-    //     })
-    //
-    //     console.log(aaa, 'aaa')
-    //
-    //     Promise.all(aaa?.map((callableDay, i) => {
-    //         return postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
-    //             service: callableDay.id,
-    //             date: selectedDate
-    //         }).then((response) => {
-    //             return {
-    //                 id: callableDay.id,
-    //                 name: callableDay?.name,
-    //                 hasDays: response,
-    //             }
-    //         })
-    //
-    //     })).then(responses => {
-    //
-    //         let filterResponses = responses?.flat()?.filter((e) => {
-    //             return e?.hasDays?.length > 0
-    //         })
-    //
-    //         console.log(responses,filterResponses, 'responses')
-    //
-    //         setAvailableServices(filterResponses)
-    //         setLoadingAvailableServices(false)
-    //
-    //
-    //
-    //     })
-    //
-    //
-    //
-    // }, [])
+    useEffect(() => {
+        setLoadingAvailableServices(true)
+
+        let serviceTypes = getServiceTypes(clinic.services).filter((el) => {
+            return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
+        })
+
+
+
+        Promise.all(serviceTypes?.map((callableDay, i) => {
+            return postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
+                service: callableDay.id,
+                date: selectedDate
+            }).then((response) => {
+                return {
+                    id: callableDay.id,
+                    name: callableDay?.name,
+                    hasDays: response,
+                }
+            })
+
+        })).then(responses => {
+
+            let filterResponses = responses?.flat()?.filter((e) => {
+                return e?.hasDays?.length > 0 && e?.hasDays[0]?.length > 0
+            })
+
+
+
+            setAvailableServices(filterResponses)
+            setLoadingAvailableServices(false)
+        })
+    }, [])
 
 
 
@@ -329,19 +333,20 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
 
-                                 <FormInput label={t('Service Type')} name={'service_type'}
-                                            inputType={'resourceSelect'}
-                                            rules={[{required: true}]}
-                                            initialValue={null}
-                                            inputProps={{
-                                                onChange:(e)=> setServisTypeAndTime(prevState => ({
-                                                    ...prevState,
-                                                    service_type: e
-                                                }))
-                                            }}
-                                            initialData={getServiceTypes(clinic.services).filter((el) => {
-                                                return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
-                                            })}/>
+                                {
+                                    loadingAvailableServices ? <Preloader small={30}/> : <FormInput label={t('Service Type')} name={'service_type'}
+                                                                                             inputType={'resourceSelect'}
+                                                                                             rules={[{required: true}]}
+                                                                                             initialValue={null}
+                                                                                             inputProps={{
+                                                                                                 onChange:(e)=> setServisTypeAndTime(prevState => ({
+                                                                                                     ...prevState,
+                                                                                                     service_type: e
+                                                                                                 }))
+                                                                                             }}
+                                                                                             initialData={availableServices}/>
+                                }
+
 
 
 
@@ -359,7 +364,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.appointment?.patient?.phone_country_code}
+                                       initialValue={data?.appointment?.patient?.phone_country_code ? data?.appointment?.patient?.phone_country_code : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        inputProps={{
@@ -376,7 +381,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                        rules={[{required: true}]}
                                        searchConfigs={{minLength: 4}}
                                        initialValue={null}
-                                       disabled={!data?.phone_country_code}
+                                       //disabled={!data?.phone_country_code}
 
 
                                        inputProps={{
@@ -395,7 +400,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                                <Button type={'secondary'} style={{border: "none"}}  onClick={openDrawer}>{t('Create new')}</Button></div>
                                        }}
                                        resourceParams={{
-                                           phone_country_code: data?.phone_country_code,
+                                           phone_country_code: data?.phone_country_code ? data?.phone_country_code?.length > 3 ? data?.phone_country_code?.slice(data?.phone_country_code?.indexOf('(')+1, data?.phone_country_code?.indexOf(')')) : data?.phone_country_code : '966',
                                            clinic_id: clinicID
                                        }}
                                        initialData={[]}

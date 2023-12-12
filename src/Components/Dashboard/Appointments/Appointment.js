@@ -26,6 +26,7 @@ function Appointment({isPatient}) {
     const phoneNumberRef = useRef();
     let token = useSelector((state) => state.auth.token);
     let role = useSelector((state) => state.auth.selected_role?.key);
+    let language = useSelector((state) => state.app.current_locale)
 
 
 
@@ -244,6 +245,14 @@ function Appointment({isPatient}) {
         }
 
         values.booked_at = values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
+
+
+
+        if(values?.patient?.phone_country_code) {
+            if(values.patient.phone_country_code.length > 3) {
+                values.patient.phone_country_code = values?.patient?.phone_country_code?.slice(values?.patient.phone_country_code.indexOf('(')+1, values?.patient.phone_country_code?.indexOf(')'))
+            }
+        }
         setSaveLoading(true)
         // if (params.id) {
         //     updateResource(resource, params.id, values, token).then(response => {
@@ -437,7 +446,7 @@ function Appointment({isPatient}) {
                                                         <FormInput label={t('Country Code')} name={['patient','phone_country_code']}
                                                                    inputType={'resourceSelect'}
                                                                    rules={[{required: true}]}
-                                                                   initialValue={formRef?.current?.getFieldValue(['patient','phone_country_code'])}
+                                                                   initialValue={formRef?.current?.getFieldValue(['patient','phone_country_code']) ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                                                    handleMapItems={handleMapItems}
                                                                    disabled={data?.patient_id}
                                                                    customSearchKey={'phone_code'}
@@ -448,7 +457,7 @@ function Appointment({isPatient}) {
                                                                    inputDisabled={data?.patient_id}
                                                                    name={['patient','phone_number']}
                                                                    maxLength={10}
-                                                                   initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_country_code']) : phoneNumberRef?.current}
+                                                                   initialValue={data?.patient_id ? formRef?.current?.getFieldValue(['patient','phone_number']) : phoneNumberRef?.current}
 
                                                                    rules={[{required: true}]}/>
                                                     </Col>

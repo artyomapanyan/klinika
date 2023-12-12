@@ -47,7 +47,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
         postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
             setClinicHoursesDataNew(response)
-            console.log(response, 'rrr')
+
 
         })
 
@@ -63,7 +63,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
         ])
        .then(responses => {
-           console.log(responses, 'response')
+
 
             setData(responses[0]?.working_hours)
             setDocData({

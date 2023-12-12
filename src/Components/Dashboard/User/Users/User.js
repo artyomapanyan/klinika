@@ -16,6 +16,7 @@ const resource = 'User';
 function User() {
     let dispatch = useDispatch();
     let selectedRole = useSelector((state) => state.auth.selected_role);
+    let language = useSelector((state) => state.app.current_locale)
     const params = useParams();
     const navigate = useNavigate();
     const formRef = useRef();
@@ -36,6 +37,8 @@ function User() {
         if(values.phone_country_code.length > 3) {
             values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
         }
+
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
@@ -134,9 +137,9 @@ function User() {
                     />
                     <div style={{display:"flex"}}>
                         <div style={{width:'25%'}}>
-                            <FormInput label={t('Country Code  ')} name={'phone_country_code'} inputType={'resourceSelect'}
+                            <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.phone_country_code ? `${data?.phone_country_code}` : null}
+                                       initialValue={data?.phone_country_code ? `${data?.phone_country_code}` : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                 inputProps={{onChange:(e, re)=> {
                                        let a = re.find((el) => el.id === e)
                                         setCountryCode(a)

@@ -47,8 +47,6 @@ function OffersTopPrice({
 
 
 
-
-
     const onClick = ({ key }) => {
         setParams({
             ...params,
@@ -173,6 +171,7 @@ function OffersTopPrice({
                 >
                     <div align={redux.app.current_locale === 'en' ? 'right' : 'left'} style={{width: '100%'}}>
                         <Input
+                            defaultValue={params?.title}
                             className={'offers_search_input'}
                             style={{width: '80%'}}
                             size='large'

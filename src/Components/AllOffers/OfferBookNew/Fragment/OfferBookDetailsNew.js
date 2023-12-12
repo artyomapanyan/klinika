@@ -7,7 +7,7 @@ import map from '../../../../dist/Img/map.png'
 import global from '../../../../dist/Img/global-line.png'
 import OfferMap from './OfferMap'
 import { useSelector } from 'react-redux'
-import clinic_logo from "../../../../dist/Img/faik_clinic_logo.png";
+import clinic_logo from "../../../../dist/icons/favicon.png";
 
 function OfferBookDetails({ data, showDrawer }) {
 	let lngs = useSelector(state => state?.app?.current_locale)
@@ -33,6 +33,13 @@ function OfferBookDetails({ data, showDrawer }) {
 
 	const onShowLess = () => {
 		setLengthState(300)
+	}
+
+	const goLandingPage = () => {
+		window.open(
+			data?.clinic?.website,
+			'_blank' // <- This is what makes it open in a new window.
+		)
 	}
 
 
@@ -105,7 +112,7 @@ function OfferBookDetails({ data, showDrawer }) {
 						<div className={'clinic_location_div'}>
 							{data?.clinic?.location?.address1 && (
 								<>
-									<div>
+									<a href={`https://www.google.com/maps/search/?api=1&query=${data?.clinic?.location?.latitude},${data?.clinic?.location?.longitude}`} target="_blank" style={{textDecoration: 'none'}}>
 										<span className={'clinic_location_name'}>{t('Location')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
@@ -113,14 +120,14 @@ function OfferBookDetails({ data, showDrawer }) {
 											</p>
 											<Avatar size={20} src={<img src={map} alt='avatar' />} />
 										</div>
-									</div>
+									</a>
 								</>
 							)}
 
 							{data?.clinic?.website && (
 								<>
 									<hr />
-									<div>
+									<div style={{cursor: 'pointer'}} onClick={goLandingPage}>
 										<span className={'clinic_location_name'}>{t('Website')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
@@ -138,7 +145,7 @@ function OfferBookDetails({ data, showDrawer }) {
 							{data?.clinic?.phone_number && (
 								<>
 									<hr />
-									<div>
+									<a href={`tel:+${data?.clinic?.phone_country_code}${data?.clinic?.phone_number}`} style={{textDecoration: 'none'}}>
 										<span className={'clinic_location_name'}>{t('Phone')}</span>
 										<div className={'clinic_div'}>
 											<p className={'clinic_content_name'}>
@@ -154,7 +161,7 @@ function OfferBookDetails({ data, showDrawer }) {
 												/>
 											</p>
 										</div>
-									</div>
+									</a>
 								</>
 							)}
 

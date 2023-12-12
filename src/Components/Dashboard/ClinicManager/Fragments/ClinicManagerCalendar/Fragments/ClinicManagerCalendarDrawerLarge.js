@@ -69,20 +69,22 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
                             <div style={{display:"flex", gap: 20, width:'100%'}}>
                                 <div style={{width:110}}>
                                     <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                               disableClear={true}
                                                rules={[{required: true}]}
-                                               initialValue={966}
+                                               initialValue={data?.phone_country_code}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}
                                     />
                                 </div>
                                 <div style={{width:'100%'}}>
-                                    <FormInput maxLength={10} label={t('Phone number')} name={'phone_number'} />
+                                    <FormInput maxLength={10} label={t('Phone number')} name={'phone_number'} rules={[{required: true}]} />
                                 </div>
                             </div>
                             <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                        initialData={Resources?.Gender}
                                        initialValue={data?.gender}
+                                       rules={[{required: true}]}
                             />
 
                              {/*   <FileManager text1={'Insurance Card Front'}
