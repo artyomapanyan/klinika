@@ -381,7 +381,8 @@ function Offer() {
                                                    ...prevState,
                                                    service_id: undefined,
                                                    sub_categories: undefined,
-                                                   sub_services: undefined
+                                                   sub_services: undefined,
+                                                   category: undefined
                                                }))
 
                                                formRef?.current?.setFieldsValue({
@@ -405,7 +406,8 @@ function Offer() {
                                     setData((prevState)=>({
                                         ...prevState,
                                         service_id: undefined,
-                                        sub_services: undefined
+                                        sub_services: undefined,
+                                        service: undefined
                                     }))
 
                                     formRef?.current?.setFieldsValue({

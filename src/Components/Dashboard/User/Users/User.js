@@ -190,6 +190,9 @@ function User() {
                                                                         rules={[{required: true}]}
                                                                         initialValue={data?.roles?.map(e=>e.id)}
                                                                         initialData={data?.roles??[]}
+                                                                        resourceParams={{
+                                                                            except: 'doctor'
+                                                                            }}
                                                                         resource={'Role'}
                         /> : <div></div>
                     }

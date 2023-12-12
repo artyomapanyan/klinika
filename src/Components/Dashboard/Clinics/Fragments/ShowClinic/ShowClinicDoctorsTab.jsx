@@ -44,15 +44,8 @@ const ShowClinicDoctorsTab = ({dataState}) => {
     }, [])
 
 
-    const dataSource = [
-        {
-            key: '1',
-            doctor: 'Mike',
-            specialty: 32,
+    console.log(data)
 
-        },
-
-    ];
 
     const columns = [
         {

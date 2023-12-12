@@ -7,7 +7,7 @@ import ClinicShowWorkingHours from "./ClinicShowWorkingHours";
 import Preloader from "../../../../../Preloader";
 
 const resource = "Clinic";
-const service = 'telehealth'
+const service = 'main'
 function ShowClinicHoursTab({loadingState, workingHoursFooter}) {
   const params = useParams();
   let token = useSelector((state) => state.auth.token);
