@@ -17,6 +17,8 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 
     const [startDate, setStartDate] = useState(dayjs())
 
+    let [getStartDate, setGetStartDate] = useState(dayjs())
+
 
     const [timeLoading, setTimeLoading] = useState(false)
     const [availableTimes, setAvailableTimes] = useState([])
@@ -35,8 +37,8 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         }
     }
     const handleChangeDay = (count) => {
-        if (startDate.add(count, 'day') < dayjs()) {
-            setStartDate(dayjs())
+        if (startDate.add(count, 'day') < getStartDate) {
+            setStartDate(getStartDate)
         } else {
             setStartDate((prevState) => prevState.add(count, 'day'))
         }
@@ -129,26 +131,26 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 
 
 
-    // useEffect(() => {
-    //     if(formState?.clinic_id) {
-    //        new Promise((resolve, reject) => {
-    //             postResource('AvailableDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + formState?.clinic_id, {
-    //                 service: 'clinic_visit',
-    //             }).then((response) => {
-    //                 //startDate = dayjs(response?.date)
-    //                 setStartDate(dayjs(response?.date));
-    //                 setGetStartDate(dayjs(response?.date))
-    //                 setDataState(prevState => ({
-    //                     ...prevState,
-    //                     date: dayjs(response?.date)?.format('YYYY-MM-DD')
-    //                 }))
-    //                 setDate1(dayjs(response?.date))
-    //                 resolve();
-    //             }).catch(reject)
-    //         })
-    //     }
-    //
-    // }, [])
+    useEffect(() => {
+        if(formState?.clinic_id) {
+           new Promise((resolve, reject) => {
+                postResource('AvailableDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + formState?.clinic_id, {
+                    service: 'clinic_visit',
+                }).then((response) => {
+                    //startDate = dayjs(response?.date)
+                    setStartDate(dayjs(response?.date));
+                    setGetStartDate(dayjs(response?.date))
+                    // setDataState(prevState => ({
+                    //     ...prevState,
+                    //     date: dayjs(response?.date)?.format('YYYY-MM-DD')
+                    // }))
+                    setDate1(dayjs(response?.date))
+                    resolve();
+                }).catch(reject)
+            })
+        }
+
+    }, [])
 
     // const createAvailableDate = () => {
     //     return new Promise((resolve, reject) => {
@@ -201,7 +203,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
                     {t('Pick Date')}
                 </div>
                 <div className={'next_prev_div'}>
-                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== dayjs().format('DD-MM-YYYY')} onClick={() => handleChangeMonth(-1)}>
+                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== getStartDate.format('DD-MM-YYYY')} onClick={() => handleChangeMonth(-1)}>
                         {language === 'en' ? <LeftOutlined style={{color: '#ffffff'}}/> : <RightOutlined style={{color: '#ffffff'}}/>}
                     </Button>
                     <div className={'top_div_title'}>{t(GMBK(startDate.month()))}</div>
@@ -231,7 +233,7 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
                         }): <div></div>
                         }
                         {
-                            startDate.format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY') ?
+                            startDate.format('DD-MM-YYYY') === getStartDate.format('DD-MM-YYYY') ?
                                 <Button className={'next_btn'} onClick={() => handleChangeDay(6)}>
                                     <img alt={'arrow_right_white'} src={arrow_right_white}/>
                                 </Button> : <div>
