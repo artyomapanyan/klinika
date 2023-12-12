@@ -56,20 +56,20 @@ function Doctor() {
             values.password_confirmation = ''
         }
 
-        // if(values?.bio) {
-        //     values.bio = JSON.stringify(values.bio)
-        // }
-        //
-        // let nullDescription = {
-        //     en: '',
-        //     ar: ''
-        // }
-        //
-        // if(values?.bio === '{}'){
-        //     values.bio = JSON.stringify(nullDescription)
-        // }
-        // values.first = JSON.stringify(values.first)
-        // values.last = JSON.stringify(values.last)
+        if(values?.bio) {
+            values.bio = JSON.stringify(values.bio)
+        }
+
+        let nullDescription = {
+            en: '',
+            ar: ''
+        }
+
+        if(values?.bio === '{}'){
+            values.bio = JSON.stringify(nullDescription)
+        }
+        values.first = JSON.stringify(values.first)
+        values.last = JSON.stringify(values.last)
 
         setData((prevState)=>({
             ...prevState,
@@ -138,45 +138,45 @@ function Doctor() {
 
                 <div className={'add_edit_content'}>
 
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
-                    {/*        <FormInput label={t('First name en')} name={['first', 'en']} initialValue={data?.translations?.first?.en} rules={[{required: true}]} />*/}
-
-                    {/*    </div>*/}
-                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
-                    {/*        <FormInput label={t('First name ar')} name={['first', 'ar']} initialValue={data?.translations?.first?.ar} rules={[{required: true}]} />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
-                    {/*        <FormInput label={t('Last name')} name={['last', 'en']} initialValue={data?.translations?.last?.en} rules={[{required: true}]} />*/}
-
-                    {/*    </div>*/}
-                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
-                    {/*        <FormInput label={t('Last name')} name={['last', 'ar']} initialValue={data?.translations?.last?.ar} rules={[{required: true}]} />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div dir='ltr' style={{width: '50%'}}>*/}
-                    {/*        <FormInput label={t('Bio en')} name={['bio', 'en']} inputType={'textArea'} initialValue={data?.translations?.bio?.en}/>*/}
-                    {/*    </div>*/}
-                    {/*    <div dir='rtl' style={{width: '50%'}}>*/}
-                    {/*        <FormInput rtl={true} label={t('Bio ar')} name={['bio', 'ar']} inputType={'textArea'} initialValue={data?.translations?.bio?.ar}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
                     <div style={{display: 'flex', gap: 20}}>
-                        <div className={'input_ltr'} style={{width: '50%'}}>
-                            <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />
+                        <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>
+                            <FormInput label={t('First name en')} name={['first', 'en']} initialValue={data?.translations?.first?.en} rules={[{required: true}]} />
 
                         </div>
-                        <div style={{width: '50%'}}>
-                            <FormInput label={t('Last name')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />
+                        <div style={{width: '50%'}} dir="rtl" >
+                            <FormInput label={t('First name ar')} name={['first', 'ar']} initialValue={data?.translations?.first?.ar} rules={[{required: true}]} />
                         </div>
                     </div>
-                    <FormInput label={t('Bio')} name={'bio'} inputType={'textArea'} initialValue={data?.bio}/>
+
+                    <div style={{display: 'flex', gap: 20}}>
+                        <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>
+                            <FormInput label={t('Last name en')} name={['last', 'en']} initialValue={data?.translations?.last?.en} rules={[{required: true}]} />
+
+                        </div>
+                        <div style={{width: '50%'}} dir="rtl" >
+                            <FormInput label={t('Last name ar')} name={['last', 'ar']} initialValue={data?.translations?.last?.ar} rules={[{required: true}]} />
+                        </div>
+                    </div>
+
+                    <div style={{display: 'flex', gap: 20}}>
+                        <div dir='ltr' style={{width: '50%'}}>
+                            <FormInput label={t('Bio en')} name={['bio', 'en']} inputType={'textArea'} initialValue={data?.translations?.bio?.en}/>
+                        </div>
+                        <div dir='rtl' style={{width: '50%'}}>
+                            <FormInput rtl={true} label={t('Bio ar')} name={['bio', 'ar']} inputType={'textArea'} initialValue={data?.translations?.bio?.ar}/>
+                        </div>
+                    </div>
+
+                    {/*<div style={{display: 'flex', gap: 20}}>*/}
+                    {/*    <div className={'input_ltr'} style={{width: '50%'}}>*/}
+                    {/*        <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />*/}
+
+                    {/*    </div>*/}
+                    {/*    <div style={{width: '50%'}}>*/}
+                    {/*        <FormInput label={t('Last name')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    {/*<FormInput label={t('Bio')} name={'bio'} inputType={'textArea'} initialValue={data?.bio}/>*/}
 
 
                 </div>

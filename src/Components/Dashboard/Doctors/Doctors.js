@@ -56,19 +56,20 @@ function Doctors() {
                     key:'plid',
                     translatable:true,
                 },
-                // {
-                //     title:t('Clinic'),
-                //     dataIndex:'clinics',
-                //     key:'clinics',
-                //     translatable:true,
-                //     render:(e, record) => {
-                //
-                //         return record?.clinics?.map((e, i) => {
-                //                     return e?.name + (i === record?.clinics.length - 1 ? '' : ', ')
-                //                 })
-                //             }
-                //
-                // },
+                {
+                    title:t('Clinic'),
+                    dataIndex:'clinics',
+                    key:'clinics',
+                    translatable:true,
+                    className: 'table_clinics_column',
+                    render:(e, record) => {
+
+                        return record?.clinics?.map((e, i) => {
+                                    return e?.name + (i === record?.clinics.length - 1 ? '' : ', ')
+                                })
+                            }
+
+                },
                 {
                     dataIndex:['status'],
                     title:t('Status'),

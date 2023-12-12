@@ -36,19 +36,19 @@ function Specialty() {
         values.has_parent = 0
 
 
-        // if(values?.description) {
-        //     values.description = JSON.stringify(values.description)
-        // }
-        //
-        // let nullDescription = {
-        //     en: '',
-        //     ar: ''
-        //     }
-        //
-        // if(values?.description === '{}'){
-        //     values.description = JSON.stringify(nullDescription)
-        // }
-        // values.title = JSON.stringify(values.title)
+        if(values?.description) {
+            values.description = JSON.stringify(values.description)
+        }
+
+        let nullDescription = {
+            en: '',
+            ar: ''
+            }
+
+        if(values?.description === '{}'){
+            values.description = JSON.stringify(nullDescription)
+        }
+        values.title = JSON.stringify(values.title)
 
 
 
@@ -111,32 +111,34 @@ const res = 'Specialty';
             >
                 <div  className={"add_edit_content"}>
 
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
-                    {/*        <FormInput label={t('Title en')} name={['title', 'en']} initialValue={data?.translations?.title?.en} rules={[{required: true}]}/>*/}
-                    {/*    </div>*/}
-                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
-                    {/*        <FormInput  label={t('Title ar')} name={['title', 'ar']} initialValue={data?.translations?.title?.ar} rules={[{required: true}]}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div style={{display: 'flex', gap: 20}}>
+                        <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>
+                            <FormInput label={t('Title en')} name={['title', 'en']} initialValue={data?.translations?.title?.en} rules={[{required: true}]}/>
+                        </div>
+                        <div style={{width: '50%'}} dir="rtl" >
+                            <FormInput  label={t('Title ar')} name={['title', 'ar']} initialValue={data?.translations?.title?.ar} rules={[{required: true}]}/>
+                        </div>
+                    </div>
 
-                    <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
+                    {/*<FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>*/}
+
+
+                    <div style={{display: 'flex', gap: 20}}>
+                        <div dir='ltr' style={{width: '50%'}}>
+                            <FormInput label={t('Description en')} name={['description', 'en']} inputType={'textArea'} initialValue={data?.translations?.description?.en}/>
+                        </div>
+                        <div dir='rtl' style={{width: '50%'}}>
+                            <FormInput rtl={true} label={t('Description ar')} name={['description', 'ar']} inputType={'textArea'} initialValue={data?.translations?.description?.ar}/>
+                        </div>
+                    </div>
+
+                    {/*<FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>*/}
 
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}
                                initialData={Resources.Status}
                     />
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div dir='ltr' style={{width: '50%'}}>*/}
-                    {/*        <FormInput label={t('Description en')} name={['description', 'en']} inputType={'textArea'} initialValue={data?.translations?.description?.en}/>*/}
-                    {/*    </div>*/}
-                    {/*    <div dir='rtl' style={{width: '50%'}}>*/}
-                    {/*        <FormInput rtl={true} label={t('Description ar')} name={['description', 'ar']} inputType={'textArea'} initialValue={data?.translations?.description?.ar}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-                    <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
 
                     <FileManager text1={'Click or drag file to this area to upload'}
                                  text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
