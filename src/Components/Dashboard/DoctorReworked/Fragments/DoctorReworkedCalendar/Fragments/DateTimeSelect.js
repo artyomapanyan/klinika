@@ -25,7 +25,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     const [disabledDays, setDisabledDays] = useState([])
 
 
-
+    console.log(formState, date, dataClinic, bookedAtState)
 
     const handleChangeMonth = (count) => {
         if(startDate.add(count, 'month') < dayjs()){
@@ -71,10 +71,6 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         setBookedAtState(dayjs(e).format('YYYY-MM-DD'))
         setIsClicked(true)
     }
-
-
-
-
 
 
     useEffect(() => {
@@ -125,6 +121,58 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 
 
     }, [formState?.clinic_id, formState?.service_type, formState?.specialty_id])
+
+
+
+
+    //console.log(formState, date, dataClinic, bookedAtState)
+
+
+
+    // useEffect(() => {
+    //     if(formState?.clinic_id) {
+    //        new Promise((resolve, reject) => {
+    //             postResource('AvailableDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + formState?.clinic_id, {
+    //                 service: 'clinic_visit',
+    //             }).then((response) => {
+    //                 //startDate = dayjs(response?.date)
+    //                 setStartDate(dayjs(response?.date));
+    //                 setGetStartDate(dayjs(response?.date))
+    //                 setDataState(prevState => ({
+    //                     ...prevState,
+    //                     date: dayjs(response?.date)?.format('YYYY-MM-DD')
+    //                 }))
+    //                 setDate1(dayjs(response?.date))
+    //                 resolve();
+    //             }).catch(reject)
+    //         })
+    //     }
+    //
+    // }, [])
+
+    // const createAvailableDate = () => {
+    //     return new Promise((resolve, reject) => {
+    //         postResource('AvailableDayByDoctorAndClinic', 'single', token, dataState?.doctor_id + "/" + data?.clinic?.id, {
+    //             service: 'clinic_visit',
+    //         }).then((response) => {
+    //             startDate = dayjs(response?.date)
+    //             setStartDate(startDate);
+    //             setGetStartDate(dayjs(response?.date))
+    //             setDataState(prevState => ({
+    //                 ...prevState,
+    //                 date: dayjs(response?.date)?.format('YYYY-MM-DD')
+    //             }))
+    //             setDate(dayjs(response?.date))
+    //             resolve();
+    //         }).catch(reject)
+    //     })
+    //
+    // }
+
+
+
+
+
 
 
 
