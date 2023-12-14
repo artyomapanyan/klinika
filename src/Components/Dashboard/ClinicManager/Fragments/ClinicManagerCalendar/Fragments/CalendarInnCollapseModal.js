@@ -321,7 +321,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                 <div></div>
                         }
                     </div>
-                    <div >
+                    <div>
                         <Space>
                             <Avatar size={56} src={doctor?.avatar?.url} icon={<UserOutlined/>}/>
                             <div style={{display: "block"}}>
@@ -330,22 +330,26 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                             </div>
                         </Space>
                     </div>
+
+                    {
+                        loadingAvailableServices ? <Preloader small={30}/> : <div style={{marginTop: 20}}>
+                            <FormInput label={t('Service Type')} name={'service_type'}
+                                       inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={null}
+                                       inputProps={{
+                                           onChange:(e)=> setServisTypeAndTime(prevState => ({
+                                               ...prevState,
+                                               service_type: e
+                                           }))
+                                       }}
+                                       initialData={availableServices}/>
+                        </div>
+                    }
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
 
-                                {
-                                    loadingAvailableServices ? <Preloader small={30}/> : <FormInput label={t('Service Type')} name={'service_type'}
-                                                                                             inputType={'resourceSelect'}
-                                                                                             rules={[{required: true}]}
-                                                                                             initialValue={null}
-                                                                                             inputProps={{
-                                                                                                 onChange:(e)=> setServisTypeAndTime(prevState => ({
-                                                                                                     ...prevState,
-                                                                                                     service_type: e
-                                                                                                 }))
-                                                                                             }}
-                                                                                             initialData={availableServices}/>
-                                }
+
 
 
 
@@ -360,6 +364,11 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
                             <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
+                            <FormInput label={t('Offers')} name={'offer_id'}
+                                       inputType={'resourceSelect'}
+                                       initialValue={null}
+                                       initialData={[]}
+                                       resource={'Offer'}/>
 
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}

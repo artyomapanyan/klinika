@@ -9,7 +9,7 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDate1, dataClinic}) {
+function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtState, date, setDate1, dataClinic}) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
@@ -18,6 +18,8 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     const [startDate, setStartDate] = useState(dayjs())
 
     let [getStartDate, setGetStartDate] = useState(dayjs())
+    const [radioValue, setRadioValue] = useState('')
+    const [timeCount, setTimeCount] = useState()
 
 
     const [timeLoading, setTimeLoading] = useState(false)
@@ -25,9 +27,11 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     const [timesIndex, setTimesIndex] = useState(0)
     const [isClicked, setIsClicked] = useState(false)
     const [disabledDays, setDisabledDays] = useState([])
+    const [dateLoading, setDateLoading] = useState(false)
 
 
-    console.log(formState, date, dataClinic, bookedAtState)
+    console.log(formState)
+
 
     const handleChangeMonth = (count) => {
         if(startDate.add(count, 'month') < dayjs()){
@@ -45,14 +49,95 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 
     }
 
+    const createAvailableDate = () => {
+        setDateLoading(true)
+
+        return new Promise((resolve, reject) => {
+            setTimeLoading(true)
+
+            if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(formState?.service_type)) {
+                postResource('ClinicAvailableFrom', 'single', token, formState?.clinic_id, {
+                    service: formState?.service_type,
+                }).then((response) => {
+
+
+                    setStartDate(dayjs(response.date));
+                    setGetStartDate(dayjs(response.date))
+                    setFormState(prevState => ({
+                        ...prevState,
+                        date: dayjs(response.date)?.format('YYYY-MM-DD')
+                    }))
+                    setDate1(dayjs(response.date))
+
+                    postResource('Clinic', 'ClinicsAvailableTimes', token, formState?.clinic_id, {
+                        date: dayjs(response.date).format('YYYY-MM-DD'),
+                        service: formState?.service_type,
+                    }).then((res) => {
+
+                        setAvailableTimes(res?.flat()??[])
+
+                        setTimeLoading(false)
+                        setDateLoading(false)
+
+                    })
+                })
+
+
+
+
+
+            } else {
+                postResource('AvailableDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + formState?.clinic_id, {
+                    service: formState?.service_type,
+                }).then((response) => {
+
+                    //startDate = dayjs(response?.date)
+                    setStartDate(dayjs(response?.date));
+                    setGetStartDate(dayjs(response?.date))
+                    setFormState(prevState => ({
+                        ...prevState,
+                        date: dayjs(response?.date)?.format('YYYY-MM-DD')
+                    }))
+                    setDate1(dayjs(response?.date))
+                    setDateLoading(false)
+
+                        postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + formState?.clinic_id, {
+                            service: formState?.service_type,
+                            date: dayjs(response.date).format('YYYY-MM-DD')
+                        }).then((response) => {
+
+                            if(response) {
+                                setAvailableTimes(response?.flat() ?? [])
+                            }
+                            setTimeLoading(false)
+                        })
+
+
+                    resolve();
+                }).catch(reject)
+            }
+
+
+        })
+
+    }
+
+
+
     let clinicId = authRedux?.clinics?.find(e=>e?.id===formState?.clinic_id)?.id
 
     const onDateClick = (e) => {
+        setFormState(prevState => ({
+            ...prevState,
+            date: e?.format('YYYY-MM-DD'),
+            time: ''
+        }))
+
         setDate1(e)
         setTimeLoading(true)
         if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(formState?.service_type)) {
             postResource('Clinic', 'ClinicsAvailableTimes', token, (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
-                date: dayjs(e).format('YYYY-MM-DD'),
+                date: e?.format('YYYY-MM-DD'),
                 service: formState?.service_type,
             }).then((res) => {
                 setAvailableTimes(res?.flat()??[])
@@ -62,7 +147,7 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
         } else {
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, (role === 'doctor' ? authRedux?.user?.id : dataClinic?.doctor?.id) + "/" + (role === 'doctor' ? clinicId : dataClinic?.clinic?.id), {
                 service: formState?.service_type,
-                date: dayjs(e).format('YYYY-MM-DD')
+                date: e?.format('YYYY-MM-DD')
             }).then((response) => {
 
                 setTimesIndex(0)
@@ -76,21 +161,26 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 
 
     useEffect(() => {
-        if (formState?.clinic_id &&  formState?.service_type && formState?.specialty_id) {
+        if (formState?.clinic_id &&  formState?.service_type) {
+            if(!['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(formState?.service_type)) {
+                postResource('ClinicDoctorWorkingHours', 'single', token, (role === 'doctor' ? authRedux?.user?.id : dataClinic?.doctor?.id)+'/'+formState?.clinic_id, {
+                    service: formState?.service_type
+                }).then(responses => {
+                    const res = responses?.working_hours
 
-            postResource('ClinicDoctorWorkingHours', 'single', token, (role === 'doctor' ? authRedux?.user?.id : dataClinic?.doctor?.id)+'/'+formState?.clinic_id, {service: formState?.service_type}).then(responses => {
-                const res = responses?.working_hours
+                    let day = [];
+                    Object.keys(res)?.forEach((key) => {
+                        if(res[key][0]?.is_day_off){
+                            day.push(key)
+                        }
+                    })
+                    setDisabledDays(day)
 
-                let day = [];
-                Object.keys(res)?.forEach((key) => {
-                    if(res[key][0]?.is_day_off){
-                        day.push(key)
-                    }
+
                 })
-                setDisabledDays(day)
+            }
 
 
-            })
         }
 
         if(formState?.clinic_id &&  formState?.service_type === 'nursing') {
@@ -122,73 +212,69 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
 
 
 
-    }, [formState?.clinic_id, formState?.service_type, formState?.specialty_id])
-
-
-
-
-    //console.log(formState, date, dataClinic, bookedAtState)
-
-
-
-    useEffect(() => {
-        if(formState?.clinic_id) {
-           new Promise((resolve, reject) => {
-                postResource('AvailableDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + formState?.clinic_id, {
-                    service: 'clinic_visit',
-                }).then((response) => {
-                    //startDate = dayjs(response?.date)
-                    setStartDate(dayjs(response?.date));
-                    setGetStartDate(dayjs(response?.date))
-                    // setDataState(prevState => ({
-                    //     ...prevState,
-                    //     date: dayjs(response?.date)?.format('YYYY-MM-DD')
-                    // }))
-                    setDate1(dayjs(response?.date))
-                    resolve();
-                }).catch(reject)
-            })
-        }
-
-    }, [])
-
-    // const createAvailableDate = () => {
-    //     return new Promise((resolve, reject) => {
-    //         postResource('AvailableDayByDoctorAndClinic', 'single', token, dataState?.doctor_id + "/" + data?.clinic?.id, {
-    //             service: 'clinic_visit',
-    //         }).then((response) => {
-    //             startDate = dayjs(response?.date)
-    //             setStartDate(startDate);
-    //             setGetStartDate(dayjs(response?.date))
-    //             setDataState(prevState => ({
-    //                 ...prevState,
-    //                 date: dayjs(response?.date)?.format('YYYY-MM-DD')
-    //             }))
-    //             setDate(dayjs(response?.date))
-    //             resolve();
-    //         }).catch(reject)
-    //     })
-    //
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-    useEffect(() => {
-       if(formState?.patient_id && formState?.clinic_id && formState?.service_type && formState?.specialty_id && bookedAtState) {
-           onDateClick(date)
-       }
     }, [formState?.clinic_id, formState?.service_type])
 
+
+
+
+
+
+
+
+
+
+    const timeChange = (e) => {
+        setFormState((prevState) => ({
+            ...prevState,
+            time: e.target.value,
+        }))
+       // setDataTimes(e.target.value)
+        setRadioValue(e.target.value)
+    }
+
+
+
+
+
+
+
+    useEffect(() => {
+        if(formState?.clinic_id && formState?.service_type) {
+                (async () => {
+                    await createAvailableDate();
+                    // setDataState((prevState) => ({
+                    //     ...prevState,
+                    //     time: '',
+                    // }))
+                    // f2();
+                    // f();
+                    // f1();
+
+                })();
+            }
+
+
+
+
+
+    }, [formState?.service_type]);
+
+
+
+
+
+
+    // useEffect(() => {
+    //    if(formState?.clinic_id && formState?.service_type) {
+    //        if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(formState?.service_type)) {
+    //            onDateClick(formState?.date)
+    //        }
+    //
+    //    }
+    // }, [formState?.clinic_id, formState?.service_type])
+
     const handleChangeTime = (count) => {
+        setTimeCount(count)
         if (timesIndex + count < 0 || timesIndex + count >= availableTimes.length) {
             return setTimesIndex(0)
         }
@@ -203,7 +289,8 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
                     {t('Pick Date')}
                 </div>
                 <div className={'next_prev_div'}>
-                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== getStartDate.format('DD-MM-YYYY')} onClick={() => handleChangeMonth(-1)}>
+                    <Button className={'next_prev_btn'} disabled={startDate.format('DD-MM-YYYY')== getStartDate.format('DD-MM-YYYY')}
+                            onClick={() => handleChangeMonth(-1)}>
                         {language === 'en' ? <LeftOutlined style={{color: '#ffffff'}}/> : <RightOutlined style={{color: '#ffffff'}}/>}
                     </Button>
                     <div className={'top_div_title'}>{t(GMBK(startDate.month()))}</div>
@@ -218,32 +305,40 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
                         { formState?.clinic_id &&  formState?.service_type || formState?.specialty_id || formState?.nursing_tasks ? [...[...Array(6).keys()]].map((e, key) => {
 
                             return  <Button key={key}
-disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowerCase())}
+
+                                     disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowerCase())}
                                      className={`week_date_div ${date?.format('DD-MM-YYYY') === startDate.add(key, 'day').format('DD-MM-YYYY') ? 'selected' : ''}`}
                                      onClick={() => onDateClick(startDate.add(key, 'day'))}>
-                                    <div className={'date_div_in_map'} style={{fontWeight: 400}}>
-                                        {Resources.Days[startDate.add(key, 'day').day()]}
-                                    </div>
-                                    <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
-                                    <div key={key} className={'date_div_in_map'}>
+                                {
+                                    dateLoading ? <Spin/> : <div>
+                                        <div className={'date_div_in_map'} style={{fontWeight: 400}}>
+                                            {Resources.Days[startDate.add(key, 'day').day()]}
+                                        </div>
+                                        <div style={{borderBottom: '1px solid #ffffff77', width: '100%'}}></div>
+                                        <div key={key} className={'date_div_in_map'}>
 
-                                        {startDate.add(key, 'day').format('DD')}
+                                            {startDate.add(key, 'day').format('DD')}
+                                        </div>
                                     </div>
+                                }
+
                                 </Button>
                         }): <div></div>
                         }
                         {
                             startDate.format('DD-MM-YYYY') === getStartDate.format('DD-MM-YYYY') ?
-                                <Button className={'next_btn'} onClick={() => handleChangeDay(6)}>
-                                    <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                <Button className={'next_btn'} onClick={() => handleChangeDay(6, 'day')}>
+                                    <img alt={'arrow_right_white'} src={arrow_right_white}
+                                         style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
                                 </Button> : <div>
                                     <Button className={'Next_btn_small'} disabled={startDate == dayjs()}
-                                            onClick={() => handleChangeDay(-6)}>
-                                        <img style={{transform: 'rotateY(180deg)'}} alt={'arrow_right_white'}
-                                             src={arrow_right_white}/>
+                                            onClick={() => handleChangeDay(-6, 'day')}>
+                                        <img style={{transform: language === 'ar' ? 'rotateY(0deg)' : 'rotateY(180deg)'}}
+                                             alt={'arrow_right_white'} src={arrow_right_white}/>
                                     </Button>
-                                    <Button className={'Next_btn_small'} onClick={() => handleChangeDay(6)}>
-                                        <img alt={'arrow_right_white'} src={arrow_right_white}/>
+                                    <Button className={'Next_btn_small'} onClick={() => handleChangeDay(6, 'day')}>
+                                        <img alt={'arrow_right_white'} src={arrow_right_white}
+                                             style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
                                     </Button>
                                 </div>
                         }
@@ -263,9 +358,11 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
                     </div>
                     <div align={'center'} className={'big_time_div'}>
                         {
-                           date ? availableTimes.length === 0 ? isClicked ? <div className={'no_available_times'}>{t('No available times')}</div> : <div></div> : <Form.Item name={'booked_time'}>
+                           formState?.date ? <Form.Item name={'booked_time'}>
                                 <Radio.Group
                                     className={'hours_select'}
+                                    onChange={timeChange}
+                                    value={radioValue}
                                     options={availableTimes.slice(timesIndex, timesIndex + 8).map((e) => {
                                         return {
                                             label: dayjs('2023-10-10' + e).format('h:mmA'),
@@ -279,9 +376,29 @@ disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowe
                            </Form.Item> : <div></div>
                         }
 
-                        <Button className={'next_btn_time'} onClick={() => handleChangeTime(8)}>
-                            <img alt={'arrow_right_white'} src={arrow_right_white}/>
-                        </Button>
+                        {
+                            timesIndex !== 0 ? <div>
+                                <Button className={'Next_btn_small'}
+                                        style={{backgroundColor: '#ffffff10', border: '1px solid #774D9D10', marginTop: -20}}
+                                        disabled={startDate == dayjs()}
+                                        onClick={() => handleChangeTime(-8)}>
+                                    <img style={{transform: language === 'ar' ? 'rotateY(0deg)' : 'rotateY(180deg)'}}
+                                         alt={'arrow_right_white'} src={arrow_right_white}/>
+                                </Button>
+                                <Button style={{backgroundColor: '#ffffff10', border: '1px solid #774D9D10'}}
+                                        disabled={timesIndex + timeCount >= availableTimes.length}
+                                        className={'Next_btn_small'} onClick={() => handleChangeTime(8)}>
+                                    <img alt={'arrow_right_white'} src={arrow_right_white}
+                                         style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
+                                </Button>
+                            </div> : <Button className={'next_btn_time'} style={{marginTop: -20}}
+                                             onClick={() => handleChangeTime(8)}>
+                                <img alt={'arrow_right_white'} src={arrow_right_white}
+                                     style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
+                            </Button>
+                        }
+
+
 
                     </div>
                 </div>
