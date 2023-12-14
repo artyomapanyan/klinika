@@ -23,7 +23,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     const onNewAppointment = (values) => {
         setLoading(true)
         //values.doctor_id = role === 'doctor' ? authRedux?.user?.id : dataClinic.doctor.id
-        values.booked_at = bookedAtState+' '+values.booked_time;
+        values.booked_at = formState?.date+' '+values.booked_time;
         if(values?.patient_id){
             values.patient_id = values?.patient_id
         } else {
