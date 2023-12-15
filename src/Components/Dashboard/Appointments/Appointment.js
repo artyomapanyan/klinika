@@ -357,7 +357,7 @@ function Appointment({isPatient}) {
 
     }
 
-
+    //console.log((!data?.clinic_id && !data?.doctor_id && !data?.booked_at) && !(data?.service_type === "clinic_visit" || data?.service_type === "physical_therapy_clinic_visit" || data?.service_type === "laboratory_clinic_visit"), 'data')
 
     return (
         <div>
@@ -733,20 +733,35 @@ function Appointment({isPatient}) {
                                                                                         name={'appointment_time'}
                                                                                         inputType={'resourceSelect'}
                                                                                         options={availableTimeState}
+                                                                                        rules={[{required: true}]}
                                                                                         initialData={[]}
                                                     /></Spin> : <div></div>
                                                 }
                                             </Col>
                                         </Row>
-                                        <Row>
-                                            <Col lg={12} className="gutter-row">
-                                                <FormInput label={t('Offer (Optional)')} name={'offer_id'}
-                                                           inputType={'resourceSelect'}
-                                                           initialValue={null}
-                                                           initialData={[]}
-                                                           resource={'Offer'}/>
-                                            </Col>
-                                        </Row>
+                                        {
+                                            data?.service_type === "clinic_visit" || data?.service_type === "physical_therapy_clinic_visit" || data?.service_type === "laboratory_clinic_visit" ?
+
+                                                <Row>
+                                                    <Col lg={12} className="gutter-row">
+                                                        <FormInput label={t('Offer (Optional)')} name={'offer_id'}
+                                                                   disabled={!data?.clinic_id || !data?.doctor_id || !data?.booked_at}
+                                                                   inputType={'resourceSelect'}
+                                                                   initialValue={null}
+                                                                   initialData={[]}
+                                                                   resourceParams={{
+                                                                       clinic: data?.clinic_id,
+                                                                       status: 2,
+                                                                       approved: 1,
+                                                                       doctor: data?.doctor_id,
+                                                                       for_date: dayjs(data?.booked_at)?.format('YYYY-MM-DD')
+
+                                                                   }}
+                                                                   resource={'Offer'}/>
+                                                    </Col>
+                                                </Row> : <div></div>
+                                        }
+                                        {/*data?.service_type === "clinic_visit" || data?.service_type === "physical_therapy_clinic_visit" || data?.service_type === "laboratory_clinic_visit"*/}
                                         <div className="gutter-row">
                                             <FormInput label={t('Description')} name={'description'}
                                                        inputType={'textArea'} initialValue={data?.description}/>
