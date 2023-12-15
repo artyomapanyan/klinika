@@ -92,7 +92,7 @@ function FormInput({
                                    inputDisabled={inputDisabled} type={'textArea'}/>
             case 'number':
                 return <CInput className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
-                               inputProps={inputProps} type={'number'} min={min} max={max}/>
+                               inputProps={inputProps} type={'number'} min={min} max={max} onChange={onChange}/>
             case 'url':
                 return <CInput className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
                                inputProps={inputProps} type={'url'} placeholder={placeholder} />

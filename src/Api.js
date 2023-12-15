@@ -298,6 +298,10 @@ let api = {
         resource: 'AvailableDayByDoctorAndClinic',
     },
     {
+        url: 'clinics/available-from',
+        resource: 'ClinicAvailableFrom',
+    },
+    {
         url: 'public/appointments/store-from-offers',
         resource: 'PublicAppointment',
     },

@@ -192,7 +192,7 @@ function User() {
                                                                         initialData={data?.roles??[]}
                                                                         resourceParams={{
                                                                             except: 'doctor'
-                                                                        }}
+                                                                            }}
                                                                         resource={'Role'}
                         /> : <div></div>
                     }
