@@ -370,7 +370,7 @@ function AllOfferCalendar({
     return <div className={'drawer_cal_bog_div'}>
         <div className={''} style={{backgroundColor: '#BF539E', height: 160,}}>
             <div className={'drawer_cal_head_div'}>
-                <div className={'top_div_title'}>
+                <div className={'top_div_title'} style={{textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', fontSize: 18}}>
                     {t('Pick Date')}
                 </div>
                 <div className={'next_prev_div'}>
@@ -443,7 +443,7 @@ function AllOfferCalendar({
         <Spin spinning={timeLoading || !loadingCalled}>
             <div className={'drawer_cal_bottom_div'}>
                 <div className={'drawer_cal_foot_div'}>
-                    <div className={'top_div_title'}>
+                    <div className={'top_div_title'} style={{fontSize: 18}}>
                         {t('Select Time')}
                     </div>
                     <div align={'center'} className={'big_time_div'} style={{height: 70}}>
