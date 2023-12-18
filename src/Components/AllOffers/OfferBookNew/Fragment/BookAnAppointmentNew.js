@@ -214,7 +214,7 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
                         className={'doctor_avatar'}
                     />
                     <div className={'doctor_name'}
-                         style={{color: dataState?.doctor_id === el?.id ? '#ffffff' : '#000000'}}>
+                         style={{color: dataState?.doctor_id === el?.id ? '#ffffff' : '#000000', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 280}}>
                         {el?.first} {el?.last}
                     </div>
                 </Space>
@@ -263,7 +263,7 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
 
 
     return (
-        <div>
+        <div >
             <div>
                 {show === true ? (
                     ''

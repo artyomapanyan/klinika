@@ -241,7 +241,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             time: e?.target?.value
         }))
 
-        if(data?.phone_country_code?.length > 3) {
+        if(data?.phone_country_code?.includes('966')) {
             setData(prevState => ({
                 ...prevState,
                 phone_country_code: prevState?.phone_country_code?.slice(prevState?.phone_country_code?.indexOf('(')+1, prevState?.phone_country_code?.indexOf(')'))
@@ -287,8 +287,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     }, [])
 
 
-
-
+    console.log(data)
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>

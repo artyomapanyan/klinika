@@ -255,9 +255,18 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
             ...prevState,
             time: e?.target?.value
         }))
+        if(data?.phone_country_code?.includes('966')) {
+            setData(prevState => ({
+                ...prevState,
+                phone_country_code: '966'
+            }))
+        }
+
     }
 
 
+
+    console.log(data)
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
@@ -321,7 +330,17 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                     item?.service === 'nursing' ? <FormInput label={t('Nursing tasks')}
                                                                              disableClear={true}
                                                                              name={'nursing_tasks'}
-                                                                             inputProps={{mode: 'multiple'}}
+                                                                             inputProps={{
+                                                                                 mode: 'multiple',
+                                                                                 onChange: (e) => {
+                                                                                     if(data?.phone_country_code?.includes('966')) {
+                                                                                         setData(prevState => ({
+                                                                                             ...prevState,
+                                                                                             phone_country_code: '966'
+                                                                                         }))
+                                                                                     }
+                                                                                 }
+                                                                             }}
                                                                              rules={[{required: true}]}
                                                                              resourceParams={{
                                                                                  clinic: clinicID
@@ -338,7 +357,16 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                    resourceParams={{
                                                        clinic: clinicID
                                                    }}
-
+                                                   inputProps={{
+                                                       onChange: (e) => {
+                                                           if(data?.phone_country_code?.includes('966')) {
+                                                               setData(prevState => ({
+                                                                   ...prevState,
+                                                                   phone_country_code: '966'
+                                                               }))
+                                                           }
+                                                       }
+                                                   }}
 
                                                    resource={'LabTest'}/>
 
@@ -350,7 +378,16 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                    resourceParams={{
                                                        clinic: clinicID
                                                    }}
-
+                                                   inputProps={{
+                                                       onChange: (e) => {
+                                                           if(data?.phone_country_code?.includes('966')) {
+                                                               setData(prevState => ({
+                                                                   ...prevState,
+                                                                   phone_country_code: '966'
+                                                               }))
+                                                           }
+                                                       }
+                                                   }}
                                                    resource={'LabPackage'}/>
                                     </div>
                                 }
@@ -365,7 +402,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.appointment?.patient?.phone_country_code}
+                                       initialValue={data?.appointment?.patient?.phone_country_code ? data?.appointment?.patient?.phone_country_code : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                        handleMapItems={handleMapItems}
                                        customSearchKey={'phone_code'}
                                        inputProps={{
@@ -382,7 +419,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                        rules={[{required: true}]}
                                        searchConfigs={{minLength: 4}}
                                        initialValue={null}
-                                       disabled={!data?.phone_country_code}
+                                       //disabled={!data?.phone_country_code}
 
 
                                        inputProps={{
@@ -401,7 +438,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                <Button type={'secondary'} style={{border: "none"}}  onClick={openDrawer}>{t('Create new')}</Button></div>
                                        }}
                                        resourceParams={{
-                                           phone_country_code: data?.phone_country_code,
+                                           phone_country_code: data?.phone_country_code ? data?.phone_country_code?.length > 3 ? data?.phone_country_code?.slice(data?.phone_country_code?.indexOf('(')+1, data?.phone_country_code?.indexOf(')')) : data?.phone_country_code : '966',
                                            clinic_id: clinicID
                                        }}
                                        initialData={[]}
