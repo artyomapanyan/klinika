@@ -9,7 +9,7 @@ import Preloader from "../../../../Preloader";
 
 const resource = "Clinic";
 
-function Nursing() {
+function Nursing({tab}) {
     let token = useSelector((state) => state.auth.token);
 
     const params = useParams();
@@ -28,7 +28,7 @@ function Nursing() {
             setLoading(false)
         })
 
-    }, []);
+    }, [tab]);
 
     const onFinish = (values,prevValues) => {
         setLoading(true)
