@@ -31,7 +31,8 @@ function NursingModal({isModalOpen,onCreate,nursingState, clinicId, loading,hand
                                    initialData={isModalOpen.nursing_task?[isModalOpen?.nursing_task]:[]}
                                    //resourceData={nursingState}
                                    resourceParams={{
-                                       doesnt_have_clinic: clinicId
+                                       doesnt_have_clinic: clinicId,
+                                       status: 2
                                    }}
                                    resource={'NursingTask'}/>
 
