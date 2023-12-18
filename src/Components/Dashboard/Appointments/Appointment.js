@@ -204,29 +204,32 @@ function Appointment({isPatient}) {
                 setTimesLoading(false)
             })
         }
-        if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(data?.service_type)) {
-            postResource('Clinic', 'ClinicsAvailableTimes', token, data?.clinic_id, {
-                date: data?.booked_at?.format('YYYY-MM-DD'),
-                service: data?.service_type,
-            }).then((res) => {
+        if(data?.booked_at) {
+            if(['nursing','laboratory_clinic_visit','laboratory_home_visit'].includes(data?.service_type)) {
+                postResource('Clinic', 'ClinicsAvailableTimes', token, data?.clinic_id, {
+                    date: data?.booked_at?.format('YYYY-MM-DD'),
+                    service: data?.service_type,
+                }).then((res) => {
+                    console.log(res, 'res')
+                    if(res) {
+                        setAvailableTimesState(res?.map((el) => {
+                            return {
+                                label: el?.length > 0 ? 'Break Time' : '',
+                                options: el?.map((el1) => {
+                                    return {
+                                        lebel: el1,
+                                        value: el1
+                                    }
+                                })
+                            }
+                        }))
+                    }
 
-                if(res) {
-                    setAvailableTimesState(res?.map((el) => {
-                        return {
-                            label: el?.length > 0 ? 'Break Time' : '',
-                            options: el?.map((el1) => {
-                                return {
-                                    lebel: el1,
-                                    value: el1
-                                }
-                            })
-                        }
-                    }))
-                }
 
-
-            })
+                })
+            }
         }
+
 
 
 
@@ -594,6 +597,14 @@ function Appointment({isPatient}) {
                                                                                    appointment_time: null,
 
                                                                                })
+                                                                               setData((prevState)=>({
+                                                                                   ...prevState,
+                                                                                   specialty_id:null,
+                                                                                   doctor_id: null,
+                                                                                   booked_at: null,
+                                                                                   appointment_time: null,
+
+                                                                               }))
 
                                                                            }
                                                                        }}
@@ -622,6 +633,13 @@ function Appointment({isPatient}) {
                                                                                appointment_time: null,
 
                                                                            })
+                                                                           setData((prevState)=>({
+                                                                               ...prevState,
+                                                                               doctor_id: null,
+                                                                               booked_at: null,
+                                                                               appointment_time: null,
+
+                                                                           }))
 
                                                                        }
                                                                    }}
