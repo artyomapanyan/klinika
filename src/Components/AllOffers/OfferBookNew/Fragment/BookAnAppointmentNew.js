@@ -262,8 +262,9 @@ function BookAnAppointment({data, setOpen, setTotalState}) {
     // ]
 
 
+
     return (
-        <div >
+        <div>
             <div>
                 {show === true ? (
                     ''

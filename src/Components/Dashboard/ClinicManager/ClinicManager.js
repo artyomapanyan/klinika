@@ -71,7 +71,7 @@ function ClinicManager() {
                 </div>
                 <div>
                     {
-                        loading ? <Preloader/> : Array.isArray(labNursState?.workload) ? <div></div> : role === 'receptionist' ? <NursLabCalendar /> : <div></div>
+                        loading ? <Preloader/> : Array.isArray(labNursState?.workload) ? <div></div> : <NursLabCalendar />
                     }
                 </div>
                 <div>

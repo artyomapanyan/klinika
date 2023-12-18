@@ -150,10 +150,9 @@ function OfferBookContent() {
 												onClose={onClose}
 												open={open}
 												height={600}
-												style={{borderRadius: '12px 12px 0 0'}}
-
-
-
+												style={{
+													borderRadius: '12px 12px 0 0',
+												}}
 											>
 												<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState}/>
 											</Drawer>
