@@ -25,8 +25,6 @@ function DateTimeSelect({setBookedAtState, formState, bookedAtState, date, setDa
     const [disabledDays, setDisabledDays] = useState([])
 
 
-
-
     const handleChangeMonth = (count) => {
         if(startDate.add(count, 'month') < dayjs()){
             setStartDate(dayjs())
