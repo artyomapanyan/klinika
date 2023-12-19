@@ -18,6 +18,7 @@ import "../../Dashboard/OwnerClinics/ClinicOwnerStyles/ClinicOwnerStyles.sass"
 import Laboratory from "./Fragments/Laboratory/Laboratory";
 import Nursing from "./Fragments/Nursing/Nursing";
 import Telehealth from "./Fragments/Telehealth/Telehealth";
+import LaboratoryHomeVisit from "./Fragments/LaboratoryHomeVisit/LaboratoryHomeVisit";
 
 
 const resource = "Clinic"
@@ -91,9 +92,12 @@ function Clinic() {
 
 
 
-                {dataState.data.has_laboratory_clinic_visit_service && dataState.data.enable_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory'} tab={'Laboratory'} disabled={!params.id}>
+                {dataState.data.has_laboratory_clinic_visit_service && dataState.data.enable_laboratory_clinic_visit_service && params.id ?   <items key={'laboratory_clinic_visit'} tab={'Laboratory clinic visit'} disabled={!params.id}>
                         <Laboratory tab={tab}/>
                     </items> : null}
+                {dataState.data.has_laboratory_home_visit_service && dataState.data.enable_laboratory_home_visit_service && params.id ?   <items key={'laboratory_home_visit'} tab={'Laboratory home visit'} disabled={!params.id}>
+                    <LaboratoryHomeVisit tab={tab}/>
+                </items> : null}
                 {dataState.data.has_nursing_service && dataState.data.enable_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing tab={tab}/>
                     </items> : null}
