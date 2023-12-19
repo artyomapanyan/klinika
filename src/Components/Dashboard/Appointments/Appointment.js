@@ -727,7 +727,8 @@ function Appointment({isPatient}) {
                                                                            inputProps={{mode: 'multiple'}}
                                                                            rules={[{required: true}]}
                                                                            resourceParams={{
-                                                                               clinic: data.clinic_id
+                                                                               clinic: data.clinic_id,
+                                                                               status: 2
                                                                            }}
                                                                            inputType={'resourceSelect'}
                                                                            resource={'NursingTask'}/>
