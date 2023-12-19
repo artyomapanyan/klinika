@@ -512,6 +512,10 @@ let api = {
         resource: 'RiskFactors',
     },
     {
+        url: 'allergies',
+        resource: 'Allergies',
+    },
+    {
         url: 'patients/search',
         resource: 'PatientSearch',
     },
