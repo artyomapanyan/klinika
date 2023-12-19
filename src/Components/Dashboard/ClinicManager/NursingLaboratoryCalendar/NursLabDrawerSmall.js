@@ -24,7 +24,7 @@ function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCrea
 
 
     return (
-        <div className={language === 'ar' ? 'KM_drawer' : ''}>
+        <div className={language === 'ar' ? 'KM_drawer' : ''} style={{height:'100vh'}}>
             <div style={{padding: 1, marginTop: 1}}>
                 <Space>
                     {/*<Avatar size={50} icon={<UserOutlined/>}/>*/}

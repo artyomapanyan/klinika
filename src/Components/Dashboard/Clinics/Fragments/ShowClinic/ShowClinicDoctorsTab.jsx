@@ -44,7 +44,7 @@ const ShowClinicDoctorsTab = ({dataState}) => {
     }, [])
 
 
-    console.log(data)
+
 
 
     const columns = [

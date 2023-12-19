@@ -28,7 +28,7 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
 
 
     return(
-        <div className={language === 'ar' ? 'KM_drawer' : ''}>
+        <div className={language === 'ar' ? 'KM_drawer' : ''} style={{height:'100vh'}}>
             <Form
                 name="edit"
                 onFinish={onFinish}

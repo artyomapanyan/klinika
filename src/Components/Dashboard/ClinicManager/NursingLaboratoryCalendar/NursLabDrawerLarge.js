@@ -28,7 +28,7 @@ function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCrea
 
 
     return(
-        <div className={language === 'ar' ? 'KM_drawer' : ''}>
+        <div className={language === 'ar' ? 'KM_drawer' : ''} style={{height:'100vh'}}>
             <Form
                 name="edit"
                 onFinish={onFinish}
