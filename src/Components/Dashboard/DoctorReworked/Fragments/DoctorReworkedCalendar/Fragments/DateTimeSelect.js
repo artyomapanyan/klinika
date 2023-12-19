@@ -282,24 +282,6 @@ function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtStat
 
 
 
-
-    const handleChangeMonth = (count) => {
-        if(startDate.add(count, 'month') < dayjs()){
-            setStartDate(dayjs())
-        }else{
-            setStartDate((prevState) => prevState.add(count, 'month'))
-        }
-    }
-    // const handleChangeDay = (count) => {
-    //     if (startDate.add(count, 'day') < getStartDate) {
-    //         setStartDate(getStartDate)
-    //     } else {
-    //         setStartDate((prevState) => prevState.add(count, 'day'))
-    //     }
-    //
-    //
-    // }
-
     const handleChangeDay = (count, unit) => {
         if (startDate.add(count, unit) < getStartDate) {
             setStartDate(getStartDate)
@@ -365,15 +347,12 @@ function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtStat
 
                     //startDate = dayjs(response?.date)
 
-
-
-                    setGetStartDate(dayjs(responset?.date).add(1,'day'))
+                    setGetStartDate(dayjs(responset?.date))
                     setFormState(prevState => ({
                         ...prevState,
                         date: dayjs(responset?.date)?.format('YYYY-MM-DD')
                     }))
                     setDate1(dayjs(responset?.date))
-
 
                        return postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, authRedux?.user?.id + "/" + formState?.clinic_id, {
                             service: formState?.service_type,
@@ -388,14 +367,8 @@ function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtStat
                            setDateLoading(false)
                            return dayjs(responset.date)
                         })
-
-
                 })
             }
-
-
-
-
     }
 
 
@@ -722,7 +695,7 @@ function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtStat
                     <div className={'big_date_div'}>
                         { [...Array(6).keys()].map((key) => {
                             let e = daysData.find(u => u.key === startDate.add(key, 'day').format('YYYY-MM-DD'))
-                            console.log(e)
+
                             return  <Button key={key}
                                      disabled={dayOff?.includes(startDate.add(key, 'day').format('dddd').toLowerCase()) || e?.disabled || !e}
                                      // disabled={disabledDays?.includes(startDate.add(key, 'day').format('dddd').toLowerCase())}
