@@ -516,6 +516,10 @@ let api = {
         resource: 'Allergies',
     },
     {
+        url: 'chronic-diseases',
+        resource: 'ChronicDiseases',
+    },
+    {
         url: 'patients/search',
         resource: 'PatientSearch',
     },

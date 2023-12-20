@@ -15,6 +15,7 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
     const [riskFactorsPerPage, setRiskFactorsPerPage] = useState(3);
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [loading, setLoading] = useState(false)
+    const [itemsLength, setItemsLength] = useState([])
 
     const showModal = (data) => {
         setIsModalOpen(true);
@@ -36,12 +37,21 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
             setLoading(false)
 
         })
+        postResource('Allergies','single', token,  '', {
+                patient: patientId,
+
+            }
+        ).then((response) => {
+            setItemsLength(response?.items)
+            setLoading(false)
+
+        })
     }, [addDeleteState, riskFactorsPerPage])
 
 
     const deleteRickFactor = (e) => {
         setLoading(true)
-        deleteResource('RiskFactors', e.id, token).then(resp => {
+        deleteResource('Allergies', e.id, token).then(resp => {
             setAddDeleteState((prevState) => prevState-1)
             setLoading(false)
         })
@@ -56,7 +66,7 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
         <div className={'current_medications_card'}>
             {
                 loading ? <Preloader/> : <Card
-                    title={<div className={'cards_title'}>{t('Risk factors')}</div>}
+                    title={<div className={'cards_title'}>{t('Allergy')}</div>}
                     extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>{t('Add')}</span></Button>}
                     style={{padding:15}}
                 >
@@ -64,7 +74,7 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
                         className="demo-loadmore-list"
                         itemLayout="horizontal"
                         dataSource={riskFactors}
-                        style={{overflow: 'auto', height: riskFactors?.length >= 3 ? 220 : 250}}
+                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, paddingRight: itemsLength?.length > 3 ? 10 : 0}}
                         renderItem={(e) => (
                             <List.Item>
                                 <List.Item.Meta
@@ -83,7 +93,7 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
 
                     <div style={{display: 'flex'}}>
                         {
-                            riskFactors?.length >= riskFactorsPerPage ? (
+                            itemsLength?.length > riskFactorsPerPage ? (
                                 <div style={{paddingTop: 10}}>
                                     <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
                                 </div>
@@ -101,8 +111,8 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
                 </Card>
             }
 
-            <Modal className={'medications_modal'} width={475} title={t("Add new: Risk factors")} footer={false} open={isModalOpen} onCancel={handleCancel}>
-                <RiskFactorModal key={Math.random()}  setIsModalOpen={setIsModalOpen} dataClinic={dataClinic} setAddDeleteState={setAddDeleteState}/>
+            <Modal className={'medications_modal'} width={475} title={t("Add new: Allergy")} footer={false} open={isModalOpen} onCancel={handleCancel}>
+                <RiskFactorModal key={Math.random()}  setIsModalOpen={setIsModalOpen} dataClinic={dataClinic} setAddDeleteState={setAddDeleteState} resource={'Allergies'} inputTitle={t('Allergy')}/>
             </Modal>
         </div>
     )

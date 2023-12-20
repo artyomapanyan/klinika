@@ -16,6 +16,7 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
     const [riskFactorsPerPage, setRiskFactorsPerPage] = useState(3);
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [loading, setLoading] = useState(false)
+    const [itemsLength, setItemsLength] = useState([])
 
     const showModal = (data) => {
         setIsModalOpen(true);
@@ -34,6 +35,15 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
             }
         ).then((response) => {
             setRiskFactors(response?.items)
+            setLoading(false)
+
+        })
+        postResource('RiskFactors','single', token,  '', {
+                patient: patientId,
+
+            }
+        ).then((response) => {
+            setItemsLength(response?.items)
             setLoading(false)
 
         })
@@ -65,7 +75,7 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
                         className="demo-loadmore-list"
                         itemLayout="horizontal"
                         dataSource={riskFactors}
-                        style={{overflow: 'auto', height: riskFactors?.length >= 3 ? 220 : 250}}
+                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, paddingRight: itemsLength?.length > 3 ? 10 : 0}}
                         renderItem={(e) => (
                             <List.Item>
                                 <List.Item.Meta
@@ -84,7 +94,7 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
 
                     <div style={{display: 'flex'}}>
                         {
-                            riskFactors?.length >= riskFactorsPerPage ? (
+                            itemsLength?.length > riskFactorsPerPage ? (
                                 <div style={{paddingTop: 10}}>
                                     <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
                                 </div>
@@ -103,7 +113,7 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
             }
 
             <Modal className={'medications_modal'} width={475} title={t("Add new: Risk factors")} footer={false} open={isModalOpen} onCancel={handleCancel}>
-                <RiskFactorModal key={Math.random()}  setIsModalOpen={setIsModalOpen} dataClinic={dataClinic} setAddDeleteState={setAddDeleteState}/>
+                <RiskFactorModal key={Math.random()}  setIsModalOpen={setIsModalOpen} dataClinic={dataClinic} setAddDeleteState={setAddDeleteState} resource={'RiskFactors'} inputTitle={t('Risk factors')}/>
             </Modal>
         </div>
     )
