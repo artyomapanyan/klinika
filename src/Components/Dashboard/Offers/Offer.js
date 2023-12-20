@@ -32,8 +32,16 @@ function Offer() {
     const [changeValuesState, setChangeValuesState] = useState({})
 
 
-
+    // formRef?.current?.validateFields(['content_en']).then(e => {
+    //     console.log('dddddd')
+    // }).catch((c) => {
+    //
+    // })
     const onFinish = (values) => {
+
+
+
+
         setSaveLoading(true)
         values.expired_at = values?.expired_at?.format('YYYY-MM-DD')
         values.begins_at = values?.begins_at?.format('YYYY-MM-DD')
@@ -125,10 +133,13 @@ function Offer() {
      }
  }
 
-
+let enTitle = <span><span style={{color: 'red'}}>* </span>{('EN title')}</span>
+let arTitle = <span><span style={{color: 'red'}}>* </span>{('AR title')}</span>
+let enContent = <span><span style={{color: 'red'}}>* </span>{('EN content')}</span>
+let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</span>
     return(
         <div >
-            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing offer`)} - {language === 'ar' ? data?.translations?.title?.ar : data?.translations?.title?.en}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new offer`)}</h3>}
+            {data?.translations?.title?.en ? <h3 className={'create_apdate_btns'}>{t(`Editing offer`)} - {language === 'ar' ? data?.translations?.title?.ar ? data?.translations?.title?.ar : data?.translations?.title?.en  : data?.translations?.title?.en}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new offer`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -139,25 +150,70 @@ function Offer() {
             >
                 <div className={'add_edit_content'}>
                     <div style={{display: 'flex', gap: 20}}>
-                        <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>
-                            <FormInput label={t('Title en')} name={['title', 'en']} initialValue={data?.translations?.title?.en} rules={[{required: true}]}/>
+                        <div className={language === 'ar' ? 'input_ltr' : 'draft_ltr_div'} style={{width: '50%'}} dir='ltr'>
+                            <FormInput label={enTitle} name={['title', 'en']} initialValue={data?.translations?.title?.en} rules={[
+                                // {required: true},
+                                {
+                                    message: t('Please enter the EN title'),
+                                    validator:(rule,value)=>{
+                                        value=value.trim();
+                                        if(value.length==0){
+                                            return Promise.reject(t('Please enter the EN title'))
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
                         </div>
-                        <div style={{width: '50%'}} dir="rtl" >
-                            <FormInput  label={t('Title ar')} name={['title', 'ar']} initialValue={data?.translations?.title?.ar} rules={[{required: true}]}/>
+                        <div style={{width: '50%'}} className={'input_rtl'} >
+                            <FormInput  label={arTitle} name={['title', 'ar']} initialValue={data?.translations?.title?.ar} rules={[
+                                {
+                                    message: t('Please enter the AR title'),
+                                    validator:(rule,value)=>{
+                                        value=value.trim();
+                                        if(value.length==0){
+                                            return Promise.reject(t('Please enter the AR title'))
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
                         </div>
                     </div>
 
                     {/*<FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>*/}
 
                     <div style={{display: 'flex', gap: 20}}>
-                        <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>
-                            <Form.Item name={'content_en'} label={t('content en')} rules={[{required: true,},]} initialValue={data?.translations?.content?.en}>
-                                <DraftEditor initialValue={data?.translations?.content?.en} formRef={formRef} name={'content_en'} />
+                        <div className={language === 'ar' ? 'input_ltr' : 'draft_ltr_div'} style={{width: '50%'}} >
+                            <Form.Item name={'content_en'} label={enContent} rules={[
+                                {
+                                    message: t('Please enter the EN content'),
+                                    validator:(rule,value)=>{
+                                        console.log(value, '1')
+                                        value=value.trim();
+                                        if(value.length==0 || value == '<p></p>'){
+                                            console.log(value, '2')
+                                            return Promise.reject(t('Please enter the EN content'))
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }]} initialValue={data?.translations?.content?.en}>
+                                <DraftEditor initialValue={data?.translations?.content?.en} formRef={formRef} name={'content_en'} rtl={false}/>
                             </Form.Item>
                         </div>
-                        <div style={{width: '50%'}} dir="rtl" className={'rtl_editor'} >
-                            <Form.Item name={'content_ar'} label={t('content ar')} rules={[{required: true,},]} initialValue={data?.translations?.content?.ar}>
-                                <DraftEditor initialValue={data?.translations?.content?.ar} formRef={formRef} name={'content_ar'} dir={'rtl'} />
+
+                        <div style={{width: '50%'}} className={'rtl_editor'} >
+                            <Form.Item name={'content_ar'} label={arContent} rules={[{
+                                message: t('Please enter the AR content'),
+                                validator:(rule,value)=>{
+                                    value=value.trim();
+                                    if(value.length==0 || value == '<p></p>'){
+                                        return Promise.reject(t('Please enter the AR content'))
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }]} initialValue={data?.translations?.content?.ar}>
+                                <DraftEditor initialValue={data?.translations?.content?.ar} formRef={formRef} name={'content_ar'} rtl={true} />
                             </Form.Item>
                         </div>
                     </div>

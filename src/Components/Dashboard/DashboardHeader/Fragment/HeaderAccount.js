@@ -82,7 +82,7 @@ function HeaderAccount() {
 		// ])
 	}
 
-
+	console.log(user, 'user')
 
 	return (
 		<div>

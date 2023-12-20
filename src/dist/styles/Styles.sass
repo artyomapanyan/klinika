@@ -681,8 +681,23 @@ body
   line-height: 1
   content: "*"
 .input_ltr
+  direction: rtl
   input
+    text-align: left
     direction: ltr
+  .rdw-dropdown-carettoopen
+    right: 73%
+  .rdw-dropdown-carettoclose
+    right: 73%
+
+.draft_ltr_div
+  direction: ltr
+  input
+    text-align: left
+    direction: ltr
+.input_rtl
+  input
+    text-align: right
 
 .rtl_editor
   .public-DraftStyleDefault-ltr
@@ -695,6 +710,9 @@ body
 
 .editor_class_name
   padding: 5px
+.editor_wrap_class_name
+  direction: rtl
+  text-align: right
 
 
 .flying-label-textarea
