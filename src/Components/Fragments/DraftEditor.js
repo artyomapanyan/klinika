@@ -35,7 +35,7 @@ class DraftEditor extends Component {
             <Editor
                 editorState={editorState}
                 wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
+                editorClassName="demo-editor editor_class_name"
                 onEditorStateChange={this.onEditorStateChange}
             />
         )
