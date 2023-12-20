@@ -67,7 +67,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
 
     return(
-        <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''}>
+        <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''} style={{height: '100vh'}}>
             <Form
                 onFinish={onNewAppointment}
                 ref={formRef}
