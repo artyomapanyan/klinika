@@ -11,6 +11,7 @@ function Doctors() {
     return(
         <div>
             <ResourceTable resource={resource}
+                           tableSmall={true}
                            except={{
                                delete: PermCheck(`Doctor:delete`) ? false : true,
                                edit: PermCheck(`Doctor:update`) ? false : true
@@ -22,12 +23,14 @@ function Doctors() {
                     dataIndex:'id',
                     key:'id',
                     sorter:true,
+                    className: 'table_clinics_column',
                 },
                 {
                     title:t('First Name'),
                     dataIndex:'first',
                     key:'first',
                     sorter:true,
+                    className: 'table_clinics_column',
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
                 },
@@ -35,6 +38,7 @@ function Doctors() {
                     title:t('Last Name'),
                     dataIndex:'last',
                     key:'last',
+                    className: 'table_clinics_column',
                     sorter:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
@@ -43,11 +47,13 @@ function Doctors() {
                     dataIndex:'email',
                     key:'email',
                     translatable:true,
+                    className: 'table_clinics_column',
                 },
                 {
                     title:t('Phone number'),
                     dataIndex:'phone_number',
                     key:'phone_number',
+                    className: 'table_clinics_column',
                     translatable:true,
                 },
                 {
@@ -55,6 +61,7 @@ function Doctors() {
                     dataIndex:'plid',
                     key:'plid',
                     translatable:true,
+                    className: 'table_clinics_column',
                 },
                 {
                     title:t('Clinic'),
@@ -74,6 +81,7 @@ function Doctors() {
                     dataIndex:['status'],
                     title:t('Status'),
                     key:'category',
+                    className: 'table_clinics_column',
                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
                     render:(e,record)=>{
                         return<ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>}
@@ -82,6 +90,7 @@ function Doctors() {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
                     key:'date',
+                    className: 'table_clinics_column',
                     render:i=><DateParser date={i}/>
                 },
             ]} title={t('Doctors')}/>

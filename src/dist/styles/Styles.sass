@@ -167,7 +167,11 @@ body
   margin-top: -2px
 
 .table_clinics_column
-  max-width: 400px
+  max-width: 300px
+  @media screen and (max-width: 1300px)
+    font-size: 12px
+  @media screen and (max-width: 1190px)
+    font-size: 10px
 
 .ant-input-rtl
   padding-right: 20px !important
@@ -537,7 +541,7 @@ body
 .Clinic_tab_conteiner
   display: flex
   flex-direction: row
-  padding-left: 52px
+  padding-left: 30px
 
 
 
@@ -547,7 +551,7 @@ body
     display: flex
     flex-direction: column
     align-items: center
-    padding-left: 40px
+    //padding-left: 40px
 
 
 
@@ -1831,44 +1835,7 @@ body
   align-items: flex-start
   padding: 30px
 
-.Clinic_tab_conteiner
-  display: flex
-  flex-direction: row
-  padding-left: 52px
 
-
-
-  .tab_item_container
-    cursor: pointer
-    //padding-right: 25px
-    display: flex
-    flex-direction: column
-    align-items: center
-    padding-left: 40px
-
-
-
-    &.tab_active
-      .clinic_tab_below
-        background-color: #ce4e99
-
-      .clinic_tab_item
-        color: #ce4e99
-        border-color: #ce4e99
-
-    .clinic_tab_item
-      border: 2px solid #FFFFFF
-      border-radius: 8px 8px 0 0
-      border-top: none
-      border-right: none
-      border-left: none
-
-      font-family: Inter
-      font-weight: 400
-      padding: 7px
-      font-size: 18px
-      line-height: 22px
-      transition: all .3s
 
 .right-label
   .ant-form-item-label
@@ -3060,44 +3027,7 @@ body
   align-items: flex-start
   padding: 30px
 
-.Clinic_tab_conteiner
-  display: flex
-  flex-direction: row
-  padding-left: 52px
 
-
-
-  .tab_item_container
-    cursor: pointer
-    padding-right: 25px
-    display: flex
-    flex-direction: column
-    align-items: center
-    padding-left: 40px
-
-
-
-    &.tab_active
-      .clinic_tab_below
-        background-color: #ce4e99
-
-      .clinic_tab_item
-        color: #ce4e99
-        border-color: #ce4e99
-
-    .clinic_tab_item
-      border: 2px solid #FFFFFF
-      border-radius: 8px 8px 0 0
-      border-top: none
-      border-right: none
-      border-left: none
-
-      font-family: Inter
-      font-weight: 400
-      padding: 7px
-      font-size: 18px
-      line-height: 22px
-      transition: all .3s
 
 .right-label
   .ant-form-item-label

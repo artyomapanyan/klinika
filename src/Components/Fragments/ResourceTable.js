@@ -56,6 +56,7 @@ function ResourceTable ({
                             andStatus=false,
                             newDelete=false,
                             invoiceSwitches=false,
+    tableSmall=false,
     paginationResourceTable = true,
     editStyle=false,
     updateTable = 0
@@ -327,6 +328,7 @@ function ResourceTable ({
                         onChange={handleTableChange}
                         dataSource={data?.items}
                         rowKey={e => e.id}
+                        size={tableSmall ? 'small' : ''}
 
                     />}
                 </Form>
