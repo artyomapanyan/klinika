@@ -401,7 +401,7 @@ function AppPersonalDetails({
 
 													]}
 											/>
-											<div>
+											<div className={'personal_details_nationality_div'}>
 												<FormInput label={t('Nationality')} name={'country_id'}
 														   disabled={verifyResponse?.patient?.nationality?.id}
 														   inputType={'resourceSelect'}
