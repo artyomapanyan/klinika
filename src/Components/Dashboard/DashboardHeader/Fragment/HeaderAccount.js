@@ -84,11 +84,14 @@ function HeaderAccount() {
 	}
 
 	useEffect(() => {
-		setLoading(true)
-		postResource('DoctorUpdateProfile', 'GetDoctorProfile', token, '').then((response) => {
-			setNameLastName(response)
+		if(role === 'doctor') {
+			setLoading(true)
+			postResource('DoctorUpdateProfile', 'GetDoctorProfile', token, '').then((response) => {
+				setNameLastName(response)
 
-		})
+			})
+		}
+
 	}, [])
 
 	console.log(user, nameLastName,role, 'user')
