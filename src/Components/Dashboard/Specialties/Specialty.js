@@ -97,8 +97,10 @@ function Specialty() {
         }
     }
 
+    const res = 'Specialty';
 
-const res = 'Specialty';
+    let enTitle = <span><span style={{color: 'red'}}>* </span>{('EN title')}</span>
+    let arTitle = <span><span style={{color: 'red'}}>* </span>{('AR title')}</span>
     return (
         <div>
             {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Specialty`)} - {language === 'ar' ? data?.translations?.title?.ar ? data?.translations?.title?.ar : data?.translations?.title?.en : data?.translations?.title?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Specialty`)}</h3>}
@@ -113,11 +115,33 @@ const res = 'Specialty';
                 <div  className={"add_edit_content"}>
 
                     <div style={{display: 'flex', gap: 20}}>
-                        <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>
-                            <FormInput label={t('Title en')} name={['title', 'en']} initialValue={data?.translations?.title?.en} rules={[{required: true}]}/>
+                        <div className={language === 'ar' ? 'input_ltr' : 'draft_ltr_div'} style={{width: '50%'}} dir='ltr'>
+                            <FormInput label={enTitle} name={['title', 'en']} initialValue={data?.translations?.title?.en} rules={[
+                                {
+                                    message: t('Please enter the EN title'),
+                                    validator:(rule,value)=>{
+                                        value=value.trim();
+                                        if(value.length==0){
+                                            return Promise.reject(t('Please enter the EN title'))
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
                         </div>
-                        <div style={{width: '50%'}} dir="rtl" >
-                            <FormInput  label={t('Title ar')} name={['title', 'ar']} initialValue={data?.translations?.title?.ar} rules={[{required: true}]}/>
+                        <div style={{width: '50%'}} className={'input_rtl'} >
+                            <FormInput  label={arTitle} name={['title', 'ar']} initialValue={data?.translations?.title?.ar} rules={[
+                                {
+                                    message: t('Please enter the AR title'),
+                                    validator:(rule,value)=>{
+                                        value=value.trim();
+                                        if(value.length==0){
+                                            return Promise.reject(t('Please enter the AR title'))
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
                         </div>
                     </div>
 
