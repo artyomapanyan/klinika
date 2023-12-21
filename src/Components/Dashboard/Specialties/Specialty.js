@@ -150,10 +150,10 @@ function Specialty() {
 
                     <div style={{display: 'flex', gap: 28}}>
                         <div dir='ltr' style={{width: '50%', marginLeft: -6}}>
-                            <FormInput label={t('Description en')} name={['description', 'en']} inputType={'textArea'} initialValue={data?.translations?.description?.en}/>
+                            <FormInput label={t('EN Description')} name={['description', 'en']} inputType={'textArea'} initialValue={data?.translations?.description?.en}/>
                         </div>
                         <div dir='rtl' style={{width: '50%'}}>
-                            <FormInput rtl={true} label={t('Description ar')} name={['description', 'ar']} inputType={'textArea'} initialValue={data?.translations?.description?.ar}/>
+                            <FormInput rtl={true} label={t('AR Description')} name={['description', 'ar']} inputType={'textArea'} initialValue={data?.translations?.description?.ar}/>
                         </div>
                     </div>
 

@@ -123,10 +123,10 @@ function Doctor() {
         }
     }
 
-    let enFirst = <span><span style={{color: 'red'}}>* </span>{('EN First')}</span>
-    let enLast = <span><span style={{color: 'red'}}>* </span>{('EN Last')}</span>
-    let arFirst = <span><span style={{color: 'red'}}>* </span>{('AR First')}</span>
-    let arLast = <span><span style={{color: 'red'}}>* </span>{('AR Last')}</span>
+    let enFirst = <span><span style={{color: 'red'}}>* </span>{('EN First Name')}</span>
+    let enLast = <span><span style={{color: 'red'}}>* </span>{('EN Last Name')}</span>
+    let arFirst = <span><span style={{color: 'red'}}>* </span>{('AR First Name')}</span>
+    let arLast = <span><span style={{color: 'red'}}>* </span>{('AR Last Name')}</span>
 
     return(
         <div>
@@ -146,11 +146,11 @@ function Doctor() {
                         <div className={language === 'ar' ? 'input_ltr' : 'draft_ltr_div'} style={{width: '50%'}} dir='ltr'>
                             <FormInput label={enFirst} name={['first', 'en']} initialValue={data?.translations?.first?.en} rules={[
                                 {
-                                    message: t('Please enter the EN First'),
+                                    message: t('Please enter the EN First Name'),
                                     validator:(rule,value)=>{
                                         value=value.trim();
                                         if(value.length==0){
-                                            return Promise.reject(t('Please enter the EN First'))
+                                            return Promise.reject(t('Please enter the EN First Name'))
                                         }
                                         return Promise.resolve();
                                     }
@@ -161,11 +161,11 @@ function Doctor() {
                         <div style={{width: '50%'}} className={'input_rtl'} >
                             <FormInput label={arFirst} name={['first', 'ar']} initialValue={data?.translations?.first?.ar} rules={[
                                 {
-                                    message: t('Please enter the AR First'),
+                                    message: t('Please enter the AR First Name'),
                                     validator:(rule,value)=>{
                                         value=value.trim();
                                         if(value.length==0){
-                                            return Promise.reject(t('Please enter the AR First'))
+                                            return Promise.reject(t('Please enter the AR First Name'))
                                         }
                                         return Promise.resolve();
                                     }
@@ -178,11 +178,11 @@ function Doctor() {
                         <div className={language === 'ar' ? 'input_ltr' : 'draft_ltr_div'} style={{width: '50%'}} dir='ltr'>
                             <FormInput label={enLast} name={['last', 'en']} initialValue={data?.translations?.last?.en} rules={[
                                 {
-                                    message: t('Please enter the EN Last'),
+                                    message: t('Please enter the EN Last Name'),
                                     validator:(rule,value)=>{
                                         value=value.trim();
                                         if(value.length==0){
-                                            return Promise.reject(t('Please enter the EN Last'))
+                                            return Promise.reject(t('Please enter the EN Last Name'))
                                         }
                                         return Promise.resolve();
                                     }
@@ -193,11 +193,11 @@ function Doctor() {
                         <div style={{width: '50%'}} className={'input_rtl'} >
                             <FormInput label={arLast} name={['last', 'ar']} initialValue={data?.translations?.last?.ar} rules={[
                                 {
-                                    message: t('Please enter the AR Last'),
+                                    message: t('Please enter the AR Last Name'),
                                     validator:(rule,value)=>{
                                         value=value.trim();
                                         if(value.length==0){
-                                            return Promise.reject(t('Please enter the AR Last'))
+                                            return Promise.reject(t('Please enter the AR Last Name'))
                                         }
                                         return Promise.resolve();
                                     }
