@@ -18,6 +18,7 @@ import CancelComponent from "../../Fragments/CancelComponent";
 const resource = 'Taxonomy';
 
 function Specialty() {
+    let language = useSelector((state) => state.app.current_locale)
     let dispatch = useDispatch();
     const params = useParams();
     const navigate = useNavigate();
@@ -100,7 +101,7 @@ function Specialty() {
 const res = 'Specialty';
     return (
         <div>
-            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Specialty`)} - {data?.title}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Specialty`)}</h3>}
+            {data?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing Specialty`)} - {language === 'ar' ? data?.translations?.title?.ar ? data?.translations?.title?.ar : data?.translations?.title?.en : data?.translations?.title?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Specialty`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -123,8 +124,8 @@ const res = 'Specialty';
                     {/*<FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>*/}
 
 
-                    <div style={{display: 'flex', gap: 20}}>
-                        <div dir='ltr' style={{width: '50%'}}>
+                    <div style={{display: 'flex', gap: 28}}>
+                        <div dir='ltr' style={{width: '50%', marginLeft: -6}}>
                             <FormInput label={t('Description en')} name={['description', 'en']} inputType={'textArea'} initialValue={data?.translations?.description?.en}/>
                         </div>
                         <div dir='rtl' style={{width: '50%'}}>

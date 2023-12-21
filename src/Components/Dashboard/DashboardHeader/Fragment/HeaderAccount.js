@@ -34,6 +34,7 @@ function HeaderAccount() {
 	const [authOpen, setAuthOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [notifications, setNotifications] = useState([])
+	const [nameLastName, setNameLastName] = useState({})
 
 	useEffect(() => {
 		if(role == 'doctor') {
@@ -82,7 +83,15 @@ function HeaderAccount() {
 		// ])
 	}
 
-	console.log(user, 'user')
+	useEffect(() => {
+		setLoading(true)
+		postResource('DoctorUpdateProfile', 'GetDoctorProfile', token, '').then((response) => {
+			setNameLastName(response)
+
+		})
+	}, [])
+
+	console.log(user, nameLastName,role, 'user')
 
 	return (
 		<div>
@@ -249,13 +258,13 @@ function HeaderAccount() {
 					>
 						<Button type={'link'} className={'head_user_db'}>
 							<div className={'avatar_big_div'}>
-								<Avatar size={'large'} className='header_avatar'>
+								<Avatar size={'large'} className='header_avatar' src={nameLastName?.avatar?.url ? <img src={nameLastName?.avatar?.url} /> : ''}>
 									{user?.first.slice(0, 1)}
 									{user?.last.slice(0, 1)}
 								</Avatar>
 								<div style={{ margin: '0 8px' }}>
-									<div className={'first_name'}>{user?.first}</div>
-									<div className={'last_name'}>{user?.last}</div>
+									<div className={'first_name'}>{role === 'doctor' ? nameLastName?.first : user?.first}</div>
+									<div className={'last_name'}>{role === 'doctor' ? nameLastName?.last : user?.last}</div>
 								</div>
 								<div style={{ marginLeft: language === 'en' ? 15 : 0, display: 'flex' }}>
 									<img alt={'icons'} src={arrowDownPurple} />

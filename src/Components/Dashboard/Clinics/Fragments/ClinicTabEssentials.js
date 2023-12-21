@@ -530,7 +530,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
     return(
         <div >
-            {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic`)} - {language === 'en' ? data?.translations?.name?.en : data?.translations?.name?.ar}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
+            {data?.translations?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic`)} - {language === 'en' ? data?.translations?.name?.en : data?.translations?.name?.ar}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
             {loading ? <Preloader/> : <Form
                 onValuesChange={handleValuesChange}
                 onFinish={onFinish}

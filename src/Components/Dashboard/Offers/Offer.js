@@ -139,7 +139,7 @@ let enContent = <span><span style={{color: 'red'}}>* </span>{('EN content')}</sp
 let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</span>
     return(
         <div >
-            {data?.translations?.title?.en ? <h3 className={'create_apdate_btns'}>{t(`Editing offer`)} - {language === 'ar' ? data?.translations?.title?.ar ? data?.translations?.title?.ar : data?.translations?.title?.en  : data?.translations?.title?.en}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new offer`)}</h3>}
+            {data?.translations?.title ? <h3 className={'create_apdate_btns'}>{t(`Editing offer`)} - {language === 'ar' ? data?.translations?.title?.ar ? data?.translations?.title?.ar : data?.translations?.title?.en  : data?.translations?.title?.en}</h3 > : <h3 className={'create_apdate_btns'}>{t(`Add new offer`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}

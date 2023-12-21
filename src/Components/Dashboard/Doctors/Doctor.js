@@ -123,10 +123,10 @@ function Doctor() {
         }
     }
 
-
+    console.log(data)
     return(
         <div>
-            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - {data?.first} {data?.last}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
+            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - {language === 'ar' ? data?.translations?.first?.ar +' ' + data?.translations?.last?.ar : data?.translations?.first?.en + ' ' + data?.translations?.last?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -158,8 +158,8 @@ function Doctor() {
                         </div>
                     </div>
 
-                    <div style={{display: 'flex', gap: 20}}>
-                        <div dir='ltr' style={{width: '50%'}}>
+                    <div style={{display: 'flex', gap: 28}}>
+                        <div dir='ltr' style={{width: '50%', marginLeft: -8}}>
                             <FormInput label={t('Bio en')} name={['bio', 'en']} inputType={'textArea'} initialValue={data?.translations?.bio?.en}/>
                         </div>
                         <div dir='rtl' style={{width: '50%'}}>
