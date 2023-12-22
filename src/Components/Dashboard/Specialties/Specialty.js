@@ -165,8 +165,8 @@ function Specialty() {
                                initialData={Resources.Status}
                     />
 
-                    <FileManager text1={'Click or drag file to this area to upload'}
-                                 text2={'Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files'}
+                    <FileManager text1={t('Click or drag file to this area to upload')}
+                                 text2={t('Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files')}
                                  name={'cover'}
                                  uploadIcon={<InboxOutlined/>}
                                  initialFileList={[data.cover]} limit={1} formRef={formRef} type={'drag'}/>

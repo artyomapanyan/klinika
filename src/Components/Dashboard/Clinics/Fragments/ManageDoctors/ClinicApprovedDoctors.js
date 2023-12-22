@@ -31,8 +31,9 @@ function ClinicApprovedDoctors({dataService}) {
 
 
     return(
-        <div>
-            <h1 className={'h1'}>{t(`Manage Approved Doctors`)}</h1>
+        <div className={'manage_doctors_table_div'} style={{overflow: 'auto'}}
+        >
+            <h1 className={'h1'} style={{marginBottom: -120}}>{t(`Manage Approved Doctors`)}</h1>
            <ResourceTable
                tableSmall={true}
                customHeader={({setParams})=><Form onValuesChange={(e,v)=>setParams(v)}>
