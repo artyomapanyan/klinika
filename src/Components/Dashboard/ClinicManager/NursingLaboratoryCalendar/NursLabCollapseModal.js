@@ -398,7 +398,16 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                        inputType={'resourceSelect'}
                                        initialValue={null}
                                        initialData={[]}
+                                       resourceParams={{
+                                           clinic: clinicID,
+                                           status: 2,
+                                           approved: 1,
+                                           //doctor: docItem?.doctor.id,
+                                           for_date: selectedDate
+
+                                       }}
                                        resource={'Offer'}/>
+
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}
