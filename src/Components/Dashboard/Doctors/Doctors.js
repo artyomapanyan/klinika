@@ -9,7 +9,7 @@ import PermCheck from "../../Fragments/PermCheck";
 const resource = 'Doctor';
 function Doctors() {
     return(
-        <div style={{overflowX: 'auto'}}>
+        <div >
             <ResourceTable resource={resource}
                            tableSmall={true}
                            except={{
