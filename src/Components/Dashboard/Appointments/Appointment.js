@@ -257,6 +257,12 @@ function Appointment({isPatient}) {
             }
         }
         setSaveLoading(true)
+
+        if(values?.lab_packages) {
+            values.lab_packages = [values.lab_packages]
+
+        }
+
         // if (params.id) {
         //     updateResource(resource, params.id, values, token).then(response => {
         //         if (response?.id) {
@@ -702,8 +708,16 @@ function Appointment({isPatient}) {
                                                         <Row>
                                                             <Col lg={12} className="gutter-row">
                                                                 <FormInput label={t('Lab Tests')}
-                                                                           name={'lab_test_id'}
-                                                                           rules={[{required: true}]}
+                                                                           inputProps={{
+                                                                               mode: 'multiple',
+                                                                           }}
+                                                                           name={'lab_tests'}
+                                                                           rules={[
+                                                                               {
+                                                                                   required: !data?.lab_packages && !data?.lab_packages?.length,
+                                                                                   message: 'Please enter Lab test or Lab package'
+                                                                               },
+                                                                           ]}
                                                                            inputType={'resourceSelect'}
                                                                            resourceParams={{
                                                                                clinic: data.clinic_id
@@ -712,8 +726,11 @@ function Appointment({isPatient}) {
                                                             </Col>
                                                             <Col lg={12} className="gutter-row">
                                                                 <FormInput label={t('Lab Packages')}
-                                                                           name={'lab_package_id'}
-                                                                           rules={[{required: true}]}
+                                                                           name={'lab_packages'}
+                                                                           rules={[{
+                                                                               required: !data?.lab_tests || !data?.lab_tests?.length,
+                                                                               message: 'Please enter Lab test or Lab package'
+                                                                           }]}
                                                                            inputType={'resourceSelect'}
                                                                            resourceParams={{
                                                                                clinic: data.clinic_id
