@@ -34,8 +34,8 @@ class DraftEditor extends Component {
         return (
             <Editor
                 editorState={editorState}
-                wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
+                wrapperClassName={this.props.rtl ? "demo-wrapper editor_wrap_class_name" : "demo-wrapper"}
+                editorClassName="demo-editor editor_class_name"
                 onEditorStateChange={this.onEditorStateChange}
             />
         )

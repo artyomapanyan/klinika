@@ -105,12 +105,17 @@ function DoctorProfile() {
 
         }
 
+        if(values?.bio == null) {
+            values.bio = ''
+        }
+
         updateResource(resource, '', values, token, true).then(response => {
             if(response?.id){
 
             }
         }).finally(() => {
             setSaveLoading(false)
+            window.location.reload()
         })
     }
 

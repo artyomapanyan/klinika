@@ -225,6 +225,7 @@ function Invoice() {
             formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
             formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
 
+            formRef?.current?.getFieldValue('sub_total')
 
         })
 
@@ -234,6 +235,7 @@ function Invoice() {
     formRef?.current?.getFieldValue('sub_total')
 
 
+    console.log(formRef?.current?.getFieldValue('sub_total'), 'data')
 
     return (
         <div className={"new_invoice_big_div"}>
@@ -402,7 +404,6 @@ function Invoice() {
                                         </div>
                                         {
                                             Object.keys(data?.items ?? {})?.map((key) => {
-
                                                 return <div key={key} style={{
                                                     display: 'flex',
                                                     gap: 15,
@@ -459,7 +460,7 @@ function Invoice() {
                                     <div className={'invoice_add_total_div'}>
                                         <div></div>
                                         <div className={'invoice_total_div'}>
-                                            <div style={{marginTop: 15, width: 70}}>{t('Total')} (${t('sar')})</div>
+                                            <div style={{marginTop: 15, width: 70}}>{t('Total')} ({t('sar')})</div>
                                             <div style={{width: '90%'}}>
                                                 <FormInput label={t('Sub Total')} name={'sub_total'}
                                                            inputType={'number'} initialValue={data?.items?.amount}/>

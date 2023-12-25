@@ -23,7 +23,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     const onNewAppointment = (values) => {
         setLoading(true)
         //values.doctor_id = role === 'doctor' ? authRedux?.user?.id : dataClinic.doctor.id
-        values.booked_at = bookedAtState+' '+values.booked_time;
+        values.booked_at = formState?.date+' '+values.booked_time;
         if(values?.patient_id){
             values.patient_id = values?.patient_id
         } else {
@@ -67,7 +67,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
 
     return(
-        <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''}>
+        <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''} style={{height: '100vh'}}>
             <Form
                 onFinish={onNewAppointment}
                 ref={formRef}
@@ -113,7 +113,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
-                    initialData={role === 'doctor' ? getServiceTypes(authRedux?.clinics?.find(e=>e.id===formState?.clinic_id)?.services) : getServiceTypes([dataClinic?.clinic]?.find(e=>e.id===formState?.clinic_id)?.services)}
+                           initialData={role === 'doctor' ? getServiceTypes(authRedux?.clinics?.find(e=>e.id===formState?.clinic_id)?.services) : getServiceTypes([dataClinic?.clinic]?.find(e=>e.id===formState?.clinic_id)?.services)}
                 />:null}
                 {
                     formState?.service_type === 'nursing' ? <FormInput label={t('Nursing tasks')}
@@ -158,7 +158,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                 }
 
 
-                <DateTimeSelect formState={formState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
+                <DateTimeSelect formState={formState} setFormState={setFormState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 
                 <div style={{paddingTop:20}}>
                     <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>{t('Add Entry')}</Button>

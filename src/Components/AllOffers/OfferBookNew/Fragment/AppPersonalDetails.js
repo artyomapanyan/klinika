@@ -67,6 +67,7 @@ function AppPersonalDetails({
 		if(values?.phone_country_code.includes('966')) {
 			values.phone_country_code = '966'
 		}
+
 		setPhoneLoading(true)
 		setSendAgain(values)
 		postResource('PublicOffer', 'PhoneVerify', token, '', values).then(
@@ -400,13 +401,16 @@ function AppPersonalDetails({
 
 													]}
 											/>
-											<FormInput label={t('Nationality')} name={'country_id'}
-													   disabled={verifyResponse?.patient?.nationality?.id}
-													   inputType={'resourceSelect'}
-													   rules={[{required: true}]}
-													   initialValue={verifyResponse?.patient?.nationality?.id}
-													   initialData={verifyResponse?.patient?.nationality ? [verifyResponse?.patient?.nationality] : []}
-													   resource={'PublicCountry'}/>
+											<div className={'personal_details_nationality_div'}>
+												<FormInput label={t('Nationality')} name={'country_id'}
+														   disabled={verifyResponse?.patient?.nationality?.id}
+														   inputType={'resourceSelect'}
+														   rules={[{required: true}]}
+														   initialValue={verifyResponse?.patient?.nationality?.id}
+														   initialData={verifyResponse?.patient?.nationality ? [verifyResponse?.patient?.nationality] : []}
+														   resource={'PublicCountry'}/>
+											</div>
+
 
 										</Form>
 

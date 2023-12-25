@@ -421,20 +421,20 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         }
 
 
-        // if(values?.description) {
-        //     values.description = JSON.stringify(values.description)
-        // }
-        //
-        // let nullDescription = {
-        //     en: '',
-        //     ar: ''
-        // }
-        //
-        // if(values?.description === '{}'){
-        //     values.description = JSON.stringify(nullDescription)
-        // }
-        //
-        // values.name = JSON.stringify(values?.name)
+        if(values?.description) {
+            values.description = JSON.stringify(values.description)
+        }
+
+        let nullDescription = {
+            en: '',
+            ar: ''
+        }
+
+        if(values?.description === '{}'){
+            values.description = JSON.stringify(nullDescription)
+        }
+
+        values.name = JSON.stringify(values?.name)
 
 
         if(values?.phone_country_code) {
@@ -526,11 +526,12 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         return [name, item, searchData]
     }
 
-//language === 'ar' ? data?.translations?.name?.ar : data?.translations?.name?.en
+    let enTitle = <span><span style={{color: 'red'}}>* </span>{('EN Clinic Name')}</span>
+    let arTitle = <span><span style={{color: 'red'}}>* </span>{('AR Clinic Name')}</span>
 
     return(
         <div >
-            {data?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic`)} - {data?.name}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
+            {data?.translations?.name ? <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Editing clinic`)} - {language === 'en' ? data?.translations?.name?.en : data?.translations?.name?.ar}</h3> : <h3 style={{marginTop:20}} className={'create_apdate_btns'}>{t(`Add new Clinic`)}</h3>}
             {loading ? <Preloader/> : <Form
                 onValuesChange={handleValuesChange}
                 onFinish={onFinish}
@@ -538,28 +539,50 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                 ref={formRef}
             >
                 <div className={'add_edit_content'}>
-                    <FormInput label={t('Clinic Name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
+                    {/*<FormInput label={t('Clinic Name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />*/}
 
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div className={'input_ltr'} style={{width: '50%'}} dir='ltr'>*/}
-                    {/*        <FormInput label={t('Clinic Name en')} name={['name', 'en']} initialValue={data?.translations?.name?.en} rules={[{required: true}]}/>*/}
+                    <div style={{display: 'flex', gap: 20}}>
+                        <div className={language === 'ar' ? 'input_ltr' : 'draft_ltr_div'} style={{width: '50%'}} dir='ltr'>
+                            <FormInput label={enTitle} name={['name', 'en']} initialValue={data?.translations?.name?.en} rules={[
+                                {
+                                    message: t('Please enter the EN Clinic Name'),
+                                    validator:(rule,value)=>{
+                                        value=value.trim();
+                                        if(value.length==0){
+                                            return Promise.reject(t('Please enter the EN Clinic Name'))
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
 
-                    {/*    </div>*/}
-                    {/*    <div style={{width: '50%'}} dir="rtl" >*/}
-                    {/*        <FormInput  label={t('Clinic Name ar')} name={['name', 'ar']} initialValue={data?.translations?.name?.ar} rules={[{required: true}]}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                        </div>
+                        <div style={{width: '50%'}} className={'input_rtl'} >
+                            <FormInput  label={arTitle} name={['name', 'ar']} initialValue={data?.translations?.name?.ar} rules={[
+                                {
+                                    message: t('Please enter the AR Clinic Name'),
+                                    validator:(rule,value)=>{
+                                        value=value.trim();
+                                        if(value.length==0){
+                                            return Promise.reject(t('Please enter the AR Clinic Name'))
+                                        }
+                                        return Promise.resolve();
+                                    }
+                                }
+                            ]}/>
+                        </div>
+                    </div>
 
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div dir='ltr' style={{width: '50%'}}>*/}
-                    {/*        <FormInput label={t('Description en')} name={['description', 'en']} inputType={'textArea'} initialValue={data?.translations?.description?.en}/>*/}
-                    {/*    </div>*/}
-                    {/*    <div dir='rtl' style={{width: '50%'}}>*/}
-                    {/*        <FormInput rtl={true} label={t('Description ar')} name={['description', 'ar']} inputType={'textArea'} initialValue={data?.translations?.description?.ar}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div style={{display: 'flex', gap: language === 'ar' ? 10 : 30}}>
+                        <div dir='ltr' style={{width: '50%'}}>
+                            <FormInput label={t('EN Description')} name={['description', 'en']}  inputType={'textArea'} initialValue={data?.translations?.description?.en}/>
+                        </div>
+                        <div dir='rtl' style={{width: '50%'}}>
+                            <FormInput rtl={true} label={t('AR Description')} name={['description', 'ar']} inputType={'textArea'} initialValue={data?.translations?.description?.ar}/>
+                        </div>
+                    </div>
 
-                    <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
+                    {/*<FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>*/}
                 </div>
                 <div className={'add_edit_content'}>
                     <Row>

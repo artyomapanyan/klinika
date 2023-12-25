@@ -149,8 +149,13 @@ function OfferBookContent() {
 												closable={false}
 												onClose={onClose}
 												open={open}
-												height={600}
-												style={{borderRadius: '12px 12px 0 0'}}
+												height={'520'}
+												zIndex={1000}
+												style={{
+													borderRadius: '12px 12px 0 0',
+													//overflow: 'auto'
+												}}
+
 
 
 

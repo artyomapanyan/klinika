@@ -241,7 +241,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             time: e?.target?.value
         }))
 
-        if(data?.phone_country_code?.length > 3) {
+        if(data?.phone_country_code?.includes('966')) {
             setData(prevState => ({
                 ...prevState,
                 phone_country_code: prevState?.phone_country_code?.slice(prevState?.phone_country_code?.indexOf('(')+1, prevState?.phone_country_code?.indexOf(')'))
@@ -287,8 +287,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     }, [])
 
 
-
-
+    console.log(data)
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
@@ -321,7 +320,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                 <div></div>
                         }
                     </div>
-                    <div >
+                    <div>
                         <Space>
                             <Avatar size={56} src={doctor?.avatar?.url} icon={<UserOutlined/>}/>
                             <div style={{display: "block"}}>
@@ -330,22 +329,26 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                             </div>
                         </Space>
                     </div>
+
+                    {
+                        loadingAvailableServices ? <Preloader small={30}/> : <div style={{marginTop: 20}}>
+                            <FormInput label={t('Service Type')} name={'service_type'}
+                                       inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={null}
+                                       inputProps={{
+                                           onChange:(e)=> setServisTypeAndTime(prevState => ({
+                                               ...prevState,
+                                               service_type: e
+                                           }))
+                                       }}
+                                       initialData={availableServices}/>
+                        </div>
+                    }
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
 
-                                {
-                                    loadingAvailableServices ? <Preloader small={30}/> : <FormInput label={t('Service Type')} name={'service_type'}
-                                                                                             inputType={'resourceSelect'}
-                                                                                             rules={[{required: true}]}
-                                                                                             initialValue={null}
-                                                                                             inputProps={{
-                                                                                                 onChange:(e)=> setServisTypeAndTime(prevState => ({
-                                                                                                     ...prevState,
-                                                                                                     service_type: e
-                                                                                                 }))
-                                                                                             }}
-                                                                                             initialData={availableServices}/>
-                                }
+
 
 
 
@@ -360,6 +363,11 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
                             <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
+                            <FormInput label={t('Offers')} name={'offer_id'}
+                                       inputType={'resourceSelect'}
+                                       initialValue={null}
+                                       initialData={[]}
+                                       resource={'Offer'}/>
 
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}

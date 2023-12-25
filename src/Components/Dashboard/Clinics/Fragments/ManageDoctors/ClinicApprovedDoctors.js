@@ -31,9 +31,11 @@ function ClinicApprovedDoctors({dataService}) {
 
 
     return(
-        <div>
-            <h1 className={'h1'}>{t(`Manage Approved Doctors`)}</h1>
+        <div className={'manage_doctors_table_div'} style={{overflow: 'auto'}}
+        >
+            <h1 className={'h1'} style={{marginBottom: -120}}>{t(`Manage Approved Doctors`)}</h1>
            <ResourceTable
+               tableSmall={true}
                customHeader={({setParams})=><Form onValuesChange={(e,v)=>setParams(v)}>
 
 
@@ -66,7 +68,7 @@ function ClinicApprovedDoctors({dataService}) {
                             render:(e, record)=> {
                                 return <div  style={{padding:2}}>{dataService?.has_telehealth_service && dataService?.enable_telehealth_service ? <Button
                                     onClick={() => showModal(record.id, 'telehealth', ['telehealth_activated_at', 'telehealth_diagnosis_price'])}
-                                    type={'primary'} size={'large'}>{t('Manage Working hours')}</Button> : null}</div>
+                                    type={'primary'} size={'middle'}>{t('Manage Working hours')}</Button> : null}</div>
                             }
                         },
                         {
@@ -76,7 +78,7 @@ function ClinicApprovedDoctors({dataService}) {
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_clinic_visit_service && dataService?.enable_clinic_visit_service ? <Button
                                     onClick={() => showModal(record.id, 'clinic_visit', ['clinic_visit_activated_at', 'clinic_visit_diagnosis_price'])}
-                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
+                                    type={'primary'} size={'middle'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {
@@ -86,7 +88,7 @@ function ClinicApprovedDoctors({dataService}) {
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_home_visit_service && dataService?.enable_home_visit_service ? <Button
                                     onClick={() => showModal(record.id, 'home_visit', ['home_visit_activated_at', 'home_visit_diagnosis_price'])}
-                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
+                                    type={'primary'} size={'middle'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {
@@ -96,7 +98,7 @@ function ClinicApprovedDoctors({dataService}) {
                             render:(e, record)=> {
                                 return<div style={{padding:2}}>{dataService?.has_physical_therapy_home_visit_service && dataService?.enable_physical_therapy_home_visit_service ? <Button
                                     onClick={() => showModal(record.id, 'physical_therapy_home_visit', ['physical_therapy_home_visit_activated_at', 'physical_therapy_home_visit_diagnosis_price'])}
-                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
+                                    type={'primary'} size={'middle'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {
@@ -106,7 +108,7 @@ function ClinicApprovedDoctors({dataService}) {
                             render:(e, record)=> {
                                 return<div  style={{padding:2}}>{dataService?.has_physical_therapy_clinic_visit_service && dataService?.enable_physical_therapy_clinic_visit_service ? <Button
                                     onClick={() => showModal(record.id, 'physical_therapy_clinic_visit', ['physical_therapy_clinic_visit_activated_at', 'physical_therapy_clinic_visit_diagnosis_price'])}
-                                    type={'primary'} size={'large'}>Manage Working hours</Button> : <div></div>}</div>
+                                    type={'primary'} size={'middle'}>Manage Working hours</Button> : <div></div>}</div>
                             }
                         },
                         {

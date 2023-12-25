@@ -39,11 +39,12 @@ function Users() {
                     key:'phone_number',
 
                 },
-                // {
-                //     title:t('Clinics'),
-                //     dataIndex:'clinic_names',
-                //     key:'clinic_names',
-                // },
+                {
+                    title:t('Clinics'),
+                    dataIndex:'clinic_names',
+                    key:'clinic_names',
+                    className: 'table_clinics_column'
+                },
                 {
                     dataIndex:['updated_at','iso_string'],
                     title:t('Create date'),
