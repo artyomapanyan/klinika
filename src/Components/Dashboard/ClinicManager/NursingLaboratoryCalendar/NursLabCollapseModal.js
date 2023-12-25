@@ -44,6 +44,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     const [verifyPatient, setVerifyPatient] = useState({});
     const [servisTypeAndTime, setServisTypeAndTime] = useState({});
     const [loading403, setLoading403] = useState(false);
+    const [renderInput, setRenderInput] = useState(false);
 
 
 
@@ -84,7 +85,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_test_id', 'lab_package_id', 'nursing_tasks']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {
@@ -129,8 +130,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
         setFinishLoading(true)
 
 
-        // if(values?.lab_package_id) {
-        //     values.lab_package_id = [values?.lab_package_id]
+        // if(values?.lab_packages) {
+        //     values.lab_packages = [values?.lab_packages]
         // }
         console.log(values, 'val')
         postResource('Appointment', 'create', token, '', {
@@ -223,7 +224,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const onSendCode = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_test_id', 'lab_package_id', 'nursing_tasks']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks']).then(e => {
             setLoading(true)
             postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
 
@@ -271,7 +272,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
 
-    console.log(data, !data?.lab_package_id && !data?.lab_package_id?.length,  'data')
+    console.log(data, !data?.lab_packages && !data?.lab_packages?.length,  'data')
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
@@ -356,10 +357,10 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                     /> : <div>
                                         <FormInput label={t('Lab Tests')}
                                                    disableClear={true}
-                                                   name={'lab_test_id'}
+                                                   name={'lab_tests'}
                                                    rules={[
                                                        {
-                                                           required: !data?.lab_package_id || !data?.lab_package_id?.length,
+                                                           required: !data?.lab_packages || !data?.lab_packages?.length,
                                                            message: 'Please enter Lab test or Lab package'
                                                        },
                                                    ]}
@@ -376,6 +377,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                                    phone_country_code: '966'
                                                                }))
                                                            }
+
                                                        }
                                                    }}
 
@@ -383,9 +385,9 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
                                         <FormInput label={t('Lab Packages')}
                                                    disableClear={true}
-                                                   name={'lab_package_id'}
+                                                   name={'lab_packages'}
                                                    rules={[{
-                                                       required: !data?.lab_test_id || !data?.lab_test_id?.length,
+                                                       required: !data?.lab_tests || !data?.lab_tests?.length,
                                                        message: 'Please enter Lab test or Lab package'
                                                    }]}
                                                    inputType={'resourceSelect'}
@@ -401,6 +403,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                                    phone_country_code: '966'
                                                                }))
                                                            }
+                                                           setRenderInput(!renderInput)
                                                        }
                                                    }}
                                                    resource={'LabPackage'}/>
