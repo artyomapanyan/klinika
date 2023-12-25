@@ -81,7 +81,6 @@ function OffersFooter() {
                     {/*<div className={'gray_text'}>{t('Telehealth')}</div>*/}
                     {/*<div className={'gray_text'}>{t('Laboratory')}</div>*/}
                     {/*<div className={'gray_text'}>{t('Nursing')}</div>*/}
-
                     {/*</Space>*/}
                 </div>
 
