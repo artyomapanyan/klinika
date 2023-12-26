@@ -33,7 +33,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     let inputRef_4 = useRef();
     const [inputValues, setInputValues] = useState(['', '', '', '']);
     const [codeAndPhone, setCodeAndPhone] = useState({
-        phone_country_code: null,
+        phone_country_code: 966,
         phone_number: null
     });
     const [sendCodeState, setSendCodeState] = useState(false);
@@ -209,6 +209,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     const onSendCode = () => {
         setLoading(true)
+
         postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
 
             setLoading(false)
