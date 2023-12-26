@@ -44,6 +44,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     const [verifyPatient, setVerifyPatient] = useState({});
     const [servisTypeAndTime, setServisTypeAndTime] = useState({});
     const [loading403, setLoading403] = useState(false);
+    const [renderInput, setRenderInput] = useState(1);
 
 
 
@@ -84,7 +85,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_test_id', 'lab_package_id', 'nursing_tasks']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {
@@ -128,6 +129,21 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     const handleCreateAppointment = (values, additional) => {
         setFinishLoading(true)
 
+
+
+
+        if(values?.lab_packages) {
+            values.lab_packages = [values.lab_packages]
+
+        }
+
+        delete data?.lab_packages
+
+
+
+
+
+        console.log(values, 'val')
         postResource('Appointment', 'create', token, '', {
             ...values,
             ...(additional ?? {}),
@@ -136,7 +152,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
             service_type: item?.service,
             clinic_id: clinicID,
             //doctor_id: doctor.id,
-            booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm')
+            booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm'),
 
         }).then(e => {
             if(e.id){
@@ -218,7 +234,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const onSendCode = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_test_id', 'lab_package_id', 'nursing_tasks']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks']).then(e => {
             setLoading(true)
             postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
 
@@ -266,7 +282,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
 
-    console.log(data)
+    //console.log(data, !data?.lab_packages && !data?.lab_packages?.length,  'data')
+    console.log(formRef?.current?.getFieldsValue(), 'ref')
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
@@ -350,14 +367,20 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                                              resource={'NursingTask'}
                                     /> : <div>
                                         <FormInput label={t('Lab Tests')}
-                                                   disableClear={true}
-                                                   name={'lab_test_id'}
-                                                   rules={[{required: true}]}
+                                                   //disableClear={true}
+                                                   name={'lab_tests'}
+                                                   rules={[
+                                                       {
+                                                           required: !data?.lab_packages && !data?.lab_packages?.length,
+                                                           message: 'Please enter Lab test or Lab package'
+                                                       },
+                                                   ]}
                                                    inputType={'resourceSelect'}
                                                    resourceParams={{
                                                        clinic: clinicID
                                                    }}
                                                    inputProps={{
+                                                       mode: 'multiple',
                                                        onChange: (e) => {
                                                            if(data?.phone_country_code?.includes('966')) {
                                                                setData(prevState => ({
@@ -365,20 +388,31 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                                    phone_country_code: '966'
                                                                }))
                                                            }
+                                                           // formRef?.current?.setFieldsValue({
+                                                           //     lab_packages: data?.lab_packages,
+                                                           // })
+
+
+
+
                                                        }
                                                    }}
 
                                                    resource={'LabTest'}/>
 
                                         <FormInput label={t('Lab Packages')}
-                                                   disableClear={true}
-                                                   name={'lab_package_id'}
-                                                   rules={[{required: true}]}
+                                                   //disableClear={true}
+                                                   name={'lab_packages'}
+                                                   rules={[{
+                                                       required: !data?.lab_tests || !data?.lab_tests?.length,
+                                                       message: 'Please enter Lab test or Lab package'
+                                                   }]}
                                                    inputType={'resourceSelect'}
                                                    resourceParams={{
                                                        clinic: clinicID
                                                    }}
                                                    inputProps={{
+                                                       //mode: 'multiple',
                                                        onChange: (e) => {
                                                            if(data?.phone_country_code?.includes('966')) {
                                                                setData(prevState => ({
@@ -386,6 +420,10 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                                    phone_country_code: '966'
                                                                }))
                                                            }
+                                                           formRef?.current?.setFieldsValue({
+                                                               lab_tests: data?.lab_tests,
+                                                           })
+
                                                        }
                                                    }}
                                                    resource={'LabPackage'}/>
@@ -398,7 +436,16 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                        inputType={'resourceSelect'}
                                        initialValue={null}
                                        initialData={[]}
+                                       resourceParams={{
+                                           clinic: clinicID,
+                                           status: 2,
+                                           approved: 1,
+                                           //doctor: docItem?.doctor.id,
+                                           for_date: selectedDate
+
+                                       }}
                                        resource={'Offer'}/>
+
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
                                        rules={[{required: true}]}

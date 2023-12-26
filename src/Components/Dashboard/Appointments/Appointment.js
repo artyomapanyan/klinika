@@ -210,7 +210,7 @@ function Appointment({isPatient}) {
                     date: data?.booked_at?.format('YYYY-MM-DD'),
                     service: data?.service_type,
                 }).then((res) => {
-                    console.log(res, 'res')
+
                     if(res) {
                         setAvailableTimesState(res?.map((el) => {
                             return {
@@ -257,6 +257,12 @@ function Appointment({isPatient}) {
             }
         }
         setSaveLoading(true)
+
+        if(values?.lab_packages) {
+            values.lab_packages = [values.lab_packages]
+
+        }
+
         // if (params.id) {
         //     updateResource(resource, params.id, values, token).then(response => {
         //         if (response?.id) {
@@ -360,7 +366,7 @@ function Appointment({isPatient}) {
 
     }
 
-
+    //console.log((!data?.clinic_id && !data?.doctor_id && !data?.booked_at) && !(data?.service_type === "clinic_visit" || data?.service_type === "physical_therapy_clinic_visit" || data?.service_type === "laboratory_clinic_visit"), 'data')
 
     return (
         <div>
@@ -702,8 +708,16 @@ function Appointment({isPatient}) {
                                                         <Row>
                                                             <Col lg={12} className="gutter-row">
                                                                 <FormInput label={t('Lab Tests')}
-                                                                           name={'lab_test_id'}
-                                                                           rules={[{required: true}]}
+                                                                           inputProps={{
+                                                                               mode: 'multiple',
+                                                                           }}
+                                                                           name={'lab_tests'}
+                                                                           rules={[
+                                                                               {
+                                                                                   required: !data?.lab_packages && !data?.lab_packages?.length,
+                                                                                   message: 'Please enter Lab test or Lab package'
+                                                                               },
+                                                                           ]}
                                                                            inputType={'resourceSelect'}
                                                                            resourceParams={{
                                                                                clinic: data.clinic_id
@@ -712,11 +726,21 @@ function Appointment({isPatient}) {
                                                             </Col>
                                                             <Col lg={12} className="gutter-row">
                                                                 <FormInput label={t('Lab Packages')}
-                                                                           name={'lab_package_id'}
-                                                                           rules={[{required: true}]}
+                                                                           name={'lab_packages'}
+                                                                           rules={[{
+                                                                               required: !data?.lab_tests || !data?.lab_tests?.length,
+                                                                               message: 'Please enter Lab test or Lab package'
+                                                                           }]}
                                                                            inputType={'resourceSelect'}
                                                                            resourceParams={{
                                                                                clinic: data.clinic_id
+                                                                           }}
+                                                                           inputProps={{
+                                                                               onChange:(e) => {
+                                                                                   formRef?.current?.setFieldsValue({
+                                                                                       lab_tests: data?.lab_tests,
+                                                                                   })
+                                                                               }
                                                                            }}
                                                                            resource={'LabPackage'}/>
                                                             </Col>
@@ -727,7 +751,8 @@ function Appointment({isPatient}) {
                                                                            inputProps={{mode: 'multiple'}}
                                                                            rules={[{required: true}]}
                                                                            resourceParams={{
-                                                                               clinic: data.clinic_id
+                                                                               clinic: data.clinic_id,
+                                                                               status: 2
                                                                            }}
                                                                            inputType={'resourceSelect'}
                                                                            resource={'NursingTask'}/>
@@ -751,20 +776,35 @@ function Appointment({isPatient}) {
                                                                                         name={'appointment_time'}
                                                                                         inputType={'resourceSelect'}
                                                                                         options={availableTimeState}
+                                                                                        rules={[{required: true}]}
                                                                                         initialData={[]}
                                                     /></Spin> : <div></div>
                                                 }
                                             </Col>
                                         </Row>
-                                        <Row>
-                                            <Col lg={12} className="gutter-row">
-                                                <FormInput label={t('Offer (Optional)')} name={'offer_id'}
-                                                           inputType={'resourceSelect'}
-                                                           initialValue={null}
-                                                           initialData={[]}
-                                                           resource={'Offer'}/>
-                                            </Col>
-                                        </Row>
+                                        {
+                                            data?.service_type === "clinic_visit" || data?.service_type === "physical_therapy_clinic_visit" || data?.service_type === "laboratory_clinic_visit" ?
+
+                                                <Row>
+                                                    <Col lg={12} className="gutter-row">
+                                                        <FormInput label={t('Offer (Optional)')} name={'offer_id'}
+                                                                   disabled={!data?.clinic_id || !data?.doctor_id || !data?.booked_at}
+                                                                   inputType={'resourceSelect'}
+                                                                   initialValue={null}
+                                                                   initialData={[]}
+                                                                   resourceParams={{
+                                                                       clinic: data?.clinic_id,
+                                                                       status: 2,
+                                                                       approved: 1,
+                                                                       doctor: data?.doctor_id,
+                                                                       for_date: dayjs(data?.booked_at)?.format('YYYY-MM-DD')
+
+                                                                   }}
+                                                                   resource={'Offer'}/>
+                                                    </Col>
+                                                </Row> : <div></div>
+                                        }
+                                        {/*data?.service_type === "clinic_visit" || data?.service_type === "physical_therapy_clinic_visit" || data?.service_type === "laboratory_clinic_visit"*/}
                                         <div className="gutter-row">
                                             <FormInput label={t('Description')} name={'description'}
                                                        inputType={'textArea'} initialValue={data?.description}/>

@@ -34,7 +34,10 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
         } else {
             values.doctor_id = dataClinic.doctor.id
         }
+        if(values?.lab_packages) {
+            values.lab_packages = [values.lab_packages]
 
+        }
 
         createResource('Appointment', values, token).then((response) => {
             if (response?.id) {
@@ -65,7 +68,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
     }, [])
 
-
+    console.log(formState,bookedAtState, 'fff')
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''} style={{height:'100vh'}}>
             <Form
@@ -127,18 +130,38 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                 resource={'NursingTask'}/> : formState?.service_type === 'laboratory_home_visit' || formState?.service_type === 'laboratory_clinic_visit' ? <div>
 
                             <FormInput label={t('Lab Tests')}
-                                       name={'lab_test_id'}
-                                       rules={[{required: true}]}
+                                       name={'lab_tests'}
+                                       rules={[
+                                           {
+                                               required: !formState?.lab_packages && !formState?.lab_packages?.length,
+                                               message: 'Please enter Lab test or Lab package'
+                                           },
+                                       ]}
                                        inputType={'resourceSelect'}
                                        resourceParams={{
                                            clinic: formState.clinic_id
                                        }}
+                                       inputProps={{mode: 'multiple'}}
                                        resource={'LabTest'}/>
 
                             <FormInput label={t('Lab Packages')}
-                                       name={'lab_package_id'}
-                                       rules={[{required: true}]}
+                                       name={'lab_packages'}
+                                       rules={[
+                                           {
+                                               required: !formState?.lab_tests && !formState?.lab_tests?.length,
+                                               message: 'Please enter Lab test or Lab package'
+                                           },
+                                       ]}
                                        inputType={'resourceSelect'}
+                                       inputProps={{
+                                           //mode: 'multiple',
+                                           onChange: (e) => {
+                                               formRef?.current?.setFieldsValue({
+                                                   lab_tests: formState?.lab_tests,
+                                               })
+
+                                           }
+                                       }}
                                        resourceParams={{
                                            clinic: formState.clinic_id
                                        }}
