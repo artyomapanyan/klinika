@@ -233,7 +233,6 @@ function Appointment({isPatient}) {
 
 
 
-
     }, [data?.booked_at, data?.doctor_id])
 
 
