@@ -238,7 +238,6 @@ function Appointment({isPatient}) {
 
 
 
-
     const onFinish = (values) => {
         if(values.patient_id){
             delete values.patient;
