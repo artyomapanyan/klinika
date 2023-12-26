@@ -235,7 +235,7 @@ function Invoice() {
     formRef?.current?.getFieldValue('sub_total')
 
 
-    console.log(formRef?.current?.getFieldValue('sub_total'), 'data')
+
 
     return (
         <div className={"new_invoice_big_div"}>

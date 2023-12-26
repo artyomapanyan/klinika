@@ -117,7 +117,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
     }
 
-    // console.log(clinichoursData, 'fffff')
+
 
     return(
         <div className={'doctor_working_hours_conteiner'}>

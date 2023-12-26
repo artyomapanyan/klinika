@@ -32,7 +32,7 @@ function LaboratoryHomeVisit({tab}) {
     }, [tab]);
 
     const onFinish = (values,prevValues) => {
-        console.log(values, prevValues)
+
         setLoading(true)
         setData((prevState)=>({
             ...prevState,

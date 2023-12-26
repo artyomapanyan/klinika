@@ -130,7 +130,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
         setFinishLoading(true)
 
 
-        console.log(values, 'val1')
+
 
         if(values?.lab_packages) {
             values.lab_packages = [values.lab_packages]

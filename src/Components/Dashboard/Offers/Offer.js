@@ -189,10 +189,9 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                 {
                                     message: t('Please enter the EN content'),
                                     validator:(rule,value)=>{
-                                        console.log(value, '1')
+
                                         value=value.trim();
                                         if(value.length==0 || value == '<p></p>'){
-                                            console.log(value, '2')
                                             return Promise.reject(t('Please enter the EN content'))
                                         }
                                         return Promise.resolve();

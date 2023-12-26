@@ -94,7 +94,7 @@ function HeaderAccount() {
 
 	}, [])
 
-	console.log(user, nameLastName,role, 'user')
+
 
 	return (
 		<div>
