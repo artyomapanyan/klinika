@@ -136,14 +136,12 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
             values.lab_packages = [values.lab_packages]
 
         }
+        if(data?.lab_packages) {
+            data.lab_packages = [data.lab_packages]
 
-        delete data?.lab_packages
+        }
 
 
-
-
-
-        console.log(values, 'val')
         postResource('Appointment', 'create', token, '', {
             ...values,
             ...(additional ?? {}),
@@ -281,9 +279,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     }
 
 
-
-    //console.log(data, !data?.lab_packages && !data?.lab_packages?.length,  'data')
-    console.log(formRef?.current?.getFieldsValue(), 'ref')
+    //console.log(data, 'ref')
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>

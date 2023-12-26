@@ -210,7 +210,7 @@ function Appointment({isPatient}) {
                     date: data?.booked_at?.format('YYYY-MM-DD'),
                     service: data?.service_type,
                 }).then((res) => {
-                    console.log(res, 'res')
+
                     if(res) {
                         setAvailableTimesState(res?.map((el) => {
                             return {
