@@ -131,7 +131,6 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
 
-
         if(values?.lab_packages) {
             values.lab_packages = [values.lab_packages]
 
