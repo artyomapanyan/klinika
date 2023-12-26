@@ -388,7 +388,9 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                                    phone_country_code: '966'
                                                                }))
                                                            }
-
+                                                           // formRef?.current?.setFieldsValue({
+                                                           //     lab_packages: data?.lab_packages,
+                                                           // })
 
 
 
@@ -403,7 +405,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                    name={'lab_packages'}
                                                    rules={[{
                                                        required: !data?.lab_tests || !data?.lab_tests?.length,
-                                                       message: !data?.lab_tests?.length ? 'Please enter Lab test or Lab package' : 'hhh'
+                                                       message: 'Please enter Lab test or Lab package'
                                                    }]}
                                                    inputType={'resourceSelect'}
                                                    resourceParams={{

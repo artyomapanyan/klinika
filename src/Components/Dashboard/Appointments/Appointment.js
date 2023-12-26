@@ -735,6 +735,13 @@ function Appointment({isPatient}) {
                                                                            resourceParams={{
                                                                                clinic: data.clinic_id
                                                                            }}
+                                                                           inputProps={{
+                                                                               onChange:(e) => {
+                                                                                   formRef?.current?.setFieldsValue({
+                                                                                       lab_tests: data?.lab_tests,
+                                                                                   })
+                                                                               }
+                                                                           }}
                                                                            resource={'LabPackage'}/>
                                                             </Col>
                                                         </Row> : data?.service_type === 'nursing' ? <Row>
