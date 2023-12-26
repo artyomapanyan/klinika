@@ -401,13 +401,16 @@ function AppPersonalDetails({
 
 													]}
 											/>
-											<FormInput label={t('Nationality')} name={'country_id'}
-													   disabled={verifyResponse?.patient?.nationality?.id}
-													   inputType={'resourceSelect'}
-													   rules={[{required: true}]}
-													   initialValue={verifyResponse?.patient?.nationality?.id}
-													   initialData={verifyResponse?.patient?.nationality ? [verifyResponse?.patient?.nationality] : []}
-													   resource={'PublicCountry'}/>
+											<div className={'personal_details_nationality_div'}>
+												<FormInput label={t('Nationality')} name={'country_id'}
+														   disabled={verifyResponse?.patient?.nationality?.id}
+														   inputType={'resourceSelect'}
+														   rules={[{required: true}]}
+														   initialValue={verifyResponse?.patient?.nationality?.id}
+														   initialData={verifyResponse?.patient?.nationality ? [verifyResponse?.patient?.nationality] : []}
+														   resource={'PublicCountry'}/>
+											</div>
+
 
 										</Form>
 

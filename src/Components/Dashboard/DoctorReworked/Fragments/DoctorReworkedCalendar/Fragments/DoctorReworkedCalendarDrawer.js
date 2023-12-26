@@ -68,7 +68,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
     }, [])
 
-    console.log(formState,bookedAtState, 'fff')
+
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''} style={{height:'100vh'}}>
             <Form

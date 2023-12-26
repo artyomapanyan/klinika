@@ -142,19 +142,23 @@ function OfferBookContent() {
 										</div>
 
 
-										<div >
+										<div>
 
 											<Drawer
 												placement={'bottom'}
 												closable={false}
 												onClose={onClose}
 												open={open}
-												height={600}
+												height={'520'}
+												zIndex={1000}
 												style={{
 													borderRadius: '12px 12px 0 0',
-													// minHeight: '100vh !important',
-													// overflow: 'auto',
+													//overflow: 'auto'
 												}}
+
+
+
+
 											>
 												<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState}/>
 											</Drawer>
