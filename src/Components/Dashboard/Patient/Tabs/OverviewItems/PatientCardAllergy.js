@@ -61,7 +61,6 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
         setRiskFactorsPerPage(riskFactorsPerPage + 3)
     }
 
-
     return(
         <div className={'current_medications_card'}>
             {
