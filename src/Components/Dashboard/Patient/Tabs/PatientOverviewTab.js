@@ -16,12 +16,20 @@ function PatientOverviewTab({tab = {tab}, id, patientId, dataClinic}){
     return <Row gutter={[16,16]}>
         <Col lg={16}>
             <div style={{display:"flex", gap: 24, padding: 24}}>
-                <PatientCardMedications tab={tab} dataClinic={dataClinic}/>
-                <PatientCardRiskFactors patientId={patientId} dataClinic={dataClinic} tab={tab}/>
+                <div style={{width: '50%'}}>
+                    <PatientCardMedications tab={tab} dataClinic={dataClinic}/>
+                </div>
+                <div style={{width: '50%'}}>
+                    <PatientCardRiskFactors patientId={patientId} dataClinic={dataClinic} tab={tab}/>
+                </div>
             </div>
-            <div style={{display:"flex", gap: 24, padding: 24}}>
-                {/*<PatientCardAllergy/>*/}
-                {/*<PatientCardChronicDiseases/>*/}
+            <div style={{display:"flex", gap: 24, padding: 24, marginTop: -24}}>
+                <div style={{width: '50%'}}>
+                    <PatientCardAllergy patientId={patientId} dataClinic={dataClinic} tab={tab}/>
+                </div>
+                <div style={{width: '50%'}}>
+                    <PatientCardChronicDiseases patientId={patientId} dataClinic={dataClinic} tab={tab}/>
+                </div>
             </div>
             {/*<div style={{padding: 24}}>*/}
             {/*    <PatientCardChart />*/}

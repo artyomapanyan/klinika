@@ -11,8 +11,8 @@ import {useSelector} from "react-redux";
 import '../../Patient.sass'
 
 
-let resource = 'RiskFactors';
-function RiskFactorModal({dataClinic, setIsModalOpen, setAddDeleteState}) {
+
+function RiskFactorModal({dataClinic, setIsModalOpen, setAddDeleteState, resource, inputTitle}) {
     let token = useSelector((state) => state.auth.token);
     const [saveLoading, setSaveLoading] = useState(false)
 
@@ -49,7 +49,7 @@ function RiskFactorModal({dataClinic, setIsModalOpen, setAddDeleteState}) {
                 onFinish={onFinish}
             >
                 <div style={{marginTop: 25}}>
-                    <FormInput label={t('Risk factor')} name={'name'}  />
+                    <FormInput label={inputTitle} name={'name'}  />
                     <FormInput label={t('Description')} name={'description'}  />
                 </div>
 
