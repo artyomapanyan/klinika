@@ -43,7 +43,7 @@ function ClinicTabManageDoctors({dataService}) {
     return (
         <div>
             <div  className={'add_edit_content'}>
-                <h1 className={'h1'}>{t(`Manage Pending Doctors`)}</h1>
+                <h1 className={'h1'} style={{marginBottom: -80}}>{t(`Manage Pending Doctors`)}</h1>
                 {loading ? <Preloader/> : <ResourceTable
                     noHeader={true}
                     except={{edit: true}}

@@ -33,9 +33,9 @@ function Appointment({isPatient}) {
 
 
     const {loadingState, dataState} = useGetResourceSingle(!isPatient ? resource : 'Patient', params.id,{},isPatient ?(data)=>{
-       setTimeout(()=>{
-           handleValuesChange({patient_id:data.id})
-       },500)
+        setTimeout(()=>{
+            handleValuesChange({patient_id:data.id})
+        },500)
         return data
     }:null)
     const {data, setData} = dataState;
@@ -210,7 +210,7 @@ function Appointment({isPatient}) {
                     date: data?.booked_at?.format('YYYY-MM-DD'),
                     service: data?.service_type,
                 }).then((res) => {
-
+                    console.log(res, 'res')
                     if(res) {
                         setAvailableTimesState(res?.map((el) => {
                             return {
@@ -276,18 +276,18 @@ function Appointment({isPatient}) {
         //         setSaveLoading(false)
         //     })
         // } else {
-            createResource(resource, values, token).then((response) => {
-                if (response?.id) {
-                    navigate(-1)
-                }
+        createResource(resource, values, token).then((response) => {
+            if (response?.id) {
+                navigate(-1)
+            }
 
-            }).finally(() => {
-                dispatch({
-                    type: 'DASHBOARD_STATE',
-                    payload: false
-                })
-                setSaveLoading(false)
+        }).finally(() => {
+            dispatch({
+                type: 'DASHBOARD_STATE',
+                payload: false
             })
+            setSaveLoading(false)
+        })
 
     }
 
@@ -366,7 +366,7 @@ function Appointment({isPatient}) {
 
     }
 
-    //console.log((!data?.clinic_id && !data?.doctor_id && !data?.booked_at) && !(data?.service_type === "clinic_visit" || data?.service_type === "physical_therapy_clinic_visit" || data?.service_type === "laboratory_clinic_visit"), 'data')
+
 
     return (
         <div>
@@ -495,12 +495,12 @@ function Appointment({isPatient}) {
                                                                    rules={[{required: !data?.patient_id}]}/>
 
                                                         <FormInput label={t('Nationality')} name={['patient','country_id']}
-                                                                                          inputType={'resourceSelect'}
-                                                                                          initialValue={formRef?.current?.getFieldValue(['patient','nationality', 'id'])}
-                                                                                          rules={[{required: !data?.patient_id}]}
-                                                                                          disabled={data?.patient_id}
-                                                                                          initialData={formRef?.current?.getFieldValue(['patient','nationality']) ? [formRef?.current?.getFieldValue(['patient','nationality'])] : []}
-                                                                                          resource={'Country'}/>
+                                                                   inputType={'resourceSelect'}
+                                                                   initialValue={formRef?.current?.getFieldValue(['patient','nationality', 'id'])}
+                                                                   rules={[{required: !data?.patient_id}]}
+                                                                   disabled={data?.patient_id}
+                                                                   initialData={formRef?.current?.getFieldValue(['patient','nationality']) ? [formRef?.current?.getFieldValue(['patient','nationality'])] : []}
+                                                                   resource={'Country'}/>
 
 
 
@@ -564,7 +564,7 @@ function Appointment({isPatient}) {
                                                                onChange:(e,dat)=> {
 
                                                                    setData((prevState)=>({
-                                                                    ...prevState,
+                                                                       ...prevState,
                                                                        specialty_id:null,
                                                                        doctor_id: null,
                                                                        booked_at: null,
@@ -572,13 +572,13 @@ function Appointment({isPatient}) {
                                                                        service_type: null,
                                                                    }))
 
-                                                                    formRef?.current?.setFieldsValue({
-                                                                        specialty_id:null,
+                                                                   formRef?.current?.setFieldsValue({
+                                                                       specialty_id:null,
                                                                        doctor_id: null,
-                                                                        booked_at: null,
-                                                                        appointment_time: null,
-                                                                        service_type: null,
-                                                                    })
+                                                                       booked_at: null,
+                                                                       appointment_time: null,
+                                                                       service_type: null,
+                                                                   })
 
                                                                }
                                                            }}
