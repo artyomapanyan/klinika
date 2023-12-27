@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 
 
 
-function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, data,setOpen,handleCreateAppointment,setData}) {
+function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, finishLoading, data,setOpen,handleCreateAppointment,setData}) {
     let language = useSelector((state) => state?.app?.current_locale);
     const onFinish = (values) => {
 
@@ -121,7 +121,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, d
                         }
                     ]}/>
                     <div>
-                        <Button style={{width: '100%'}} size={'large'} type={'primary'}
+                        <Button style={{width: '100%'}} size={'large'} type={'primary'} loading={finishLoading}
                                 htmlType="submit">{t("Save")}</Button>
                     </div>
                     <div>

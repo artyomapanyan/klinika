@@ -7,7 +7,7 @@ import FormInput from "../../../Fragments/FormInput";
 import Resources from "../../../../store/Resources";
 import dayjs from "dayjs";
 
-function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData}) {
+function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData, finishLoading}) {
     const formRef = useRef();
     let language = useSelector((state) => state?.app?.current_locale);
     const [loading, setLoading] = useState(false)
@@ -90,7 +90,7 @@ function NursLabDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCrea
                                              uploadIcon={<img alt={'icons'} src={addimage}/>}
                                              name={'cover'} initialFileList={[]} formRef={formRef} type={'drag'}/>*/}
                             <div>
-                                <Button loading={loading} style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
+                                <Button loading={finishLoading} style={{width:'100%'}} size={'large'} type={'primary'} htmlType="submit">{t("Save")}</Button>
                             </div>
 
                         </div>

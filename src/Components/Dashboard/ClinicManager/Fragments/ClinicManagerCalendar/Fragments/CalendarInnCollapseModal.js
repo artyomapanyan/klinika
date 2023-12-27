@@ -287,7 +287,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
         })
     }, [])
 
-
+    console.log(data, 'ref')
 
 
     return (
@@ -363,6 +363,16 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                            doctor: docItem?.doctor.id,
                                            for_date: selectedDate
 
+                                       }}
+                                       inputProps={{
+                                           onChange: (e) => {
+                                               if(data?.phone_country_code?.includes('966')) {
+                                                   setData(prevState => ({
+                                                       ...prevState,
+                                                       phone_country_code: '966'
+                                                   }))
+                                               }
+                                           }
                                        }}
                                        resource={'Offer'}/>
 
@@ -489,9 +499,11 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                     size === "default" ?
                         <ClinicManagerCalendarDrawerSmall setData={setData} data={data} doctor={doctor} specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
+                                                          finishLoading={finishLoading}
                                                           openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
                         <ClinicManagerCalendarDrawerLarge setData={setData} data={data} doctor={doctor} specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
+                                                          finishLoading={finishLoading}
                                                           setOpen={setOpen} openDrawer={openDrawer}/>
                 }
 

@@ -36,7 +36,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     let inputRef_4 = useRef();
     const [inputValues, setInputValues] = useState(['', '', '', '']);
     const [codeAndPhone, setCodeAndPhone] = useState({
-        phone_country_code: null,
+        phone_country_code: 966,
         phone_number: null
     });
     const [sendCodeState, setSendCodeState] = useState(false);
@@ -278,7 +278,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     }
 
 
-    //console.log(data, 'ref')
+
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
@@ -439,6 +439,16 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                            for_date: selectedDate
 
                                        }}
+                                       inputProps={{
+                                           onChange: (e) => {
+                                               if(data?.phone_country_code?.includes('966')) {
+                                                   setData(prevState => ({
+                                                       ...prevState,
+                                                       phone_country_code: '966'
+                                                   }))
+                                               }
+                                           }
+                                       }}
                                        resource={'Offer'}/>
 
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
@@ -565,8 +575,10 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                     size === "default" ?
                         <NursLabDrawerSmall setData={setData} data={data}  specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
+                                            finishLoading={finishLoading}
                                                           openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
                         <NursLabDrawerLarge setData={setData} data={data}  specialty={specialty}
+                                            finishLoading={finishLoading}
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           setOpen={setOpen} openDrawer={openDrawer}/>
                 }

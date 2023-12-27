@@ -7,7 +7,7 @@ import Resources from "../../../../store/Resources";
 import dayjs from "dayjs";
 import React from "react";
 
-function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCreateAppointment,setData}) {
+function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCreateAppointment,setData, finishLoading}) {
     let language = useSelector((state) => state?.app?.current_locale);
     const onFinish = (values) => {
 
@@ -120,7 +120,7 @@ function NursLabDrawerSmall({openLargeDrawer, specialty, data,setOpen,handleCrea
                         }
                     ]}/>
                     <div>
-                        <Button style={{width: '100%'}} size={'large'} type={'primary'}
+                        <Button style={{width: '100%'}} size={'large'} type={'primary'} loading={finishLoading}
                                 htmlType="submit">{t("Save")}</Button>
                     </div>
                     <div>
