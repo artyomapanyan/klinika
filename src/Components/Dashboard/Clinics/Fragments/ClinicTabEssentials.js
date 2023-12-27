@@ -978,13 +978,13 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                         }
                                         <div style={{width: 200}}>
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} label={t('Bookings per slot')} name={["service_settings","laboratory_clinic_visit","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.laboratory_clinic_visit?.bookings_per_slot ? data?.service_settings?.laboratory_clinic_visit?.bookings_per_slot : 1}/>
-
-                                            <Form.Item
-                                                name={["service_settings","laboratory_clinic_visit","duration"]}
-                                                style={{position: 'absolute'}}
-                                            >
-                                                <Input hidden={true} />
-                                            </Form.Item>
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_clinic_visit_service} label={t('Duration')} name={["service_settings","laboratory_clinic_visit","duration"]} inputType={'number'}  initialValue={data?.service_settings?.laboratory_clinic_visit?.duration}/>
+                                            {/*<Form.Item*/}
+                                            {/*    name={["service_settings","laboratory_clinic_visit","duration"]}*/}
+                                            {/*    //style={{position: 'absolute'}}*/}
+                                            {/*>*/}
+                                            {/*    <Input  />*/}
+                                            {/*</Form.Item>*/}
                                         </div>
 
                                     </div> : <div></div>
