@@ -9,7 +9,9 @@ import ShowClinicDoctorsTab from './ShowClinicDoctorsTab';
 import {useSelector} from "react-redux";
 import ResourceLinks from "../../../../ResourceLinks";
 import Preloader from "../../../../Preloader";
+import clinic_logo from '../../../../../dist/Img/logo_klinika.png'
 import ClinicWorkingHours from "../ClinicWorkingHours/ClinicWorkingHours";
+import off_head from "../../../../../dist/Img/off_head.png";
 
 let resource = 'Clinic';
 function ShowClinic () {
@@ -64,7 +66,6 @@ function ShowClinic () {
   }
 
 
-
   return (
       <div style={{marginTop: -120}}>
         <div>
@@ -77,8 +78,10 @@ function ShowClinic () {
               <Col style={{ marginRight: '2em' }}>
                 <Image
                     width={400}
-                    src={cover?.url}
+                    alt={'clinic_logo'}
+                    src={cover?.url ? cover?.url : clinic_logo}
                 />
+                {/*<img src={clinic_logo} alt={'clinic_logo'} width={400}  />*/}
               </Col>
               <Col>
                 <Row>
