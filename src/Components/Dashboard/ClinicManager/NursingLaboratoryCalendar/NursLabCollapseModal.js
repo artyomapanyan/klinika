@@ -85,7 +85,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks', 'phone_country_code']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {
@@ -231,7 +231,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const onSendCode = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks', 'phone_country_code']).then(e => {
             setLoading(true)
             postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
 
@@ -506,13 +506,13 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
 
-                    {statusCode !== 403 ? data?.patient_id && data?.time && <Button type={'primary'} htmlType={'submit'}
+                    {statusCode !== 403 ? data?.patient_id && <Button type={'primary'} htmlType={'submit'}
                                                                                     loading={finishLoading}
                                                                                     style={{width: '100%', height: '44px'}}>{t("Book")}</Button> : <div></div>}
 
 
                     {
-                        statusCode === 403 ? !sendCodeState ? data?.patient_id && data?.time && <Button type={'primary'}
+                        statusCode === 403 ? !sendCodeState ? data?.patient_id && <Button type={'primary'}
                                                                                                         onClick={onSendCode}
                                                                                                         loading={loading}
                                                                                                         style={{width: '100%', height: '44px', fontSize: 16, fontWeight: 700}}>{t("Send request")}</Button> : <div></div> : <div></div>
