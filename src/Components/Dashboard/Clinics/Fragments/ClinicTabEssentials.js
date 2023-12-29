@@ -450,10 +450,7 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         }))
 
 
-        if(values?.service_settings?.clinic_visit?.duration && values?.service_settings?.laboratory_clinic_visit?.duration) {
-            values.service_settings.laboratory_clinic_visit.duration = values?.service_settings?.clinic_visit?.duration
-
-        }if(values?.service_settings?.home_visit?.duration && values?.service_settings?.laboratory_home_visit?.duration) {
+        if(values?.service_settings?.home_visit?.duration && values?.service_settings?.laboratory_home_visit?.duration) {
             values.service_settings.laboratory_home_visit.duration = values?.service_settings?.home_visit?.duration
         }
 

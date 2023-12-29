@@ -20,7 +20,6 @@ import ResourceLins from "../../ResourceLinks";
 import {t} from "i18next";
 import dayjs from "dayjs";
 
-
 let resource = 'Appointment'
 let res = 'DoctorReworked'
 function Patient() {
