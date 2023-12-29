@@ -18,9 +18,10 @@ function AppPersonalDetails({
 	setNamesState,
 	namesState,
 	showPayment,
+	setVerifyResponseNationality,
 	setShowPayment,
 	show,verifyState,setVerifyState,personalForm,
-	codeAndNumberState, setCodeAndNumberState
+	codeAndNumberState, setCodeAndNumberState,
 }) {
 	let token = useSelector(state => state.auth.token)
 
@@ -128,6 +129,8 @@ function AppPersonalDetails({
 		setPhoneLoading(true)
 		postResource('PublicOffer', 'CodeVerify', token, '', values).then(
 			response => {
+				console.log(response, 'dfsdfsdfsfdsdf')
+				setVerifyResponseNationality(response?.patient?.is_saudi)
 				setResponseCodeState(response)
 				setVerifyResponse(response)
 				setPhoneLoading(false)
@@ -205,6 +208,8 @@ function AppPersonalDetails({
 			...prevState,
 			...changed
 		}))
+
+
 	}
 
 	const validateMessages = {
@@ -406,6 +411,15 @@ function AppPersonalDetails({
 														   disabled={verifyResponse?.patient?.nationality?.id}
 														   inputType={'resourceSelect'}
 														   rules={[{required: true}]}
+														   inputProps={{
+															   onChange: (e) => {
+																   if(e == 1) {
+																	   setVerifyResponseNationality(true)
+																   } else {
+																	   setVerifyResponseNationality(false)
+																   }
+															   },
+														   }}
 														   initialValue={verifyResponse?.patient?.nationality?.id}
 														   initialData={verifyResponse?.patient?.nationality ? [verifyResponse?.patient?.nationality] : []}
 														   resource={'PublicCountry'}/>

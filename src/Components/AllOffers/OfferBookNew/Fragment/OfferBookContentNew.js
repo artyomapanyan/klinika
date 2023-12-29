@@ -25,9 +25,10 @@ function OfferBookContent() {
 	const [response404, setResponse404] = useState({});
 
 	const [totalState, setTotalState] = useState(false);
+	const [verifyResponseNationality, setVerifyResponseNationality] = useState(false);
 
 
-
+	console.log(verifyResponseNationality,totalState, 'state')
 
 	const showDrawer = () => {
 		setOpen(true);
@@ -124,21 +125,26 @@ function OfferBookContent() {
 										<div>
 											{isMobile ? (
 												<div>
-													<OfferHours data={data} />
+													{
+														totalState ? <div></div> : <OfferHours data={data} />
+													}
+
 													<div style={{ marginTop: '10px' }}>
-														<OfferPrice data={data} totalState={totalState}/>
+														<OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>
 													</div>
 												</div>
 											) : (
 												<div>
-													<OfferPrice data={data} totalState={totalState} />
-													<OfferHours data={data} />
+													<OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>
+													{
+														totalState ? <div></div> : <OfferHours data={data} />
+													}
 												</div>
 											)}
 										</div>
 
 										<div className={'offer_appointment_sec'}>
-											<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState} />
+											<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState} setVerifyResponseNationality={setVerifyResponseNationality} />
 										</div>
 
 
@@ -160,7 +166,7 @@ function OfferBookContent() {
 
 
 											>
-												<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState}/>
+												<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState} setVerifyResponseNationality={setVerifyResponseNationality}/>
 											</Drawer>
 										</div>
 
