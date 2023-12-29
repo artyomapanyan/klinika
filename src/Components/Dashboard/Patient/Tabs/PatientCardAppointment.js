@@ -111,7 +111,7 @@ function PatientCardAppointment({bigData, id, setBigData}) {
                                                 }
 
                                                 <div align={'right'} style={{padding: 16}}>
-                                                    <button onClick={btnEdit} className={'doctor_notes_edit_btn'}  style={{fontWeight: 500}}  type={'secondary'}>{t('Edit')}1</button>
+                                                    <button onClick={btnEdit} className={'doctor_notes_edit_btn'}  style={{fontWeight: 500}}  type={'secondary'}>{t('Edit')}</button>
                                                 </div>
                                             </div> : <div className={'Purpose_textarea_div'}>
                                                 <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
