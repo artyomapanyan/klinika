@@ -57,6 +57,8 @@ function Appointment({isPatient}) {
 
 
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [offerState, setOfferState] = useState([])
+    const [offerLoading, setOfferLoading] = useState(false)
 
     const fetchedUsers = useRef([]);
 
@@ -158,9 +160,23 @@ function Appointment({isPatient}) {
                 setTimesLoading(false)
             })
         }
-        if (data?.clinic_id && data?.service_type === "laboratory_home_visit" || data?.service_type === "laboratory_clinic_visit") {
+        if (data?.clinic_id && data?.service_type === "laboratory_clinic_visit") {
             setTimesLoading(true)
             postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'laboratory_clinic_visit'}).then(response => {
+                let day = [];
+
+                Object.keys(response)?.forEach((key) => {
+                    if(response[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+                setAvailableDateState(day)
+                setTimesLoading(false)
+            })
+        }
+        if (data?.clinic_id && data?.service_type === "laboratory_home_visit") {
+            setTimesLoading(true)
+            postResource('Clinic','WorkingHours',token, +data?.clinic_id,{service:'laboratory_home_visit'}).then(response => {
                 let day = [];
 
                 Object.keys(response)?.forEach((key) => {
@@ -364,7 +380,32 @@ function Appointment({isPatient}) {
 
     }
 
+    useEffect(() => {
 
+        if(data?.booked_at) {
+            setOfferLoading(true)
+            postResource('Offer', 'list', token, null, {
+                clinic: data?.clinic_id,
+                status: 2,
+                approved: 1,
+                doctor: data?.doctor_id,
+                for_date: data?.booked_at ? dayjs(data?.booked_at)?.format('YYYY-MM-DD') : dayjs()?.format('YYYY-MM-DD')
+
+            }).then((response) => {
+                //console.log(response)
+                setOfferState(response?.items?.map((el) => {
+                    return {
+                        id: el?.id,
+                        title: el?.title
+                    }
+                }))
+                setOfferLoading(false)
+            })
+        }
+
+    }, [data?.booked_at])
+
+    console.log(offerState, data)
 
     return (
         <div>
@@ -568,6 +609,8 @@ function Appointment({isPatient}) {
                                                                        booked_at: null,
                                                                        appointment_time: null,
                                                                        service_type: null,
+                                                                       offer_id: null
+
                                                                    }))
 
                                                                    formRef?.current?.setFieldsValue({
@@ -576,6 +619,7 @@ function Appointment({isPatient}) {
                                                                        booked_at: null,
                                                                        appointment_time: null,
                                                                        service_type: null,
+                                                                       offer_id: null
                                                                    })
 
                                                                }
@@ -599,6 +643,9 @@ function Appointment({isPatient}) {
                                                                                    doctor_id: null,
                                                                                    booked_at: null,
                                                                                    appointment_time: null,
+                                                                                   //lab_tests: null,
+                                                                                   lab_packages: null,
+                                                                                   offer_id: null
 
                                                                                })
                                                                                setData((prevState)=>({
@@ -607,6 +654,9 @@ function Appointment({isPatient}) {
                                                                                    doctor_id: null,
                                                                                    booked_at: null,
                                                                                    appointment_time: null,
+                                                                                   //lab_tests: null,
+                                                                                   lab_packages: null,
+                                                                                   offer_id: null
 
                                                                                }))
 
@@ -635,6 +685,7 @@ function Appointment({isPatient}) {
                                                                                doctor_id: null,
                                                                                booked_at: null,
                                                                                appointment_time: null,
+                                                                               offer_id: null
 
                                                                            })
                                                                            setData((prevState)=>({
@@ -642,6 +693,7 @@ function Appointment({isPatient}) {
                                                                                doctor_id: null,
                                                                                booked_at: null,
                                                                                appointment_time: null,
+                                                                               offer_id: null
 
                                                                            }))
 
@@ -664,6 +716,24 @@ function Appointment({isPatient}) {
                                                                            handleMapItems={(item, name) => {
                                                                                item.id = item?.doctor?.id
                                                                                return [name, item]
+                                                                           }}
+                                                                           inputProps={{
+                                                                               onChange:(e,data)=> {
+                                                                                   formRef?.current?.setFieldsValue({
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                       offer_id: null
+
+                                                                                   })
+                                                                                   setData((prevState)=>({
+                                                                                       ...prevState,
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                       offer_id: null
+
+                                                                                   }))
+
+                                                                               }
                                                                            }}
                                                                            disabled={!data.specialty_id && true}
                                                                            resourceParams={{
@@ -697,6 +767,24 @@ function Appointment({isPatient}) {
                                                                            specialty: data.specialty_id,
                                                                            clinic: data.clinic_id
                                                                        }}
+                                                                       inputProps={{
+                                                                           onChange:(e,data)=> {
+                                                                               formRef?.current?.setFieldsValue({
+                                                                                   booked_at: null,
+                                                                                   appointment_time: null,
+                                                                                   offer_id: null
+
+                                                                               })
+                                                                               setData((prevState)=>({
+                                                                                   ...prevState,
+                                                                                   booked_at: null,
+                                                                                   appointment_time: null,
+                                                                                   offer_id: null
+
+                                                                               }))
+
+                                                                           }
+                                                                       }}
                                                                        initialValue={null}
                                                                        resource={'ClinicDoctor'}
                                                                        initialData={[]}/>
@@ -708,6 +796,22 @@ function Appointment({isPatient}) {
                                                                 <FormInput label={t('Lab Tests')}
                                                                            inputProps={{
                                                                                mode: 'multiple',
+                                                                               onChange:(e,data)=> {
+                                                                                   formRef?.current?.setFieldsValue({
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                       offer_id: null
+
+                                                                                   })
+                                                                                   setData((prevState)=>({
+                                                                                       ...prevState,
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                       offer_id: null
+
+                                                                                   }))
+
+                                                                               }
                                                                            }}
                                                                            name={'lab_tests'}
                                                                            rules={[
@@ -720,6 +824,7 @@ function Appointment({isPatient}) {
                                                                            resourceParams={{
                                                                                clinic: data.clinic_id
                                                                            }}
+
                                                                            resource={'LabTest'}/>
                                                             </Col>
                                                             <Col lg={12} className="gutter-row">
@@ -734,10 +839,21 @@ function Appointment({isPatient}) {
                                                                                clinic: data.clinic_id
                                                                            }}
                                                                            inputProps={{
-                                                                               onChange:(e) => {
+                                                                               onChange:(e,data)=> {
                                                                                    formRef?.current?.setFieldsValue({
-                                                                                       lab_tests: data?.lab_tests,
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                       offer_id: null
+
                                                                                    })
+                                                                                   setData((prevState)=>({
+                                                                                       ...prevState,
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                       offer_id: null
+
+                                                                                   }))
+
                                                                                }
                                                                            }}
                                                                            resource={'LabPackage'}/>
@@ -746,7 +862,21 @@ function Appointment({isPatient}) {
                                                             <Col lg={24} className="gutter-row">
                                                                 <FormInput label={t('Nursing tasks')}
                                                                            name={'nursing_tasks'}
-                                                                           inputProps={{mode: 'multiple'}}
+                                                                           inputProps={{
+                                                                               mode: 'multiple',
+                                                                               onChange:(e,data)=> {
+                                                                                   formRef?.current?.setFieldsValue({
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                   })
+                                                                                   setData((prevState)=>({
+                                                                                       ...prevState,
+                                                                                       booked_at: null,
+                                                                                       appointment_time: null,
+                                                                                   }))
+
+                                                                               }
+                                                                }}
                                                                            rules={[{required: true}]}
                                                                            resourceParams={{
                                                                                clinic: data.clinic_id,
@@ -765,6 +895,22 @@ function Appointment({isPatient}) {
                                                            disabledDate={disabledDate}
                                                            name={'booked_at'}
                                                            inputType={'date'}
+                                                           inputProps={{
+                                                               onChange:(e,data)=> {
+                                                                   formRef?.current?.setFieldsValue({
+                                                                       appointment_time: null,
+                                                                       offer_id: null
+
+                                                                   })
+                                                                   setData((prevState)=>({
+                                                                       ...prevState,
+                                                                       appointment_time: null,
+                                                                       offer_id: null
+
+                                                                   }))
+
+                                                               }
+                                                           }}
                                                            rules={[{required: true}]}
                                                 />
                                             </Col>
@@ -785,20 +931,24 @@ function Appointment({isPatient}) {
 
                                                 <Row>
                                                     <Col lg={12} className="gutter-row">
-                                                        <FormInput label={t('Offer (Optional)')} name={'offer_id'}
-                                                                   disabled={!data?.clinic_id || !data?.doctor_id || !data?.booked_at}
-                                                                   inputType={'resourceSelect'}
-                                                                   initialValue={null}
-                                                                   initialData={[]}
-                                                                   resourceParams={{
-                                                                       clinic: data?.clinic_id,
-                                                                       status: 2,
-                                                                       approved: 1,
-                                                                       doctor: data?.doctor_id,
-                                                                       for_date: dayjs(data?.booked_at)?.format('YYYY-MM-DD')
+                                                        {
+                                                            offerLoading ? <Preloader small={10}/> : <FormInput label={t('Offer (Optional)')} name={'offer_id'}
+                                                                                                                       disabled={data?.service_type === "laboratory_clinic_visit" ? !data?.clinic_id || !data?.booked_at : !data?.clinic_id || !data?.doctor_id || !data?.booked_at}
+                                                                                                                       inputType={'resourceSelect'}
+                                                                                                                       initialValue={null}
+                                                                                                                       initialData={offerState}
+                                                                // resourceParams={{
+                                                                //     clinic: data?.clinic_id,
+                                                                //     status: 2,
+                                                                //     approved: 1,
+                                                                //     doctor: data?.doctor_id,
+                                                                //     for_date: data?.booked_at ? dayjs(data?.booked_at)?.format('YYYY-MM-DD') : dayjs()?.format('YYYY-MM-DD')
+                                                                //
+                                                                // }}
+                                                                // resource={'Offer'}
+                                                            />
+                                                        }
 
-                                                                   }}
-                                                                   resource={'Offer'}/>
                                                     </Col>
                                                 </Row> : <div></div>
                                         }

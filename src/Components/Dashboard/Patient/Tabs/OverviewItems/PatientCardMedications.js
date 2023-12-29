@@ -89,20 +89,18 @@ function PatientCardMedications({tab, dataClinic}) {
             {
                 loading ? <Preloader /> : <Card
                     title={<div className={'cards_title'}>{t('Current medications')}</div>}
-                    extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>{t('Add')}</span></Button>}
-                    style={{ padding:15}}
+                    extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{margin:'0px 8px'}}>{t('Add')}</span></Button>}
+                    style={{ padding:'15px 0px'}}
                 >
                     <List
                         className="demo-loadmore-list"
                          //loading={initLoading}
                         itemLayout="horizontal"
                         dataSource={prescriptions}
-                        style={{overflow: 'auto', height: dataClinic?.prescriptions?.length > prescriptionPerPage ? 220 : 250}}
+                        style={{overflow: 'auto', height: dataClinic?.prescriptions?.length > prescriptionPerPage ? 220 : 250, padding: '0px 10px'}}
                         renderItem={(e) => {
                             return<List.Item >
                                 <List.Item.Meta
-                                    style={{padding:-10}}
-
                                     title={<div style={{fontWeight: 700}}>{e?.name}</div>}
                                     description={<div ><span style={{color: '#000000', fontSize: 13}}>{`${e?.frequency} times/day /`}</span><span className={{fontSize: 13}}>{`${e?.dose} pcs `}</span></div>}
                                 />

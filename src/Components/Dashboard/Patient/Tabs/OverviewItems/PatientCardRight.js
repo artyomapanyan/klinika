@@ -1,7 +1,7 @@
 
 import Vector from "../../../../../dist/icons/Vector.png";
 import VectorHend from "../../../../../dist/icons/VectorHend.png";
-import {Avatar, Drawer, Space, Tag} from "antd";
+import {Avatar, Drawer, Tag} from "antd";
 
 import plusPurple from "../../../../../dist/icons/plus-purple.svg";
 import {UserOutlined} from "@ant-design/icons";
@@ -37,7 +37,6 @@ function PatientCardRight({id, patientId, dataClinic}) {
     const onClose = () => {
         setOpen(false);
     };
-
 
 
     return(
@@ -86,7 +85,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
                         {t('Next Appointments')}:
                     </div>
                     <div>
-                        <div onClick={showDrawer} style={{cursor: 'pointer'}}> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>{t('Add')}</span></div>
+                        <div onClick={showDrawer} style={{cursor: 'pointer', whiteSpace: 'nowrap'}}> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>{t('Add')}</span></div>
                     </div>
                 </div>
                 {

@@ -80,7 +80,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {
@@ -144,6 +144,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 setUpdate((prevState) =>prevState+1)
             }
 
+        }).finally(()=>{
+            setFinishLoading(false)
         })
 
     }
@@ -170,6 +172,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 setUpdate((prevState) =>prevState+1)
             }
 
+        }).finally(()=>{
+            setLoading403(false)
         })
 
     }
@@ -208,13 +212,18 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
     const onSendCode = () => {
-        setLoading(true)
+        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code']).then(e => {
+            setLoading(true)
 
-        postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
+            postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
 
-            setLoading(false)
-            setSendCodeState(true)
+                setLoading(false)
+                setSendCodeState(true)
+            })
+        }).catch((c) => {
+
         })
+
     }
 
     const onVerify = () => {
@@ -431,13 +440,13 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
 
-                    {statusCode !== 403 ? data?.patient_id && data?.time && <Button type={'primary'} htmlType={'submit'}
+                    {statusCode !== 403 ? data?.patient_id && <Button type={'primary'} htmlType={'submit'}
                                                                loading={finishLoading}
                                                                style={{width: '100%', height: '44px'}}>{t("Book")}</Button> : <div></div>}
 
 
                     {
-                        statusCode === 403 ? !sendCodeState ? data?.patient_id && data?.time && <Button type={'primary'}
+                        statusCode === 403 ? !sendCodeState ? data?.patient_id && <Button type={'primary'}
                                                     onClick={onSendCode}
                                                     loading={loading}
                                                     style={{width: '100%', height: '44px', fontSize: 16, fontWeight: 700}}>{t("Send request")}</Button> : <div></div> : <div></div>
