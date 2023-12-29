@@ -296,7 +296,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
         })
     }, [])
 
-    console.log(data, 'ref')
+
 
 
     return (

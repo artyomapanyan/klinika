@@ -405,7 +405,7 @@ function Appointment({isPatient}) {
 
     }, [data?.booked_at])
 
-    console.log(offerState, data)
+
 
     return (
         <div>

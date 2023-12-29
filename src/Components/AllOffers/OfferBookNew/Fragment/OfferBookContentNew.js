@@ -28,7 +28,7 @@ function OfferBookContent() {
 	const [verifyResponseNationality, setVerifyResponseNationality] = useState(false);
 
 
-	console.log(verifyResponseNationality,totalState, 'state')
+
 
 	const showDrawer = () => {
 		setOpen(true);

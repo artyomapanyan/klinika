@@ -129,7 +129,7 @@ function AppPersonalDetails({
 		setPhoneLoading(true)
 		postResource('PublicOffer', 'CodeVerify', token, '', values).then(
 			response => {
-				console.log(response, 'dfsdfsdfsfdsdf')
+
 				setVerifyResponseNationality(response?.patient?.is_saudi)
 				setResponseCodeState(response)
 				setVerifyResponse(response)

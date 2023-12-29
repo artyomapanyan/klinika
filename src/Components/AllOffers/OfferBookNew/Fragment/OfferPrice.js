@@ -2,7 +2,7 @@ import React from 'react'
 import { t } from 'i18next'
 
 function OfferPrice({ data, verifyResponseNationality, totalState }) {
-	console.log(data)
+
 	return (
 		<div>
 			{

@@ -80,7 +80,6 @@ function PatientCardAppointment({bigData, id, setBigData}) {
         setEditState(true)
     }
 
-    console.log(bigData?.appointment_doctor_notes, editState)
 
     return(
         <Layout.Content>
