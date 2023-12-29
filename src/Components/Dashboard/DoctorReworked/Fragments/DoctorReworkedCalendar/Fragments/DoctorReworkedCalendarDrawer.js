@@ -29,15 +29,21 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
         } else {
             values.patient_id = patientId
         }
-        if(role === 'doctor') {
-            values.doctor_id = authRedux?.user?.id
-        } else {
-            values.doctor_id = dataClinic.doctor.id
-        }
+        // if(role === 'doctor') {
+        //     values.doctor_id = authRedux?.user?.id
+        // } else {
+        //     values.doctor_id = dataClinic.doctor.id
+        // }
         if(values?.lab_packages) {
             values.lab_packages = [values.lab_packages]
 
         }
+
+        if(values?.service_type === "physical_therapy_home_visit" || values?.service_type === "telehealth" || values?.service_type === "clinic_visit" || values?.service_type === "home_visit" || values?.service_type === "physical_therapy_clinic_visit") {
+            values.doctor_id = authRedux?.user?.id
+        }
+        console.log(values)
+
 
         createResource('Appointment', values, token).then((response) => {
             if (response?.id) {
@@ -47,7 +53,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
             }
 
         }).finally(() => {
-
+            setLoading(false)
         })
     }
 

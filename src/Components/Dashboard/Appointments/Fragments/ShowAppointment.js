@@ -9,7 +9,7 @@ import {
     FilePdfOutlined,
     LeftOutlined,
     MailOutlined,
-    PhoneOutlined
+    PhoneOutlined, UserOutlined
 } from "@ant-design/icons";
 import axios from "axios";
 import api from "../../../../Api";
@@ -93,6 +93,8 @@ function ShowAppointment() {
     }
 
 
+
+
     return(
         <div className={'app_show_big_div'}>
             <div>
@@ -102,7 +104,7 @@ function ShowAppointment() {
                 loading ? <Preloader /> : <div>
                     <div className={'add_edit_content'} id={'show_header'}>
                         <div style={{display: 'flex'}}>
-                            <Avatar size={120} src={<img src={data?.logo?.url} />} style={{background:'gray'}}/>
+                            <Avatar size={120} src={data?.logo?.url ? <img src={data?.logo?.url}  /> : <UserOutlined />}  style={{background:'gray'}}/>
                             <div style={{display:"block", marginLeft:20}}>
                                 <div>id {data?.patient?.id}</div>
                                 <h2 style={{fontWeight: 600}}>{data?.patient?.first}  {data?.patient?.last}</h2>
@@ -131,6 +133,31 @@ function ShowAppointment() {
                                     <td className={'show_td_1'}>{t('Service Type')}</td>
                                     <td className={'show_td_2'}>{data?.service_type[0]?.toUpperCase() + data?.service_type?.slice(1)?.replaceAll("_", " ") || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
+                                {
+                                    data?.lab_packages?.length > 0 || data?.lab_tests?.length > 0 ? <tr>
+                                        <td className={'show_td_1'}>{t('Lab tests')}</td>
+                                        <td className={'show_td_2'}>{data?.lab_tests?.length > 0 ? data?.lab_tests?.map((el, i) => {
+                                            return el?.name + (i === data?.lab_tests?.length - 1 ? '' : ', ')
+                                        }) : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
+                                    </tr> : null
+                                }
+                                {
+                                    data?.lab_packages?.length > 0 || data?.lab_tests?.length > 0 ? <tr>
+                                        <td className={'show_td_1'}>{t('Lab packages')}</td>
+                                        <td className={'show_td_2'}>{data?.lab_packages?.length > 0 ? data?.lab_packages?.map((el) => {
+                                            return el?.name
+                                        }) : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
+                                    </tr> : null
+                                }
+                                {
+                                    data?.nursing_tasks?.length > 0 ? <tr>
+                                        <td className={'show_td_1'}>{t('Nursing tasks')}</td>
+                                        <td className={'show_td_2'}>{data?.nursing_tasks?.length > 0 ? data?.nursing_tasks?.map((el, i) => {
+                                            return el?.name + (i === data?.nursing_tasks?.length - 1 ? '' : ', ')
+                                        }) : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
+                                    </tr> : null
+                                }
+
                                 <tr>
                                     <td className={'show_td_1'}>{t('Clinic')}</td>
                                     <td className={'show_td_2'}>{data?.clinic?.name || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
