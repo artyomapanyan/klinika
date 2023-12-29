@@ -76,7 +76,11 @@ function PatientCardAppointment({bigData, id, setBigData}) {
     //     }
     // }, [fileChangeState])
 
+    const btnEdit = () => {
+        setEditState(true)
+    }
 
+    console.log(bigData?.appointment_doctor_notes, editState)
 
     return(
         <Layout.Content>
@@ -91,7 +95,15 @@ function PatientCardAppointment({bigData, id, setBigData}) {
                                         >
                                         <h1 className={'h1'}>{t('Doctor Notes')}</h1>
                                         {
-                                            editState ? <div></div> : <div>
+                                            !bigData?.appointment_doctor_notes ? <div className={'Purpose_textarea_div'}>
+                                                <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
+                                                    <TextArea placeholder={t("Patients condition")} rows={8}/>
+                                                </Form.Item>
+                                                <div align={'right'}>
+                                                    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                                </div>
+
+                                            </div> : !editState ? <div>
                                                 {
                                                     loadingSubmit ? <Preloader small={50}/> : <div className={'dr_notes_text_div'}>
                                                         {bigData?.appointment_doctor_notes}
@@ -99,14 +111,9 @@ function PatientCardAppointment({bigData, id, setBigData}) {
                                                 }
 
                                                 <div align={'right'} style={{padding: 16}}>
-                                                    <Button onClick={()=>setEditState(true)} loading={loadingSubmit} style={{fontWeight: 700}}  type={'secondary'}>{t('Edit')}</Button>
+                                                    <button onClick={btnEdit} className={'doctor_notes_edit_btn'}  style={{fontWeight: 500}}  type={'secondary'}>{t('Edit')}1</button>
                                                 </div>
-                                            </div>
-                                        }
-
-
-                                        {
-                                            !editState ? <div></div> : <div className={'Purpose_textarea_div'}>
+                                            </div> : <div className={'Purpose_textarea_div'}>
                                                 <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>
                                                     <TextArea placeholder={t("Patients condition")} rows={8}/>
                                                 </Form.Item>
@@ -116,6 +123,29 @@ function PatientCardAppointment({bigData, id, setBigData}) {
 
                                             </div>
                                         }
+
+
+                                        {/*{*/}
+                                        {/*    !bigData?.appointment_doctor_notes || !editState ? <div>*/}
+                                        {/*        {*/}
+                                        {/*            loadingSubmit ? <Preloader small={50}/> : <div className={'dr_notes_text_div'}>*/}
+                                        {/*                {bigData?.appointment_doctor_notes}*/}
+                                        {/*            </div>*/}
+                                        {/*        }*/}
+
+                                        {/*        <div align={'right'} style={{padding: 16}}>*/}
+                                        {/*            <Button onClick={()=>setEditState(true)} loading={loadingSubmit} style={{fontWeight: 700}}  type={'secondary'}>{t('Edit')}</Button>*/}
+                                        {/*        </div>*/}
+                                        {/*    </div> : <div className={'Purpose_textarea_div'}>*/}
+                                        {/*        <Form.Item initialValue={bigData?.appointment_doctor_notes} name={'appointment_doctor_notes'}>*/}
+                                        {/*            <TextArea placeholder={t("Patients condition")} rows={8}/>*/}
+                                        {/*        </Form.Item>*/}
+                                        {/*        <div align={'right'}>*/}
+                                        {/*            <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>*/}
+                                        {/*        </div>*/}
+
+                                        {/*    </div>*/}
+                                        {/*}*/}
                                         <h1 className={'h1'}>{t('Purpose')}</h1>
                                             <div className={'Purpose_textarea_div'}>
                                                 <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
