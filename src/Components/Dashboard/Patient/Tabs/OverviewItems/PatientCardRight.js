@@ -86,7 +86,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
                         {t('Next Appointments')}:
                     </div>
                     <div>
-                        <div onClick={showDrawer} style={{cursor: 'pointer'}}> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>{t('Add')}</span></div>
+                        <div onClick={showDrawer} style={{cursor: 'pointer', whiteSpace: 'nowrap'}}> <img alt={'icons'} src={plusPurple}/><span className={'add_text'}>{t('Add')}</span></div>
                     </div>
                 </div>
                 {

@@ -66,14 +66,14 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
             {
                 loading ? <Preloader/> : <Card
                     title={<div className={'cards_title'}>{t('Allergy')}</div>}
-                    extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{marginLeft:10}}>{t('Add')}</span></Button>}
-                    style={{padding:15}}
+                    extra={<Button className={'patient_card_btn'} onClick={showModal}> <img alt={'icons'} src={plusPurple}/><span style={{margin:'0px 8px'}}>{t('Add')}</span></Button>}
+                    style={{padding:'15px 0px'}}
                 >
                     <List
                         className="demo-loadmore-list"
                         itemLayout="horizontal"
                         dataSource={riskFactors}
-                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, paddingRight: itemsLength?.length > 3 ? 10 : 0}}
+                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, padding: '0px 10px'}}
                         renderItem={(e) => (
                             <List.Item>
                                 <List.Item.Meta
