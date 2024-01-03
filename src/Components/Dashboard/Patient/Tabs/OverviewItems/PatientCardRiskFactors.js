@@ -10,6 +10,7 @@ import closeLightGray from "../../../../../dist/icons/close-lightGray.svg";
 import Preloader from "../../../../Preloader";
 
 function PatientCardRiskFactors({patientId, dataClinic, tab}) {
+    let language = useSelector((state) => state.app.current_locale)
     const token = useSelector((state) => state.auth.token);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [riskFactors, setRiskFactors] = useState([]);
@@ -75,7 +76,7 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
                         className="demo-loadmore-list"
                         itemLayout="horizontal"
                         dataSource={riskFactors}
-                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, padding: '0px 10px'}}
+                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => (
                             <List.Item>
                                 <List.Item.Meta

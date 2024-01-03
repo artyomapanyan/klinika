@@ -5,17 +5,15 @@ import {Button, Spin} from "antd";
 import dayjs from "dayjs";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import Preloader from "../../../Preloader";
 
-export function RascheduledContent({onCancel, modal, loading}){
+export function RascheduledContent({onCancel, modal, loading, formRef}){
     let token = useSelector((state) => state.auth.token);
     const [date,setDate] = useState(null);
     const [availableTimes,setAvailableTimesState] = useState([]);
     const [dateLoading,setDateLoading] = useState(false);
     const [availableDateState, setAvailableDateState] = useState([])
-
-
-
-
+    const [inputsLoading, setInputsLoading] = useState(false)
 
 
 
@@ -70,7 +68,9 @@ export function RascheduledContent({onCancel, modal, loading}){
    }, [date])
 
     useEffect(() => {
+
         if(modal?.service_type === 'telehealth' ||modal?.service_type === 'clinic_visit' || modal?.service_type === 'home_visit' || modal?.service_type === 'physical_therapy_clinic_visit' || modal?.service_type === 'physical_therapy_home_visit') {
+            setInputsLoading(true)
             postResource('ClinicDoctorWorkingHours', 'single', token, modal?.doctor?.id+'/'+modal?.clinic?.id, {service: modal?.service_type}).then(responses => {
                 const res = responses?.working_hours
                 let day = [];
@@ -89,9 +89,11 @@ export function RascheduledContent({onCancel, modal, loading}){
 
 
                 setAvailableDateState(day)
+                setInputsLoading(false)
 
             })
         } else if(modal?.service_type === 'nursing') {
+            setInputsLoading(true)
             postResource('Clinic','WorkingHours',token, +modal?.clinic?.id,{service:'nursing'}).then(response => {
                 let day = [];
 
@@ -101,10 +103,12 @@ export function RascheduledContent({onCancel, modal, loading}){
                     }
                 })
                 setAvailableDateState(day)
+                setInputsLoading(false)
 
 
             })
-        } else if(modal?.service_type === 'laboratory_home_visit' || modal?.service_type === 'laboratory_clinic_visit') {
+        } else if(modal?.service_type === 'laboratory_clinic_visit') {
+            setInputsLoading(true)
             postResource('Clinic','WorkingHours',token, +modal?.clinic?.id,{service:'laboratory_clinic_visit'}).then(response => {
                 let day = [];
 
@@ -114,11 +118,26 @@ export function RascheduledContent({onCancel, modal, loading}){
                     }
                 })
                 setAvailableDateState(day)
+                setInputsLoading(false)
+
+            })
+        } else if(modal?.service_type === 'laboratory_home_visit') {
+            setInputsLoading(true)
+            postResource('Clinic','WorkingHours',token, +modal?.clinic?.id,{service:'laboratory_home_visit'}).then(response => {
+                let day = [];
+
+                Object.keys(response)?.forEach((key) => {
+                    if(response[key][0]?.is_day_off){
+                        day.push(key)
+                    }
+                })
+                setAvailableDateState(day)
+                setInputsLoading(false)
 
             })
         }
 
-    }, [])
+    }, [modal?.service_type])
 
     const disabledDate = (current) => {
         return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
@@ -127,30 +146,44 @@ export function RascheduledContent({onCancel, modal, loading}){
 
     return<div>
 
-        <div style={{display: 'flex', gap: 5, marginTop: 20}}>
-            <div style={{width: '50%'}}>
-                <FormInput label={t('Appointment date')}
-                           disabledDate={disabledDate}
-                           inputProps={{onChange:e=>setDate(e)}}
-                           name={'booked_at'}
-                           inputType={'date'}
-                           rules={[{required: true}]}
-                />
-            </div>
-            <div style={{width: '50%'}}>
-                <Spin spinning={dateLoading}>
+        {
+            inputsLoading ? <Preloader/> : <div style={{display: 'flex', gap: 5, marginTop: 20}}>
+                <div style={{width: '50%'}}>
+                    <FormInput label={t('Appointment date')}
+                               disabledDate={disabledDate}
+                               inputProps={{onChange:e=>setDate(e)}}
+                               inputProps={{
+                                   onChange:(e)=> {
 
+                                       setDate(e)
 
-                <FormInput label={t('Appointment time')}
-                           name={'appointment_time'}
-                           inputType={'resourceSelect'}
-                           options={availableTimes}
-                           rules={[{required: true}]}
-                           initialData={[]}
-                />
-                </Spin>
+                                       formRef?.current?.setFieldsValue({
+                                           appointment_time: null,
+
+                                       })
+
+                                   }
+                               }}
+                               name={'booked_at'}
+                               inputType={'date'}
+                               rules={[{required: true}]}
+                    />
+                </div>
+                <div style={{width: '50%'}}>
+                    {
+                        dateLoading ? <Preloader small={10}/> : <FormInput label={t('Appointment time')}
+                                                                name={'appointment_time'}
+                                                                inputType={'resourceSelect'}
+                                                                options={availableTimes}
+                                                                rules={[{required: true}]}
+                                                                initialData={[]}
+                        />
+                    }
+
+                </div>
             </div>
-        </div>
+        }
+
 
 
         <div style={{display: 'flex', gap: 3}} >

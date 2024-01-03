@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Collapse, Form, Modal, Tag} from 'antd';
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
 import arrowUpPurple from "../../../../dist/icons/arrow-up-purple.svg";
@@ -18,6 +18,7 @@ const { Panel } = Collapse;
 function PatientCollapse({data, setData}) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
+    const formRef = useRef();
 
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
@@ -97,11 +98,12 @@ function PatientCollapse({data, setData}) {
             <Modal key={Math.random()} maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                 <Form onFinish={onFinish}
                       //onValuesChange={handleValuesChange}
+                      ref={formRef}
                 >
                     {
                         modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
                             modal?.key === '2' ? <Confirmed loading={loading} onCancel={onCancel}/> :
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} /> :
                                     modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                         modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                             modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :

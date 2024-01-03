@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Button, Form, Modal, Spin} from "antd";
 import ColorSelect from "../../../../Fragments/ColorSelect";
 import arrow_next from "../../../../../dist/icons/arrow-next.svg";
@@ -31,6 +31,7 @@ import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
     let token = useSelector((state) => state.auth.token);
+    const formRef = useRef();
     const navigate = useNavigate();
     const [dateWeek, setDateWeek] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
     const [modal,setModal] = useState(false)
@@ -132,11 +133,12 @@ function ClinicManagerAppointmentsTable() {
                     <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                         <Form onFinish={onFinish}
                               onValuesChange={handleValuesChange}
+                              ref={formRef}
                         >
                             {
                                 modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
                                     modal?.key === '2' ? <Confirmed loading={loading} onCancel={onCancel}/> :
-                                        modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
+                                        modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} /> :
                                             modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                                 modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                                     modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :

@@ -9,7 +9,7 @@ import closeLightGray from "../../../../../dist/icons/close-lightGray.svg";
 import RiskFactorModal from "./RiskFactorModal";
 
 function PatientCardChronicDiseases({patientId, dataClinic}) {
-
+    let language = useSelector((state) => state.app.current_locale)
     const token = useSelector((state) => state.auth.token);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [riskFactors, setRiskFactors] = useState([]);
@@ -74,7 +74,7 @@ function PatientCardChronicDiseases({patientId, dataClinic}) {
                         className="demo-loadmore-list"
                         itemLayout="horizontal"
                         dataSource={riskFactors}
-                        style={{overflow: 'auto', height: riskFactors?.length > 3 ? 220 : 250, padding: '0px 10px'}}
+                        style={{overflow: 'auto', height: riskFactors?.length > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => (
                             <List.Item>
                                 <List.Item.Meta

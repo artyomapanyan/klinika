@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Button, Form, Modal, Spin, Tooltip} from "antd";
 import {t} from "i18next";
 import ResourceTable from "../../Fragments/ResourceTable";
@@ -27,6 +27,7 @@ function Appointments() {
     const navigate = useNavigate();
     let token = useSelector((state) => state.auth.token);
     let selectedRole = useSelector((state) => state.auth.selected_role.key);
+    const formRef = useRef();
 
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
@@ -67,6 +68,7 @@ function Appointments() {
 
     const onFinish = (values) => {
         setLoading(true)
+
         if (values?.booked_at) {
             values.booked_at = values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
         }
@@ -113,11 +115,12 @@ function Appointments() {
                 <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
                     <Form onFinish={onFinish}
                           onValuesChange={handleValuesChange}
+                          ref={formRef}
                     >
                         {
                             modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
                                 modal?.key === '2' ? <Confirmed loading={loading} onCancel={onCancel}/>:
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} /> :
+                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} /> :
                                 modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :

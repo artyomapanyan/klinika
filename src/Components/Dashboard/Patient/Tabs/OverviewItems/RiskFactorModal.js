@@ -49,7 +49,10 @@ function RiskFactorModal({dataClinic, setIsModalOpen, setAddDeleteState, resourc
                 onFinish={onFinish}
             >
                 <div style={{marginTop: 25}}>
-                    <FormInput label={inputTitle} name={'name'}  />
+                    <FormInput label={inputTitle} name={'name'} rules={[{
+                        required: true,
+                        message: `Please enter ${inputTitle}`
+                    }]} />
                     <FormInput label={t('Description')} name={'description'}  />
                 </div>
 

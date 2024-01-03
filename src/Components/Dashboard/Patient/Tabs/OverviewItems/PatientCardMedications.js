@@ -50,6 +50,7 @@ function PatientCardMedications({tab, dataClinic}) {
     // };
 
     const token = useSelector((state) => state.auth.token);
+    let language = useSelector((state) => state.app.current_locale)
     let params = useParams()
 
 
@@ -97,7 +98,7 @@ function PatientCardMedications({tab, dataClinic}) {
                          //loading={initLoading}
                         itemLayout="horizontal"
                         dataSource={prescriptions}
-                        style={{overflow: 'auto', height: dataClinic?.prescriptions?.length > prescriptionPerPage ? 220 : 250, padding: '0px 10px'}}
+                        style={{overflow: 'auto', height: dataClinic?.prescriptions?.length > prescriptionPerPage ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => {
                             return<List.Item >
                                 <List.Item.Meta
