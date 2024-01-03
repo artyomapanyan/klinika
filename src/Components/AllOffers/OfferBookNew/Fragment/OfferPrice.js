@@ -11,7 +11,7 @@ function OfferPrice({ data, verifyResponseNationality, totalState }) {
 							<div className={'offer_new_price'}>
 								{t('Total with taxes')}
 								<span className={'offer_percent'}>:</span>
-								<span className={'offer_percent'}>{data?.new_price}.0</span>
+								<span className={'offer_percent'}>{verifyResponseNationality ? data?.new_price_after_vat_saudi : data?.new_price_after_vat_non_saudi}.0</span>
 								<span className={'offer_sar'}> {t('SAR')}</span>
 							</div>
 							<div className={'offer_save_price_new'}>
