@@ -40,7 +40,7 @@ function ClinicManager() {
 
     return(
         <div>
-            {!ownerClinics?.month_key?<Preloader/>:<div style={{margin:20}} className={'clinics_owner'}>
+            {!ownerClinics?.id?<Preloader/>:<div style={{margin:20}} className={'clinics_owner'}>
                 {
                     role === 'receptionist' ? <div></div> : <Row gutter={[16,16]}>
                         <Col  lg={8} md={12} sm={24} xs={24} >

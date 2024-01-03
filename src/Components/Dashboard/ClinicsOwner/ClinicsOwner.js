@@ -92,7 +92,7 @@ function ClinicsOwner() {
 
     return(
         <div style={{marginBottom: 100}}>
-            {!ownerClinics?.id || !ownerClinics?.month_key?<Preloader/>:<div style={{margin:'10px 20px'}} className={'clinics_owner'}>
+            {!ownerClinics?.id ? <Preloader/>:<div style={{margin:'10px 20px'}} className={'clinics_owner'}>
                 <div className={'k_owner_conteiners'}>
                     {
                        loading ? <Preloader small={30} /> : responseState?.map((el, key) => {
