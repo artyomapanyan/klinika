@@ -643,9 +643,10 @@ function Appointment({isPatient}) {
                                                                                    doctor_id: null,
                                                                                    booked_at: null,
                                                                                    appointment_time: null,
-                                                                                   //lab_tests: null,
-                                                                                   //lab_packages: null,
-                                                                                   offer_id: null
+                                                                                   lab_tests: undefined,
+                                                                                   lab_packages: null,
+                                                                                   offer_id: null,
+                                                                                   nursing_tasks: undefined
 
                                                                                })
                                                                                setData((prevState)=>({
@@ -654,9 +655,10 @@ function Appointment({isPatient}) {
                                                                                    doctor_id: null,
                                                                                    booked_at: null,
                                                                                    appointment_time: null,
-                                                                                   //lab_tests: null,
-                                                                                   //lab_packages: null,
-                                                                                   offer_id: null
+                                                                                   lab_tests: null,
+                                                                                   lab_packages: null,
+                                                                                   offer_id: null,
+                                                                                   nursing_tasks: null
 
                                                                                }))
 

@@ -17,6 +17,7 @@ function PatientCardChronicDiseases({patientId, dataClinic}) {
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [loading, setLoading] = useState(false)
     const [itemsLength, setItemsLength] = useState([])
+    const [showAll, setShowAll] = useState(false)
 
     const showModal = (data) => {
         setIsModalOpen(true);
@@ -31,11 +32,10 @@ function PatientCardChronicDiseases({patientId, dataClinic}) {
         postResource('ChronicDiseases','single', token,  '', {
                 //page: 1,
                 patient: patientId,
-                per_page: riskFactorsPerPage
+                per_page: showAll ? null : 3
             }
         ).then((response) => {
             setRiskFactors(response?.items)
-            setLoading(false)
 
         })
         postResource('ChronicDiseases','single', token,  '', {
@@ -43,10 +43,12 @@ function PatientCardChronicDiseases({patientId, dataClinic}) {
             }
         ).then((response) => {
             setItemsLength(response?.items)
-            setLoading(false)
 
+
+        }).finally(() => {
+            setLoading(false)
         })
-    }, [addDeleteState, riskFactorsPerPage])
+    }, [addDeleteState, riskFactorsPerPage, showAll])
 
 
     const deleteRickFactor = (e) => {
@@ -57,9 +59,7 @@ function PatientCardChronicDiseases({patientId, dataClinic}) {
         })
     }
 
-    const onLoadMore = () => {
-        setRiskFactorsPerPage(riskFactorsPerPage + 3)
-    }
+
 
 
     return(
@@ -74,7 +74,7 @@ function PatientCardChronicDiseases({patientId, dataClinic}) {
                         className="demo-loadmore-list"
                         itemLayout="horizontal"
                         dataSource={riskFactors}
-                        style={{overflow: 'auto', height: riskFactors?.length > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
+                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => (
                             <List.Item>
                                 <List.Item.Meta
@@ -93,16 +93,16 @@ function PatientCardChronicDiseases({patientId, dataClinic}) {
 
                     <div style={{display: 'flex'}}>
                         {
-                            itemsLength?.length > riskFactorsPerPage ? (
+                            itemsLength?.length > 3 && !showAll ? (
                                 <div style={{paddingTop: 10}}>
-                                    <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
+                                    <Tag onClick={()=>setShowAll(true)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('and more')} {itemsLength?.length - 3} {t('items')}</Tag>
                                 </div>
                             ) : null
                         }
                         {
-                            riskFactorsPerPage > 3 ? (
+                            itemsLength?.length > 3 && showAll ? (
                                 <div style={{paddingTop: 10}}>
-                                    <Tag onClick={()=>setRiskFactorsPerPage(riskFactorsPerPage - 3)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
+                                    <Tag onClick={()=>setShowAll(false)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
                                 </div>
                             ) : null
                         }

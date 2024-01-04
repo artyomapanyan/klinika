@@ -17,6 +17,7 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [loading, setLoading] = useState(false)
     const [itemsLength, setItemsLength] = useState([])
+    const [showAll, setShowAll] = useState(false)
 
     const showModal = (data) => {
         setIsModalOpen(true);
@@ -31,11 +32,10 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
         postResource('Allergies','single', token,  '', {
                 //page: 1,
                 patient: patientId,
-                per_page: riskFactorsPerPage
+                per_page: showAll ? null : 3
             }
         ).then((response) => {
             setRiskFactors(response?.items)
-            setLoading(false)
 
         })
         postResource('Allergies','single', token,  '', {
@@ -44,23 +44,21 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
             }
         ).then((response) => {
             setItemsLength(response?.items)
-            setLoading(false)
 
+        }).finally(() => {
+            setLoading(false)
         })
-    }, [addDeleteState, riskFactorsPerPage])
+    }, [addDeleteState, riskFactorsPerPage, showAll])
 
 
     const deleteRickFactor = (e) => {
-        setLoading(true)
+
         deleteResource('Allergies', e.id, token).then(resp => {
             setAddDeleteState((prevState) => prevState-1)
-            setLoading(false)
+
         })
     }
 
-    const onLoadMore = () => {
-        setRiskFactorsPerPage(riskFactorsPerPage + 3)
-    }
 
     return(
         <div className={'current_medications_card'}>
@@ -93,16 +91,16 @@ function PatientCardAllergy({patientId, dataClinic, tab}) {
 
                     <div style={{display: 'flex'}}>
                         {
-                            itemsLength?.length > riskFactorsPerPage ? (
+                            itemsLength?.length > 3 && !showAll ? (
                                 <div style={{paddingTop: 10}}>
-                                    <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
+                                    <Tag onClick={()=>setShowAll(true)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('and more')} {itemsLength?.length - 3} {t('items')}</Tag>
                                 </div>
                             ) : null
                         }
                         {
-                            riskFactorsPerPage > 3 ? (
+                            itemsLength?.length > 3 && showAll ? (
                                 <div style={{paddingTop: 10}}>
-                                    <Tag onClick={()=>setRiskFactorsPerPage(riskFactorsPerPage - 3)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
+                                    <Tag onClick={()=>setShowAll(false)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
                                 </div>
                             ) : null
                         }

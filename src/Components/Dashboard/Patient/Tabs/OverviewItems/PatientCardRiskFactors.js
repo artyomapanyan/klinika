@@ -18,6 +18,7 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [loading, setLoading] = useState(false)
     const [itemsLength, setItemsLength] = useState([])
+    const [showAll, setShowAll] = useState(false)
 
     const showModal = (data) => {
         setIsModalOpen(true);
@@ -32,23 +33,26 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
         postResource('RiskFactors','single', token,  '', {
             //page: 1,
             patient: patientId,
-            per_page: riskFactorsPerPage
+            per_page: showAll ? null : 3
             }
         ).then((response) => {
             setRiskFactors(response?.items)
-            setLoading(false)
+
 
         })
+
         postResource('RiskFactors','single', token,  '', {
                 patient: patientId,
 
             }
         ).then((response) => {
             setItemsLength(response?.items)
-            setLoading(false)
 
+
+        }).finally(() => {
+            setLoading(false)
         })
-    }, [addDeleteState, riskFactorsPerPage])
+    }, [addDeleteState, riskFactorsPerPage, showAll])
 
 
     const deleteRickFactor = (e) => {
@@ -57,10 +61,6 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
             setAddDeleteState((prevState) => prevState-1)
             setLoading(false)
         })
-    }
-
-    const onLoadMore = () => {
-        setRiskFactorsPerPage(riskFactorsPerPage + 3)
     }
 
 
@@ -95,16 +95,16 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
 
                     <div style={{display: 'flex'}}>
                         {
-                            itemsLength?.length > riskFactorsPerPage ? (
+                            itemsLength?.length > 3 && !showAll ? (
                                 <div style={{paddingTop: 10}}>
-                                    <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
+                                    <Tag onClick={()=>setShowAll(true)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('and more')} {itemsLength?.length - 3} {t('items')}</Tag>
                                 </div>
                             ) : null
                         }
                         {
-                            riskFactorsPerPage > 3 ? (
+                            itemsLength?.length > 3 && showAll ? (
                                 <div style={{paddingTop: 10}}>
-                                    <Tag onClick={()=>setRiskFactorsPerPage(riskFactorsPerPage - 3)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
+                                    <Tag onClick={()=>setShowAll(false)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
                                 </div>
                             ) : null
                         }
@@ -114,7 +114,7 @@ function PatientCardRiskFactors({patientId, dataClinic, tab}) {
             }
 
             <Modal className={'medications_modal'} width={475} title={t("Add new: Risk factors")} footer={false} open={isModalOpen} onCancel={handleCancel}>
-                <RiskFactorModal key={Math.random()}  setIsModalOpen={setIsModalOpen} dataClinic={dataClinic} setAddDeleteState={setAddDeleteState} resource={'RiskFactors'} inputTitle={t('Risk factors')}/>
+                <RiskFactorModal key={Math.random()} setIsModalOpen={setIsModalOpen} dataClinic={dataClinic} setAddDeleteState={setAddDeleteState} resource={'RiskFactors'} inputTitle={t('Risk factors')}/>
             </Modal>
         </div>
     )

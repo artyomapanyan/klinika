@@ -13,41 +13,7 @@ const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 function PatientCardMedications({tab, dataClinic}) {
 
-    // const [initLoading, setInitLoading] = useState(true);
-    // const [loading, setLoading] = useState(false);
-    // const [data, setData] = useState([]);
-    // const [list, setList] = useState([]);
-    //
-    // useEffect(() => {
-    //     fetch(fakeDataUrl)
-    //         .then((res) => res.json())
-    //         .then((res) => {
-    //             setInitLoading(false);
-    //             setData(res.results);
-    //             setList(res.results);
-    //         });
-    // }, []);
-    // const onLoadMore = () => {
-    //     setLoading(true);
-    //     setList(
-    //         data.concat(
-    //             [...new Array(count)].map(() => ({
-    //                 loading: true,
-    //                 name: {},
-    //             })),
-    //         ),
-    //     );
-    //     fetch(fakeDataUrl)
-    //         .then((res) => res.json())
-    //         .then((res) => {
-    //             const newData = data.concat(res.results);
-    //             setData(newData);
-    //             setList(newData);
-    //             setLoading(false);
-    //
-    //             window.dispatchEvent(new Event('resize'));
-    //         });
-    // };
+
 
     const token = useSelector((state) => state.auth.token);
     let language = useSelector((state) => state.app.current_locale)
@@ -59,6 +25,8 @@ function PatientCardMedications({tab, dataClinic}) {
     const [loading, setLoading] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [prescriptionPerPage, setPrescriptionPerPage] = useState(3)
+    const [itemsLength, setItemsLength] = useState([])
+    const [showAll, setShowAll] = useState(false)
     const showModal = (data) => {
         setIsModalOpen(data??{});
     };
@@ -72,18 +40,28 @@ function PatientCardMedications({tab, dataClinic}) {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
                 appointment: params.id,
-                per_page: prescriptionPerPage
+                per_page: showAll ? null : 3
             }
         ).then((response) => {
             setPrescriptions(response?.items)
-            setLoading(false)
+
 
         })
-    }, [tab, addDeleteState, prescriptionPerPage])
 
-    const onLoadMore = () => {
-        setPrescriptionPerPage(prescriptionPerPage + 3)
-    }
+        postResource('prescriptions','single', token,  '', {
+            appointment: params.id,
+
+            }
+        ).then((response) => {
+            setItemsLength(response?.items)
+
+
+        }).finally(() => {
+            setLoading(false)
+        })
+    }, [tab, addDeleteState, prescriptionPerPage, showAll])
+
+
 
     return(
         <div className={'current_medications_card'}>
@@ -98,7 +76,7 @@ function PatientCardMedications({tab, dataClinic}) {
                          //loading={initLoading}
                         itemLayout="horizontal"
                         dataSource={prescriptions}
-                        style={{overflow: 'auto', height: dataClinic?.prescriptions?.length > prescriptionPerPage ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
+                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => {
                             return<List.Item >
                                 <List.Item.Meta
@@ -116,16 +94,16 @@ function PatientCardMedications({tab, dataClinic}) {
 
                     <div style={{display: 'flex'}}>
                         {
-                            dataClinic?.prescriptions?.length > prescriptionPerPage ? (
-                                <div style={{paddingTop: 5}}>
-                                    <Tag onClick={onLoadMore} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{('Show More')}</Tag>
+                            itemsLength?.length > 3 && !showAll ? (
+                                <div style={{paddingTop: 10}}>
+                                    <Tag onClick={()=>setShowAll(true)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('and more')} {itemsLength?.length - 3} {t('items')}</Tag>
                                 </div>
                             ) : <div></div>
                         }
                         {
-                            prescriptionPerPage > 3 ? (
-                                <div style={{paddingTop: 5}}>
-                                    <Tag onClick={()=>setPrescriptionPerPage(prescriptionPerPage - 3)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
+                            itemsLength?.length > 3 && showAll ? (
+                                <div style={{paddingTop: 10}}>
+                                    <Tag onClick={()=>setShowAll(false)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
                                 </div>
                             ) : <div></div>
                         }

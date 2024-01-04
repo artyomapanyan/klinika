@@ -28,6 +28,7 @@ function PatientCardAppointment({bigData, id, setBigData}) {
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [editState, setEditState] = useState(false)
+    const [editState2, setEditState2] = useState(false)
     const [fileChangeState, setFileChangeState] = useState({})
     const showModal = (data) => {
         setIsModalOpen(data??{});
@@ -58,6 +59,7 @@ function PatientCardAppointment({bigData, id, setBigData}) {
 
         })
         setEditState(false)
+        setEditState2(false)
     }
 
 
@@ -80,6 +82,10 @@ function PatientCardAppointment({bigData, id, setBigData}) {
         setEditState(true)
     }
 
+    const btnEdit2 = () => {
+        setEditState2(true)
+    }
+    console.log(bigData, 'fff')
 
     return(
         <Layout.Content>
@@ -146,15 +152,48 @@ function PatientCardAppointment({bigData, id, setBigData}) {
                                         {/*    </div>*/}
                                         {/*}*/}
                                         <h1 className={'h1'}>{t('Purpose')}</h1>
-                                            <div className={'Purpose_textarea_div'}>
-                                                <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
-                                                    <TextArea placeholder={t("Add notes here")} rows={8} />
-                                                </Form.Item>
-                                            </div>
 
-                                        <div align={'right'}>
-                                            <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
-                                        </div>
+                                        {
+                                            !bigData?.purpose ? <div className={'Purpose_textarea_div'}>
+                                                <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
+                                                    <TextArea placeholder={t("Add notes here")} rows={8}/>
+                                                </Form.Item>
+                                                <div align={'right'}>
+                                                    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                                </div>
+
+                                            </div> : !editState2 ? <div>
+                                                {
+                                                    loadingSubmit ? <Preloader small={50}/> : <div className={'dr_notes_text_div'}>
+                                                        {bigData?.purpose}
+                                                    </div>
+                                                }
+
+                                                <div align={'right'} style={{padding: 16}}>
+                                                    <button onClick={btnEdit2} className={'doctor_notes_edit_btn'}  style={{fontWeight: 500}}  type={'secondary'}>{t('Edit')}</button>
+                                                </div>
+                                            </div> : <div className={'Purpose_textarea_div'}>
+                                                <Form.Item initialValue={bigData?.purpose} name={'purpose'}>
+                                                    <TextArea placeholder={t("Patients condition")} rows={8}/>
+                                                </Form.Item>
+                                                <div align={'right'}>
+                                                    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                                </div>
+
+                                            </div>
+                                        }
+
+
+
+                                        {/*    <div className={'Purpose_textarea_div'}>*/}
+                                        {/*        <Form.Item initialValue={bigData?.purpose} name={'purpose'}>*/}
+                                        {/*            <TextArea placeholder={t("Add notes here")} rows={8} />*/}
+                                        {/*        </Form.Item>*/}
+                                        {/*    </div>*/}
+
+                                        {/*<div align={'right'}>*/}
+                                        {/*    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>*/}
+                                        {/*</div>*/}
 
                                         </Form>
 
