@@ -672,6 +672,15 @@ function Appointment({isPatient}) {
                                                 </Col> : <div></div>
                                             }
                                         </Row>
+                                        <Row>
+                                            {
+                                              data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
+                                              data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
+                                                <Col lg={12} className="gutter-row">
+                                                    <FormInput label={t('Address')} name={'address'} rules={[{required: true}]}/>
+                                                </Col> : <div></div>  
+                                            }
+                                        </Row>
                                         {
                                             data?.service_type === 'telehealth' || data?.service_type === 'clinic_visit' || data?.service_type === 'home_visit' ?
                                                 <Row>

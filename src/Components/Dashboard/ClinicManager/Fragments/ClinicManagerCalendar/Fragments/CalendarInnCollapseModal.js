@@ -355,12 +355,16 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                        initialData={availableServices}/>
                         </div>
                     }
+                
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
-
-
-
+                    
                             <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
+                            {
+                                data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
+                                data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
+                                    <FormInput label={t('Address')} name={'address'} rules={[{required: true}]}/> : <div></div>  
+                            }
                             <FormInput label={t('Offers')} name={'offer_id'}
                                        inputType={'resourceSelect'}
                                        initialValue={null}

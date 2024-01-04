@@ -125,6 +125,11 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                            initialData={role === 'doctor' ? getServiceTypes(authRedux?.clinics?.find(e=>e.id===formState?.clinic_id)?.services) : getServiceTypes([dataClinic?.clinic]?.find(e=>e.id===formState?.clinic_id)?.services)}
                 />:null}
                 {
+                    formState.service_type === 'home_visit' || formState.service_type ==='physical_therapy_home_visit' ||
+                    formState.service_type === 'laboratory_home_visit' || formState.service_type ==='nursing'?
+                        <FormInput label={t('Address')} name={'address'} rules={[{required: true}]}/> : <div></div> 
+                }
+                {
                     formState?.service_type === 'nursing' ? <FormInput label={t('Nursing tasks')}
                 name={'nursing_tasks'}
                 inputProps={{mode: 'multiple'}}
