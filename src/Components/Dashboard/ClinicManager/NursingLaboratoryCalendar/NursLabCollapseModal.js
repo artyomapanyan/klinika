@@ -140,7 +140,6 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
         }
 
-
         postResource('Appointment', 'create', token, '', {
             ...values,
             ...(additional ?? {}),
