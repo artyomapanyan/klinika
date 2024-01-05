@@ -767,7 +767,9 @@ function Appointment({isPatient}) {
                                                                        }}
                                                                        resourceParams={{
                                                                            specialty: data.specialty_id,
-                                                                           clinic: data.clinic_id
+                                                                           clinic: data.clinic_id,
+                                                                           is_approved: 1,
+
                                                                        }}
                                                                        inputProps={{
                                                                            onChange:(e,data)=> {
