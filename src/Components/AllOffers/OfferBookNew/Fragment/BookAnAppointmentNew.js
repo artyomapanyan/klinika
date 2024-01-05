@@ -21,7 +21,7 @@ import {log10} from "chart.js/helpers";
 import HCP_Male from "../../../../dist/icons/HCP_Male.png";
 import HCP_Female from "../../../../dist/icons/HCP_Female.png";
 
-function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNationality}) {
+function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNationality, totalState, verifyResponseNationality}) {
     let token = useSelector(state => state.auth.token)
     let params = useParams()
     let dispatch = useDispatch()
@@ -451,6 +451,8 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                             setDataState={setDataState}
                             dataState={dataState}
                             responseCodeState={responseCodeState}
+                            totalState={totalState}
+                            verifyResponseNationality={verifyResponseNationality}
                         />
                     </div>
                 ) : (
