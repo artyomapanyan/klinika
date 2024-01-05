@@ -50,12 +50,10 @@ function AppPaymentMethods({
 		<div>
 
 					<div>
-						<Space className={'text_select_payment_method_web'}>
+						<Space className={'drawer_header_text'}>
 							<h2 className={'appointment_title'}>{t('Select payment method')}</h2>
 						</Space>
-						<div className={'text_select_payment_method_mobile'} align={'center'}>
-							<h2 className={'appointment_title'}>{t('Select payment method')}</h2>
-						</div>
+
 
 						<div className={'mobile_offer_price'}>
 							<OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>

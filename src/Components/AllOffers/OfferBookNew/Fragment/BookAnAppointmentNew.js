@@ -277,7 +277,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                             className={'tab_div_mobile_new_offer'}
                         >
                             <div>
-                                <div>
+                                <div className={'drawer_header_text'}>
                                     <p className={'appointment_title'}>{t('Select doctor and date')}</p>
                                 </div>
                                 {/*<div className={'collepse_offer_calendar'}>*/}
