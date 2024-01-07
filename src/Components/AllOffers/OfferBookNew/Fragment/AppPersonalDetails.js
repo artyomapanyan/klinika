@@ -229,12 +229,14 @@ function AppPersonalDetails({
 
 			{show ? (
 				<>
-					<Space>
+					<div>
 						{
-							!showPayment ? <h2 style={{ fontWeight: 600 }}>{t('Your Information')}</h2> : <div></div>
+							!showPayment ? <div className={'drawer_header_text'}>
+								<h2 style={{ fontWeight: 600 }}>{t('Your Information')}</h2>
+							</div> : <div></div>
 						}
 
-					</Space>
+					</div>
 					<div>
 						<div>
 							{verifyState === 0 && (

@@ -50,6 +50,7 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
 
         postResource('prescriptions','single', token,  '', {
             appointment: params.id,
+            //actual: 1,
 
             }
         ).then((response) => {

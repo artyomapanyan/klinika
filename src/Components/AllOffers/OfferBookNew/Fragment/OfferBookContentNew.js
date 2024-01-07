@@ -144,7 +144,7 @@ function OfferBookContent() {
 										</div>
 
 										<div className={'offer_appointment_sec'}>
-											<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState} setVerifyResponseNationality={setVerifyResponseNationality} />
+											<BookAnAppointmentNew data={data} setOpen={setOpen} totalState={totalState} setTotalState={setTotalState} verifyResponseNationality={verifyResponseNationality} setVerifyResponseNationality={setVerifyResponseNationality} />
 										</div>
 
 
@@ -166,7 +166,7 @@ function OfferBookContent() {
 
 
 											>
-												<BookAnAppointmentNew data={data} setOpen={setOpen} setTotalState={setTotalState} setVerifyResponseNationality={setVerifyResponseNationality}/>
+												<BookAnAppointmentNew data={data} setOpen={setOpen} totalState={totalState} setTotalState={setTotalState} verifyResponseNationality={verifyResponseNationality} setVerifyResponseNationality={setVerifyResponseNationality}/>
 											</Drawer>
 										</div>
 

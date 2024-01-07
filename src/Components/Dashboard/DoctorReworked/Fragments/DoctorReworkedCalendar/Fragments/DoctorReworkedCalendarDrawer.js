@@ -70,10 +70,9 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
         return [name, item, searchData]
     }
 
-    useEffect(() => {
 
-    }, [])
 
+    console.log(formState, 'ddddd')
 
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''} style={{height:'100vh'}}>
@@ -181,7 +180,9 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                                                         resource={'Taxonomy'}
                                                         resourceParams={{
                                                             type: Resources.TaxonomyTypes.SPECIALTY,
-                                                            has_parent: 0
+                                                            has_parent: 0,
+                                                            doctor_id: authRedux?.user?.id,
+                                                            clinic_id: formState?.clinic_id
                                                         }}
                     />
                 }
