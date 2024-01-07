@@ -11,7 +11,7 @@ import {t} from "i18next";
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
-function PatientCardMedications({tab, dataClinic}) {
+function PatientCardMedications({patientId, tab, dataClinic}) {
 
 
 
@@ -39,8 +39,8 @@ function PatientCardMedications({tab, dataClinic}) {
     useEffect(() => {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
-                appointment: params.id,
-                per_page: showAll ? null : 3
+            patient: patientId,
+            per_page: showAll ? null : 3
             }
         ).then((response) => {
             setPrescriptions(response?.items)

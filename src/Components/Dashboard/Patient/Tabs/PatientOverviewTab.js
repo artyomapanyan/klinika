@@ -17,7 +17,7 @@ function PatientOverviewTab({tab = {tab}, id, patientId, dataClinic}){
         <Col lg={16}>
             <div style={{display:"flex", gap: 24, padding: 24}}>
                 <div style={{width: '50%'}}>
-                    <PatientCardMedications tab={tab} dataClinic={dataClinic}/>
+                    <PatientCardMedications patientId={patientId} tab={tab} dataClinic={dataClinic}/>
                 </div>
                 <div style={{width: '50%'}}>
                     <PatientCardRiskFactors patientId={patientId} dataClinic={dataClinic} tab={tab}/>

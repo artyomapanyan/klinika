@@ -132,7 +132,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                     </div>
 
                     <div style={{width: '25%'}}>
-                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue={data?.gap}/>
+                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue='0'/>
                     </div>
                 </div>
                 <div style={{ marginTop:-16}}>
