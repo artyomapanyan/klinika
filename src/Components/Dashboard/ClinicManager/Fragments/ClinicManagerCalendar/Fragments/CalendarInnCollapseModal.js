@@ -80,7 +80,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code', 'address1']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {
@@ -363,7 +363,17 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                             {
                                 data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
                                 data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
-                                    <FormInput label={t('Address')} name={'address1'} rules={[{required: true}]}/> : <div></div>
+                                    <FormInput onChange={(e)=>{
+                                        if(data?.phone_country_code?.includes('966')) {
+                                            setData(prevState => ({
+                                                ...prevState,
+                                                phone_country_code: '966'
+                                            }))
+                                        }
+                                    }} label={t('Address')} name={'address1'} rules={[{
+                                        required: true,
+                                        message: 'Please enter address'
+                                    }]}/> : <div></div>
                             }
                             <FormInput label={t('Offers')} name={'offer_id'}
                                        inputType={'resourceSelect'}

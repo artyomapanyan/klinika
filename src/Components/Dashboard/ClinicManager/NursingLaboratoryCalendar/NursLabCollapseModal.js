@@ -85,7 +85,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks', 'phone_country_code']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks', 'phone_country_code', 'address1']).then(e => {
             setOpen(true);
             setSize('default');
         }).catch((c) => {
@@ -277,7 +277,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     }
 
 
-
+    console.log(item)
 
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
@@ -423,6 +423,20 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                    resource={'LabPackage'}/>
                                     </div>
                                 }
+                    {
+                        item?.service === 'laboratory_home_visit' || item?.service ==='nursing' ?
+                            <FormInput onChange={(e)=>{
+                                if(data?.phone_country_code?.includes('966')) {
+                                    setData(prevState => ({
+                                        ...prevState,
+                                        phone_country_code: '966'
+                                    }))
+                                }
+                            }} label={t('Address')} name={'address1'} rules={[{
+                                required: true,
+                                message: 'Please enter address'
+                            }]}/> : <div></div>
+                    }
 
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
