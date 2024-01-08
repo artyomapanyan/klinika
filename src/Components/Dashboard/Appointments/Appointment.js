@@ -405,7 +405,7 @@ function Appointment({isPatient}) {
 
     }, [data?.booked_at])
 
-
+    console.log(data?.service_type)
 
     return (
         <div>
@@ -638,6 +638,7 @@ function Appointment({isPatient}) {
                                                                        rules={[{required: true}]}
                                                                        inputProps={{
                                                                            onChange:(e,data)=> {
+                                                                               console.log(e, 'sss')
                                                                                formRef?.current?.setFieldsValue({
                                                                                    specialty_id:null,
                                                                                    doctor_id: null,
@@ -646,7 +647,8 @@ function Appointment({isPatient}) {
                                                                                    lab_tests: undefined,
                                                                                    lab_packages: null,
                                                                                    offer_id: null,
-                                                                                   nursing_tasks: undefined
+                                                                                   nursing_tasks: undefined,
+                                                                                   service_type: e
 
                                                                                })
                                                                                setData((prevState)=>({
@@ -658,7 +660,8 @@ function Appointment({isPatient}) {
                                                                                    lab_tests: null,
                                                                                    lab_packages: null,
                                                                                    offer_id: null,
-                                                                                   nursing_tasks: null
+                                                                                   nursing_tasks: null,
+                                                                                   service_type: e
 
                                                                                }))
 
@@ -742,7 +745,8 @@ function Appointment({isPatient}) {
                                                                                specialty: data?.specialty_id,
                                                                                clinic: data?.clinic_id,
                                                                                is_approved: 1,
-                                                                               service_type: data?.service_type
+                                                                               aaa: 1,
+                                                                               service_type: data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ? null : data?.service_type
                                                                            }}
                                                                            customSearchKey={'name'}
                                                                            initialValue={null}
@@ -766,9 +770,10 @@ function Appointment({isPatient}) {
                                                                            return [name, item]
                                                                        }}
                                                                        resourceParams={{
-                                                                           specialty: data.specialty_id,
+                                                                           //specialty: data.specialty_id,
                                                                            clinic: data.clinic_id,
                                                                            is_approved: 1,
+                                                                           aaa: 2
 
                                                                        }}
                                                                        inputProps={{
