@@ -392,7 +392,7 @@ function Appointment({isPatient}) {
                 for_date: data?.booked_at ? dayjs(data?.booked_at)?.format('YYYY-MM-DD') : dayjs()?.format('YYYY-MM-DD')
 
             }).then((response) => {
-                //console.log(response)
+
                 setOfferState(response?.items?.map((el) => {
                     return {
                         id: el?.id,
@@ -646,7 +646,8 @@ function Appointment({isPatient}) {
                                                                                    lab_tests: undefined,
                                                                                    lab_packages: null,
                                                                                    offer_id: null,
-                                                                                   nursing_tasks: undefined
+                                                                                   nursing_tasks: undefined,
+                                                                                   service_type: e
 
                                                                                })
                                                                                setData((prevState)=>({
@@ -658,7 +659,8 @@ function Appointment({isPatient}) {
                                                                                    lab_tests: null,
                                                                                    lab_packages: null,
                                                                                    offer_id: null,
-                                                                                   nursing_tasks: null
+                                                                                   nursing_tasks: null,
+                                                                                   service_type: e
 
                                                                                }))
 
@@ -751,7 +753,8 @@ function Appointment({isPatient}) {
                                                                                specialty: data?.specialty_id,
                                                                                clinic: data?.clinic_id,
                                                                                is_approved: 1,
-                                                                               service_type: data?.service_type
+                                                                               no_specialty: 1,
+                                                                               service_type: data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ? null : data?.service_type
                                                                            }}
                                                                            customSearchKey={'name'}
                                                                            initialValue={null}
@@ -775,8 +778,11 @@ function Appointment({isPatient}) {
                                                                            return [name, item]
                                                                        }}
                                                                        resourceParams={{
-                                                                           specialty: data.specialty_id,
-                                                                           clinic: data.clinic_id
+                                                                           //specialty: data.specialty_id,
+                                                                           clinic: data.clinic_id,
+                                                                           is_approved: 1,
+                                                                           no_specialty: 2
+
                                                                        }}
                                                                        inputProps={{
                                                                            onChange:(e,data)=> {

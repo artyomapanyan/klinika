@@ -10,12 +10,15 @@ import imgf from '../../../../dist/Img/img-20.png'
 import payment_visa from '../../../../dist/Img/Payments.png'
 import mobile_filter_icon from "../../../../dist/icons/mobile_filter_icon.png";
 import {PayCircleOutlined} from "@ant-design/icons";
+import OfferPrice from "./OfferPrice";
 
 function AppPaymentMethods({
 	setDataState,
 	dataState,
 	responseCodeState,
-	data
+	data,
+	totalState,
+	verifyResponseNationality
 }) {
 	const [paymentMethodState, setPaymentMethodState] = useState('')
 
@@ -47,9 +50,15 @@ function AppPaymentMethods({
 		<div>
 
 					<div>
-						<Space>
+						<Space className={'drawer_header_text'}>
 							<h2 className={'appointment_title'}>{t('Select payment method')}</h2>
 						</Space>
+
+
+						<div className={'mobile_offer_price'}>
+							<OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>
+						</div>
+
 						{data?.clinic?.payment_methods.map((item, key) => {
 							return <div key={key} className={'payment_section'}>
 

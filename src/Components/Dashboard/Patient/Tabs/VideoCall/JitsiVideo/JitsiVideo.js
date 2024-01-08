@@ -30,7 +30,7 @@ function JitsiVideo({data}) {
                 // you can also store it locally to execute commands
             } }
             getIFrameRef = { (iframeRef) => {
-                iframeRef.style.height = '600px';
+                iframeRef.style.height = '700px';
                 iframeRef.style.width = '100%';
 
             } }

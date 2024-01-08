@@ -40,6 +40,7 @@ function PatientCardMedications({tab, dataClinic}) {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
                 appointment: params.id,
+                //actual: 1,
                 per_page: showAll ? null : 3
             }
         ).then((response) => {
@@ -50,6 +51,7 @@ function PatientCardMedications({tab, dataClinic}) {
 
         postResource('prescriptions','single', token,  '', {
             appointment: params.id,
+            //actual: 1,
 
             }
         ).then((response) => {
