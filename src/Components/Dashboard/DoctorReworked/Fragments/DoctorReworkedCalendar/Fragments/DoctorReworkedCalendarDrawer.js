@@ -144,7 +144,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                                        rules={[
                                            {
                                                required: !formState?.lab_packages && !formState?.lab_packages?.length,
-                                               message: 'Please enter Lab test or Lab package'
+                                               message: t('Please enter Lab test or Lab package')
                                            },
                                        ]}
                                        inputType={'resourceSelect'}
@@ -159,7 +159,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                                        rules={[
                                            {
                                                required: !formState?.lab_tests && !formState?.lab_tests?.length,
-                                               message: 'Please enter Lab test or Lab package'
+                                               message: t('Please enter Lab test or Lab package')
                                            },
                                        ]}
                                        inputType={'resourceSelect'}
@@ -186,8 +186,8 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                                                         resourceParams={{
                                                             type: Resources.TaxonomyTypes.SPECIALTY,
                                                             has_parent: 0,
-                                                            doctor_id: authRedux?.user?.id,
-                                                            clinic_id: formState?.clinic_id
+                                                            doctor: authRedux?.user?.id,
+                                                            clinic: formState?.clinic_id
                                                         }}
                     />
                 }

@@ -27,6 +27,7 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
+    const [loadingSubmit1, setLoadingSubmit1] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [editState, setEditState] = useState(false)
     const [editState2, setEditState2] = useState(false)
@@ -57,6 +58,17 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
         postResource('Appointment', 'NotePurpose', token, `${id}/add-notes-and-purpose`, values).then((response) => {
             setBigData(response)
             setLoadingSubmit(false)
+
+        })
+        setEditState(false)
+        setEditState2(false)
+    }
+
+    const onFinish1 = (values) => {
+        setLoadingSubmit1(true)
+        postResource('Appointment', 'NotePurpose', token, `${id}/add-notes-and-purpose`, values).then((response) => {
+            setBigData(response)
+            setLoadingSubmit1(false)
 
         })
         setEditState(false)
@@ -129,6 +141,7 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
 
                                             </div>
                                         }
+                                    </Form>
 
 
                                         {/*{*/}
@@ -152,6 +165,9 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
 
                                         {/*    </div>*/}
                                         {/*}*/}
+                                <Form
+                                    onFinish={onFinish1}
+                                >
                                         <h1 className={'h1'}>{t('Purpose')}</h1>
 
                                         {
@@ -160,12 +176,12 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
                                                     <TextArea placeholder={t("Add notes here")} rows={8}/>
                                                 </Form.Item>
                                                 <div align={'right'}>
-                                                    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                                    <Button loading={loadingSubmit1} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
                                                 </div>
 
                                             </div> : !editState2 ? <div>
                                                 {
-                                                    loadingSubmit ? <Preloader small={50}/> : <div className={'dr_notes_text_div'}>
+                                                    loadingSubmit1 ? <Preloader small={50}/> : <div className={'dr_notes_text_div'}>
                                                         {bigData?.purpose}
                                                     </div>
                                                 }
@@ -178,7 +194,7 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
                                                     <TextArea placeholder={t("Patients condition")} rows={8}/>
                                                 </Form.Item>
                                                 <div align={'right'}>
-                                                    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
+                                                    <Button loading={loadingSubmit1} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>
                                                 </div>
 
                                             </div>
