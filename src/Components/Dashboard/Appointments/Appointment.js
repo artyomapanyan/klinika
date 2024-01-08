@@ -392,7 +392,7 @@ function Appointment({isPatient}) {
                 for_date: data?.booked_at ? dayjs(data?.booked_at)?.format('YYYY-MM-DD') : dayjs()?.format('YYYY-MM-DD')
 
             }).then((response) => {
-                //console.log(response)
+
                 setOfferState(response?.items?.map((el) => {
                     return {
                         id: el?.id,
@@ -405,7 +405,7 @@ function Appointment({isPatient}) {
 
     }, [data?.booked_at])
 
-    console.log(data?.service_type)
+
 
     return (
         <div>
@@ -638,7 +638,6 @@ function Appointment({isPatient}) {
                                                                        rules={[{required: true}]}
                                                                        inputProps={{
                                                                            onChange:(e,data)=> {
-                                                                               console.log(e, 'sss')
                                                                                formRef?.current?.setFieldsValue({
                                                                                    specialty_id:null,
                                                                                    doctor_id: null,
@@ -745,7 +744,7 @@ function Appointment({isPatient}) {
                                                                                specialty: data?.specialty_id,
                                                                                clinic: data?.clinic_id,
                                                                                is_approved: 1,
-                                                                               aaa: 1,
+                                                                               no_specialty: 1,
                                                                                service_type: data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ? null : data?.service_type
                                                                            }}
                                                                            customSearchKey={'name'}
@@ -773,7 +772,7 @@ function Appointment({isPatient}) {
                                                                            //specialty: data.specialty_id,
                                                                            clinic: data.clinic_id,
                                                                            is_approved: 1,
-                                                                           aaa: 2
+                                                                           no_specialty: 2
 
                                                                        }}
                                                                        inputProps={{
