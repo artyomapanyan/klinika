@@ -679,7 +679,7 @@ function Appointment({isPatient}) {
                                               data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
                                               data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
                                                 <Col lg={12} className="gutter-row">
-                                                    <FormInput label={t('Address')} name={'address'} rules={[{required: true}]}/>
+                                                    <FormInput label={t('Address')} name={'address1'} rules={[{required: true}]}/>
                                                 </Col> : <div></div>  
                                             }
                                         </Row>

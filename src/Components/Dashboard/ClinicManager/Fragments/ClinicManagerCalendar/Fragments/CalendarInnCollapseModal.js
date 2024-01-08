@@ -363,7 +363,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                             {
                                 data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
                                 data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
-                                    <FormInput label={t('Address')} name={'address'} rules={[{required: true}]}/> : <div></div>  
+                                    <FormInput label={t('Address')} name={'address1'} rules={[{required: true}]}/> : <div></div>
                             }
                             <FormInput label={t('Offers')} name={'offer_id'}
                                        inputType={'resourceSelect'}

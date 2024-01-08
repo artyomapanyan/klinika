@@ -126,7 +126,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                 {
                     formState.service_type === 'home_visit' || formState.service_type ==='physical_therapy_home_visit' ||
                     formState.service_type === 'laboratory_home_visit' || formState.service_type ==='nursing'?
-                        <FormInput label={t('Address')} name={'address'} rules={[{required: true}]}/> : <div></div> 
+                        <FormInput label={t('Address')} name={'address1'} rules={[{required: true}]}/> : <div></div>
                 }
                 {
                     formState?.service_type === 'nursing' ? <FormInput label={t('Nursing tasks')}
