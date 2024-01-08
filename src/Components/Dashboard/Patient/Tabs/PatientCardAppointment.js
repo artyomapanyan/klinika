@@ -219,8 +219,8 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
                                         {oldPrescriptions.length? 
                                             <div>
                                                 <p style={{fontSize:16}}>The patient is already taking: 
-                                                    {oldPrescriptions.map((el) => {
-                                                        return<span style={{fontSize:16, fontWeight:700}}>
+                                                    {oldPrescriptions.map((el, key) => {
+                                                        return<span key={key} style={{fontSize:16, fontWeight:700}}>
                                                             {el.name}
                                                             {el != oldPrescriptions[oldPrescriptions.length - 1]? ', ' : '' } 
                                                         </span>
