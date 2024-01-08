@@ -159,6 +159,10 @@ function ShowAppointment() {
                                 }
 
                                 <tr>
+                                    <td className={'show_td_1'}>{t('Address')}</td>
+                                    <td className={'show_td_2'}>{data?.address?.address1 || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
+                                </tr>
+                                <tr>
                                     <td className={'show_td_1'}>{t('Clinic')}</td>
                                     <td className={'show_td_2'}>{data?.clinic?.name || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                 </tr>
