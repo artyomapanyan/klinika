@@ -23,11 +23,6 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
                     <div className={'patient_card_header'}>
                         <div>
                             <div style={{fontSize: 16, fontWeight: 700}}>{el?.name}</div>
-                            <div  style={{fontSize:14, fontWeight:400}}>
-                                #{el?.queuePrescription?.id} {' '}
-                                {el?.queue_type === 1 ? `${t('After')}` : el?.queue_type === 2 ? `${t('Before')}` : el?.queue_type === 3 ? `${t('Same day')}` : ""} {' '}
-                                {el?.gap ? `${el?.gap} days` : ''}
-                            </div>
                         </div>
                         {
                             add_update_btns ? <div style={{display: 'flex'}}>

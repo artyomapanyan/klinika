@@ -17,12 +17,13 @@ import {t} from "i18next";
 const { TextArea } = Input;
 
 const resource = 'Appointment'
-function PatientCardAppointment({bigData, id, setBigData}) {
+function PatientCardAppointment({patientId, bigData, id, setBigData}) {
     const formRef = useRef();
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
 
     const [prescriptions, setPrescriptions] = useState([])
+    const [oldPrescriptions, setOldPrescriptions] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
@@ -41,12 +42,12 @@ function PatientCardAppointment({bigData, id, setBigData}) {
     useEffect(() => {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
-            appointment: params.id
-            }
+            patient: patientId,
+        }
             ).then((response) => {
-            setPrescriptions(response?.items)
+            setPrescriptions(response?.items.filter(item => item.appointment_id == params.id))
+            setOldPrescriptions(response?.items.filter(item => item.appointment_id != params.id));
             setLoading(false)
-
         })
     }, [addDeleteState])
 
@@ -215,10 +216,19 @@ function PatientCardAppointment({bigData, id, setBigData}) {
 
                                     <div style={{marginTop:30}}>
 
-                                        {/*<div>*/}
-                                        {/*    <p style={{fontSize:16}}>The patient is already taking: <span style={{fontSize:16, fontWeight:700}}>Crestor 20 mg Tablet 28pcs, Lipanthyl 145 mg , Lorvast Everin 40 mg</span></p>*/}
-
-                                        {/*</div>*/}
+                                        {oldPrescriptions.length? 
+                                            <div>
+                                                <p style={{fontSize:16}}>The patient is already taking: 
+                                                    {oldPrescriptions.map((el, key) => {
+                                                        return<span key={key} style={{fontSize:16, fontWeight:700}}>
+                                                            {el.name}
+                                                            {el != oldPrescriptions[oldPrescriptions.length - 1]? ', ' : '' } 
+                                                        </span>
+                                                        })
+                                                    }
+                                                </p>
+                                            </div>: ''
+                                        }
                                         <Button onClick={showModal} size={'large'} type={'primary'}>{t('Add medications')}</Button>
                                         <div>
                                             <Modal className={'medications_modal'} width={752} title="Add medication" footer={false} open={isModalOpen} onCancel={handleCancel}>
