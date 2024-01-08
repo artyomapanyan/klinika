@@ -49,7 +49,7 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
             setOldPrescriptions(response?.items.filter(item => item.appointment_id != params.id));
             setLoading(false)
         })
-    }, [addDeleteState])
+    }, [addDeleteState, bigData])
 
 
     const onFinish = (values) => {

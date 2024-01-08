@@ -39,8 +39,9 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
     useEffect(() => {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
-            patient: patientId,
-            per_page: showAll ? null : 3
+                appointment: params.id,
+                actual: 1,
+                per_page: showAll ? null : 3
             }
         ).then((response) => {
             setPrescriptions(response?.items)
@@ -50,7 +51,7 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
 
         postResource('prescriptions','single', token,  '', {
             appointment: params.id,
-            //actual: 1,
+            actual: 1,
 
             }
         ).then((response) => {
