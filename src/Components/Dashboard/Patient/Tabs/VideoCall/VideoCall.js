@@ -99,7 +99,7 @@ function VideoCall({data}) {
                 {
                     videoState ? <JitsiVideo data={data}/> : <div className={'video_call_avatr_Text'}>
                         <div>
-                            <Avatar  style={{height:278, width: 200, borderRadius: 8}}  shape="square" icon={<UserOutlined />} />
+                            <Avatar  style={{height:240, width: 200, borderRadius: 8}}  shape="square" icon={<UserOutlined />} />
                         </div>
                         <div className={'video_call_avatar_right_div'}>
                             <div>
@@ -124,20 +124,20 @@ function VideoCall({data}) {
                                 </Modal>
                             </div>
 
-                            <div onClick={getLocalStream} className={'video_call_sound_and_text_div'}>
-                                <div>
-                                    <div className={'video_call_purpule_text'}>
-                                        {t('Test your permissions and devices')}
-                                    </div>
-                                    <div className={'video_call_permission_text'}>
-                                        {t('Before call please check audio and video permissions')}
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className={'video_call_sound_div'}><img src={sound_icon} alt={'sound_icon'}/></div>
+                            {/*<div onClick={getLocalStream} className={'video_call_sound_and_text_div'}>*/}
+                            {/*    <div>*/}
+                            {/*        <div className={'video_call_purpule_text'}>*/}
+                            {/*            {t('Test your permissions and devices')}*/}
+                            {/*        </div>*/}
+                            {/*        <div className={'video_call_permission_text'}>*/}
+                            {/*            {t('Before call please check audio and video permissions')}*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*    <div>*/}
+                            {/*        <div className={'video_call_sound_div'}><img src={sound_icon} alt={'sound_icon'}/></div>*/}
 
-                                </div>
-                            </div>
+                            {/*    </div>*/}
+                            {/*</div>*/}
 
                         </div>
                     </div>
