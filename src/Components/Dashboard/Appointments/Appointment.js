@@ -678,8 +678,9 @@ function Appointment({isPatient}) {
                                             {
                                               data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
                                               data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
-                                                <Col lg={12} className="gutter-row">
-                                                    <FormInput label={t('Address')} name={'address1'} rules={[{required: true}]}/>
+                                                <Col lg={24} className="gutter-row">
+                                                    <FormInput label={t('Visit Address')} name={'address1'} 
+                                                    rules={[{required: true, message: 'Please enter visit address'}]}/>
                                                 </Col> : <div></div>  
                                             }
                                         </Row>
@@ -766,9 +767,6 @@ function Appointment({isPatient}) {
 
                                                 </Row> : data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ?
                                                     <Row>
-                                                        <Col lg={12} className="gutter-row">
-                                                            <div></div>
-                                                        </Col>
                                                         <Col lg={12} className="gutter-row">
                                                             <FormInput label={t('Doctor')} name={'doctor_id'}
                                                                        inputType={'resourceSelect'}

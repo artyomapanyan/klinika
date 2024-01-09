@@ -157,11 +157,15 @@ function ShowAppointment() {
                                         }) : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                     </tr> : null
                                 }
+                                {
+                                    data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
+                                    data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
+                                    <tr>
+                                        <td className={'show_td_1'}>{t('Visit Address')}</td>
+                                        <td className={'show_td_2'}>{data?.address?.address1 || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
+                                    </tr> : null  
+                                }
 
-                                <tr>
-                                    <td className={'show_td_1'}>{t('Address')}</td>
-                                    <td className={'show_td_2'}>{data?.address?.address1 || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
-                                </tr>
                                 <tr>
                                     <td className={'show_td_1'}>{t('Clinic')}</td>
                                     <td className={'show_td_2'}>{data?.clinic?.name || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
