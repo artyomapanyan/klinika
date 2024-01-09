@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {Button, Form, Modal, Spin} from "antd";
+import {Button, Form, Modal, Spin, Tooltip} from "antd";
 import ColorSelect from "../../../../Fragments/ColorSelect";
 import arrow_next from "../../../../../dist/icons/arrow-next.svg";
 import printIcon from "../../../../../dist/icons/printIcon.svg";
@@ -27,6 +27,7 @@ import Preloader from "../../../../Preloader";
 import {t} from "i18next";
 import DateFilterElement from "../../../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_purpule_icon.png";
+import {CheckCircleOutlined} from "@ant-design/icons";
 
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
@@ -203,7 +204,9 @@ function ClinicManagerAppointmentsTable() {
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                 filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
-                                    return <div className={'table_normal_text'}>{record?.doctor?.first} {record?.doctor?.last}</div>
+                                    console.log(record)
+                                    return record?.doctor ? <div className={'table_normal_text'}>{record?.doctor?.first} {record?.doctor?.last}</div> :
+                                        record?.service_type === "nursing" ? 'Nurse' : 'Lab technician'
                                 }
                             },
                             {
@@ -213,7 +216,9 @@ function ClinicManagerAppointmentsTable() {
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                 filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
-                                    return <div className={'table_normal_text'}>{record?.specialty?.title}</div>
+                                    return record?.specialty ? <div className={'table_normal_text'}>{record?.specialty?.title}</div> :
+                                        record?.service_type === "nursing" ? 'Nurse' :
+                                        record?.service_type === "laboratory_home_visit" || record?.service_type === "laboratory_clinic_visit" ? 'Lab technician' : 'Physical therapy'
                                 }
                             },
                             {
@@ -246,7 +251,7 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'offer',
                                 key: 'offer',
                                 render:(e, record) => {
-                                    return record.offer ? <img alt={'Active_icon'} src={Active_icon}/> : <div></div>
+                                    return <Tooltip title={record?.offer?.title}>{record.offer ? <img alt={'Active_icon'} src={Active_icon}/> : ""}</Tooltip>
                                 }
                             },
                             {
