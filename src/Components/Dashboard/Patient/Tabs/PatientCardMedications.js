@@ -13,7 +13,8 @@ function PatientCardMedications({tab}) {
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
 
-    const [prescriptions, setPrescriptions] = useState([])
+    const [acualPrescriptions, setActualPrescriptions] = useState([])
+    const [notActualPrescriptions, setNotActualPrescriptions] = useState([])
     const [searchPrescriptions, setSearchPrescriptions] = useState('')
     const [searchLoading, setSearchLoading] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -23,11 +24,24 @@ function PatientCardMedications({tab}) {
     useEffect(() => {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
-                appointment: params.id,
-                per_page: 50
+            actual: 1,
+
             }
         ).then((response) => {
-            setPrescriptions(response?.items)
+            setActualPrescriptions(response?.items)
+            setLoading(false)
+
+        })
+    }, [tab, addDeleteState])
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('prescriptions','single', token,  '', {
+                not_actual: 1,
+
+            }
+        ).then((response) => {
+            setNotActualPrescriptions(response?.items)
             setLoading(false)
 
         })
@@ -66,10 +80,8 @@ function PatientCardMedications({tab}) {
             <Row gutter={[16]} >
                 {
 
-                    prescriptions.filter((el) => {
-                       return dayjs(el?.end_date?.iso_string) >= dayjs()
-                    }).map((el) => {
-                            return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
+                    acualPrescriptions?.map((el) => {
+                            return <MedicationCards key={el?.id} el={el} setPrescriptions={setActualPrescriptions}
                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
 
                     })
@@ -87,10 +99,8 @@ function PatientCardMedications({tab}) {
 
                      {
 
-                         prescriptions?.filter((el) => {
-                             return dayjs(el?.end_date?.iso_string) < dayjs()
-                         })?.filter((el) => el?.name?.toLowerCase().includes(searchPrescriptions?.toLowerCase()))?.map((el) => {
-                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setPrescriptions}
+                         notActualPrescriptions?.filter((el) => el?.name?.toLowerCase().includes(searchPrescriptions?.toLowerCase()))?.map((el) => {
+                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setNotActualPrescriptions}
                                                      setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
 
                          })

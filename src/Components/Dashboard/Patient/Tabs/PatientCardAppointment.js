@@ -47,8 +47,23 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
                 clinic: bigData?.clinic?.id,
         }
             ).then((response) => {
-            setPrescriptions(response?.items.filter(item => item.appointment_id == params.id))
+            //setPrescriptions(response?.items.filter(item => item.appointment_id == params.id))
             setOldPrescriptions(response?.items.filter(item => item.appointment_id != params.id));
+            setLoading(false)
+        })
+    }, [addDeleteState, bigData])
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('prescriptions','single', token,  '', {
+                appointment: params.id,
+
+            }
+        ).then((response) => {
+            setPrescriptions(response?.items)
+
+
+        }).finally(() => {
             setLoading(false)
         })
     }, [addDeleteState, bigData])
