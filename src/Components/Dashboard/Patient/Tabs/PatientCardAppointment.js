@@ -44,6 +44,7 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
             patient: patientId,
+                clinic: bigData?.clinic?.id,
         }
             ).then((response) => {
             setPrescriptions(response?.items.filter(item => item.appointment_id == params.id))

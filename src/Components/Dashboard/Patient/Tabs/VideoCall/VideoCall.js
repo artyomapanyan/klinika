@@ -119,8 +119,8 @@ function VideoCall({data}) {
                             <div style={{display: 'flex', gap: 10}}>
                                 <Button onClick={onStartCall} className={'video_call_primary_btn'} type={'primary'}>{t('Start call now')}</Button>
                                 <Button onClick={showModal} className={'video_call_primary_btn'} type={'secondary'}>{t('Cancel')}</Button>
-                                <Modal title={t("Are you sure?")} footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                    <CancelReason setIsModalOpen={setIsModalOpen}/>
+                                <Modal key={Math.random()} title={t("Are you sure?")} footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                    <CancelReason setIsModalOpen={setIsModalOpen} data={data}/>
                                 </Modal>
                             </div>
 
