@@ -370,9 +370,9 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                                 phone_country_code: '966'
                                             }))
                                         }
-                                    }} label={t('Address')} name={'address1'} rules={[{
+                                    }} label={t('Visit Address')} name={'address1'} rules={[{
                                         required: true,
-                                        message: 'Please enter address'
+                                        message: 'Please enter visit address'
                                     }]}/> : <div></div>
                             }
                             <FormInput label={t('Offers')} name={'offer_id'}

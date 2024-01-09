@@ -432,9 +432,9 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                         phone_country_code: '966'
                                     }))
                                 }
-                            }} label={t('Address')} name={'address1'} rules={[{
+                            }} label={t('Visit Address')} name={'address1'} rules={[{
                                 required: true,
-                                message: 'Please enter address'
+                                message: 'Please enter visit address'
                             }]}/> : <div></div>
                     }
 
