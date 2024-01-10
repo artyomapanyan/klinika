@@ -27,6 +27,9 @@ import arrow_next from "../../dist/icons/arrow-next.svg";
 import ResourceTableHeader from "./ResourceTableHeader";
 import SwitchStatus from "./SwitchStatus";
 import {t} from "i18next";
+import printIcon from "../../dist/icons/printIcon.svg";
+
+let resourceInvoice = 'Invoice'
 
 function ResourceTable ({
                             resource, tableColumns,
@@ -56,6 +59,7 @@ function ResourceTable ({
                             andStatus=false,
                             newDelete=false,
                             invoiceSwitches=false,
+    pdfPrint=false,
     tableSmall=false,
     paginationResourceTable = true,
     editStyle=false,
@@ -73,6 +77,8 @@ function ResourceTable ({
 
     const {t} = useTranslation()
     let navigate = useNavigate();
+
+    const [pdfState, setPdfState] = useState(false);
 
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params,false,false,false,getAll)
@@ -162,6 +168,27 @@ function ResourceTable ({
 
     },[data])
 
+    const handleExportPDF =(record)=>{
+        setPdfState(true)
+        axios.request({
+            url: `${api[resourceInvoice].exportPdf.url}/${record.id}/export-pdf`,
+            method: api[resourceInvoice].exportPdf.method,
+            headers: {
+                'Authorization': token,
+            },
+            responseType: 'blob',
+
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', resourceInvoice+'.pdf');
+            document.body.appendChild(link);
+            link.click();
+            setPdfState(false);
+        });
+    }
+
 
 
     const columns = useMemo(() => {
@@ -183,6 +210,13 @@ function ResourceTable ({
 
             ...(hideActions?[]:[{
                 dataIndex: 'id', title: t('Actions'), key: 'id', render: (e,record) => <Space>
+
+                    {
+                        pdfPrint ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}>
+                            <img alt={'icons'} src={printIcon}/>
+                        </Button> : <div></div>
+                    }
+
 
                     {!except.edit ? <Tooltip title={editStyle ? 'Schedule an Appointment' : "Update"}>
                         {

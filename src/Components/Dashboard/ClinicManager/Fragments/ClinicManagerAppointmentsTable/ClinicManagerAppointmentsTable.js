@@ -162,16 +162,18 @@ function ClinicManagerAppointmentsTable() {
                                 from:dates[0].format('YYYY-MM-DD'),
                                 to:dates[1].format('YYYY-MM-DD'),
                             }))}  hideData={true} date={dateWeek} setDate={setDateWeek} showMonth={true}/>}
-                        initialParams={{
-                            from:dateWeek[0].format('YYYY-MM-DD'),
-                            to:dateWeek[1].format('YYYY-MM-DD'),
-
-                        }}
+                        // initialParams={{
+                        //     from:dateWeek[0].format('YYYY-MM-DD'),
+                        //     to:dateWeek[1].format('YYYY-MM-DD'),
+                        //
+                        // }}
 
                         resourceTablemarginTop={true}
                         initialParams={{
                             order_by: 'booked_at',
-                            order: 'desc'
+                            order: 'desc',
+                            from:dateWeek[0].format('YYYY-MM-DD'),
+                            to:dateWeek[1].format('YYYY-MM-DD'),
                         }}
                         noHeader={true}
                         hideActions={true}
@@ -243,8 +245,11 @@ function ClinicManagerAppointmentsTable() {
                             },
                             {
                                 title: t('Price'),
-                                dataIndex: 'price',
-                                key: 'price',
+                                dataIndex: 'total_price',
+                                key: 'total_price',
+                                render:(e, record) => {
+                                    return <div>{record?.total_price} {t('SAR')}</div>
+                                }
                             },
                             {
                                 title: t('Offer'),
