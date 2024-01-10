@@ -5,7 +5,6 @@ import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
-import dayjs from "dayjs";
 import search_icon_black from "../../../../dist/icons/search_icon_black.png";
 import {t} from "i18next";
 
@@ -19,7 +18,7 @@ function PatientCardMedications({tab}) {
     const [searchLoading, setSearchLoading] = useState(false)
     const [loading, setLoading] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
-    const [search,setSearch] = useState('');
+
 
     useEffect(() => {
         setLoading(true)
@@ -66,8 +65,6 @@ function PatientCardMedications({tab}) {
     }
 
 
-
-    //.filter((e) => e?.name?.toLowerCase().includes(search?.toLowerCase()))
 
 
 

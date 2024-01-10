@@ -21,7 +21,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   const customWorkingHouers = {
-    monday: [{day: 'monday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
+    monday: [{day: 'monday', opens_at: '11:00', closes_at: '00:00', is_day_off: false, type: type}],
     tuesday: [{day: 'tuesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
     wednesday: [{day: 'wednesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
     thursday: [{day: 'thursday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
@@ -30,6 +30,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
     sunday: [{day: 'sunday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
   }
   const handleFilterData = (data) => {
+
     let newData = {...data}
 
     Object.keys(newData)?.forEach(key => {
@@ -37,6 +38,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
     })
     return newData
   }
+
 
 
   useEffect(() => {
@@ -51,7 +53,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
     if (data.length !== 0) {
       setWorkingData(handleFilterData(data))
     } else {
-      setWorkingData(customWorkingHouers)
+      setWorkingData(handleFilterData(clinicHoursesDataNew))
     }
 
   }, [data, switchChange]);

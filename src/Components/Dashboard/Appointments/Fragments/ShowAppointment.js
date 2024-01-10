@@ -137,15 +137,15 @@ function ShowAppointment() {
                                     data?.lab_packages?.length > 0 || data?.lab_tests?.length > 0 ? <tr>
                                         <td className={'show_td_1'}>{t('Lab tests')}</td>
                                         <td className={'show_td_2'}>{data?.lab_tests?.length > 0 ? data?.lab_tests?.map((el, i) => {
-                                            return el?.name + (i === data?.lab_tests?.length - 1 ? '' : ', ')
+                                            return <span key={i}>{el?.name + (i === data?.lab_tests?.length - 1 ? '' : ', ')}</span>
                                         }) : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                     </tr> : null
                                 }
                                 {
                                     data?.lab_packages?.length > 0 || data?.lab_tests?.length > 0 ? <tr>
                                         <td className={'show_td_1'}>{t('Lab packages')}</td>
-                                        <td className={'show_td_2'}>{data?.lab_packages?.length > 0 ? data?.lab_packages?.map((el) => {
-                                            return el?.name
+                                        <td className={'show_td_2'}>{data?.lab_packages?.length > 0 ? data?.lab_packages?.map((el, i) => {
+                                            return <span key={i}>{el?.name}</span>
                                         }) : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                     </tr> : null
                                 }
@@ -153,7 +153,7 @@ function ShowAppointment() {
                                     data?.nursing_tasks?.length > 0 ? <tr>
                                         <td className={'show_td_1'}>{t('Nursing tasks')}</td>
                                         <td className={'show_td_2'}>{data?.nursing_tasks?.length > 0 ? data?.nursing_tasks?.map((el, i) => {
-                                            return el?.name + (i === data?.nursing_tasks?.length - 1 ? '' : ', ')
+                                            return <span key={i}>{el?.name + (i === data?.nursing_tasks?.length - 1 ? '' : ', ')}</span>
                                         }) : <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
                                     </tr> : null
                                 }
@@ -286,8 +286,8 @@ function ShowAppointment() {
 
 
                                     <td>{data?.prescriptions ? <div style={{display: 'flex', gap: 20}}>{
-                                        data?.prescriptions?.map((el) => {
-                                            return <div className={'patient_card'} style={{width: 300}}>
+                                        data?.prescriptions?.map((el, i) => {
+                                            return <div key={i} className={'patient_card'} style={{width: 300}}>
                                                 <div className={'patient_card_header'}>
                                                     <div>
                                                         <div style={{fontSize: 16, fontWeight: 700}}>{el?.name}</div>

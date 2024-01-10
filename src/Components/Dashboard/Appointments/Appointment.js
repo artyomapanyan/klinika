@@ -754,7 +754,6 @@ function Appointment({isPatient}) {
                                                                                specialty: data?.specialty_id,
                                                                                clinic: data?.clinic_id,
                                                                                is_approved: 1,
-                                                                               no_specialty: 1,
                                                                                service_type: data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ? null : data?.service_type
                                                                            }}
                                                                            customSearchKey={'name'}
@@ -765,7 +764,10 @@ function Appointment({isPatient}) {
 
                                                     </Col>
 
-                                                </Row> : data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ?
+                                                </Row> : <div></div>
+                                        }
+                                        {
+                                            data?.service_type === 'physical_therapy_home_visit' || data?.service_type === 'physical_therapy_clinic_visit' ?
                                                     <Row>
                                                         <Col lg={12} className="gutter-row">
                                                             <FormInput label={t('Doctor')} name={'doctor_id'}
@@ -776,10 +778,9 @@ function Appointment({isPatient}) {
                                                                            return [name, item]
                                                                        }}
                                                                        resourceParams={{
-                                                                           //specialty: data.specialty_id,
                                                                            clinic: data.clinic_id,
                                                                            is_approved: 1,
-                                                                           no_specialty: 2
+                                                                           service_type: data?.service_type
 
                                                                        }}
                                                                        inputProps={{
@@ -805,7 +806,10 @@ function Appointment({isPatient}) {
                                                                        initialData={[]}/>
                                                         </Col>
 
-                                                    </Row> : data?.service_type === 'laboratory_home_visit' || data?.service_type === 'laboratory_clinic_visit' ?
+                                                    </Row> : <div></div>
+                                        }
+                                        {
+                                            data?.service_type === 'laboratory_home_visit' || data?.service_type === 'laboratory_clinic_visit' ?
                                                         <Row>
                                                             <Col lg={12} className="gutter-row">
                                                                 <FormInput label={t('Lab Tests')}
@@ -873,7 +877,10 @@ function Appointment({isPatient}) {
                                                                            }}
                                                                            resource={'LabPackage'}/>
                                                             </Col>
-                                                        </Row> : data?.service_type === 'nursing' ? <Row>
+                                                        </Row> : <div></div>
+                                        }
+                                        {
+                                            data?.service_type === 'nursing' ? <Row>
                                                             <Col lg={24} className="gutter-row">
                                                                 <FormInput label={t('Nursing tasks')}
                                                                            name={'nursing_tasks'}
