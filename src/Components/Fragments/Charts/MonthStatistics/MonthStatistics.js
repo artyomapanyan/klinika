@@ -45,23 +45,6 @@ function MonthStatistics () {
 
                   </div>
                   <div align={'center'} className={styles.itemGroup}>
-                      <div className={styles.numbers}>{data?.rating}</div>
-                      <div className={styles.text}>{dayjs().month(ownerClinics).format('MMMM')} Rating</div>
-
-                      {
-                          language === 'en' ? <span className={styles.bottonLine_center}></span> : <span></span>
-                      }
-                      <span className={styles.bottonLine}></span>
-                  </div>
-                  <div align={'center'} className={styles.itemGroup}>
-                      <div className={styles.numbers}>{data?.clinic_visit_appointments_count}</div>
-                      <div className={styles.text}>Reviews</div>
-                      <span className={styles.bottonLine}></span>
-                      {
-                          language === 'en' ? <span></span> : <span className={styles.bottonLine_center}></span>
-                      }
-                  </div>
-                  <div align={'center'} className={styles.itemGroup}>
                       <div className={styles.numbers}>{data?.telehealth_appointments_count}</div>
                       <div className={styles.text}>Telehealth appointments</div>
 

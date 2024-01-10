@@ -10,6 +10,8 @@ import message_icon from "../../../../../dist/icons/message_icon.png";
 import Preloader from "../../../../Preloader";
 import {t} from "i18next";
 import {useNavigate} from "react-router";
+import ResourceLinks from "../../../../ResourceLinks";
+
 
 const count = 6;
 
@@ -40,6 +42,10 @@ function DoctorReworkedNotifications() {
         navigate('/dashboard/notifications')
     }
 
+    const goToAppointment = (appointmentId) => {
+        if(appointmentId)
+            navigate(ResourceLinks['Appointment'] + appointmentId + '/doctor');
+     }
 
 
     return (
@@ -55,7 +61,7 @@ function DoctorReworkedNotifications() {
                         return <div key={key}>
                             <div className={'dashed_lini'}></div>
 
-                            <div className={'dr_rew_notifications'}>
+                            <div className={'dr_rew_notifications'} onClick={() => goToAppointment(el?.data?.id)} style={{cursor: 'pointer'}}>
                                 <div>
                                     {
                                         el?.data?.icon === "calendar-check" ? <img src={checked_calendar_icon}
