@@ -26,6 +26,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [clinicHoursesDataNew, setClinicHoursesDataNew] = useState({})
 
 
+
     useEffect(()=>{
 
         postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
@@ -39,6 +40,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
             setClinichoursData(response)
 
+
         })
 
     }, [id,type]);
@@ -48,14 +50,12 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
         postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
             setClinicHoursesDataNew(response)
 
-
         })
 
     }, [id,type]);
 
 
     useEffect(() => {
-
         setLoading(true)
         Promise.all([
             postResource(resource,'WorkingHours',token,id,{service:excludedGet[type]??type}),
@@ -64,8 +64,8 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
         ])
        .then(responses => {
 
+           setData(responses[0]?.working_hours)
 
-            setData(responses[0]?.working_hours)
             setDocData({
                 price:responses[0]?.clinic_doctor[keys[1]],
                 status:responses[0]?.clinic_doctor[keys[0]]
@@ -84,6 +84,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
         })
 
     },[type,id]);
+
 
     const onFinish = (values,prevValues) => {
 
