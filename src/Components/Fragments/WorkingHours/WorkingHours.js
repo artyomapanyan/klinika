@@ -12,7 +12,21 @@ import dayjs from "dayjs";
 
 let res = "Clinic";
 
-function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, doctorData, handleCancel, sincWitMain=true, clinichoursData,timeLimits, switchStatus = false, clinicHoursesDataNew}) {
+function WorkingHours({onFinish,
+                        data,
+                        loading,
+                        type,
+                        modalId,
+                        isDoctorHours,
+                        doctorData,
+                        handleCancel,
+                        sincWitMain=true,
+                        clinichoursData,
+                        timeLimits,
+                        switchStatus = false,
+                        clinicHoursesDataNew,
+                        doctorHoursModal = true
+}) {
   const navigate = useNavigate();
   const formRef = useRef();
   const [workingData, setWorkingData] = useState({})
@@ -50,11 +64,22 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   useEffect(() => {
-    if (data.length !== 0) {
-      setWorkingData(handleFilterData(data))
+    if(doctorHoursModal) {
+      if (data.length !== 0) {
+        setWorkingData(handleFilterData(data))
+      } else {
+        setWorkingData(customWorkingHouers)
+      }
     } else {
-      setWorkingData(handleFilterData(clinicHoursesDataNew))
+      if (data.length !== 0) {
+        setWorkingData(handleFilterData(data))
+      } else if(clinicHoursesDataNew.length) {
+        setWorkingData(handleFilterData(clinicHoursesDataNew))
+      } else {
+        setWorkingData(customWorkingHouers)
+      }
     }
+
 
   }, [data, switchChange]);
 
