@@ -31,7 +31,8 @@ function LabPackageModal({isModalOpen,onCreate,labPackagesState, clinicId, loadi
                                        initialData={isModalOpen.lab_package?[isModalOpen?.lab_package]:[]}
                                        //resourceData={labPackagesState}
                                        resourceParams={{
-                                           doesnt_have_clinic: clinicId
+                                           doesnt_have_clinic: clinicId,
+                                           status: 2
                                        }}
                                        resource={'LabPackage'}/>
 

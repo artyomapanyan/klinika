@@ -841,7 +841,8 @@ function Appointment({isPatient}) {
                                                                            ]}
                                                                            inputType={'resourceSelect'}
                                                                            resourceParams={{
-                                                                               clinic: data.clinic_id
+                                                                               clinic: data.clinic_id,
+                                                                               status: 2
                                                                            }}
 
                                                                            resource={'LabTest'}/>
@@ -855,7 +856,8 @@ function Appointment({isPatient}) {
                                                                            }]}
                                                                            inputType={'resourceSelect'}
                                                                            resourceParams={{
-                                                                               clinic: data.clinic_id
+                                                                               clinic: data.clinic_id,
+                                                                               status: 2
                                                                            }}
                                                                            inputProps={{
                                                                                onChange:(e,data)=> {

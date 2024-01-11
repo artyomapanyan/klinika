@@ -31,7 +31,8 @@ function LabTestsModal({isModalOpen,onCreate,labTestState, loading,handleClose, 
                                    rules={[{required: true}]}
                                    inputType={'resourceSelect'}
                                    resourceParams={{
-                                       doesnt_have_clinic: clinicId
+                                       doesnt_have_clinic: clinicId,
+                                       status: 2
                                    }}
 
                                    initialValue={isModalOpen?.lab_test?.id}

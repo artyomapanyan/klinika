@@ -21,7 +21,7 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
 
 
   const customWorkingHouers = {
-    monday: [{day: 'monday', opens_at: '11:00', closes_at: '00:00', is_day_off: false, type: type}],
+    monday: [{day: 'monday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
     tuesday: [{day: 'tuesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
     wednesday: [{day: 'wednesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
     thursday: [{day: 'thursday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
@@ -52,8 +52,10 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
   useEffect(() => {
     if (data.length !== 0) {
       setWorkingData(handleFilterData(data))
-    } else {
+    } else if(Object?.keys(clinicHoursesDataNew)?.length) {
       setWorkingData(handleFilterData(clinicHoursesDataNew))
+    } else {
+      setWorkingData(customWorkingHouers)
     }
 
   }, [data, switchChange]);
