@@ -371,7 +371,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                    ]}
                                                    inputType={'resourceSelect'}
                                                    resourceParams={{
-                                                       clinic: clinicID
+                                                       clinic: clinicID,
+                                                       status: 2
                                                    }}
                                                    inputProps={{
                                                        mode: 'multiple',
@@ -403,7 +404,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                    }]}
                                                    inputType={'resourceSelect'}
                                                    resourceParams={{
-                                                       clinic: clinicID
+                                                       clinic: clinicID,
+                                                       status: 2
                                                    }}
                                                    inputProps={{
                                                        //mode: 'multiple',

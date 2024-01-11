@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {Button, Form, Modal, Spin} from "antd";
+import {Button, Form, Modal, Spin, Tooltip} from "antd";
 import ColorSelect from "../../../../Fragments/ColorSelect";
 import arrow_next from "../../../../../dist/icons/arrow-next.svg";
 import printIcon from "../../../../../dist/icons/printIcon.svg";
@@ -27,6 +27,7 @@ import Preloader from "../../../../Preloader";
 import {t} from "i18next";
 import DateFilterElement from "../../../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_purpule_icon.png";
+import {CheckCircleOutlined} from "@ant-design/icons";
 
 let resource = 'Appointment';
 function ClinicManagerAppointmentsTable() {
@@ -161,16 +162,18 @@ function ClinicManagerAppointmentsTable() {
                                 from:dates[0].format('YYYY-MM-DD'),
                                 to:dates[1].format('YYYY-MM-DD'),
                             }))}  hideData={true} date={dateWeek} setDate={setDateWeek} showMonth={true}/>}
-                        initialParams={{
-                            from:dateWeek[0].format('YYYY-MM-DD'),
-                            to:dateWeek[1].format('YYYY-MM-DD'),
-
-                        }}
+                        // initialParams={{
+                        //     from:dateWeek[0].format('YYYY-MM-DD'),
+                        //     to:dateWeek[1].format('YYYY-MM-DD'),
+                        //
+                        // }}
 
                         resourceTablemarginTop={true}
                         initialParams={{
                             order_by: 'booked_at',
-                            order: 'desc'
+                            order: 'desc',
+                            from:dateWeek[0].format('YYYY-MM-DD'),
+                            to:dateWeek[1].format('YYYY-MM-DD'),
                         }}
                         noHeader={true}
                         hideActions={true}
@@ -203,7 +206,9 @@ function ClinicManagerAppointmentsTable() {
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                 filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
-                                    return <div className={'table_normal_text'}>{record?.doctor?.first} {record?.doctor?.last}</div>
+                                    console.log(record)
+                                    return record?.doctor ? <div className={'table_normal_text'}>{record?.doctor?.first} {record?.doctor?.last}</div> :
+                                        record?.service_type === "nursing" ? 'Nurse' : 'Lab technician'
                                 }
                             },
                             {
@@ -213,7 +218,9 @@ function ClinicManagerAppointmentsTable() {
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                 filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
-                                    return <div className={'table_normal_text'}>{record?.specialty?.title}</div>
+                                    return record?.specialty ? <div className={'table_normal_text'}>{record?.specialty?.title}</div> :
+                                        record?.service_type === "nursing" ? 'Nurse' :
+                                        record?.service_type === "laboratory_home_visit" || record?.service_type === "laboratory_clinic_visit" ? 'Lab technician' : 'Physical therapy'
                                 }
                             },
                             {
@@ -238,15 +245,18 @@ function ClinicManagerAppointmentsTable() {
                             },
                             {
                                 title: t('Price'),
-                                dataIndex: 'price',
-                                key: 'price',
+                                dataIndex: 'total_price',
+                                key: 'total_price',
+                                render:(e, record) => {
+                                    return <div>{record?.total_price} {t('SAR')}</div>
+                                }
                             },
                             {
                                 title: t('Offer'),
                                 dataIndex: 'offer',
                                 key: 'offer',
                                 render:(e, record) => {
-                                    return record.offer ? <img alt={'Active_icon'} src={Active_icon}/> : <div></div>
+                                    return <Tooltip title={record?.offer?.title}>{record.offer ? <img alt={'Active_icon'} src={Active_icon}/> : ""}</Tooltip>
                                 }
                             },
                             {
@@ -254,7 +264,7 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'actions',
                                 key: 'actions',
                                 render: (e, record) => {
-                                    return record.status == 2 ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button> : record.status == 3 ? <div></div> : <div><a href={`tel:${record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`sms:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
+                                    return record.status == 2 ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button> : record.status == 3 ? <div></div> : <div><a href={`tel:+${record?.patient?.phone_country_code + record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`mailto:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
                                 }
                             },
                             {

@@ -76,7 +76,7 @@ function Invoices() {
                                    edit: PermCheck(`Invoice:update`) ? false : true
                                }}
                                updateTable={updateTable}
-
+                               pdfPrint={true}
                                customHeader={(props)=> {
 
                                    return <div  style={{display: 'flex', gap: 15, alignItems: 'center', justifyContent: 'flex-end', width: '100%', marginBottom: -30, marginTop:15}}>
@@ -165,14 +165,14 @@ function Invoices() {
                                    //     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
                                    //     render:(e,record)=><ColorSelect items={Resource.StatusInvoices} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                                    // },
-                                   {
-                                       title: '',
-                                       dataIndex: 'pdf',
-                                       key: 'pdf',
-                                       render: (e, record) => {
-                                           return <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button>
-                                       }
-                                   },
+                                   // {
+                                   //     title: '',
+                                   //     dataIndex: 'pdf',
+                                   //     key: 'pdf',
+                                   //     render: (e, record) => {
+                                   //         return <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button>
+                                   //     }
+                                   // },
 
                                ]} title={t('Invoices')}/>
             </div>

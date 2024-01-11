@@ -42,7 +42,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
         if(values?.service_type === "physical_therapy_home_visit" || values?.service_type === "telehealth" || values?.service_type === "clinic_visit" || values?.service_type === "home_visit" || values?.service_type === "physical_therapy_clinic_visit") {
             values.doctor_id = authRedux?.user?.id
         }
-        console.log(values)
+
 
 
         createResource('Appointment', values, token).then((response) => {
@@ -113,8 +113,12 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                 <FormInput label={t('Clinic')} name={'clinic_id'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
+                           resourceParams={{
+                               active:2
+                           }}
                            initialValue={null}
-                           initialData={role === 'doctor' ? authRedux?.clinics : [dataClinic?.clinic]}
+                           initialData={[]}
+                           resource={'Clinic'}
 
                 />
                 {formState?.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
@@ -135,7 +139,8 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                 inputProps={{mode: 'multiple'}}
                 rules={[{required: true}]}
                 resourceParams={{
-                    clinic: formState.clinic_id
+                    clinic: formState.clinic_id,
+                    status: 2
                 }}
                 inputType={'resourceSelect'}
                 resource={'NursingTask'}/> : formState?.service_type === 'laboratory_home_visit' || formState?.service_type === 'laboratory_clinic_visit' ? <div>
@@ -150,7 +155,8 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                                        ]}
                                        inputType={'resourceSelect'}
                                        resourceParams={{
-                                           clinic: formState.clinic_id
+                                           clinic: formState.clinic_id,
+                                           status: 2
                                        }}
                                        inputProps={{mode: 'multiple'}}
                                        resource={'LabTest'}/>
@@ -174,7 +180,8 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                                            }
                                        }}
                                        resourceParams={{
-                                           clinic: formState.clinic_id
+                                           clinic: formState.clinic_id,
+                                           status: 2
                                        }}
                                        resource={'LabPackage'}/>
 
