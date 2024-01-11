@@ -52,10 +52,8 @@ function WorkingHours({onFinish, data, loading, type, modalId, isDoctorHours, do
   useEffect(() => {
     if (data.length !== 0) {
       setWorkingData(handleFilterData(data))
-    } else if(Object?.keys(clinicHoursesDataNew)?.length) {
-      setWorkingData(handleFilterData(clinicHoursesDataNew))
     } else {
-      setWorkingData(customWorkingHouers)
+      setWorkingData(handleFilterData(clinicHoursesDataNew))
     }
 
   }, [data, switchChange]);
