@@ -50,19 +50,6 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
         }).finally(() => {
             setLoading(false)
         })
-
-        // postResource('prescriptions','single', token,  '', {
-        //     patient: patientId,
-        //     actual: 1,
-
-        //     }
-        // ).then((response) => {
-        //     setItemsLength(response?.items)
-
-
-        // }).finally(() => {
-        //     setLoading(false)
-        // })
     }, [tab, addDeleteState, prescriptionPerPage, showAll])
 
 
