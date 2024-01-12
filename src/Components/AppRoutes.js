@@ -14,6 +14,7 @@ import OfferMap from "./AllOffers/ThankYouOffer/Fragments/OfferMap";
 /**offer new version */
 import OfferBookNew from "./AllOffers/OfferBookNew/OfferBookNew";
 import NewThankYouOffer from "./AllOffers/NewThankYouOffer/NewThankYouOffer";
+import AccountDeleteProcess from "./AccountDeleteProcess/AccountDeleteProcess";
 
 
 
@@ -31,6 +32,7 @@ function AppRoutes(){
                 {/*<Route path={'thank-you'} element={<ThankYouOffer/>}></Route>*/}
             <Route path={'offers/:id/thank-you'} element={<NewThankYouOffer/>}></Route>
                 <Route path={'maps'} element={<OfferMap/>}></Route>
+            <Route path={'account_delete_process'} element={<AccountDeleteProcess/>}></Route>
                  
           
              

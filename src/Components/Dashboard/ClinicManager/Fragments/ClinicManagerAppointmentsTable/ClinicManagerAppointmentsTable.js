@@ -219,8 +219,8 @@ function ClinicManagerAppointmentsTable() {
                                 filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
                                     return record?.specialty ? <div className={'table_normal_text'}>{record?.specialty?.title}</div> :
-                                        record?.service_type === "nursing" ? 'Nurse' :
-                                        record?.service_type === "laboratory_home_visit" || record?.service_type === "laboratory_clinic_visit" ? 'Lab technician' : 'Physical therapy'
+                                        record?.service_type === "nursing" ? 'Nursing' :
+                                        record?.service_type === "laboratory_home_visit" || record?.service_type === "laboratory_clinic_visit" ? 'laboratory' : 'Physical therapy'
                                 }
                             },
                             {
@@ -264,7 +264,7 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'actions',
                                 key: 'actions',
                                 render: (e, record) => {
-                                    return record.status == 2 ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button> : record.status == 3 ? <div></div> : <div><a href={`tel:+${record?.patient?.phone_country_code + record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`mailto:${record?.patient?.phone_number}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
+                                    return record.status == 2 ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button> : record.status == 3 ? <div></div> : <div><a href={`tel:+${record?.patient?.phone_country_code + record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`mailto:${record?.patient?.email}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
                                 }
                             },
                             {
