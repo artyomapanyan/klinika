@@ -256,6 +256,16 @@ let api = {
         }
     },
     {
+        url: 'public/delete-account-request',
+        resource: 'PublicDeleteAccountRequest',
+        custom: {
+            DeleteAccountRequest:{
+                url: `${endpoint}${version}/public/delete-account-request`,
+                method: 'POST',
+            },
+        }
+    },
+    {
         url: 'patients/send-verification-code',
         resource: 'PatientsVerificationCode',
         custom: {

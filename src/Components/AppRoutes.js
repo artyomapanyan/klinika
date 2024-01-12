@@ -14,6 +14,7 @@ import OfferMap from "./AllOffers/ThankYouOffer/Fragments/OfferMap";
 /**offer new version */
 import OfferBookNew from "./AllOffers/OfferBookNew/OfferBookNew";
 import NewThankYouOffer from "./AllOffers/NewThankYouOffer/NewThankYouOffer";
+import AccountDeleteProcess from "./AccountDeleteProcess/AccountDeleteProcess";
 
 
 
