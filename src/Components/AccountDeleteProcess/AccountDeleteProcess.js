@@ -1,7 +1,7 @@
 import './AccountDeleteProcess.sass'
 import clinic_logo_only_bird from "../../dist/Img/clinic_logo_only_bird.png";
 import React, {useState} from "react";
-import {Button, Form, Input} from "antd";
+import {Button, Form} from "antd";
 import {t} from "i18next";
 import FormInput from "../../Components/Fragments/FormInput";
 import {postResource} from "../Functions/api_calls";
@@ -18,11 +18,7 @@ function AccountDeleteProcess() {
 
         })
     }
-    const handleMapItems = (item,name)=>{
-        name = item.phone_code?`(${item.phone_code}) ${item.name} `:null
-        item.id = item.phone_code
-        return [name,item]
-    }
+
 
 
     return <div className={'delete_account_big_div'}>
@@ -93,33 +89,6 @@ function AccountDeleteProcess() {
 
                                 }]}/>
 
-                                {/*<div style={{display:"flex"}}>*/}
-                                {/*    <div style={{width:'50%'}}>*/}
-                                {/*        <FormInput  label={t('Account email')} name={'email'} rules={[{*/}
-                                {/*            required: true,*/}
-                                {/*            message: 'Please enter Account email'*/}
-                                {/*        }]}/>*/}
-                                {/*    </div>*/}
-                                {/*    <div style={{width:'50%'}}>*/}
-                                {/*        <FormInput  label={t('Your name')} name={'name'} rules={[{*/}
-                                {/*            required: true,*/}
-                                {/*            message: 'Please enter Your name'*/}
-                                {/*        }]}/>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-
-                                {/*<div style={{display:"flex"}}>*/}
-                                {/*    <div style={{width:'50%'}} className={'delete_account_country_code_div'}>*/}
-                                {/*        <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}*/}
-                                {/*                   rules={[{required: true}]}*/}
-                                {/*                   handleMapItems={handleMapItems}*/}
-                                {/*                   customSearchKey={'phone_code'}*/}
-                                {/*                   resource={'PublicCountry'}/>*/}
-                                {/*    </div>*/}
-                                {/*    <div style={{width:'50%'}}>*/}
-                                {/*        <FormInput maxLength={10} label={t('Phone number')} name={'phone_number'} rules={[{required: true}]} />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
                             </div>
                             <div>
                                 Also, please tell us the reason you leave us. It is important for us to grow
@@ -138,15 +107,6 @@ function AccountDeleteProcess() {
                     <div>
                         We hope that you will reconsider your decision and keep using our service. We value your feedback and we are always working to improve our service. Thank you for choosing Klinika!😊
                     </div>
-
-
-
-
-
-
-
-
-
 
 
                 </div>
