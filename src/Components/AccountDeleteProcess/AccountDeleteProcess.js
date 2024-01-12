@@ -20,7 +20,6 @@ function AccountDeleteProcess() {
     }
 
 
-
     return <div className={'delete_account_big_div'}>
         <div className={'delete_account_inn_big_div'} >
             <Form
