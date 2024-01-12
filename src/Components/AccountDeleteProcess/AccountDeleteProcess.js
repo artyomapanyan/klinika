@@ -47,9 +47,11 @@ function AccountDeleteProcess() {
                 <div className={'delete_account_information_text_big_div'}>
 
                     <div style={{lineHeight: 1.5}}>
+
                            We understand that you want to delete your account and all the information from our service,
                         but we kindly ask you not to do so. This is because this information is medical and important for your health.
                             We respect your privacy and we want to help you take care of yourself.
+
 
                     </div>
                     <div>
@@ -81,7 +83,7 @@ function AccountDeleteProcess() {
                         2) We will review your request within 5 days and contact you by email to discuss the way of deleting your information.
                     </div>
                     {
-                        loading ? <Preloader/> : <div>
+                        loading ? <Preloader/> : <div dir='ltr'>
                             <div style={{marginTop: 15}}>
                                 <FormInput  label={t('Account email')} name={'email'} rules={[{
                                     required: true,
@@ -93,9 +95,9 @@ function AccountDeleteProcess() {
                             <div>
                                 Also, please tell us the reason you leave us. It is important for us to grow
                             </div>
-                            <div className={'delete_account_textarea_div'}>
+                            <div className={'delete_account_textarea_div'} dir='ltr'>
 
-                                 <FormInput textareaHeight={true} inputType={'textArea'} label={t('Reason for deleting account')} name={'message'} />
+                                <FormInput textareaHeight={true} inputType={'textArea'} label={t('Reason for deleting account')} name={'message'} />
 
                             </div>
                         </div>
