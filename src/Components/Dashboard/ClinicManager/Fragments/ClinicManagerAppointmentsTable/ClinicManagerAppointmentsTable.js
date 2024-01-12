@@ -219,8 +219,8 @@ function ClinicManagerAppointmentsTable() {
                                 filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
                                     return record?.specialty ? <div className={'table_normal_text'}>{record?.specialty?.title}</div> :
-                                        record?.service_type === "nursing" ? 'Nurse' :
-                                        record?.service_type === "laboratory_home_visit" || record?.service_type === "laboratory_clinic_visit" ? 'Lab technician' : 'Physical therapy'
+                                        record?.service_type === "nursing" ? 'Nursing' :
+                                        record?.service_type === "laboratory_home_visit" || record?.service_type === "laboratory_clinic_visit" ? 'laboratory' : 'Physical therapy'
                                 }
                             },
                             {
