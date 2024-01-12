@@ -81,7 +81,7 @@ function AccountDeleteProcess() {
                         2) We will review your request within 5 days and contact you by email to discuss the way of deleting your information.
                     </div>
                     {
-                        loading ? <Preloader/> : <div>
+                        loading ? <Preloader/> : <div dir='ltr'>
                             <div style={{marginTop: 15}}>
                                 <FormInput  label={t('Account email')} name={'email'} rules={[{
                                     required: true,
@@ -93,7 +93,7 @@ function AccountDeleteProcess() {
                             <div>
                                 Also, please tell us the reason you leave us. It is important for us to grow
                             </div>
-                            <div className={'delete_account_textarea_div'}>
+                            <div className={'delete_account_textarea_div'} dir='ltr'>
 
                                 <FormInput textareaHeight={true} inputType={'textArea'} label={t('Reason for deleting account')} name={'message'} />
 
