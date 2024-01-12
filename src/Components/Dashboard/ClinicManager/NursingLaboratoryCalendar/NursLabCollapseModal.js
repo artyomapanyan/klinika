@@ -354,7 +354,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                                              }}
                                                                              rules={[{required: true}]}
                                                                              resourceParams={{
-                                                                                 clinic: clinicID
+                                                                                 clinic: clinicID,
+                                                                                 status: 2
                                                                              }}
 
                                                                              inputType={'resourceSelect'}
