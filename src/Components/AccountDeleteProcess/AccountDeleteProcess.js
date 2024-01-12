@@ -1,15 +1,17 @@
 import './AccountDeleteProcess.sass'
 import clinic_logo_only_bird from "../../dist/Img/clinic_logo_only_bird.png";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Form} from "antd";
-import {t} from "i18next";
+import {changeLanguage, t} from "i18next";
 import FormInput from "../../Components/Fragments/FormInput";
 import {postResource} from "../Functions/api_calls";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Preloader from "../Preloader";
 function AccountDeleteProcess() {
     let token = useSelector((state) => state.auth.token);
     const [loading, setLoading] = useState(false)
+    let lngs = useSelector(state => state?.app?.current_locale)
+    let dispatch = useDispatch()
 
     const onFinish = (values) => {
         setLoading(true)
@@ -18,6 +20,17 @@ function AccountDeleteProcess() {
 
         })
     }
+
+    useEffect(()=>{
+        if(lngs!=='en'){
+            changeLanguage('en')
+            dispatch({
+                type:'LANGUAGE_STATE',
+                payload:'en'
+            })
+            window.location.reload()
+        }
+    },[])
 
 
     return <div className={'delete_account_big_div'}>
