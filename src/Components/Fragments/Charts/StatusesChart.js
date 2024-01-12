@@ -36,6 +36,8 @@ function StatusesChart() {
                 }
             }
 
+            setData(resApps??{})
+
             setLoading(false)
             const counterforGreenDoughnut = {
                 id: "counter",
