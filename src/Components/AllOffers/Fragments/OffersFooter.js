@@ -74,14 +74,13 @@ function OffersFooter() {
                         </span>
                     </div>
                     {/*<Space direction={'vertical'}>*/}
-                        {/*<div className={'white_text'}>{t('Services')}</div>*/}
-                        {/*<div className={'gray_text'}>{t('Physical Therapy')}</div>*/}
-                        {/*<div className={'gray_text'}>{t('Clinic Visit')}</div>*/}
-                        {/*<div className={'gray_text'}>{t('Home Visit')}</div>*/}
-                        {/*<div className={'gray_text'}>{t('Telehealth')}</div>*/}
-                        {/*<div className={'gray_text'}>{t('Laboratory')}</div>*/}
-                        {/*<div className={'gray_text'}>{t('Nursing')}</div>*/}
-
+                    {/*<div className={'white_text'}>{t('Services')}</div>*/}
+                    {/*<div className={'gray_text'}>{t('Physical Therapy')}</div>*/}
+                    {/*<div className={'gray_text'}>{t('Clinic Visit')}</div>*/}
+                    {/*<div className={'gray_text'}>{t('Home Visit')}</div>*/}
+                    {/*<div className={'gray_text'}>{t('Telehealth')}</div>*/}
+                    {/*<div className={'gray_text'}>{t('Laboratory')}</div>*/}
+                    {/*<div className={'gray_text'}>{t('Nursing')}</div>*/}
                     {/*</Space>*/}
                 </div>
 

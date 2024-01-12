@@ -374,6 +374,19 @@
     flex-direction: row
     justify-content: space-between
     gap: 35px
+  //@media screen and (max-width: 800px)
+  //  margin-top: 20px
+  .app_play_logos_div
+    display: flex
+    gap: 10px
+    @media screen and (max-width: 600px)
+      display: block
+  .logo_app_store
+    width: 220px
+    border-radius: 12px
+    border: 2px solid gray
+    cursor: pointer
+    margin-bottom: 5px
     //@media screen and (max-width: 800px)
     //  margin-top: 20px
   .app_play_logos_div
@@ -1349,35 +1362,35 @@ hr
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.12)
   @media screen and (max-width: 400px)
   display: none
-  
-   
+
+
 .slick-prev,
-.slick-next 
+.slick-next
 
 .custom-prevArrow,
-.custom-nextArrow 
+.custom-nextArrow
   position: relative
   z-index: 99999
   top: -10px
 
-.custom-prevArrow 
+.custom-prevArrow
   left: -10px
 
-.custom-nextArrow 
+.custom-nextArrow
   right: -10px
 
 .custom-prevArrow:hover
-.custom-nextArrow:hover 
+.custom-nextArrow:hover
   fill: red
   cursor: pointer
 
-.slick-next:before  
-    font-family: monospace !important
-    font-size: 28px !important
+.slick-next:before
+  font-family: monospace !important
+  font-size: 28px !important
 
-.slick-prev:before  
-    font-family: monospace !important
-    font-size: 28px !important
+.slick-prev:before
+  font-family: monospace !important
+  font-size: 28px !important
 
 
 .navbar_offer_new
@@ -1447,7 +1460,7 @@ hr
 
 .input_RTL
   .ant-input-rtl
-    //direction: ltr !important
+//direction: ltr !important
 
 .all_offers_personal_det_inputs
   .ant-form-item-required
@@ -1514,7 +1527,7 @@ hr
 
 
 .ant-select-tree-title
-  //color: #984d67 !important
+//color: #984d67 !important
 .ant-select-tree-indent-unit
   width: 0px !important
 
@@ -1526,7 +1539,7 @@ hr
   border-bottom: 1px solid #D7DAE8
   &:hover
     background-color: #F8F2FE
-    //color: #FFFFFF
+//color: #FFFFFF
 
 .selected_ASDF
   color: #ffffff
@@ -1563,9 +1576,9 @@ hr
 
 
 .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-treenode
-    order: 0 !important
+  order: 0 !important
 .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher
-    order: 1 !important
+  order: 1 !important
 
 .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected
   background-color: #F8F2FE00 !important

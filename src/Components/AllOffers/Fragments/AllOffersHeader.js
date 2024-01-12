@@ -40,7 +40,7 @@ function AllOffersHeader({headerState}) {
     }
 
     return (
-        
+
         <div style={{width:'100%', position:"absolute", top:40, display: "flex", flexDirection:"row", JustifyContent:'space-around', alignItems: 'center'}}>
             {
                 headerState ? <div style={{marginLeft:'13%', cursor: 'pointer'}} onClick={goHome}>
@@ -63,7 +63,7 @@ function AllOffersHeader({headerState}) {
 
                 {/*</Dropdown>*/}
             </div>
-            </div>
+        </div>
     )
 }
 export default AllOffersHeader;

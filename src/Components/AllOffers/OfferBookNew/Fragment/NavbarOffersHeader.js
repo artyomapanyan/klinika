@@ -2,8 +2,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {changeLanguage, t} from "i18next";
 import logo from "../../../../dist/icons/favicon.png";
-import {Button, Dropdown, Space} from "antd";
-import {ArrowLeftOutlined, DownOutlined} from "@ant-design/icons";
+import {Button} from "antd";
+import {ArrowLeftOutlined} from "@ant-design/icons";
 import React from "react";
 
 function NavbarOffersHeader({headerState}) {
