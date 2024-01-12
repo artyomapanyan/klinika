@@ -1,15 +1,17 @@
 import './AccountDeleteProcess.sass'
 import clinic_logo_only_bird from "../../dist/Img/clinic_logo_only_bird.png";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Form} from "antd";
-import {t} from "i18next";
+import {changeLanguage, t} from "i18next";
 import FormInput from "../../Components/Fragments/FormInput";
 import {postResource} from "../Functions/api_calls";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Preloader from "../Preloader";
 function AccountDeleteProcess() {
     let token = useSelector((state) => state.auth.token);
     const [loading, setLoading] = useState(false)
+    let lngs = useSelector(state => state?.app?.current_locale)
+    let dispatch = useDispatch()
 
     const onFinish = (values) => {
         setLoading(true)
@@ -19,6 +21,16 @@ function AccountDeleteProcess() {
         })
     }
 
+    useEffect(()=>{
+        if(lngs!=='en'){
+            changeLanguage('en')
+            dispatch({
+                type:'LANGUAGE_STATE',
+                payload:'en'
+            })
+            window.location.reload()
+        }
+    },[])
 
 
     return <div className={'delete_account_big_div'}>
@@ -47,9 +59,11 @@ function AccountDeleteProcess() {
                 <div className={'delete_account_information_text_big_div'}>
 
                     <div style={{lineHeight: 1.5}}>
+
                            We understand that you want to delete your account and all the information from our service,
                         but we kindly ask you not to do so. This is because this information is medical and important for your health.
                             We respect your privacy and we want to help you take care of yourself.
+
 
                     </div>
                     <div>
@@ -81,7 +95,7 @@ function AccountDeleteProcess() {
                         2) We will review your request within 5 days and contact you by email to discuss the way of deleting your information.
                     </div>
                     {
-                        loading ? <Preloader/> : <div>
+                        loading ? <Preloader/> : <div dir='ltr'>
                             <div style={{marginTop: 15}}>
                                 <FormInput  label={t('Account email')} name={'email'} rules={[{
                                     required: true,
@@ -93,9 +107,9 @@ function AccountDeleteProcess() {
                             <div>
                                 Also, please tell us the reason you leave us. It is important for us to grow
                             </div>
-                            <div className={'delete_account_textarea_div'}>
+                            <div className={'delete_account_textarea_div'} dir='ltr'>
 
-                                 <FormInput textareaHeight={true} inputType={'textArea'} label={t('Reason for deleting account')} name={'message'} />
+                                <FormInput textareaHeight={true} inputType={'textArea'} label={t('Reason for deleting account')} name={'message'} />
 
                             </div>
                         </div>

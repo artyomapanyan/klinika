@@ -33,7 +33,6 @@ function AppRoutes(){
             <Route path={'offers/:id/thank-you'} element={<NewThankYouOffer/>}></Route>
                 <Route path={'maps'} element={<OfferMap/>}></Route>
             <Route path={'account_delete_process'} element={<AccountDeleteProcess/>}></Route>
-                 
           
              
 
