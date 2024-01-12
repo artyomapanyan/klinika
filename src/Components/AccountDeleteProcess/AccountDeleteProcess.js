@@ -61,16 +61,16 @@ function AccountDeleteProcess() {
                     </div>
                     <div>
                         <ul>
-                            <li className={'delete_account_bold_text'}>
+                            <li>
                                 Your personal information, such as your name, email, phone number.
                             </li>
-                            <li className={'delete_account_bold_text'}>
+                            <li>
                                 Your medical data, such as your symptoms, diagnoses, treatments, medications, and allergies.
                             </li>
-                            <li className={'delete_account_bold_text'}>
+                            <li>
                                 Your appointment history, such as the date, time, duration, and provider of each visit.
                             </li>
-                            <li className={'delete_account_bold_text'}>
+                            <li>
                                 Some analytics statistics that help us to develop our service and improve your experience.
                             </li>
                         </ul>
