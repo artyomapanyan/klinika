@@ -58,7 +58,7 @@ function  AllOffers() {
 		false,
 		false,
 		{
-			PublicClinic: { per_page: 5000 },
+			PublicClinic: {active: 2},
 			PublicCategory: {}
 		},
 		{
