@@ -25,7 +25,7 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
     const [loading, setLoading] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [prescriptionPerPage, setPrescriptionPerPage] = useState(3)
-    const [itemsLength, setItemsLength] = useState([])
+    const [itemsLength, setItemsLength] = useState(0)
     const [showAll, setShowAll] = useState(false)
     const showModal = (data) => {
         setIsModalOpen(data??{});
@@ -39,26 +39,13 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
     useEffect(() => {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
-                // appointment: params.id,
-                // clinic: dataClinic?.clinic?.id,
+                patient: patientId,
                 actual: 1,
                 per_page: showAll ? null : 3
             }
         ).then((response) => {
             setPrescriptions(response?.items)
-
-
-        })
-
-        postResource('prescriptions','single', token,  '', {
-            // appointment: params.id,
-            // clinic: dataClinic?.clinic?.id,
-            actual: 1,
-
-            }
-        ).then((response) => {
-            setItemsLength(response?.items)
-
+            setItemsLength(response.total_items)
 
         }).finally(() => {
             setLoading(false)
@@ -80,7 +67,7 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
                          //loading={initLoading}
                         itemLayout="horizontal"
                         dataSource={prescriptions}
-                        style={{overflow: 'auto', height: itemsLength?.length > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
+                        style={{overflow: 'auto', height: itemsLength > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => {
                             return<List.Item >
                                 <List.Item.Meta
@@ -98,14 +85,14 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
 
                     <div style={{display: 'flex'}}>
                         {
-                            itemsLength?.length > 3 && !showAll ? (
+                            itemsLength > 3 && !showAll ? (
                                 <div style={{paddingTop: 10}}>
-                                    <Tag onClick={()=>setShowAll(true)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('and more')} {itemsLength?.length - 3} {t('items')}</Tag>
+                                    <Tag onClick={()=>setShowAll(true)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('and more')} {itemsLength - 3} {t('items')}</Tag>
                                 </div>
                             ) : <div></div>
                         }
                         {
-                            itemsLength?.length > 3 && showAll ? (
+                            itemsLength > 3 && showAll ? (
                                 <div style={{paddingTop: 10}}>
                                     <Tag onClick={()=>setShowAll(false)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
                                 </div>

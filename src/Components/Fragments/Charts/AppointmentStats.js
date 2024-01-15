@@ -26,7 +26,7 @@ function AppointmentStats(){
     useEffect(()=>{
         setLoading(true)
         postResource('DoctorReworked', 'PeriodAppointmentStats', token, '', date).then((response) => {
-            let dates = Object.keys(response?.incomes).map(el => el.slice(5).replace('-', '/')).sort()
+            let dates = Object.keys(response?.incomes).map(el => el.slice(5).replace('-', '/'))
             let data = {
                 2:[],
                 3:[],
@@ -112,7 +112,7 @@ function AppointmentStats(){
                             label: "Canceled",
                             data:  data[3],
                             stack: "Stack 0",
-                            backgroundColor: ["#F5A348"],
+                            backgroundColor: ["#635D6B"],
                             borderColor: ["white"],
                             borderSkipped: false,
                             borderWidth: 2,
@@ -129,7 +129,7 @@ function AppointmentStats(){
                             label: "Rescheduled",
                             data:  data[4],
                             stack: "Stack 0",
-                            backgroundColor: ["rgba(99, 93, 107, 0.4)"],
+                            backgroundColor: ["#F5A348"],
                             borderColor: ["white"],
                             borderSkipped: false,
                             borderWidth: 2,
@@ -259,10 +259,10 @@ function AppointmentStats(){
 
                     <div style={{display: 'flex', margin: ' 0 20px'}}>
                         <div className={'switc_div1'}>
-                            <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)}  /><span className={'text_switch'}>Canceled</span>
+                            <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)}  /><span className={'text_switch'}>Canceled</span>
                         </div>
                         <div className={'switc_div2'}>
-                            <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)} /> <span className={'text_switch'}>Rescheduled</span>
+                            <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} /> <span className={'text_switch'}>Rescheduled</span>
                         </div>
                         <div className={'switc_div3'}>
                             <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} /> <span className={'text_switch'}>Finished</span>

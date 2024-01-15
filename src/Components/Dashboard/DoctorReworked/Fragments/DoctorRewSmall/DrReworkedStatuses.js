@@ -16,7 +16,7 @@ function DrReworkedStatuses() {
 
 
 
-    let text = ['new' ,"Confirmed", '', "Cancelled", "Rescheduled"]
+    let text = ['new' ,"Confirmed", null, "Cancelled", "Rescheduled"]
 
     useEffect(()=>{
         setLoading(true)
@@ -24,17 +24,19 @@ function DrReworkedStatuses() {
             month:ownerClinics.month_key,
             year:dayjs().format('YYYY')
         } ).then((response) => {
+            //The APi may returns up to 8 statuses, this code is to select  just [New, Completed, Cancelled and Rescheduled] from them.
+            let resApps = {};
+            const requiredStatuses = [0,1,3,4]; 
+            for (const key of requiredStatuses) {
+                if (response.appointments.hasOwnProperty(key)) {
+                    resApps[key] = response.appointments[key];
+                }
+                else{
+                    resApps[key] = 0;
+                }
+            }
 
-            // text.forEach((e,k)=>{
-            //     if(!response.appointments[k] && e) {
-            //         response.appointments[k] = 0
-            //     }
-            // })
-            let resApps = response.appointments
-
-
-
-            setData(response.appointments??{})
+            setData(resApps??{})
 
 
             setLoading(false)
@@ -48,9 +50,9 @@ function DrReworkedStatuses() {
                     ctx.save();
                     ctx.font = "700 22px Roboto Bold";
                     ctx.textAlign = "center";
-                    ctx.fillStyle = "rgba(191, 83, 158, 1)";
+                    ctx.fillStyle = "#000";
                     ctx.fillText(
-                        Object.values(response.appointments).reduce((a, b) => a + b, 0),
+                        Object.values(resApps).reduce((a, b) => a + b, 0),
                         width / 2,
                         top + height / 2
                     );
@@ -62,9 +64,9 @@ function DrReworkedStatuses() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? ['#F5F6FA'] : ["#BF539E","#6DAF56", "#87828E",  "#FFD850"],
+                            backgroundColor: resApps[0] == 0 && resApps[1] == 0 && resApps[3] == 0 && resApps[4] == 0 ? ['#F5F6FA'] :  ["#BF539E", "#6DAF56", "#87828E", "#FFD850"],
                             weight: 0.5,
-                            data: resApps[1] == 0 && resApps[2] == 0 && resApps[3] == 0 && resApps[4] == 0 ? [1,0,0,0] : Object.values(resApps),
+                            data: resApps[0] == 0 && resApps[1] == 0 && resApps[3] == 0 && resApps[4] == 0 ? [1,0,0,0] : Object.values(resApps),
                             spacing: 0,
                             borderWidth: 0,
                         },
