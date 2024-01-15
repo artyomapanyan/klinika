@@ -88,7 +88,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
             setClinicHoursesDataNew(response)
             setLoading(false)
             setReqwestdone(true)
-            console.log(response, 'res')
+
         })
 
     },[type,id]);

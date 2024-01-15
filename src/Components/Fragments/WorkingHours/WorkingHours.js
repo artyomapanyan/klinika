@@ -65,7 +65,7 @@ function WorkingHours({onFinish,
 
   useEffect(() => {
     if(doctorHoursModal) {
-      console.log('true')
+
       if (data.length !== 0 ) {
         setWorkingData(handleFilterData(data))
       } else {
@@ -73,12 +73,12 @@ function WorkingHours({onFinish,
       }
     } else {
 
-        console.log(clinicHoursesDataNew, 'false')
+
 
       if (data.length !== 0) {
         setWorkingData(handleFilterData(data))
       } else if(!Array.isArray(clinicHoursesDataNew)) {
-        console.log(clinicHoursesDataNew, 'new')
+
         setWorkingData(handleFilterData(clinicHoursesDataNew))
       } else {
         setWorkingData(customWorkingHouers)
