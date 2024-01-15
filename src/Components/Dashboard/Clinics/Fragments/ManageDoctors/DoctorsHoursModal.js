@@ -24,6 +24,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [loading, setLoading] = useState(true)
     const [clinichoursData, setClinichoursData] = useState({})
     const [clinicHoursesDataNew, setClinicHoursesDataNew] = useState({})
+    const [reqwestdone, setReqwestdone] = useState(false)
 
 
 
@@ -45,14 +46,14 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
     }, [id,type]);
 
-    useEffect(()=>{
-
-        postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
-            setClinicHoursesDataNew(response)
-
-        })
-
-    }, [id,type]);
+    // useEffect(()=>{
+    //
+    //     postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
+    //         setClinicHoursesDataNew(response)
+    //
+    //     })
+    //
+    // }, [id,type]);
 
 
     useEffect(() => {
@@ -81,6 +82,13 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
            setClinichoursData(clinicTimes)
 
            setLoading(false)
+        })
+
+        postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
+            setClinicHoursesDataNew(response)
+            setLoading(false)
+            setReqwestdone(true)
+
         })
 
     },[type,id]);
@@ -122,7 +130,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
     return(
         <div className={'doctor_working_hours_conteiner'}>
-            {loading?<Preloader/>:<WorkingHours doctorHoursModal={false} clinicHoursesDataNew={clinicHoursesDataNew} switchStatus={true} timeLimits={clinichoursData}  handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
+            {loading?<Preloader/>:<WorkingHours reqwestdone={reqwestdone} doctorHoursModal={false} clinicHoursesDataNew={clinicHoursesDataNew} switchStatus={true} timeLimits={clinichoursData}  handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
         </div>
     )
 }

@@ -4,7 +4,6 @@ import {JitsiMeeting} from "@jitsi/react-sdk";
 function JitsiVideo({data}) {
 
 
-
     return(
         <JitsiMeeting
             domain = {`${data?.telehealth?.domain}`}

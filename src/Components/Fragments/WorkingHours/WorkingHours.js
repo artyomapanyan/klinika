@@ -65,15 +65,20 @@ function WorkingHours({onFinish,
 
   useEffect(() => {
     if(doctorHoursModal) {
-      if (data.length !== 0) {
+
+      if (data.length !== 0 ) {
         setWorkingData(handleFilterData(data))
       } else {
         setWorkingData(customWorkingHouers)
       }
     } else {
+
+
+
       if (data.length !== 0) {
         setWorkingData(handleFilterData(data))
-      } else if(clinicHoursesDataNew.length) {
+      } else if(!Array.isArray(clinicHoursesDataNew)) {
+
         setWorkingData(handleFilterData(clinicHoursesDataNew))
       } else {
         setWorkingData(customWorkingHouers)
@@ -81,7 +86,7 @@ function WorkingHours({onFinish,
     }
 
 
-  }, [data, switchChange]);
+  }, [data, switchChange, clinicHoursesDataNew]);
 
 
 

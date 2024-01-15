@@ -98,7 +98,7 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
     const btnEdit2 = () => {
         setEditState2(true)
     }
-    console.log(bigData, 'fff')
+
 
     return(
         <Layout.Content>

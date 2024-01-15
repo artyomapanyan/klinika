@@ -206,7 +206,7 @@ function ClinicManagerAppointmentsTable() {
                                 filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                 filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
                                 render:(e, record) => {
-                                    console.log(record)
+
                                     return record?.doctor ? <div className={'table_normal_text'}>{record?.doctor?.first} {record?.doctor?.last}</div> :
                                         record?.service_type === "nursing" ? 'Nurse' : 'Lab technician'
                                 }
