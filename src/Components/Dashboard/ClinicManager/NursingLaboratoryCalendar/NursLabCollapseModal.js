@@ -170,6 +170,10 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)
+        if(data?.lab_packages) {
+            data.lab_packages = [data.lab_packages]
+
+        }
 
         postResource('Appointment', 'create', token, '', {
             ...data,
