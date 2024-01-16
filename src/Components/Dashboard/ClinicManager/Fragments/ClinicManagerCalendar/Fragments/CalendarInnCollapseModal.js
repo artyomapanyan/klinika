@@ -43,6 +43,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const [loading403, setLoading403] = useState(false);
     const [availableServices, setAvailableServices] = useState([]);
     const [loadingAvailableServices, setLoadingAvailableServices] = useState(false);
+    const [addressValue, setAddressValue] = useState('');
 
 
 
@@ -124,7 +125,6 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
     const handleCreateAppointment = (values, additional) => {
         setFinishLoading(true)
 
-
         postResource('Appointment', 'create', token, '', {
             ...values,
             ...(additional ?? {}),
@@ -153,13 +153,13 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)
-
         postResource('Appointment', 'create', token, '', {
             patient_id: verifyPatient?.patient?.id,
             service_type: servisTypeAndTime?.service_type,
             specialty_id: speciality_id,
             clinic_id: clinicID,
             doctor_id: doctor.id,
+            address1: addressValue,
             booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
 
         }).then(e => {
@@ -212,7 +212,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
     const onSendCode = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code', 'address1']).then(e => {
             setLoading(true)
 
             postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
@@ -364,6 +364,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                 data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
                                 data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
                                     <FormInput onChange={(e)=>{
+                                        setAddressValue(e?.target?.value)
                                         if(data?.phone_country_code?.includes('966')) {
                                             setData(prevState => ({
                                                 ...prevState,

@@ -44,7 +44,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
     const [verifyPatient, setVerifyPatient] = useState({});
     const [servisTypeAndTime, setServisTypeAndTime] = useState({});
     const [loading403, setLoading403] = useState(false);
-    const [renderInput, setRenderInput] = useState(1);
+    const [addressValue, setAddressValue] = useState('');
 
 
 
@@ -178,6 +178,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
             specialty_id: speciality_id,
             clinic_id: clinicID,
             //doctor_id: doctor.id,
+            address1: addressValue,
             booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
 
         }).then(e => {
@@ -230,7 +231,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
     const onSendCode = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks', 'phone_country_code']).then(e => {
+        formRef?.current?.validateFields(['time', 'service_type', 'lab_tests', 'lab_packages', 'nursing_tasks', 'phone_country_code', 'address1']).then(e => {
             setLoading(true)
             postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
 
@@ -426,23 +427,25 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                    resource={'LabPackage'}/>
                                     </div>
                                 }
-                    {
-                        item?.service === 'laboratory_home_visit' || item?.service ==='nursing' ?
-                            <FormInput onChange={(e)=>{
-                                if(data?.phone_country_code?.includes('966')) {
-                                    setData(prevState => ({
-                                        ...prevState,
-                                        phone_country_code: '966'
-                                    }))
-                                }
-                            }} label={t('Visit Address')} name={'address1'} rules={[{
-                                required: true,
-                                message: 'Please enter visit address'
-                            }]}/> : <div></div>
-                    }
+
 
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
+                            {
+                                item?.service === 'laboratory_home_visit' || item?.service ==='nursing' ?
+                                    <FormInput onChange={(e)=>{
+                                        setAddressValue(e?.target?.value)
+                                        if(data?.phone_country_code?.includes('966')) {
+                                            setData(prevState => ({
+                                                ...prevState,
+                                                phone_country_code: '966'
+                                            }))
+                                        }
+                                    }} label={t('Visit Address')} name={'address1'} rules={[{
+                                        required: true,
+                                        message: 'Please enter visit address'
+                                    }]}/> : <div></div>
+                            }
                             <FormInput label={t('Offers')} name={'offer_id'}
                                        inputType={'resourceSelect'}
                                        initialValue={null}
