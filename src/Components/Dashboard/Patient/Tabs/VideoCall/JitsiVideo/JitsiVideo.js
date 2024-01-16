@@ -1,7 +1,9 @@
 import React from 'react';
 import {JitsiMeeting} from "@jitsi/react-sdk";
+import {useNavigate} from "react-router";
 
-function JitsiVideo({data}) {
+function JitsiVideo({data, setVideoState}) {
+    let navigate = useNavigate()
 
 
     return(
@@ -18,13 +20,27 @@ function JitsiVideo({data}) {
                 enableClosePage:true,
             }}
             interfaceConfigOverwrite = {{
-                DISABLE_JOIN_LEAVE_NOTIFICATIONS: true
+                DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+
             }}
             userInfo = {{
                 displayName: data?.doctor?.first
             }}
             onApiReady = { (externalApi) => {
+               // externalApi.executeCommand('hangup');
 
+                // externalApi.addEventListeners({
+                //     readyToClose: () => {
+                //         setVideoState(false)
+                //         // Ваш код для обработки события завершения звонка
+                //     },
+                // });
+
+                externalApi.on('readyToClose',  () => {
+                    setVideoState(false)
+                    // Ваш код для обработки события завершения звонка
+
+                });
                 // here you can attach custom event listeners to the Jitsi Meet External API
                 // you can also store it locally to execute commands
             } }
@@ -33,6 +49,7 @@ function JitsiVideo({data}) {
                 iframeRef.style.width = '100%';
 
             } }
+
             interfaceConfig={{
                 CLOSE_PAGE_GUEST_HINT: false
             }}

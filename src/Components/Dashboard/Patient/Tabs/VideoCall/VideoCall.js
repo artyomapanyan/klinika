@@ -97,7 +97,7 @@ function VideoCall({data}) {
         <div style={{display: 'flex'}}>
             <div className={'video_sms_div'} style={{ padding: videoState ? 0 : 180, width: collapseState ? '100%' : '100%'}}>
                 {
-                    videoState ? <JitsiVideo data={data}/> : <div className={'video_call_avatr_Text'}>
+                    videoState ? <JitsiVideo data={data} setVideoState={setVideoState}/> : <div className={'video_call_avatr_Text'}>
                         <div>
                             <Avatar  style={{height:240, width: 200, borderRadius: 8}}  shape="square" icon={<UserOutlined />} />
                         </div>
