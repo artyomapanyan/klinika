@@ -58,7 +58,11 @@ function OfferBookContent() {
 
 	const { loadingState, dataState } = useGetResourceSingle(
 		'PublicOffer',
-		params.id
+		params.id,
+		{},
+		null,
+		null,
+		{ignore_timezone: '1'}
 	)
 
 	useEffect(() => {
