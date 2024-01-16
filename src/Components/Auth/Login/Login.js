@@ -68,6 +68,13 @@ function Login() {
                 method: inputState ? api.Auth.UpdateTempEmail.method : api.Auth.login.method ,
                 data: values,
             }).then(response => {
+                response = {
+                    ...response,
+                    user: {
+                        ...response.user,
+                        roles: response.user.roles.filter(item => item.key !== 'patient' && item.key !== 'temp-patient')
+                    }
+                }
                 setDataState(response)
 
                 if (response.user?.id) {
