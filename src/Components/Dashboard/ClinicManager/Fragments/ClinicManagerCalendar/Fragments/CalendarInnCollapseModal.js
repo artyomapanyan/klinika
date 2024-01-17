@@ -153,28 +153,53 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)
-        postResource('Appointment', 'create', token, '', {
-            patient_id: verifyPatient?.patient?.id,
-            service_type: servisTypeAndTime?.service_type,
-            specialty_id: speciality_id,
-            clinic_id: clinicID,
-            doctor_id: doctor.id,
-            address1: addressValue,
-            booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
+        if(data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit') {
+            postResource('Appointment', 'create', token, '', {
+                patient_id: verifyPatient?.patient?.id,
+                service_type: servisTypeAndTime?.service_type,
+                specialty_id: speciality_id,
+                clinic_id: clinicID,
+                doctor_id: doctor.id,
+                address1: addressValue,
+                booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
 
-        }).then(e => {
-            if(e.id){
-                setOpen(false)
-                setSize(false)
+            }).then(e => {
+                if(e.id){
+                    setOpen(false)
+                    setSize(false)
+                    setLoading403(false)
+                    setSelectedDate(false)
+                    setDate((prevState)=>prevState)
+                    setUpdate((prevState) =>prevState+1)
+                }
+
+            }).finally(()=>{
                 setLoading403(false)
-                setSelectedDate(false)
-                setDate((prevState)=>prevState)
-                setUpdate((prevState) =>prevState+1)
-            }
+            })
+        } else {
+            postResource('Appointment', 'create', token, '', {
+                patient_id: verifyPatient?.patient?.id,
+                service_type: servisTypeAndTime?.service_type,
+                specialty_id: speciality_id,
+                clinic_id: clinicID,
+                doctor_id: doctor.id,
+                booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
 
-        }).finally(()=>{
-            setLoading403(false)
-        })
+            }).then(e => {
+                if(e.id){
+                    setOpen(false)
+                    setSize(false)
+                    setLoading403(false)
+                    setSelectedDate(false)
+                    setDate((prevState)=>prevState)
+                    setUpdate((prevState) =>prevState+1)
+                }
+
+            }).finally(()=>{
+                setLoading403(false)
+            })
+        }
+
 
     }
 

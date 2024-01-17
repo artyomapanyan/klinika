@@ -166,7 +166,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
     }
 
-
+    console.log(addressValue)
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)
@@ -175,29 +175,56 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
         }
 
-        postResource('Appointment', 'create', token, '', {
-            ...data,
-            patient_id: verifyPatient?.patient?.id,
-            service_type: item?.service,
-            specialty_id: speciality_id,
-            clinic_id: clinicID,
-            //doctor_id: doctor.id,
-            address1: addressValue,
-            booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
+        if(item?.service === 'laboratory_home_visit' || item?.service ==='nursing') {
+            postResource('Appointment', 'create', token, '', {
+                ...data,
+                patient_id: verifyPatient?.patient?.id,
+                service_type: item?.service,
+                specialty_id: speciality_id,
+                clinic_id: clinicID,
+                //doctor_id: doctor.id,
+                address1: addressValue,
+                booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
 
-        }).then(e => {
-            if(e.id){
-                setOpen(false)
-                setSize(false)
+            }).then(e => {
+                if(e.id){
+                    setOpen(false)
+                    setSize(false)
+                    setLoading403(false)
+                    setSelectedDate(false)
+                    setDate((prevState)=>prevState)
+                    setUpdate((prevState) =>prevState+1)
+                }
+
+            }).finally(()=>{
                 setLoading403(false)
-                setSelectedDate(false)
-                setDate((prevState)=>prevState)
-                setUpdate((prevState) =>prevState+1)
-            }
+            })
+        } else {
+            postResource('Appointment', 'create', token, '', {
+                ...data,
+                patient_id: verifyPatient?.patient?.id,
+                service_type: item?.service,
+                specialty_id: speciality_id,
+                clinic_id: clinicID,
+                //doctor_id: doctor.id,
+                booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
 
-        }).finally(()=>{
-            setLoading403(false)
-        })
+            }).then(e => {
+                if(e.id){
+                    setOpen(false)
+                    setSize(false)
+                    setLoading403(false)
+                    setSelectedDate(false)
+                    setDate((prevState)=>prevState)
+                    setUpdate((prevState) =>prevState+1)
+                }
+
+            }).finally(()=>{
+                setLoading403(false)
+            })
+        }
+
+
 
     }
 
