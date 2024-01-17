@@ -20,6 +20,7 @@ import Preloader from "../../../Preloader";
 import {log10} from "chart.js/helpers";
 import HCP_Male from "../../../../dist/icons/HCP_Male.png";
 import HCP_Female from "../../../../dist/icons/HCP_Female.png";
+import PaymentFailed from "../../Fragments/PaymentFailed";
 
 function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNationality, totalState, verifyResponseNationality}) {
     let token = useSelector(state => state.auth.token)
@@ -458,6 +459,10 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                 ) : (
                     ''
                 )}
+
+                <div>
+                    <PaymentFailed />
+                </div>
 
 
                 <div className={'tab_div_mobile_new_offer'}>
