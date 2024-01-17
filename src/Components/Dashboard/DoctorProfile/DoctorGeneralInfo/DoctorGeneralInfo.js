@@ -189,6 +189,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                                                    initialValue={data?.specialties?.map(e=>e?.id)}
                                                    initialData={data?.specialties ??[]}
                                                    resource={'Taxonomy'}
+                                                   customSearchKey={'title'}
                                                    resourceParams={{
                                                        type: Resources.TaxonomyTypes.SPECIALTY,
                                                        has_parent: 0
