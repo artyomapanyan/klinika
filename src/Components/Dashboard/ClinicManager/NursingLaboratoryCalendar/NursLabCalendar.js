@@ -12,7 +12,7 @@ import NursLabCalendarCollapse from "./NursLabCalendarCollapse";
 
 function NursLabCalendar() {
     const [loading, setLoading] = useState(true)
-    const [date, setDate] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
+    const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
     const [data, setData] = useState({workload: []});
     const [showCount,setShowCount] = useState(10);
     const [search,setSearch] = useState('');
@@ -91,7 +91,7 @@ function NursLabCalendar() {
                                                     return <td key={e} className="appointmentsDate" style={{height: 48, paddingLeft: k === 0 ? 20 : 0}}>
                                                         <div className="appointmentsDate__content" style={{height: 48, paddingTop: 14}}>
                                                             <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>
-                                                            <span style={{marginLeft: 5, fontSize: 18}} className="ppointmentsDate__content__text appointmentsDate__content__text--light">{Resources.Days[e]}</span>
+                                                            <span style={{marginLeft: 5, fontSize: 18}} className="ppointmentsDate__content__text appointmentsDate__content__text--light">{date[0].add(e, 'days').format('ddd')}</span>
                                                         </div>
                                                     </td>
                                                 })}
