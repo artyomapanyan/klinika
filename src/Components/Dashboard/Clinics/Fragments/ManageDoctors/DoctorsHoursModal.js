@@ -55,7 +55,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     //
     // }, [id,type]);
 
-    console.log(type)
+
     useEffect(() => {
         setLoading(true)
         Promise.all([
