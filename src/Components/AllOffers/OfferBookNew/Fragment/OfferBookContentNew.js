@@ -40,7 +40,6 @@ function OfferBookContent() {
 	const onClick = () => {
 		navigate(-1)
 	}
-
 	//choose the screen size
 	const handleResize = () => {
 		if (window.innerWidth < 600) {
@@ -58,7 +57,11 @@ function OfferBookContent() {
 
 	const { loadingState, dataState } = useGetResourceSingle(
 		'PublicOffer',
-		params.id
+		params.id,
+		{},
+		null,
+		null,
+		{ignore_timezone: '1'}
 	)
 
 	useEffect(() => {
