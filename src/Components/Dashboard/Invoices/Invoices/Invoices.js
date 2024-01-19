@@ -1,6 +1,6 @@
 import ResourceTable from "../../../Fragments/ResourceTable";
 import {t} from "i18next";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import api from "../../../../Api";
 import {useSelector} from "react-redux";
@@ -21,11 +21,11 @@ let resource = 'Invoice'
 function Invoices() {
     let token = useSelector((state) => state.auth.token);
     let role = useSelector((state) => state?.auth?.selected_role?.key);
+    let headerFilters = useSelector((state) => state?.owner);
+
     const [pdfState, setPdfState] = useState(false);
     const [updateTable,setUpdateTable] = useState({})
-
-
-
+    
     const handleExportPDF =(record)=>{
         setPdfState(true)
         axios.request({
@@ -52,15 +52,21 @@ function Invoices() {
             ...prevState,
             status_new:e?1:0
         }))
-
     }
     const onPayed = (e) => {
         setUpdateTable(prevState => ({
             ...prevState,
             status_paid:e?2:0
         }))
-
     }
+
+    useEffect(() => {
+        setUpdateTable(prevState => ({
+            ...prevState,
+            clinic: headerFilters.id,
+            month: headerFilters.month_key
+        }))
+    }, [headerFilters]);
 
     return(
         <div style={{marginTop: -20, zIndex: 999}}>
@@ -74,6 +80,10 @@ function Invoices() {
                                except={{
                                    delete: PermCheck(`Invoice:delete`) ? false : true,
                                    edit: PermCheck(`Invoice:update`) ? false : true
+                               }}
+                               tableParams={{
+                                    clinic: headerFilters.id,
+                                    month: headerFilters.month_key
                                }}
                                updateTable={updateTable}
                                pdfPrint={true}
