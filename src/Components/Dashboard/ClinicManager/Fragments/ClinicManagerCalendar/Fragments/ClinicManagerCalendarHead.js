@@ -9,8 +9,8 @@ import arrow_prev from "../../../../../../dist/icons/arrow-prev.svg";
 function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDates, calendarTitle=true}) {
     dayjs.extend(customParseFormat);
     const customWeekStartEndFormat = (value) =>
-        `${dayjs(value).startOf('week').format('DD MMM')} - ${dayjs(value)
-            .endOf('week')
+        `${dayjs(value).format('DD MMM')} - ${dayjs(value)
+            .add(6, 'day')
             .format('DD MMM')}`;
 
 
@@ -30,9 +30,9 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
         setDate((prevState)=>{
             const newStart = prevState[0].add(val,'week')
             if(getDates){
-                getDates([newStart.startOf('week'),newStart.endOf('week')])
+                getDates([newStart,newStart.add(6, 'day')])
             }
-            return [newStart.startOf('week'),newStart.endOf('week')]
+            return [newStart,newStart.add(6, 'day')]
         })
     }
     return(
@@ -51,7 +51,7 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
                     }
 
                     <Button className={'chart_button'} style={{paddingTop: 1}} onClick={()=>handleSwitchWeek(-1)}><img src={arrow_prev} alt={'arrow_prev'}/></Button>
-                    <DatePicker suffixIcon={null} allowClear={false}  className={'chart_clinic_manager_date_picker'} value={date[0]} defaultValue={dayjs()} onChange={e=>setDate([dayjs(e).startOf('week'),dayjs(e).endOf('week')])} format={customWeekStartEndFormat} picker="week" />
+                    <DatePicker suffixIcon={null} allowClear={false}  className={'chart_clinic_manager_date_picker'} value={date[0]} defaultValue={dayjs()} onChange={e=>setDate([dayjs(e),dayjs(e).add(6, 'day')])} format={customWeekStartEndFormat} picker="week" />
                     <Button className={'chart_button'} style={{paddingTop: 1}} onClick={()=>handleSwitchWeek(1)}><img src={arrow_next} alt={'arrow_next'}/></Button>
                 </Space>
             </div>
