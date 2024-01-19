@@ -40,7 +40,6 @@ function OfferBookContent() {
 	const onClick = () => {
 		navigate(-1)
 	}
-
 	//choose the screen size
 	const handleResize = () => {
 		if (window.innerWidth < 600) {
