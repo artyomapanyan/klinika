@@ -2,7 +2,6 @@ import React, {useEffect, useMemo, useState} from "react";
 import "./ClinicManagerCalendar.scss";
 import {Button, Input, Spin} from "antd";
 import ClinicManagerCalendarHead from "./Fragments/ClinicManagerCalendarHead";
-
 import dayjs from "dayjs";
 import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
