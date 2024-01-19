@@ -170,7 +170,7 @@ function ShowAppointment() {
                                         <td className={'show_td_1'}>{t('Visit Address')}</td>
                                         <td className={'show_td_2'}>
                                             {data?.address?.address1 || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span onClick={() =>copyText(data?.address.address1)}><img src={copyIcon} alt={'copy'} style={{width:20, cursor: 'pointer'}}/></span>
+                                            <span onClick={() =>copyText(data?.address?.address1)}><img src={copyIcon} alt={'copy'} style={{width:20, cursor: 'pointer'}}/></span>
                                         </td>
                                     </tr> : null  
                                 }
