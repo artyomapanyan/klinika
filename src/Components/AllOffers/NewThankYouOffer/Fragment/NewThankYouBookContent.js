@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
-import {LeftOutlined} from "@ant-design/icons";
+import {LeftOutlined, PayCircleOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
 import clinic2 from "../../../../dist/Img/clinic2.png";
 import OfferBookDetailsNew from "../../OfferBookNew/Fragment/OfferBookDetailsNew";
@@ -11,15 +11,19 @@ import OfferPrice from "../../OfferBookNew/Fragment/OfferPrice";
 import BookAnAppointmentNew from "../../OfferBookNew/Fragment/BookAnAppointmentNew";
 import img_thank_you from "../../../../dist/Img/thank_you.png";
 import {t} from "i18next";
-import {Button, Drawer} from "antd";
+import {Button, Drawer, Space} from "antd";
 import ThankYouOfferDetailsNew from "./ThankYouOfferDetailsNew";
+import PaymentFailed from "../../Fragments/PaymentFailed";
 
-function NewThankYouBookContent() {
+function NewThankYouBookContent({chargeResponse}) {
     const params = useParams()
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
     const navigate = useNavigate()
     const [open, setOpen] = useState(window.innerWidth <= 600 ? true : false);
+    const [goBackState, setGoBackState] = useState(false)
+    const [paymentMethodState, setPaymentMethodState] = useState('')
+    const [activePaymentMethodState, setActivePaymentMethodState] = useState(false)
 
     const showDrawer = () => {
         setOpen(true);
@@ -60,7 +64,16 @@ function NewThankYouBookContent() {
         navigate('/offers')
     }
 
+    const onGoBack = () => {
+        setGoBackState(true)
+    }
 
+    const onpay = e => {
+        setPaymentMethodState(e)
+        setActivePaymentMethodState(true)
+
+    }
+    console.log(paymentMethodState)
 
     return (
         <>
@@ -114,19 +127,82 @@ function NewThankYouBookContent() {
                                     )}
                                 </div>
 
-                                <div className={'offer_appointment_sec'}>
-                                    {/*<BookAnAppointmentNew data={data} />*/}
-                                    <div align={'center'} style={{padding: 24}}>
-                                        <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
-                                        <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
-                                        {/*<div className={'thank_you_smoll_text'}>*/}
-                                        {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*/}
+                                {
+                                    chargeResponse?.status !== "CAPTURED" ? <div className={'offer_appointment_sec'}>
+                                        {/*<BookAnAppointmentNew data={data} />*/}
+                                        <div align={'center'} style={{padding: 24}}>
+                                            <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                            <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+                                            {/*<div className={'thank_you_smoll_text'}>*/}
+                                            {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*/}
+                                            {/*</div>*/}
+                                            <div style={{marginTop: 10}}>
+                                                <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                            </div>
+                                        </div>
+                                    </div> : !goBackState ? <div>
+                                        <PaymentFailed onGoBack={onGoBack} />
+                                    </div> : <div style={{marginTop: 20}}>
+                                        <Space className={'drawer_header_text'}>
+                                            <h2 className={'appointment_title'}>{t('Select payment method')}</h2>
+                                        </Space>
+
+
+                                        {/*<div className={'mobile_offer_price'}>*/}
+                                        {/*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>*/}
                                         {/*</div>*/}
-                                        <div style={{marginTop: 10}}>
-                                            <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+
+                                        {data?.clinic?.payment_methods.map((item, key) => {
+                                            return <div key={key} className={'payment_section'}>
+
+                                                <div
+                                                    onClick={() => onpay(item.id)}
+                                                    className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+                                                    //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
+                                                >
+                                                    <div style={{height: 24,display: 'flex', alignItems: 'center'}}>
+                                                        {
+                                                            item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{width: 25}} /> : <PayCircleOutlined />
+                                                        }
+                                                    </div>
+                                                    <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>
+                                                        {item.title}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        })}
+                                        <div>
+                                            {
+                                                activePaymentMethodState ? <div>
+
+                                                    <Button
+                                                        loading={loading}
+                                                        //onClick={onBooking}
+                                                        type={'primary'}
+                                                        className={'all_offers_book_btns'}
+                                                        style={{marginTop: '20px'}}
+
+                                                        htmlType={'submit'}
+                                                    >
+                                                        {t('Book_now')}
+                                                    </Button>
+                                                    <div style={{marginTop: 10}}>
+                                                        <Button
+                                                            //onClick={onCancelAll}
+                                                            style={{border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}
+                                                            type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>
+                                                    </div>
+
+                                                </div> : <div></div>
+                                            }
                                         </div>
                                     </div>
-                                </div>
+                                }
+
+
+
+
 
 
 

@@ -59,7 +59,6 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
             response => {
                 setLoading(false)
 
-
                 if (response?.appointment?.id) {
                     //setShowthank(true)
                     //console.log('response?.redirect ', response?.redirect)
@@ -460,9 +459,9 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                     ''
                 )}
 
-                <div>
-                    <PaymentFailed />
-                </div>
+                {/*<div>*/}
+                {/*    <PaymentFailed />*/}
+                {/*</div>*/}
 
 
                 <div className={'tab_div_mobile_new_offer'}>

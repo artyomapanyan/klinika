@@ -545,6 +545,17 @@ let api = {
         url: 'managers',
         resource: 'Manager',
     },
+    {
+        url: 'public/offers/charge',
+        resource: 'PublicOffersCharge',
+        custom: {
+            GetPublicOffersCharge:{
+                url: `${endpoint}${version}/public/offers/charge/`,
+                method: 'GET',
+            },
+
+        }
+    },
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',

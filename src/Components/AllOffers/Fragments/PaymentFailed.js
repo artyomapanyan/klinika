@@ -4,7 +4,7 @@ import {Button} from "antd";
 import {t} from "i18next";
 
 
-function PaymentFailed() {
+function PaymentFailed({onGoBack}) {
 
     return <div align={'center'} className={'payment_failed_big_div'}>
         <div style={{padding: '32px 32px 24px 32px'}}>
@@ -21,7 +21,7 @@ function PaymentFailed() {
 
         </div>
         <div style={{marginTop: 12}}>
-            <Button className={'all_offers_book_btns'} type={'secondary'}>{t('Go back')}</Button>
+            <Button onClick={onGoBack} className={'all_offers_book_btns'} type={'secondary'}>{t('Go back')}</Button>
         </div>
 
     </div>
