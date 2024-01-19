@@ -16,6 +16,7 @@ function LabPackages() {
                                delete: PermCheck(`LabPackage:delete`) ? false : true,
                                edit: PermCheck(`LabPackage:update`) ? false : true
                            }}
+                           exportDatabase={true}
                            tableColumns={[
                 {
                     title:'ID',
