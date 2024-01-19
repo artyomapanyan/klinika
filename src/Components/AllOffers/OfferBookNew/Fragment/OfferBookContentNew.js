@@ -23,7 +23,6 @@ function OfferBookContent() {
 	const navigate = useNavigate()
 	const [open, setOpen] = useState(false);
 	const [response404, setResponse404] = useState({});
-
 	const [totalState, setTotalState] = useState(false);
 	const [verifyResponseNationality, setVerifyResponseNationality] = useState(false);
 
