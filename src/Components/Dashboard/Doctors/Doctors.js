@@ -82,6 +82,7 @@ function Doctors() {
                     dataIndex:'specialties',
                     key:'specialties',
                     translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                     className: 'table_clinics_column',
                     render:(e, record) => {
 
