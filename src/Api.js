@@ -545,6 +545,7 @@ let api = {
         url: 'managers',
         resource: 'Manager',
     },
+
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',
@@ -588,6 +589,10 @@ let api = {
                 exportExcel: {
                     url: `${endpoint}${version}/${item.url}/export`,
                     method: 'GET',
+                },
+                importExcel: {
+                    url: `${endpoint}${version}/${item.url}/import`,
+                    method: 'POST',
                 },
                 exportPdf: {
                     url: `${endpoint}${version}/${item.url}`,
