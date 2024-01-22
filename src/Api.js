@@ -545,6 +545,11 @@ let api = {
         url: 'managers',
         resource: 'Manager',
     },
+    {
+        url: 'clinic-doctors/by-doctor-and-clinic',
+        resource: 'clinicDoctorBydoctorAndClinic',
+    },
+
 
     // {
     //     url: 'add-private-notes',
