@@ -4,7 +4,6 @@ import {Button, Input, InputNumber} from "antd";
 import {t} from "i18next";
 import {updateResource} from "../../Functions/api_calls";
 import {useSelector} from "react-redux";
-import { Switch } from 'antd';
 
 const resource = 'Preference'
 
@@ -19,11 +18,6 @@ function Preferences() {
            setLoading({})
        })
     }
-
-    const handleBooleanChange = (record, value) => {
-        record.value = value;
-        handleSave(record);
-    };
 
     return (
         <ResourceTable resource={resource}
@@ -43,15 +37,14 @@ function Preferences() {
                                key: 'value',
                                render:(i,record)=>record.type==='number'?<InputNumber defaultValue={record.value} onChange={(e)=>record.value=e}/>:
                                    record.type==='text'?<Input defaultValue={record.value} onChange={(e)=>record.value=e.target.value}/>:
-                                   record.type==='textarea'?<Input.TextArea defaultValue={record.value} onChange={(e)=>record.value=e.target.value}/>:
-                                   record.type==='boolean'?<Switch checked={record.value} onChange={(checked) => handleBooleanChange(record, checked)} checkedChildren="On" unCheckedChildren="Off"/>:
+                                       record.type==='textarea'?<Input.TextArea defaultValue={record.value} onChange={(e)=>record.value=e.target.value}/>:
                                    record.value
                            },
                            {
                                title: t('Save'),
                                dataIndex: 'save',
                                key: 'save',
-                               render:(i,record)=><Button style={{ width: '100px' }} type={'primary'} loading={loading[record.id]} onClick={()=>handleSave(record)}>{t('Save')}</Button>
+                               render:(i,record)=><Button type={'primary'} loading={loading[record.id]} onClick={()=>handleSave(record)}>{t('Save')}</Button>
                            },
                        ]} title={t('Preference')}/>
     )
