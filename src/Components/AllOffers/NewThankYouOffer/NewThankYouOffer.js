@@ -12,6 +12,7 @@ function NewThankYouOffer() {
 
     const [chargeResponse, setChargeResponse] = useState({})
     const [firstLoadingThankYou, setFirstLoadingThankYou] = useState(true)
+    const [onlineOrClinicPay, setOnlineOrClinicPay] = useState(false)
 
     useEffect(()=>{
         if(lngs!=='ar'){
@@ -26,21 +27,31 @@ function NewThankYouOffer() {
 
     useEffect(()=>{
         let currentURL = window.location.href;
-        var url = new URL(currentURL);
-        var invoiceParam = url.searchParams.get("invoice");
-        var tapIdParam = url.searchParams.get("tap_id");
 
-        console.log(invoiceParam, tapIdParam);
+        if(currentURL?.includes('invoice')) {
+            setOnlineOrClinicPay(true)
 
-        postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
-            charge: tapIdParam
-        }).then((response) => {
-            console.log(response, 'jjjj')
+            let url = new URL(currentURL);
+            let invoiceParam = url.searchParams.get("invoice");
+            let tapIdParam = url.searchParams.get("tap_id");
+
+            console.log(currentURL, currentURL?.includes('invoice'), 'wwwwwwwwwwwwwwwwwww');
+
+            postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
+                charge: tapIdParam
+            }).then((response) => {
+                console.log(response, 'jjjj')
+                setFirstLoadingThankYou(false)
+                setChargeResponse(response)
+
+
+            })
+        } else {
+            setOnlineOrClinicPay(false)
             setFirstLoadingThankYou(false)
-            setChargeResponse(response)
+        }
 
 
-        })
     },[])
 
     return (
@@ -72,7 +83,7 @@ function NewThankYouOffer() {
                     }
                 >
                     <div className={'menu_div_new'} style={{ minHeight: 500}}>
-                        <NewThankYouBookContent chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou}/>
+                        <NewThankYouBookContent chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou} onlineOrClinicPay={onlineOrClinicPay}/>
                     </div>
 
                     {/**<OffersFooter />**/}
