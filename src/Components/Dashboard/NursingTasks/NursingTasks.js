@@ -16,6 +16,7 @@ function NursingTasks() {
                                delete: PermCheck(`NursingTask:delete`) ? false : true,
                                edit: PermCheck(`NursingTask:update`) ? false : true
                            }}
+                           exportDatabase={true}
 
                            tableColumns={[
                 {

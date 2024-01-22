@@ -524,15 +524,6 @@ function Appointment({isPatient}) {
                                                                    name={['patient','email']}
 
                                                                    rules={[{required: true}]}/>
-                                                        <FormInput label={'Password'} inputDisabled={data?.patient_id}
-                                                                   name={['patient','password']} initialValue={''}
-                                                                   rules={[{required: !data?.patient_id}]}/>
-
-                                                        <FormInput label={'Password Confirmation'}
-                                                                   inputDisabled={data?.patient_id} initialValue={''}
-                                                                   name={['patient','password_confirmation']}
-                                                                   rules={[{required: !data?.patient_id}]}/>
-
                                                         <FormInput label={t('Nationality')} name={['patient','country_id']}
                                                                    inputType={'resourceSelect'}
                                                                    initialValue={formRef?.current?.getFieldValue(['patient','nationality', 'id'])}
@@ -577,9 +568,6 @@ function Appointment({isPatient}) {
                                                                    rules={[{required: !data?.patient_id}]}
                                                                    initialValue={formRef?.current?.getFieldValue(['patient','status'])}
                                                                    initialData={Resources.Status}
-                                                        />
-                                                        <FormInput label={t('Bio')} inputDisabled={data?.patient_id}
-                                                                   name={['patient','bio']} inputType={'textArea'}
                                                         />
                                                     </Col>
                                                 </Row>

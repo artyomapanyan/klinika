@@ -23,7 +23,6 @@ function OfferBookContent() {
 	const navigate = useNavigate()
 	const [open, setOpen] = useState(false);
 	const [response404, setResponse404] = useState({});
-
 	const [totalState, setTotalState] = useState(false);
 	const [verifyResponseNationality, setVerifyResponseNationality] = useState(false);
 
@@ -40,7 +39,6 @@ function OfferBookContent() {
 	const onClick = () => {
 		navigate(-1)
 	}
-
 	//choose the screen size
 	const handleResize = () => {
 		if (window.innerWidth < 600) {
@@ -58,7 +56,11 @@ function OfferBookContent() {
 
 	const { loadingState, dataState } = useGetResourceSingle(
 		'PublicOffer',
-		params.id
+		params.id,
+		{},
+		null,
+		null,
+		{ignore_timezone: '1'}
 	)
 
 	useEffect(() => {

@@ -81,7 +81,6 @@ function Offer() {
 
 
 
-
         if (params.id) {
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
@@ -422,7 +421,8 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        resource={'Doctor'}
                                        resourceParams={{
                                            clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
-                                           specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id
+                                           specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
+                                           status: 2,
                                        }}
                             />
 
