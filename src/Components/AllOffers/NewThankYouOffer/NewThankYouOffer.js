@@ -11,6 +11,7 @@ function NewThankYouOffer() {
     let dispatch = useDispatch()
 
     const [chargeResponse, setChargeResponse] = useState({})
+    const [firstLoadingThankYou, setFirstLoadingThankYou] = useState(true)
 
     useEffect(()=>{
         if(lngs!=='ar'){
@@ -25,23 +26,17 @@ function NewThankYouOffer() {
 
     useEffect(()=>{
         let currentURL = window.location.href;
-        let urlParts = currentURL.split("?");
-        let queryParams = urlParts[1];
-        let paramsArray = queryParams.split("&");
-        let invoiceParam = null;
-        for (let i = 0; i < paramsArray.length; i++) {
-            if (paramsArray[i].startsWith("invoice=")) {
-                invoiceParam = paramsArray[i].split("=")[1];
-                break;
-            }
-        }
+        var url = new URL(currentURL);
+        var invoiceParam = url.searchParams.get("invoice");
+        var tapIdParam = url.searchParams.get("tap_id");
 
-        console.log(invoiceParam);
+        console.log(invoiceParam, tapIdParam);
 
-        postResource('PublicOffersCharge','GetPublicOffersCharge', token,  744, {
-            charge:'chg_TS03A0220241435Ph1g1801422'
+        postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
+            charge: tapIdParam
         }).then((response) => {
-            console.log(response)
+            console.log(response, 'jjjj')
+            setFirstLoadingThankYou(false)
             setChargeResponse(response)
 
 
@@ -77,7 +72,7 @@ function NewThankYouOffer() {
                     }
                 >
                     <div className={'menu_div_new'} style={{ minHeight: 500}}>
-                        <NewThankYouBookContent chargeResponse={chargeResponse} />
+                        <NewThankYouBookContent chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou}/>
                     </div>
 
                     {/**<OffersFooter />**/}

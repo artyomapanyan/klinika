@@ -320,6 +320,10 @@ let api = {
         resource: 'PublicAppointment',
     },
     {
+        url: 'public/appointments/',
+        resource: 'RePayPublicAppointment',
+    },
+    {
         url: 'invoice-items',
         resource: 'InvoiceItem',
     },

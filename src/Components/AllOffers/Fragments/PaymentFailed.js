@@ -4,7 +4,7 @@ import {Button} from "antd";
 import {t} from "i18next";
 
 
-function PaymentFailed({onGoBack}) {
+function PaymentFailed({onGoBack, rePayOfferAppointment, tryAgainLoading}) {
 
     return <div align={'center'} className={'payment_failed_big_div'}>
         <div style={{padding: '32px 32px 24px 32px'}}>
@@ -17,7 +17,7 @@ function PaymentFailed({onGoBack}) {
             {t('There are some problems with paying for a visit to the doctor. You can try again or choose another payment method')}.
         </div>
         <div style={{marginTop: 24}}>
-            <Button className={'all_offers_book_btns'} type={'primary'}>{t('Try again')}</Button>
+            <Button loading={tryAgainLoading} onClick={rePayOfferAppointment} className={'all_offers_book_btns'} type={'primary'}>{t('Try again')}</Button>
 
         </div>
         <div style={{marginTop: 12}}>
