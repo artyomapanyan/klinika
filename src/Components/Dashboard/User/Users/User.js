@@ -38,7 +38,7 @@ function User() {
             values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
         }
 
-        console.log(values)
+
         if(values?.insurance_company_id) {
             values.insurance_company_id = values.insurance_company_id
         } else {
