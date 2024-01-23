@@ -8,8 +8,8 @@ import './Offers.sass'
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import PermCheck from "../../Fragments/PermCheck";
-import {CopyOutlined} from "@ant-design/icons";
-import {message} from "antd";
+import {CopyOutlined, CheckOutlined, CloseOutlined} from "@ant-design/icons";
+import {message, Switch} from "antd";
 
 const resource='Offer'
 
@@ -26,9 +26,17 @@ function Offers() {
         });
     };
 
+    const handleBooleanChange = (value) => {
+        console.log(value);
+    };
 
     return(
         <div>
+            <div style={{  display: 'flex', justifyContent: 'center', marginBottom: '40px', zIndex:'2', position:'relative' }}>
+                <h3>
+                    <Switch  onChange={(checked) => handleBooleanChange(checked)} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />}/> Enable Vat for Offers
+                </h3>
+            </div>
             <ResourceTable resource={resource}
                            // except={{
                            //     delete: reduxInfo?.selected_role?.key === 'doctor' ? true : false,
