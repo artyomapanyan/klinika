@@ -15,6 +15,9 @@ function Users() {
                                delete: PermCheck(`User:delete`) ? false : true,
                                edit: PermCheck(`User:update`) ? false : true
                            }}
+                            tableParams={{
+                                excludePatients: true,
+                            }}
                            tableColumns={[
                 {
                     title:'ID',
