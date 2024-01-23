@@ -129,7 +129,6 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     }, [formState?.clinic_id])
 
 
-    console.log(serviceTypeState, 'ttttttttt')
 
 
     return(

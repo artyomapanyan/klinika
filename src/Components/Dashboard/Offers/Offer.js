@@ -31,7 +31,6 @@ function Offer() {
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
 
-
     // formRef?.current?.validateFields(['content_en']).then(e => {
     //     console.log('dddddd')
     // }).catch((c) => {
