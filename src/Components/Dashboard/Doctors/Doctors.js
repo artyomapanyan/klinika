@@ -80,7 +80,7 @@ function Doctors() {
                 {
                     title:t('Specialties'),
                     dataIndex:'specialties',
-                    key:'specialties',
+                    key:'specialty_name',
                     translatable:true,
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                     className: 'table_clinics_column',
