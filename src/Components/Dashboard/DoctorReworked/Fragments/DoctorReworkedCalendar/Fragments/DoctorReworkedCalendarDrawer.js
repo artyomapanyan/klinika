@@ -6,7 +6,8 @@ import {Button, Form} from "antd";
 import {useSelector} from "react-redux";
 import {getServiceTypes} from "../../../../../../functions";
 import DateTimeSelect from "./DateTimeSelect";
-import {createResource} from "../../../../../Functions/api_calls";
+import {createResource, postResource} from "../../../../../Functions/api_calls";
+import Preloader from "../../../../../Preloader";
 
 function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataClinic}) {
     const authRedux = useSelector((state) => state?.auth);
@@ -18,6 +19,8 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     const [loading, setLoading] = useState(false);
     const [formState, setFormState] = useState({});
     const [date, setDate1] = useState(null)
+    const [serviceTypeState, setServiceTypeState] = useState([])
+    const [load, setLoad] = useState(false)
 
 
     const onNewAppointment = (values) => {
@@ -70,6 +73,60 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
         return [name, item, searchData]
     }
 
+    useEffect(() => {
+        setLoad(true)
+        if (formState?.clinic_id) {
+            Promise.all([
+                postResource('clinicDoctorBydoctorAndClinic', 'single', token, `${authRedux?.user?.id}/${formState?.clinic_id}`),
+                postResource('Clinic', 'single', token, formState?.clinic_id)
+
+            ]).then((responses) => {
+                let doctorActiveServices = Object.keys(responses[0]?.activated_services)?.map((el) => {
+                    return {
+                        service: true,
+                        id: el,
+                        name: el.replaceAll('_', ' ')
+                    }
+                })
+
+
+                let clinicActiveServices = [
+                    {
+                        service: responses[1]?.has_laboratory_home_visit_service,
+                        id: 'laboratory_home_visit',
+                        name: 'Laboratory Home Visit'
+                    },
+                    {
+                        service: responses[1]?.has_nursing_service,
+                        id: 'nursing',
+                        name: 'Nursing'
+                    },
+                    {
+                        service: responses[1]?.has_laboratory_clinic_visit_service,
+                        id: 'laboratory_clinic_visit',
+                        name: 'Laboratory Clinic Visit'
+                    }
+                ].filter(el => el.service === true)
+
+                setServiceTypeState([
+                    ...doctorActiveServices,
+                    ...clinicActiveServices
+                ]
+
+                )
+                //console.log(a,q, 'a')
+                setLoad(false)
+            })
+
+
+
+
+
+
+
+        }
+
+    }, [formState?.clinic_id])
 
 
 
@@ -121,11 +178,11 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                            resource={'Clinic'}
 
                 />
-                {formState?.clinic_id?<FormInput label={t('Service Type')} name={'service_type'}
+                {formState?.clinic_id ? load ? <Preloader small={25}/> : <FormInput label={t('Service Type')} name={'service_type'}
                            inputType={'resourceSelect'}
                            rules={[{required: true}]}
                            initialValue={null}
-                           initialData={role === 'doctor' ? getServiceTypes(authRedux?.clinics?.find(e=>e.id===formState?.clinic_id)?.services) : getServiceTypes([dataClinic?.clinic]?.find(e=>e.id===formState?.clinic_id)?.services)}
+                           initialData={serviceTypeState}
                 />:null}
                 {
                     formState.service_type === 'home_visit' || formState.service_type ==='physical_therapy_home_visit' ||
