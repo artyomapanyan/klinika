@@ -60,7 +60,7 @@ function Users() {
                     }
                 },
                 {
-                    dataIndex:['updated_at','iso_string'],
+                    dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
                     key:'date',
                     render:i=><DateParser date={i}/>
