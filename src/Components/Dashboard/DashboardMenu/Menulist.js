@@ -343,7 +343,12 @@ export default {
             icon: <BellOutlined style={{color:'#ce4e99', fontSize:20}} />,
             label: t(`Notifications`),
         },
-
+        {
+            icon:<img alt={'icons'} src={dash4}/>,
+            key: 'users/patient-list',
+            label: t(`Patients`),
+            permission:'Patient'
+        },
 
     ],
     'super-admin': [
@@ -533,7 +538,12 @@ export default {
             icon: <BellOutlined style={{color:'#ce4e99', fontSize:20}} />,
             label: t(`Notifications`),
         },
-
+        {
+            icon:<img alt={'icons'} src={dash4}/>,
+            key: 'users/patient-list',
+            label: t(`Patients`),
+            permission:'Patient'
+        },
 
     ],
 

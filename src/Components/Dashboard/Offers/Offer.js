@@ -31,7 +31,6 @@ function Offer() {
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
 
-
     // formRef?.current?.validateFields(['content_en']).then(e => {
     //     console.log('dddddd')
     // }).catch((c) => {
@@ -349,6 +348,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        initialData={data?.specialty_id ? [data.specialty_id] : []}
                                        resourceParams={{
                                            clinic: data?.clinic?.id ? data?.clinic?.id : data.clinic_id,
+                                           has_doctor: 1,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 

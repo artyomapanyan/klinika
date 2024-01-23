@@ -34,7 +34,7 @@ function ClinicManagerAppointmentsTable() {
     let token = useSelector((state) => state.auth.token);
     const formRef = useRef();
     const navigate = useNavigate();
-    const [dateWeek, setDateWeek] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
+    const [dateWeek, setDateWeek] = useState([dayjs(), dayjs().add(6, 'day')])
     const [modal,setModal] = useState(false)
     const [loading,setLoading] = useState(false)
     const [date,setDate] = useState(false)

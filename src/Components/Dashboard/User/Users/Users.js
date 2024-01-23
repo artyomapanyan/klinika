@@ -15,6 +15,9 @@ function Users() {
                                delete: PermCheck(`User:delete`) ? false : true,
                                edit: PermCheck(`User:update`) ? false : true
                            }}
+                            tableParams={{
+                                excludePatients: true,
+                            }}
                            tableColumns={[
                 {
                     title:'ID',
@@ -60,7 +63,7 @@ function Users() {
                     }
                 },
                 {
-                    dataIndex:['updated_at','iso_string'],
+                    dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
                     key:'date',
                     render:i=><DateParser date={i}/>

@@ -59,7 +59,7 @@ function OfferBookContent() {
 		params.id,
 		{},
 		null,
-		null,
+		lngs,
 		{ignore_timezone: '1'}
 	)
 
