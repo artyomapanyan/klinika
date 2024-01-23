@@ -72,7 +72,7 @@ function Login() {
                     ...response,
                     user: {
                         ...response.user,
-                        roles: response.user.roles.filter(item => item.key !== 'patient' && item.key !== 'user')
+                        roles: response.user.roles.filter(item => item.key !== 'temp-patient' && item.key !== 'user')
                     }
                 }
                 setDataState(response)
