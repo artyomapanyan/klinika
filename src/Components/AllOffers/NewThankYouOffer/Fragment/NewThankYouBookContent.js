@@ -111,7 +111,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         )
     }
 
-    console.log(paymentMethodState, chargeResponse, activePaymentMethodState)
+
 
     return (
         <>

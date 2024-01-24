@@ -35,12 +35,12 @@ function NewThankYouOffer() {
             let invoiceParam = url.searchParams.get("invoice");
             let tapIdParam = url.searchParams.get("tap_id");
 
-            console.log(currentURL, currentURL?.includes('invoice'), 'wwwwwwwwwwwwwwwwwww');
+
 
             postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
                 charge: tapIdParam
             }).then((response) => {
-                console.log(response, 'jjjj')
+
                 setFirstLoadingThankYou(false)
                 setChargeResponse(response)
 
