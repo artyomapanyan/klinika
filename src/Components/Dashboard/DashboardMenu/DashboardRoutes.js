@@ -294,8 +294,8 @@ function DashboardRoutes(){
         {/*<Route path={'owner-clinics'} element={<OwnerClinics />}/>*/}
         <Route path={'clinics/doctors/:id'} element={<ClinicDoctorUpdate />}/>
         <Route path={'Reports/new'} element={<Report />}/>
-
-        <Route path={'appointments/:id/doctor'} element={<AuthCheck permission={'Patient:viewPatientCard'}> <Patient /></AuthCheck>}/>
+        <Route path={'appointments/:id/doctor'} element={<Patient />}/>
+        {/*<Route path={'appointments/:id/doctor'} element={<AuthCheck permission={'Patient:viewPatientCard'}> <Patient /></AuthCheck>}/>*/}
         <Route path={'clinics-owner'} element={<AuthCheck roleKey={'clinic-owner'} ><ClinicsOwner /></AuthCheck>}/>
         <Route path={'clinic-manager'} element={<AuthCheck roleKey={'clinic-manager'} ><ClinicManager /></AuthCheck>}/>
         <Route path={'receptionist'} element={<AuthCheck roleKey={'receptionist'} ><ClinicManager /></AuthCheck>}/>

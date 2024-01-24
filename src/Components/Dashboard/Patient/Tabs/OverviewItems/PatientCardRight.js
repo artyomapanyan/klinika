@@ -24,7 +24,10 @@ function PatientCardRight({id, patientId, dataClinic}) {
 
     useEffect(() => {
         setLoading(true)
-        postResource('Appointment', 'list', token, `/${id}/upcoming-appointments-patient`).then((response) => {
+        postResource('Appointment', 'list', token, `/${id}/upcoming-appointments-patient`, {
+            per_page: 20
+        }).then((response) => {
+            console.log(response)
             setAppointments(response)
             setLoading(false)
         })
@@ -97,7 +100,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
                             </div>
                             <div className={'patient_next_app_texts'}>
                                 <div>
-                                    <Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title}</Tag>
+                                    <Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title ? el?.specialty?.title : el?.service_type === 'nursing' ? 'Nursing' : 'Laboratory'}</Tag>
                                     {dayjs(el?.booked_at?.iso_string).format('YYYY MMM DD')}
                                 </div>
                                 <div className={'patient_next_app_name_text'}>
