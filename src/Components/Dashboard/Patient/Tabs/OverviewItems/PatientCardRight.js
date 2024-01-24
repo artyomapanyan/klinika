@@ -19,19 +19,21 @@ function PatientCardRight({id, patientId, dataClinic}) {
     const [appointments, setAppointments] = useState()
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [perPageState, setPerPageState] = useState(5);
+    const [showAll, setShowAll] = useState(false)
 
 
 
     useEffect(() => {
         setLoading(true)
         postResource('Appointment', 'list', token, `/${id}/upcoming-appointments-patient`, {
-            per_page: 20
+            per_page: showAll ? null : 3
         }).then((response) => {
             console.log(response)
             setAppointments(response)
             setLoading(false)
         })
-    }, [open])
+    }, [open, showAll])
 
 
     const showDrawer = () => {
@@ -40,6 +42,10 @@ function PatientCardRight({id, patientId, dataClinic}) {
     const onClose = () => {
         setOpen(false);
     };
+
+    const appLoadMore = () => {
+
+    }
 
 
     return(
@@ -92,25 +98,48 @@ function PatientCardRight({id, patientId, dataClinic}) {
                     </div>
                 </div>
                 {
-                    loading ? <Preloader /> : appointments?.items?.map((el) => {
-                        return <div key={el.id} className={'patient_next_app_content'}>
+                    loading ? <Preloader /> : <div>
+                        <div style={{maxHeight: 668, overflow: 'auto'}}>
+                            {
+                                loading ? <Preloader /> : appointments?.items?.map((el) => {
+                                    return <div key={el.id} className={'patient_next_app_content'}>
 
-                            <div>
-                                <Avatar  size={48}  shape="square" icon={<UserOutlined />} />
-                            </div>
-                            <div className={'patient_next_app_texts'}>
-                                <div>
-                                    <Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title ? el?.specialty?.title : el?.service_type === 'nursing' ? 'Nursing' : 'Laboratory'}</Tag>
-                                    {dayjs(el?.booked_at?.iso_string).format('YYYY MMM DD')}
-                                </div>
-                                <div className={'patient_next_app_name_text'}>
-                                    {el?.patient?.first} {el?.patient?.last}
-                                </div>
+                                        <div>
+                                            <Avatar  size={48}  shape="square" icon={<UserOutlined />} />
+                                        </div>
+                                        <div className={'patient_next_app_texts'}>
+                                            <div>
+                                                <Tag onClick={appLoadMore} color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title ? el?.specialty?.title : el?.service_type === 'nursing' ? 'Nursing' : 'Laboratory'}</Tag>
+                                                {dayjs(el?.booked_at?.iso_string).format('YYYY MMM DD')}
+                                            </div>
+                                            <div className={'patient_next_app_name_text'}>
+                                                {el?.patient?.first} {el?.patient?.last}
+                                            </div>
 
-                            </div>
+                                        </div>
+                                    </div>
+                                })
+                            }
                         </div>
-                    })
+
+                        {
+
+                            !showAll && appointments?.total_items > 3 ? <div style={{padding: '10px 22px'}}>
+                                <Tag onClick={()=>setShowAll(true)}  style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('and more')} {appointments?.total_items - 3} {t('items')}</Tag>
+                            </div> : null
+
+                        }
+                        {
+
+                            showAll && appointments?.total_items > 3 ? <div style={{padding: '10px 22px'}}>
+                                <Tag onClick={()=>setShowAll(false)} style={{cursor: 'pointer', fontSize:13}}  color="magenta" className={'ant_tag'}>{t('Show Less')}</Tag>
+                            </div> : null
+
+                        }
+                    </div>
                 }
+
+
                 <Drawer width={411} title="Add User" placement="right" onClose={onClose} open={open}>
                     {open?<DoctorReworkedCalendarDrawer setOpen={setOpen}  patient={false} patientId={patientId} dataClinic={dataClinic}/>:null}
                 </Drawer>
