@@ -25,7 +25,7 @@ function General(){
             }).then(response=>{
                 if(response.user.id){
                     if(!response?.token){
-                        setRolesState(response?.user?.roles)
+                        setRolesState(response?.user?.roles.filter(item => item.key !== 'temp-patient' && item.key !== 'user'))
 
                     }else{
                         dispatch({
