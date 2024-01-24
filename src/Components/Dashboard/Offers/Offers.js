@@ -18,7 +18,6 @@ function Offers() {
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = (record) => {
-        console.log(record, 'ddddd')
         navigator.clipboard.writeText(record?.deep_link)
         messageApi.open({
             type: 'success',
