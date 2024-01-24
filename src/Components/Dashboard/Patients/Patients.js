@@ -3,6 +3,9 @@ import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import DateParser from "../../Fragments/DateParser";
 import React from "react";
+import PermCheck from "../../Fragments/PermCheck";
+import DateRangeFilterElement from "../../Fragments/TableFilterElements/DateRangeFilterElement";
+import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
 
 function Patients() {
 
@@ -15,7 +18,8 @@ function Patients() {
                            eyeShow={true}
                            addBtn={false}
                            except={{
-                               delete: true
+                               delete: true,
+                               edit: PermCheck(`Appointment:create`) ? false : true
                            }}
 
                            tableColumns={[
@@ -30,6 +34,7 @@ function Patients() {
                     dataIndex: 'name',
                     key: 'name',
                     translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                     render:(e, record) => {
                         return <div>{record?.first} {record?.last}</div>
                     }
@@ -40,6 +45,7 @@ function Patients() {
                     dataIndex:'email',
                     key:'email',
                     sorter:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
                     dataIndex:'phone_number',
@@ -50,7 +56,9 @@ function Patients() {
                 {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
-                    key:'date',
+                    key:'date',                    
+                    filterDropdown: (props)=><DateRangeFilterElement filterProps={props}/>,
+                    filterIcon: (filtered) => (<img alt={'calendar_dark_purpule_icon'} src={calendar_dark_purpule_icon}/>),
                     render:i=><DateParser date={i}/>
                 },
                 {

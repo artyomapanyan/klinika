@@ -550,6 +550,12 @@ let api = {
         resource: 'Manager',
     },
     {
+        url: 'clinic-doctors/by-doctor-and-clinic',
+        resource: 'clinicDoctorBydoctorAndClinic',
+    },
+
+
+    {
         url: 'public/offers/charge',
         resource: 'PublicOffersCharge',
         custom: {
@@ -603,6 +609,10 @@ let api = {
                 exportExcel: {
                     url: `${endpoint}${version}/${item.url}/export`,
                     method: 'GET',
+                },
+                importExcel: {
+                    url: `${endpoint}${version}/${item.url}/import`,
+                    method: 'POST',
                 },
                 exportPdf: {
                     url: `${endpoint}${version}/${item.url}`,

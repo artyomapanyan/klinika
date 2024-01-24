@@ -8,11 +8,23 @@ import './Offers.sass'
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import PermCheck from "../../Fragments/PermCheck";
+import {CopyOutlined} from "@ant-design/icons";
+import {message} from "antd";
 
 const resource='Offer'
 
 function Offers() {
     let reduxInfo = useSelector((state) => state?.auth);
+
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = (record) => {
+        console.log(record, 'ddddd')
+        navigator.clipboard.writeText(record?.deep_link)
+        messageApi.open({
+            type: 'success',
+            content: 'Successfully Done',
+        });
+    };
 
 
     return(
@@ -70,6 +82,18 @@ function Offers() {
                                    key:'category',
                                    shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
                                    render:(e,record)=><ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                               },
+                               {
+                                   dataIndex:'deep_link',
+                                   title:t('Copy link'),
+                                   key:'deep_link',
+                                   render:(e,record)=> {
+                                       console.log(record)
+                                       return <div onClick={()=>success(record)} style={{cursor: 'pointer', margin: '0px 22px'}}>
+                                           <CopyOutlined style={{color: '#ce4e99', fontSize: 20}}/>
+                                           {contextHolder}
+                                       </div>
+                                   }
                                },
 
                            ]} title={t('Offers')}/>

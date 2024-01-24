@@ -4,7 +4,10 @@ import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilt
 import {t} from "i18next";
 import DateParser from "../../../Fragments/DateParser";
 import PermCheck from "../../../Fragments/PermCheck";
+import {useSelector} from "react-redux";
+
 function Users() {
+    let language = useSelector((state) => state.app.current_locale)
     return(
         <div>
             <ResourceTable resource={'User'}
@@ -12,6 +15,9 @@ function Users() {
                                delete: PermCheck(`User:delete`) ? false : true,
                                edit: PermCheck(`User:update`) ? false : true
                            }}
+                            tableParams={{
+                                excludePatients: true,
+                            }}
                            tableColumns={[
                 {
                     title:'ID',
@@ -46,7 +52,18 @@ function Users() {
                     className: 'table_clinics_column'
                 },
                 {
-                    dataIndex:['updated_at','iso_string'],
+                    title:t('Roles'),
+                    dataIndex:'roles',
+                    key:'roles',
+                    translatable:true,
+                    render:(e, record) => {
+                        return record?.roles?.map((e, i) => {
+                            return e?.name[language] + (i === record?.roles.length - 1 ? '' : ', ')
+                        })
+                    }
+                },
+                {
+                    dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
                     key:'date',
                     render:i=><DateParser date={i}/>

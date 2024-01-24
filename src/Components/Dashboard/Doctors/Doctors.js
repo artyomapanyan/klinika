@@ -78,6 +78,21 @@ function Doctors() {
 
                 },
                 {
+                    title:t('Specialties'),
+                    dataIndex:'specialties',
+                    key:'specialty_name',
+                    translatable:true,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                    className: 'table_clinics_column',
+                    render:(e, record) => {
+
+                        return record?.specialties?.map((e, i) => {
+                                    return e?.title + (i === record?.specialties.length - 1 ? '' : ', ')
+                                })
+                            }
+
+                },
+                {
                     dataIndex:['status'],
                     title:t('Status'),
                     key:'category',

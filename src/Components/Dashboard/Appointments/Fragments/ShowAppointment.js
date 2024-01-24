@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router";
 import {useSelector} from "react-redux";
 import {useGetResourceSingle} from "../../../Functions/api_calls";
-import {Avatar, Button, Col, Divider, message, Row, Space} from "antd";
+import {Avatar, Button, Col, Divider, message, Row, Space, Tooltip} from "antd";
 import {
     CopyOutlined,
     EditOutlined,
@@ -16,7 +16,7 @@ import api from "../../../../Api";
 import Preloader from "../../../Preloader";
 import dayjs from "dayjs";
 import ResourceLinks from "../../../ResourceLinks";
-import closeLightGray from "../../../../dist/icons/close-lightGray.svg";
+import copyIcon from "../../../../dist/icons/copy.svg";
 import {t} from "i18next";
 
 
@@ -92,7 +92,13 @@ function ShowAppointment() {
         navigate(-1)
     }
 
-
+    const copyText = (text) => {
+        navigator.clipboard.writeText(text);
+        messageApi.open({
+            type: 'success',
+            content: 'Copied to clipboard',
+        });
+    }
 
 
     return(
@@ -162,7 +168,13 @@ function ShowAppointment() {
                                     data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
                                     <tr>
                                         <td className={'show_td_1'}>{t('Visit Address')}</td>
-                                        <td className={'show_td_2'}>{data?.address?.address1 || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>}</td>
+                                        <td className={'show_td_2'}>
+                                            {data?.address?.address1 || <span style={{fontStyle: 'italic', fontWeight:600, color: '#969698'}}>N/A</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <Tooltip title="Copy address">
+                                                <span onClick={() =>copyText(data?.address?.address1)}><img src={copyIcon} alt={'copy'} style={{width:20, cursor: 'pointer'}}/></span>
+                                            </Tooltip>
+                                        
+                                        </td>
                                     </tr> : null  
                                 }
 

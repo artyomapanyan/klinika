@@ -39,6 +39,11 @@ function User() {
         }
 
 
+        if(values?.insurance_company_id) {
+            values.insurance_company_id = values.insurance_company_id
+        } else {
+            values.insurance_company_id = null
+        }
 
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {

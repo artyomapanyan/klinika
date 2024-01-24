@@ -24,7 +24,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
     const [autoFillState, setAutoFillState] = useState(true);
-
+    const [selectedSpecialties,setSelectedSpecialties] = useState([]);
 
 
 
@@ -34,6 +34,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
             setData(response)
             setLoading(false)
             setAllData(response)
+            setSelectedSpecialties(response?.specialties?.map(el => el.id))
         })
     }, [autoFillState])
 
@@ -166,36 +167,55 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                             {/*    </Col>*/}
                             {/*</Row>*/}
                             <Row gutter={20}>
-                                <Col lg={8} className={'doc_profile_specialties'}>
-                                    <FormInput inputProps={{mode:'multiple'}} label={t('Sub specialties')} name={'sub_specialities'} inputType={'resourceSelect'}
-                                               rules={[{required: true}]}
-                                               initialValue={data?.sub_specialties?.map(e=>e?.id)}
-                                               initialData={data?.sub_specialties ??[]}
-                                               resource={'Taxonomy'}
-                                               resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,
-                                                   has_parent: 1
-                                               }}
-                                    />
-                                </Col>
-
                                 <Col lg={16} className={'doc_profile_specialties'}>
                                     <div style={{width: '100%'}}>
-                                        <FormInput label={t('')} name={'specialities'}
-                                                   inputProps={{mode: 'multiple'}}
-                                                   suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>{t('Specialties')} </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
-
-                                                   inputType={'resourceSelect'}
-                                                   rules={[{required: true}]}
-                                                   initialValue={data?.specialties?.map(e=>e?.id)}
-                                                   initialData={data?.specialties ??[]}
-                                                   resource={'Taxonomy'}
-                                                   resourceParams={{
-                                                       type: Resources.TaxonomyTypes.SPECIALTY,
-                                                       has_parent: 0
-                                                   }}
+                                        <FormInput label={t('')} name={'specialties'}
+                                            inputProps={{
+                                            mode:'multiple',
+                                            onChange:(e,dat)=> {
+                                                setData((prevState)=>({
+                                                    ...prevState,
+                                                    sub_specialties: undefined,
+                                                }))
+            
+                                                formRef?.current?.setFieldsValue({
+                                                    sub_specialties: undefined,
+                                                })
+                                                setSelectedSpecialties(formRef?.current?.getFieldValue('specialties'))
+                                            }
+                                            }}
+                                            suffixIcon={<div> <Divider type={"vertical"} style={{height: 30}}/> <span style={{color:'#635D6B', fontSize: '12',marginRight: 10 }}>{t('Specialties')} </span>  <img alt={'suffix_select_icon'} src={suffix_select_icon}/></div>}
+                                            inputType={'resourceSelect'}
+                                            rules={[{required: true}]}
+                                            initialValue={data?.specialties?.map(e=>e?.id)}
+                                            initialData={data?.specialties ??[]}
+                                            resource={'Taxonomy'}
+                                            customSearchKey={'title'}
+                                            resourceParams={{
+                                                type: Resources.TaxonomyTypes.SPECIALTY,
+                                                has_parent: 0
+                                            }}
                                         />
                                     </div>
 
+                                </Col>
+                                <Col lg={8} className={'doc_profile_specialties'}>
+                                        <FormInput
+											inputProps={{ mode: 'multiple' }}
+											label={t('Sub specialties')}
+											name={'sub_specialties'}
+											inputType={'resourceSelect'}
+											rules={[{ required: true }]}
+											initialValue={data?.sub_specialties?.map(e => e?.id)}
+											initialData={data?.sub_specialties ?? []}
+											resource={'Taxonomy'}
+											resourceParams={{
+												type: Resources.TaxonomyTypes.SPECIALTY,
+												has_parent: 1,
+												parents: selectedSpecialties
+											}}
+											disabled={!selectedSpecialties.length}
+										/>
                                 </Col>
                             </Row>
                             <Row gutter={20}>

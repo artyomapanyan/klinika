@@ -31,7 +31,6 @@ function Offer() {
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
 
-
     // formRef?.current?.validateFields(['content_en']).then(e => {
     //     console.log('dddddd')
     // }).catch((c) => {
@@ -77,7 +76,6 @@ function Offer() {
         if(values?.content) {
             values.content = values.content.replace('background-color:', '')
         }
-
 
 
 
@@ -350,6 +348,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        initialData={data?.specialty_id ? [data.specialty_id] : []}
                                        resourceParams={{
                                            clinic: data?.clinic?.id ? data?.clinic?.id : data.clinic_id,
+                                           has_doctor: 1,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 
@@ -422,7 +421,8 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        resource={'Doctor'}
                                        resourceParams={{
                                            clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
-                                           specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id
+                                           specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
+                                           status: 2,
                                        }}
                             />
 

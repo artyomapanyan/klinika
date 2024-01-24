@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import {Content} from "antd/es/layout/layout";
-import {Button, Col, Form, Popconfirm, Row, Space, Switch, Table, Tooltip} from "antd";
+import {Button, Col, Form, Input, message, Modal, Popconfirm, Row, Space, Switch, Table, Tooltip, Upload} from "antd";
 import {deleteResource, useGetResourceIndex} from "../Functions/api_calls";
 import {
     CarryOutOutlined,
@@ -8,7 +8,7 @@ import {
     EditOutlined,
     EyeOutlined,
     PlusOutlined,
-    QuestionCircleOutlined
+    QuestionCircleOutlined, UploadOutlined
 } from "@ant-design/icons";
 import {useNavigate} from "react-router";
 import ResourceLinks from "../ResourceLinks";
@@ -37,7 +37,7 @@ function ResourceTable ({
                             resourceLink = null,
                             hideActions = false,
                             exportButton = true,
-                            exportDatabase = true,
+                            exportDatabase = false,
                             addButtonChange = true,
                             except = {},
                             handleTableBelowData,
@@ -79,6 +79,9 @@ function ResourceTable ({
     let navigate = useNavigate();
 
     const [pdfState, setPdfState] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [importFile, setImportFile] = useState({});
+    const [importLoading, setImportLoading] = useState(false);
 
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params,false,false,false,getAll)
@@ -298,7 +301,38 @@ function ResourceTable ({
         });
     }
 
+    const importChange = (e) => {
+        console.log(e?.target?.files[0])
+        setImportFile(e.target.files[0])
 
+    }
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setImportLoading(true)
+        axios.request({
+            url: api[resource].importExcel.url,
+            method: api[resource].importExcel.method,
+            data: {file: importFile},
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'multipart/form-data'
+            },
+
+
+        }).then((response) => {
+
+        }).finally(() => {
+            setIsModalOpen(false);
+            setImportLoading(false)
+        })
+
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
 
     return (<Content className={containermargin ? 'layout-conatiner1' : 'layout-conatiner'}>
@@ -321,9 +355,35 @@ function ResourceTable ({
                             : null : null
                     }
 
+                    {
+                        exportDatabase ? <Button onClick={showModal} className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button> : null
+                    }
+
                     {/*{*/}
-                    {/*    exportDatabase ? <Button className={'resource_table_btn'} type={'secondary'}>{t("Import to Database")}</Button> : null*/}
+                    {/*    <div>*/}
+                    {/*        <input type={'file'} onInput={(e)=>importChange(e)} id={'upload-btn-lg'} />*/}
+                    {/*    </div>*/}
                     {/*}*/}
+                    <Modal  title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null} width={400}>
+                        <div>
+                            <div style={{marginTop: 30}}>
+                                <label className={'resource_table_import'}>
+                                    <input style={{display: 'none'}} type={'file'} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onInput={(e)=>importChange(e)} id={'upload-btn-lg'} />
+                                    <span>{<UploadOutlined />}</span><span >Import file</span>
+                                </label>
+                                <div style={{marginTop: 15}}>
+                                    {importFile?.name}
+                                </div>
+
+                            </div>
+                            <div style={{marginTop: 40, display: 'flex', gap: 8,}} >
+                                <Button type={'secondary'} onClick={handleCancel} >{t('Cancel')}</Button>
+                                <Button loading={importLoading} type={'primary'} onClick={handleOk} >{t('Save')}</Button>
+                            </div>
+                        </div>
+
+
+                    </Modal>
 
 
                 </div>

@@ -24,27 +24,27 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
     const [loading, setLoading] = useState(true)
     const [clinichoursData, setClinichoursData] = useState({})
     const [clinicHoursesDataNew, setClinicHoursesDataNew] = useState({})
-    const [reqwestdone, setReqwestdone] = useState(false)
+   // const [reqwestdone, setReqwestdone] = useState(false)
 
 
 
-    useEffect(()=>{
-
-        postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
-
-            Object.keys(response)?.forEach(key=>{
-                response[key] = response[key]?.map(e=>({
-                start:Resources.dateOptions.findIndex(u=>u.value===e.opens_at),
-                end:Resources.dateOptions.findIndex(u=>u.value===e.closes_at)
-            }))
-            })
-
-            setClinichoursData(response)
-
-
-        })
-
-    }, [id,type]);
+    // useEffect(()=>{
+    //
+    //     postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
+    //
+    //         Object.keys(response)?.forEach(key=>{
+    //             response[key] = response[key]?.map(e=>({
+    //             start:Resources.dateOptions.findIndex(u=>u.value===e.opens_at),
+    //             end:Resources.dateOptions.findIndex(u=>u.value===e.closes_at)
+    //         }))
+    //         })
+    //
+    //         setClinichoursData(response)
+    //
+    //
+    //     })
+    //
+    // }, [id,type]);
 
     // useEffect(()=>{
     //
@@ -60,7 +60,8 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
         setLoading(true)
         Promise.all([
             postResource(resource,'WorkingHours',token,id,{service:excludedGet[type]??type}),
-            postResource(res,'WorkingHours',token,params.id,{service: excludedGet[type]??type})
+            postResource(res,'WorkingHours',token,params.id,{service: excludedGet[type]??type}),
+            postResource(res,'WorkingHours',token,params.id,{service: type})
 
         ])
        .then(responses => {
@@ -80,16 +81,17 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
            })
 
            setClinichoursData(clinicTimes)
+           setClinicHoursesDataNew(responses[2])
 
            setLoading(false)
         })
 
-        postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
-            setClinicHoursesDataNew(response)
-            setLoading(false)
-            setReqwestdone(true)
-
-        })
+        // postResource(res,'WorkingHours',token,params.id,{service: type}).then(response => {
+        //     setClinicHoursesDataNew(response)
+        //     setLoading(false)
+        //
+        //
+        // })
 
     },[type,id]);
 
@@ -130,7 +132,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
     return(
         <div className={'doctor_working_hours_conteiner'}>
-            {loading?<Preloader/>:<WorkingHours reqwestdone={reqwestdone} doctorHoursModal={false} clinicHoursesDataNew={clinicHoursesDataNew} switchStatus={true} timeLimits={clinichoursData}  handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
+            {loading?<Preloader/>:<WorkingHours doctorHoursModal={false} clinicHoursesDataNew={clinicHoursesDataNew} switchStatus={true} timeLimits={clinichoursData}  handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
         </div>
     )
 }
