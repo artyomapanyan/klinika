@@ -126,6 +126,16 @@ let api = {
     {
         url: 'preferences',
         resource: 'Preference',
+        custom: {
+            GetPreference: {
+                url: `${endpoint}${version}/getPreference`,
+                method: 'GET',
+            },
+            SetPreference: {
+                url: `${endpoint}${version}/setPreference`,
+                method: 'PUT',
+            },
+        }
     },
     {
         url: 'clinics',
@@ -549,11 +559,6 @@ let api = {
         url: 'managers',
         resource: 'Manager',
     },
-    {
-        url: 'clinic-doctors/by-doctor-and-clinic',
-        resource: 'clinicDoctorBydoctorAndClinic',
-    },
-
 
     {
         url: 'public/offers/charge',
