@@ -1,4 +1,4 @@
-import React, { useRef} from 'react'
+import React, { useEffect, useState} from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
@@ -8,13 +8,17 @@ import './Offers.sass'
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import PermCheck from "../../Fragments/PermCheck";
-import {CopyOutlined} from "@ant-design/icons";
-import {message} from "antd";
+import {CopyOutlined, CheckOutlined, CloseOutlined} from "@ant-design/icons";
+import {message, Switch} from "antd";
+import {postResource} from "../../Functions/api_calls";
 
 const resource='Offer'
 
 function Offers() {
     let reduxInfo = useSelector((state) => state?.auth);
+    let selectedRole = useSelector((state) => state.auth.selected_role);
+    const [vatOnOffer,setVatOnOfferValue] = useState({});
+    let token = useSelector((state) => state.auth.token);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = (record) => {
@@ -26,9 +30,32 @@ function Offers() {
         });
     };
 
+    useEffect(() => {
+        postResource('Preference', 'GetPreference', token,  null, {key: 'vat_on_offer'}).then((response) => {
+            setVatOnOfferValue(response?.value);
+        });
+    }, [])
+
+    const handleBooleanChange = (value) => {
+        setVatOnOfferValue(value);
+        postResource('Preference', 'SetPreference', token,  null, {key: 'vat_on_offer', value: value? 1 : 0}).then((response) => {
+            setVatOnOfferValue(response?.value);
+            messageApi.open({
+                type: 'success',
+                content: 'Successfully Done',
+            });
+        });
+    };
 
     return(
         <div>
+            {selectedRole.key === 'super' || selectedRole.key === 'super-admin' ?
+                <div style={{  display: 'flex', justifyContent: 'center', marginBottom: '40px', zIndex:'2', position:'relative' }}>
+                    <h3>
+                        <Switch checked={vatOnOffer} onChange={(checked) => handleBooleanChange(checked)} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />}/> Enable Vat for Offers
+                    </h3>
+                </div>: null
+            }
             <ResourceTable resource={resource}
                            // except={{
                            //     delete: reduxInfo?.selected_role?.key === 'doctor' ? true : false,
