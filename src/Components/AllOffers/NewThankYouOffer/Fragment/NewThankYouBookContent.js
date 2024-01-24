@@ -112,7 +112,6 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
     }
 
 
-
     return (
         <>
             <div
