@@ -111,7 +111,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         )
     }
 
-
+    console.log(chargeResponse?.status)
     return (
         <>
             <div
@@ -166,7 +166,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                 {
                                     firstLoadingThankYou ? <Preloader/> : <div>
                                         {
-                                            onlineOrClinicPay ? <div className={'offer_appointment_sec'}>
+                                            !onlineOrClinicPay ? <div className={'offer_appointment_sec'}>
                                                 {/*<BookAnAppointmentNew data={data} />*/}
                                                 <div align={'center'} style={{padding: 24}}>
                                                     <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
@@ -180,7 +180,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                                 </div>
                                             </div> : <div>
                                                 {
-                                                    chargeResponse?.status == "CAPTURED" ? <div className={'offer_appointment_sec'}>
+                                                    chargeResponse?.status === "CAPTURED" ? <div className={'offer_appointment_sec'}>
                                                         {/*<BookAnAppointmentNew data={data} />*/}
                                                         <div align={'center'} style={{padding: 24}}>
                                                             <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
