@@ -31,9 +31,10 @@ function Offers() {
     };
 
     useEffect(() => {
-        postResource('Preference', 'GetPreference', token,  null, {key: 'vat_on_offer'}).then((response) => {
-            setVatOnOfferValue(response?.value);
-        });
+        if(selectedRole.key === 'super' || selectedRole.key === 'super-admin')
+            postResource('Preference', 'GetPreference', token,  null, {key: 'vat_on_offer'}).then((response) => {
+                setVatOnOfferValue(response?.value);
+            });
     }, [])
 
     const handleBooleanChange = (value) => {
@@ -49,18 +50,18 @@ function Offers() {
 
     return(
         <div>
-            {selectedRole.key === 'super' || selectedRole.key === 'super-admin' ?
-                <div style={{  display: 'flex', justifyContent: 'center', marginBottom: '40px', zIndex:'2', position:'relative' }}>
-                    <h3>
-                        <Switch checked={vatOnOffer} onChange={(checked) => handleBooleanChange(checked)} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />}/> Enable Vat for Offers
-                    </h3>
-                </div>: null
-            }
             <ResourceTable resource={resource}
-                           // except={{
-                           //     delete: reduxInfo?.selected_role?.key === 'doctor' ? true : false,
-                           //     edit: reduxInfo?.selected_role?.key === 'doctor' ? true : false
-                           // }}
+                            customHeader={()=> {
+                                return <div> {selectedRole.key === 'super' || selectedRole.key === 'super-admin' ?
+                                <div style={{display: 'flex', justifyContent: 'center', marginBottom: -30}}>
+                                    <div style={{zIndex:2, position: 'relative'}}>
+                                        <h3>
+                                        <Switch checked={vatOnOffer} onChange={(checked) => handleBooleanChange(checked)} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />}/> Enable Vat for Offers
+                                    </h3>
+                                    </div>
+                                </div>: null
+                            }</div>
+                            }}
 
                            except={{
                                delete: PermCheck(`Offer:delete`) ? false : true,
