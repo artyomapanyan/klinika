@@ -5,6 +5,7 @@ import {t} from "i18next";
 import DateParser from "../../../Fragments/DateParser";
 import PermCheck from "../../../Fragments/PermCheck";
 import {useSelector} from "react-redux";
+import search_icon_darkPurpole from "../../../../dist/icons/search_icon_darkPurpole.png";
 
 function Users() {
     let language = useSelector((state) => state.app.current_locale)
@@ -54,8 +55,10 @@ function Users() {
                 {
                     title:t('Roles'),
                     dataIndex:'roles',
-                    key:'roles',
+                    key:'role',
                     translatable:true,
+                    filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
+                    filterDropdown: (props)=><TableFilterElement resource='RoleWithoutPatients' type={'selectFilter'} filterProps={props}/>,
                     render:(e, record) => {
                         return record?.roles?.map((e, i) => {
                             return e?.name[language] + (i === record?.roles.length - 1 ? '' : ', ')

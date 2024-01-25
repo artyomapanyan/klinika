@@ -94,6 +94,10 @@ let api = {
         resource: 'Role',
     },
     {
+        url: 'roles?except=user,temp-patient',
+        resource: 'RoleWithoutPatients',
+    },
+    {
         url: 'permissions',
         resource: 'Permission',
     },
