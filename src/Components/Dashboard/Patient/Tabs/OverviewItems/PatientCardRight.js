@@ -19,7 +19,6 @@ function PatientCardRight({id, patientId, dataClinic}) {
     const [appointments, setAppointments] = useState()
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [perPageState, setPerPageState] = useState(5);
     const [showAll, setShowAll] = useState(false)
 
 
@@ -29,7 +28,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
         postResource('Appointment', 'list', token, `/${id}/upcoming-appointments-patient`, {
             per_page: showAll ? null : 3
         }).then((response) => {
-            console.log(response)
+
             setAppointments(response)
             setLoading(false)
         })
@@ -43,9 +42,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
         setOpen(false);
     };
 
-    const appLoadMore = () => {
 
-    }
 
 
     return(
@@ -109,7 +106,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
                                         </div>
                                         <div className={'patient_next_app_texts'}>
                                             <div>
-                                                <Tag onClick={appLoadMore} color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title ? el?.specialty?.title : el?.service_type === 'nursing' ? 'Nursing' : 'Laboratory'}</Tag>
+                                                <Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title ? el?.specialty?.title : el?.service_type === 'nursing' ? 'Nursing' : 'Laboratory'}</Tag>
                                                 {dayjs(el?.booked_at?.iso_string).format('YYYY MMM DD')}
                                             </div>
                                             <div className={'patient_next_app_name_text'}>
