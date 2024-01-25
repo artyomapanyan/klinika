@@ -6,19 +6,34 @@ import React, {useRef, useState} from "react";
 import Resources from "../../../../../../store/Resources";
 import dayjs from "dayjs";
 import {useSelector} from "react-redux";
+import {postResource} from "../../../../../Functions/api_calls";
 
 
-function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData, finishLoading}) {
+function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setOpen,handleCreateAppointment,setData, finishLoading, setFinishLoading}) {
     const formRef = useRef();
     let language = useSelector((state) => state?.app?.current_locale);
+    let token = useSelector((state) => state?.auth?.token);
+
     const [loading, setLoading] = useState(false)
+    const [emailState, setEmailState] = useState('')
+
 
     const onFinish = (values) => {
-        setLoading(true)
-        handleCreateAppointment(data,{
-            patient:values
+        setFinishLoading(true)
+        postResource('PublicIsEmailFree', 'PublicIsEmailFreeCustom', token, '', {
+            email: data?.email ? data?.email : emailState
+        }).then((response) => {
+            if(response?.isEmailFree) {
+                handleCreateAppointment(data,{
+                    patient:values,
+                })
+
+            } else {
+                setFinishLoading(false)
+            }
         })
-        setLoading(false)
+
+
     }
     const handleMapItems = (item, name) => {
         name = item.phone_code ? `${item.phone_code} ` : null
@@ -65,7 +80,12 @@ function ClinicManagerCalendarDrawerLarge({openDrawer,doctor,specialty,data,setO
 
                             <FormInput label={t('First name')} name={'first'}   rules={[{required: true}]} />
                             <FormInput label={t('Last name')} name={'last'} rules={[{required: true}]} />
-                            <FormInput label={t('Email')} name={'email'} rules={[{required: true}]} />
+                            <FormInput label={t('Email')} name={'email'}
+                                       rules={[{required: true}]}
+                                       onChange={(event) => {
+                                           setEmailState(event?.target?.value)
+                                       }}
+                            />
                             <div style={{display:"flex", gap: 20, width:'100%'}}>
                                 <div style={{width:110}}>
                                     <FormInput label={t('Code')} name={'phone_country_code'} inputType={'resourceSelect'}

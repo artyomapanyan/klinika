@@ -22,6 +22,7 @@ function AppPersonalDetails({
 	setShowPayment,
 	show,verifyState,setVerifyState,personalForm,
 	codeAndNumberState, setCodeAndNumberState,
+	setEmailValidationState,
 }) {
 	let token = useSelector(state => state.auth.token)
 
@@ -34,6 +35,7 @@ function AppPersonalDetails({
 	const [codeStatus, setCodeStatus] = useState(null)
 	const [changeVerifyCode, setChangeVerifyCode] = useState('')
 	const [sendAgain, setSendAgain] = useState({})
+
 
 
 
@@ -220,14 +222,25 @@ function AppPersonalDetails({
 
 	};
 
-	useEffect(() => {
 
-		postResource('PublicIsEmailFree', 'PublicIsEmailFreeCustom', token, '', {
-			email: 'aaa@mail.ru'
-		}).then((response) => {
-			console.log(response, 'rrrrrrr')
-		})
-	}, [])
+
+	// const onEmailChange = (event) => {
+	// 	personalForm?.current?.validateFields(['email']).then((e) => {
+	// 		console.log(e)
+	// 		postResource('PublicIsEmailFree', 'PublicIsEmailFreeCustom', token, '', {
+	// 			email: e?.email
+	// 		}).then((response) => {
+	// 			setEmailValidationState(response?.isEmailFree)
+	// 		})
+	// 	}).catch((e) => {
+	// 		// let hasError = e?.errorFields.filter((eItem) => {
+	// 		// 	return eItem.name[0] === 'email';
+	// 		// });
+	// 		// hasError = !hasError.length
+	// 		//
+	// 		// console.log(hasError, e, 'catch')
+	// 	})
+	// }
 
 	const redStar = <div><span style={{color: 'red'}}>*</span> <span>{t('Email')}</span></div>
 
@@ -407,26 +420,20 @@ function AppPersonalDetails({
 											/>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.email}
-												label={redStar}
+												label={'Email'}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
-												onChange={(e, a, v) => {
-													personalForm?.current?.validateFields().then((e) => {
-
-													}).catch((e) => {
-														let hasError = e?.errorFields.filter((eItem) => {
-															return eItem.name[0] === 'email';
-														});
-														hasError = !hasError.length
-														console.log(hasError)
-													})
-													// console.log(personalForm?.current?.validateFields())
+												onChange={(event) => {
+													setEmailValidationState(event?.target?.value)
 												}}
 
 												rules={[
 													{
 														type: 'email',
+														required: true
+
 													},
+
 
 													]}
 											/>
