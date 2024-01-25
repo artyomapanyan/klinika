@@ -3,12 +3,12 @@ import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import DateParser from "../../Fragments/DateParser";
 import React from "react";
-import PermCheck from "../../Fragments/PermCheck";
+import {useSelector} from "react-redux";
 import DateRangeFilterElement from "../../Fragments/TableFilterElements/DateRangeFilterElement";
 import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
 
 function Patients() {
-
+    let selectedRole = useSelector((state) => state.auth.selected_role);
 
     return(
         <div>
@@ -19,7 +19,7 @@ function Patients() {
                            addBtn={false}
                            except={{
                                delete: true,
-                               edit: PermCheck(`Appointment:create`) ? false : true
+                               edit: selectedRole.key === 'super' || selectedRole.key === 'super-admin' ? true : false
                            }}
 
                            tableColumns={[
