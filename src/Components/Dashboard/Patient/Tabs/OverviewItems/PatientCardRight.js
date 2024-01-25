@@ -44,7 +44,6 @@ function PatientCardRight({id, patientId, dataClinic}) {
 
 
 
-
     return(
         <div className={'Patient_card_right_div'} style={{marginRight: 24, marginTop: 24}}>
             {/*<div className={'Patient_card_right_img'}>*/}
