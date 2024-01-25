@@ -28,7 +28,6 @@ function Patient() {
     let language = useSelector((state) => state.app.current_locale)
     let role = useSelector((state) => state.auth.selected_role.key)
 
-
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading} = loadingState
