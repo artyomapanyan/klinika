@@ -220,6 +220,15 @@ function AppPersonalDetails({
 
 	};
 
+	useEffect(() => {
+
+		postResource('PublicIsEmailFree', 'PublicIsEmailFreeCustom', token, '', {
+			email: 'aaa@mail.ru'
+		}).then((response) => {
+			console.log(response, 'rrrrrrr')
+		})
+	}, [])
+
 	const redStar = <div><span style={{color: 'red'}}>*</span> <span>{t('Email')}</span></div>
 
 
@@ -380,6 +389,7 @@ function AppPersonalDetails({
 											  validateMessages={validateMessages}
 											  id={'personal_form'}
 
+
 										>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.first}
@@ -400,6 +410,18 @@ function AppPersonalDetails({
 												label={redStar}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
+												onChange={(e, a, v) => {
+													personalForm?.current?.validateFields().then((e) => {
+
+													}).catch((e) => {
+														let hasError = e?.errorFields.filter((eItem) => {
+															return eItem.name[0] === 'email';
+														});
+														hasError = !hasError.length
+														console.log(hasError)
+													})
+													// console.log(personalForm?.current?.validateFields())
+												}}
 
 												rules={[
 													{
