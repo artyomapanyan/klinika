@@ -5,7 +5,8 @@ export default function auth(state = {}, action) {
                 token:'Bearer ' +action.payload.token,
                 user:{
                     ...action.payload.user,
-                    permissions:action.payload.selected_role.permissions.map(e=>e.name)
+                    permissions:action.payload.selected_role.permissions.map(e=>e.name),
+                    roles: action.payload.user.roles.filter(item => item.key !== 'temp-patient' && item.key !== 'user')
                 }
 
             }
