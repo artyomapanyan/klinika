@@ -98,6 +98,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
                         <div style={{maxHeight: 668, overflow: 'auto'}}>
                             {
                                 loading ? <Preloader /> : appointments?.items?.map((el) => {
+                                    console.log(el)
                                     return <div key={el.id} className={'patient_next_app_content'}>
 
                                         <div>
@@ -105,7 +106,11 @@ function PatientCardRight({id, patientId, dataClinic}) {
                                         </div>
                                         <div className={'patient_next_app_texts'}>
                                             <div>
-                                                <Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>{el?.specialty?.title ? el?.specialty?.title : el?.service_type === 'nursing' ? 'Nursing' : 'Laboratory'}</Tag>
+                                                <Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>
+                                                    {el?.specialty?.title ? el?.specialty?.title :
+                                                        el?.service_type === 'nursing' ? 'Nursing' :
+                                                            el?.service_type === 'laboratory_clinic_visit' ? 'Laboratory Clinic visit' : 'Laboratory Home Visit'}
+                                                </Tag>
                                                 {dayjs(el?.booked_at?.iso_string).format('YYYY MMM DD')}
                                             </div>
                                             <div className={'patient_next_app_name_text'}>
