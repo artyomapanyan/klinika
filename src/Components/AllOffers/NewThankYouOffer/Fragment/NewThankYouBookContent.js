@@ -111,7 +111,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         )
     }
 
-    console.log(chargeResponse?.status)
+
     return (
         <>
             <div

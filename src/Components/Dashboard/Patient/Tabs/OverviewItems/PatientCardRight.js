@@ -97,7 +97,7 @@ function PatientCardRight({id, patientId, dataClinic}) {
                         <div style={{maxHeight: 668, overflow: 'auto'}}>
                             {
                                 loading ? <Preloader /> : appointments?.items?.map((el) => {
-                                    console.log(el)
+
                                     return <div key={el.id} className={'patient_next_app_content'}>
 
                                         <div>

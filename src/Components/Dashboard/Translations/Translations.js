@@ -151,8 +151,8 @@ function Translations(){
                     onFinish={onFinish}
                 >
 
-                       <FormInput label={t('Key')} name={'key'} />
-                        <FormInput label={t('Value')} name={'value'}/>
+                       <FormInput label={t('Key')} name={'key'} maxLength={200}/>
+                        <FormInput label={t('Value')} name={'value'} maxLength={200}/>
 
                     <Button htmlType={'submit'} type={'primary'} style={{margin: '0 8px'}}>Ok</Button>
                     <Button onClick={handleCancel}>Cancel</Button>
