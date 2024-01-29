@@ -521,6 +521,10 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                             />
                         </Col>
                     </Row>
+                    <a style={{margin: 7}} href={'http://localhost:3000/dashboard/offers'}>
+                        Please check that your photos match criteria in this file.
+                    </a>
+
                     <FileManager text1={t('Cover')}
                                  text2={t('Download the file')}
                                  name={'cover'}
