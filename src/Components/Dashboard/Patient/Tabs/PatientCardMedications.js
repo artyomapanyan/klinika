@@ -8,7 +8,7 @@ import Preloader from "../../../Preloader";
 import search_icon_black from "../../../../dist/icons/search_icon_black.png";
 import {t} from "i18next";
 
-function PatientCardMedications({tab}) {
+function PatientCardMedications({tab, patientId}) {
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
 
@@ -24,7 +24,7 @@ function PatientCardMedications({tab}) {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
             actual: 1,
-
+            patient: patientId
             }
         ).then((response) => {
             setActualPrescriptions(response?.items)
@@ -37,7 +37,7 @@ function PatientCardMedications({tab}) {
         setLoading(true)
         postResource('prescriptions','single', token,  '', {
                 not_actual: 1,
-
+                patient: patientId
             }
         ).then((response) => {
             setNotActualPrescriptions(response?.items)
