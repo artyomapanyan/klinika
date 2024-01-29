@@ -14,7 +14,6 @@ import {InboxOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 
-
 const resource = 'Taxonomy';
 
 function SubSpecialty() {
