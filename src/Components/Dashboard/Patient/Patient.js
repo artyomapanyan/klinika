@@ -71,7 +71,7 @@ function Patient() {
                                 <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-                                <PatientCardAppointment patientId={data?.patient?.id}  bigData={data} id={params.id} setBigData={setData}/>
+                                <PatientCardAppointment  tab={tab} patientId={data?.patient?.id}  bigData={data} id={params.id} setBigData={setData}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'video_call'} tab={'Video call'} >
                                 <VideoCall data={data}/>
@@ -83,7 +83,7 @@ function Patient() {
                             {/*    <PatientCardLabTests/>*/}
                             {/*</Tabs.TabPane>*/}
                             <Tabs.TabPane key={'medications'} tab={'Medications'} >
-                                <PatientCardMedications tab={tab}/>
+                                <PatientCardMedications tab={tab} patientId={data?.patient?.id}/>
                             </Tabs.TabPane>
                             {/*<Tabs.TabPane key={'log'} tab={'log'} >*/}
                             {/*    <PatientCardLog />*/}
