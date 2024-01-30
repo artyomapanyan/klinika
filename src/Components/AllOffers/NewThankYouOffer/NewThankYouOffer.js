@@ -5,6 +5,7 @@ import NewThankYouBookContent from "./Fragment/NewThankYouBookContent";
 import {changeLanguage} from "i18next";
 import {postResource} from "../../Functions/api_calls";
 
+
 function NewThankYouOffer() {
     let token = useSelector(state => state.auth.token)
     let lngs = useSelector(state => state?.app?.current_locale)
