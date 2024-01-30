@@ -27,7 +27,7 @@ function MonthStatistics () {
                   <div className={styles.title}>Your {dayjs().month(ownerClinics).format('MMMM')}’s statistics</div>
                   <div></div>
                   <div align={'center'} className={styles.itemGroup}>
-                      <div className={styles.numbers}>{data?.clinic_visit_appointments_count}</div>
+                      <div className={styles.numbers}>{data?.visits}</div>
                       <div className={styles.text}>Visits</div>
                       {
                           language === 'en' ? <span className={styles.rightLine}></span> : <span></span>
