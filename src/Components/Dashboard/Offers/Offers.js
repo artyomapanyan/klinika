@@ -11,6 +11,7 @@ import PermCheck from "../../Fragments/PermCheck";
 import {CopyOutlined, CheckOutlined, CloseOutlined} from "@ant-design/icons";
 import {message, Switch} from "antd";
 import {postResource} from "../../Functions/api_calls";
+import SwitchStatus from "../../Fragments/SwitchStatus";
 
 const resource='Offer'
 
@@ -19,6 +20,7 @@ function Offers() {
     let selectedRole = useSelector((state) => state.auth.selected_role);
     const [vatOnOffer,setVatOnOfferValue] = useState({});
     let token = useSelector((state) => state.auth.token);
+    let user =  useSelector(state=>state?.auth?.user)
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = (record) => {
@@ -104,13 +106,20 @@ function Offers() {
                                        </div>
                                    }
                                },
-                               {
-                                   dataIndex:['status'],
-                                   title:t('Status'),
-                                   key:'category',
-                                   shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                                   render:(e,record)=><ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
-                               },
+                                {
+                                    dataIndex:['status'],
+                                    title:t('Status'),
+                                    key:'status',
+                                    shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                                    render:(e,record)=>{
+                                        return <div>
+                                            {user?.permissions?.includes(`Offer:update`) ? 
+                                               <SwitchStatus switchDisabled={record?.approved_at && !record?.rejected_at ? false : true} record={record} resource={resource} name={'status'}/> : 
+                                               <ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                                            }
+                                        </div>
+                                        }
+                                },
                                {
                                    dataIndex:'deep_link',
                                    title:t('Copy link'),
