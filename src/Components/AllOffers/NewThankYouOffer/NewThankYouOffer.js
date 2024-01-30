@@ -25,34 +25,34 @@ function NewThankYouOffer() {
         }
     },[])
 
-    useEffect(()=>{
-        let currentURL = window.location.href;
-
-        if(currentURL?.includes('invoice')) {
-            setOnlineOrClinicPay(true)
-
-            let url = new URL(currentURL);
-            let invoiceParam = url.searchParams.get("invoice");
-            let tapIdParam = url.searchParams.get("tap_id");
-
-
-
-            postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
-                charge: tapIdParam
-            }).then((response) => {
-
-                setFirstLoadingThankYou(false)
-                setChargeResponse(response)
-
-
-            })
-        } else {
-            setOnlineOrClinicPay(false)
-            setFirstLoadingThankYou(false)
-        }
-
-
-    },[])
+    // useEffect(()=>{
+    //     let currentURL = window.location.href;
+    //
+    //     if(currentURL?.includes('invoice')) {
+    //         setOnlineOrClinicPay(true)
+    //
+    //         let url = new URL(currentURL);
+    //         let invoiceParam = url.searchParams.get("invoice");
+    //         let tapIdParam = url.searchParams.get("tap_id");
+    //
+    //
+    //
+    //         postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
+    //             charge: tapIdParam
+    //         }).then((response) => {
+    //
+    //             setFirstLoadingThankYou(false)
+    //             setChargeResponse(response)
+    //
+    //
+    //         })
+    //     } else {
+    //         setOnlineOrClinicPay(false)
+    //         setFirstLoadingThankYou(false)
+    //     }
+    //
+    //
+    // },[])
 
     return (
         <div>
