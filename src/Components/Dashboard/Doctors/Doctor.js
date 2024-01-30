@@ -291,7 +291,6 @@ function Doctor() {
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:0}}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties??[]}
                                        resource={'Taxonomy'}
