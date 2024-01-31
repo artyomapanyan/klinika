@@ -19,6 +19,8 @@ import Laboratory from "./Fragments/Laboratory/Laboratory";
 import Nursing from "./Fragments/Nursing/Nursing";
 import Telehealth from "./Fragments/Telehealth/Telehealth";
 import LaboratoryHomeVisit from "./Fragments/LaboratoryHomeVisit/LaboratoryHomeVisit";
+import PhysicalTherapyClinicVisit from "./Fragments/PhysicalTherapyClinicVisit/PhysicalTherapyClinicVisit";
+import PhysicalTherapyHomeVisit from "./Fragments/PhysicalTherapyHomeVisit/PhysicalTherapyHomeVisit";
 
 
 const resource = "Clinic"
@@ -47,6 +49,8 @@ function Clinic() {
     const handleLangChange = (e) => {
         setLang(e.target.value)
     }
+
+    console.log(dataState)
 
     return (
         <div  className={'clinic_tab_big_div'}>
@@ -101,6 +105,14 @@ function Clinic() {
                 {dataState.data.has_nursing_service && dataState.data.enable_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing tab={tab}/>
                     </items> : null}
+
+                {dataState.data.has_physical_therapy_clinic_visit_service && dataState.data.enable_physical_therapy_clinic_visit_service && params.id ? <items key={'physical_therapy_clinic_visit'} tab={'Physical therapy clinic visit'} disabled={!params.id}>
+                    <PhysicalTherapyClinicVisit tab={tab}/>
+                </items> : null}
+
+                {dataState.data.has_physical_therapy_home_visit_service && dataState.data.enable_physical_therapy_home_visit_service && params.id ? <items key={'physical_therapy_home_visit'} tab={'Physical therapy home visit'} disabled={!params.id}>
+                    <PhysicalTherapyHomeVisit tab={tab}/>
+                </items> : null}
                 </ClinicTabBars>}
           </div>
     )
