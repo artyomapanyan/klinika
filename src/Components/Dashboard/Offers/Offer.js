@@ -11,7 +11,7 @@ import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
 import CancelComponent from "../../Fragments/CancelComponent";
-import dayjs from "dayjs";
+
 import {InboxOutlined} from "@ant-design/icons";
 import FileManager from "../../Fragments/FileManager";
 import pdf from "../../../dist/offerPDF/Klinika_content_guide.pdf";
@@ -19,6 +19,7 @@ import pdf from "../../../dist/offerPDF/Klinika_content_guide.pdf";
 const resource = 'Offer';
 
 function Offer() {
+    let role = useSelector((state) => state.auth.selected_role.key)
     let dispatch = useDispatch()
     let language = useSelector((state) => state.app.current_locale)
     const params = useParams();
@@ -520,9 +521,15 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                             />
                         </Col>
                     </Row>
+                    {/*{*/}
+                    {/*    role === 'clinic-owner' || role === 'clinic-manager' ? <a style={{margin: 7}} href={pdf} target="_blank">*/}
+                    {/*        Please check that your photos match criteria in this file.*/}
+                    {/*    </a> : <div></div>*/}
+                    {/*}*/}
                     <a style={{margin: 7}} href={pdf} target="_blank">
                         Please check that your photos match criteria in this file.
                     </a>
+
 
                     <FileManager text1={t('Cover')}
                                  text2={t('Download the file')}
