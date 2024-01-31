@@ -49,6 +49,8 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     const [codeAndNumberState, setCodeAndNumberState] = useState({
         phone_country_code: '966'
     })
+    const [emailValidationState, setEmailValidationState] = useState(false)
+    const [emailLoadind, setEmailLoadind] = useState(false)
 
 
 
@@ -109,18 +111,53 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     }
 
     const handleShowPayment = () => {
-        personalForm.current.validateFields({
-            validateOnly: true
-        }).then(
-            () => {
-                setShowPayment(true)
-                setShowButtons(false)
-                setTotalState(true)
-            },
-            () => {
 
-            },
-        );
+        if(responseCodeState?.patient) {
+            personalForm.current.validateFields({
+                validateOnly: true
+            }).then(
+
+                () => {
+
+                  setShowPayment(true)
+                  setShowButtons(false)
+                  setTotalState(true)
+                  setEmailLoadind(false)
+
+
+                },
+                () => {
+
+                },
+            );
+        } else {
+            personalForm.current.validateFields({
+                validateOnly: true
+            }).then(
+
+                () => {
+                    setEmailLoadind(true)
+                    postResource('PublicIsEmailFree', 'PublicIsEmailFreeCustom', token, '', {
+                        email: emailValidationState
+                    }).then((response) => {
+
+                        if(response?.isEmailFree) {
+                            setShowPayment(true)
+                            setShowButtons(false)
+                            setTotalState(true)
+                            setEmailLoadind(false)
+                        } else {
+                            setEmailLoadind(false)
+                        }
+                    })
+
+                },
+                () => {
+
+                },
+            );
+        }
+
 
 
     }
@@ -422,6 +459,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                             codeAndNumberState={codeAndNumberState}
                             setCodeAndNumberState={setCodeAndNumberState}
                             setVerifyResponseNationality={setVerifyResponseNationality}
+                            setEmailValidationState={setEmailValidationState}
                         />
                     </div>
                 }
@@ -431,6 +469,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                             <Button onClick={handleShowPayment} className={'all_offers_book_btns'}
                                     form={'personal_form'}
                                     htmlType={'submit'}
+                                    loading={emailLoadind}
                                     disabled={namesState?.first && namesState?.last && namesState?.email ? false : true}
                                     type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
                         </div>

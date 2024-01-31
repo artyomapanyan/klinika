@@ -549,10 +549,12 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                         <ClinicManagerCalendarDrawerSmall setData={setData} data={data} doctor={doctor} specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           finishLoading={finishLoading}
+                                                          setFinishLoading={setFinishLoading}
                                                           openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
                         <ClinicManagerCalendarDrawerLarge setData={setData} data={data} doctor={doctor} specialty={specialty}
                                                           handleCreateAppointment={handleCreateAppointment}
                                                           finishLoading={finishLoading}
+                                                          setFinishLoading={setFinishLoading}
                                                           setOpen={setOpen} openDrawer={openDrawer}/>
                 }
 

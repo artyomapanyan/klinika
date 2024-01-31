@@ -579,6 +579,17 @@ let api = {
 
         }
     },
+    {
+        url: 'public/isEmailFree',
+        resource: 'PublicIsEmailFree',
+        custom: {
+            PublicIsEmailFreeCustom:{
+                url: `${endpoint}${version}/public/isEmailFree`,
+                method: 'POST',
+            },
+
+        }
+    },
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',
