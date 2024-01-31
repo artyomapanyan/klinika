@@ -20,6 +20,7 @@ import Preloader from "../../../Preloader";
 import {log10} from "chart.js/helpers";
 import HCP_Male from "../../../../dist/icons/HCP_Male.png";
 import HCP_Female from "../../../../dist/icons/HCP_Female.png";
+import PaymentFailed from "../../Fragments/PaymentFailed";
 
 function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNationality, totalState, verifyResponseNationality}) {
     let token = useSelector(state => state.auth.token)
@@ -48,6 +49,8 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     const [codeAndNumberState, setCodeAndNumberState] = useState({
         phone_country_code: '966'
     })
+    const [emailValidationState, setEmailValidationState] = useState(false)
+    const [emailLoadind, setEmailLoadind] = useState(false)
 
 
 
@@ -57,7 +60,6 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
         postResource('PublicAppointment', 'create', token, '', dataState).then(
             response => {
                 setLoading(false)
-
 
                 if (response?.appointment?.id) {
                     //setShowthank(true)
@@ -109,18 +111,53 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     }
 
     const handleShowPayment = () => {
-        personalForm.current.validateFields({
-            validateOnly: true
-        }).then(
-            () => {
-                setShowPayment(true)
-                setShowButtons(false)
-                setTotalState(true)
-            },
-            () => {
 
-            },
-        );
+        if(responseCodeState?.patient) {
+            personalForm.current.validateFields({
+                validateOnly: true
+            }).then(
+
+                () => {
+
+                  setShowPayment(true)
+                  setShowButtons(false)
+                  setTotalState(true)
+                  setEmailLoadind(false)
+
+
+                },
+                () => {
+
+                },
+            );
+        } else {
+            personalForm.current.validateFields({
+                validateOnly: true
+            }).then(
+
+                () => {
+                    setEmailLoadind(true)
+                    postResource('PublicIsEmailFree', 'PublicIsEmailFreeCustom', token, '', {
+                        email: emailValidationState
+                    }).then((response) => {
+
+                        if(response?.isEmailFree) {
+                            setShowPayment(true)
+                            setShowButtons(false)
+                            setTotalState(true)
+                            setEmailLoadind(false)
+                        } else {
+                            setEmailLoadind(false)
+                        }
+                    })
+
+                },
+                () => {
+
+                },
+            );
+        }
+
 
 
     }
@@ -422,6 +459,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                             codeAndNumberState={codeAndNumberState}
                             setCodeAndNumberState={setCodeAndNumberState}
                             setVerifyResponseNationality={setVerifyResponseNationality}
+                            setEmailValidationState={setEmailValidationState}
                         />
                     </div>
                 }
@@ -431,6 +469,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                             <Button onClick={handleShowPayment} className={'all_offers_book_btns'}
                                     form={'personal_form'}
                                     htmlType={'submit'}
+                                    loading={emailLoadind}
                                     disabled={namesState?.first && namesState?.last && namesState?.email ? false : true}
                                     type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
                         </div>
@@ -458,6 +497,10 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                 ) : (
                     ''
                 )}
+
+                {/*<div>*/}
+                {/*    <PaymentFailed />*/}
+                {/*</div>*/}
 
 
                 <div className={'tab_div_mobile_new_offer'}>

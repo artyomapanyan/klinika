@@ -18,6 +18,9 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
 
     const [saveLoading, setSaveLoading] = useState(false)
 
+    if (data?.id) {
+        prescriptions = prescriptions.filter(e=> e.id !== data.id);
+    }
 
     const onFinish = (values) => {
         setSaveLoading(true)
@@ -86,17 +89,17 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
             {data?<Form
                 onFinish={onFinish}
             >
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} />
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
                 <div style={{display: 'flex', gap: 8, marginTop:-16}}>
                     <div style={{width: '50%'}}>
-                        <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} />
+                        <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} rules={[{required: true}]} inputType={'number'}/>
                     </div>
                     <div style={{width: '50%'}}>
-                        <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration}/>
+                        <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[{required: true}]} inputType={'number'}/>
                     </div>
 
                     <div style={{width: '50%'}}>
-                        <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose}/>
+                        <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose} rules={[{required: true}]} inputType={'number'}/>
                     </div>
                     <div style={{width: '50%'}}>
                         <FormInput label={t('Units')} name={'unit_type'} inputType={'resourceSelect'}
@@ -132,7 +135,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                     </div>
 
                     <div style={{width: '25%'}}>
-                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue='0'/>
+                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue='0' inputType={'number'}/>
                     </div>
                 </div>
                 <div style={{ marginTop:-16}}>

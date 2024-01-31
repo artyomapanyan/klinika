@@ -17,7 +17,7 @@ import {t} from "i18next";
 const { TextArea } = Input;
 
 const resource = 'Appointment'
-function PatientCardAppointment({patientId, bigData, id, setBigData}) {
+function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
     const formRef = useRef();
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
@@ -51,7 +51,7 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
             setOldPrescriptions(response?.items.filter(item => item.appointment_id != params.id));
             setLoading(false)
         })
-    }, [addDeleteState, bigData])
+    }, [tab, addDeleteState, bigData])
 
     const onFinish = (values) => {
         setLoadingSubmit(true)
@@ -285,9 +285,9 @@ function PatientCardAppointment({patientId, bigData, id, setBigData}) {
                                     </Form>
 
                                 </div>
-                                {/*<div style={{marginTop:30}}>*/}
-                                {/*    <AppointmentFollowUpHistory/>*/}
-                                {/*</div>*/}
+                                <div style={{marginTop:30}}>
+                                   <AppointmentFollowUpHistory appointment={bigData} />
+                                </div>
                             </Col>
                         </Row>
                     </Col>

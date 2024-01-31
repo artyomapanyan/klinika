@@ -1,4 +1,4 @@
-import React, { useRef} from 'react'
+import React, { useEffect, useState} from 'react'
 import ResourceTable from "../../Fragments/ResourceTable";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import {t} from "i18next";
@@ -8,13 +8,19 @@ import './Offers.sass'
 import ColorSelect from "../../Fragments/ColorSelect";
 import Resource from "../../../store/Resources";
 import PermCheck from "../../Fragments/PermCheck";
-import {CopyOutlined} from "@ant-design/icons";
-import {message} from "antd";
+import {CopyOutlined, CheckOutlined, CloseOutlined} from "@ant-design/icons";
+import {message, Switch} from "antd";
+import {postResource} from "../../Functions/api_calls";
+import SwitchStatus from "../../Fragments/SwitchStatus";
 
 const resource='Offer'
 
 function Offers() {
     let reduxInfo = useSelector((state) => state?.auth);
+    let selectedRole = useSelector((state) => state.auth.selected_role);
+    const [vatOnOffer,setVatOnOfferValue] = useState({});
+    let token = useSelector((state) => state.auth.token);
+    let user =  useSelector(state=>state?.auth?.user)
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = (record) => {
@@ -25,14 +31,38 @@ function Offers() {
         });
     };
 
+    useEffect(() => {
+        if(selectedRole.key === 'super' || selectedRole.key === 'super-admin')
+            postResource('Preference', 'GetPreference', token,  null, {key: 'vat_on_offer'}).then((response) => {
+                setVatOnOfferValue(response?.value);
+            });
+    }, [])
+
+    const handleBooleanChange = (value) => {
+        setVatOnOfferValue(value);
+        postResource('Preference', 'SetPreference', token,  null, {key: 'vat_on_offer', value: value? 1 : 0}).then((response) => {
+            setVatOnOfferValue(response?.value);
+            messageApi.open({
+                type: 'success',
+                content: 'Successfully Done',
+            });
+        });
+    };
 
     return(
         <div>
             <ResourceTable resource={resource}
-                           // except={{
-                           //     delete: reduxInfo?.selected_role?.key === 'doctor' ? true : false,
-                           //     edit: reduxInfo?.selected_role?.key === 'doctor' ? true : false
-                           // }}
+                            customHeader={()=> {
+                                return <div> {selectedRole.key === 'super' || selectedRole.key === 'super-admin' ?
+                                <div style={{display: 'flex', justifyContent: 'center', marginBottom: -30}}>
+                                    <div style={{zIndex:2, position: 'relative'}}>
+                                        <h3>
+                                        <Switch checked={vatOnOffer} onChange={(checked) => handleBooleanChange(checked)} checkedChildren={<CheckOutlined />} unCheckedChildren={<CloseOutlined />}/> Enable Vat for Offers
+                                    </h3>
+                                    </div>
+                                </div>: null
+                            }</div>
+                            }}
 
                            except={{
                                delete: PermCheck(`Offer:delete`) ? false : true,
@@ -75,13 +105,20 @@ function Offers() {
                                        </div>
                                    }
                                },
-                               {
-                                   dataIndex:['status'],
-                                   title:t('Status'),
-                                   key:'category',
-                                   shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                                   render:(e,record)=><ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
-                               },
+                                {
+                                    dataIndex:['status'],
+                                    title:t('Status'),
+                                    key:'status',
+                                    shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                                    render:(e,record)=>{
+                                        return <div>
+                                            {user?.permissions?.includes(`Offer:update`) ? 
+                                               <SwitchStatus switchDisabled={record?.approved_at && !record?.rejected_at ? false : true} record={record} resource={resource} name={'status'}/> : 
+                                               <ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+                                            }
+                                        </div>
+                                        }
+                                },
                                {
                                    dataIndex:'deep_link',
                                    title:t('Copy link'),

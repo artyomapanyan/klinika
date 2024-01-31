@@ -450,9 +450,6 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
         }))
 
 
-        if(values?.service_settings?.home_visit?.duration && values?.service_settings?.laboratory_home_visit?.duration) {
-            values.service_settings.laboratory_home_visit.duration = values?.service_settings?.home_visit?.duration
-        }
 
 
 
@@ -912,12 +909,14 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                             }
 
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} label={t('Bookings per slot')} name={["service_settings","laboratory_home_visit","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.laboratory_home_visit?.bookings_per_slot ? data?.service_settings?.laboratory_home_visit?.bookings_per_slot : 1}/>
-                                            <Form.Item
-                                                name={["service_settings","laboratory_home_visit","duration"]}
+                                            <FormInput inputDisabled={role !== 'super' && !data?.enable_laboratory_home_visit_service} label={t('Duration')} name={["service_settings","laboratory_home_visit","duration"]} inputType={'number'}  initialValue={data?.service_settings?.laboratory_home_visit?.duration ? data?.service_settings?.laboratory_home_visit?.duration : 60}/>
 
-                                            >
-                                                <Input hidden={true} />
-                                            </Form.Item>
+                                            {/*<Form.Item*/}
+                                            {/*    name={["service_settings","laboratory_home_visit","duration"]}*/}
+
+                                            {/*>*/}
+                                            {/*    <Input />*/}
+                                            {/*</Form.Item>*/}
 
 
                                         </div>

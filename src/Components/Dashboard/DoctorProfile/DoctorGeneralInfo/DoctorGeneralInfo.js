@@ -121,13 +121,10 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                                     <FormInput label={t('Date of Birth')} name={'dob'}
                                                suffixIcon={<img alt={'calendar_black_icon'} src={calendar_black_icon}/>}
                                                initialValue={data?.dob}
-
-
-                                        //inputDisabled={true}
                                                inputType={'date'}
                                                rules={[
-
                                         {
+                                            required: true,
                                             validator:(rule,value)=>{
                                                 if(dayjs().diff(value,'year')<18){
                                                     return Promise.reject('min age 18')
@@ -141,6 +138,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
                                                initialValue={data?.gender}
                                                initialData={Resources?.Gender}
+                                               rules={[{required: true}]}
                                     />
 
                                 </Col>
@@ -205,7 +203,6 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
 											label={t('Sub specialties')}
 											name={'sub_specialties'}
 											inputType={'resourceSelect'}
-											rules={[{ required: true }]}
 											initialValue={data?.sub_specialties?.map(e => e?.id)}
 											initialData={data?.sub_specialties ?? []}
 											resource={'Taxonomy'}

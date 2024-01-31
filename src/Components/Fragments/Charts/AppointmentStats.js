@@ -211,7 +211,13 @@ function AppointmentStats(){
                         legend: {
                             labels: false,
                         },
-                        tooltip: false,
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.dataset.label + ' : ' + tooltipItem.parsed.y + '%';
+                                },
+                            }}
                     },
                 },
                 plugins: [noData],
@@ -277,7 +283,7 @@ function AppointmentStats(){
 
                             </Button>
                             <div className={'app_stats_date_div'}>
-                                {dayjs(date.from).format('DD')} -  {dayjs(date.to).format('DD')} {GMBK(dayjs(date.to).month())}
+                                {dayjs(date.from).format('DD')} {dayjs(date.from).format('MMM')} -  {dayjs(date.to).format('DD')} {dayjs(date.to).format('MMM')}
                             </div>
                             <Button className={'chart_button'} disabled={date.to >= dayjs()} onClick={onNextYear}>
                                 {

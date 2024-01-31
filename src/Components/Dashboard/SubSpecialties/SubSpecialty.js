@@ -14,7 +14,6 @@ import {InboxOutlined} from "@ant-design/icons";
 import CancelComponent from "../../Fragments/CancelComponent";
 
 
-
 const resource = 'Taxonomy';
 
 function SubSpecialty() {
@@ -53,7 +52,7 @@ function SubSpecialty() {
                 setSaveLoading(false)
             })
         } else {
-            createResource(resource, values, token).then((response) => {
+            createResource(resource, values, token, true).then((response) => {
                 if (response?.id) {
                     navigate(resourceLinks['SubSpecialty'])
                 }
@@ -94,6 +93,18 @@ function SubSpecialty() {
             >
                 <div className={"add_edit_content"}>
                     <FormInput label={t('Title')} name={'title'} initialValue={data?.title} rules={[{required: true}]}/>
+                    <FormInput label={t('Specialty')} name={'parent_id'}
+                               inputType={'resourceSelect'}
+                               rules={[{required: true}]}
+                               initialValue={data?.parent?.id}
+                               initialData={data?.parent ? [data?.parent] : []}
+                               resource={'Taxonomy'}
+                               customSearchKey={'title'}
+                               resourceParams={{
+                                   type: Resources.TaxonomyTypes.SPECIALTY,
+                                   has_parent: 0
+                               }}
+                    />
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}

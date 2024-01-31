@@ -94,6 +94,10 @@ let api = {
         resource: 'Role',
     },
     {
+        url: 'roles?except=user,temp-patient',
+        resource: 'RoleWithoutPatients',
+    },
+    {
         url: 'permissions',
         resource: 'Permission',
     },
@@ -126,6 +130,16 @@ let api = {
     {
         url: 'preferences',
         resource: 'Preference',
+        custom: {
+            GetPreference: {
+                url: `${endpoint}${version}/getPreference`,
+                method: 'GET',
+            },
+            SetPreference: {
+                url: `${endpoint}${version}/setPreference`,
+                method: 'PUT',
+            },
+        }
     },
     {
         url: 'clinics',
@@ -320,6 +334,10 @@ let api = {
         resource: 'PublicAppointment',
     },
     {
+        url: 'public/appointments/',
+        resource: 'RePayPublicAppointment',
+    },
+    {
         url: 'invoice-items',
         resource: 'InvoiceItem',
     },
@@ -379,6 +397,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/owner/new-patients/`,
                 method: 'GET',
             },
+            InvoicesStatuses: {
+                url: `${endpoint}${version}/dashboard/owner/invoice-statuses/`,
+                method: 'GET',
+            },
         },
     },
     {
@@ -403,6 +425,14 @@ let api = {
             },
             ClinicWorkload: {
                 url: `${endpoint}${version}/dashboard/manager/clinic-workload/`,
+                method: 'GET',
+            },
+            MonthlyIncomes: {
+                url: `${endpoint}${version}/dashboard/manager/monthly-incomes/`,
+                method: 'GET',
+            },
+            InvoicesStatuses: {
+                url: `${endpoint}${version}/dashboard/manager/invoice-statuses/`,
                 method: 'GET',
             },
         },
@@ -550,7 +580,28 @@ let api = {
         resource: 'clinicDoctorBydoctorAndClinic',
     },
 
+    {
+        url: 'public/offers/charge',
+        resource: 'PublicOffersCharge',
+        custom: {
+            GetPublicOffersCharge:{
+                url: `${endpoint}${version}/public/offers/charge/`,
+                method: 'GET',
+            },
 
+        }
+    },
+    {
+        url: 'public/isEmailFree',
+        resource: 'PublicIsEmailFree',
+        custom: {
+            PublicIsEmailFreeCustom:{
+                url: `${endpoint}${version}/public/isEmailFree`,
+                method: 'POST',
+            },
+
+        }
+    },
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',

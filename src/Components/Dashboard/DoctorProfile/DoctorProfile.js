@@ -93,30 +93,38 @@ function DoctorProfile() {
     // }
 
 
-
     const handleSave = () => {
-        setSaveLoading(true)
 
-        let values = {...formRefs?.general_information?.current?.getFieldValue()};
 
-       values.dob = dayjs(values.dob).format('YYYY-MM-DD')
-        if(avatarDeleteType) {
-            values.avatar_deleted = [allData?.avatar?.id]
+        formRefs?.general_information?.current?.validateFields(['first', 'last', 'dob', 'gender', 'specialties', 'sub_specialties', 'email', 'phone_country_code', 'phone_number', 'plid', 'doctor_title_id']).then(e => {
+            setSaveLoading(true)
 
-        }
+            let values = {...formRefs?.general_information?.current?.getFieldValue()};
 
-        if(values?.bio == null) {
-            values.bio = ''
-        }
-
-        updateResource(resource, '', values, token, true).then(response => {
-            if(response?.id){
+            values.dob = dayjs(values.dob).format('YYYY-MM-DD')
+            if(avatarDeleteType) {
+                values.avatar_deleted = [allData?.avatar?.id]
 
             }
-        }).finally(() => {
-            setSaveLoading(false)
-            window.location.reload()
+
+            if(values?.bio == null) {
+                values.bio = ''
+            }
+
+            updateResource(resource, '', values, token, true).then(response => {
+                if(response?.id){
+
+                }
+            }).finally(() => {
+                setSaveLoading(false)
+                window.location.reload()
+            })
+
+        }).catch((c) => {
+
         })
+
+
     }
 
     const onBack = () => {
