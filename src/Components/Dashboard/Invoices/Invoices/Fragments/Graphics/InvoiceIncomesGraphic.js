@@ -1,63 +1,81 @@
-import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {postResource} from "../../../../../Functions/api_calls";
-import dayjs from "dayjs";
-import {Space, Spin} from "antd";
-import arrowGreen from "../../../../../../dist/icons/arrow-green.svg";
-import arrowRed from "../../../../../../dist/icons/arrow-red.svg";
-import {t} from "i18next";
-import {GMBK} from "../../../../../../functions";
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { postResource } from '../../../../../Functions/api_calls'
+import { Space, Spin } from 'antd'
+import arrowGreen from '../../../../../../dist/icons/arrow-green.svg'
+import arrowRed from '../../../../../../dist/icons/arrow-red.svg'
+import { t } from 'i18next'
 
 function InvoiceIncomesGraphic() {
-    const [loading, setLoading] = useState(false);
-    const token = useSelector((state) => state.auth.token);
-    const drReworked = useSelector((state) => state?.owner);
-    const [data, setData] = useState({
-        count: 0,
-        prev_month_count: 0,
-        percent_change: 0,
-    });
+	const [loading, setLoading] = useState(false)
+	const token = useSelector(state => state.auth.token)
+	const role = useSelector(state => state.auth.selected_role?.key)
+	const headerFilters = useSelector(state => state?.owner)
 
-    // useEffect(()=>{
-    //     postResource('DoctorReworked','MonthlyAppointments', token,  '',{
-    //         year:dayjs().format('YYYY'),
-    //         month:drReworked.month_key,
-    //     } ).then((response) => {
-    //         setData(response)
-    //         setLoading(false)
-    //     })
-    //
-    //
-    //
-    // },[drReworked.month_key])
+	const [data, setData] = useState({
+		incomes: 0,
+		incomes_prev_month: 0,
+		percentage: 0
+	})
 
-    return (<Spin spinning={loading}>
-            <Space>
-                <Space direction={'vertical'} className={'progress_big_div'}>
-                    <div className={'clinic_owner_big_text'}>
-                        {100}
-                    </div>
-                    <div style={{color: data.percent_change > 0 ? "#6DAF56" : 200 ? '#a4a2a2' : "rgba(207, 83, 62, 1)"}}>
-                        {
-                            data.percent_change !== 0 ? <img alt={'icons'} src={data.percent_change > 0 ? arrowGreen : arrowRed}/> : <div></div>
-                        }
-                        <span style={{fontWeight: 700, marginLeft: 5}}>0%</span>
-                    </div>
-                </Space>
+	useEffect(() => {
+		setLoading(true)
+		postResource(
+			role === 'clinic-owner' ? 'ClinicOwner' : 'ClinicManager',
+			'MonthlyIncomes',
+			token,
+			null,
+			{
+				year: new Date().getFullYear().toString(),
+				month: headerFilters?.month_key,
+				clinic: headerFilters.id === 'all' ? undefined : headerFilters.id
+			}
+		).then(response => {
+			setData(response)
+			setLoading(false)
+		})
+	}, [headerFilters])
 
-                <Space direction={'vertical'} style={{marginLeft: 17}}>
-                    <div className={'avg_montly'}>
-                        <span>{t("Current month")}</span>
+	return (
+		<Spin spinning={loading}>
+			<Space>
+				<Space direction={'vertical'} className={'progress_big_div'}>
+					<div className={'clinic_owner_big_text'}>{data?.incomes}</div>
+					<div
+						style={{
+							color:
+								data.percentage > 0
+									? '#6DAF56'
+									: 200
+									? '#a4a2a2'
+									: 'rgba(207, 83, 62, 1)'
+						}}
+					>
+						{data.percentage !== 0 ? (
+							<img
+								alt={'icons'}
+								src={data?.percentage > 0 ? arrowGreen : arrowRed}
+							/>
+						) : (
+							<div></div>
+						)}
+						<span style={{ fontWeight: 700, marginLeft: 5 }}>
+							{data?.percentage}%
+						</span>
+					</div>
+				</Space>
 
-                    </div>
-                    <div className={'dr_counter_text'} style={{fontWeight: 700}}>
-                        {t("incomes")}
-                    </div>
-                </Space>
-            </Space>
-        </Spin>
-    )
-
+				<Space direction={'vertical'} style={{ marginLeft: 17 }}>
+					<div className={'avg_montly'}>
+						<span>{t('Current month')}</span>
+					</div>
+					<div className={'dr_counter_text'} style={{ fontWeight: 700 }}>
+						{t('incomes')}
+					</div>
+				</Space>
+			</Space>
+		</Spin>
+	)
 }
 
-export default InvoiceIncomesGraphic;
+export default InvoiceIncomesGraphic

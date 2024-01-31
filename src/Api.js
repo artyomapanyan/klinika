@@ -397,6 +397,10 @@ let api = {
                 url: `${endpoint}${version}/dashboard/owner/new-patients/`,
                 method: 'GET',
             },
+            InvoicesStatuses: {
+                url: `${endpoint}${version}/dashboard/owner/invoice-statuses/`,
+                method: 'GET',
+            },
         },
     },
     {
@@ -421,6 +425,14 @@ let api = {
             },
             ClinicWorkload: {
                 url: `${endpoint}${version}/dashboard/manager/clinic-workload/`,
+                method: 'GET',
+            },
+            MonthlyIncomes: {
+                url: `${endpoint}${version}/dashboard/manager/monthly-incomes/`,
+                method: 'GET',
+            },
+            InvoicesStatuses: {
+                url: `${endpoint}${version}/dashboard/manager/invoice-statuses/`,
                 method: 'GET',
             },
         },
