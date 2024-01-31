@@ -9,6 +9,7 @@ import FormInput from "../FormInput";
 import resourceLinks from "../../ResourceLinks";
 import Resources from "../../../store/Resources";
 import dayjs from "dayjs";
+import {log10} from "chart.js/helpers";
 
 let res = "Clinic";
 
@@ -267,6 +268,11 @@ function WorkingHours({onFinish,
                     );
                   }
 
+                  let openKey = currentOptions?.findIndex(e => e?.value === el.opens_at)
+                  let closeKey = currentOptions?.findIndex(e => e?.value === el.closes_at)
+
+
+
                   return <Row key={dataKey + key + (new Date())}
                               className={!workingDay[0]?.is_day_off ? 'd-none' : ''}
                   >
@@ -278,7 +284,7 @@ function WorkingHours({onFinish,
                       >
                         <Select
                           style={{width: 120}}
-                          options={currentOptions}
+                          options={currentOptions?.slice(0, closeKey)}
                           className={'working_houre_margin'}
                         />
                       </Form.Item>
@@ -293,7 +299,7 @@ function WorkingHours({onFinish,
                           className={'working_houre_margin'}
                           style={{width: 120,}}
                           options={
-                            workingDay[key]?.opens_at && timeLimits?currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
+                            workingDay[key]?.opens_at && timeLimits ? currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
                                 currentTimes?.find(e=>e?.find(u=>u.value=== workingDay[key]?.opens_at))?.findIndex(e => e?.value === workingDay[key]?.opens_at) + 1, currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.length
                             ): key > 0 && workingDay?.length ? currentOptions : currentOptions?.slice(
                                 currentTimes?.findIndex(
