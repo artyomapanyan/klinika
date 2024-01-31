@@ -378,7 +378,6 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                 }
                             }} label={t('Sub specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
                                        disabled={!data?.specialty_id}
-                                       rules={[{required: true}]}
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
@@ -414,7 +413,6 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
 
                                 }
                             }}
-                                       disabled={!data?.sub_specialties || data?.sub_specialties?.length < 1}
                                        label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.doctors?.map(e=>e.id)}
