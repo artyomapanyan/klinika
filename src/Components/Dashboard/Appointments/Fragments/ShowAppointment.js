@@ -19,7 +19,6 @@ import ResourceLinks from "../../../ResourceLinks";
 import copyIcon from "../../../../dist/icons/copy.svg";
 import {t} from "i18next";
 
-
 const resource = 'Appointment';
 const invoiceResource = 'Invoice';
 function ShowAppointment() {
