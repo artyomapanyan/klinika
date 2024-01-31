@@ -14,7 +14,6 @@ import CancelComponent from "../../Fragments/CancelComponent";
 import {InboxOutlined} from "@ant-design/icons";
 import FileManager from "../../Fragments/FileManager";
 import pdf from "../../../dist/offerPDF/Klinika_content_guide.pdf";
-
 const resource = 'Offer';
 
 function Offer() {
