@@ -11,7 +11,6 @@ import Resources from "../../../store/Resources";
 import {Row} from "antd/lib";
 import DraftEditor from "../../Fragments/DraftEditor";
 import CancelComponent from "../../Fragments/CancelComponent";
-
 import {InboxOutlined} from "@ant-design/icons";
 import FileManager from "../../Fragments/FileManager";
 import pdf from "../../../dist/offerPDF/Klinika_content_guide.pdf";
