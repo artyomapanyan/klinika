@@ -14,6 +14,7 @@ import CancelComponent from "../../Fragments/CancelComponent";
 import dayjs from "dayjs";
 import {InboxOutlined} from "@ant-design/icons";
 import FileManager from "../../Fragments/FileManager";
+import pdf from "../../../dist/offerPDF/Klinika_content_guide.pdf";
 
 const resource = 'Offer';
 
@@ -521,6 +522,10 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                             />
                         </Col>
                     </Row>
+                    <a style={{margin: 7}} href={pdf} target="_blank">
+                        Please check that your photos match criteria in this file.
+                    </a>
+
                     <FileManager text1={t('Cover')}
                                  text2={t('Download the file')}
                                  name={'cover'}
