@@ -263,7 +263,7 @@ function Doctor() {
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
                                        initialData={data?.languages??[]}
-                                       resource={'Country'}
+                                       resource={'Language'}
                             />
                         </Col>
                         <Col lg={12} className="gutter-row">
@@ -281,8 +281,10 @@ function Doctor() {
                                     <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} initialValue={data?.phone_number} />
                                 </div>
                             </div>
-                            <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
-                            <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} rules={[{required: true}]} />
+                            <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} rules={[{required: true}]} />
+                            <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} 
+                                       disabledDate={current => dayjs(current).isBefore(dayjs(), 'day')}
+                                       rules={[{required: true}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Specialties')} name={'specialties'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.specialties?.map(e=>e.id)}
@@ -291,13 +293,18 @@ function Doctor() {
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:0}}
                             />
                             <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties??[]}
                                        resource={'Taxonomy'}
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1}}
                             />
-
+                            <FormInput label={t('Doctor title id')} name={'doctor_title_id'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               initialValue={data?.doctor_title?.id}
+                                               initialData={data?.doctor_title?[data?.doctor_title]:[]}
+                                               resource={'Taxonomy'}
+                                               resourceParams={{type:Resources.TaxonomyTypes.DOCTOR_TITLE}}
+                            />
 
                         </Col>
                     </Row>

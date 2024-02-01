@@ -203,7 +203,6 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
 											label={t('Sub specialties')}
 											name={'sub_specialties'}
 											inputType={'resourceSelect'}
-											rules={[{ required: true }]}
 											initialValue={data?.sub_specialties?.map(e => e?.id)}
 											initialData={data?.sub_specialties ?? []}
 											resource={'Taxonomy'}

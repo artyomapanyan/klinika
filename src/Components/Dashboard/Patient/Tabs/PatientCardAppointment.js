@@ -285,9 +285,9 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
                                     </Form>
 
                                 </div>
-                                {/*<div style={{marginTop:30}}>*/}
-                                {/*    <AppointmentFollowUpHistory/>*/}
-                                {/*</div>*/}
+                                <div style={{marginTop:30}}>
+                                   <AppointmentFollowUpHistory appointment={bigData} />
+                                </div>
                             </Col>
                         </Row>
                     </Col>

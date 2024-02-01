@@ -63,7 +63,7 @@ function Invoices() {
     useEffect(() => {
         setUpdateTable(prevState => ({
             ...prevState,
-            clinic: headerFilters.id,
+            clinic: headerFilters.id === 'all' ? undefined : headerFilters.id,
             month: headerFilters.month_key
         }))
     }, [headerFilters]);

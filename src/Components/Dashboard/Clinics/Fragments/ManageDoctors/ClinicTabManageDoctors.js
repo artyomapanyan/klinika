@@ -54,9 +54,12 @@ function ClinicTabManageDoctors({dataService}) {
                     resource={'ClinicDoctor'}
                     tableColumns={[
                         {
-                            dataIndex: ['doctor', 'plid'],
-                            title: 'Doctor PLID',
-                            key: 'plid',
+                            dataIndex: ['doctor', 'name'],
+                            title: 'Doctor Name',
+                            key: 'name',
+                            render:(e, record)=> {
+                                return <div  style={{padding:2}}>{record?.doctor?.first} {record?.doctor?.last}</div>
+                            }
                         },
                     ]}
                 />}
