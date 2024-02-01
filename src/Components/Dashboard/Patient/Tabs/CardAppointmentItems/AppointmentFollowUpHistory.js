@@ -98,7 +98,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 									title={<span style={{ color: '#bfbfbf' }}>Date & Time</span>}
 									description={
 										<span style={{ color: '#000', fontWeight: 'bold' }}>
-											{dayjs(e?.booked_at).format('ddd, MMM DD, HH:mm')}
+											{dayjs(e).format('ddd, MMM DD, HH:mm')}
 										</span>
 									}
 								/>
@@ -108,14 +108,14 @@ function AppointmentFollowUpHistory({ appointment }) {
 										<Tag
 											className={'ant_tag'}
 											style={{
-												color: constconvertDateToStatus(e?.booked_at).color,
-												backgroundColor: constconvertDateToStatus(e?.booked_at)
+												color: constconvertDateToStatus(e).color,
+												backgroundColor: constconvertDateToStatus(e)
 													.backgroundColor,
 												margin: '0 8px',
 												fontSize: 11
 											}}
 										>
-											{constconvertDateToStatus(e?.booked_at).text}
+											{constconvertDateToStatus(e).text}
 										</Tag>
 									}
 								</div>

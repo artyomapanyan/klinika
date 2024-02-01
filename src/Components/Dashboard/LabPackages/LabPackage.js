@@ -111,8 +111,8 @@ function LabPackage() {
                                rules={[{required: true}]}
                                initialValue={data?.lab_tests?.map(e=>e.id)}
                                initialData={data?.lab_tests??[]}
-                               resource={'Taxonomy'}
-                               resourceParams={{type:Resources.TaxonomyTypes.LAB_TEST_CATEGORY}}
+                               resource={'LabTest'}
+
                     />
 
                     <FileManager text1={'Click or drag file to this area to upload'}
