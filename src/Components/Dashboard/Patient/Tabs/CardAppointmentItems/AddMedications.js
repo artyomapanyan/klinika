@@ -105,11 +105,31 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                         ]} inputType={'number'}/>
                     </div>
                     <div style={{width: '50%'}}>
-                        <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[{required: true}]} inputType={'number'}/>
+                        <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[
+                            {required: true},
+                            // {
+                            //     validator:(rule,value)=>{
+                            //         if(+value > 120){
+                            //             return Promise.reject('The frequency may not be greater than 120.')
+                            //         }
+                            //         return Promise.resolve();
+                            //     }
+                            // }
+                        ]} inputType={'number'}/>
                     </div>
 
                     <div style={{width: '50%'}}>
-                        <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose} rules={[{required: true}]} inputType={'number'}/>
+                        <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose} rules={[
+                            {required: true},
+                            // {
+                            //     validator:(rule,value)=>{
+                            //         if(+value > 120){
+                            //             return Promise.reject('The frequency may not be greater than 120.')
+                            //         }
+                            //         return Promise.resolve();
+                            //     }
+                            // }
+                        ]} inputType={'number'}/>
                     </div>
                     <div style={{width: '50%'}}>
                         <FormInput label={t('Units')} name={'unit_type'} inputType={'resourceSelect'}

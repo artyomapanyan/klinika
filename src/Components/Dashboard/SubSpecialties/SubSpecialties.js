@@ -14,7 +14,7 @@ function SubSpecialties() {
                                edit: PermCheck(`Taxonomy:update`) ? false : true
                            }}
                            resourceLink={'SubSpecialty'}
-                           tableParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
+                           tableParams={{type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1, order_by: 'id', order: 'asc'}}
                            tableColumns={[
                                {
                                    dataIndex:'id',
