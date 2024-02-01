@@ -91,8 +91,18 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
             >
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
                 <div style={{display: 'flex', gap: 8, marginTop:-16}}>
-                    <div style={{width: '50%'}}>
-                        <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} rules={[{required: true}]} inputType={'number'}/>
+                    <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
+                        <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} rules={[
+                            {required: true},
+                            {
+                                validator:(rule,value)=>{
+                                    if(+value > 120){
+                                        return Promise.reject('The frequency may not be greater than 120.')
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]} inputType={'number'}/>
                     </div>
                     <div style={{width: '50%'}}>
                         <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[{required: true}]} inputType={'number'}/>
@@ -134,8 +144,18 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                         />
                     </div>
 
-                    <div style={{width: '25%'}}>
-                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue='0' inputType={'number'}/>
+                    <div style={{width: '25%'}} className={'patient_card_medication_errors'}>
+                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue='0' inputType={'number'} rules={[
+                            {required: false},
+                            {
+                                validator:(rule,value)=>{
+                                    if(+value > 120){
+                                        return Promise.reject('The gap may not be greater than 120.')
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}/>
                     </div>
                 </div>
                 <div style={{ marginTop:-16}}>
