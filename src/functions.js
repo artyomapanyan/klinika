@@ -124,35 +124,31 @@ export function blobToObjectUrl(blob, noPdf) {
 
 }
 export function notificate(data,status) {
-    console.log(data, status, 'notif')
     if (data?.errors) {
-        Object.keys(data?.errors).map((type) => {
-            console.log(type, 'type')
+        Object.entries(data?.errors).map((type) => {
             if( typeof data.errors==='object'){
-                Object.values(data.errors)?.forEach((message) => {
+               // Object.values(data.errors)?.forEach((message) => {
                     console.log('-1')
                     notification.error({
-                        message: type,
-                        description: message,
+                        message: type[0],
+                        description: type[1],
                         placement: "bottomRight"
                     })
-                });
+               // });
             }else{
-                console.log('0')
-                data.errors?.forEach((message) => {
+                //data.errors?.forEach((message) => {
                     notification.error({
-                        message: type,
-                        description: message,
+                        message: type[0],
+                        description: type[1],
                         placement: "bottomRight"
                     })
-                });
+               // });
             }
 
             return true;
         });
     }
     if (data === "error") {
-        console.log('1')
         notification.error({
             message: "Error",
             description: "Please contact the administrator",
@@ -161,7 +157,6 @@ export function notificate(data,status) {
     }
     if (data?.message  ) {
         if(status===200){
-            console.log('2')
             notification.info({
                 message: "Notification",
                 description: data.message,
@@ -170,7 +165,6 @@ export function notificate(data,status) {
         }
         else {
             if( data.errors===null) {
-                console.log('3')
                 notification.error({
                     message: "Notification",
                     description: data.message,
@@ -182,7 +176,6 @@ export function notificate(data,status) {
 
     }
     if (data?.notices) {
-        console.log('4')
         data.notices.forEach((message) => {
             if (data.status <= 400) {
                 notification.info({
