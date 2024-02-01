@@ -173,11 +173,11 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                                             onChange:(e,dat)=> {
                                                 setData((prevState)=>({
                                                     ...prevState,
-                                                    sub_specialties: undefined,
+                                                    sub_specialties: [],
                                                 }))
             
                                                 formRef?.current?.setFieldsValue({
-                                                    sub_specialties: undefined,
+                                                    sub_specialties: [],
                                                 })
                                                 setSelectedSpecialties(formRef?.current?.getFieldValue('specialties'))
                                             }
