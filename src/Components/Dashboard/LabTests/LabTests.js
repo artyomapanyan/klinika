@@ -7,6 +7,7 @@ import Resource from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
 import PermCheck from "../../Fragments/PermCheck";
 
+
 const resource='LabTest'
 function LabTests() {
     return(
