@@ -113,11 +113,14 @@ function DoctorProfile() {
 
             updateResource(resource, '', values, token, true).then(response => {
                 if(response?.id){
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 500)
 
                 }
             }).finally(() => {
                 setSaveLoading(false)
-                window.location.reload()
+
             })
 
         }).catch((c) => {
