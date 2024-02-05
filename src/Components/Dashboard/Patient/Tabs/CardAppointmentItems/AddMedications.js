@@ -113,33 +113,29 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                     <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
                         <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[
                             {required: true},
-                            {
-                                validator:(rule,value)=>{
-                                    if(+value > 999){
-                                        return Promise.reject('The Duration may not be greater than 999.')
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
+                            // {
+                            //     validator:(rule,value)=>{
+                            //         if(+value > 999){
+                            //             return Promise.reject('The Duration may not be greater than 999.')
+                            //         }
+                            //         return Promise.resolve();
+                            //     }
+                            // }
                         ]} inputType={'number'} />
                     </div>
 
                     <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
                         <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose} rules={[
                             {required: true},
-                            {
-                                validator:(rule,value)=>{
-                                    if(+value > 999999){
-                                        return Promise.reject('The dose may not be greater than 999999.')
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
-                        ]} inputType={'number'} onChange={(e)=>{
-                            console.log(e.target.value)
-                            if (e?.target?.value?.length > 3) {
-                                return e.target.value = e?.target?.value.slice(0, 3)
-                            }}}/>
+                            // {
+                            //     validator:(rule,value)=>{
+                            //         if(+value > 999999){
+                            //             return Promise.reject('The dose may not be greater than 999999.')
+                            //         }
+                            //         return Promise.resolve();
+                            //     }
+                            // }
+                        ]} inputType={'number'} />
                     </div>
 
                     <div style={{width: '50%'}}>

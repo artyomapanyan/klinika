@@ -285,7 +285,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                             closable={false}
                                             onClose={onClose}
                                             open={open}
-                                            height={400}
+                                            height={chargeResponse?.status == "CAPTURED" ? 400 : 470}
                                             style={{borderRadius: '12px 12px 0 0'}}
 
 
@@ -355,7 +355,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                                                             >
                                                                                 <div style={{height: 24,display: 'flex', alignItems: 'center'}}>
                                                                                     {
-                                                                                        item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{width: 25}} /> : <PayCircleOutlined />
+                                                                                        item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{height: 30}} /> : <PayCircleOutlined />
                                                                                     }
                                                                                 </div>
                                                                                 <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>
