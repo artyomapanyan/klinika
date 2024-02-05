@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Form, Switch} from "antd";
+import {Button, Form, Input, Switch} from "antd";
 import FormInput from "../../../../Fragments/FormInput";
 import {t} from "i18next";
 import {createResource, updateResource} from "../../../../Functions/api_calls";
@@ -88,7 +88,13 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
         <div className={'add_medications_big_div'}>
             {data?<Form
                 onFinish={onFinish}
+
             >
+                {/*<input type="number" onChange={(e)=>{*/}
+                {/*    console.log(e)*/}
+                {/*    if (e?.target?.value?.length > 3) {*/}
+                {/*        return e.target.value = e?.target?.value.slice(0, 3)*/}
+                {/*    }}} />*/}
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
                 <div style={{display: 'flex', gap: 8, marginTop:-16}}>
                     <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
@@ -104,33 +110,38 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                             }
                         ]} inputType={'number'}/>
                     </div>
-                    <div style={{width: '50%'}}>
+                    <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
                         <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[
                             {required: true},
-                            // {
-                            //     validator:(rule,value)=>{
-                            //         if(+value > 120){
-                            //             return Promise.reject('The frequency may not be greater than 120.')
-                            //         }
-                            //         return Promise.resolve();
-                            //     }
-                            // }
-                        ]} inputType={'number'}/>
+                            {
+                                validator:(rule,value)=>{
+                                    if(+value > 999){
+                                        return Promise.reject('The Duration may not be greater than 999.')
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]} inputType={'number'} />
                     </div>
 
-                    <div style={{width: '50%'}}>
+                    <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
                         <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose} rules={[
                             {required: true},
-                            // {
-                            //     validator:(rule,value)=>{
-                            //         if(+value > 120){
-                            //             return Promise.reject('The frequency may not be greater than 120.')
-                            //         }
-                            //         return Promise.resolve();
-                            //     }
-                            // }
-                        ]} inputType={'number'}/>
+                            {
+                                validator:(rule,value)=>{
+                                    if(+value > 999999){
+                                        return Promise.reject('The dose may not be greater than 999999.')
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]} inputType={'number'} onChange={(e)=>{
+                            console.log(e.target.value)
+                            if (e?.target?.value?.length > 3) {
+                                return e.target.value = e?.target?.value.slice(0, 3)
+                            }}}/>
                     </div>
+
                     <div style={{width: '50%'}}>
                         <FormInput label={t('Units')} name={'unit_type'} inputType={'resourceSelect'}
                                    rules={[{required: true}]}
