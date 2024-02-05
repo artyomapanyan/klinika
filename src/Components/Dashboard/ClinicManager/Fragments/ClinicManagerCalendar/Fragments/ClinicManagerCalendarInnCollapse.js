@@ -23,23 +23,42 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
             </td>
             {
                 Object.keys(docItem?.availability??{}).map((key, k) => {
-                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || docItem.availability[key] === null ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>
+                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || !docItem.availability[key]?.available ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>
 
-                        <div className="progress progressGreen" style={{cursor: thisDate > key || docItem.availability[key] === null ? "" : 'pointer', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
+                        <div className="progress progressGreen" style={{cursor: thisDate > key || !docItem.availability[key]?.available ? "" : 'pointer', background: docItem.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
                             <div className="progress-bar progressGreen__inside"
                                  role="progressbar"
-                                 style={{width: docItem.availability[key]+'%', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF56'}}
+                                 style={{width: docItem.availability[key]?.percentage+'%', background: docItem?.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF56'}}
                                  aria-valuenow="85" aria-valuemin="0"
                                  aria-valuemax="100">
                             </div>
                             {
-                                docItem.availability[key] === null ? <div></div> : <div className="progressText">{docItem.availability[key]?.toFixed()}%</div>
+                                docItem.availability[key]?.percentage === null ? <div></div> : <div className="progressText">{docItem.availability[key]?.percentage?.toFixed()}%</div>
                             }
 
                         </div>
                     </td>
                 })
             }
+            {/*{*/}
+            {/*    Object.keys(docItem?.availability??{}).map((key, k) => {*/}
+            {/*        return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || docItem.availability[key] === null ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>*/}
+
+            {/*            <div className="progress progressGreen" style={{cursor: thisDate > key || docItem.availability[key] === null ? "" : 'pointer', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>*/}
+            {/*                <div className="progress-bar progressGreen__inside"*/}
+            {/*                     role="progressbar"*/}
+            {/*                     style={{width: docItem.availability[key]+'%', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF56'}}*/}
+            {/*                     aria-valuenow="85" aria-valuemin="0"*/}
+            {/*                     aria-valuemax="100">*/}
+            {/*                </div>*/}
+            {/*                {*/}
+            {/*                    docItem.availability[key] === null ? <div></div> : <div className="progressText">{docItem.availability[key]?.toFixed()}%</div>*/}
+            {/*                }*/}
+
+            {/*            </div>*/}
+            {/*        </td>*/}
+            {/*    })*/}
+            {/*}*/}
             <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
                 {selectedDate ? <CalendarInnCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
