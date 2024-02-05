@@ -88,7 +88,6 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
         <div className={'add_medications_big_div'}>
             {data?<Form
                 onFinish={onFinish}
-
             >
                 {/*<input type="number" onChange={(e)=>{*/}
                 {/*    console.log(e)*/}
