@@ -285,7 +285,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                             closable={false}
                                             onClose={onClose}
                                             open={open}
-                                            height={chargeResponse?.status == "CAPTURED" ? 400 : 470}
+                                            height={chargeResponse?.status == "CAPTURED" ? 400 : 500}
                                             style={{borderRadius: '12px 12px 0 0'}}
 
 
