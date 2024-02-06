@@ -28,7 +28,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
     const [tryAgainLoading, setTryAgainLoading] = useState(false)
     const [totalState, setTotalState] = useState(false)
 
-    console.log(isSaudi, 'issaudi')
+
 
     const showDrawer = () => {
         setOpen(true);
@@ -149,6 +149,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
 
                         <div className={'offer_details_new'}>
+
                             <ThankYouOfferDetailsNew data={data} showDrawer={showDrawer}/>
 
                             <div className={'offer_section'}>
@@ -157,12 +158,12 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                         <div>
                                             <OfferHours data={data} />
                                             <div style={{ marginTop: '10px' }}>
-                                                <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>
+                                                <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>
+                                            <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
                                             <OfferHours data={data} />
                                         </div>
                                     )}

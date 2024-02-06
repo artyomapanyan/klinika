@@ -42,7 +42,6 @@ function NewThankYouOffer() {
             postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
                 charge: tapIdParam
             }).then((response) => {
-                console.log(response, 'resaaaaa')
                 setFirstLoadingThankYou(false)
                 setChargeResponse(response)
                 setIsSaudi(response?.appointment?.patient?.is_saudi)

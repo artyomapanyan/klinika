@@ -14,7 +14,7 @@ function PaymentFailed({onGoBack, rePayOfferAppointment, tryAgainLoading}) {
             {t("Payment failed")}
         </div>
         <div className={'payment_failed_light_text'}>
-            {t('There are some problems with paying for a visit to the doctor. You can try again or choose another payment method')}.
+            {t('There are some problems with paying for a visit to the doctor. You can try again or choose another payment method.')}
         </div>
         <div style={{marginTop: 24}}>
             <Button loading={tryAgainLoading} onClick={rePayOfferAppointment} className={'all_offers_book_btns'} type={'primary'}>{t('Try again')}</Button>
