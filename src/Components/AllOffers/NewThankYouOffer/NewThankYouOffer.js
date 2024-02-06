@@ -45,7 +45,7 @@ function NewThankYouOffer() {
                 console.log(response, 'resaaaaa')
                 setFirstLoadingThankYou(false)
                 setChargeResponse(response)
-                setIsSaudi(response?.data?.appointment?.patient?.is_saudi)
+                setIsSaudi(response?.appointment?.patient?.is_saudi)
 
 
             })
