@@ -14,6 +14,7 @@ function NewThankYouOffer() {
     const [chargeResponse, setChargeResponse] = useState({})
     const [firstLoadingThankYou, setFirstLoadingThankYou] = useState(true)
     const [onlineOrClinicPay, setOnlineOrClinicPay] = useState(false)
+    const [isSaudi, setIsSaudi] = useState(false)
 
     useEffect(()=>{
         if(lngs!=='ar'){
@@ -41,9 +42,10 @@ function NewThankYouOffer() {
             postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
                 charge: tapIdParam
             }).then((response) => {
-
+                console.log(response, 'resaaaaa')
                 setFirstLoadingThankYou(false)
                 setChargeResponse(response)
+                setIsSaudi(response?.data?.appointment?.patient?.is_saudi)
 
 
             })
@@ -84,7 +86,7 @@ function NewThankYouOffer() {
                     }
                 >
                     <div className={'menu_div_new'} style={{ minHeight: 500}}>
-                        <NewThankYouBookContent chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou} onlineOrClinicPay={onlineOrClinicPay}/>
+                        <NewThankYouBookContent isSaudi={isSaudi} chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou} onlineOrClinicPay={onlineOrClinicPay}/>
                     </div>
 
                     {/**<OffersFooter />**/}

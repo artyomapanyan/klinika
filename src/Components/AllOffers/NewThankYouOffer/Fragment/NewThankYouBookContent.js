@@ -15,7 +15,7 @@ import {Button, Drawer, Space} from "antd";
 import ThankYouOfferDetailsNew from "./ThankYouOfferDetailsNew";
 import PaymentFailed from "../../Fragments/PaymentFailed";
 
-function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay}) {
+function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay, isSaudi}) {
     let token = useSelector(state => state.auth.token)
     const params = useParams()
     let lngs = useSelector(state => state?.app?.current_locale)
@@ -26,6 +26,8 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
     const [paymentMethodState, setPaymentMethodState] = useState('')
     const [activePaymentMethodState, setActivePaymentMethodState] = useState(false)
     const [tryAgainLoading, setTryAgainLoading] = useState(false)
+
+    console.log(isSaudi, 'issaudi')
 
     const showDrawer = () => {
         setOpen(true);
@@ -153,12 +155,12 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                         <div>
                                             <OfferHours data={data} />
                                             <div style={{ marginTop: '10px' }}>
-                                                <OfferPrice data={data} totalState={true} verifyResponseNationality={chargeResponse?.data?.appointment?.patient?.is_saudi}/>
+                                                <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <OfferPrice data={data} totalState={true} verifyResponseNationality={chargeResponse?.data?.appointment?.patient?.is_saudi}/>
+                                            <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
                                             <OfferHours data={data} />
                                         </div>
                                     )}
