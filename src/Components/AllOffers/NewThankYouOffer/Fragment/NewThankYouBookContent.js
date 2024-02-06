@@ -217,7 +217,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
 
                                                         {/*<div className={'mobile_offer_price'}>*/}
-                                                        {/*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>*/}
+                                                        {/*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>*/}
                                                         {/*</div>*/}
 
                                                         {data?.clinic?.payment_methods.map((item, key) => {
@@ -345,9 +345,9 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                                                     </Space>
 
 
-                                                                    {/*<div className={'mobile_offer_price'}>*/}
-                                                                    {/*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>*/}
-                                                                    {/*</div>*/}
+                                                                    <div className={'mobile_offer_price'}>
+                                                                        <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>
+                                                                    </div>
 
                                                                     {data?.clinic?.payment_methods.map((item, key) => {
                                                                         return <div key={key} className={'payment_section'}>
