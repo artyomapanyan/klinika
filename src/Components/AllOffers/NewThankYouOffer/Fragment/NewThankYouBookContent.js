@@ -26,6 +26,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
     const [paymentMethodState, setPaymentMethodState] = useState('')
     const [activePaymentMethodState, setActivePaymentMethodState] = useState(false)
     const [tryAgainLoading, setTryAgainLoading] = useState(false)
+    const [totalState, setTotalState] = useState(false)
 
     console.log(isSaudi, 'issaudi')
 
@@ -70,6 +71,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
     const onGoBack = () => {
         setGoBackState(true)
+        setTotalState(true)
     }
 
     const onpay = e => {
@@ -155,12 +157,12 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                         <div>
                                             <OfferHours data={data} />
                                             <div style={{ marginTop: '10px' }}>
-                                                <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
+                                                <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
+                                            <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>
                                             <OfferHours data={data} />
                                         </div>
                                     )}
