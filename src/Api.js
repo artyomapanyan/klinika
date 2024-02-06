@@ -528,6 +528,20 @@ let api = {
         },
     },
     {
+        url: 'dashboard/invoices',
+        resource: 'InvoicesCharts',
+        custom: {
+            MonthlyIncomes: {
+                url: `${endpoint}${version}/dashboard/invoices/monthly-incomes/`,
+                method: 'GET',
+            },
+            InvoicesStatuses: {
+                url: `${endpoint}${version}/dashboard/invoices/invoice-statuses/`,
+                method: 'GET',
+            },
+        }
+    },
+    {
         url: 'auth/profile/notifications/',
         resource: 'Notifications',
         custom: {
