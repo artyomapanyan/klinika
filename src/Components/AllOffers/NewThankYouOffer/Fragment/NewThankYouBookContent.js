@@ -148,7 +148,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                         />
 
 
-                        <div className={'offer_details_new'}>
+                        <div className={'offer_details_new1'}>
 
                             <ThankYouOfferDetailsNew data={data} showDrawer={showDrawer}/>
 
