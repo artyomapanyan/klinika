@@ -30,6 +30,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
 
 
+
     const showDrawer = () => {
         setOpen(true);
     };
