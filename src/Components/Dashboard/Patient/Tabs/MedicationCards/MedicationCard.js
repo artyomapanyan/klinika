@@ -5,7 +5,7 @@ import {deleteResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import {t} from "i18next";
 
-function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true}) {
+function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true, colWidth= 8 }) {
     let token = useSelector((state) => state?.auth?.token);
     let language = useSelector((state) => state.app.current_locale)
     const deletePrescription = () => {
@@ -18,7 +18,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
 
 
     return(
-            <Col xxl={8} xl={12} lg={12} md={12} sm={24} xs={24} style={{marginTop:16}} >
+            <Col xxl={colWidth} xl={12} lg={12} md={12} sm={24} xs={24} style={{marginTop:16}} >
                 <div className={'patient_card'}>
                     <div className={'patient_card_header'}>
                         <div>
