@@ -79,7 +79,7 @@ function PatientCardMedications({tab, patientId}) {
 
                     acualPrescriptions?.map((el) => {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setActualPrescriptions}
-                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
+                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false} colWidth={8}/>
 
                     })
                 }
@@ -98,7 +98,7 @@ function PatientCardMedications({tab, patientId}) {
 
                          notActualPrescriptions?.filter((el) => el?.name?.toLowerCase().includes(searchPrescriptions?.toLowerCase()))?.map((el) => {
                              return <MedicationCards key={el?.id} el={el} setPrescriptions={setNotActualPrescriptions}
-                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false}/>
+                                                     setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false} colWidth={6}/>
 
                          })
                      }

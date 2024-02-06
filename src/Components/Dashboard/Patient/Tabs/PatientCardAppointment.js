@@ -22,7 +22,8 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
 
-    const [prescriptions, setPrescriptions] = useState([])
+    const [allPrescriptions, setAllPrescriptions] = useState([])
+    const [currentPrescriptions, setCurrentPrescriptions] = useState([])
     const [oldPrescriptions, setOldPrescriptions] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
@@ -47,9 +48,10 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
             actual: 1,
         }
             ).then((response) => {
-            setPrescriptions(response?.items.filter(item => item.appointment_id == params.id))
-            setOldPrescriptions(response?.items.filter(item => item.appointment_id != params.id));
-            setLoading(false)
+                setAllPrescriptions(response?.items)
+                setCurrentPrescriptions(response?.items.filter(item => item.appointment_id == params.id))
+                setOldPrescriptions(response?.items.filter(item => item.appointment_id != params.id));
+                setLoading(false)
         })
     }, [tab, addDeleteState, bigData])
 
@@ -223,8 +225,8 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
                                     <Row gutter={16} style={{marginTop:-16}}>
                                         {
 
-                                            prescriptions.map((el) => {
-                                                return<MedicationCards key={el?.id} el={el} showModal={showModal} setPrescriptions={setPrescriptions} setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
+                                            currentPrescriptions.map((el) => {
+                                                return<MedicationCards key={el?.id} el={el} showModal={showModal} setPrescriptions={setCurrentPrescriptions} setLoading={setLoading} setAddDeleteState={setAddDeleteState}/>
 
                                             })
                                         }
@@ -248,7 +250,7 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
                                         <Button onClick={showModal} size={'large'} type={'primary'}>{t('Add medications')}</Button>
                                         <div>
                                             <Modal className={'medications_modal'} width={752} title="Add medication" footer={false} open={isModalOpen} onCancel={handleCancel}>
-                                                <AddMedications key={Math.random()} handleCancel={handleCancel} setIsModalOpen={setIsModalOpen} data={isModalOpen} prescriptions={prescriptions} setAddDeleteState={setAddDeleteState}/>
+                                                <AddMedications key={Math.random()} handleCancel={handleCancel} setIsModalOpen={setIsModalOpen} data={isModalOpen} prescriptions={allPrescriptions} setAddDeleteState={setAddDeleteState}/>
                                             </Modal>
                                         </div>
 

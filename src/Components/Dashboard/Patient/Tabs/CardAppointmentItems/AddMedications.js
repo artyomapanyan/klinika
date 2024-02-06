@@ -157,15 +157,12 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                     </div>
                     <div style={{width: '50%'}}>
                         <FormInput label={t('Medication name')} name={'queue_prescription_id'} inputType={'resourceSelect'}
-                                   //rules={[{required: true}]}
-                                   handleMapItems={handleMapItems}
-                                    initialValue={data?.queuePrescription?.id}
-                                   initialData={data?.queuePrescription ? [data.queuePrescription] : []}
-                                   disabled={prescriptions?.length < 1}
-                                   resourceParams={{
-                                       appointment: params.id,
-                                    }}
-                                   resource={'prescriptions'}
+                            //rules={[{required: true}]}
+                            handleMapItems={handleMapItems}
+                            initialValue={data?.queuePrescription?.id}
+                            initialData={data?.queuePrescription ? [data.queuePrescription] : []}
+                            disabled={prescriptions?.length < 1}
+                            resourceData={prescriptions}
 
                         />
                     </div>
