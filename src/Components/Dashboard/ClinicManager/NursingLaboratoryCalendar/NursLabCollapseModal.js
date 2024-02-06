@@ -310,7 +310,6 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
 
-
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
             {
