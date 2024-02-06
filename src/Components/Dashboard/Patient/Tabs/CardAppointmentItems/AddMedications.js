@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Button, Form, Input, Switch} from "antd";
 import FormInput from "../../../../Fragments/FormInput";
 import {t} from "i18next";
@@ -11,7 +11,7 @@ import '../../Patient.sass'
 
 let resource = 'prescriptions';
 function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAddDeleteState}) {
-
+    const formRef = useRef();
     const params = useParams();
 
     let token = useSelector((state) => state.auth.token);
@@ -23,6 +23,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
     }
 
     const onFinish = (values) => {
+        console.log(values)
         setSaveLoading(true)
         values.appointment_id = params.id
         if (data.id) {
@@ -88,6 +89,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
         <div className={'add_medications_big_div'}>
             {data?<Form
                 onFinish={onFinish}
+                ref={formRef}
             >
                 {/*<input type="number" onChange={(e)=>{*/}
                 {/*    console.log(e)*/}
@@ -107,7 +109,11 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                                     return Promise.resolve();
                                 }
                             }
-                        ]} inputType={'number'}/>
+                        ]} inputType={'number'} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 3) {
+                                formRef?.current?.setFieldValue('frequency', e?.target?.value.slice(0, 3))
+                            }}}/>
                     </div>
                     <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
                         <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[
@@ -120,7 +126,11 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                             //         return Promise.resolve();
                             //     }
                             // }
-                        ]} inputType={'number'} />
+                        ]} inputType={'number'} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 3) {
+                                formRef?.current?.setFieldValue('duration', e?.target?.value.slice(0, 3))
+                            }}}/>
                     </div>
 
                     <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
@@ -134,7 +144,11 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                             //         return Promise.resolve();
                             //     }
                             // }
-                        ]} inputType={'number'} />
+                        ]} inputType={'number'} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 6) {
+                                formRef?.current?.setFieldValue('dose', e?.target?.value.slice(0, 6))
+                            }}}/>
                     </div>
 
                     <div style={{width: '50%'}}>
@@ -178,7 +192,11 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                                     return Promise.resolve();
                                 }
                             }
-                        ]}/>
+                        ]} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 3) {
+                                formRef?.current?.setFieldValue('gap', e?.target?.value.slice(0, 3))
+                            }}}/>
                     </div>
                 </div>
                 <div style={{ marginTop:-16}}>
