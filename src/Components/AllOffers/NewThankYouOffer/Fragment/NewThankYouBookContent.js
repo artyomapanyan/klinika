@@ -153,12 +153,12 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                         <div>
                                             <OfferHours data={data} />
                                             <div style={{ marginTop: '10px' }}>
-                                                <OfferPrice data={data} />
+                                                <OfferPrice data={data} totalState={true} verifyResponseNationality={chargeResponse?.data?.appointment?.patient?.is_saudi}/>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <OfferPrice data={data} />
+                                            <OfferPrice data={data} totalState={true} verifyResponseNationality={chargeResponse?.data?.appointment?.patient?.is_saudi}/>
                                             <OfferHours data={data} />
                                         </div>
                                     )}
