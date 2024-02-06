@@ -103,7 +103,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                             {required: true},
                             {
                                 validator:(rule,value)=>{
-                                    if(+value > 120){
+                                    if(+(value?.slice(0, 3)) > 120){
                                         return Promise.reject('The frequency may not be greater than 120.')
                                     }
                                     return Promise.resolve();
@@ -186,7 +186,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                             {required: false},
                             {
                                 validator:(rule,value)=>{
-                                    if(+value > 120){
+                                    if(+(value?.slice(0, 3)) > 120){
                                         return Promise.reject('The gap may not be greater than 120.')
                                     }
                                     return Promise.resolve();
