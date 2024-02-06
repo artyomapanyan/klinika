@@ -14,11 +14,14 @@ function MonthStatistics () {
 
     useEffect(() => {
         setLoading(true)
-        postResource('DoctorReworked', 'TotalEntries', token, '', ).then((response) => {
+        postResource('DoctorReworked', 'TotalEntries', token, '', {
+            month: ownerClinics,
+            year:dayjs().format('YYYY'),
+        }).then((response) => {
             setData(response)
             setLoading(false)
         })
-    }, [])
+    }, [ownerClinics])
 
   return (
       <div>
