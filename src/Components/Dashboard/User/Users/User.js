@@ -27,6 +27,7 @@ function User() {
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
     const [countryCode, setCountryCode] = useState('')
+    const [limitDateState, setLimitDateState] = useState(null)
 
 
 
@@ -115,17 +116,24 @@ function User() {
                     <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
                     <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} rules={[{required: !data?.id}]} />
                     <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'}
-                               // rules={[
-                               //      {required: true},
-                               //      {
-                               //          validator:(rule,value)=>{
-                               //              if(dayjs().diff(value,'year')<18){
-                               //                  return Promise.reject('min age 18')
-                               //              }
-                               //              return Promise.resolve();
-                               //          }
-                               //      }
-                               //  ]}
+                               inputProps={{
+                                   onChange:(e,data)=> {
+                                       setLimitDateState(e)
+
+
+                                   }
+                               }}
+                               rules={[
+                                    //{required: limitDateState},
+                                    {
+                                        validator:(rule,value)=>{
+                                            if(dayjs().diff(value,'year')<18){
+                                                return limitDateState ? Promise.reject('min age 18') : Promise.resolve()
+                                            }
+                                            return Promise.resolve();
+                                        }
+                                    }
+                                ]}
                     />
                     <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}

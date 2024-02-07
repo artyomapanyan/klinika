@@ -24,9 +24,6 @@ function ShowPatient() {
 
 
 
-    let a = 'aaa@mail.ru'
-    let b = '123456789'
-
     const dataSource = [
         {
             key: data?.id,
@@ -37,6 +34,7 @@ function ShowPatient() {
             gender: data?.gender === 1 ? 'male' : 'female',
             insurance_company: data?.insurance_company,
             address: data?.address,
+            nationality: data?.nationality
         },
 
     ];
@@ -69,13 +67,18 @@ function ShowPatient() {
         },
         {
             title: t('Address'),
-            dataIndex: 'address',
+            dataIndex: ['address', 'address1'],
             key: 'address',
         },
         {
             title: t('Insurance Company'),
-            dataIndex: 'insurance_company',
+            dataIndex: ['insurance_company', 'name'],
             key: 'insurance_company',
+        },
+        {
+            title: t('Nationality'),
+            dataIndex: ['nationality', 'name'],
+            key: 'nationality',
         },
     ];
 
