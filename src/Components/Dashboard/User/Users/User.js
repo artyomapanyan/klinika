@@ -32,7 +32,9 @@ function User() {
 
     const onFinish = (values) => {
         setSaveLoading(true)
-        values.dob = values.dob.format('YYYY-MM-DD')
+        if (values.dob) {
+            values.dob = values.dob.format('YYYY-MM-DD')
+        }
         values.phone_country = countryCode.key
         if(values.phone_country_code.length > 3) {
             values.phone_country_code = values.phone_country_code.slice(1, values.phone_country_code.indexOf(')'))
@@ -113,17 +115,17 @@ function User() {
                     <FormInput inputType={'password'}  label={'Password'} name={'password'} rules={[{required: !data?.id}]} />
                     <FormInput inputType={'password'}  label={'Password Confirmation'} name={'password_confirmation'} rules={[{required: !data?.id}]} />
                     <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'}
-                               rules={[
-                                    {required: true},
-                                    {
-                                        validator:(rule,value)=>{
-                                            if(dayjs().diff(value,'year')<18){
-                                                return Promise.reject('min age 18')
-                                            }
-                                            return Promise.resolve();
-                                        }
-                                    }
-                                ]}
+                               // rules={[
+                               //      {required: true},
+                               //      {
+                               //          validator:(rule,value)=>{
+                               //              if(dayjs().diff(value,'year')<18){
+                               //                  return Promise.reject('min age 18')
+                               //              }
+                               //              return Promise.resolve();
+                               //          }
+                               //      }
+                               //  ]}
                     />
                     <FormInput label={t('Bio')} name={'bio'} initialValue={data?.bio} />
                     <FormInput label={t('Gender')} name={'gender'} inputType={'resourceSelect'}
@@ -136,7 +138,7 @@ function User() {
                                resource={'InsuranceCompany'}
                                resourceParams={{type:Resources.TaxonomyTypes.INSURANCE_TYPE}}
                     />
-                    <FormInput label={t('Nationality number')} name={'nationality_number'}  initialValue={data?.nationality_number} rules={[{required: true}]}/>
+                    <FormInput label={t('Nationality number')} name={'nationality_number'}  initialValue={data?.nationality_number} />
                     <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                initialValue={data?.status}
@@ -166,14 +168,14 @@ function User() {
                         <div style={{width:'25%'}}>
                             <FormInput label={t('Country')} name={'country_id'}
                                        inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
+                                       //rules={[{required: true}]}
                                        initialValue={data?.address?.country?.id}
                                        initialData={data?.address?.country ? [data?.address?.country] : []}
                                        resource={'Country'}/>
                         </div>
                         <div style={{width:'25%', marginLeft:10}}>
                             <FormInput label={t('Area')} name={'region_id'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
+                                       //rules={[{required: true}]}
                                        initialValue={data?.address?.region?.id}
                                        initialData={data?.address?.region ? [data?.address?.region] : []}
                                        resource={'Region'}/>
@@ -181,12 +183,12 @@ function User() {
                         <div style={{width:'25%', marginLeft:10}}>
                             <FormInput label={t('City')} name={'city_id'} inputType={'resourceSelect'}
                                        initialValue={data?.address?.city?.id}
-                                       rules={[{required: true}]}
+                                       //rules={[{required: true}]}
                                        initialData={data?.address?.city ? [data?.address?.city] : []}
                                        resource={'City'} />
                         </div>
                         <div style={{width:'25%', marginLeft:10}}>
-                            <FormInput label={t('Address')} name={'address1'} initialValue={data?.address?.address1} rules={[{required: true}]}/>
+                            <FormInput label={t('Address')} name={'address1'} initialValue={data?.address?.address1} />
                         </div>
                     </div>
 
