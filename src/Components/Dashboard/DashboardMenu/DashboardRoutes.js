@@ -52,7 +52,7 @@ import LabPackageCategory from "../LabPackagesCategory/LabPackageCategory";
 import LabPackagesCategories from "../LabPackagesCategory/LabPackagesCategories";
 import LabTestCategory from "../LabTestCategories/LabTestCategory";
 import LabTestCategories from "../LabTestCategories/LabTestCategories";
-import Appointment from "../Appointments/Appointment";
+import Appointment from "../Appointments/Appointment_new";
 import Appointments from "../Appointments/Appointments";
 import ShowAppointment from "../Appointments/Fragments/ShowAppointment";
 import InvoiceItem from "../Invoices/InvoiceItems/InvoiceItem";
