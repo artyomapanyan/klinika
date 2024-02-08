@@ -13,7 +13,7 @@ function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}
     }
 
 
-
+    console.log(item, 'items')
     return(
         <>
             <tbody>

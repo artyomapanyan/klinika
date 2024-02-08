@@ -309,12 +309,9 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
             })
 
         })).then(responses => {
-
             let filterResponses = responses?.flat()?.filter((e) => {
-                return e?.hasDays?.length > 0 && e?.hasDays[0]?.length > 0
+                return e?.hasDays?.length > 0 || e?.hasDays?.flat()?.length > 0
             })
-
-
 
             setAvailableServices(filterResponses)
             setLoadingAvailableServices(false)

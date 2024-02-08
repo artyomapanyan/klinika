@@ -47,6 +47,7 @@ function Offer() {
         values.top =values.top === true ? true : false;
 
 
+        values.sub_specialties = values.sub_specialties? values.sub_specialties : [];
 
 
 

@@ -110,14 +110,8 @@ function Offers() {
                                     title:t('Status'),
                                     key:'status',
                                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                                    render:(e,record)=>{
-                                        return <div>
-                                            {user?.permissions?.includes(`Offer:update`) ? 
-                                               <SwitchStatus switchDisabled={record?.approved_at && !record?.rejected_at ? false : true} record={record} resource={resource} name={'status'}/> : 
-                                               <ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
-                                            }
-                                        </div>
-                                        }
+                                    render:(e,record)=><ColorSelect colorSelectDisabled={!user?.permissions?.includes(`Offer:update`)} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+
                                 },
                                {
                                    dataIndex:'deep_link',

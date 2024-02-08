@@ -166,7 +166,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
     }
 
-    console.log(addressValue)
+
 
     const handleCreateNewApp = (values) => {
         setLoading403(true)
@@ -307,7 +307,6 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
         }
 
     }
-
 
 
 

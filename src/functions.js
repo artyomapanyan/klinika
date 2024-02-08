@@ -123,25 +123,26 @@ export function blobToObjectUrl(blob, noPdf) {
 
 
 }
+
 export function notificate(data,status) {
     if (data?.errors) {
-        Object.keys(data?.errors).map((type) => {
+        Object.entries(data?.errors).map((type) => {
             if( typeof data.errors==='object'){
-                Object.values(data.errors)?.forEach((message) => {
-                    notification.error({
-                        message: type,
-                        description: message,
-                        placement: "bottomRight"
-                    })
-                });
+                // Object.values(data.errors)?.forEach((message) => {
+                notification.error({
+                    message: type[0],
+                    description: type[1],
+                    placement: "bottomRight"
+                })
+                // });
             }else{
-                data.errors?.forEach((message) => {
-                    notification.error({
-                        message: type,
-                        description: message,
-                        placement: "bottomRight"
-                    })
-                });
+                //data.errors?.forEach((message) => {
+                notification.error({
+                    message: type[0],
+                    description: type[1],
+                    placement: "bottomRight"
+                })
+                // });
             }
 
             return true;
@@ -163,11 +164,14 @@ export function notificate(data,status) {
             })
         }
         else {
-            notification.error({
-                message: "Notification",
-                description: data.message,
-                placement: "bottomRight"
-            })
+            if( data.errors==null) {
+                notification.error({
+                    message: "Notification",
+                    description: data.message,
+                    placement: "bottomRight"
+                })
+            }
+
         }
 
     }
@@ -190,5 +194,74 @@ export function notificate(data,status) {
         });
     }
 }
+
+
+// export function notificate(data,status) {
+//     if (data?.errors) {
+//         Object.keys(data?.errors).map((type) => {
+//             if( typeof data.errors==='object'){
+//                 Object.values(data.errors)?.forEach((message) => {
+//                     notification.error({
+//                         message: type,
+//                         description: message,
+//                         placement: "bottomRight"
+//                     })
+//                 });
+//             }else{
+//                 data.errors?.forEach((message) => {
+//                     notification.error({
+//                         message: type,
+//                         description: message,
+//                         placement: "bottomRight"
+//                     })
+//                 });
+//             }
+//
+//             return true;
+//         });
+//     }
+//     if (data === "error") {
+//         notification.error({
+//             message: "Error",
+//             description: "Please contact the administrator",
+//             placement: "bottomRight"
+//         })
+//     }
+//     if (data?.message  ) {
+//         if(status===200){
+//             notification.info({
+//                 message: "Notification",
+//                 description: data.message,
+//                 placement: "bottomRight"
+//             })
+//         }
+//         else {
+//             notification.error({
+//                 message: "Notification",
+//                 description: data.message,
+//                 placement: "bottomRight"
+//             })
+//         }
+//
+//     }
+//     if (data?.notices) {
+//         data.notices.forEach((message) => {
+//             if (data.status <= 400) {
+//                 notification.info({
+//                     message: "Notification",
+//                     description: message,
+//                     placement: "bottomRight"
+//                 })
+//             } else {
+//                 notification.warning({
+//                     message: "Warning",
+//                     description: message,
+//                     placement: "bottomRight"
+//                 })
+//             };
+//             return true;
+//         });
+//     }
+// }
 
 
