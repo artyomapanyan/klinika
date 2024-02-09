@@ -16,7 +16,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
     }
 
 
-
+    console.log(el)
     return(
             <Col xxl={colWidth} xl={12} lg={12} md={12} sm={24} xs={24} style={{marginTop:16}} >
                 <div className={'patient_card'}>
@@ -47,7 +47,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
                         </Col>
                         <Col lg={7} align={'center'}>
                             <div className={"medication_card_text1"}>{t('Dose')}</div>
-                            <div className={"medication_card_text2"}>{el?.dose} pcs</div>
+                            <div className={"medication_card_text2"}>{el?.dose} {el?.unit_type == 1 ? 'pcs' : 'mg'}</div>
                         </Col>
                         <Col lg={1} align={'center'}>
                             <Divider type={'vertical'} style={{border:'1px solid #cfceca', height:45,  margin: '0 10px'}} />

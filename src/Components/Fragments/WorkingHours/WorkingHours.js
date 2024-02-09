@@ -258,6 +258,10 @@ function WorkingHours({onFinish,
               </Col>
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
+                  // if(el?.opens_at === '00:00') {
+                  //   el.opens_at = '12:00 AM'
+                  // }
+
 
                   let currentOptions =[...currentTimes]?.flat()
                   if (key > 0 && workingDay?.length) {
