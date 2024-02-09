@@ -38,21 +38,9 @@ function Appointment({ isPatient }) {
 	let role = useSelector(state => state.auth.selected_role?.key)
 	let ownerClinics = useSelector(state => state?.owner)
 	let language = useSelector(state => state.app.current_locale)
+    const [serviceTypeState, setServiceTypeState] = useState([])
 
-	const { loadingState, dataState } = useGetResourceSingle(
-		!isPatient ? resource : 'Patient',
-		params.id,
-		{},
-		isPatient
-			? data => {
-					setTimeout(() => {
-						handleValuesChange({ patient_id: data.id })
-					}, 500)
-					return data
-			  }
-			: null
-	)
-	const { data, setData } = dataState
+	const [ data, setData ] = useState(null);
 	const [patient, setPatient] = useState(null)
 	const [saveLoading, setSaveLoading] = useState(false)
 	const [codeAndPhone, setCodeAndPhone] = useState({
@@ -63,12 +51,12 @@ function Appointment({ isPatient }) {
 	const [changeValuesState, setChangeValuesState] = useState({})
 	const fetchedUsers = useRef([])
 
-	// useEffect(() => {
-	// 	if (statusCode === 403) {
-	//         setPageState('unauthorized')
-	//     }
-	//     return () => {};
-	// }, [statusCode]);
+	useEffect(() => {
+		setData( prevState => ({
+			...prevState,
+			clinic_id: ownerClinics.id
+		}))
+	}, [ownerClinics.id]);
 
 	useEffect(() => {
 		if (data?.patient_id === undefined) {
@@ -219,7 +207,7 @@ function Appointment({ isPatient }) {
 			postResource('PatientsVerificationCode', 'PatientCodeVerify', token, '', {
 				phone_country_code: codeAndPhone?.phone_country_code,
 				phone_number: codeAndPhone?.phone_number,
-				clinic_id: ownerClinics.id ? ownerClinics.id : data.clinic_id,
+				clinic_id: data?.clinic_id,
 				code: data?.code
 			}).then(response => {
 				setPageState('selected')
@@ -232,6 +220,57 @@ function Appointment({ isPatient }) {
 		item.id = item.phone_code
 		return [name, item]
 	}
+
+	useEffect(() => {
+        if (data?.clinic_id) {
+
+            postResource('Clinic', 'single', token, data?.clinic_id).then(responses => {
+
+                setServiceTypeState([
+                    {
+                        service: responses?.has_telehealth_service,
+                        id: 'telehealth',
+                        name: "Telehealth",
+                    },
+                    {
+                        service: responses?.has_clinic_visit_service,
+                        id: 'clinic_visit',
+                        name: 'Clinic Visit',
+                    },
+                    {
+                        service: responses?.has_home_visit_service,
+                        id: 'home_visit',
+                        name: 'Home Visit',
+                    },
+                    {
+                        service: responses?.has_physical_therapy_home_visit_service,
+                        id: 'physical_therapy_home_visit',
+                        name: 'Physical Therapy Home Visit',
+                    },
+                    {
+                        service: responses?.has_physical_therapy_clinic_visit_service,
+                        id: 'physical_therapy_clinic_visit',
+                        name: 'Physical Therapy Clinic Visit',
+                    },
+                    {
+                        service: responses?.has_laboratory_home_visit_service,
+                        id: 'laboratory_home_visit',
+                        name: 'Laboratory Home Visit'
+                    },
+                    {
+                        service: responses?.has_nursing_service,
+                        id: 'nursing',
+                        name: 'Nursing'
+                    },
+                    {
+                        service: responses?.has_laboratory_clinic_visit_service,
+                        id: 'laboratory_clinic_visit',
+                        name: 'Laboratory Clinic Visit'
+                    }
+                ].filter(el => el.service === true))
+            })
+        }
+    }, [data?.clinic_id])
 
 	return (
 		<div className={'app_show_big_div'}>
@@ -257,7 +296,7 @@ function Appointment({ isPatient }) {
 				<div className={'add_edit_content'}>
 					<div className='gutter-row'>
 						<Row>
-							{!ownerClinics.id ? (
+							{!data?.clinic_id ? (
 								<Col lg={6} className='gutter-row'>
 									<FormInput
 										label={t('Clinic')}
@@ -364,9 +403,7 @@ function Appointment({ isPatient }) {
 													)
 												: data?.phone_country_code
 											: '966',
-										clinic_id: ownerClinics.id
-											? ownerClinics.id
-											: data.clinic_id
+										clinic_id: data?.clinic_id
 									}}
 									initialData={[]}
 									handleMapItems={(item, name, status) =>
@@ -442,11 +479,88 @@ function Appointment({ isPatient }) {
 				) : (
 					<div></div>
 				)}
-				<div>
-				<div>
+				{serviceTypeState?.length?  (<div className={'add_edit_content'}>
+					<Form>
+						<Row>
+							<Col lg={8} className='gutter-row'>
+								<FormInput label={t('Service Type')} name={'service_type'}
+									inputType={'resourceSelect'}
+									rules={[{required: true}]}
+									inputProps={{
+										onChange:(e,data)=> {
+											formRef?.current?.setFieldsValue({
+												specialty_id:null,
+												doctor_id: null,
+												booked_at: null,
+												appointment_time: null,
+												lab_tests: undefined,
+												lab_packages: null,
+												offer_id: null,
+												nursing_tasks: undefined,
+												service_type: e
+
+											})
+											setData((prevState)=>({
+												...prevState,
+												specialty_id:null,
+												doctor_id: null,
+												booked_at: null,
+												appointment_time: null,
+												lab_tests: null,
+												lab_packages: null,
+												offer_id: null,
+												nursing_tasks: null,
+												service_type: e
+
+											}))
+
+										}
+									}}
+									initialValue={null}
+									initialData={serviceTypeState}/>
+							</Col>
+							<Col lg={16} className='gutter-row'>
+								<FormInput label={t('Specialties')} name={'specialty_id'}
+									inputType={'resourceSelect'}
+									rules={[{required: true}]}
+									initialValue={null}
+									initialData={[]}
+									inputProps={{
+										onChange:(e,data)=> {
+											formRef?.current?.setFieldsValue({
+												doctor_id: null,
+												booked_at: null,
+												appointment_time: null,
+												offer_id: null
+
+											})
+											setData((prevState)=>({
+												...prevState,
+												doctor_id: null,
+												booked_at: null,
+												appointment_time: null,
+												offer_id: null
+
+											}))
+
+										}
+									}}
+									resource={'Taxonomy'}
+									customSearchKey={'title'}
+									resourceParams={{
+										type: Resources.TaxonomyTypes.SPECIALTY,
+										has_parent: 0
+									}}
+						/>		
+							</Col>
+						</Row>
+						
+					</Form>
                     <ClinicManagerCalendar />
                 </div>
-				</div>
+								) : (
+					<Preloader></Preloader>
+				)}
 		</div>
 	)
 }
