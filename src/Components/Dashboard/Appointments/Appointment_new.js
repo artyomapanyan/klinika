@@ -24,8 +24,9 @@ import {
 	UserOutlined
 } from '@ant-design/icons'
 import clinic_man_user_icon from '../../../dist/icons/clinic_man_user_icon.png'
-import ClinicManagerCalendar from "../ClinicManager/Fragments/ClinicManagerCalendar/ClinicManagerCalendar";
+import AppointmentCalendar from "./Fragments/AppointmentCalendar/AppointmentCalendar"
 import { formToJSON } from 'axios'
+import NursLabCalendar from './Fragments/NursingLaboratoryCalendar/NursLabCalendar'
 
 const resource = 'Appointment'
 
@@ -557,7 +558,10 @@ function Appointment() {
 						</Row>
 						
 					</Form>
-                    <ClinicManagerCalendar />
+					{ data?.service_type?
+						(data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit')?
+						<NursLabCalendar/>:<AppointmentCalendar /> : null
+					}
                 </div>
 								) : (
 					<Preloader></Preloader>

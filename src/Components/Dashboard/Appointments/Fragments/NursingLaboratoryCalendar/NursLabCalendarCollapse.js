@@ -1,0 +1,58 @@
+import React, {useState} from "react";
+import {Button, Modal} from "antd";
+import gray_grid from "../../../../../dist/icons/gray_grid.png";
+import dayjs from "dayjs";
+import NursLabCollapseModal from "./NursLabCollapseModal";
+import {t} from "i18next";
+
+function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
+    const [btnCollapsed, setBtnCollapsed] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(false);
+    let thisDate = dayjs().format('YYYY-MM-DD')
+
+    const openCollapse = () => {
+        setBtnCollapsed(!btnCollapsed)
+    }
+
+
+    console.log(item)
+    return(
+        <>
+            <tbody>
+            <tr>
+                <td>
+                    <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
+                        <span className={'cl_manager_collapse_specialty'}>{t(item?.service.replaceAll('_', ' '))}</span>
+                        {/*<img src={arrowDownPurple} alt={'arrowDownPurple'}/>*/}
+                    </Button>
+                </td>
+                {Object.keys(item?.availability??{}).map((key, k)=>   {
+                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null ? null : () => setSelectedDate(key)}>
+
+                        <div className={"progressPurple"} style={{background: !item.availability[key]?.available ? 'url('+gray_grid+')' : '#6DAF5620'}}>
+
+                            <div className="progress-bar "
+                                 role="progressbar"
+                                 style={{width: item.availability[key]?.percentage+'%', background: item.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF56'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
+                                 aria-valuemax="100">
+                            </div>
+                            {
+                                item.availability[key]?.percentage === null ? <div ></div> : <div className="progressText">{item.availability[key]?.percentage?.toFixed()}%</div>
+                            }
+
+                        </div>
+                    </td>})}
+            </tr>
+            </tbody>
+            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
+                {selectedDate ? <NursLabCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} item={item} clinic={clinic} specialty={item?.service} clinicID={clinicID}   setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
+            </Modal>
+
+            {/*{*/}
+            {/*    btnCollapsed ? Object.values(item?.doctors??{}).map((doctor, key)=><NursLabCalendarInnCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null*/}
+            {/*}*/}
+        </>
+
+    )
+}
+export default NursLabCalendarCollapse;
