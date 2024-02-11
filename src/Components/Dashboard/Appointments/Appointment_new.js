@@ -25,10 +25,11 @@ import {
 } from '@ant-design/icons'
 import clinic_man_user_icon from '../../../dist/icons/clinic_man_user_icon.png'
 import ClinicManagerCalendar from "../ClinicManager/Fragments/ClinicManagerCalendar/ClinicManagerCalendar";
+import { formToJSON } from 'axios'
 
 const resource = 'Appointment'
 
-function Appointment({ isPatient }) {
+function Appointment() {
 	const navigate = useNavigate()
 	let dispatch = useDispatch()
 	const params = useParams()
@@ -50,6 +51,7 @@ function Appointment({ isPatient }) {
 	const [pageState, setPageState] = useState('initial')
 	const [changeValuesState, setChangeValuesState] = useState({})
 	const fetchedUsers = useRef([])
+	const patientFormRef = useRef();
 
 	useEffect(() => {
 		setData( prevState => ({
@@ -76,44 +78,6 @@ function Appointment({ isPatient }) {
 	}
 
 	const onFinish = values => {
-		if (values.patient_id) {
-			delete values.patient
-			delete values?.dob
-		} else {
-			values.dob = values.patient.dob.format('YYYY-MM-DD')
-		}
-
-		values.booked_at =
-			values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
-
-		if (values?.patient?.phone_country_code) {
-			if (values.patient.phone_country_code.length > 3) {
-				values.patient.phone_country_code =
-					values?.patient?.phone_country_code?.slice(
-						values?.patient.phone_country_code.indexOf('(') + 1,
-						values?.patient.phone_country_code?.indexOf(')')
-					)
-			}
-		}
-		setSaveLoading(true)
-
-		if (values?.lab_packages) {
-			values.lab_packages = [values.lab_packages]
-		}
-
-		createResource(resource, values, token)
-			.then(response => {
-				if (response?.id) {
-					navigate(-1)
-				}
-			})
-			.finally(() => {
-				dispatch({
-					type: 'DASHBOARD_STATE',
-					payload: false
-				})
-				setSaveLoading(false)
-			})
 	}
 
 	const handleValuesChange = (e, v) => {
@@ -124,7 +88,7 @@ function Appointment({ isPatient }) {
 		if (e.patient_id) {
 			const foundUser = fetchedUsers.current?.find(i => i.id === e?.patient_id)
 			setPatient(foundUser)
-			
+
 		}
 		setChangeValuesState(e)
 		if (Object.keys(e).length > 0) {
@@ -272,6 +236,43 @@ function Appointment({ isPatient }) {
         }
     }, [data?.clinic_id])
 
+	const saveAppointment = () => {
+		formRef.current.submit();
+
+		let appointment = formRef.current.getFieldsValue();
+		if (pageState === 'selected') {
+			delete appointment?.dob
+		} else if (pageState === 'creation'){
+			patientFormRef.current.submit();
+			appointment.patient = patient;
+			appointment.dob = appointment.patient.dob.format('YYYY-MM-DD');
+		}
+
+		appointment.booked_at =
+		appointment.booked_at.format('YYYY-MM-DD') + ' ' + appointment.appointment_time
+
+		setSaveLoading(true)
+
+		if (appointment?.lab_packages) {
+			appointment.lab_packages = [appointment.lab_packages]
+		}
+
+		console.log(appointment);
+		// createResource(resource, appointment, token)
+		// 	.then(response => {
+		// 		if (response?.id) {
+		// 			navigate(-1)
+		// 		}
+		// 	})
+		// 	.finally(() => {
+		// 		dispatch({
+		// 			type: 'DASHBOARD_STATE',
+		// 			payload: false
+		// 		})
+		// 		setSaveLoading(false)
+		// 	})
+	}
+
 	return (
 		<div className={'app_show_big_div'}>
 			<div>
@@ -415,7 +416,7 @@ function Appointment({ isPatient }) {
 								/>
 							</Col>
 							<Col lg={6} className='gutter-row'>
-								{pageState === 'initial' ? (
+								{pageState === 'initial' || pageState === 'creation' ? (
 									<Button
 										onClick={() => {
 											formRef.current.resetFields(['patient_id'])
@@ -474,7 +475,7 @@ function Appointment({ isPatient }) {
 			</Form>
 			{pageState === 'creation' || pageState === 'selected' ? (
 					<div>
-						<CreatePatient data={patient} pageState={pageState} setData={setPatient} setPageState={setPageState}></CreatePatient>
+						<CreatePatient data={patient} setData={setPatient} formRef={patientFormRef}></CreatePatient>
 					</div>
 				) : (
 					<div></div>
@@ -561,7 +562,11 @@ function Appointment({ isPatient }) {
 								) : (
 					<Preloader></Preloader>
 				)}
+				<Space className={'create_apdate_btns'}>
+                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit" onClick={saveAppointment}>{t("Save Appointment")}</Button>
+                </Space>
 		</div>
+		
 	)
 }
 

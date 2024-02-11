@@ -12,7 +12,6 @@ import Preloader from '../../../Preloader'
 import FormInput from '../../../Fragments/FormInput'
 import Resources from '../../../../store/Resources'
 import dayjs from 'dayjs'
-import CancelComponent from '../../../Fragments/CancelComponent'
 import {
 	CopyOutlined,
 	EditOutlined,
@@ -26,7 +25,7 @@ import clinic_man_user_icon from '../../../../dist/icons/clinic_man_user_icon.pn
 
 const resource = 'User'
 
-function CreatePatient({ data, setData, pageState, setPageState }) {
+function CreatePatient({ data, setData, formRef }) {
 	let token = useSelector(state => state.auth.token)
 	let language = useSelector(state => state.app.current_locale)
 	const [saveLoading, setSaveLoading] = useState(false)
@@ -54,18 +53,7 @@ function CreatePatient({ data, setData, pageState, setPageState }) {
 		} else {
 			values.insurance_company_id = null
 		}
-		createResource(resource, values, token)
-			.then(response => {
-                setData(response);
-                setPageState('selected')
-            })
-			.finally(() => {
-				dispatch({
-					type: 'DASHBOARD_STATE',
-					payload: false
-				})
-				setSaveLoading(false)
-			})
+        setData(values);
 	}
 
 	const handleMapItems = (item, name) => {
@@ -76,11 +64,12 @@ function CreatePatient({ data, setData, pageState, setPageState }) {
 
 	return (
 		<Form
-			name='edit'
+			name='patient'
 			onFinish={onFinish}
 			layout='vertical'
 			className={'add_create_form'}
 			disabled={data?.id}
+            ref={formRef}
 		>
 			<div className={'add_edit_content'}>
 				<Row>
@@ -195,18 +184,6 @@ function CreatePatient({ data, setData, pageState, setPageState }) {
 						/>
 					</Col>
 				</Row>
-				{pageState === 'creation' ? (
-					<Space className={'create_apdate_btns'}>
-						<Button
-							loading={saveLoading}
-							size={'large'}
-							type={'primary'}
-							htmlType='submit'
-						>
-							{t('Save and create user')}
-						</Button>
-					</Space>
-				) : null}
 			</div>
 		</Form>
 	)
