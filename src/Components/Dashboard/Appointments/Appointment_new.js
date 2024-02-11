@@ -24,13 +24,17 @@ import {
 	UserOutlined
 } from '@ant-design/icons'
 import clinic_man_user_icon from '../../../dist/icons/clinic_man_user_icon.png'
-import AppointmentCalendar from "./Fragments/AppointmentCalendar/AppointmentCalendar"
+import AppointmentCalendar from './Fragments/AppointmentCalendar/AppointmentCalendar'
 import { formToJSON } from 'axios'
 import NursLabCalendar from './Fragments/NursingLaboratoryCalendar/NursLabCalendar'
 
 const resource = 'Appointment'
 
 function Appointment() {
+	const [saveLoading, setSaveLoading] = useState(false)
+	const [verifyLoading, setVerifyLoading] = useState(false)
+	const [sendCodeLoading, setSendCodeLoading] = useState(false)
+
 	const navigate = useNavigate()
 	let dispatch = useDispatch()
 	const params = useParams()
@@ -40,11 +44,10 @@ function Appointment() {
 	let role = useSelector(state => state.auth.selected_role?.key)
 	let ownerClinics = useSelector(state => state?.owner)
 	let language = useSelector(state => state.app.current_locale)
-    const [serviceTypeState, setServiceTypeState] = useState([])
+	const [serviceTypeState, setServiceTypeState] = useState([])
 
-	const [ data, setData ] = useState(null);
+	const [data, setData] = useState(null)
 	const [patient, setPatient] = useState(null)
-	const [saveLoading, setSaveLoading] = useState(false)
 	const [codeAndPhone, setCodeAndPhone] = useState({
 		phone_country_code: 966,
 		phone_number: null
@@ -52,14 +55,14 @@ function Appointment() {
 	const [pageState, setPageState] = useState('initial')
 	const [changeValuesState, setChangeValuesState] = useState({})
 	const fetchedUsers = useRef([])
-	const patientFormRef = useRef();
+	const patientFormRef = useRef()
 
 	useEffect(() => {
-		setData( prevState => ({
+		setData(prevState => ({
 			...prevState,
 			clinic_id: ownerClinics.id
 		}))
-	}, [ownerClinics.id]);
+	}, [ownerClinics.id])
 
 	useEffect(() => {
 		if (data?.patient_id === undefined) {
@@ -78,8 +81,7 @@ function Appointment() {
 		navigate(-1)
 	}
 
-	const onFinish = values => {
-	}
+	const onFinish = values => {}
 
 	const handleValuesChange = (e, v) => {
 		setData(prevState => ({
@@ -89,7 +91,6 @@ function Appointment() {
 		if (e.patient_id) {
 			const foundUser = fetchedUsers.current?.find(i => i.id === e?.patient_id)
 			setPatient(foundUser)
-
 		}
 		setChangeValuesState(e)
 		if (Object.keys(e).length > 0) {
@@ -103,7 +104,7 @@ function Appointment() {
 	}
 
 	const searchByNumber = (item, name) => {
-		fetchedUsers.current.push(item);
+		fetchedUsers.current.push(item)
 
 		if (item?.name === null) {
 			name = (
@@ -146,6 +147,7 @@ function Appointment() {
 	}
 
 	const onSendCode = () => {
+		setSendCodeLoading(true)
 		formRef?.current
 			?.validateFields([
 				'time',
@@ -162,6 +164,7 @@ function Appointment() {
 					codeAndPhone
 				).then(response => {
 					setPageState('codeSent')
+					setSendCodeLoading(false)
 				})
 			})
 			.catch(c => {})
@@ -169,13 +172,16 @@ function Appointment() {
 
 	const onVerify = e => {
 		if (data?.code?.length === 4) {
+			setVerifyLoading(true)
 			postResource('PatientsVerificationCode', 'PatientCodeVerify', token, '', {
 				phone_country_code: codeAndPhone?.phone_country_code,
 				phone_number: codeAndPhone?.phone_number,
 				clinic_id: data?.clinic_id,
 				code: data?.code
 			}).then(response => {
+				setPatient(response?.patient)
 				setPageState('selected')
+				setVerifyLoading(false)
 			})
 		}
 	}
@@ -187,70 +193,74 @@ function Appointment() {
 	}
 
 	useEffect(() => {
-        if (data?.clinic_id) {
-
-            postResource('Clinic', 'single', token, data?.clinic_id).then(responses => {
-
-                setServiceTypeState([
-                    {
-                        service: responses?.has_telehealth_service,
-                        id: 'telehealth',
-                        name: "Telehealth",
-                    },
-                    {
-                        service: responses?.has_clinic_visit_service,
-                        id: 'clinic_visit',
-                        name: 'Clinic Visit',
-                    },
-                    {
-                        service: responses?.has_home_visit_service,
-                        id: 'home_visit',
-                        name: 'Home Visit',
-                    },
-                    {
-                        service: responses?.has_physical_therapy_home_visit_service,
-                        id: 'physical_therapy_home_visit',
-                        name: 'Physical Therapy Home Visit',
-                    },
-                    {
-                        service: responses?.has_physical_therapy_clinic_visit_service,
-                        id: 'physical_therapy_clinic_visit',
-                        name: 'Physical Therapy Clinic Visit',
-                    },
-                    {
-                        service: responses?.has_laboratory_home_visit_service,
-                        id: 'laboratory_home_visit',
-                        name: 'Laboratory Home Visit'
-                    },
-                    {
-                        service: responses?.has_nursing_service,
-                        id: 'nursing',
-                        name: 'Nursing'
-                    },
-                    {
-                        service: responses?.has_laboratory_clinic_visit_service,
-                        id: 'laboratory_clinic_visit',
-                        name: 'Laboratory Clinic Visit'
-                    }
-                ].filter(el => el.service === true))
-            })
-        }
-    }, [data?.clinic_id])
+		if (data?.clinic_id) {
+			postResource('Clinic', 'single', token, data?.clinic_id).then(
+				responses => {
+					setServiceTypeState(
+						[
+							{
+								service: responses?.has_telehealth_service,
+								id: 'telehealth',
+								name: 'Telehealth'
+							},
+							{
+								service: responses?.has_clinic_visit_service,
+								id: 'clinic_visit',
+								name: 'Clinic Visit'
+							},
+							{
+								service: responses?.has_home_visit_service,
+								id: 'home_visit',
+								name: 'Home Visit'
+							},
+							{
+								service: responses?.has_physical_therapy_home_visit_service,
+								id: 'physical_therapy_home_visit',
+								name: 'Physical Therapy Home Visit'
+							},
+							{
+								service: responses?.has_physical_therapy_clinic_visit_service,
+								id: 'physical_therapy_clinic_visit',
+								name: 'Physical Therapy Clinic Visit'
+							},
+							{
+								service: responses?.has_laboratory_home_visit_service,
+								id: 'laboratory_home_visit',
+								name: 'Laboratory Home Visit'
+							},
+							{
+								service: responses?.has_nursing_service,
+								id: 'nursing',
+								name: 'Nursing'
+							},
+							{
+								service: responses?.has_laboratory_clinic_visit_service,
+								id: 'laboratory_clinic_visit',
+								name: 'Laboratory Clinic Visit'
+							}
+						].filter(el => el.service === true)
+					)
+				}
+			)
+		}
+	}, [data?.clinic_id])
 
 	const saveAppointment = () => {
-		formRef.current.submit();
+		formRef.current.submit()
 
-		let appointment = formRef.current.getFieldsValue();
+		let appointment = formRef.current.getFieldsValue()
 		if (pageState === 'selected') {
 			delete appointment?.dob
-		} else if (pageState === 'creation'){
-			patientFormRef.current.submit();
-			appointment.patient = patient;
-			appointment.dob = appointment.patient.dob.format('YYYY-MM-DD');
+		} else if (pageState === 'creation') {
+			patientFormRef.current.submit()
+			appointment.patient = patient
+			appointment.dob = appointment.patient.dob.format('YYYY-MM-DD')
 		}
 
 		appointment.booked_at =
-		appointment.booked_at.format('YYYY-MM-DD') + ' ' + appointment.appointment_time
+			appointment.booked_at.format('YYYY-MM-DD') +
+			' ' +
+			appointment.appointment_time
 
 		setSaveLoading(true)
 
@@ -258,7 +268,7 @@ function Appointment() {
 			appointment.lab_packages = [appointment.lab_packages]
 		}
 
-		console.log(appointment);
+		console.log(appointment)
 		// createResource(resource, appointment, token)
 		// 	.then(response => {
 		// 		if (response?.id) {
@@ -298,7 +308,7 @@ function Appointment() {
 				<div className={'add_edit_content'}>
 					<div className='gutter-row'>
 						<Row>
-							{!data?.clinic_id ? (
+							{!ownerClinics.id ? (
 								<Col lg={6} className='gutter-row'>
 									<FormInput
 										label={t('Clinic')}
@@ -349,7 +359,7 @@ function Appointment() {
 													language === 'ar'
 														? 'المملكة العربية السعودية'
 														: 'Saudi Arabia'
-												}`
+											  }`
 									}
 									handleMapItems={handleMapItems}
 									customSearchKey={'phone_code'}
@@ -402,7 +412,7 @@ function Appointment() {
 												? data?.phone_country_code?.slice(
 														data?.phone_country_code?.indexOf('(') + 1,
 														data?.phone_country_code?.indexOf(')')
-													)
+												  )
 												: data?.phone_country_code
 											: '966',
 										clinic_id: data?.clinic_id
@@ -433,12 +443,14 @@ function Appointment() {
 								) : (
 									<div></div>
 								)}
-								{pageState === 'unauthorized' ? (
+								{pageState === 'unauthorized' || pageState === 'codeSent' ? (
 									<Button
 										onClick={onSendCode}
 										type={'primary'}
 										style={{ marginTop: 4 }}
 										className={'all_offers_book_btns'}
+										disabled={pageState === 'codeSent'}
+										loading={sendCodeLoading}
 									>
 										{t('Send request')}
 									</Button>
@@ -447,27 +459,50 @@ function Appointment() {
 								)}
 							</Col>
 						</Row>
-						{pageState === 'unauthorized' || pageState === 'codeSent' ? (
-							<Row>
-								<Col lg={8} className='gutter-row'>
-									<FormInput
-										label={t('Code (4 digits)')}
-										inputDisabled={pageState === 'unauthorized'}
-										name={'code'}
-									/>
-								</Col>
-								<Col lg={4} className='gutter-row'>
-									<Button
-										onClick={onVerify}
-										type={'primary'}
-										style={{ marginTop: 4 }}
-										className={'all_offers_book_btns'}
-										disabled={data?.code?.length !== 4}
-									>
-										{t('Verify')}
-									</Button>
-								</Col>
-							</Row>
+						{pageState === 'codeSent' ? (
+							<div>
+								<Row>
+									<Col lg={8} className='gutter-row'>
+										<FormInput
+											label={t('Code (4 digits)')}
+											inputDisabled={pageState === 'unauthorized'}
+											name={'code'}
+										/>
+									</Col>
+									<Col lg={4} className='gutter-row'>
+										<Button
+											onClick={onVerify}
+											type={'primary'}
+											style={{ marginTop: 4 }}
+											className={'all_offers_book_btns'}
+											disabled={data?.code?.length !== 4}
+											loading={verifyLoading}
+										>
+											{t('Verify')}
+										</Button>
+									</Col>
+								</Row>
+								<Row>
+									<Col lg={12} className='gutter-row'>
+										Send request for permissions to personal information. Please
+										enter code from user or wait when user accept your request
+										in app,
+									</Col>
+									<Col lg={12} className='gutter-row'>
+										{t("Client didn't get a message")}? <br />
+										<span
+											onClick={onSendCode}
+											style={{
+												color: '#BF539E',
+												fontWeight: 700,
+												cursor: 'pointer'
+											}}
+										>
+											{t('Resend Request')}
+										</span>
+									</Col>
+								</Row>
+							</div>
 						) : (
 							<div></div>
 						)}
@@ -475,102 +510,119 @@ function Appointment() {
 				</div>
 			</Form>
 			{pageState === 'creation' || pageState === 'selected' ? (
-					<div>
-						<CreatePatient data={patient} setData={setPatient} formRef={patientFormRef}></CreatePatient>
+				<div>
+					<CreatePatient
+						data={patient}
+						setData={setPatient}
+						formRef={patientFormRef}
+					></CreatePatient>
+				</div>
+			) : (
+				<div></div>
+			)}
+			{data?.clinic_id ? (
+				serviceTypeState?.length ? (
+					<div className={'add_edit_content'}>
+						<Form>
+							<Row>
+								<Col lg={8} className='gutter-row'>
+									<FormInput
+										label={t('Service Type')}
+										name={'service_type'}
+										inputType={'resourceSelect'}
+										rules={[{ required: true }]}
+										inputProps={{
+											onChange: (e, data) => {
+												formRef?.current?.setFieldsValue({
+													specialty_id: null,
+													doctor_id: null,
+													booked_at: null,
+													appointment_time: null,
+													lab_tests: undefined,
+													lab_packages: null,
+													offer_id: null,
+													nursing_tasks: undefined,
+													service_type: e
+												})
+												setData(prevState => ({
+													...prevState,
+													specialty_id: null,
+													doctor_id: null,
+													booked_at: null,
+													appointment_time: null,
+													lab_tests: null,
+													lab_packages: null,
+													offer_id: null,
+													nursing_tasks: null,
+													service_type: e
+												}))
+											}
+										}}
+										initialValue={null}
+										initialData={serviceTypeState}
+									/>
+								</Col>
+								<Col lg={16} className='gutter-row'>
+									<FormInput
+										label={t('Specialties')}
+										name={'specialty_id'}
+										inputType={'resourceSelect'}
+										rules={[{ required: true }]}
+										initialValue={null}
+										initialData={[]}
+										inputProps={{
+											onChange: (e, data) => {
+												formRef?.current?.setFieldsValue({
+													doctor_id: null,
+													booked_at: null,
+													appointment_time: null,
+													offer_id: null
+												})
+												setData(prevState => ({
+													...prevState,
+													doctor_id: null,
+													booked_at: null,
+													appointment_time: null,
+													offer_id: null
+												}))
+											}
+										}}
+										resource={'Taxonomy'}
+										customSearchKey={'title'}
+										resourceParams={{
+											type: Resources.TaxonomyTypes.SPECIALTY,
+											has_parent: 0
+										}}
+									/>
+								</Col>
+							</Row>
+						</Form>
+						{data?.service_type ? (
+							data?.service_type === 'nursing' ||
+							data?.service_type === 'laboratory_clinic_visit' ||
+							data?.service_type === 'laboratory_home_visit' ? (
+								<NursLabCalendar />
+							) : (
+								<AppointmentCalendar />
+							)
+						) : null}
+						<Space className={'create_apdate_btns'}>
+							<Button
+								loading={saveLoading}
+								size={'large'}
+								type={'primary'}
+								htmlType='submit'
+								onClick={saveAppointment}
+							>
+								{t('Save Appointment')}
+							</Button>
+						</Space>
 					</div>
 				) : (
-					<div></div>
-				)}
-				{serviceTypeState?.length?  (<div className={'add_edit_content'}>
-					<Form>
-						<Row>
-							<Col lg={8} className='gutter-row'>
-								<FormInput label={t('Service Type')} name={'service_type'}
-									inputType={'resourceSelect'}
-									rules={[{required: true}]}
-									inputProps={{
-										onChange:(e,data)=> {
-											formRef?.current?.setFieldsValue({
-												specialty_id:null,
-												doctor_id: null,
-												booked_at: null,
-												appointment_time: null,
-												lab_tests: undefined,
-												lab_packages: null,
-												offer_id: null,
-												nursing_tasks: undefined,
-												service_type: e
-
-											})
-											setData((prevState)=>({
-												...prevState,
-												specialty_id:null,
-												doctor_id: null,
-												booked_at: null,
-												appointment_time: null,
-												lab_tests: null,
-												lab_packages: null,
-												offer_id: null,
-												nursing_tasks: null,
-												service_type: e
-
-											}))
-
-										}
-									}}
-									initialValue={null}
-									initialData={serviceTypeState}/>
-							</Col>
-							<Col lg={16} className='gutter-row'>
-								<FormInput label={t('Specialties')} name={'specialty_id'}
-									inputType={'resourceSelect'}
-									rules={[{required: true}]}
-									initialValue={null}
-									initialData={[]}
-									inputProps={{
-										onChange:(e,data)=> {
-											formRef?.current?.setFieldsValue({
-												doctor_id: null,
-												booked_at: null,
-												appointment_time: null,
-												offer_id: null
-
-											})
-											setData((prevState)=>({
-												...prevState,
-												doctor_id: null,
-												booked_at: null,
-												appointment_time: null,
-												offer_id: null
-
-											}))
-
-										}
-									}}
-									resource={'Taxonomy'}
-									customSearchKey={'title'}
-									resourceParams={{
-										type: Resources.TaxonomyTypes.SPECIALTY,
-										has_parent: 0
-									}}
-						/>		
-							</Col>
-						</Row>
-						
-					</Form>
-					{ data?.service_type?
-						(data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit')?
-						<NursLabCalendar/>:<AppointmentCalendar /> : null
-					}
-                </div>
-								) : (
 					<Preloader></Preloader>
-				)}
-				<Space className={'create_apdate_btns'}>
-                    <Button loading={saveLoading} size={'large'} type={'primary'} htmlType="submit" onClick={saveAppointment}>{t("Save Appointment")}</Button>
-                </Space>
+				)
+			) : null}
 		</div>
-		
 	)
 }
 
