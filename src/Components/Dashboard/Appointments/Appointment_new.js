@@ -1,31 +1,16 @@
 import { useNavigate, useParams } from 'react-router'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-	createResource,
-	postResource,
-	useGetResourceSingle
-} from '../../Functions/api_calls'
-import { Button, Form, Space, Row, Col, Spin } from 'antd'
+import { postResource } from '../../Functions/api_calls'
+import { Button, Form, Space, Row, Col } from 'antd'
 import { t } from 'i18next'
 import Preloader from '../../Preloader'
 import FormInput from '../../Fragments/FormInput'
 import CreatePatient from './Fragments/CreatePatient'
 import Resources from '../../../store/Resources'
-import dayjs from 'dayjs'
-import CancelComponent from '../../Fragments/CancelComponent'
-import {
-	CopyOutlined,
-	EditOutlined,
-	FilePdfOutlined,
-	LeftOutlined,
-	MailOutlined,
-	PhoneOutlined,
-	UserOutlined
-} from '@ant-design/icons'
+import { LeftOutlined } from '@ant-design/icons'
 import clinic_man_user_icon from '../../../dist/icons/clinic_man_user_icon.png'
 import AppointmentCalendar from './Fragments/AppointmentCalendar/AppointmentCalendar'
-import { formToJSON } from 'axios'
 import NursLabCalendar from './Fragments/NursingLaboratoryCalendar/NursLabCalendar'
 
 const resource = 'Appointment'
@@ -37,9 +22,7 @@ function Appointment() {
 
 	const navigate = useNavigate()
 	let dispatch = useDispatch()
-	const params = useParams()
 	const formRef = useRef()
-	const phoneNumberRef = useRef()
 	let token = useSelector(state => state.auth.token)
 	let role = useSelector(state => state.auth.selected_role?.key)
 	let ownerClinics = useSelector(state => state?.owner)
@@ -84,6 +67,7 @@ function Appointment() {
 	const onFinish = values => {}
 
 	const handleValuesChange = (e, v) => {
+		//setPageState('loading')
 		setData(prevState => ({
 			...prevState,
 			...e
@@ -388,12 +372,13 @@ function Appointment() {
 									searchConfigs={{ minLength: 6 }}
 									initialValue={null}
 									inputProps={{
-										onSearch: e =>
-											setCodeAndPhone(prevState => ({
-												...prevState,
-												phone_number: e
-											})),
-
+										onSearch: e => {
+											if (e)
+												setCodeAndPhone(prevState => ({
+													...prevState,
+													phone_number: e
+												}))
+										},
 										notFoundContent: (
 											<div
 												style={{
@@ -431,7 +416,7 @@ function Appointment() {
 									<Button
 										onClick={() => {
 											formRef.current.resetFields(['patient_id'])
-											setPatient(null)
+											setPatient(codeAndPhone)
 											setPageState('creation')
 										}}
 										type={'primary'}
@@ -510,16 +495,16 @@ function Appointment() {
 				</div>
 			</Form>
 			{pageState === 'creation' || pageState === 'selected' ? (
-				<div>
-					<CreatePatient
-						data={patient}
-						setData={setPatient}
-						formRef={patientFormRef}
-					></CreatePatient>
-				</div>
-			) : (
-				<div></div>
-			)}
+					<div>
+						<CreatePatient
+							data={patient}
+							setData={setPatient}
+							formRef={patientFormRef}
+						></CreatePatient>
+					</div>
+				) : (
+					<div></div>
+				)}
 			{data?.clinic_id ? (
 				serviceTypeState?.length ? (
 					<div className={'add_edit_content'}>

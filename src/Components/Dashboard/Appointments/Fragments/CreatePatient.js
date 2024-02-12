@@ -137,7 +137,7 @@ function CreatePatient({ data, setData, formRef }) {
 							inputType={'resourceSelect'}
 							rules={[{ required: !data?.id }]}
 							initialValue={
-								data?.id
+								data?.phone_country_code
 									? data?.phone_country_code
 									: `(966) ${
 											language === 'ar'
@@ -155,7 +155,7 @@ function CreatePatient({ data, setData, formRef }) {
 							label={t('Phone number')}
 							name={'phone_number'}
 							maxLength={10}
-							initialValue={data?.id ? data?.phone_number : null}
+							initialValue={data?.phone_number}
 							rules={[{ required: !data?.id }]}
 						/>
 					</Col>
