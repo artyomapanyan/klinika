@@ -114,6 +114,10 @@ function Doctor() {
 
     const handleValuesChange = (changed)=>{
         setChangeValuesState(changed)
+        setData((prevData) => ({
+            ...prevData,
+            ...changed
+        }))
 
         if(Object.keys(changed).length > 0) {
             dispatch({
@@ -127,7 +131,7 @@ function Doctor() {
     let enLast = <span><span style={{color: 'red'}}>* </span>{('EN Last Name')}</span>
     let arFirst = <span><span style={{color: 'red'}}>* </span>{('AR First Name')}</span>
     let arLast = <span><span style={{color: 'red'}}>* </span>{('AR Last Name')}</span>
-
+    console.log(data, formRef?.current?.setFieldsValue())
     return(
         <div>
             {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - {language === 'ar' ? data?.translations?.first?.ar +' ' + data?.translations?.last?.ar : data?.translations?.first?.en + ' ' + data?.translations?.last?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
@@ -285,7 +289,24 @@ function Doctor() {
                             <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} 
                                        disabledDate={current => dayjs(current).isBefore(dayjs(), 'day')}
                                        rules={[{required: true}]} />
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Specialties')} name={'specialties'} inputType={'resourceSelect'}
+                            <FormInput inputProps={{
+                                mode:'multiple',
+                                onChange:(e,dat)=> {
+                                    setData((prevState)=>({
+                                        ...prevState,
+                                        sub_specialties: undefined,
+
+
+                                    }))
+
+                                    formRef?.current?.setFieldsValue({
+                                        sub_specialties: undefined,
+
+
+                                    })
+
+                                }
+                            }} label={t('Specialties')} name={'specialties'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.specialties?.map(e=>e.id)}
                                        initialData={data?.specialties??[]}
@@ -295,8 +316,12 @@ function Doctor() {
                             <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
                                        initialValue={data?.sub_specialties?.map(e=>e.id)}
                                        initialData={data?.sub_specialties??[]}
+                                       disabled={!data?.specialties || !data?.specialties?.length}
                                        resource={'Taxonomy'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1}}
+                                       resourceParams={{
+                                           parents: data?.specialties,
+                                           type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1
+                            }}
                             />
                             <FormInput label={t('Doctor title id')} name={'doctor_title_id'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
