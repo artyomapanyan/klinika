@@ -1,4 +1,4 @@
-import {Input, Row} from "antd";
+import {Input, Modal, Row} from "antd";
 import MedicationCards from "./MedicationCards/MedicationCard";
 import React, {useEffect, useState} from "react";
 import {postResource} from "../../../Functions/api_calls";
@@ -7,6 +7,7 @@ import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
 import search_icon_black from "../../../../dist/icons/search_icon_black.png";
 import {t} from "i18next";
+import AddMedications from "./CardAppointmentItems/AddMedications";
 
 function PatientCardMedications({tab, patientId}) {
     const token = useSelector((state) => state.auth.token);
@@ -18,6 +19,7 @@ function PatientCardMedications({tab, patientId}) {
     const [searchLoading, setSearchLoading] = useState(false)
     const [loading, setLoading] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     useEffect(() => {
@@ -64,7 +66,13 @@ function PatientCardMedications({tab, patientId}) {
         setSearchPrescriptions(e.target.value)
     }
 
+    const showModal = (data) => {
+        setIsModalOpen(data??{});
+    };
 
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
 
 
@@ -79,7 +87,7 @@ function PatientCardMedications({tab, patientId}) {
 
                     acualPrescriptions?.map((el) => {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setActualPrescriptions}
-                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState} add_update_btns={false} colWidth={8}/>
+                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState} showModal={showModal}  colWidth={8}/>
 
                     })
                 }
@@ -108,6 +116,9 @@ function PatientCardMedications({tab, patientId}) {
 
              </div>
                 }
+            <Modal className={'medications_modal'} width={752} title="Add medication" footer={false} open={isModalOpen} onCancel={handleCancel}>
+                <AddMedications key={Math.random()} handleCancel={handleCancel} setIsModalOpen={setIsModalOpen} data={isModalOpen} prescriptions={acualPrescriptions} setAddDeleteState={setAddDeleteState}/>
+            </Modal>
         </div>
     )
 }
