@@ -77,11 +77,13 @@ function WorkingHours({onFinish,
 
 
       if (data.length !== 0) {
+        console.log('0')
         setWorkingData(handleFilterData(data))
       } else if(!Array.isArray(clinicHoursesDataNew)) {
-
+        console.log('1')
         setWorkingData(handleFilterData(clinicHoursesDataNew))
       } else {
+        console.log('2')
         setWorkingData(customWorkingHouers)
       }
     }
@@ -174,7 +176,7 @@ function WorkingHours({onFinish,
   }
 
 
-
+  console.log(clinicHoursesDataNew, data, 'ddddd')
 
 
   return (loading ? <Preloader/> : <Form
@@ -252,7 +254,7 @@ function WorkingHours({onFinish,
                     valuePropName={'checked'}
                     initialValue={workingDay[0]?.is_day_off}
                   >
-                    <Switch checkedChildren="Open" unCheckedChildren="Closed" disabled={switchStatus ? getIsDayOff(workingDay[0]?.day) : false} />
+                    <Switch checkedChildren="Open" unCheckedChildren="Closed" disabled={Array.isArray(clinicHoursesDataNew) ? true : switchStatus ? getIsDayOff(workingDay[0]?.day) : false} />
                   </Form.Item>
                 </div>
               </Col>
