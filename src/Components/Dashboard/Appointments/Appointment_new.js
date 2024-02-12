@@ -22,7 +22,10 @@ function Appointment() {
 
 	const navigate = useNavigate()
 	let dispatch = useDispatch()
-	const formRef = useRef()
+	const searchFormRef = useRef()
+	const patientFormRef = useRef()
+	const appointmentFormRef = useRef()
+
 	let token = useSelector(state => state.auth.token)
 	let role = useSelector(state => state.auth.selected_role?.key)
 	let ownerClinics = useSelector(state => state?.owner)
@@ -38,7 +41,6 @@ function Appointment() {
 	const [pageState, setPageState] = useState('initial')
 	const [changeValuesState, setChangeValuesState] = useState({})
 	const fetchedUsers = useRef([])
-	const patientFormRef = useRef()
 
 	useEffect(() => {
 		setData(prevState => ({
@@ -132,26 +134,16 @@ function Appointment() {
 
 	const onSendCode = () => {
 		setSendCodeLoading(true)
-		formRef?.current
-			?.validateFields([
-				'time',
-				'service_type',
-				'phone_country_code',
-				'address1'
-			])
-			.then(e => {
-				postResource(
-					'PatientsVerificationCode',
-					'PatientsPhoneVerify',
-					token,
-					'',
-					codeAndPhone
-				).then(response => {
-					setPageState('codeSent')
-					setSendCodeLoading(false)
-				})
-			})
-			.catch(c => {})
+		postResource(
+			'PatientsVerificationCode',
+			'PatientsPhoneVerify',
+			token,
+			'',
+			codeAndPhone
+		).then(response => {
+			setPageState('codeSent')
+			setSendCodeLoading(false)
+		})
 	}
 
 	const onVerify = e => {
@@ -230,9 +222,9 @@ function Appointment() {
 	}, [data?.clinic_id])
 
 	const saveAppointment = () => {
-		formRef.current.submit()
+		appointmentFormRef.current.submit()
 
-		let appointment = formRef.current.getFieldsValue()
+		let appointment = appointmentFormRef.current.getFieldsValue()
 		if (pageState === 'selected') {
 			delete appointment?.dob
 		} else if (pageState === 'creation') {
@@ -286,7 +278,7 @@ function Appointment() {
 				name='edit'
 				onFinish={onFinish}
 				layout='vertical'
-				ref={formRef}
+				ref={searchFormRef}
 				className={'add_create_form'}
 			>
 				<div className={'add_edit_content'}>
@@ -313,7 +305,7 @@ function Appointment() {
 													offer_id: null
 												}))
 
-												formRef?.current?.setFieldsValue({
+												appointmentFormRef?.current?.setFieldsValue({
 													specialty_id: null,
 													doctor_id: null,
 													booked_at: null,
@@ -415,7 +407,7 @@ function Appointment() {
 								{pageState === 'initial' || pageState === 'creation' ? (
 									<Button
 										onClick={() => {
-											formRef.current.resetFields(['patient_id'])
+											appointmentFormRef.current.resetFields(['patient_id'])
 											setPatient(codeAndPhone)
 											setPageState('creation')
 										}}
@@ -508,7 +500,9 @@ function Appointment() {
 			{data?.clinic_id ? (
 				serviceTypeState?.length ? (
 					<div className={'add_edit_content'}>
-						<Form>
+						<Form ref={appointmentFormRef}
+										onValuesChange={handleValuesChange}
+										>
 							<Row>
 								<Col lg={8} className='gutter-row'>
 									<FormInput
@@ -518,7 +512,7 @@ function Appointment() {
 										rules={[{ required: true }]}
 										inputProps={{
 											onChange: (e, data) => {
-												formRef?.current?.setFieldsValue({
+												appointmentFormRef?.current?.setFieldsValue({
 													specialty_id: null,
 													doctor_id: null,
 													booked_at: null,
@@ -547,6 +541,8 @@ function Appointment() {
 										initialData={serviceTypeState}
 									/>
 								</Col>
+								{data?.service_type && 
+								data?.service_type !== 'nursing' && data?.service_type !== 'laboratory_clinic_visit' && data?.service_type !== 'laboratory_home_visit'? (
 								<Col lg={16} className='gutter-row'>
 									<FormInput
 										label={t('Specialties')}
@@ -557,18 +553,20 @@ function Appointment() {
 										initialData={[]}
 										inputProps={{
 											onChange: (e, data) => {
-												formRef?.current?.setFieldsValue({
+												appointmentFormRef?.current?.setFieldsValue({
 													doctor_id: null,
 													booked_at: null,
 													appointment_time: null,
-													offer_id: null
+													offer_id: null,
+													specialty_id: e
 												})
 												setData(prevState => ({
 													...prevState,
 													doctor_id: null,
 													booked_at: null,
 													appointment_time: null,
-													offer_id: null
+													offer_id: null,
+													specialty_id: e
 												}))
 											}
 										}}
@@ -579,16 +577,15 @@ function Appointment() {
 											has_parent: 0
 										}}
 									/>
-								</Col>
+								</Col>) : null
+}
 							</Row>
 						</Form>
 						{data?.service_type ? (
-							data?.service_type === 'nursing' ||
-							data?.service_type === 'laboratory_clinic_visit' ||
-							data?.service_type === 'laboratory_home_visit' ? (
-								<NursLabCalendar />
+							data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit' ? (
+								<NursLabCalendar selectedService={data?.service_type}/>
 							) : (
-								<AppointmentCalendar />
+								data?.specialty_id? <AppointmentCalendar selectedSpeciality={data?.specialty_id}/> : null
 							)
 						) : null}
 						<Space className={'create_apdate_btns'}>

@@ -1,22 +1,48 @@
+import React, { useState, useMemo } from 'react'
+import { Button } from 'antd'
+import AppointmentCalendarInnCollapse from './AppointmentCalendarInnCollapse'
+import gray_grid from '../../../../../dist/icons/gray_grid.png'
+import arrowDownPurple from '../../../../../dist/icons/arrowDownPurple.svg'
 
-import React, {useState} from "react";
-import {Button} from "antd";
-import AppointmentCalendarInnCollapse from "./AppointmentCalendarInnCollapse";
-import gray_grid from "../../../../../dist/icons/gray_grid.png";
-import arrowDownPurple from "../../../../../dist/icons/arrowDownPurple.svg";
+function AppointmentCalendarCollapse({
+	item,
+	setDate,
+	clinicID,
+	clinic,
+	setUpdate,
+	search
+}) {
+	const [btnCollapsed, setBtnCollapsed] = useState(true)
 
-function AppointmentCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
-    const [btnCollapsed, setBtnCollapsed] = useState(false);
+	// const openCollapse = () => {
+	// 	setBtnCollapsed(!btnCollapsed)
+	// }
 
-    const openCollapse = () => {
-        setBtnCollapsed(!btnCollapsed)
-    }
+	const filteredData = useMemo(() => {
+		return [...Object.values(item?.doctors ?? {})]
+			.map(e => {
+				if (!search?.length) {
+					return e
+				}
+				let doctor = [e.doctor].filter(doc => {
+                    const fullName = `${doc.first} ${doc.last}`;
+					return fullName.toLowerCase().includes(search.toLowerCase())
+				})
+				if (doctor.length === 0) {
+					return null
+				}
+				return {
+					...e,
+					doctor: doctor[0]
+				}
+			})
+			.filter(e => e)
+	}, [search, item])
 
-
-    console.log(item, 'items')
-    return(
-        <>
-            <tbody>
+	console.log(item, 'items')
+	return (
+		<>
+			{/* <tbody>
             <tr>
                 <td>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
@@ -40,13 +66,23 @@ function AppointmentCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) 
                     </div>
                 </td>})}
             </tr>
-            </tbody>
+            </tbody> */}
 
-            {
-                btnCollapsed ? Object.values(item?.doctors??{}).map((doctor, key)=><AppointmentCalendarInnCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={clinic} clinicID={clinicID} speciality_id={item?.speciality_id} specialty={item?.speciality} docItem={doctor} />) : null
-            }
-        </>
-
-    )
+			{btnCollapsed
+				? filteredData.map((doctor, key) => (
+						<AppointmentCalendarInnCollapse
+							setUpdate={setUpdate}
+							key={key}
+							setDate={setDate}
+							clinic={clinic}
+							clinicID={clinicID}
+							speciality_id={item?.speciality_id}
+							specialty={item?.speciality}
+							docItem={doctor}
+						/>
+				  ))
+				: null}
+		</>
+	)
 }
-export default AppointmentCalendarCollapse;
+export default AppointmentCalendarCollapse

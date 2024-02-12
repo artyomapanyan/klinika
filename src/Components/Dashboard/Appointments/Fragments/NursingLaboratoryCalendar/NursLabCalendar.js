@@ -9,7 +9,7 @@ import Resources from "../../../../../store/Resources";
 import {t} from "i18next";
 import NursLabCalendarCollapse from "./NursLabCalendarCollapse";
 
-function NursLabCalendar() {
+function NursLabCalendar({selectedService}) {
     const [loading, setLoading] = useState(true)
     const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
     const [data, setData] = useState({workload: []});
@@ -30,14 +30,14 @@ function NursLabCalendar() {
             setData({
                 clinic_id:response.clinic.id,
                 clinic:response.clinic,
-                workload:Object.values(response.workload)
+                workload:Object.values(response.workload).filter(e=> e.service === selectedService)
             })
             setLoading(false)
 
 
         })
 
-    }, [date, update])
+    }, [date, update, selectedService])
 
 
 
@@ -78,14 +78,14 @@ function NursLabCalendar() {
                                         <table className="w-100" style={{marginTop: -10}}>
                                             <tbody>
                                             <tr className="d-flex align-items-center justify-content-between w-100">
-                                                <td>
+                                                {/* <td>
                                                     <div className="input-group md-form form-sm pl-0 mr-3 searchInput" >
                                                         <Input className={'search_input_clinic_man'}
                                                                onChange={(e)=>setSearch(e.target.value)}
                                                                value={search}
                                                                aria-label="Search" prefix={<img src={search_icon_black} alt={'search_icon_black'} />}/>
                                                     </div>
-                                                </td>
+                                                </td> */}
                                                 {[...Array(7).keys()].map((e,k) => {
                                                     return <td key={e} className="appointmentsDate" style={{height: 48, paddingLeft: k === 0 ? 20 : 0}}>
                                                         <div className="appointmentsDate__content" style={{height: 48, paddingTop: 14}}>

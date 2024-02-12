@@ -10,7 +10,7 @@ import search_icon_black from "../../../../../dist/icons/search_icon_black.png"
 import AppointmentCalendarCollapse from "./AppointmentCalendarCollapse";
 import {t} from "i18next";
 
-function AppointmentCalendar() {
+function AppointmentCalendar({selectedSpeciality}) {
     const [loading, setLoading] = useState(true)
     const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
     const [data, setData] = useState({workload: []});
@@ -30,37 +30,37 @@ function AppointmentCalendar() {
             setData({
                 clinic_id:response.clinic.id,
                 clinic:response.clinic,
-                workload:Object.values(response.workload)
+                workload:Object.values(response.workload).filter(e => e.speciality_id === selectedSpeciality)
             })
             setLoading(false)
 
         })
 
-    }, [date, update])
+    }, [date, update, selectedSpeciality])
 
 
 
-    const filteredData = useMemo(()=>{
-        return [...data.workload].map(e=>{
-            if(!search?.length){
-                return e
-            }
-            if(!e.speciality){
-                return null
-            }
-            let speciality = [e.speciality].filter(doc=>{
-                return doc.toLowerCase().includes(search.toLowerCase())
-            })
-            if(speciality.length===0){
-                return null
-            }
-            return {
-                ...e,
-                speciality:speciality
-            }
-        }).filter(e=>e)
+    // const filteredData = useMemo(()=>{
+    //     return [...data.workload].map(e=>{
+    //         if(!search?.length){
+    //             return e
+    //         }
+    //         if(!e.speciality){
+    //             return null
+    //         }
+    //         let speciality = [e.speciality].filter(doc=>{
+    //             return doc.toLowerCase().includes(search.toLowerCase())
+    //         })
+    //         if(speciality.length===0){
+    //             return null
+    //         }
+    //         return {
+    //             ...e,
+    //             speciality:speciality
+    //         }
+    //     }).filter(e=>e)
 
-    },[search,data])
+    // },[search,data])
 
 
 
@@ -96,10 +96,10 @@ function AppointmentCalendar() {
                                                 </tr>
                                             </tbody>
 
-                                            {filteredData?.slice(0,showCount)?.map((item, key) => <AppointmentCalendarCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item}/>)}
+                                            {data.workload?.slice(0,showCount)?.map((item, key) => <AppointmentCalendarCollapse setUpdate={setUpdate} key={key} setDate={setDate} clinic={data.clinic} clinicID={data.clinic_id} item={item} search={search}/>)}
                                         </table>
                                         <div style={{padding: 10, display: 'flex', gap: 10}}>
-                                            {filteredData.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>{t('Show More')}</Button>:null}
+                                            {data.workload.length>showCount?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState+10)}>{t('Show More')}</Button>:null}
                                             {showCount>10?<Button type={'primary'} onClick={()=>setShowCount((prevState)=>prevState-10)}>{t('Show Less')}</Button>:null}
                                         </div>
 

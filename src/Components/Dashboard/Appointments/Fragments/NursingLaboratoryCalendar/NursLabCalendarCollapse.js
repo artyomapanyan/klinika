@@ -20,12 +20,12 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
         <>
             <tbody>
             <tr>
-                <td>
+                {/*<td>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
-                        <span className={'cl_manager_collapse_specialty'}>{t(item?.service.replaceAll('_', ' '))}</span>
+                        <span className={'cl_manager_collapse_specialty'}>{t(item?.service.replaceAll('_', ' '))}</span> */}
                         {/*<img src={arrowDownPurple} alt={'arrowDownPurple'}/>*/}
-                    </Button>
-                </td>
+                    {/* </Button>
+                </td> */}
                 {Object.keys(item?.availability??{}).map((key, k)=>   {
                     return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null ? null : () => setSelectedDate(key)}>
 
