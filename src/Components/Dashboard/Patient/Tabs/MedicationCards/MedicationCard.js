@@ -16,7 +16,7 @@ function MedicationCards({el, showModal, setAddDeleteState, add_update_btns=true
     }
 
 
-    console.log(el)
+
     return(
             <Col xxl={colWidth} xl={12} lg={12} md={12} sm={24} xs={24} style={{marginTop:16}} >
                 <div className={'patient_card'}>

@@ -23,7 +23,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
     }
 
     const onFinish = (values) => {
-        console.log(values)
+
         setSaveLoading(true)
         values.appointment_id = params.id
         if (data.id) {

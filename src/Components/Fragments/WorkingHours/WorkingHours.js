@@ -77,13 +77,13 @@ function WorkingHours({onFinish,
 
 
       if (data.length !== 0) {
-        console.log('0')
+
         setWorkingData(handleFilterData(data))
       } else if(!Array.isArray(clinicHoursesDataNew)) {
-        console.log('1')
+
         setWorkingData(handleFilterData(clinicHoursesDataNew))
       } else {
-        console.log('2')
+
         setWorkingData(customWorkingHouers)
       }
     }
@@ -176,7 +176,7 @@ function WorkingHours({onFinish,
   }
 
 
-  console.log(clinicHoursesDataNew, data, 'ddddd')
+
 
 
   return (loading ? <Preloader/> : <Form

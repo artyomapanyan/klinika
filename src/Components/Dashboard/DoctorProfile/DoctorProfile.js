@@ -112,7 +112,7 @@ function DoctorProfile() {
             }
 
             updateResource(resource, '', values, token, true).then(response => {
-                console.log(response)
+
                 if(response?.id){
                     setTimeout(() => {
                         window.location.reload()

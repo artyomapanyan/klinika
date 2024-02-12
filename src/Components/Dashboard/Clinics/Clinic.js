@@ -50,7 +50,7 @@ function Clinic() {
         setLang(e.target.value)
     }
 
-    console.log(dataState)
+
 
     return (
         <div  className={'clinic_tab_big_div'}>
