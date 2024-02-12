@@ -77,11 +77,13 @@ function WorkingHours({onFinish,
 
 
       if (data.length !== 0) {
+
         setWorkingData(handleFilterData(data))
       } else if(!Array.isArray(clinicHoursesDataNew)) {
 
         setWorkingData(handleFilterData(clinicHoursesDataNew))
       } else {
+
         setWorkingData(customWorkingHouers)
       }
     }
@@ -252,12 +254,16 @@ function WorkingHours({onFinish,
                     valuePropName={'checked'}
                     initialValue={workingDay[0]?.is_day_off}
                   >
-                    <Switch checkedChildren="Open" unCheckedChildren="Closed" disabled={switchStatus ? getIsDayOff(workingDay[0]?.day) : false} />
+                    <Switch checkedChildren="Open" unCheckedChildren="Closed" disabled={Array.isArray(clinicHoursesDataNew) ? true : switchStatus ? getIsDayOff(workingDay[0]?.day) : false} />
                   </Form.Item>
                 </div>
               </Col>
               <Col lg={15}>
                 {workingDay?.map((el, key) => {
+                  // if(el?.opens_at === '00:00') {
+                  //   el.opens_at = '12:00 AM'
+                  // }
+
 
                   let currentOptions =[...currentTimes]?.flat()
                   if (key > 0 && workingDay?.length) {

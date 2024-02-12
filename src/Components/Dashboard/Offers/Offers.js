@@ -24,6 +24,7 @@ function Offers() {
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = (record) => {
+
         navigator.clipboard.writeText(record?.deep_link)
         messageApi.open({
             type: 'success',
@@ -110,21 +111,15 @@ function Offers() {
                                     title:t('Status'),
                                     key:'status',
                                     shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
-                                    render:(e,record)=>{
-                                        return <div>
-                                            {user?.permissions?.includes(`Offer:update`) ? 
-                                               <SwitchStatus switchDisabled={record?.approved_at && !record?.rejected_at ? false : true} record={record} resource={resource} name={'status'}/> : 
-                                               <ColorSelect colorSelectDisabled={true} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
-                                            }
-                                        </div>
-                                        }
+                                    render:(e,record)=><ColorSelect colorSelectDisabled={!user?.permissions?.includes(`Offer:update`)} items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
+
                                 },
                                {
                                    dataIndex:'deep_link',
                                    title:t('Copy link'),
                                    key:'deep_link',
                                    render:(e,record)=> {
-                                       console.log(record)
+
                                        return <div onClick={()=>success(record)} style={{cursor: 'pointer', margin: '0px 22px'}}>
                                            <CopyOutlined style={{color: '#ce4e99', fontSize: 20}}/>
                                            {contextHolder}

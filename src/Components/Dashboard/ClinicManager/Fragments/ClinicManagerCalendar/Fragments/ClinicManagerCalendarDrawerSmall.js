@@ -16,7 +16,7 @@ function ClinicManagerCalendarDrawerSmall({openLargeDrawer, doctor, specialty, f
 
     const [emailState, setEmailState] = useState('')
 
-    console.log(emailState, 'dddddddd')
+
     const onFinish = (values) => {
         setFinishLoading(true)
         postResource('PublicIsEmailFree', 'PublicIsEmailFreeCustom', token, '', {

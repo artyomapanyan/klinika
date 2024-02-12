@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Button, Form, Switch} from "antd";
+import React, {useRef, useState} from 'react';
+import {Button, Form, Input, Switch} from "antd";
 import FormInput from "../../../../Fragments/FormInput";
 import {t} from "i18next";
 import {createResource, updateResource} from "../../../../Functions/api_calls";
@@ -11,7 +11,7 @@ import '../../Patient.sass'
 
 let resource = 'prescriptions';
 function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAddDeleteState}) {
-
+    const formRef = useRef();
     const params = useParams();
 
     let token = useSelector((state) => state.auth.token);
@@ -23,6 +23,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
     }
 
     const onFinish = (values) => {
+
         setSaveLoading(true)
         values.appointment_id = params.id
         if (data.id) {
@@ -88,19 +89,74 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
         <div className={'add_medications_big_div'}>
             {data?<Form
                 onFinish={onFinish}
+                ref={formRef}
             >
+                {/*<input type="number" onChange={(e)=>{*/}
+                {/*    console.log(e)*/}
+                {/*    if (e?.target?.value?.length > 3) {*/}
+                {/*        return e.target.value = e?.target?.value.slice(0, 3)*/}
+                {/*    }}} />*/}
                 <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
                 <div style={{display: 'flex', gap: 8, marginTop:-16}}>
-                    <div style={{width: '50%'}}>
-                        <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} rules={[{required: true}]} inputType={'number'}/>
+                    <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
+                        <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} rules={[
+                            {required: true},
+                            {
+                                validator:(rule,value)=>{
+                                    if(typeof value === 'string') {
+                                        if(+(value?.slice(0, 3)) > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
+                                    } else {
+                                        if(value > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]} inputType={'number'} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 3) {
+                                formRef?.current?.setFieldValue('frequency', e?.target?.value.slice(0, 3))
+                            }}}/>
                     </div>
-                    <div style={{width: '50%'}}>
-                        <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[{required: true}]} inputType={'number'}/>
+                    <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
+                        <FormInput label={t('Duration, days')} name={'duration'} initialValue={data?.duration} rules={[
+                            {required: true},
+                            // {
+                            //     validator:(rule,value)=>{
+                            //         if(+value > 999){
+                            //             return Promise.reject('The Duration may not be greater than 999.')
+                            //         }
+                            //         return Promise.resolve();
+                            //     }
+                            // }
+                        ]} inputType={'number'} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 3) {
+                                formRef?.current?.setFieldValue('duration', e?.target?.value.slice(0, 3))
+                            }}}/>
                     </div>
 
-                    <div style={{width: '50%'}}>
-                        <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose} rules={[{required: true}]} inputType={'number'}/>
+                    <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
+                        <FormInput label={t('Dose')} name={'dose'} initialValue={data?.dose} rules={[
+                            {required: true},
+                            // {
+                            //     validator:(rule,value)=>{
+                            //         if(+value > 999999){
+                            //             return Promise.reject('The dose may not be greater than 999999.')
+                            //         }
+                            //         return Promise.resolve();
+                            //     }
+                            // }
+                        ]} inputType={'number'} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 6) {
+                                formRef?.current?.setFieldValue('dose', e?.target?.value.slice(0, 6))
+                            }}}/>
                     </div>
+
                     <div style={{width: '50%'}}>
                         <FormInput label={t('Units')} name={'unit_type'} inputType={'resourceSelect'}
                                    rules={[{required: true}]}
@@ -121,21 +177,39 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                     </div>
                     <div style={{width: '50%'}}>
                         <FormInput label={t('Medication name')} name={'queue_prescription_id'} inputType={'resourceSelect'}
-                                   //rules={[{required: true}]}
-                                   handleMapItems={handleMapItems}
-                                    initialValue={data?.queuePrescription?.id}
-                                   initialData={data?.queuePrescription ? [data.queuePrescription] : []}
-                                   disabled={prescriptions?.length < 1}
-                                   resourceParams={{
-                                       appointment: params.id,
-                                    }}
-                                   resource={'prescriptions'}
+                            //rules={[{required: true}]}
+                            handleMapItems={handleMapItems}
+                            initialValue={data?.queuePrescription?.id}
+                            initialData={data?.queuePrescription ? [data.queuePrescription] : []}
+                            disabled={prescriptions?.length < 1}
+                            resourceData={prescriptions}
 
                         />
                     </div>
 
-                    <div style={{width: '25%'}}>
-                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue='0' inputType={'number'}/>
+                    <div style={{width: '25%'}} className={'patient_card_medication_errors'}>
+                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue={data?.gap ? data?.gap : '0'} inputType={'number'} rules={[
+                            {required: false},
+                            {
+                                validator:(rule,value)=>{
+                                    if(typeof value === 'string') {
+                                        if(+(value?.slice(0, 3)) > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
+                                    } else {
+                                        if(value > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
+                                    }
+
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]} onChange={(e)=>{
+
+                            if (e?.target?.value?.length > 3) {
+                                formRef?.current?.setFieldValue('gap', e?.target?.value.slice(0, 3))
+                            }}}/>
                     </div>
                 </div>
                 <div style={{ marginTop:-16}}>
@@ -144,7 +218,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
 
                 <div style={{borderBottom: '1px dashed #e6e8eb', marginLeft: 6, marginRight: 6, marginTop: -10}}></div>
 
-                <div className={'reminders'}>Reminers</div>
+                <div className={'reminders'}>Reminders</div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div className={'times_big_div'}>
                         <div className={'morning_div'}>{t('Morning')}</div>

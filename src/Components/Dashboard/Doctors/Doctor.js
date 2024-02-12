@@ -33,7 +33,7 @@ function Doctor() {
 
     const onFinish = (values) => {
         setSaveLoading(true)
-
+        values.sub_specialties = values.sub_specialties? values.sub_specialties : [];
         values.dob = values?.dob?.format('YYYY-MM-DD')
         values.plid_expired_at = values?.plid_expired_at?.format('YYYY-MM-DD')
 

@@ -47,6 +47,7 @@ function Offer() {
         values.top =values.top === true ? true : false;
 
 
+        values.sub_specialties = values.sub_specialties? values.sub_specialties : [];
 
 
 
@@ -418,6 +419,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        initialData={data?.doctors??[]}
                                        resource={'Doctor'}
                                        resourceParams={{
+                                           approved: 1,
                                            clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
                                            specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
                                            status: 2,

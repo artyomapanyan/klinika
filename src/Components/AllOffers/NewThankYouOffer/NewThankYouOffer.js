@@ -14,6 +14,7 @@ function NewThankYouOffer() {
     const [chargeResponse, setChargeResponse] = useState({})
     const [firstLoadingThankYou, setFirstLoadingThankYou] = useState(true)
     const [onlineOrClinicPay, setOnlineOrClinicPay] = useState(false)
+    const [isSaudi, setIsSaudi] = useState(false)
 
     useEffect(()=>{
         if(lngs!=='ar'){
@@ -26,34 +27,34 @@ function NewThankYouOffer() {
         }
     },[])
 
-    // useEffect(()=>{
-    //     let currentURL = window.location.href;
-    //
-    //     if(currentURL?.includes('invoice')) {
-    //         setOnlineOrClinicPay(true)
-    //
-    //         let url = new URL(currentURL);
-    //         let invoiceParam = url.searchParams.get("invoice");
-    //         let tapIdParam = url.searchParams.get("tap_id");
-    //
-    //
-    //
-    //         postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
-    //             charge: tapIdParam
-    //         }).then((response) => {
-    //
-    //             setFirstLoadingThankYou(false)
-    //             setChargeResponse(response)
-    //
-    //
-    //         })
-    //     } else {
-    //         setOnlineOrClinicPay(false)
-    //         setFirstLoadingThankYou(false)
-    //     }
-    //
-    //
-    // },[])
+    useEffect(()=>{
+        let currentURL = window.location.href;
+
+        if(currentURL?.includes('invoice')) {
+            setOnlineOrClinicPay(true)
+
+            let url = new URL(currentURL);
+            let invoiceParam = url.searchParams.get("invoice");
+            let tapIdParam = url.searchParams.get("tap_id");
+
+
+
+            postResource('PublicOffersCharge','GetPublicOffersCharge', token,  invoiceParam, {
+                charge: tapIdParam
+            }).then((response) => {
+                setFirstLoadingThankYou(false)
+                setChargeResponse(response)
+                setIsSaudi(response?.appointment?.patient?.is_saudi)
+
+
+            })
+        } else {
+            setOnlineOrClinicPay(false)
+            setFirstLoadingThankYou(false)
+        }
+
+
+    },[])
 
     return (
         <div>
@@ -84,7 +85,7 @@ function NewThankYouOffer() {
                     }
                 >
                     <div className={'menu_div_new'} style={{ minHeight: 500}}>
-                        <NewThankYouBookContent chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou} onlineOrClinicPay={onlineOrClinicPay}/>
+                        <NewThankYouBookContent isSaudi={isSaudi} chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou} onlineOrClinicPay={onlineOrClinicPay}/>
                     </div>
 
                     {/**<OffersFooter />**/}

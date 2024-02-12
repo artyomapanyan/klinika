@@ -15,7 +15,7 @@ import {Button, Drawer, Space} from "antd";
 import ThankYouOfferDetailsNew from "./ThankYouOfferDetailsNew";
 import PaymentFailed from "../../Fragments/PaymentFailed";
 
-function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay}) {
+function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay, isSaudi}) {
     let token = useSelector(state => state.auth.token)
     const params = useParams()
     let lngs = useSelector(state => state?.app?.current_locale)
@@ -26,6 +26,10 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
     const [paymentMethodState, setPaymentMethodState] = useState('')
     const [activePaymentMethodState, setActivePaymentMethodState] = useState(false)
     const [tryAgainLoading, setTryAgainLoading] = useState(false)
+    const [totalState, setTotalState] = useState(false)
+
+
+
 
     const showDrawer = () => {
         setOpen(true);
@@ -68,6 +72,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
     const onGoBack = () => {
         setGoBackState(true)
+        setTotalState(true)
     }
 
     const onpay = e => {
@@ -144,7 +149,8 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                         />
 
 
-                        <div className={'offer_details_new'}>
+                        <div className={'offer_details_new1'}>
+
                             <ThankYouOfferDetailsNew data={data} showDrawer={showDrawer}/>
 
                             <div className={'offer_section'}>
@@ -153,119 +159,120 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                         <div>
                                             <OfferHours data={data} />
                                             <div style={{ marginTop: '10px' }}>
-                                                <OfferPrice data={data} />
+                                                <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <OfferPrice data={data} />
+                                            <OfferPrice data={data} totalState={true} verifyResponseNationality={isSaudi}/>
                                             <OfferHours data={data} />
                                         </div>
                                     )}
                                 </div>
-                                <div className={'offer_appointment_sec'}>
-                                    {/*<BookAnAppointmentNew data={data} />*/}
-                                    <div align={'center'} style={{padding: 24}}>
-                                        <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
-                                        <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+                                {/*<div className={'offer_appointment_sec'}>*/}
+                                {/*    /!*<BookAnAppointmentNew data={data} />*!/*/}
+                                {/*    <div align={'center'} style={{padding: 24}}>*/}
+                                {/*        <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>*/}
+                                {/*        <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>*/}
 
-                                        <div style={{marginTop: 10}}>
-                                            <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/*{*/}
-                                {/*    firstLoadingThankYou ? <Preloader/> : <div>*/}
-                                {/*        {*/}
-                                {/*            !onlineOrClinicPay ? */}
-                                {/*                <div className={'offer_appointment_sec'}>*/}
-                                {/*                /!*<BookAnAppointmentNew data={data} />*!/*/}
-                                {/*                <div align={'center'} style={{padding: 24}}>*/}
-                                {/*                    <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>*/}
-                                {/*                    <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>*/}
-                                {/*                    */}
-                                {/*                    <div style={{marginTop: 10}}>*/}
-                                {/*                        <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div> */}
-                                {/*                : <div>*/}
-                                {/*                {*/}
-                                {/*                    chargeResponse?.status === "CAPTURED" ? <div className={'offer_appointment_sec'}>*/}
-                                {/*                        /!*<BookAnAppointmentNew data={data} />*!/*/}
-                                {/*                        <div align={'center'} style={{padding: 24}}>*/}
-                                {/*                            <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>*/}
-                                {/*                            <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>*/}
-                                {/*                            /!*<div className={'thank_you_smoll_text'}>*!/*/}
-                                {/*                            /!*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*!/*/}
-                                {/*                            /!*</div>*!/*/}
-                                {/*                            <div style={{marginTop: 10}}>*/}
-                                {/*                                <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>*/}
-                                {/*                            </div>*/}
-                                {/*                        </div>*/}
-                                {/*                    </div> : !goBackState ? <div className={'offer_appointment_sec'}>*/}
-                                {/*                        <PaymentFailed onGoBack={onGoBack} rePayOfferAppointment={rePayOfferAppointment} tryAgainLoading={tryAgainLoading}/>*/}
-                                {/*                    </div> : <div style={{marginTop: 20}} className={'offer_appointment_sec'}>*/}
-                                {/*                        <Space className={'drawer_header_text'}>*/}
-                                {/*                            <h2 className={'appointment_title'}>{t('Select payment method')}</h2>*/}
-                                {/*                        </Space>*/}
-
-
-                                {/*                        /!*<div className={'mobile_offer_price'}>*!/*/}
-                                {/*                        /!*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>*!/*/}
-                                {/*                        /!*</div>*!/*/}
-
-                                {/*                        {data?.clinic?.payment_methods.map((item, key) => {*/}
-                                {/*                            return <div key={key} className={'payment_section'}>*/}
-
-                                {/*                                <div*/}
-                                {/*                                    onClick={() => onpay(item.id)}*/}
-                                {/*                                    className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}*/}
-                                {/*                                    //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}*/}
-                                {/*                                >*/}
-                                {/*                                    <div style={{height: 24,display: 'flex', alignItems: 'center'}}>*/}
-                                {/*                                        {*/}
-                                {/*                                            item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{width: 25}} /> : <PayCircleOutlined />*/}
-                                {/*                                        }*/}
-                                {/*                                    </div>*/}
-                                {/*                                    <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>*/}
-                                {/*                                        {item.title}*/}
-                                {/*                                    </div>*/}
-                                {/*                                </div>*/}
-                                {/*                            </div>*/}
-
-                                {/*                        })}*/}
-                                {/*                        <div>*/}
-                                {/*                            {*/}
-                                {/*                                activePaymentMethodState ? <div>*/}
-
-                                {/*                                    <Button*/}
-                                {/*                                        loading={tryAgainLoading}*/}
-                                {/*                                        onClick={onReBookWidthPaymentMethod}*/}
-                                {/*                                        type={'primary'}*/}
-                                {/*                                        className={'all_offers_book_btns'}*/}
-                                {/*                                        style={{marginTop: '20px'}}*/}
-
-                                {/*                                        htmlType={'submit'}*/}
-                                {/*                                    >*/}
-                                {/*                                        {t('Book_now')}*/}
-                                {/*                                    </Button>*/}
-                                {/*                                    <div style={{marginTop: 10}}>*/}
-                                {/*                                        <Button*/}
-                                {/*                                            onClick={(e)=>onGoOffer(e)}*/}
-                                {/*                                            style={{border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}*/}
-                                {/*                                            type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>*/}
-                                {/*                                    </div>*/}
-
-                                {/*                                </div> : <div></div>*/}
-                                {/*                            }*/}
-                                {/*                        </div>*/}
-                                {/*                    </div>*/}
-                                {/*                }*/}
-                                {/*            </div>*/}
-                                {/*        }*/}
+                                {/*        <div style={{marginTop: 10}}>*/}
+                                {/*            <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>*/}
+                                {/*        </div>*/}
                                 {/*    </div>*/}
-                                {/*}*/}
+                                {/*</div>*/}
+
+                                {
+                                    firstLoadingThankYou ? <Preloader/> : <div>
+                                        {
+                                            !onlineOrClinicPay ?
+                                                <div className={'offer_appointment_sec'}>
+                                                {/*<BookAnAppointmentNew data={data} />*/}
+                                                <div align={'center'} style={{padding: 24}}>
+                                                    <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                    <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+
+                                                    <div style={{marginTop: 10}}>
+                                                        <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                : <div>
+                                                {
+                                                    chargeResponse?.status === "CAPTURED" ? <div className={'offer_appointment_sec'}>
+                                                        {/*<BookAnAppointmentNew data={data} />*/}
+                                                        <div align={'center'} style={{padding: 24}}>
+                                                            <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                            <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+                                                            {/*<div className={'thank_you_smoll_text'}>*/}
+                                                            {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*/}
+                                                            {/*</div>*/}
+                                                            <div style={{marginTop: 10}}>
+                                                                <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                            </div>
+                                                        </div>
+                                                    </div> : !goBackState ? <div className={'offer_appointment_sec'}>
+                                                        <PaymentFailed onGoBack={onGoBack} rePayOfferAppointment={rePayOfferAppointment} tryAgainLoading={tryAgainLoading}/>
+                                                    </div> : <div style={{marginTop: 20}} className={'offer_appointment_sec'}>
+                                                        <Space className={'drawer_header_text'}>
+                                                            <h2 className={'appointment_title'}>{t('Select payment method')}</h2>
+                                                        </Space>
+
+
+                                                        {/*<div className={'mobile_offer_price'}>*/}
+                                                        {/*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>*/}
+                                                        {/*</div>*/}
+
+                                                        {data?.clinic?.payment_methods.map((item, key) => {
+                                                            return <div key={key} className={'payment_section'}>
+
+                                                                <div
+                                                                    onClick={() => onpay(item.id)}
+                                                                    className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+                                                                    //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
+                                                                >
+                                                                    <div style={{height: 24,display: 'flex', alignItems: 'center'}}>
+                                                                        {
+                                                                            item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{height: 30}} /> : <PayCircleOutlined />
+                                                                        }
+                                                                    </div>
+                                                                    <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>
+                                                                        {item.title}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        })}
+                                                        <div>
+                                                            {
+                                                                activePaymentMethodState ? <div>
+
+                                                                    <Button
+                                                                        loading={tryAgainLoading}
+                                                                        onClick={onReBookWidthPaymentMethod}
+                                                                        type={'primary'}
+                                                                        className={'all_offers_book_btns'}
+                                                                        style={{marginTop: '20px'}}
+
+                                                                        htmlType={'submit'}
+                                                                    >
+                                                                        {t('Book_now')}
+                                                                    </Button>
+                                                                    <div style={{marginTop: 10}}>
+                                                                        <Button
+                                                                            onClick={(e)=>onGoOffer(e)}
+                                                                            style={{border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}
+                                                                            type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>
+                                                                    </div>
+
+                                                                </div> : <div></div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                }
 
 
 
@@ -284,116 +291,117 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                             closable={false}
                                             onClose={onClose}
                                             open={open}
-                                            height={400}
+                                            height={chargeResponse?.status == "CAPTURED" ? 400 : 500}
                                             style={{borderRadius: '12px 12px 0 0'}}
 
 
                                         >
-                                            <div >
-                                                {/*<BookAnAppointmentNew data={data} />*/}
-                                                <div align={'center'} style={{padding: 24}}>
-                                                    <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
-                                                    <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
-                                                    {/*<div className={'thank_you_smoll_text'}>*/}
-                                                    {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception.')}*/}
-                                                    {/*</div>*/}
-                                                    <div style={{marginTop: 10}}>
-                                                        <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {/*{*/}
-                                            {/*    firstLoadingThankYou ? <Preloader/> : <div>*/}
-                                            {/*        {*/}
-                                            {/*            !onlineOrClinicPay ? <div >*/}
-                                            {/*                /!*<BookAnAppointmentNew data={data} />*!/*/}
-                                            {/*                <div align={'center'} style={{padding: 24}}>*/}
-                                            {/*                    <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>*/}
-                                            {/*                    <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>*/}
-                                            {/*                    /!*<div className={'thank_you_smoll_text'}>*!/*/}
-                                            {/*                    /!*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*!/*/}
-                                            {/*                    /!*</div>*!/*/}
-                                            {/*                    <div style={{marginTop: 10}}>*/}
-                                            {/*                        <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>*/}
-                                            {/*                    </div>*/}
-                                            {/*                </div>*/}
-                                            {/*            </div> : <div>*/}
-                                            {/*                {*/}
-                                            {/*                    chargeResponse?.status == "CAPTURED" ? <div>*/}
-                                            {/*                        /!*<BookAnAppointmentNew data={data} />*!/*/}
-                                            {/*                        <div align={'center'} style={{padding: 24}}>*/}
-                                            {/*                            <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>*/}
-                                            {/*                            <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>*/}
-                                            {/*                            /!*<div className={'thank_you_smoll_text'}>*!/*/}
-                                            {/*                            /!*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*!/*/}
-                                            {/*                            /!*</div>*!/*/}
-                                            {/*                            <div style={{marginTop: 10}}>*/}
-                                            {/*                                <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>*/}
-                                            {/*                            </div>*/}
-                                            {/*                        </div>*/}
-                                            {/*                    </div> : !goBackState ? <div>*/}
-                                            {/*                        <PaymentFailed onGoBack={onGoBack} rePayOfferAppointment={rePayOfferAppointment} tryAgainLoading={tryAgainLoading}/>*/}
-                                            {/*                    </div> : <div style={{marginTop: 20}}>*/}
-                                            {/*                        <Space className={'drawer_header_text'}>*/}
-                                            {/*                            <h2 className={'appointment_title'}>{t('Select payment method')}</h2>*/}
-                                            {/*                        </Space>*/}
-
-
-                                            {/*                        /!*<div className={'mobile_offer_price'}>*!/*/}
-                                            {/*                        /!*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={verifyResponseNationality}/>*!/*/}
-                                            {/*                        /!*</div>*!/*/}
-
-                                            {/*                        {data?.clinic?.payment_methods.map((item, key) => {*/}
-                                            {/*                            return <div key={key} className={'payment_section'}>*/}
-
-                                            {/*                                <div*/}
-                                            {/*                                    onClick={() => onpay(item.id)}*/}
-                                            {/*                                    className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}*/}
-                                            {/*                                    //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}*/}
-                                            {/*                                >*/}
-                                            {/*                                    <div style={{height: 24,display: 'flex', alignItems: 'center'}}>*/}
-                                            {/*                                        {*/}
-                                            {/*                                            item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{width: 25}} /> : <PayCircleOutlined />*/}
-                                            {/*                                        }*/}
-                                            {/*                                    </div>*/}
-                                            {/*                                    <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>*/}
-                                            {/*                                        {item.title}*/}
-                                            {/*                                    </div>*/}
-                                            {/*                                </div>*/}
-                                            {/*                            </div>*/}
-
-                                            {/*                        })}*/}
-                                            {/*                        <div>*/}
-                                            {/*                            {*/}
-                                            {/*                                activePaymentMethodState ? <div>*/}
-
-                                            {/*                                    <Button*/}
-                                            {/*                                        loading={tryAgainLoading}*/}
-                                            {/*                                        onClick={onReBookWidthPaymentMethod}*/}
-                                            {/*                                        type={'primary'}*/}
-                                            {/*                                        className={'all_offers_book_btns'}*/}
-                                            {/*                                        style={{marginTop: '20px'}}*/}
-
-                                            {/*                                        htmlType={'submit'}*/}
-                                            {/*                                    >*/}
-                                            {/*                                        {t('Book_now')}*/}
-                                            {/*                                    </Button>*/}
-                                            {/*                                    <div style={{marginTop: 10}}>*/}
-                                            {/*                                        <Button*/}
-                                            {/*                                            onClick={(e)=>onGoOffer(e)}*/}
-                                            {/*                                            style={{border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}*/}
-                                            {/*                                            type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>*/}
-                                            {/*                                    </div>*/}
-
-                                            {/*                                </div> : <div></div>*/}
-                                            {/*                            }*/}
-                                            {/*                        </div>*/}
-                                            {/*                    </div>*/}
-                                            {/*                }*/}
-                                            {/*            </div>*/}
-                                            {/*        }*/}
+                                            {/*<div >*/}
+                                            {/*    /!*<BookAnAppointmentNew data={data} />*!/*/}
+                                            {/*    <div align={'center'} style={{padding: 24}}>*/}
+                                            {/*        <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>*/}
+                                            {/*        <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>*/}
+                                            {/*        /!*<div className={'thank_you_smoll_text'}>*!/*/}
+                                            {/*        /!*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception.')}*!/*/}
+                                            {/*        /!*</div>*!/*/}
+                                            {/*        <div style={{marginTop: 10}}>*/}
+                                            {/*            <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>*/}
+                                            {/*        </div>*/}
                                             {/*    </div>*/}
-                                            {/*}*/}
+                                            {/*</div>*/}
+
+                                            {
+                                                firstLoadingThankYou ? <Preloader/> : <div>
+                                                    {
+                                                        !onlineOrClinicPay ? <div >
+                                                            {/*<BookAnAppointmentNew data={data} />*/}
+                                                            <div align={'center'} style={{padding: 24}}>
+                                                                <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                                <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+                                                                {/*<div className={'thank_you_smoll_text'}>*/}
+                                                                {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*/}
+                                                                {/*</div>*/}
+                                                                <div style={{marginTop: 10}}>
+                                                                    <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                                </div>
+                                                            </div>
+                                                        </div> : <div>
+                                                            {
+                                                                chargeResponse?.status == "CAPTURED" ? <div>
+                                                                    {/*<BookAnAppointmentNew data={data} />*/}
+                                                                    <div align={'center'} style={{padding: 24}}>
+                                                                        <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                                        <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+                                                                        {/*<div className={'thank_you_smoll_text'}>*/}
+                                                                        {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*/}
+                                                                        {/*</div>*/}
+                                                                        <div style={{marginTop: 10}}>
+                                                                            <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> : !goBackState ? <div>
+                                                                    <PaymentFailed onGoBack={onGoBack} rePayOfferAppointment={rePayOfferAppointment} tryAgainLoading={tryAgainLoading}/>
+                                                                </div> : <div style={{marginTop: 20}}>
+                                                                    <Space className={'drawer_header_text'}>
+                                                                        <h2 className={'appointment_title'}>{t('Select payment method')}</h2>
+                                                                    </Space>
+
+
+                                                                    <div className={'mobile_offer_price'}>
+                                                                        <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>
+                                                                    </div>
+
+                                                                    {data?.clinic?.payment_methods.map((item, key) => {
+                                                                        return <div key={key} className={'payment_section'}>
+
+                                                                            <div
+                                                                                onClick={() => onpay(item.id)}
+                                                                                className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+                                                                                //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
+                                                                            >
+                                                                                <div style={{height: 24,display: 'flex', alignItems: 'center'}}>
+                                                                                    {
+                                                                                        item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{height: 30}} /> : <PayCircleOutlined />
+                                                                                    }
+                                                                                </div>
+                                                                                <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>
+                                                                                    {item.title}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    })}
+                                                                    <div>
+                                                                        {
+                                                                            activePaymentMethodState ? <div>
+
+                                                                                <Button
+                                                                                    loading={tryAgainLoading}
+                                                                                    onClick={onReBookWidthPaymentMethod}
+                                                                                    type={'primary'}
+                                                                                    className={'all_offers_book_btns'}
+                                                                                    style={{marginTop: '20px'}}
+
+                                                                                    htmlType={'submit'}
+                                                                                >
+                                                                                    {t('Book_now')}
+                                                                                </Button>
+                                                                                <div style={{marginTop: 10}}>
+                                                                                    <Button
+                                                                                        onClick={(e)=>onGoOffer(e)}
+                                                                                        style={{border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}
+                                                                                        type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>
+                                                                                </div>
+
+                                                                            </div> : <div></div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
 
 
                                         </Drawer>

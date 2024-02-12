@@ -21,14 +21,24 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
 
 
     const [prescriptions, setPrescriptions] = useState([])
+    const [allPrescriptions, setAllPrescriptions] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const [addDeleteState, setAddDeleteState] = useState(1)
     const [prescriptionPerPage, setPrescriptionPerPage] = useState(3)
     const [itemsLength, setItemsLength] = useState(0)
     const [showAll, setShowAll] = useState(false)
+
+
     const showModal = (data) => {
         setIsModalOpen(data??{});
+        postResource('prescriptions','single', token,  '', {
+            patient: patientId,
+            actual: 1,
+        }
+    ).then((response) => {
+        setAllPrescriptions(response?.items)
+    })
     };
 
     const handleCancel = () => {
@@ -104,7 +114,7 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
             }
 
             <Modal className={'medications_modal'} width={752} title="Add medication" footer={false} open={isModalOpen} onCancel={handleCancel}>
-                <AddMedications key={Math.random()} handleCancel={handleCancel} setIsModalOpen={setIsModalOpen} data={isModalOpen} prescriptions={prescriptions} setAddDeleteState={setAddDeleteState}/>
+                <AddMedications key={Math.random()} handleCancel={handleCancel} setIsModalOpen={setIsModalOpen} data={isModalOpen} prescriptions={allPrescriptions} setAddDeleteState={setAddDeleteState}/>
             </Modal>
 
         </div>

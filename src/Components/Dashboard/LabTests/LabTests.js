@@ -7,6 +7,7 @@ import Resource from "../../../store/Resources";
 import ColorSelect from "../../Fragments/ColorSelect";
 import PermCheck from "../../Fragments/PermCheck";
 
+
 const resource='LabTest'
 function LabTests() {
     return(
@@ -16,6 +17,7 @@ function LabTests() {
                                delete: PermCheck(`LabTest:delete`) ? false : true,
                                edit: PermCheck(`LabTest:update`) ? false : true
                            }}
+                           exportDatabase={true}
                            tableColumns={[
                 {
                     title:'ID',

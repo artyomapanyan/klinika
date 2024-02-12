@@ -112,12 +112,16 @@ function DoctorProfile() {
             }
 
             updateResource(resource, '', values, token, true).then(response => {
+
                 if(response?.id){
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 2000)
 
                 }
             }).finally(() => {
                 setSaveLoading(false)
-                window.location.reload()
+
             })
 
         }).catch((c) => {

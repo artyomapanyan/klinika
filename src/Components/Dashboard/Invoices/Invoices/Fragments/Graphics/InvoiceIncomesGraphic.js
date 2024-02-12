@@ -21,7 +21,7 @@ function InvoiceIncomesGraphic() {
 	useEffect(() => {
 		setLoading(true)
 		postResource(
-			role === 'clinic-owner' ? 'ClinicOwner' : 'ClinicManager',
+			'InvoicesCharts',
 			'MonthlyIncomes',
 			token,
 			null,

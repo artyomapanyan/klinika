@@ -69,7 +69,7 @@ function AppPaymentMethods({
 										>
 											<div style={{height: 24,display: 'flex', alignItems: 'center'}}>
 												{
-													item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{width: 25}} /> : <PayCircleOutlined />
+													item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{height: 30}} /> : <PayCircleOutlined />
 												}
 
 

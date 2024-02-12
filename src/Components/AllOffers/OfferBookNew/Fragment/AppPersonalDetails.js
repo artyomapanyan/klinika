@@ -420,7 +420,7 @@ function AppPersonalDetails({
 											/>
 											<FormInput
 												inputDisabled={verifyResponse?.patient?.email}
-												label={'Email'}
+												label={t('Email')}
 												name={'email'}
 												initialValue={verifyResponse?.patient?.email}
 												onChange={(event) => {

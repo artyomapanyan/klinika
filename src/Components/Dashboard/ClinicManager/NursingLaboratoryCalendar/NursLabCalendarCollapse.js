@@ -20,7 +20,6 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
 
 
 
-
     return(
         <>
             <tbody>
@@ -32,17 +31,17 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
                     </Button>
                 </td>
                 {Object.keys(item?.availability??{}).map((key, k)=>   {
-                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || item?.availability[key] === null ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key] === null ? null : () => setSelectedDate(key)}>
+                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null ? null : () => setSelectedDate(key)}>
 
-                        <div className={"progressPurple"} style={{background: item.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
+                        <div className={"progressPurple"} style={{background: !item.availability[key]?.available ? 'url('+gray_grid+')' : '#6DAF5620'}}>
 
                             <div className="progress-bar "
                                  role="progressbar"
-                                 style={{width: item.availability[key]+'%', background: item.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF56'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
+                                 style={{width: item.availability[key]?.percentage+'%', background: item.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF56'}} aria-valuenow={item.availability[key]} aria-valuemin="0"
                                  aria-valuemax="100">
                             </div>
                             {
-                                item.availability[key] === null ? <div ></div> : <div className="progressText">{item.availability[key]?.toFixed()}%</div>
+                                item.availability[key]?.percentage === null ? <div ></div> : <div className="progressText">{item.availability[key]?.percentage?.toFixed()}%</div>
                             }
 
                         </div>

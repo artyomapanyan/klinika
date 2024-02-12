@@ -302,6 +302,7 @@ function ResourceTable ({
     }
 
     const importChange = (e) => {
+
         setImportFile(e.target.files[0])
 
     }
