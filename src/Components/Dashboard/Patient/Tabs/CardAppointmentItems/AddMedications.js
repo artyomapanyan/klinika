@@ -23,7 +23,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
     }
 
     const onFinish = (values) => {
-        console.log(values)
+
         setSaveLoading(true)
         values.appointment_id = params.id
         if (data.id) {
@@ -103,8 +103,14 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                             {required: true},
                             {
                                 validator:(rule,value)=>{
-                                    if(+(value?.slice(0, 3)) > 120){
-                                        return Promise.reject('The frequency may not be greater than 120.')
+                                    if(typeof value === 'string') {
+                                        if(+(value?.slice(0, 3)) > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
+                                    } else {
+                                        if(value > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
                                     }
                                     return Promise.resolve();
                                 }
@@ -182,13 +188,20 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                     </div>
 
                     <div style={{width: '25%'}} className={'patient_card_medication_errors'}>
-                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue='0' inputType={'number'} rules={[
+                        <FormInput label={t('Gap, days')} name={'gap'} inputDisabled={prescriptions?.length < 1} initialValue={data?.gap ? data?.gap : '0'} inputType={'number'} rules={[
                             {required: false},
                             {
                                 validator:(rule,value)=>{
-                                    if(+(value?.slice(0, 3)) > 120){
-                                        return Promise.reject('The gap may not be greater than 120.')
+                                    if(typeof value === 'string') {
+                                        if(+(value?.slice(0, 3)) > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
+                                    } else {
+                                        if(value > 120){
+                                            return Promise.reject('The gap may not be greater than 120.')
+                                        }
                                     }
+
                                     return Promise.resolve();
                                 }
                             }
@@ -205,7 +218,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
 
                 <div style={{borderBottom: '1px dashed #e6e8eb', marginLeft: 6, marginRight: 6, marginTop: -10}}></div>
 
-                <div className={'reminders'}>Reminers</div>
+                <div className={'reminders'}>Reminders</div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div className={'times_big_div'}>
                         <div className={'morning_div'}>{t('Morning')}</div>

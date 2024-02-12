@@ -40,7 +40,6 @@ function ShowAppointment() {
         });
     };
 
-
     const handleExportPDF =()=>{
         setPdfState(true)
         axios.request({

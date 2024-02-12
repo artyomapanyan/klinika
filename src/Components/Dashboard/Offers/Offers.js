@@ -24,6 +24,7 @@ function Offers() {
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = (record) => {
+
         navigator.clipboard.writeText(record?.deep_link)
         messageApi.open({
             type: 'success',
@@ -118,7 +119,7 @@ function Offers() {
                                    title:t('Copy link'),
                                    key:'deep_link',
                                    render:(e,record)=> {
-                                       console.log(record)
+
                                        return <div onClick={()=>success(record)} style={{cursor: 'pointer', margin: '0px 22px'}}>
                                            <CopyOutlined style={{color: '#ce4e99', fontSize: 20}}/>
                                            {contextHolder}

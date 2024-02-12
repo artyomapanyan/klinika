@@ -19,7 +19,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
     }
 
 
-    console.log(item)
+
     return(
         <>
             <tbody>
