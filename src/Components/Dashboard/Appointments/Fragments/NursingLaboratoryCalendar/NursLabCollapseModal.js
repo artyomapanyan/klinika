@@ -9,8 +9,6 @@ import {t} from "i18next";
 import {UserOutlined} from "@ant-design/icons";
 import FormInput from "../../../../Fragments/FormInput";
 import clinic_man_user_icon from "../../../../../dist/icons/clinic_man_user_icon.png";
-import NursLabDrawerSmall from "./NursLabDrawerSmall";
-import NursLabDrawerLarge from "./NursLabDrawerLarge";
 
 function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate, setUpdate}) {
     let language = useSelector((state) => state?.app?.current_locale);
@@ -612,23 +610,6 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
 
             </div>
-
-
-            <Drawer size={size} title={t("Add User")} placement="right" onClose={() => setOpen(false)} open={open}>
-                {
-                    size === "default" ?
-                        <NursLabDrawerSmall setData={setData} data={data}  specialty={specialty}
-                                                          handleCreateAppointment={handleCreateAppointment}
-                                            finishLoading={finishLoading}
-                                                          openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
-                        <NursLabDrawerLarge setData={setData} data={data}  specialty={specialty}
-                                            finishLoading={finishLoading}
-                                                          handleCreateAppointment={handleCreateAppointment}
-                                                          setOpen={setOpen} openDrawer={openDrawer}/>
-                }
-
-
-            </Drawer>
 
         </div>
     )

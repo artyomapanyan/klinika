@@ -580,12 +580,22 @@ function Appointment() {
 								</Col>) : null
 }
 							</Row>
+							<Row>
+								{
+									data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
+									data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
+									<Col lg={24} className="gutter-row">
+										<FormInput label={t('Visit Address')} name={'address1'} 
+										rules={[{required: true, message: 'Please enter visit address'}]}/>
+									</Col> : <div></div>  
+								}
+							</Row>
 						</Form>
 						{data?.service_type ? (
 							data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit' ? (
 								<NursLabCalendar selectedService={data?.service_type}/>
 							) : (
-								data?.specialty_id? <AppointmentCalendar selectedSpeciality={data?.specialty_id}/> : null
+								data?.specialty_id? <AppointmentCalendar appointMentObj={data} setAppointMentObj={setData}/> : null
 							)
 						) : null}
 						<Space className={'create_apdate_btns'}>

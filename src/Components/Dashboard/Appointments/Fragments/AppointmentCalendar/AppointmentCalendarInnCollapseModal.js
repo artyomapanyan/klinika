@@ -1,61 +1,38 @@
-import {Avatar, Button, Drawer, Form, Space, Radio, Input} from "antd";
-import {UserOutlined} from "@ant-design/icons";
-import React, {useEffect, useRef, useState} from "react";
-import AppointmentCalendarDrawerSmall from "./AppointmentCalendarDrawerSmall";
-import AppointmentCalendarDrawerLarge from "./AppointmentCalendarDrawerLarge";
-import dayjs from "dayjs";
-import Resources from "../../../../../store/Resources";
-import {postResource} from "../../../../Functions/api_calls";
-import {useSelector} from "react-redux";
+import { Avatar, Form, Space, Radio, Button } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import React, { useEffect, useRef, useState } from 'react'
+import dayjs from 'dayjs'
+import Resources from '../../../../../store/Resources'
+import { postResource } from '../../../../Functions/api_calls'
+import { useSelector } from 'react-redux'
 
-import FormInput from "../../../../Fragments/FormInput";
-import {t} from "i18next";
-import Preloader from "../../../../Preloader";
-import {getServiceTypes} from "../../../../../functions";
-import clinic_man_user_icon from "../../../../../dist/icons/clinic_man_user_icon.png";
+import FormInput from '../../../../Fragments/FormInput'
+import { t } from 'i18next'
+import Preloader from '../../../../Preloader'
 
-function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, clinicID, speciality_id, clinic,setSelectedDate, setUpdate}) {
-    let language = useSelector((state) => state?.app?.current_locale);
-    let statusCode = useSelector((state) => state?.statusCode);
-    const {doctor} = docItem;
-    const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [finishLoading, setFinishLoading] = useState(false);
-    const [size, setSize] = useState();
-    const [times, setTimes] = useState([]);
-    const [noTimes, setNoTimes] = useState(false);
-    const [data, setData] = useState({});
-    const formRef = useRef();
-    let token = useSelector((state) => state.auth.token);
-    let inputRef_1 = useRef();
-    let inputRef_2 = useRef();
-    let inputRef_3 = useRef();
-    let inputRef_4 = useRef();
-    const [inputValues, setInputValues] = useState(['', '', '', '']);
-    const [codeAndPhone, setCodeAndPhone] = useState({
-        phone_country_code: 966,
-        phone_number: null
-    });
-    const [sendCodeState, setSendCodeState] = useState(false);
-    const [overAllState, setOverAllState] = useState('');
-    const [verifyPatient, setVerifyPatient] = useState({});
-    const [servisTypeAndTime, setServisTypeAndTime] = useState({});
-    const [loading403, setLoading403] = useState(false);
-    const [availableServices, setAvailableServices] = useState([]);
-    const [loadingAvailableServices, setLoadingAvailableServices] = useState(false);
-    const [addressValue, setAddressValue] = useState('');
-
-
-
+function AppointmentCalendarInnCollapseModal({
+	doctor,
+	specialty,
+	selectedDate,
+    setSelectedDate,
+	appointMentObj,
+	setAppointMentObj
+}) {
+	let language = useSelector(state => state?.app?.current_locale)
+	const [loading, setLoading] = useState(false)
+	const [times, setTimes] = useState([])
+	const [noTimes, setNoTimes] = useState(false)
+	const formRef = useRef()
+	let token = useSelector(state => state.auth.token)
 
     useEffect(() => {
 
-        if(data.service_type){
-            if(data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit') {
+        if(appointMentObj.service_type){
+            if(appointMentObj?.service_type === 'nursing' || appointMentObj?.service_type === 'laboratory_clinic_visit' || appointMentObj?.service_type === 'laboratory_home_visit') {
                 setLoading(true)
-                postResource('Clinic', 'ClinicsAvailableTimes', token, clinicID, {
+                postResource('Clinic', 'ClinicsAvailableTimes', token, appointMentObj.clinic_id, {
                     date: selectedDate,
-                    service: data.service_type,
+                    service: appointMentObj.service_type,
                 }).then(response => {
                     setLoading(false)
                     setTimes(response.flat())
@@ -64,8 +41,8 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                 })
             } else {
                 setLoading(true)
-                postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
-                    service: data.service_type,
+                postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, doctor.id + "/" + appointMentObj.clinic_id, {
+                    service: appointMentObj.service_type,
                     date: selectedDate
                 }).then(response => {
                     setLoading(false)
@@ -76,490 +53,130 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
         }
 
-    }, [selectedDate, docItem,data.service_type])
-
-
-
-    const openDrawer = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code', 'address1']).then(e => {
-            setOpen(true);
-            setSize('default');
-        }).catch((c) => {
-
-        })
-
-    }
-
-    const openLargeDrawer = () => {
-        setOpen(true);
-        setSize('large');
-    }
-
-    const searchByNumber = (item, name) => {
-
-        if(item?.name === null) {
-            name = <div  style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px'}}>
-                <div>Registered | App</div>
-                <div>{codeAndPhone?.phone_country_code} {codeAndPhone?.phone_number}</div>
-            </div>
-            let searchData = item.phone_number + item.email;
-            return [name, item, searchData]
-        } else {
-
-            name = <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px'}}>
-                <div>{item.first} {item.last}</div>
-                <div>+{item.phone_country_code}{item.phone_number}</div>
-            </div>
-            let searchData = item.phone_number + item.email;
-            return [name, item, searchData]
-        }
-
-
-    }
-
-
-
-
-
-
-    const handleCreateAppointment = (values, additional) => {
-        setFinishLoading(true)
-
-        postResource('Appointment', 'create', token, '', {
-            ...values,
-            ...(additional ?? {}),
-            ...data,
-            speciality_id,
-            clinic_id: clinicID,
-            doctor_id: doctor.id,
-            booked_at: dayjs(selectedDate + ' ' + values.time).format('YYYY-MM-DD HH:mm')
-
-        }).then(e => {
-            if(e.id){
-                setOpen(false)
-                setSize(false)
-                setFinishLoading(false)
-                setSelectedDate(false)
-                setDate((prevState)=>prevState)
-                setUpdate((prevState) =>prevState+1)
-            }
-
-        }).finally(()=>{
-            setFinishLoading(false)
-        })
-
-    }
-
-
-    const handleCreateNewApp = (values) => {
-        setLoading403(true)
-        if(data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit') {
-            postResource('Appointment', 'create', token, '', {
-                patient_id: verifyPatient?.patient?.id,
-                service_type: servisTypeAndTime?.service_type,
-                specialty_id: speciality_id,
-                clinic_id: clinicID,
-                doctor_id: doctor.id,
-                address1: addressValue,
-                booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
-
-            }).then(e => {
-                if(e.id){
-                    setOpen(false)
-                    setSize(false)
-                    setLoading403(false)
-                    setSelectedDate(false)
-                    setDate((prevState)=>prevState)
-                    setUpdate((prevState) =>prevState+1)
-                }
-
-            }).finally(()=>{
-                setLoading403(false)
-            })
-        } else {
-            postResource('Appointment', 'create', token, '', {
-                patient_id: verifyPatient?.patient?.id,
-                service_type: servisTypeAndTime?.service_type,
-                specialty_id: speciality_id,
-                clinic_id: clinicID,
-                doctor_id: doctor.id,
-                booked_at: dayjs(selectedDate + ' ' + servisTypeAndTime?.time).format('YYYY-MM-DD HH:mm')
-
-            }).then(e => {
-                if(e.id){
-                    setOpen(false)
-                    setSize(false)
-                    setLoading403(false)
-                    setSelectedDate(false)
-                    setDate((prevState)=>prevState)
-                    setUpdate((prevState) =>prevState+1)
-                }
-
-            }).finally(()=>{
-                setLoading403(false)
-            })
-        }
-
-
-    }
-
-    const handleMapItems = (item, name) => {
-        name = item.phone_code ? `(${item.phone_code}) ${item.name}` : null
-        item.id = item.phone_code
-        return [name, item]
-    }
-
-    const numInput = (e, i) => {
-        let myVal = e.target.value;
-        let myRefs = [inputRef_1,inputRef_2,inputRef_3,inputRef_4];
-        inputValues[i-1] = myVal;
-        if(i < 4 && myVal !== ''){
-            inputValues[i] = '';
-        }
-        setInputValues([...inputValues]);
-
-        if(i < 4 && myVal !== '') {
-            myRefs[i].current.focus();
-        }
-        let overAll = inputValues.every((val)=>{
-            return val !== '';
-        });
-        if(overAll){
-
-        }
-
-        setOverAllState(overAll)
-
-
-
-    }
-
-
-
-    const onSendCode = () => {
-        formRef?.current?.validateFields(['time', 'service_type', 'phone_country_code', 'address1']).then(e => {
-            setLoading(true)
-
-            postResource('PatientsVerificationCode', 'PatientsPhoneVerify', token, '', codeAndPhone).then((response) => {
-
-                setLoading(false)
-                setSendCodeState(true)
-            })
-        }).catch((c) => {
-
-        })
-
-    }
-
-    const onVerify = () => {
-        setLoading(true)
-        let verifyString = ''+inputValues[0]+inputValues[1]+inputValues[2]+inputValues[3]
-
-
-        postResource('PatientsVerificationCode', 'PatientCodeVerify', token, '', {
-            phone_country_code: codeAndPhone?.phone_country_code,
-            phone_number: codeAndPhone?.phone_number,
-            clinic_id: clinicID,
-            code: verifyString
-        }).then((response) => {
-            setVerifyPatient(response)
-            setLoading(false)
-            setSendCodeState(true)
-
-        })
-
-    }
-    const onRadioChange = (e) => {
-
-        setServisTypeAndTime(prevState => ({
-            ...prevState,
-            time: e?.target?.value
-        }))
-
-        if(data?.phone_country_code?.includes('966')) {
-            setData(prevState => ({
-                ...prevState,
-                phone_country_code: prevState?.phone_country_code?.slice(prevState?.phone_country_code?.indexOf('(')+1, prevState?.phone_country_code?.indexOf(')'))
-            }))
-        }
-
-
-    }
-
-
-    useEffect(() => {
-        setLoadingAvailableServices(true)
-
-        let serviceTypes = getServiceTypes(clinic.services).filter((el) => {
-            return el.id !== 'laboratory_clinic_visit' && el.id !== 'nursing' && el.id !== 'laboratory_home_visit'
-        })
-
-
-
-        Promise.all(serviceTypes?.map((callableDay, i) => {
-            return postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, docItem?.doctor.id + "/" + clinicID, {
-                service: callableDay.id,
-                date: selectedDate
-            }).then((response) => {
-                return {
-                    id: callableDay.id,
-                    name: callableDay?.name,
-                    hasDays: response,
-                }
-            })
-
-        })).then(responses => {
-            let filterResponses = responses?.flat()?.filter((e) => {
-                return e?.hasDays?.length > 0 || e?.hasDays?.flat()?.length > 0
-            })
-
-            setAvailableServices(filterResponses)
-            setLoadingAvailableServices(false)
-        })
     }, [])
 
 
+	const handleCreateAppointment = (values) => {
+        setAppointMentObj(prevState => ({
+			...prevState,
+			booked_at: dayjs(selectedDate + ' ' + values.time).format(
+				'YYYY-MM-DD HH:mm'
+			),
+            offer_id: values.offer_id? values.offer_id : null,
+            doctor_id: doctor?.id
+		}))
+        setSelectedDate(false);
+        console.log(appointMentObj)
+	}
 
+	return (
+		<div
+			className={
+				language === 'ar'
+					? 'clinic_manager_modal_big_div'
+					: 'clinic_manager_modal_big_div_en'
+			}
+		>
+			<Form ref={formRef} onFinish={handleCreateAppointment}>
+				<Space>
+					<h1 className={'cl_manager_calendar_modal_head'}>
+						{dayjs(selectedDate).format('DD MMMM')}
+					</h1>
+					<h1 style={{ fontSize: 24, fontWeight: 300 }}>
+						{Resources.Days[dayjs(selectedDate).day()]}
+					</h1>
+				</Space>
+				<div>
+					<Space style={{ marginBottom: '20' }}>
+						<Avatar
+							size={56}
+							src={doctor?.avatar?.url}
+							icon={<UserOutlined />}
+						/>
+						<div style={{ display: 'block' }}>
+							<div className={'cl_manager_modal_dr_name'}>
+								{doctor.first} {doctor.last}
+							</div>
+							<div className={'cl_manager_modal_stecialty_name'}>
+								{specialty}
+							</div>
+						</div>
+						<br></br>
+						<br></br>
+						<br></br>
+					</Space>
+				</div>
+				<div>
+					{loading ? (
+						<Preloader />
+					) : times.length ? (
+						<Form.Item
+							name={'time'}
+							rules={[
+								{
+									required: true
+								}
+							]}
+						>
+							<Radio.Group
+								className={'hours_select_cl_manager_modal'}
+								options={times.map(e => ({
+									label: dayjs('2023-10-10' + e).format('h:mmA'),
+									value: e
+								}))}
+								optionType='button'
+								buttonStyle='solid'
+							/>
+						</Form.Item>
+					) : (
+						<div></div>
+					)}
+					{noTimes[0]?.length < 1 || noTimes?.length < 1 ? (
+						<div
+							align={'center'}
+							style={{
+								width: '100%',
+								fontSize: 20,
+								marginTop: 20,
+								marginBottom: 20,
+								fontWeight: 500,
+								color: '#F3A632'
+							}}
+						>
+							{t('There are no available times')}
+						</div>
+					) : (
+						<div></div>
+					)}
+				</div>
 
-    return (
-        <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
-            {
-                !selectedDate ? <Preloader/> : <Form ref={formRef} onValuesChange={(e, v) => setData(v)} onFinish={handleCreateAppointment}>
-                    <Space >
-                        <h1 className={'cl_manager_calendar_modal_head'}>{dayjs(selectedDate).format('DD MMMM')}</h1>
-                        <h1 style={{fontSize: 24, fontWeight: 300}}>{Resources.Days[dayjs(selectedDate).day()]}</h1>
-                    </Space>
-                    <div>
-                        {loading ? <Preloader/> : times.length?<Form.Item name={'time'} rules={[
-                            {
-                                required: true,
-                            }
-                        ]
-                        }>
-                            <Radio.Group
-                                onChange={onRadioChange}
-                                className={'hours_select_cl_manager_modal'}
-                                options={times.map(e => ({
-                                    label: dayjs('2023-10-10' + e).format('h:mmA'),
-                                    value: e
-                                }))}
-                                optionType="button"
-                                buttonStyle="solid"
-                            />
-                        </Form.Item>: <div></div>}
-                        {
-                            noTimes[0]?.length < 1 || noTimes?.length < 1 ? <div align={'center'} style={{width:'100%', fontSize: 20, marginTop:20, marginBottom: 20, fontWeight: 500, color: '#F3A632'}}>{t('There are no available times')}</div> :
-                                <div></div>
-                        }
-                    </div>
-                    <div>
-                        <Space>
-                            <Avatar size={56} src={doctor?.avatar?.url} icon={<UserOutlined/>}/>
-                            <div style={{display: "block"}}>
-                                <div className={'cl_manager_modal_dr_name'}>{doctor.first} {doctor.last}</div>
-                                <div className={'cl_manager_modal_stecialty_name'}>{specialty}</div>
-                            </div>
-                        </Space>
-                    </div>
+				<FormInput
+					label={t('Offers')}
+					name={'offer_id'}
+					inputType={'resourceSelect'}
+					initialValue={null}
+					initialData={[]}
+					resourceParams={{
+						clinic: appointMentObj.clinic_id,
+						status: 2,
+						approved: 1,
+						doctor: doctor.id,
+						for_date: selectedDate
+					}}
+					resource={'Offer'}
+				/>
+				<Button
+					type={'primary'}
+					htmlType={'submit'}
+					style={{ width: '100%', height: '44px' }}
+				>
+					{t('Save')}
+				</Button>
+			</Form>
 
-                    {
-                        loadingAvailableServices ? <Preloader small={30}/> : <div style={{marginTop: 20}}>
-                            <FormInput label={t('Service Type')} name={'service_type'}
-                                       inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={null}
-                                       inputProps={{
-                                           onChange:(e)=> setServisTypeAndTime(prevState => ({
-                                               ...prevState,
-                                               service_type: e
-                                           }))
-                                       }}
-                                       initialData={availableServices}/>
-                        </div>
-                    }
-                
-                    {
-                        !sendCodeState ? <div  style={{marginTop: 20}}>
-                    
-                            <Form.Item name={'specialty_id'} hidden={true} initialValue={speciality_id}/>
-                            {
-                                data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
-                                data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
-                                    <FormInput onChange={(e)=>{
-                                        setAddressValue(e?.target?.value)
-                                        if(data?.phone_country_code?.includes('966')) {
-                                            setData(prevState => ({
-                                                ...prevState,
-                                                phone_country_code: '966'
-                                            }))
-                                        }
-                                    }} label={t('Visit Address')} name={'address1'} rules={[{
-                                        required: true,
-                                        message: 'Please enter visit address'
-                                    }]}/> : <div></div>
-                            }
-                            <FormInput label={t('Offers')} name={'offer_id'}
-                                       inputType={'resourceSelect'}
-                                       initialValue={null}
-                                       initialData={[]}
-                                       resourceParams={{
-                                           clinic: clinicID,
-                                           status: 2,
-                                           approved: 1,
-                                           doctor: docItem?.doctor.id,
-                                           for_date: selectedDate
-
-                                       }}
-                                       inputProps={{
-                                           onChange: (e) => {
-                                               if(data?.phone_country_code?.includes('966')) {
-                                                   setData(prevState => ({
-                                                       ...prevState,
-                                                       phone_country_code: '966'
-                                                   }))
-                                               }
-                                           }
-                                       }}
-                                       resource={'Offer'}/>
-
-                            <FormInput label={t('Country Code')} name={'phone_country_code'}
-                                       inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.appointment?.patient?.phone_country_code ? data?.appointment?.patient?.phone_country_code : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
-                                       handleMapItems={handleMapItems}
-                                       customSearchKey={'phone_code'}
-                                       inputProps={{
-                                           onChange:(e)=> setCodeAndPhone(prevState => ({
-                                               ...prevState,
-                                               phone_country_code: e
-                                           }))
-                                       }}
-                                       resource={'Country'}/>
-
-                            <FormInput label={t('Select Patient (Search By phone number)')} name={'patient_id'}
-                                       suffixIcon={<img src={clinic_man_user_icon} alt={'clinic_man_user_icon'} />}
-                                       inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       searchConfigs={{minLength: 4}}
-                                       initialValue={null}
-                                       //disabled={!data?.phone_country_code}
-
-
-                                       inputProps={{
-                                           // onChange:(e, data)=> setCodeAndPhone(prevState => ({
-                                           //     ...prevState,
-                                           //     phone_number: data[0]?.phone_number
-                                           // })),
-                                           onSearch: (e)=> setCodeAndPhone(prevState => ({
-                                               ...prevState,
-                                               phone_number: e
-                                           })),
-
-                                           notFoundContent:  <div
-                                               style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                                               <div>{t('Not found')}</div>
-                                               <Button type={'secondary'} style={{border: "none"}}  onClick={openDrawer}>{t('Create new')}</Button></div>
-                                       }}
-                                       resourceParams={{
-                                           phone_country_code: data?.phone_country_code ? data?.phone_country_code?.length > 3 ? data?.phone_country_code?.slice(data?.phone_country_code?.indexOf('(')+1, data?.phone_country_code?.indexOf(')')) : data?.phone_country_code : '966',
-                                           clinic_id: clinicID
-                                       }}
-                                       initialData={[]}
-                                       handleMapItems={(item, name, status) => searchByNumber(item, name, status)}
-                                       handleStatus={true}
-                                       customSearchKey={'phone_number'}
-
-                                       resource={'PatientSearch'}/>
-
-                        </div> : <div></div>
-                    }
-
-
-
-
-                    {statusCode !== 403 ? data?.patient_id && <Button type={'primary'} htmlType={'submit'}
-                                                               loading={finishLoading}
-                                                               style={{width: '100%', height: '44px'}}>{t("Book")}</Button> : <div></div>}
-
-
-                    {
-                        statusCode === 403 ? !sendCodeState ? data?.patient_id && <Button type={'primary'}
-                                                    onClick={onSendCode}
-                                                    loading={loading}
-                                                    style={{width: '100%', height: '44px', fontSize: 16, fontWeight: 700}}>{t("Send request")}</Button> : <div></div> : <div></div>
-                    }
-
-
-
-
-                </Form>
-
-            }
-
-            <div>
-
-                {
-                    sendCodeState ? verifyPatient?.patient ? <div style={{marginTop: 24}}>
-                        <Space>
-                            <Avatar size={56} src={''} icon={<UserOutlined/>}/>
-                            <div style={{display: "block"}}>
-                                <div className={'cl_manager_modal_dr_name'}>{verifyPatient?.patient?.first} {verifyPatient?.patient?.last}</div>
-                                <div className={'cl_manager_modal_stecialty_name'}>{verifyPatient?.patient?.email}</div>
-                                <div className={'cl_manager_modal_stecialty_name'}>{verifyPatient?.patient?.phone_country_code} {verifyPatient?.patient?.phone_number}</div>
-                            </div>
-                        </Space>
-                        <Button onClick={handleCreateNewApp} loading={loading403} type={'primary'} htmlType={'submit'} style={{width: '100%', height: '44px', marginTop:24}}>{t("Book")}</Button>
-                    </div> : <Form className={"verify_form"}>
-                <div style={{backgroundColor: '#774D9B', marginTop:36, borderRadius: 4, padding: 12, color: '#ffffff', fontWeight: 400, fontSize: 14}}>
-                    {t('This user already registered in KLINIKA system. App sent request for permissions to personal \n' +
-                        '                            information. Please enter code from user or wait when user accept your request in app')}
-
-                </div>
-                <div style={{display: 'flex', justifyContent: "center", gap: 16, width: '100%', marginTop: 24}}>
-                    <Input value={inputValues[0]} ref={inputRef_1} className={'clinic_manager_verify_inputs'} onInput={(e)=>numInput(e, 1)} maxLength={1} name='code'   required/>
-                    <Input value={inputValues[1]} ref={inputRef_2} className={'clinic_manager_verify_inputs'} maxLength={1} onInput={(e)=>numInput(e, 2)} name='code' required/>
-                    <Input value={inputValues[2]} ref={inputRef_3} className={'clinic_manager_verify_inputs'} maxLength={1} onInput={(e)=>numInput(e, 3)} name='code'  required/>
-                    <Input value={inputValues[3]} ref={inputRef_4} className={'clinic_manager_verify_inputs'}  name='code' maxLength={1} onInput={(e)=>numInput(e, 4)}  required/>
-
-                </div>
-                <div style={{ marginTop: 24}}>
-                    {t("Client didn't get a message")}? <span onClick={onSendCode} style={{color: '#BF539E', fontWeight: 700, cursor: 'pointer'}}>{t('Resend')}</span>
-                </div>
-                        {
-                            overAllState ? <Button style={{width: '100%', marginTop:24}} type={'primary'} onClick={onVerify}>{t('Verify')}</Button> : <div></div>
-                        }
-
-                <Button style={{width: '100%', marginTop:5}} type={'secondary'} onClick={() => setSelectedDate(false)}>{t('Cancel')}</Button>
-
-                    </Form> : <div></div>
-                }
-
-
-
-
-            </div>
-
-
-            <Drawer size={size} title={t("Add User")} placement="right" onClose={() => setOpen(false)} open={open}>
-                {
-                    size === "default" ?
-                        <AppointmentCalendarDrawerSmall setData={setData} data={data} doctor={doctor} specialty={specialty}
-                                                          handleCreateAppointment={handleCreateAppointment}
-                                                          finishLoading={finishLoading}
-                                                          setFinishLoading={setFinishLoading}
-                                                          openLargeDrawer={openLargeDrawer} setOpen={setOpen}/> :
-                        <AppointmentCalendarDrawerLarge setData={setData} data={data} doctor={doctor} specialty={specialty}
-                                                          handleCreateAppointment={handleCreateAppointment}
-                                                          finishLoading={finishLoading}
-                                                          setFinishLoading={setFinishLoading}
-                                                          setOpen={setOpen} openDrawer={openDrawer}/>
-                }
-
-
-            </Drawer>
-
-        </div>
-    )
+			<div></div>
+		</div>
+	)
 }
 
-export default CalendarInnCollapseModal;
+export default AppointmentCalendarInnCollapseModal

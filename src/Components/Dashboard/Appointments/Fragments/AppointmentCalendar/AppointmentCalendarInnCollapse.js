@@ -1,71 +1,102 @@
-import {Avatar, Modal} from "antd";
-import React, {useState} from "react";
-import CalendarInnCollapseModal from "./AppointmentCalendarInnCollapseModal";
-import dayjs from "dayjs";
-import gray_grid from "../../../../../dist/icons/gray_grid.png";
+import { Avatar, Modal } from 'antd'
+import React, { useState } from 'react'
+import AppointmentCalendarInnCollapseModal from './AppointmentCalendarInnCollapseModal'
+import dayjs from 'dayjs'
+import gray_grid from '../../../../../dist/icons/gray_grid.png'
 
-function AppointmentCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic, setUpdate}) {
-    const [selectedDate, setSelectedDate] = useState(false);
-    let thisDate = dayjs().format('YYYY-MM-DD')
+function AppointmentCalendarInnCollapse({
+	docObj,
+	specialty,
+	appointMentObj,
+	setAppointMentObj
+}) {
+	const [selectedDate, setSelectedDate] = useState(false)
+	let thisDate = dayjs().format('YYYY-MM-DD')
 
-    return (
-        <tbody>
-        <tr id="hidden_row1" className="hide">
-
-
-            <td className="hiddenTableRow__col">
-                <div className="hiddenTableRow__col-item">
-                    <div className="circleImageHolder">
-                        <Avatar size={36}  src={docItem.doctor.avatar?.url}/>
-                    </div>
-                    <p className={'cl_manager_calendar_dr_name'}>{docItem?.doctor?.first} {docItem?.doctor?.last}</p>
-                </div>
-            </td>
-            {
-                Object.keys(docItem?.availability??{}).map((key, k) => {
-                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || !docItem.availability[key]?.available ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>
-
-                        <div className="progress progressGreen" style={{cursor: thisDate > key || !docItem.availability[key]?.available ? "" : 'pointer', background: docItem.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
-                            <div className="progress-bar progressGreen__inside"
-                                 role="progressbar"
-                                 style={{width: docItem.availability[key]?.percentage+'%', background: docItem?.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF56'}}
-                                 aria-valuenow="85" aria-valuemin="0"
-                                 aria-valuemax="100">
-                            </div>
-                            {
-                                docItem.availability[key]?.percentage === null ? <div></div> : <div className="progressText">{docItem.availability[key]?.percentage?.toFixed()}%</div>
-                            }
-
-                        </div>
-                    </td>
-                })
-            }
-            {/*{*/}
-            {/*    Object.keys(docItem?.availability??{}).map((key, k) => {*/}
-            {/*        return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || docItem.availability[key] === null ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>*/}
-
-            {/*            <div className="progress progressGreen" style={{cursor: thisDate > key || docItem.availability[key] === null ? "" : 'pointer', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>*/}
-            {/*                <div className="progress-bar progressGreen__inside"*/}
-            {/*                     role="progressbar"*/}
-            {/*                     style={{width: docItem.availability[key]+'%', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF56'}}*/}
-            {/*                     aria-valuenow="85" aria-valuemin="0"*/}
-            {/*                     aria-valuemax="100">*/}
-            {/*                </div>*/}
-            {/*                {*/}
-            {/*                    docItem.availability[key] === null ? <div></div> : <div className="progressText">{docItem.availability[key]?.toFixed()}%</div>*/}
-            {/*                }*/}
-
-            {/*            </div>*/}
-            {/*        </td>*/}
-            {/*    })*/}
-            {/*}*/}
-            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
-                {selectedDate ? <CalendarInnCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
-            </Modal>
-        </tr>
-        </tbody>
-
-    )
+	return (
+		<tbody>
+			<tr id='hidden_row1' className='hide'>
+				<td className='hiddenTableRow__col'>
+					<div className='hiddenTableRow__col-item'>
+						<div className='circleImageHolder'>
+							<Avatar size={36} src={docObj.doctor.avatar?.url} />
+						</div>
+						<p className={'cl_manager_calendar_dr_name'}>
+							{docObj?.doctor?.first} {docObj?.doctor?.last}
+						</p>
+					</div>
+				</td>
+				{Object.keys(docObj?.availability ?? {}).map((key, k) => {
+					return (
+						<td
+							key={key}
+							className='hiddenTableRow__col'
+							onClick={
+								thisDate > key || !docObj.availability[key]?.available
+									? null
+									: () => setSelectedDate(key)
+							}
+							style={{ paddingLeft: k === 0 ? 20 : 0 }}
+						>
+							<div
+								className='progress progressGreen'
+								style={{
+									cursor:
+										thisDate > key || !docObj.availability[key]?.available
+											? ''
+											: 'pointer',
+									background:
+										docObj.availability[key]?.percentage === null
+											? 'url(' + gray_grid + ')'
+											: '#6DAF5620'
+								}}
+							>
+								<div
+									className='progress-bar progressGreen__inside'
+									role='progressbar'
+									style={{
+										width: docObj.availability[key]?.percentage + '%',
+										background:
+											docObj?.availability[key]?.percentage === null
+												? 'url(' + gray_grid + ')'
+												: '#6DAF56'
+									}}
+									aria-valuenow='85'
+									aria-valuemin='0'
+									aria-valuemax='100'
+								></div>
+								{docObj.availability[key]?.percentage === null ? (
+									<div></div>
+								) : (
+									<div className='progressText'>
+										{docObj.availability[key]?.percentage?.toFixed()}%
+									</div>
+								)}
+							</div>
+						</td>
+					)
+				})}
+				<Modal
+					open={selectedDate}
+					onCancel={() => setSelectedDate(false)}
+					width={'400px'}
+					footer={null}
+				>
+					{selectedDate ? (
+						<AppointmentCalendarInnCollapseModal
+							key={Math.random()}
+							doctor={docObj?.doctor}
+							specialty={specialty}
+                            selectedDate={selectedDate}
+							setSelectedDate={setSelectedDate}
+							appointMentObj={appointMentObj}
+                            setAppointMentObj={setAppointMentObj}
+						/>
+					) : null}
+				</Modal>
+			</tr>
+		</tbody>
+	)
 }
 
-export default AppointmentCalendarInnCollapse;
+export default AppointmentCalendarInnCollapse
