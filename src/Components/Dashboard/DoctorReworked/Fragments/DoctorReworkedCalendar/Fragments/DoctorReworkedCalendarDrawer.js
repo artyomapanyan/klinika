@@ -8,6 +8,7 @@ import {getServiceTypes} from "../../../../../../functions";
 import DateTimeSelect from "./DateTimeSelect";
 import {createResource, postResource} from "../../../../../Functions/api_calls";
 import Preloader from "../../../../../Preloader";
+import dayjs from "dayjs";
 
 function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataClinic}) {
     const authRedux = useSelector((state) => state?.auth);
@@ -128,7 +129,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     }, [formState?.clinic_id])
 
 
-
+    console.log(formState)
 
     return(
         <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''} style={{height:'100vh'}}>
@@ -183,6 +184,21 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                            initialValue={null}
                            initialData={serviceTypeState}
                 />:null}
+                {
+                    formState?.service_type === 'clinic_visit' ? <FormInput label={t('Offers')} name={'offer_id'}
+                               inputType={'resourceSelect'}
+                               initialValue={null}
+                               initialData={[]}
+                               resourceParams={{
+                                    clinic: formState?.clinic_id,
+                                    status: 2,
+                                    approved: 1,
+                                    doctor: authRedux?.user?.id,
+                                    for_date: formState?.date ? formState?.date : dayjs().format('YYYY-MM-DD')
+
+                               }}
+                               resource={'Offer'}/> : null
+                }
                 {
                     formState.service_type === 'home_visit' || formState.service_type ==='physical_therapy_home_visit' ||
                     formState.service_type === 'laboratory_home_visit' || formState.service_type ==='nursing'?
