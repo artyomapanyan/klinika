@@ -1,6 +1,6 @@
 import { Avatar, Modal } from 'antd'
 import React, { useState } from 'react'
-import AppointmentCalendarInnCollapseModal from './AppointmentCalendarInnCollapseModal'
+import AppointmentCalendarModal from './AppointmentCalendarModal'
 import dayjs from 'dayjs'
 import gray_grid from '../../../../../dist/icons/gray_grid.png'
 
@@ -83,7 +83,7 @@ function AppointmentCalendarInnCollapse({
 					footer={null}
 				>
 					{selectedDate ? (
-						<AppointmentCalendarInnCollapseModal
+						<AppointmentCalendarModal
 							key={Math.random()}
 							doctor={docObj?.doctor}
 							specialty={specialty}
