@@ -87,7 +87,7 @@ function PatientCardMedications({tab, patientId}) {
 
                     acualPrescriptions?.map((el) => {
                             return <MedicationCards key={el?.id} el={el} setPrescriptions={setActualPrescriptions}
-                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState} showModal={showModal}  colWidth={8}/>
+                                                    setLoading={setLoading} setAddDeleteState={setAddDeleteState} showModal={showModal} editBtn={false} colWidth={8}/>
 
                     })
                 }
