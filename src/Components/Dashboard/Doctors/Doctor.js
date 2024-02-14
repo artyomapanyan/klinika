@@ -319,7 +319,14 @@ function Doctor() {
                                        disabled={!data?.specialties || !data?.specialties?.length}
                                        resource={'Taxonomy'}
                                        resourceParams={{
-                                           parents: data?.specialties,
+                                           parents: data?.specialties?.map((el) => {
+                                               if(el?.id){
+                                                   return el?.id
+                                               } else {
+                                                   return el
+                                               }
+
+                                           }),
                                            type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1
                             }}
                             />

@@ -355,13 +355,49 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 
+
+
+                            <FormInput inputProps={{
+                                mode:'multiple',
+                                onChange:(e,dat)=> {
+                                    setData((prevState)=>({
+                                        ...prevState,
+                                        doctors: undefined,
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    }))
+
+                                    formRef?.current?.setFieldsValue({
+                                        doctors: undefined,
+                                        category_id: undefined,
+                                        service_id: undefined,
+                                        sub_categories: undefined,
+                                        sub_services: undefined
+
+                                    })
+
+                                }
+                            }} label={t('Sub specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
+                                       disabled={!data?.specialty_id}
+                                       initialValue={data?.sub_specialties?.map(e=>e.id)}
+                                       initialData={data?.sub_specialties ??[]}
+                                       resource={'Taxonomy'}
+                                       resourceParams={{
+                                           //doctors: data?.doctors,
+                                           parent: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
+                                           type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
+                            />
+
                             <FormInput inputProps={{
                                 mode:'multiple',
                                 onChange:(e,dat)=> {
                                     setData((prevState)=>({
                                         ...prevState,
 
-                                        sub_specialties: undefined,
+
                                         category_id: undefined,
                                         service_id: undefined,
                                         sub_categories: undefined,
@@ -371,7 +407,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
 
                                     formRef?.current?.setFieldsValue({
 
-                                        sub_specialties: undefined,
+
                                         category_id: undefined,
                                         service_id: undefined,
                                         sub_categories: undefined,
@@ -392,40 +428,6 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                            specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
                                            status: 2,
                                        }}
-                            />
-
-                            <FormInput inputProps={{
-                                mode:'multiple',
-                                onChange:(e,dat)=> {
-                                    setData((prevState)=>({
-                                        ...prevState,
-                                        //doctors: undefined,
-                                        category_id: undefined,
-                                        service_id: undefined,
-                                        sub_categories: undefined,
-                                        sub_services: undefined
-
-                                    }))
-
-                                    formRef?.current?.setFieldsValue({
-                                        //doctors: undefined,
-                                        category_id: undefined,
-                                        service_id: undefined,
-                                        sub_categories: undefined,
-                                        sub_services: undefined
-
-                                    })
-
-                                }
-                            }} label={t('Sub specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
-                                       disabled={!data?.doctors || data?.doctors?.length < 1}
-                                       initialValue={data?.sub_specialties?.map(e=>e.id)}
-                                       initialData={data?.sub_specialties ??[]}
-                                       resource={'Taxonomy'}
-                                       resourceParams={{
-                                           doctors: data?.doctors,
-                                           parent: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
-                                           type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
 
 
@@ -452,7 +454,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                            }
                                        }}
                                        rules={[{required: true}]}
-                                       disabled={!data?.sub_specialties || data?.sub_specialties?.length < 1}
+                                       disabled={!data?.doctors || data?.doctors?.length < 1}
                                        initialValue={data?.category?.id}
                                        initialData={data?.category ?[data.category]:[]}
                                        resource={'Category'}/>
