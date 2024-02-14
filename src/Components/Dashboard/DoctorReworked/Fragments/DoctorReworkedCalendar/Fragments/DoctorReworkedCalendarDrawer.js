@@ -184,21 +184,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                            initialValue={null}
                            initialData={serviceTypeState}
                 />:null}
-                {
-                    formState?.service_type === 'clinic_visit' ? <FormInput label={t('Offers')} name={'offer_id'}
-                               inputType={'resourceSelect'}
-                               initialValue={null}
-                               initialData={[]}
-                               resourceParams={{
-                                    clinic: formState?.clinic_id,
-                                    status: 2,
-                                    approved: 1,
-                                    doctor: authRedux?.user?.id,
-                                    for_date: formState?.date ? formState?.date : dayjs().format('YYYY-MM-DD')
 
-                               }}
-                               resource={'Offer'}/> : null
-                }
                 {
                     formState.service_type === 'home_visit' || formState.service_type ==='physical_therapy_home_visit' ||
                     formState.service_type === 'laboratory_home_visit' || formState.service_type ==='nursing'?
@@ -275,7 +261,25 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
 
                 <DateTimeSelect formState={formState} setFormState={setFormState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 
-                <div style={{paddingTop:20}}>
+                {
+                    formState?.service_type === 'clinic_visit' ? <div style={{marginTop: 20}}>
+                        <FormInput label={t('Offers')} name={'offer_id'}
+                                   inputType={'resourceSelect'}
+                                   initialValue={null}
+                                   initialData={[]}
+                                   resourceParams={{
+                                       clinic: formState?.clinic_id,
+                                       status: 2,
+                                       approved: 1,
+                                       doctor: authRedux?.user?.id,
+                                       for_date: formState?.date ? formState?.date : dayjs().format('YYYY-MM-DD')
+
+                                   }}
+                                   resource={'Offer'}/>
+                    </div> : null
+                }
+
+                <div style={{paddingTop: formState?.service_type === 'clinic_visit' ? 0 : 20}}>
                     <Button disabled={!formState.booked_time || !date} loading={loading} className={'btn_add_entry'} htmlType={'submit'} type={'primary'}>{t('Add Entry')}</Button>
                 </div>
                 <div style={{paddingTop:10}}>
