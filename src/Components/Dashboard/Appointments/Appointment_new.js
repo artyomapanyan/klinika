@@ -11,7 +11,6 @@ import Resources from '../../../store/Resources'
 import { LeftOutlined } from '@ant-design/icons'
 import clinic_man_user_icon from '../../../dist/icons/clinic_man_user_icon.png'
 import AppointmentCalendar from './Fragments/AppointmentCalendar/AppointmentCalendar'
-import NursLabCalendar from './Fragments/NursingLaboratoryCalendar/NursLabCalendar'
 
 const resource = 'Appointment'
 
@@ -592,11 +591,7 @@ function Appointment() {
 							</Row>
 						</Form>
 						{data?.service_type ? (
-							data?.service_type === 'nursing' || data?.service_type === 'laboratory_clinic_visit' || data?.service_type === 'laboratory_home_visit' ? (
-								<NursLabCalendar selectedService={data?.service_type}/>
-							) : (
-								data?.specialty_id? <AppointmentCalendar appointMentObj={data} setAppointMentObj={setData}/> : null
-							)
+							 <AppointmentCalendar appointMentObj={data} setAppointMentObj={setData}/>
 						) : null}
 						<Space className={'create_apdate_btns'}>
 							<Button

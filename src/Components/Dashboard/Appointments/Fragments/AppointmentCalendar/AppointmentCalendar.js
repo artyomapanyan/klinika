@@ -7,6 +7,7 @@ import { postResource } from '../../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import search_icon_black from '../../../../../dist/icons/search_icon_black.png'
 import AppointmentCalendarCollapse from './AppointmentCalendarCollapse'
+import NursLabCalendarCollapse from './NursLabCalendarCollapse'
 import { t } from 'i18next'
 
 function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
@@ -19,21 +20,44 @@ function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
 	let token = useSelector(state => state.auth.token)
 	useEffect(() => {
 		setLoading(true)
-		postResource('ClinicManager', 'DoctorWorkload', token, '', {
-			from: date[0].format('YYYY-MM-DD'),
-			to: date[1].format('YYYY-MM-DD'),
-            service: appointMentObj.service_type,
-		}).then(response => {
-			setData({
-				clinic_id: response.clinic.id,
-				clinic: response.clinic,
-				workload: Object.values(response.workload).filter(
-					e => e.speciality_id === appointMentObj?.specialty_id
-				)
-			})
-			setLoading(false)
-		})
-	}, [date, appointMentObj?.specialty_id])
+		if (appointMentObj.service_type) {
+			if (
+				appointMentObj?.service_type === 'nursing' ||
+				appointMentObj?.service_type === 'laboratory_clinic_visit' ||
+				appointMentObj?.service_type === 'laboratory_home_visit'
+			) {
+				setLoading(true)
+				postResource('ClinicManager', 'ClinicWorkload', token, '', {
+					from: date[0].format('YYYY-MM-DD'),
+					to: date[1].format('YYYY-MM-DD')
+				}).then(response => {
+					setData({
+						clinic_id: response.clinic.id,
+						clinic: response.clinic,
+						workload: Object.values(response.workload).filter(
+							e => e.service === appointMentObj.service_type
+						)
+					})
+					setLoading(false)
+				})
+			} else {
+				postResource('ClinicManager', 'DoctorWorkload', token, '', {
+					from: date[0].format('YYYY-MM-DD'),
+					to: date[1].format('YYYY-MM-DD'),
+					service: appointMentObj.service_type
+				}).then(response => {
+					setData({
+						clinic_id: response.clinic.id,
+						clinic: response.clinic,
+						workload: Object.values(response.workload).filter(
+							e => e.speciality_id === appointMentObj?.specialty_id
+						)
+					})
+					setLoading(false)
+				})
+			}
+		}
+	}, [date, appointMentObj.service_type, appointMentObj?.specialty_id])
 
 	return (
 		<section className={'table_conteiner'}>
@@ -48,22 +72,28 @@ function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
 										<table className='w-100' style={{ marginTop: -10 }}>
 											<tbody>
 												<tr className='d-flex align-items-center justify-content-between w-100'>
-													<td>
-														<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
-															<Input
-																className={'search_input_clinic_man'}
-																onChange={e => setSearch(e.target.value)}
-																value={search}
-																aria-label='Search'
-																prefix={
-																	<img
-																		src={search_icon_black}
-																		alt={'search_icon_black'}
-																	/>
-																}
-															/>
-														</div>
-													</td>
+													{appointMentObj?.service_type !== 'nursing' &&
+													appointMentObj?.service_type !==
+														'laboratory_clinic_visit' &&
+													appointMentObj?.service_type !==
+														'laboratory_home_visit' ? (
+														<td>
+															<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
+																<Input
+																	className={'search_input_clinic_man'}
+																	onChange={e => setSearch(e.target.value)}
+																	value={search}
+																	aria-label='Search'
+																	prefix={
+																		<img
+																			src={search_icon_black}
+																			alt={'search_icon_black'}
+																		/>
+																	}
+																/>
+															</div>
+														</td>
+													) : null}
 													{[...Array(7).keys()].map((e, k) => {
 														return (
 															<td
@@ -94,15 +124,30 @@ function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
 												</tr>
 											</tbody>
 
-											{data.workload?.slice(0, showCount)?.map((item, key) => (
-												<AppointmentCalendarCollapse
-													key={key}
-													item={item}
-													search={search}
-													appointMentObj={appointMentObj}
-													setAppointMentObj={setAppointMentObj}
-												/>
-											))}
+											{data.workload
+												?.slice(0, showCount)
+												?.map((item, key) =>
+													appointMentObj?.service_type === 'nursing' ||
+													appointMentObj?.service_type ===
+														'laboratory_clinic_visit' ||
+													appointMentObj?.service_type ===
+														'laboratory_home_visit' ? (
+														<NursLabCalendarCollapse
+															key={key}
+															item={item}
+															appointMentObj={appointMentObj}
+															setAppointMentObj={setAppointMentObj}
+														/>
+													) : (
+														<AppointmentCalendarCollapse
+															key={key}
+															item={item}
+															search={search}
+															appointMentObj={appointMentObj}
+															setAppointMentObj={setAppointMentObj}
+														/>
+													)
+												)}
 										</table>
 										<div style={{ padding: 10, display: 'flex', gap: 10 }}>
 											{data.workload.length > showCount ? (
