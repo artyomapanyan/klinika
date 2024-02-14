@@ -129,10 +129,10 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
     }, [formState?.clinic_id])
 
 
-    console.log(formState)
+
 
     return(
-        <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : ''} style={{height:'100vh'}}>
+        <div className={lng === 'ar' ? 'dr_reworked_calendar_drawer_form' : 'dr_reworked_calendar_drawer_form_en'} style={{height:'100vh'}}>
             <Form
                 onFinish={onNewAppointment}
                 ref={formRef}
@@ -259,7 +259,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                 }
 
 
-                <DateTimeSelect formState={formState} setFormState={setFormState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
+                <DateTimeSelect formRef={formRef} formState={formState} setFormState={setFormState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 
                 {
                     formState?.service_type === 'clinic_visit' ? <div style={{marginTop: 20}}>
