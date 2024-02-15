@@ -67,14 +67,21 @@ function AppointmentCalendarModal({
 		}
 	}, [])
 
-	const handleCreateAppointment = values => {
+	const addAppointment = values => {
 		setAppointMentObj(prevState => ({
 			...prevState,
 			booked_at: dayjs(selectedDate + ' ' + values.time).format(
 				'YYYY-MM-DD HH:mm'
 			),
-			offer_id: values.offer_id ? values.offer_id : null,
-			doctor_id: doctor?.id
+			offer_id: values.offer_id, //? values.offer_id : null,
+			doctor_id: doctor?.id,
+			lab_packages: values.lab_packages? [values.lab_packages]: [],
+			lab_tests: values.lab_tests? [values.lab_tests] : [],
+			nursing_tasks: values.nursing_tasks? [values.nursing_tasks]: [],
+			//data to be deleted from the object before saving the appointment
+			doctor: doctor,
+			specialty: specialty
+
 		}))
 		setSelectedDate(false)
 		console.log(appointMentObj)
@@ -88,7 +95,7 @@ function AppointmentCalendarModal({
 					: 'clinic_manager_modal_big_div_en'
 			}
 		>
-			<Form ref={formRef} onFinish={handleCreateAppointment}>
+			<Form ref={formRef} onFinish={addAppointment}>
 				<Space>
 					<h1 className={'cl_manager_calendar_modal_head'}>
 						{dayjs(selectedDate).format('DD MMMM')}
@@ -242,7 +249,7 @@ function AppointmentCalendarModal({
 					htmlType={'submit'}
 					style={{ width: '100%', height: '44px' }}
 				>
-					{t('Save')}
+					{t('Add')}
 				</Button>
 			</Form>
 

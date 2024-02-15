@@ -1,8 +1,8 @@
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate } from 'react-router'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { postResource } from '../../Functions/api_calls'
-import { Button, Form, Space, Row, Col } from 'antd'
+import { postResource, createResource } from '../../Functions/api_calls'
+import { Button, Form, Space, Row, Col, Avatar } from 'antd'
 import { t } from 'i18next'
 import Preloader from '../../Preloader'
 import FormInput from '../../Fragments/FormInput'
@@ -11,6 +11,8 @@ import Resources from '../../../store/Resources'
 import { LeftOutlined } from '@ant-design/icons'
 import clinic_man_user_icon from '../../../dist/icons/clinic_man_user_icon.png'
 import AppointmentCalendar from './Fragments/AppointmentCalendar/AppointmentCalendar'
+import { UserOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
 
 const resource = 'Appointment'
 
@@ -38,7 +40,6 @@ function Appointment() {
 		phone_number: null
 	})
 	const [pageState, setPageState] = useState('initial')
-	const [changeValuesState, setChangeValuesState] = useState({})
 	const fetchedUsers = useRef([])
 
 	useEffect(() => {
@@ -51,6 +52,8 @@ function Appointment() {
 	useEffect(() => {
 		if (data?.patient_id === undefined) {
 			setPageState('initial')
+		} else if (data?.patient_id === null) {
+			setPageState('creation')
 		} else if (data?.patient_id === '0') {
 			setPageState('unauthorized')
 		} else {
@@ -61,14 +64,11 @@ function Appointment() {
 		return () => {}
 	}, [data?.patient_id])
 
-	const onBack = () => {
+	const goBack = () => {
 		navigate(-1)
 	}
 
-	const onFinish = values => {}
-
 	const handleValuesChange = (e, v) => {
-		//setPageState('loading')
 		setData(prevState => ({
 			...prevState,
 			...e
@@ -77,15 +77,6 @@ function Appointment() {
 			const foundUser = fetchedUsers.current?.find(i => i.id === e?.patient_id)
 			setPatient(foundUser)
 		}
-		setChangeValuesState(e)
-		if (Object.keys(e).length > 0) {
-			dispatch({
-				type: 'DASHBOARD_STATE',
-				payload: true
-			})
-		}
-		//setLo(true)
-		//setTimeout(() => {setLo(false)},500)
 	}
 
 	const searchByNumber = (item, name) => {
@@ -221,42 +212,60 @@ function Appointment() {
 	}, [data?.clinic_id])
 
 	const saveAppointment = () => {
-		appointmentFormRef.current.submit()
+		let appointment = Object.assign({}, data);
 
-		let appointment = appointmentFormRef.current.getFieldsValue()
-		if (pageState === 'selected') {
-			delete appointment?.dob
-		} else if (pageState === 'creation') {
-			patientFormRef.current.submit()
-			appointment.patient = patient
-			appointment.dob = appointment.patient.dob.format('YYYY-MM-DD')
+		if (pageState === 'creation') {
+			delete appointment.patient_id;
+			patientFormRef.current.validateFields()
+			.then(() => {
+				appointment.patient = patientFormRef.current.getFieldsValue();
+				createAppointment(appointment);
+			})
+			.catch((error) => {
+			  console.error('Validation failed:', error);
+			});
+		} else {
+			delete appointment.patient;
+			searchFormRef.current.validateFields()
+			.then(() => {
+				createAppointment(appointment);
+			})
+			.catch((error) => {
+			  console.error('Validation failed:', error);
+			});
 		}
+	}
 
-		appointment.booked_at =
-			appointment.booked_at.format('YYYY-MM-DD') +
-			' ' +
-			appointment.appointment_time
-
-		setSaveLoading(true)
-
-		if (appointment?.lab_packages) {
-			appointment.lab_packages = [appointment.lab_packages]
-		}
-
+	const createAppointment = (appointment) => {
 		console.log(appointment)
-		// createResource(resource, appointment, token)
-		// 	.then(response => {
-		// 		if (response?.id) {
-		// 			navigate(-1)
-		// 		}
-		// 	})
-		// 	.finally(() => {
-		// 		dispatch({
-		// 			type: 'DASHBOARD_STATE',
-		// 			payload: false
-		// 		})
-		// 		setSaveLoading(false)
-		// 	})
+		setSaveLoading(true)
+		createResource(resource, appointment, token)
+			.then(response => {
+				if (response?.id) {
+					goBack()
+				}
+			})
+			.finally(() => {
+				dispatch({
+					type: 'DASHBOARD_STATE',
+					payload: false
+				})
+				setSaveLoading(false)
+			})
+	}
+
+	const removeAppointment = () => {
+		setData(prevState => ({
+			...prevState,
+			booked_at: null,
+			doctor_id: null,
+			service_type: null,
+			speciality_id: null,
+			offer_id: null,
+			lab_tests: [],
+			lab_packages: [],
+			nursing_tasks: []
+		}))
 	}
 
 	return (
@@ -264,7 +273,7 @@ function Appointment() {
 			<div>
 				<Button
 					style={{ margin: '40px 24px', height: 45, width: 45 }}
-					onClick={onBack}
+					onClick={goBack}
 				>
 					<LeftOutlined />
 				</Button>
@@ -275,7 +284,6 @@ function Appointment() {
 			<Form
 				onValuesChange={handleValuesChange}
 				name='edit'
-				onFinish={onFinish}
 				layout='vertical'
 				ref={searchFormRef}
 				className={'add_create_form'}
@@ -296,21 +304,11 @@ function Appointment() {
 											onChange: (e, dat) => {
 												setData(prevState => ({
 													...prevState,
-													specialty_id: null,
-													doctor_id: null,
-													booked_at: null,
-													appointment_time: null,
-													service_type: null,
-													offer_id: null
+													service_type: null
 												}))
 
 												appointmentFormRef?.current?.setFieldsValue({
-													specialty_id: null,
-													doctor_id: null,
-													booked_at: null,
-													appointment_time: null,
-													service_type: null,
-													offer_id: null
+													specialty_id: null
 												})
 											}
 										}}
@@ -406,7 +404,10 @@ function Appointment() {
 								{pageState === 'initial' || pageState === 'creation' ? (
 									<Button
 										onClick={() => {
-											appointmentFormRef.current.resetFields(['patient_id'])
+											setData(prevState => ({
+												...prevState,
+												patient_id: null
+											}))
 											setPatient(codeAndPhone)
 											setPageState('creation')
 										}}
@@ -486,124 +487,196 @@ function Appointment() {
 				</div>
 			</Form>
 			{pageState === 'creation' || pageState === 'selected' ? (
-					<div>
-						<CreatePatient
-							data={patient}
-							setData={setPatient}
-							formRef={patientFormRef}
-						></CreatePatient>
-					</div>
-				) : (
-					<div></div>
-				)}
+				<div>
+					<CreatePatient
+						data={patient}
+						setData={setPatient}
+						formRef={patientFormRef}
+					></CreatePatient>
+				</div>
+			) : (
+				<div></div>
+			)}
 			{data?.clinic_id ? (
 				serviceTypeState?.length ? (
 					<div className={'add_edit_content'}>
-						<Form ref={appointmentFormRef}
-										onValuesChange={handleValuesChange}
-										>
-							<Row>
-								<Col lg={8} className='gutter-row'>
-									<FormInput
-										label={t('Service Type')}
-										name={'service_type'}
-										inputType={'resourceSelect'}
-										rules={[{ required: true }]}
-										inputProps={{
-											onChange: (e, data) => {
-												appointmentFormRef?.current?.setFieldsValue({
-													specialty_id: null,
-													doctor_id: null,
-													booked_at: null,
-													appointment_time: null,
-													lab_tests: undefined,
-													lab_packages: null,
-													offer_id: null,
-													nursing_tasks: undefined,
-													service_type: e
-												})
-												setData(prevState => ({
-													...prevState,
-													specialty_id: null,
-													doctor_id: null,
-													booked_at: null,
-													appointment_time: null,
-													lab_tests: null,
-													lab_packages: null,
-													offer_id: null,
-													nursing_tasks: null,
-													service_type: e
-												}))
-											}
-										}}
-										initialValue={null}
-										initialData={serviceTypeState}
+						<h2 style={{ fontWeight: 'bold' }}>Appointment</h2>
+						{!data?.booked_at ? (
+							<div>
+								<Form
+									ref={appointmentFormRef}
+									onValuesChange={handleValuesChange}
+								>
+									<Row>
+										<Col lg={8} className='gutter-row'>
+											<FormInput
+												label={t('Service Type')}
+												name={'service_type'}
+												inputType={'resourceSelect'}
+												rules={[{ required: true }]}
+												inputProps={{
+													onChange: (e, data) => {
+														appointmentFormRef?.current?.setFieldsValue({
+															specialty_id: null
+														})
+														setData(prevState => ({
+															...prevState,
+															specialty_id: null
+														}))
+													}
+												}}
+												initialValue={null}
+												initialData={serviceTypeState}
+											/>
+										</Col>
+										{data?.service_type &&
+										data?.service_type !== 'nursing' &&
+										data?.service_type !== 'laboratory_clinic_visit' &&
+										data?.service_type !== 'laboratory_home_visit' ? (
+											<Col lg={16} className='gutter-row'>
+												<FormInput
+													label={t('Specialties')}
+													name={'specialty_id'}
+													inputType={'resourceSelect'}
+													rules={[{ required: true }]}
+													initialValue={null}
+													initialData={[]}
+													resource={'Taxonomy'}
+													customSearchKey={'title'}
+													resourceParams={{
+														type: Resources.TaxonomyTypes.SPECIALTY,
+														has_parent: 0
+													}}
+												/>
+											</Col>
+										) : null}
+									</Row>
+									<Row>
+										{data.service_type === 'home_visit' ||
+										data.service_type === 'physical_therapy_home_visit' ||
+										data.service_type === 'laboratory_home_visit' ||
+										data.service_type === 'nursing' ? (
+											<Col lg={24} className='gutter-row'>
+												<FormInput
+													label={t('Visit Address')}
+													name={'address1'}
+													rules={[
+														{
+															required: true,
+															message: 'Please enter visit address'
+														}
+													]}
+												/>
+											</Col>
+										) : (
+											<div></div>
+										)}
+									</Row>
+								</Form>
+								{data?.service_type ? (
+									<AppointmentCalendar
+										appointMentObj={data}
+										setAppointMentObj={setData}
 									/>
-								</Col>
-								{data?.service_type && 
-								data?.service_type !== 'nursing' && data?.service_type !== 'laboratory_clinic_visit' && data?.service_type !== 'laboratory_home_visit'? (
-								<Col lg={16} className='gutter-row'>
-									<FormInput
-										label={t('Specialties')}
-										name={'specialty_id'}
-										inputType={'resourceSelect'}
-										rules={[{ required: true }]}
-										initialValue={null}
-										initialData={[]}
-										inputProps={{
-											onChange: (e, data) => {
-												appointmentFormRef?.current?.setFieldsValue({
-													doctor_id: null,
-													booked_at: null,
-													appointment_time: null,
-													offer_id: null,
-													specialty_id: e
-												})
-												setData(prevState => ({
-													...prevState,
-													doctor_id: null,
-													booked_at: null,
-													appointment_time: null,
-													offer_id: null,
-													specialty_id: e
-												}))
-											}
-										}}
-										resource={'Taxonomy'}
-										customSearchKey={'title'}
-										resourceParams={{
-											type: Resources.TaxonomyTypes.SPECIALTY,
-											has_parent: 0
-										}}
-									/>
-								</Col>) : null
-}
-							</Row>
-							<Row>
-								{
-									data.service_type === 'home_visit' || data.service_type ==='physical_therapy_home_visit' ||
-									data.service_type === 'laboratory_home_visit' || data.service_type ==='nursing'?
-									<Col lg={24} className="gutter-row">
-										<FormInput label={t('Visit Address')} name={'address1'} 
-										rules={[{required: true, message: 'Please enter visit address'}]}/>
-									</Col> : <div></div>  
-								}
-							</Row>
-						</Form>
-						{data?.service_type ? (
-							 <AppointmentCalendar appointMentObj={data} setAppointMentObj={setData}/>
-						) : null}
-						<Space className={'create_apdate_btns'}>
-							<Button
-								loading={saveLoading}
-								size={'large'}
-								type={'primary'}
-								htmlType='submit'
-								onClick={saveAppointment}
-							>
-								{t('Save Appointment')}
-							</Button>
-						</Space>
+								) : null}
+							</div>
+						) : (
+							<div>
+								<br />
+								<br />
+								<Row
+									style={{
+										backgroundColor: '#F0F7EE',
+										display: 'flex',
+										alignItems: 'center',
+										borderRadius: '10px',
+										padding: '10px'
+									}}
+								>
+									{data?.doctor ? (
+										<Col lg={6} className='gutter-row'>
+											<Space>
+												<Avatar
+													size={50}
+													src={data?.doctor?.avatar?.url}
+													icon={<UserOutlined />}
+												/>
+												<div>
+													<div className={'cl_manager_modal_dr_name'}>
+														{data?.doctor?.first} {data?.doctor?.last}
+													</div>
+												</div>
+											</Space>
+										</Col>
+									) : (
+										<Col lg={12} className='gutter-row'>
+											<Space>
+												<div>
+													<div className={'cl_manager_modal_dr_name'}>
+														{data.service_type}
+													</div>
+												</div>
+											</Space>
+										</Col>
+									)}
+									{data?.specialty ? (
+										<Col lg={6} className='gutter-row'>
+											<Space>
+												<div>
+													<div className={'cl_manager_modal_dr_name'}>
+														{data.specialty}
+													</div>
+												</div>
+											</Space>
+										</Col>
+									) : null}
+									<Col lg={5} className='gutter-row'>
+										<Space>
+											<div>
+												<div className={'cl_manager_modal_dr_name'}>
+													500 SAR
+												</div>
+											</div>
+										</Space>
+									</Col>
+									<Col lg={6} className='gutter-row'>
+										<Space>
+											<div>
+												<div className={'cl_manager_modal_dr_name'}>
+													{dayjs(data.booked_at).format('h:mm A, D MMM YY')}
+												</div>
+											</div>
+										</Space>
+									</Col>
+									<Col lg={1} className='gutter-row'>
+										<Space>
+											<div>
+												<div
+													className={'cl_manager_modal_dr_name'}
+													style={{ cursor: 'pointer' }}
+													onClick={removeAppointment}
+												>
+													X
+												</div>
+											</div>
+										</Space>
+									</Col>
+								</Row>
+								<br />
+								<br />
+								<Space className={'create_apdate_btns'}>
+									<Button
+										loading={saveLoading}
+										size={'large'}
+										type={'primary'}
+										htmlType='submit'
+										onClick={saveAppointment}
+									>
+										{t('Save Appointment')}
+									</Button>
+								</Space>
+							</div>
+						)}
 					</div>
 				) : (
 					<Preloader></Preloader>
