@@ -13,6 +13,7 @@ import {message, Switch} from "antd";
 import {postResource} from "../../Functions/api_calls";
 import SwitchStatus from "../../Fragments/SwitchStatus";
 
+
 const resource='Offer'
 
 function Offers() {
