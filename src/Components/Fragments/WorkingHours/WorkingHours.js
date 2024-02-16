@@ -281,10 +281,10 @@ function WorkingHours({onFinish,
                     return e?.value === workingDay[key]?.opens_at
                   })
 
-                  let a = currentTimes?.findIndex((e) => {
+                  let afterPeriud = currentTimes?.findIndex((e) => {
                     return e?.value === workingDay[key+1]?.opens_at
                   })
-                  console.log(workingDay)
+
                   return <Row key={dataKey + key + (new Date())}
                               className={!workingDay[0]?.is_day_off ? 'd-none' : ''}
                   >
@@ -315,8 +315,8 @@ function WorkingHours({onFinish,
 
                             workingDay[key]?.opens_at && timeLimits ? currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
                                 currentTimes?.find(e=>e?.find(u=>u.value=== workingDay[key]?.opens_at))?.findIndex(e => e?.value === workingDay[key]?.opens_at) + 1, currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.length
-                            ): key > 0 && workingDay?.length ? currentTimes?.slice(indexSecondsPeriudOpensAt + 1, workingDay[key+1]?.opens_at ? a : currentTimes?.length) : currentOptions?.slice(
-                                indexSecondsPeriudOpensAt + 1, workingDay[key+1]?.opens_at ? a : currentTimes?.length
+                            ): key > 0 && workingDay?.length ? currentTimes?.slice(indexSecondsPeriudOpensAt + 1, workingDay[key+1]?.opens_at ? afterPeriud : currentTimes?.length) : currentOptions?.slice(
+                                indexSecondsPeriudOpensAt + 1, workingDay[key+1]?.opens_at ? afterPeriud : currentTimes?.length
                             )}
                         />
                       </Form.Item>
