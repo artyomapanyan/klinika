@@ -75,13 +75,12 @@ function AppointmentCalendarModal({
 			),
 			offer_id: values.offer_id, //? values.offer_id : null,
 			doctor_id: doctor?.id,
-			lab_packages: values.lab_packages? [values.lab_packages]: [],
-			lab_tests: values.lab_tests? [values.lab_tests] : [],
-			nursing_tasks: values.nursing_tasks? [values.nursing_tasks]: [],
+			lab_packages: values.lab_packages ? [values.lab_packages] : [],
+			address1: values.address1,
+
 			//data to be deleted from the object before saving the appointment
 			doctor: doctor,
 			specialty: specialty
-
 		}))
 		setSelectedDate(false)
 		console.log(appointMentObj)
@@ -229,6 +228,23 @@ function AppointmentCalendarModal({
 						/>
 					</div>
 				) : null}
+				{appointMentObj.service_type === 'home_visit' ||
+				appointMentObj.service_type === 'physical_therapy_home_visit' ||
+				appointMentObj.service_type === 'laboratory_home_visit' ||
+				appointMentObj.service_type === 'nursing' ? (
+					<FormInput
+						label={t('Visit Address')}
+						name={'address1'}
+						rules={[
+							{
+								required: true,
+								message: 'Please enter visit address'
+							}
+						]}
+					/>
+				) : (
+					<div></div>
+				)}
 				<FormInput
 					label={t('Offers')}
 					name={'offer_id'}

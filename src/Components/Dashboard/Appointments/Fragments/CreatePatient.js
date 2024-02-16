@@ -2,12 +2,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Form, Row, Col } from 'antd'
 import { t } from 'i18next'
-import Preloader from '../../../Preloader'
 import FormInput from '../../../Fragments/FormInput'
 import Resources from '../../../../store/Resources'
-import clinic_man_user_icon from '../../../../dist/icons/clinic_man_user_icon.png'
 
-function CreatePatient({ data, setData, formRef }) {
+function CreatePatient({ data, formRef }) {
 	let language = useSelector(state => state.app.current_locale)
 
 	const handleValuesChange = values => {
@@ -26,7 +24,6 @@ function CreatePatient({ data, setData, formRef }) {
 		} else {
 			values.insurance_company_id = null
 		}
-        //setData(values);
 	}
 
 	const handleMapItems = (item, name) => {
@@ -40,12 +37,11 @@ function CreatePatient({ data, setData, formRef }) {
 			name='patient'
 			onValuesChange={handleValuesChange}
 			layout='vertical'
-			className={'add_create_form'}
 			disabled={data?.id}
-            ref={formRef}
+			ref={formRef}
 		>
 			<div className={'add_edit_content'}>
-			<h2 style={{fontWeight: 'bold'}}>Patient card</h2>
+				<h2 style={{ fontWeight: 'bold' }}>{t('Patient card')}</h2>
 				<Row>
 					<Col lg={8} className='gutter-row'>
 						<FormInput
@@ -70,12 +66,6 @@ function CreatePatient({ data, setData, formRef }) {
 					<Col lg={8} className='gutter-row'>
 						<FormInput
 							label={t('Nationality Number')}
-							suffixIcon={
-								<img
-									src={clinic_man_user_icon}
-									alt={'clinic_man_user_icon'}
-								/>
-							}
 							name={'nationality_number'}
 							initialValue={data?.nationality_number}
 						/>
@@ -85,7 +75,7 @@ function CreatePatient({ data, setData, formRef }) {
 							label={t('Last Name')}
 							name={'last'}
 							initialValue={data?.last}
-                            rules={[{ required: !data?.id }]}
+							rules={[{ required: !data?.id }]}
 						/>
 					</Col>
 					<Col lg={8} className='gutter-row'>
@@ -101,12 +91,6 @@ function CreatePatient({ data, setData, formRef }) {
 					<Col lg={8} className='gutter-row'>
 						<FormInput
 							label={t('Insurance company')}
-							suffixIcon={
-								<img
-									src={clinic_man_user_icon}
-									alt={'clinic_man_user_icon'}
-								/>
-							}
 							name={'insurance_company_id'}
 							inputType={'resourceSelect'}
 							initialValue={data?.insurance_company?.id}
@@ -151,19 +135,13 @@ function CreatePatient({ data, setData, formRef }) {
 							name={'dob'}
 							initialValue={data?.dob}
 							inputType={'date'}
-							rules={[{required: !data?.id }]}
+							rules={[{ required: !data?.id }]}
 						/>
 					</Col>
 					<Col lg={8} className='gutter-row'>
 						<FormInput
 							label={t('Email')}
 							name={'email'}
-							suffixIcon={
-								<img
-									src={clinic_man_user_icon}
-									alt={'clinic_man_user_icon'}
-								/>
-							}
 							rules={[{ required: !data?.id }]}
 							initialValue={data?.email}
 						/>

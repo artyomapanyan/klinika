@@ -22,7 +22,7 @@ function Appointment() {
 	const [sendCodeLoading, setSendCodeLoading] = useState(false)
 
 	const navigate = useNavigate()
-	let dispatch = useDispatch()
+	const dispatch = useDispatch()
 	const searchFormRef = useRef()
 	const patientFormRef = useRef()
 	const appointmentFormRef = useRef()
@@ -58,25 +58,72 @@ function Appointment() {
 			setPageState('unauthorized')
 		} else {
 			setPageState('selected')
+			setPatient(fetchedUsers.current?.find(i => i.id === data?.patient_id))
 		}
-		console.log('state: ' + pageState)
-
-		return () => {}
 	}, [data?.patient_id])
+
+	useEffect(() => {
+		if (data?.clinic_id) {
+			postResource('Clinic', 'single', token, data?.clinic_id).then(
+				responses => {
+					setServiceTypeState(
+						[
+							{
+								service: responses?.has_telehealth_service,
+								id: 'telehealth',
+								name: 'Telehealth'
+							},
+							{
+								service: responses?.has_clinic_visit_service,
+								id: 'clinic_visit',
+								name: 'Clinic Visit'
+							},
+							{
+								service: responses?.has_home_visit_service,
+								id: 'home_visit',
+								name: 'Home Visit'
+							},
+							{
+								service: responses?.has_physical_therapy_home_visit_service,
+								id: 'physical_therapy_home_visit',
+								name: 'Physical Therapy Home Visit'
+							},
+							{
+								service: responses?.has_physical_therapy_clinic_visit_service,
+								id: 'physical_therapy_clinic_visit',
+								name: 'Physical Therapy Clinic Visit'
+							},
+							{
+								service: responses?.has_laboratory_home_visit_service,
+								id: 'laboratory_home_visit',
+								name: 'Laboratory Home Visit'
+							},
+							{
+								service: responses?.has_nursing_service,
+								id: 'nursing',
+								name: 'Nursing'
+							},
+							{
+								service: responses?.has_laboratory_clinic_visit_service,
+								id: 'laboratory_clinic_visit',
+								name: 'Laboratory Clinic Visit'
+							}
+						].filter(el => el.service === true)
+					)
+				}
+			)
+		}
+	}, [data?.clinic_id])
 
 	const goBack = () => {
 		navigate(-1)
 	}
 
-	const handleValuesChange = (e, v) => {
+	const handleValuesChange = e => {
 		setData(prevState => ({
 			...prevState,
 			...e
 		}))
-		if (e.patient_id) {
-			const foundUser = fetchedUsers.current?.find(i => i.id === e?.patient_id)
-			setPatient(foundUser)
-		}
 	}
 
 	const searchByNumber = (item, name) => {
@@ -136,7 +183,7 @@ function Appointment() {
 		})
 	}
 
-	const onVerify = e => {
+	const onVerify = () => {
 		if (data?.code?.length === 4) {
 			setVerifyLoading(true)
 			postResource('PatientsVerificationCode', 'PatientCodeVerify', token, '', {
@@ -145,8 +192,12 @@ function Appointment() {
 				clinic_id: data?.clinic_id,
 				code: data?.code
 			}).then(response => {
-				setPatient(response?.patient)
-				setPageState('selected')
+				fetchedUsers.current.push(response?.patient)
+				setData(prevState => ({
+					...prevState,
+					patient_id: response?.patient?.id,
+					code: null
+				}))
 				setVerifyLoading(false)
 			})
 		}
@@ -158,86 +209,33 @@ function Appointment() {
 		return [name, item]
 	}
 
-	useEffect(() => {
-		if (data?.clinic_id) {
-			postResource('Clinic', 'single', token, data?.clinic_id).then(
-				responses => {
-					setServiceTypeState(
-						[
-							{
-								service: responses?.has_telehealth_service,
-								id: 'telehealth',
-								name: 'Telehealth'
-							},
-							{
-								service: responses?.has_clinic_visit_service,
-								id: 'clinic_visit',
-								name: 'Clinic Visit'
-							},
-							{
-								service: responses?.has_home_visit_service,
-								id: 'home_visit',
-								name: 'Home Visit'
-							},
-							{
-								service: responses?.has_physical_therapy_home_visit_service,
-								id: 'physical_therapy_home_visit',
-								name: 'Physical Therapy Home Visit'
-							},
-							{
-								service: responses?.has_physical_therapy_clinic_visit_service,
-								id: 'physical_therapy_clinic_visit',
-								name: 'Physical Therapy Clinic Visit'
-							},
-							{
-								service: responses?.has_laboratory_home_visit_service,
-								id: 'laboratory_home_visit',
-								name: 'Laboratory Home Visit'
-							},
-							{
-								service: responses?.has_nursing_service,
-								id: 'nursing',
-								name: 'Nursing'
-							},
-							{
-								service: responses?.has_laboratory_clinic_visit_service,
-								id: 'laboratory_clinic_visit',
-								name: 'Laboratory Clinic Visit'
-							}
-						].filter(el => el.service === true)
-					)
-				}
-			)
-		}
-	}, [data?.clinic_id])
-
 	const saveAppointment = () => {
-		let appointment = Object.assign({}, data);
-
+		let appointment = Object.assign({}, data)
 		if (pageState === 'creation') {
-			delete appointment.patient_id;
-			patientFormRef.current.validateFields()
-			.then(() => {
-				appointment.patient = patientFormRef.current.getFieldsValue();
-				createAppointment(appointment);
-			})
-			.catch((error) => {
-			  console.error('Validation failed:', error);
-			});
+			delete appointment.patient_id
+			patientFormRef.current
+				.validateFields()
+				.then(() => {
+					appointment.patient = patientFormRef.current.getFieldsValue()
+					createAppointment(appointment)
+				})
+				.catch(error => {
+					console.error('Validation failed:', error)
+				})
 		} else {
-			delete appointment.patient;
-			searchFormRef.current.validateFields()
-			.then(() => {
-				createAppointment(appointment);
-			})
-			.catch((error) => {
-			  console.error('Validation failed:', error);
-			});
+			delete appointment.patient
+			searchFormRef.current
+				.validateFields()
+				.then(() => {
+					createAppointment(appointment)
+				})
+				.catch(error => {
+					console.error('Validation failed:', error)
+				})
 		}
 	}
 
-	const createAppointment = (appointment) => {
-		console.log(appointment)
+	const createAppointment = appointment => {
 		setSaveLoading(true)
 		createResource(resource, appointment, token)
 			.then(response => {
@@ -283,10 +281,9 @@ function Appointment() {
 			</div>
 			<Form
 				onValuesChange={handleValuesChange}
-				name='edit'
+				name='search'
 				layout='vertical'
 				ref={searchFormRef}
-				className={'add_create_form'}
 			>
 				<div className={'add_edit_content'}>
 					<div className='gutter-row'>
@@ -298,17 +295,15 @@ function Appointment() {
 										name={'clinic_id'}
 										inputType={'resourceSelect'}
 										rules={[{ required: true }]}
-										initialValue={null}
 										initialData={[data?.clinic].filter(e => e)}
 										inputProps={{
-											onChange: (e, dat) => {
+											onChange: () => {
 												setData(prevState => ({
 													...prevState,
 													service_type: null
 												}))
-
 												appointmentFormRef?.current?.setFieldsValue({
-													specialty_id: null
+													service_type: null
 												})
 											}
 										}}
@@ -359,7 +354,6 @@ function Appointment() {
 									inputType={'resourceSelect'}
 									rules={[{ required: true }]}
 									searchConfigs={{ minLength: 6 }}
-									initialValue={null}
 									inputProps={{
 										onSearch: e => {
 											if (e)
@@ -391,7 +385,6 @@ function Appointment() {
 											: '966',
 										clinic_id: data?.clinic_id
 									}}
-									initialData={[]}
 									handleMapItems={(item, name, status) =>
 										searchByNumber(item, name, status)
 									}
@@ -486,11 +479,15 @@ function Appointment() {
 					</div>
 				</div>
 			</Form>
-			{pageState === 'creation' || pageState === 'selected' ? (
+			{pageState === 'creation' ? (
+				<CreatePatient formRef={patientFormRef}></CreatePatient>
+			) : (
+				<div></div>
+			)}
+			{pageState === 'selected' ? (
 				<div>
 					<CreatePatient
 						data={patient}
-						setData={setPatient}
 						formRef={patientFormRef}
 					></CreatePatient>
 				</div>
@@ -500,7 +497,7 @@ function Appointment() {
 			{data?.clinic_id ? (
 				serviceTypeState?.length ? (
 					<div className={'add_edit_content'}>
-						<h2 style={{ fontWeight: 'bold' }}>Appointment</h2>
+						<h2 style={{ fontWeight: 'bold' }}>{t('Appointment')}</h2>
 						{!data?.booked_at ? (
 							<div>
 								<Form
@@ -525,7 +522,6 @@ function Appointment() {
 														}))
 													}
 												}}
-												initialValue={null}
 												initialData={serviceTypeState}
 											/>
 										</Col>
@@ -539,8 +535,6 @@ function Appointment() {
 													name={'specialty_id'}
 													inputType={'resourceSelect'}
 													rules={[{ required: true }]}
-													initialValue={null}
-													initialData={[]}
 													resource={'Taxonomy'}
 													customSearchKey={'title'}
 													resourceParams={{
@@ -550,27 +544,6 @@ function Appointment() {
 												/>
 											</Col>
 										) : null}
-									</Row>
-									<Row>
-										{data.service_type === 'home_visit' ||
-										data.service_type === 'physical_therapy_home_visit' ||
-										data.service_type === 'laboratory_home_visit' ||
-										data.service_type === 'nursing' ? (
-											<Col lg={24} className='gutter-row'>
-												<FormInput
-													label={t('Visit Address')}
-													name={'address1'}
-													rules={[
-														{
-															required: true,
-															message: 'Please enter visit address'
-														}
-													]}
-												/>
-											</Col>
-										) : (
-											<div></div>
-										)}
 									</Row>
 								</Form>
 								{data?.service_type ? (
@@ -613,7 +586,10 @@ function Appointment() {
 											<Space>
 												<div>
 													<div className={'cl_manager_modal_dr_name'}>
-														{data.service_type}
+														{data?.service_type[0]?.toUpperCase() +
+															data?.service_type
+																?.slice(1)
+																?.replaceAll('_', ' ')}
 													</div>
 												</div>
 											</Space>
