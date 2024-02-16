@@ -96,7 +96,19 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                 {/*    if (e?.target?.value?.length > 3) {*/}
                 {/*        return e.target.value = e?.target?.value.slice(0, 3)*/}
                 {/*    }}} />*/}
-                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]}/>
+                <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[
+                    {required: true},
+                    {
+                        validator:(rule,value)=>{
+                            if(!(/^[a-zA-Z\s()]*$/u.test(value))) {
+
+                                return Promise.reject('Please enter a valid name.')
+
+                            }
+                            return Promise.resolve();
+                        }
+                    }
+                ]}/>
                 <div style={{display: 'flex', gap: 8, marginTop:-16}}>
                     <div style={{width: '50%'}} className={'patient_card_medication_errors'}>
                         <FormInput label={t('Times/Day')} name={'frequency'} initialValue={data?.frequency} rules={[
