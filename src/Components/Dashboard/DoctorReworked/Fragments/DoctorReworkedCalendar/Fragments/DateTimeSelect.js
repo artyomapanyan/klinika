@@ -841,7 +841,7 @@ import Resources from "../../../../../../store/Resources";
 import {postResource} from "../../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
-function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtState, date, setDate1, dataClinic}) {
+function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtState, date, setDate1, dataClinic, formRef}) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     const authRedux = useSelector((state) => state?.auth);
@@ -965,8 +965,14 @@ function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtStat
         setFormState(prevState => ({
             ...prevState,
             date: e?.format('YYYY-MM-DD'),
-            time: ''
+            time: '',
+            offer_id: null,
         }))
+        formRef?.current?.setFieldsValue({
+            offer_id: null
+
+        })
+
 
         setDate1(e)
         setTimeLoading(true)

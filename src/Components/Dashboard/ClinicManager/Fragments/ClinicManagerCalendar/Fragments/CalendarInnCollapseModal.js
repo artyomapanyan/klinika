@@ -398,29 +398,32 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                         message: 'Please enter visit address'
                                     }]}/> : <div></div>
                             }
-                            <FormInput label={t('Offers')} name={'offer_id'}
-                                       inputType={'resourceSelect'}
-                                       initialValue={null}
-                                       initialData={[]}
-                                       resourceParams={{
-                                           clinic: clinicID,
-                                           status: 2,
-                                           approved: 1,
-                                           doctor: docItem?.doctor.id,
-                                           for_date: selectedDate
+                            {
+                                data.service_type === 'clinic_visit' ? <FormInput label={t('Offers')} name={'offer_id'}
+                                                                                  inputType={'resourceSelect'}
+                                                                                  initialValue={null}
+                                                                                  initialData={[]}
+                                                                                  resourceParams={{
+                                                                                      clinic: clinicID,
+                                                                                      status: 2,
+                                                                                      approved: 1,
+                                                                                      doctor: docItem?.doctor.id,
+                                                                                      for_date: selectedDate
 
-                                       }}
-                                       inputProps={{
-                                           onChange: (e) => {
-                                               if(data?.phone_country_code?.includes('966')) {
-                                                   setData(prevState => ({
-                                                       ...prevState,
-                                                       phone_country_code: '966'
-                                                   }))
-                                               }
-                                           }
-                                       }}
-                                       resource={'Offer'}/>
+                                                                                  }}
+                                                                                  inputProps={{
+                                                                                      onChange: (e) => {
+                                                                                          if(data?.phone_country_code?.includes('966')) {
+                                                                                              setData(prevState => ({
+                                                                                                  ...prevState,
+                                                                                                  phone_country_code: '966'
+                                                                                              }))
+                                                                                          }
+                                                                                      }
+                                                                                  }}
+                                                                                  resource={'Offer'}/> : <div></div>
+                            }
+
 
                             <FormInput label={t('Country Code')} name={'phone_country_code'}
                                        inputType={'resourceSelect'}
