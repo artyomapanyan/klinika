@@ -308,13 +308,18 @@ function Appointment() {
 										rules={[{ required: true }]}
 										initialData={[data?.clinic].filter(e => e)}
 										inputProps={{
-											onChange: () => {
+											onChange: (e) => {
 												setData(prevState => ({
 													...prevState,
-													service_type: null
+													service_type: null,
+													patient_id: undefined,
+													patient: undefined
 												}))
 												appointmentFormRef?.current?.setFieldsValue({
-													service_type: null
+													service_type: null,
+												})
+												searchFormRef?.current?.setFieldsValue({
+													patient_id: undefined
 												})
 											}
 										}}
@@ -349,6 +354,7 @@ function Appointment() {
 												phone_country_code: e
 											}))
 									}}
+									disabled={!data?.clinic_id}
 									resource={'Country'}
 								/>
 							</Col>
@@ -401,6 +407,7 @@ function Appointment() {
 									}
 									handleStatus={true}
 									customSearchKey={'phone_number'}
+									disabled={!data?.clinic_id}
 									resource={'PatientSearch'}
 								/>
 							</Col>
@@ -418,6 +425,7 @@ function Appointment() {
 										type={'primary'}
 										style={{ marginTop: 4 }}
 										className={'all_offers_book_btns'}
+										disabled={!data?.clinic_id}
 									>
 										{t('Create new')}
 									</Button>
@@ -559,8 +567,8 @@ function Appointment() {
 								</Form>
 								{data?.service_type ? (
 									<AppointmentCalendar
-										appointMentObj={data}
-										setAppointMentObj={setData}
+										appointmentObj={data}
+										setappointmentObj={setData}
 									/>
 								) : null}
 							</div>

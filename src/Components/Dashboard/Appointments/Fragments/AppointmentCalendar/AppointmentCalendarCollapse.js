@@ -4,8 +4,8 @@ import AppointmentCalendarInnCollapse from './AppointmentCalendarInnCollapse'
 function AppointmentCalendarCollapse({
 	item,
 	search,
-	appointMentObj,
-	setAppointMentObj
+	appointmentObj,
+	setappointmentObj
 }) {
 
 	const filteredData = useMemo(() => {
@@ -37,8 +37,8 @@ function AppointmentCalendarCollapse({
 					key={key}
 					docObj={doctor}
 					specialty={item?.speciality}
-					appointMentObj={appointMentObj}
-					setAppointMentObj={setAppointMentObj}
+					appointmentObj={appointmentObj}
+					setappointmentObj={setappointmentObj}
 				/>
 			))}
 		</>

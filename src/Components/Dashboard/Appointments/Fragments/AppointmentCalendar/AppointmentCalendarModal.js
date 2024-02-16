@@ -15,8 +15,8 @@ function AppointmentCalendarModal({
 	specialty,
 	selectedDate,
 	setSelectedDate,
-	appointMentObj,
-	setAppointMentObj
+	appointmentObj,
+	setappointmentObj
 }) {
 	let language = useSelector(state => state?.app?.current_locale)
 	const [loading, setLoading] = useState(false)
@@ -26,21 +26,21 @@ function AppointmentCalendarModal({
 	let token = useSelector(state => state.auth.token)
 
 	useEffect(() => {
-		if (appointMentObj.service_type) {
+		if (appointmentObj.service_type) {
 			if (
-				appointMentObj?.service_type === 'nursing' ||
-				appointMentObj?.service_type === 'laboratory_clinic_visit' ||
-				appointMentObj?.service_type === 'laboratory_home_visit'
+				appointmentObj?.service_type === 'nursing' ||
+				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
 				setLoading(true)
 				postResource(
 					'Clinic',
 					'ClinicsAvailableTimes',
 					token,
-					appointMentObj.clinic_id,
+					appointmentObj.clinic_id,
 					{
 						date: selectedDate,
-						service: appointMentObj.service_type
+						service: appointmentObj.service_type
 					}
 				).then(response => {
 					setLoading(false)
@@ -53,9 +53,9 @@ function AppointmentCalendarModal({
 					'ClinicDoctorAvailableTimeForDayByDoctorAndClinic',
 					'single',
 					token,
-					doctor.id + '/' + appointMentObj.clinic_id,
+					doctor.id + '/' + appointmentObj.clinic_id,
 					{
-						service: appointMentObj.service_type,
+						service: appointmentObj.service_type,
 						date: selectedDate
 					}
 				).then(response => {
@@ -68,7 +68,7 @@ function AppointmentCalendarModal({
 	}, [])
 
 	const addAppointment = values => {
-		setAppointMentObj(prevState => ({
+		setappointmentObj(prevState => ({
 			...prevState,
 			booked_at: dayjs(selectedDate + ' ' + values.time).format(
 				'YYYY-MM-DD HH:mm'
@@ -83,7 +83,7 @@ function AppointmentCalendarModal({
 			specialty: specialty
 		}))
 		setSelectedDate(false)
-		console.log(appointMentObj)
+		console.log(appointmentObj)
 	}
 
 	return (
@@ -166,7 +166,7 @@ function AppointmentCalendarModal({
 					)}
 				</div>
 
-				{appointMentObj?.service_type === 'nursing' ? (
+				{appointmentObj?.service_type === 'nursing' ? (
 					<FormInput
 						label={t('Nursing tasks')}
 						disableClear={true}
@@ -176,15 +176,15 @@ function AppointmentCalendarModal({
 						}}
 						rules={[{ required: true }]}
 						resourceParams={{
-							clinic: appointMentObj.clinic_id,
+							clinic: appointmentObj.clinic_id,
 							status: 2
 						}}
 						inputType={'resourceSelect'}
 						resource={'NursingTask'}
 					/>
 				) : null}
-				{appointMentObj?.service_type === 'laboratory_clinic_visit' ||
-				appointMentObj?.service_type === 'laboratory_home_visit' ? (
+				{appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+				appointmentObj?.service_type === 'laboratory_home_visit' ? (
 					<div>
 						<FormInput
 							label={t('Lab Tests')}
@@ -192,14 +192,14 @@ function AppointmentCalendarModal({
 							rules={[
 								{
 									required:
-										!appointMentObj?.lab_packages &&
-										!appointMentObj?.lab_packages?.length,
+										!appointmentObj?.lab_packages &&
+										!appointmentObj?.lab_packages?.length,
 									message: 'Please enter Lab test or Lab package'
 								}
 							]}
 							inputType={'resourceSelect'}
 							resourceParams={{
-								clinic: appointMentObj.clinic_id,
+								clinic: appointmentObj.clinic_id,
 								status: 2
 							}}
 							inputProps={{
@@ -214,24 +214,24 @@ function AppointmentCalendarModal({
 							rules={[
 								{
 									required:
-										!appointMentObj?.lab_tests ||
-										!appointMentObj?.lab_tests?.length,
+										!appointmentObj?.lab_tests ||
+										!appointmentObj?.lab_tests?.length,
 									message: 'Please enter Lab test or Lab package'
 								}
 							]}
 							inputType={'resourceSelect'}
 							resourceParams={{
-								clinic: appointMentObj.clinic_id,
+								clinic: appointmentObj.clinic_id,
 								status: 2
 							}}
 							resource={'LabPackage'}
 						/>
 					</div>
 				) : null}
-				{appointMentObj.service_type === 'home_visit' ||
-				appointMentObj.service_type === 'physical_therapy_home_visit' ||
-				appointMentObj.service_type === 'laboratory_home_visit' ||
-				appointMentObj.service_type === 'nursing' ? (
+				{appointmentObj.service_type === 'home_visit' ||
+				appointmentObj.service_type === 'physical_therapy_home_visit' ||
+				appointmentObj.service_type === 'laboratory_home_visit' ||
+				appointmentObj.service_type === 'nursing' ? (
 					<FormInput
 						label={t('Visit Address')}
 						name={'address1'}
@@ -252,7 +252,7 @@ function AppointmentCalendarModal({
 					initialValue={null}
 					initialData={[]}
 					resourceParams={{
-						clinic: appointMentObj.clinic_id,
+						clinic: appointmentObj.clinic_id,
 						status: 2,
 						approved: 1,
 						doctor: doctor?.id,

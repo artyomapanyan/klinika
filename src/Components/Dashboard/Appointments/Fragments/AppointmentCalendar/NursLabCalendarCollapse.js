@@ -4,7 +4,7 @@ import AppointmentCalendarModal from './AppointmentCalendarModal'
 import gray_grid from '../../../../../dist/icons/gray_grid.png'
 import dayjs from 'dayjs'
 
-function NursLabCalendarCollapse({ item, appointMentObj, setAppointMentObj }) {
+function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 	const [selectedDate, setSelectedDate] = useState(false)
 	let thisDate = dayjs().format('YYYY-MM-DD')
 
@@ -75,8 +75,8 @@ function NursLabCalendarCollapse({ item, appointMentObj, setAppointMentObj }) {
 						key={Math.random()}
 						selectedDate={selectedDate}
 						setSelectedDate={setSelectedDate}
-						appointMentObj={appointMentObj}
-						setAppointMentObj={setAppointMentObj}
+						appointmentObj={appointmentObj}
+						setappointmentObj={setappointmentObj}
 					/>
 				) : null}
 			</Modal>

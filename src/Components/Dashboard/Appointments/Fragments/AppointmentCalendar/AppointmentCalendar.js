@@ -10,7 +10,7 @@ import AppointmentCalendarCollapse from './AppointmentCalendarCollapse'
 import NursLabCalendarCollapse from './NursLabCalendarCollapse'
 import { t } from 'i18next'
 
-function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
+function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 	const [loading, setLoading] = useState(true)
 	const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
 	const [data, setData] = useState({ workload: [] })
@@ -20,44 +20,45 @@ function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
 	let token = useSelector(state => state.auth.token)
 	useEffect(() => {
 		setLoading(true)
-		if (appointMentObj.service_type) {
+		if (appointmentObj?.service_type) {
 			if (
-				appointMentObj?.service_type === 'nursing' ||
-				appointMentObj?.service_type === 'laboratory_clinic_visit' ||
-				appointMentObj?.service_type === 'laboratory_home_visit'
+				appointmentObj?.service_type === 'nursing' ||
+				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
 				setLoading(true)
-				postResource('ClinicManager', 'ClinicWorkload', token, '', {
+				postResource('Dashboard', 'ClinicWorkload', token, '', {
 					from: date[0].format('YYYY-MM-DD'),
-					to: date[1].format('YYYY-MM-DD')
+					to: date[1].format('YYYY-MM-DD'),
+					clinic: appointmentObj?.clinic_id,
+					service: appointmentObj?.service_type
 				}).then(response => {
 					setData({
 						clinic_id: response.clinic.id,
 						clinic: response.clinic,
-						workload: Object.values(response.workload).filter(
-							e => e.service === appointMentObj.service_type
-						)
+						workload: Object.values(response.workload)
 					})
 					setLoading(false)
 				})
 			} else {
-				postResource('ClinicManager', 'DoctorWorkload', token, '', {
+				postResource('Dashboard', 'DoctorWorkload', token, '', {
 					from: date[0].format('YYYY-MM-DD'),
 					to: date[1].format('YYYY-MM-DD'),
-					service: appointMentObj.service_type
+					clinic: appointmentObj?.clinic_id,
+					service: appointmentObj?.service_type
 				}).then(response => {
 					setData({
 						clinic_id: response.clinic.id,
 						clinic: response.clinic,
 						workload: Object.values(response.workload).filter(
-							e => e.speciality_id === appointMentObj?.specialty_id
+							e => e.speciality_id === appointmentObj?.specialty_id
 						)
 					})
 					setLoading(false)
 				})
 			}
 		}
-	}, [date, appointMentObj.service_type, appointMentObj?.specialty_id])
+	}, [date, appointmentObj?.service_type, appointmentObj?.specialty_id])
 
 	return (
 		<section className={'table_conteiner'}>
@@ -72,10 +73,10 @@ function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
 										<table className='w-100' style={{ marginTop: -10 }}>
 											<tbody>
 												<tr className='d-flex align-items-center justify-content-between w-100'>
-													{appointMentObj?.service_type !== 'nursing' &&
-													appointMentObj?.service_type !==
+													{appointmentObj?.service_type !== 'nursing' &&
+													appointmentObj?.service_type !==
 														'laboratory_clinic_visit' &&
-													appointMentObj?.service_type !==
+													appointmentObj?.service_type !==
 														'laboratory_home_visit' ? (
 														<td>
 															<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
@@ -127,24 +128,24 @@ function AppointmentCalendar({ appointMentObj, setAppointMentObj }) {
 											{data.workload
 												?.slice(0, showCount)
 												?.map((item, key) =>
-													appointMentObj?.service_type === 'nursing' ||
-													appointMentObj?.service_type ===
+													appointmentObj?.service_type === 'nursing' ||
+													appointmentObj?.service_type ===
 														'laboratory_clinic_visit' ||
-													appointMentObj?.service_type ===
+													appointmentObj?.service_type ===
 														'laboratory_home_visit' ? (
 														<NursLabCalendarCollapse
 															key={key}
 															item={item}
-															appointMentObj={appointMentObj}
-															setAppointMentObj={setAppointMentObj}
+															appointmentObj={appointmentObj}
+															setappointmentObj={setappointmentObj}
 														/>
 													) : (
 														<AppointmentCalendarCollapse
 															key={key}
 															item={item}
 															search={search}
-															appointMentObj={appointMentObj}
-															setAppointMentObj={setAppointMentObj}
+															appointmentObj={appointmentObj}
+															setappointmentObj={setappointmentObj}
 														/>
 													)
 												)}

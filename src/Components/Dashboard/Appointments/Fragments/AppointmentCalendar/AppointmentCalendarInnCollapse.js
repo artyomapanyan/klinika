@@ -7,8 +7,8 @@ import gray_grid from '../../../../../dist/icons/gray_grid.png'
 function AppointmentCalendarInnCollapse({
 	docObj,
 	specialty,
-	appointMentObj,
-	setAppointMentObj
+	appointmentObj,
+	setappointmentObj
 }) {
 	const [selectedDate, setSelectedDate] = useState(false)
 	let thisDate = dayjs().format('YYYY-MM-DD')
@@ -89,8 +89,8 @@ function AppointmentCalendarInnCollapse({
 							specialty={specialty}
                             selectedDate={selectedDate}
 							setSelectedDate={setSelectedDate}
-							appointMentObj={appointMentObj}
-                            setAppointMentObj={setAppointMentObj}
+							appointmentObj={appointmentObj}
+                            setappointmentObj={setappointmentObj}
 						/>
 					) : null}
 				</Modal>
