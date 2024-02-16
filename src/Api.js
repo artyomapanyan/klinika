@@ -252,6 +252,10 @@ let api = {
                 url: `${endpoint}${version}/appointments/`,
                 method: 'PUT',
             },
+            InvoicePrice:{
+                url: `${endpoint}${version}/appointments/get-invoice-price`,
+                method: 'POST',
+            },
         }
     },
     {

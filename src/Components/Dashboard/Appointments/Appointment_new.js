@@ -42,6 +42,7 @@ function Appointment() {
 	})
 	const [pageState, setPageState] = useState('initial')
 	const fetchedUsers = useRef([])
+	const [invoicePrice, setInvoicePrice] = useState(null)
 
 	useEffect(() => {
 		if (role === 'clinic-manager') {
@@ -272,6 +273,15 @@ function Appointment() {
 				setSaveLoading(false)
 			})
 	}
+
+	useEffect(() => {
+		if (data?.booked_at && (data.patient || data.patient_id)) {
+			postResource(resource, 'InvoicePrice', token, '', data)
+				.then(response => {
+					setInvoicePrice(response.total_price)
+				})
+		}
+	}, [data?.booked_at, data?.patient, data?.patient_id])
 
 	const removeAppointment = () => {
 		setData(prevState => ({
@@ -640,7 +650,7 @@ function Appointment() {
 										<Space>
 											<div>
 												<div className={'cl_manager_modal_dr_name'}>
-													500 SAR
+													{invoicePrice} SAR
 												</div>
 											</div>
 										</Space>
