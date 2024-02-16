@@ -8,24 +8,6 @@ import Resources from '../../../../store/Resources'
 function CreatePatient({ data, formRef }) {
 	let language = useSelector(state => state.app.current_locale)
 
-	const handleValuesChange = values => {
-		values.dob = values.dob?.format('YYYY-MM-DD')
-		if (values?.phone_country_code) {
-			if (values.phone_country_code.length > 3) {
-				values.phone_country_code = values?.phone_country_code?.slice(
-					values.phone_country_code.indexOf('(') + 1,
-					values.phone_country_code?.indexOf(')')
-				)
-			}
-		}
-
-		if (values?.insurance_company_id) {
-			values.insurance_company_id = values.insurance_company_id
-		} else {
-			values.insurance_company_id = null
-		}
-	}
-
 	const handleMapItems = (item, name) => {
 		name = item.phone_code ? `(${item.phone_code}) ${item.name}` : null
 		item.id = item.phone_code
@@ -35,7 +17,6 @@ function CreatePatient({ data, formRef }) {
 	return (
 		<Form
 			name='patient'
-			onValuesChange={handleValuesChange}
 			layout='vertical'
 			disabled={data?.id}
 			ref={formRef}

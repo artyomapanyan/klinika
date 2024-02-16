@@ -216,7 +216,18 @@ function Appointment() {
 			patientFormRef.current
 				.validateFields()
 				.then(() => {
-					appointment.patient = patientFormRef.current.getFieldsValue()
+					const patient = patientFormRef.current.getFieldsValue()
+					appointment.patient = {
+						...patient,
+						dob: patient.dob?.format('YYYY-MM-DD'),
+						phone_country_code:
+							patient.phone_country_code.length > 3
+								? patient?.phone_country_code?.slice(
+										patient.phone_country_code.indexOf('(') + 1,
+										patient.phone_country_code?.indexOf(')')
+								  )
+								: patient.phone_country_code
+					}
 					createAppointment(appointment)
 				})
 				.catch(error => {
