@@ -238,7 +238,6 @@ function WorkingHours({onFinish,
 
 
 
-
           return workingDay && <div key={iKey}>
 
             <Row>
@@ -277,7 +276,13 @@ function WorkingHours({onFinish,
                   let openKey = currentOptions?.findIndex(e => e?.value === el.opens_at)
                   let closeKey = currentOptions?.findIndex(e => e?.value === el.closes_at)
 
+                  let indexSecondsPeriudOpensAt = currentTimes?.findIndex((e) => {
+                    return e?.value === workingDay[key]?.opens_at
+                  })
 
+                  let afterPeriud = currentTimes?.findIndex((e) => {
+                    return e?.value === workingDay[key+1]?.opens_at
+                  })
 
                   return <Row key={dataKey + key + (new Date())}
                               className={!workingDay[0]?.is_day_off ? 'd-none' : ''}
@@ -304,13 +309,13 @@ function WorkingHours({onFinish,
                         <Select
                           className={'working_houre_margin'}
                           style={{width: 120,}}
+                          disabled={!workingDay[key]?.opens_at}
                           options={
+
                             workingDay[key]?.opens_at && timeLimits ? currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
                                 currentTimes?.find(e=>e?.find(u=>u.value=== workingDay[key]?.opens_at))?.findIndex(e => e?.value === workingDay[key]?.opens_at) + 1, currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.length
-                            ): key > 0 && workingDay?.length ? currentOptions : currentOptions?.slice(
-                                currentTimes?.findIndex(
-                                    e => e?.value === workingDay[key]?.opens_at
-                                ) + 1, currentTimes?.length
+                            ): key > 0 && workingDay?.length ? currentTimes?.slice(indexSecondsPeriudOpensAt + 1, workingDay[key+1]?.opens_at ? afterPeriud : currentTimes?.length) : currentOptions?.slice(
+                                indexSecondsPeriudOpensAt + 1, workingDay[key+1]?.opens_at ? afterPeriud : currentTimes?.length
                             )}
                         />
                       </Form.Item>

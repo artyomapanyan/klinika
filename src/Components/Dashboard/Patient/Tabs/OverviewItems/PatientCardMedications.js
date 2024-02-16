@@ -79,10 +79,11 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
                         dataSource={prescriptions}
                         style={{overflow: 'auto', height: itemsLength > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => {
+
                             return<List.Item >
                                 <List.Item.Meta
                                     title={<div style={{fontWeight: 700}}>{e?.name}</div>}
-                                    description={<div ><span style={{color: '#000000', fontSize: 13}}>{`${e?.frequency} times/day /`}</span><span className={{fontSize: 13}}>{`${e?.dose} pcs `}</span></div>}
+                                    description={<div ><span style={{color: '#000000', fontSize: 13}}>{`${e?.frequency} times/day /`}</span><span className={{fontSize: 13}}>{`${e?.dose} ${e?.unit_type == 1 ? 'pcs' : 'mg'}`}</span></div>}
                                 />
                                 <div style={{marginRight: 5}}>{e?.duration} {t('days')}</div>
 

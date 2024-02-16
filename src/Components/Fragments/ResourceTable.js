@@ -85,6 +85,9 @@ function ResourceTable ({
 
 
     const {loadingState, dataState} = useGetResourceIndex(resource, params,false,false,false,getAll)
+
+    const {setLoading, loading} = loadingState;
+    const {setData, data} = dataState
     const handleTableChange = (pagination, filters, sorter) => {
         let data = {
             ...params,
@@ -105,7 +108,9 @@ function ResourceTable ({
     useEffect(()=>{
         if(typeof updateTable === 'object'){
             setParams({...params,...updateTable})
-        }else{
+        }
+        if(updateTable > 0){
+
             setParams({...params})
         }
 
@@ -131,8 +136,7 @@ function ResourceTable ({
         }
 
     },[tableSFilters])
-    const {setLoading, loading} = loadingState;
-    const {setData, data} = dataState
+
 
 
     const onResourceEdit = (record) => {
@@ -300,7 +304,6 @@ function ResourceTable ({
             link.click();
         });
     }
-
     const importChange = (e) => {
 
         setImportFile(e.target.files[0])
