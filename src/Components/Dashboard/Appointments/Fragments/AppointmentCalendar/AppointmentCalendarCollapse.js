@@ -7,9 +7,9 @@ function AppointmentCalendarCollapse({
 	appointmentObj,
 	setappointmentObj
 }) {
-
 	const filteredData = useMemo(() => {
 		return [...Object.values(item?.doctors ?? {})]
+			.filter(e => !appointmentObj.doctor_id || e.doctor.id === appointmentObj.doctor_id)
 			.map(e => {
 				if (!search?.length) {
 					return e

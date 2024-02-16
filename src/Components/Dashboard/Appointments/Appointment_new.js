@@ -29,6 +29,7 @@ function Appointment() {
 
 	let token = useSelector(state => state.auth.token)
 	let role = useSelector(state => state.auth.selected_role?.key)
+	let doctor_id = useSelector(state => state.auth?.user?.id)
 	let ownerClinics = useSelector(state => state?.owner)
 	let language = useSelector(state => state.app.current_locale)
 	const [serviceTypeState, setServiceTypeState] = useState([])
@@ -43,10 +44,19 @@ function Appointment() {
 	const fetchedUsers = useRef([])
 
 	useEffect(() => {
-		setData(prevState => ({
-			...prevState,
-			clinic_id: ownerClinics.id
-		}))
+		if (role === 'clinic-manager') {
+			setData(prevState => ({
+				...prevState,
+				clinic_id: ownerClinics.id
+			}))
+		}
+
+		if (role === 'doctor') {
+			setData(prevState => ({
+				...prevState,
+				doctor_id: doctor_id
+			}))
+		}
 	}, [ownerClinics.id])
 
 	useEffect(() => {
@@ -299,7 +309,7 @@ function Appointment() {
 				<div className={'add_edit_content'}>
 					<div className='gutter-row'>
 						<Row>
-							{!ownerClinics.id ? (
+							{role !== 'clinic-manager' ? (
 								<Col lg={6} className='gutter-row'>
 									<FormInput
 										label={t('Clinic')}
@@ -308,7 +318,7 @@ function Appointment() {
 										rules={[{ required: true }]}
 										initialData={[data?.clinic].filter(e => e)}
 										inputProps={{
-											onChange: (e) => {
+											onChange: e => {
 												setData(prevState => ({
 													...prevState,
 													service_type: null,
@@ -316,7 +326,7 @@ function Appointment() {
 													patient: undefined
 												}))
 												appointmentFormRef?.current?.setFieldsValue({
-													service_type: null,
+													service_type: null
 												})
 												searchFormRef?.current?.setFieldsValue({
 													patient_id: undefined
@@ -558,7 +568,8 @@ function Appointment() {
 													customSearchKey={'title'}
 													resourceParams={{
 														type: Resources.TaxonomyTypes.SPECIALTY,
-														has_parent: 0
+														has_parent: 0,
+														doctor: role === 'doctor' ? doctor_id : undefined
 													}}
 												/>
 											</Col>
