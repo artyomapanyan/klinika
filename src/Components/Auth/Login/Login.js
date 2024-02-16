@@ -16,7 +16,7 @@ import checkout from "../../../dist/icons/checkout.svg";
 import dayjs from "dayjs";
 
 
-function Login() {
+function Login({goBackBtn}) {
     let dispatch = useDispatch()
     let language = useSelector((state) => state?.app?.current_locale);
     const carouselRef = useRef();
@@ -123,7 +123,7 @@ function Login() {
 
     return (
         <div className={'login_background'}>
-            <AuthHeader />
+            <AuthHeader goBackBtn={goBackBtn}/>
             <div className={'card_div'}>
                 <Carousel dots={false} ref={carouselRef}>
                     <div className={'logo_div'}>

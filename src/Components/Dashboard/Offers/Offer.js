@@ -132,6 +132,8 @@ function Offer() {
      }
  }
 
+    console.log(data)
+
 let enTitle = <span><span style={{color: 'red'}}>* </span>{('EN title')}</span>
 let arTitle = <span><span style={{color: 'red'}}>* </span>{('AR title')}</span>
 let enContent = <span><span style={{color: 'red'}}>* </span>{('EN content')}</span>
@@ -353,6 +355,8 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 0}}
                                        resource={'Taxonomy'}/>
 
+
+
                             <FormInput inputProps={{
                                 mode:'multiple',
                                 onChange:(e,dat)=> {
@@ -382,10 +386,10 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
                                        resourceParams={{
+                                           //doctors: data?.doctors,
                                            parent: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
-
 
                             <FormInput inputProps={{
                                 mode:'multiple',

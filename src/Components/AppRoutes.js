@@ -20,11 +20,11 @@ import AccountDeleteProcess from "./AccountDeleteProcess/AccountDeleteProcess";
 
 function AppRoutes(){
     return(<Routes>
-                <Route path={'/'} element={<General/>}></Route>
+                <Route path={'/'} element={<Login goBackBtn={false}/>}></Route>
                 <Route path={'/password/reset/:token'} element={<Reset/>}></Route>
                 <Route path={'forgot'} element={<Forgot/>}></Route>
                 <Route path={'dashboard/*'} element={<AuthCheck><AppLayout/></AuthCheck>}></Route>
-                <Route path={'login'} element={<Login/>}></Route>
+                <Route path={'login'} element={<Login goBackBtn={true}/>}></Route>
                 <Route path={'offers'} element={<AllOffers/>}></Route>
             {/*<Route path={'offers/:id'} element={<OfferBook/>}></Route>*/}
             <Route path={'offers/:id'} element={<OfferBookNew/>}></Route>

@@ -62,11 +62,23 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                 setLoading(false)
 
                 if (response?.appointment?.id) {
-                    //setShowthank(true)
-                    //console.log('response?.redirect ', response?.redirect)
-
                     document.location.href = response?.redirect
+                } else {
+                    setShow(false)
+                    setShowPayment(false)
+                    setVerify(0)
+                    setResponseCodeState(null)
+                    setNamesState({})
+                    setDataState({
+                        doctor_id: dataState?.doctor_id
+                    })
+                    setShowButtons(true)
+                    setCodeAndNumberState(prevState => ({
+                        phone_country_code: '966'
+                    }))
+                    setTotalState(false)
                 }
+
             }
         )
     }
