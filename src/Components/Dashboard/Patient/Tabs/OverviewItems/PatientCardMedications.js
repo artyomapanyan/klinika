@@ -79,7 +79,7 @@ function PatientCardMedications({patientId, tab, dataClinic}) {
                         dataSource={prescriptions}
                         style={{overflow: 'auto', height: itemsLength > 3 ? 220 : 250, padding: language === 'ar' ? '0px 0px 0px 25px' : '0px 25px 0px 0px'}}
                         renderItem={(e) => {
-                            console.log(e)
+
                             return<List.Item >
                                 <List.Item.Meta
                                     title={<div style={{fontWeight: 700}}>{e?.name}</div>}

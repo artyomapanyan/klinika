@@ -116,7 +116,7 @@ function ResourceTable ({
 
     },[updateTable])
 
-    console.log(data, 't data')
+
 
     useEffect(()=>{
         if(tableSFilters && Object.keys(tableSFilters).length){
