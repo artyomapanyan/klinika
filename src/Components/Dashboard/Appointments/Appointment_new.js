@@ -606,6 +606,7 @@ function Appointment() {
 													resourceParams={{
 														type: Resources.TaxonomyTypes.SPECIALTY,
 														has_parent: 0,
+														clinic: data?.clinic_id,
 														doctor: role === 'doctor' ? doctor_id : undefined
 													}}
 												/>
