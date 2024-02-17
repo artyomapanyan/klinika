@@ -4,6 +4,7 @@ import { Form, Row, Col } from 'antd'
 import { t } from 'i18next'
 import FormInput from '../../../Fragments/FormInput'
 import Resources from '../../../../store/Resources'
+import dayjs from 'dayjs'
 
 function CreatePatient({ data, formRef, setNationality }) {
 	let language = useSelector(state => state.app.current_locale)
@@ -112,7 +113,11 @@ function CreatePatient({ data, formRef, setNationality }) {
 							name={'phone_number'}
 							maxLength={10}
 							initialValue={data?.phone_number}
-							rules={[{ required: !data?.id }]}
+							rules={[{ required: !data?.id},{
+								pattern: /^\d{6,10}$/,
+								message: 'Please enter a valid phone number',
+							  }
+							]}
 						/>
 					</Col>
 					<Col lg={8} className='gutter-row'>
@@ -122,13 +127,14 @@ function CreatePatient({ data, formRef, setNationality }) {
 							initialValue={data?.dob}
 							inputType={'date'}
 							rules={[{ required: !data?.id }]}
-						/>
+							disabledDate={(current) => current && current.isAfter(dayjs(), 'day')}
+							/>
 					</Col>
 					<Col lg={8} className='gutter-row'>
 						<FormInput
 							label={t('Email')}
 							name={'email'}
-							rules={[{ required: !data?.id }]}
+							rules={[{ required: !data?.id, type: 'email' }]}
 							initialValue={data?.email}
 						/>
 					</Col>
