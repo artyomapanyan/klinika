@@ -17,34 +17,36 @@ import dayjs from 'dayjs'
 const resource = 'Appointment'
 
 function Appointment() {
-	const [saveLoading, setSaveLoading] = useState(false)
-	const [verifyLoading, setVerifyLoading] = useState(false)
-	const [sendCodeLoading, setSendCodeLoading] = useState(false)
-
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
-	const searchFormRef = useRef()
-	const patientFormRef = useRef()
-	const appointmentFormRef = useRef()
-
+	
 	let token = useSelector(state => state.auth.token)
 	let role = useSelector(state => state.auth.selected_role?.key)
 	let doctor_id = useSelector(state => state.auth?.user?.id)
 	let ownerClinics = useSelector(state => state?.owner)
 	let language = useSelector(state => state.app.current_locale)
-	const [serviceTypeState, setServiceTypeState] = useState([])
+
+	const [saveLoading, setSaveLoading] = useState(false)
+	const [verifyLoading, setVerifyLoading] = useState(false)
+	const [sendCodeLoading, setSendCodeLoading] = useState(false)
 
 	const [data, setData] = useState(null)
+	const [serviceTypeState, setServiceTypeState] = useState([])
 	const [patient, setPatient] = useState(null)
 	const [codeAndPhone, setCodeAndPhone] = useState({
 		phone_country_code: 966,
 		phone_number: null
 	})
 	const [pageState, setPageState] = useState('initial')
-	const fetchedUsers = useRef([])
 	const [invoicePrice, setInvoicePrice] = useState(0)
 	const [nationality, setNationality] = useState(null)
 
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
+	const searchFormRef = useRef()
+	const patientFormRef = useRef()
+	const appointmentFormRef = useRef()
+	const fetchedUsers = useRef([])
+
+	//assign user clinic and doctor id to the appointment object
 	useEffect(() => {
 		if (role === 'clinic-manager') {
 			setData(prevState => ({
@@ -61,6 +63,7 @@ function Appointment() {
 		}
 	}, [ownerClinics.id])
 
+	//change page state when changing patient id
 	useEffect(() => {
 		if (data?.patient_id === undefined) {
 			setPageState('initial')
@@ -74,59 +77,6 @@ function Appointment() {
 			setPatient(fetchedUsers.current?.find(i => i.id === data?.patient_id))
 		}
 	}, [data?.patient_id])
-
-	useEffect(() => {
-		if (data?.clinic_id) {
-			postResource('Clinic', 'single', token, data?.clinic_id).then(
-				responses => {
-					setServiceTypeState(
-						[
-							{
-								service: responses?.has_telehealth_service,
-								id: 'telehealth',
-								name: 'Telehealth'
-							},
-							{
-								service: responses?.has_clinic_visit_service,
-								id: 'clinic_visit',
-								name: 'Clinic Visit'
-							},
-							{
-								service: responses?.has_home_visit_service,
-								id: 'home_visit',
-								name: 'Home Visit'
-							},
-							{
-								service: responses?.has_physical_therapy_home_visit_service,
-								id: 'physical_therapy_home_visit',
-								name: 'Physical Therapy Home Visit'
-							},
-							{
-								service: responses?.has_physical_therapy_clinic_visit_service,
-								id: 'physical_therapy_clinic_visit',
-								name: 'Physical Therapy Clinic Visit'
-							},
-							{
-								service: responses?.has_laboratory_home_visit_service,
-								id: 'laboratory_home_visit',
-								name: 'Laboratory Home Visit'
-							},
-							{
-								service: responses?.has_nursing_service,
-								id: 'nursing',
-								name: 'Nursing'
-							},
-							{
-								service: responses?.has_laboratory_clinic_visit_service,
-								id: 'laboratory_clinic_visit',
-								name: 'Laboratory Clinic Visit'
-							}
-						].filter(el => el.service === true)
-					)
-				}
-			)
-		}
-	}, [data?.clinic_id])
 
 	const goBack = () => {
 		navigate(-1)
@@ -182,7 +132,13 @@ function Appointment() {
 		}
 	}
 
-	const onSendCode = () => {
+	const handleMapItems = (item, name) => {
+		name = item.phone_code ? `(${item.phone_code}) ${item.name}` : null
+		item.id = item.phone_code
+		return [name, item]
+	}
+
+	const sendCode = () => {
 		setSendCodeLoading(true)
 		postResource(
 			'PatientsVerificationCode',
@@ -196,7 +152,7 @@ function Appointment() {
 		})
 	}
 
-	const onVerify = () => {
+	const verifyNumber = () => {
 		if (data?.code?.length === 4) {
 			setVerifyLoading(true)
 			postResource('PatientsVerificationCode', 'PatientCodeVerify', token, '', {
@@ -216,46 +172,121 @@ function Appointment() {
 		}
 	}
 
-	const handleMapItems = (item, name) => {
-		name = item.phone_code ? `(${item.phone_code}) ${item.name}` : null
-		item.id = item.phone_code
-		return [name, item]
+	//load service types
+	useEffect(() => {
+		if (data?.clinic_id) {
+			postResource('Clinic', 'single', token, data?.clinic_id).then(
+				responses => {
+					setServiceTypeState(
+						[
+							{
+								service: responses?.has_telehealth_service,
+								id: 'telehealth',
+								name: 'Telehealth'
+							},
+							{
+								service: responses?.has_clinic_visit_service,
+								id: 'clinic_visit',
+								name: 'Clinic Visit'
+							},
+							{
+								service: responses?.has_home_visit_service,
+								id: 'home_visit',
+								name: 'Home Visit'
+							},
+							{
+								service: responses?.has_physical_therapy_home_visit_service,
+								id: 'physical_therapy_home_visit',
+								name: 'Physical Therapy Home Visit'
+							},
+							{
+								service: responses?.has_physical_therapy_clinic_visit_service,
+								id: 'physical_therapy_clinic_visit',
+								name: 'Physical Therapy Clinic Visit'
+							},
+							{
+								service: responses?.has_laboratory_home_visit_service,
+								id: 'laboratory_home_visit',
+								name: 'Laboratory Home Visit'
+							},
+							{
+								service: responses?.has_nursing_service,
+								id: 'nursing',
+								name: 'Nursing'
+							},
+							{
+								service: responses?.has_laboratory_clinic_visit_service,
+								id: 'laboratory_clinic_visit',
+								name: 'Laboratory Clinic Visit'
+							}
+						].filter(el => el.service === true)
+					)
+				}
+			)
+		}
+	}, [data?.clinic_id])
+
+	//Calculate the invoice price
+	useEffect(() => {
+		if (
+			data?.booked_at &&
+			((pageState === 'creation' && nationality) || data.patient_id)
+		) {
+			let appointment = { ...data }
+
+			if (!appointment?.patient_id) {
+				appointment.patient = { country_id: nationality }
+				delete appointment.patient_id
+			}
+			postResource(resource, 'InvoicePrice', token, '', appointment).then(
+				response => {
+					setInvoicePrice(response.total_price ?? 0)
+				}
+			)
+		} else {
+			setInvoicePrice(0)
+		}
+	}, [data, nationality])
+
+	const removeAppointment = () => {
+		setData(prevState => ({
+			...prevState,
+			booked_at: null,
+			doctor_id: null,
+			service_type: null,
+			speciality_id: null,
+			offer_id: null,
+			lab_tests: [],
+			lab_packages: [],
+			nursing_tasks: []
+		}))
+		setInvoicePrice(0)
 	}
 
 	const saveAppointment = () => {
-		let appointment = Object.assign({}, data)
+		let appointment = { ...data }
 		if (pageState === 'creation') {
 			delete appointment.patient_id
-			patientFormRef.current
-				.validateFields()
-				.then(() => {
-					const patient = patientFormRef.current.getFieldsValue()
-					appointment.patient = {
-						...patient,
-						dob: patient.dob?.format('YYYY-MM-DD'),
-						phone_country_code:
-							patient.phone_country_code.length > 3
-								? patient?.phone_country_code?.slice(
-										patient.phone_country_code.indexOf('(') + 1,
-										patient.phone_country_code?.indexOf(')')
-								  )
-								: patient.phone_country_code
-					}
-					createAppointment(appointment)
-				})
-				.catch(error => {
-					console.error('Validation failed:', error)
-				})
+			patientFormRef.current.validateFields().then(() => {
+				const patient = patientFormRef.current.getFieldsValue()
+				appointment.patient = {
+					...patient,
+					dob: patient.dob?.format('YYYY-MM-DD'),
+					phone_country_code:
+						patient.phone_country_code.length > 3
+							? patient?.phone_country_code?.slice(
+									patient.phone_country_code.indexOf('(') + 1,
+									patient.phone_country_code?.indexOf(')')
+							  )
+							: patient.phone_country_code
+				}
+				createAppointment(appointment)
+			})
 		} else {
 			delete appointment.patient
-			searchFormRef.current
-				.validateFields()
-				.then(() => {
-					createAppointment(appointment)
-				})
-				.catch(error => {
-					console.error('Validation failed:', error)
-				})
+			searchFormRef.current.validateFields().then(() => {
+				createAppointment(appointment)
+			})
 		}
 	}
 
@@ -274,51 +305,6 @@ function Appointment() {
 				})
 				setSaveLoading(false)
 			})
-	}
-
-	useEffect(() => {
-		if (
-			data?.booked_at &&
-			((pageState === 'creation' && nationality) || data.patient_id)
-		) {
-			let appointment = Object.assign({}, data)
-
-			if (!appointment?.patient_id) {
-				appointment.patient = { ...patientFormRef.current.getFieldsValue(),
-					phone_country_code:
-							patient.phone_country_code.length > 3
-								? patient?.phone_country_code?.slice(
-										patient.phone_country_code.indexOf('(') + 1,
-										patient.phone_country_code?.indexOf(')')
-								  )
-								: patient.phone_country_code
-				}
-				delete appointment.patient_id
-			}
-			postResource(resource, 'InvoicePrice', token, '', appointment).then(
-				response => {
-					setInvoicePrice(response.total_price ? response.total_price : 0)
-				}
-			)
-		}
-		else{
-			setInvoicePrice(0);
-		}
-	}, [data, nationality])
-
-	const removeAppointment = () => {
-		setData(prevState => ({
-			...prevState,
-			booked_at: null,
-			doctor_id: null,
-			service_type: null,
-			speciality_id: null,
-			offer_id: null,
-			lab_tests: [],
-			lab_packages: [],
-			nursing_tasks: []
-		}))
-		setInvoicePrice(0)
 	}
 
 	return (
@@ -478,7 +464,7 @@ function Appointment() {
 								)}
 								{pageState === 'unauthorized' || pageState === 'codeSent' ? (
 									<Button
-										onClick={onSendCode}
+										onClick={sendCode}
 										type={'primary'}
 										style={{ marginTop: 4 }}
 										className={'all_offers_book_btns'}
@@ -504,7 +490,7 @@ function Appointment() {
 									</Col>
 									<Col lg={4} className='gutter-row'>
 										<Button
-											onClick={onVerify}
+											onClick={verifyNumber}
 											type={'primary'}
 											style={{ marginTop: 4 }}
 											className={'all_offers_book_btns'}
@@ -524,7 +510,7 @@ function Appointment() {
 									<Col lg={12} className='gutter-row'>
 										{t("Client didn't get a message")}? <br />
 										<span
-											onClick={onSendCode}
+											onClick={sendCode}
 											style={{
 												color: '#BF539E',
 												fontWeight: 700,
