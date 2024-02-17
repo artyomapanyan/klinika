@@ -16,16 +16,18 @@ function AppointmentCalendarInnCollapse({
 	return (
 		<tbody>
 			<tr id='hidden_row1' className='hide'>
-				<td className='hiddenTableRow__col'>
-					<div className='hiddenTableRow__col-item'>
-						<div className='circleImageHolder'>
-							<Avatar size={36} src={docObj.doctor.avatar?.url} />
+				{!appointmentObj?.doctor_id ? (
+					<td className='hiddenTableRow__col'>
+						<div className='hiddenTableRow__col-item'>
+							<div className='circleImageHolder'>
+								<Avatar size={36} src={docObj.doctor.avatar?.url} />
+							</div>
+							<p className={'cl_manager_calendar_dr_name'}>
+								{docObj?.doctor?.first} {docObj?.doctor?.last}
+							</p>
 						</div>
-						<p className={'cl_manager_calendar_dr_name'}>
-							{docObj?.doctor?.first} {docObj?.doctor?.last}
-						</p>
-					</div>
-				</td>
+					</td>
+				) : null}
 				{Object.keys(docObj?.availability ?? {}).map((key, k) => {
 					return (
 						<td
@@ -87,10 +89,10 @@ function AppointmentCalendarInnCollapse({
 							key={Math.random()}
 							doctor={docObj?.doctor}
 							specialty={specialty}
-                            selectedDate={selectedDate}
+							selectedDate={selectedDate}
 							setSelectedDate={setSelectedDate}
 							appointmentObj={appointmentObj}
-                            setappointmentObj={setappointmentObj}
+							setappointmentObj={setappointmentObj}
 						/>
 					) : null}
 				</Modal>

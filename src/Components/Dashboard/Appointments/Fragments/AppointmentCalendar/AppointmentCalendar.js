@@ -79,7 +79,8 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 													appointmentObj?.service_type !==
 														'laboratory_clinic_visit' &&
 													appointmentObj?.service_type !==
-														'laboratory_home_visit' ? (
+														'laboratory_home_visit'  &&
+														!appointmentObj?.doctor_id? (
 														<td>
 															<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
 																<Input
