@@ -530,6 +530,7 @@ function Appointment() {
 			</Form>
 			{pageState === 'creation' ? (
 				<CreatePatient
+					data={patient}
 					formRef={patientFormRef}
 					setNationality={setNationality}
 				></CreatePatient>
