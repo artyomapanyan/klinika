@@ -36,7 +36,9 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 					setData({
 						clinic_id: response.clinic.id,
 						clinic: response.clinic,
-						workload: Object.values(response.workload)
+						workload: Object.values(response.workload).filter(
+							e => e.service === appointmentObj.service_type
+						)
 					})
 					setLoading(false)
 				})
