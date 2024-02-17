@@ -126,24 +126,127 @@ function AppointmentCalendarModal({
 					{loading ? (
 						<Preloader />
 					) : times.length ? (
-						<Form.Item
-							name={'time'}
-							rules={[
-								{
-									required: true
-								}
-							]}
-						>
-							<Radio.Group
-								className={'hours_select_cl_manager_modal'}
-								options={times.map(e => ({
-									label: dayjs('2023-10-10' + e).format('h:mmA'),
-									value: e
-								}))}
-								optionType='button'
-								buttonStyle='solid'
+						<div>
+							<Form.Item
+								name={'time'}
+								rules={[
+									{
+										required: true
+									}
+								]}
+							>
+								<Radio.Group
+									className={'hours_select_cl_manager_modal'}
+									options={times.map(e => ({
+										label: dayjs('2023-10-10' + e).format('h:mmA'),
+										value: e
+									}))}
+									optionType='button'
+									buttonStyle='solid'
+								/>
+							</Form.Item>
+							{appointmentObj?.service_type === 'nursing' ? (
+								<FormInput
+									label={t('Nursing tasks')}
+									disableClear={true}
+									name={'nursing_tasks'}
+									inputProps={{
+										mode: 'multiple'
+									}}
+									rules={[{ required: true }]}
+									resourceParams={{
+										clinic: appointmentObj.clinic_id,
+										status: 2
+									}}
+									inputType={'resourceSelect'}
+									resource={'NursingTask'}
+								/>
+							) : null}
+							{appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+							appointmentObj?.service_type === 'laboratory_home_visit' ? (
+								<div>
+									<FormInput
+										label={t('Lab Tests')}
+										name={'lab_tests'}
+										rules={[
+											{
+												required:
+													!appointmentObj?.lab_packages &&
+													!appointmentObj?.lab_packages?.length,
+												message: 'Please enter Lab test or Lab package'
+											}
+										]}
+										inputType={'resourceSelect'}
+										resourceParams={{
+											clinic: appointmentObj.clinic_id,
+											status: 2
+										}}
+										inputProps={{
+											mode: 'multiple'
+										}}
+										resource={'LabTest'}
+									/>
+
+									<FormInput
+										label={t('Lab Packages')}
+										name={'lab_packages'}
+										rules={[
+											{
+												required:
+													!appointmentObj?.lab_tests ||
+													!appointmentObj?.lab_tests?.length,
+												message: 'Please enter Lab test or Lab package'
+											}
+										]}
+										inputType={'resourceSelect'}
+										resourceParams={{
+											clinic: appointmentObj.clinic_id,
+											status: 2
+										}}
+										resource={'LabPackage'}
+									/>
+								</div>
+							) : null}
+							{appointmentObj.service_type === 'home_visit' ||
+							appointmentObj.service_type === 'physical_therapy_home_visit' ||
+							appointmentObj.service_type === 'laboratory_home_visit' ||
+							appointmentObj.service_type === 'nursing' ? (
+								<FormInput
+									label={t('Visit Address')}
+									name={'address1'}
+									rules={[
+										{
+											required: true,
+											message: 'Please enter visit address'
+										}
+									]}
+								/>
+							) : (
+								<div></div>
+							)}
+							<FormInput
+								label={t('Offers')}
+								name={'offer_id'}
+								inputType={'resourceSelect'}
+								initialValue={null}
+								initialData={[]}
+								resourceParams={{
+									clinic: appointmentObj.clinic_id,
+									status: 2,
+									approved: 1,
+									doctor: doctor?.id,
+									for_date: selectedDate
+								}}
+								resource={'Offer'}
 							/>
-						</Form.Item>
+							<Button
+								type={'primary'}
+								htmlType={'submit'}
+								style={{ width: '100%', height: '44px' }}
+							>
+								{t('Add')}
+							</Button>
+						</div>
 					) : (
 						<div></div>
 					)}
@@ -165,108 +268,6 @@ function AppointmentCalendarModal({
 						<div></div>
 					)}
 				</div>
-
-				{appointmentObj?.service_type === 'nursing' ? (
-					<FormInput
-						label={t('Nursing tasks')}
-						disableClear={true}
-						name={'nursing_tasks'}
-						inputProps={{
-							mode: 'multiple'
-						}}
-						rules={[{ required: true }]}
-						resourceParams={{
-							clinic: appointmentObj.clinic_id,
-							status: 2
-						}}
-						inputType={'resourceSelect'}
-						resource={'NursingTask'}
-					/>
-				) : null}
-				{appointmentObj?.service_type === 'laboratory_clinic_visit' ||
-				appointmentObj?.service_type === 'laboratory_home_visit' ? (
-					<div>
-						<FormInput
-							label={t('Lab Tests')}
-							name={'lab_tests'}
-							rules={[
-								{
-									required:
-										!appointmentObj?.lab_packages &&
-										!appointmentObj?.lab_packages?.length,
-									message: 'Please enter Lab test or Lab package'
-								}
-							]}
-							inputType={'resourceSelect'}
-							resourceParams={{
-								clinic: appointmentObj.clinic_id,
-								status: 2
-							}}
-							inputProps={{
-								mode: 'multiple'
-							}}
-							resource={'LabTest'}
-						/>
-
-						<FormInput
-							label={t('Lab Packages')}
-							name={'lab_packages'}
-							rules={[
-								{
-									required:
-										!appointmentObj?.lab_tests ||
-										!appointmentObj?.lab_tests?.length,
-									message: 'Please enter Lab test or Lab package'
-								}
-							]}
-							inputType={'resourceSelect'}
-							resourceParams={{
-								clinic: appointmentObj.clinic_id,
-								status: 2
-							}}
-							resource={'LabPackage'}
-						/>
-					</div>
-				) : null}
-				{appointmentObj.service_type === 'home_visit' ||
-				appointmentObj.service_type === 'physical_therapy_home_visit' ||
-				appointmentObj.service_type === 'laboratory_home_visit' ||
-				appointmentObj.service_type === 'nursing' ? (
-					<FormInput
-						label={t('Visit Address')}
-						name={'address1'}
-						rules={[
-							{
-								required: true,
-								message: 'Please enter visit address'
-							}
-						]}
-					/>
-				) : (
-					<div></div>
-				)}
-				<FormInput
-					label={t('Offers')}
-					name={'offer_id'}
-					inputType={'resourceSelect'}
-					initialValue={null}
-					initialData={[]}
-					resourceParams={{
-						clinic: appointmentObj.clinic_id,
-						status: 2,
-						approved: 1,
-						doctor: doctor?.id,
-						for_date: selectedDate
-					}}
-					resource={'Offer'}
-				/>
-				<Button
-					type={'primary'}
-					htmlType={'submit'}
-					style={{ width: '100%', height: '44px' }}
-				>
-					{t('Add')}
-				</Button>
 			</Form>
 
 			<div></div>

@@ -42,7 +42,8 @@ function Appointment() {
 	})
 	const [pageState, setPageState] = useState('initial')
 	const fetchedUsers = useRef([])
-	const [invoicePrice, setInvoicePrice] = useState(null)
+	const [invoicePrice, setInvoicePrice] = useState(0)
+	const [nationality, setNationality] = useState(null)
 
 	useEffect(() => {
 		if (role === 'clinic-manager') {
@@ -65,6 +66,7 @@ function Appointment() {
 			setPageState('initial')
 		} else if (data?.patient_id === null) {
 			setPageState('creation')
+			setNationality(null)
 		} else if (data?.patient_id === '0') {
 			setPageState('unauthorized')
 		} else {
@@ -275,13 +277,34 @@ function Appointment() {
 	}
 
 	useEffect(() => {
-		if (data?.booked_at && (data.patient || data.patient_id)) {
-			postResource(resource, 'InvoicePrice', token, '', data)
-				.then(response => {
-					setInvoicePrice(response.total_price)
-				})
+		if (
+			data?.booked_at &&
+			((pageState === 'creation' && nationality) || data.patient_id)
+		) {
+			let appointment = Object.assign({}, data)
+
+			if (!appointment?.patient_id) {
+				appointment.patient = { ...patientFormRef.current.getFieldsValue(),
+					phone_country_code:
+							patient.phone_country_code.length > 3
+								? patient?.phone_country_code?.slice(
+										patient.phone_country_code.indexOf('(') + 1,
+										patient.phone_country_code?.indexOf(')')
+								  )
+								: patient.phone_country_code
+				}
+				delete appointment.patient_id
+			}
+			postResource(resource, 'InvoicePrice', token, '', appointment).then(
+				response => {
+					setInvoicePrice(response.total_price ? response.total_price : 0)
+				}
+			)
 		}
-	}, [data?.booked_at, data?.patient, data?.patient_id])
+		else{
+			setInvoicePrice(0);
+		}
+	}, [data, nationality])
 
 	const removeAppointment = () => {
 		setData(prevState => ({
@@ -295,6 +318,7 @@ function Appointment() {
 			lab_packages: [],
 			nursing_tasks: []
 		}))
+		setInvoicePrice(0)
 	}
 
 	return (
@@ -389,7 +413,7 @@ function Appointment() {
 										/>
 									}
 									inputType={'resourceSelect'}
-									rules={[{ required: true }]}
+									rules={[{ required: pageState !== 'creation' }]}
 									searchConfigs={{ minLength: 6 }}
 									inputProps={{
 										onSearch: e => {
@@ -519,7 +543,10 @@ function Appointment() {
 				</div>
 			</Form>
 			{pageState === 'creation' ? (
-				<CreatePatient formRef={patientFormRef}></CreatePatient>
+				<CreatePatient
+					formRef={patientFormRef}
+					setNationality={setNationality}
+				></CreatePatient>
 			) : (
 				<div></div>
 			)}

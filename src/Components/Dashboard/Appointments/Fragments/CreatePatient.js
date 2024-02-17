@@ -5,7 +5,7 @@ import { t } from 'i18next'
 import FormInput from '../../../Fragments/FormInput'
 import Resources from '../../../../store/Resources'
 
-function CreatePatient({ data, formRef }) {
+function CreatePatient({ data, formRef, setNationality }) {
 	let language = useSelector(state => state.app.current_locale)
 
 	const handleMapItems = (item, name) => {
@@ -42,6 +42,11 @@ function CreatePatient({ data, formRef }) {
 							rules={[{ required: !data?.id }]}
 							initialData={data?.nationality ? [data?.nationality] : []}
 							resource={'Country'}
+							inputProps={{
+								onChange: e => {
+									setNationality(e);
+								}
+							}}
 						/>
 					</Col>
 					<Col lg={8} className='gutter-row'>
