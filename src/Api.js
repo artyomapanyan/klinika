@@ -252,6 +252,10 @@ let api = {
                 url: `${endpoint}${version}/appointments/`,
                 method: 'PUT',
             },
+            InvoicePrice:{
+                url: `${endpoint}${version}/appointments/get-invoice-price`,
+                method: 'POST',
+            },
         }
     },
     {
@@ -538,6 +542,20 @@ let api = {
             InvoicesStatuses: {
                 url: `${endpoint}${version}/dashboard/invoices/invoice-statuses/`,
                 method: 'GET',
+            },
+        }
+    },
+    {
+        url: 'dashboard',
+        resource: 'Dashboard',
+            custom: {
+                DoctorWorkload: {
+                    url: `${endpoint}${version}/dashboard/doctors-workload/`,
+                    method: 'GET',
+                },
+                ClinicWorkload: {
+                    url: `${endpoint}${version}/dashboard/clinic-workload/`,
+                    method: 'GET',
             },
         }
     },
