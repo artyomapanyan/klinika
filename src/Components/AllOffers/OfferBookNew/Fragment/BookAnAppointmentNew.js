@@ -61,8 +61,23 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
             response => {
                 setLoading(false)
 
+
                 if (response?.appointment?.id) {
                     document.location.href = response?.redirect
+                }
+                if(response?.response?.status == 408) {
+                    //setShow(false)
+                    setShowPayment(false)
+                    setVerify(0)
+                    setResponseCodeState(null)
+                    setNamesState({})
+                    //setDataState({})
+                    //setDoctorId('')
+                    //setDoctorKey('')
+                    setCodeAndNumberState(prevState => ({
+                        phone_country_code: '966'
+                    }))
+                    setTotalState(false)
                 } else {
                     setShow(false)
                     setShowPayment(false)
@@ -185,7 +200,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
         setDoctorId('')
         setDoctorKey('')
         setCodeAndNumberState(prevState => ({
-            phone_country_code: '966'
+            phone_country_code: '966',
         }))
         setTotalState(false)
     }
