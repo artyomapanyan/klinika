@@ -320,7 +320,6 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
 
-
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
             {
