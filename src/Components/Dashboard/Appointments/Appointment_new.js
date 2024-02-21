@@ -9,7 +9,7 @@ import FormInput from '../../Fragments/FormInput'
 import CreatePatient from './Fragments/CreatePatient'
 import Resources from '../../../store/Resources'
 import { LeftOutlined } from '@ant-design/icons'
-import clinic_man_user_icon from '../../../dist/icons/clinic_man_user_icon.png'
+import user_icon from '../../../dist/icons/user-search.svg'
 import AppointmentCalendar from './Fragments/AppointmentCalendar/AppointmentCalendar'
 import { UserOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
@@ -395,8 +395,8 @@ function Appointment() {
 									name={'patient_id'}
 									suffixIcon={
 										<img
-											src={clinic_man_user_icon}
-											alt={'clinic_man_user_icon'}
+											src={user_icon}
+											alt={'user_icon'}
 										/>
 									}
 									inputType={'resourceSelect'}
