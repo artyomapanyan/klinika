@@ -10,6 +10,7 @@ import CreatePatient from './Fragments/CreatePatient'
 import Resources from '../../../store/Resources'
 import { LeftOutlined } from '@ant-design/icons'
 import user_icon from '../../../dist/icons/user-search.svg'
+import x_black from "../../../dist/icons/x_black.png";
 import AppointmentCalendar from './Fragments/AppointmentCalendar/AppointmentCalendar'
 import { UserOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
@@ -313,12 +314,12 @@ function Appointment() {
 		<div className={'app_show_big_div'}>
 			<div>
 				<Button
-					style={{ margin: '40px 24px', height: 45, width: 45 }}
+					style={{ margin: '40px 24px', height: 45, width: 45, paddingTop: 10 }}
 					onClick={goBack}
 				>
 					<LeftOutlined />
 				</Button>
-				<span style={{ fontSize: 24, fontWeight: 700, fontFamily: 'Inter' }}>
+				<span style={{ fontSize: 24, fontWeight: 700, fontFamily: 'Inter', marginLeft:-15 }}>
 					{t('Add new Appointment')}
 				</span>
 			</div>
@@ -555,7 +556,11 @@ function Appointment() {
 					layout='vertical'
 				>
 					<div className={'add_edit_content'}>
-						<h2 style={{ fontWeight: 'bold' }}>{t('Appointment')}</h2>
+						<Row>
+					<Col lg={8} className='gutter-row'>
+					<h2 style={{ fontWeight: 'bold', paddingLeft: 7}}>{t('Appointment')}</h2>
+					</Col>
+				</Row>
 						{!data?.booked_at ? (
 							<div>
 									<Row>
@@ -629,7 +634,7 @@ function Appointment() {
 													icon={<UserOutlined />}
 												/>
 												<div>
-													<div className={'cl_manager_modal_dr_name'}>
+													<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:400}}>
 														{data?.doctor?.first} {data?.doctor?.last}
 													</div>
 												</div>
@@ -639,7 +644,7 @@ function Appointment() {
 										<Col lg={12} className='gutter-row'>
 											<Space>
 												<div>
-													<div className={'cl_manager_modal_dr_name'}>
+													<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:400}}>
 														{data?.service_type[0]?.toUpperCase() +
 															data?.service_type
 																?.slice(1)
@@ -653,7 +658,7 @@ function Appointment() {
 										<Col lg={6} className='gutter-row'>
 											<Space>
 												<div>
-													<div className={'cl_manager_modal_dr_name'}>
+													<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:400}}>
 														{data.specialty}
 													</div>
 												</div>
@@ -663,7 +668,7 @@ function Appointment() {
 									<Col lg={5} className='gutter-row'>
 										<Space>
 											<div>
-												<div className={'cl_manager_modal_dr_name'}>
+												<div className={'cl_manager_modal_dr_name'} style={{fontWeight:400}}>
 													{invoicePrice} SAR
 												</div>
 											</div>
@@ -672,7 +677,7 @@ function Appointment() {
 									<Col lg={6} className='gutter-row'>
 										<Space>
 											<div>
-												<div className={'cl_manager_modal_dr_name'}>
+												<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:600}}>
 													{dayjs(data.booked_at).format('h:mm A, D MMM YY')}
 												</div>
 											</div>
@@ -686,7 +691,7 @@ function Appointment() {
 													style={{ cursor: 'pointer' }}
 													onClick={removeAppointment}
 												>
-													X
+                                                    <img className={'del_icin'} alt={'x_black'} src={x_black}/>
 												</div>
 											</div>
 										</Space>
@@ -694,7 +699,6 @@ function Appointment() {
 								</Row>
 								<br />
 								<br />
-								<Space className={'create_apdate_btns'}>
 									<Button
 										loading={saveLoading}
 										size={'large'}
@@ -704,7 +708,6 @@ function Appointment() {
 									>
 										{t('Save Appointment')}
 									</Button>
-								</Space>
 							</div>
 						)}
 					</div>
