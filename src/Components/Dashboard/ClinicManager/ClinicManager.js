@@ -17,10 +17,30 @@ function ClinicManager() {
 
     let token = useSelector((state) => state.auth.token);
 
-    const [date, setDate] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
-    const [loading, setLoading] = useState(false)
+    // const [date, setDate] = useState([dayjs().startOf('week'), dayjs().endOf('week')])
+    // const [loading, setLoading] = useState(false)
     const [labNursState, setLabNursState] = useState({})
 
+    const [loading, setLoading] = useState(true)
+    const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
+    const [data, setData] = useState({workload: []});
+    const [update,setUpdate] = useState(0);
+
+
+    // useEffect(() => {
+    //     setLoading(true)
+    //     postResource('ClinicManager', 'ClinicWorkload', token, '', {
+    //         from: date[0].format('YYYY-MM-DD'),
+    //         to: date[1].format('YYYY-MM-DD')
+    //     }).then((response) => {
+    //         setLabNursState(response)
+    //         setLoading(false)
+    //
+    //
+    //
+    //     })
+    //
+    // }, [])
 
     useEffect(() => {
         setLoading(true)
@@ -28,14 +48,19 @@ function ClinicManager() {
             from: date[0].format('YYYY-MM-DD'),
             to: date[1].format('YYYY-MM-DD')
         }).then((response) => {
+
+            setData({
+                clinic_id:response.clinic.id,
+                clinic:response.clinic,
+                workload:Object.values(response.workload)
+            })
             setLabNursState(response)
             setLoading(false)
 
 
-
         })
 
-    }, [])
+    }, [date, update])
 
 
     return(
@@ -71,7 +96,14 @@ function ClinicManager() {
                 </div>
                 <div>
                     {
-                        loading ? <Preloader/> : Array.isArray(labNursState?.workload) ? <div></div> : <NursLabCalendar />
+                        loading ? <Preloader/> : Array.isArray(labNursState?.workload) ? <div></div> : <NursLabCalendar loading={loading}
+                                                                                                                        date={date}
+                                                                                                                        setDate={setDate}
+                                                                                                                        data={data}
+                                                                                                                        setData={setData}
+                                                                                                                        update={update}
+                                                                                                                        setUpdate={setUpdate}
+                        />
                     }
                 </div>
                 <div>
