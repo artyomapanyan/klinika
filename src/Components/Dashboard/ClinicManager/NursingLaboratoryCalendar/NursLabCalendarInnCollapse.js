@@ -14,7 +14,7 @@ function NursLabCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciali
         <tr id="hidden_row1" className="hide">
 
 
-            <td className="hiddenTableRow__col">
+            <td style={{paddingRight: 20 }} className="hiddenTableRow__col">
                 <div className="hiddenTableRow__col-item">
                     <div className="circleImageHolder">
                         <Avatar size={36}  src={docItem.doctor.avatar?.url}/>
@@ -24,7 +24,7 @@ function NursLabCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciali
             </td>
             {
                 Object.keys(docItem?.availability??{}).map((key, k) => {
-                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || docItem.availability[key] === null ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>
+                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || docItem.availability[key] === null ? null : () => setSelectedDate(key)}>
 
                         <div className="progress progressGreen" style={{cursor: thisDate > key || docItem.availability[key] === null ? "" : 'pointer', background: docItem.availability[key] === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
                             <div className="progress-bar progressGreen__inside"

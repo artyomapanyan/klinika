@@ -12,6 +12,8 @@ import { t } from 'i18next'
 
 function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 	const [loading, setLoading] = useState(true)
+	const [hasLeftSide, setHasLeftSide] = useState(true)
+	const [labNursing, setLabNursing] = useState(false)
 	const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
 	const [data, setData] = useState({ workload: [] })
 	const [showCount, setShowCount] = useState(10)
@@ -62,10 +64,23 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 		}
 	}, [date, appointmentObj?.service_type, appointmentObj?.specialty_id])
 
+	useEffect(() => {
+		setLabNursing(
+			appointmentObj?.service_type === 'nursing' ||
+				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+				appointmentObj?.service_type === 'laboratory_home_visit'
+		)
+	}, [appointmentObj?.service_type])
+
+	useEffect(() => {
+		setHasLeftSide(
+			!labNursing && !appointmentObj?.doctor_id
+		)
+	}, [labNursing, appointmentObj?.doctor_id])
 	return (
-		<section className={'table_conteiner'}>
+		<section>
 			<Spin spinning={loading}>
-				<AppointmentCalendarHead date={date} setDate={setDate} />
+				<AppointmentCalendarHead date={date} setDate={setDate} calendarTitle={labNursing? 'Laboratories and Nursing' : 'Appointments'}/>
 				<div className='container-fluid'>
 					<div className='row'>
 						<div className='d-flex justify-content-center w-100'>
@@ -75,15 +90,11 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 										<table className='w-100' style={{ marginTop: -10 }}>
 											<tbody>
 												<tr className='d-flex align-items-center justify-content-between w-100'>
-													{appointmentObj?.service_type !== 'nursing' &&
-													appointmentObj?.service_type !==
-														'laboratory_clinic_visit' &&
-													appointmentObj?.service_type !==
-														'laboratory_home_visit'  &&
-														!appointmentObj?.doctor_id? (
-														<td>
+													{hasLeftSide ? (
+														<td style={{ width: '20%', paddingRight: 20 }}>
 															<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
 																<Input
+																	placeholder={t('Search for doctor')}
 																	className={'search_input_clinic_man'}
 																	onChange={e => setSearch(e.target.value)}
 																	value={search}
@@ -98,14 +109,14 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 															</div>
 														</td>
 													) : null}
-													{[...Array(7).keys()].map((e, k) => {
+													{[...Array(7).keys()].map((e) => {
 														return (
 															<td
 																key={e}
 																className='appointmentsDate'
 																style={{
 																	height: 48,
-																	paddingLeft: k === 0 ? 20 : 0
+																	width: hasLeftSide ? '11.4%' : '14.3%'
 																}}
 															>
 																<div

@@ -6,7 +6,7 @@ import {GMBK} from "../../../../../functions";
 import React from "react";
 import arrow_next from "../../../../../dist/icons/arrow-next.svg";
 import arrow_prev from "../../../../../dist/icons/arrow-prev.svg";
-function AppointmentCalendarHead({date,setDate,hideData, showMonth=false,getDates, calendarTitle=true}) {
+function AppointmentCalendarHead({date,setDate,hideData, showMonth=false,getDates, calendarTitle}) {
     dayjs.extend(customParseFormat);
     const customWeekStartEndFormat = (value) =>
         `${dayjs(value).format('DD MMM')} - ${dayjs(value)
@@ -14,14 +14,8 @@ function AppointmentCalendarHead({date,setDate,hideData, showMonth=false,getDate
             .format('DD MMM')}`;
 
 
-    let data = [t('Specialty Load'),
+    let data = [
         t('HCP Load'),
-        t('Day off'),
-        //'Holidays/Weekend'
-    ]
-
-    let data1 = [t('Overall load'),
-        //t('Cabinet load'),
         t('Day off'),
         //'Holidays/Weekend'
     ]
@@ -38,11 +32,11 @@ function AppointmentCalendarHead({date,setDate,hideData, showMonth=false,getDate
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:24}}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
-                {
-                    calendarTitle ? `${t("Appointments")} :` : `${t("Laboratories and Nursing")} :`
-                }
+                
+                    {t(calendarTitle)}
+                
 
-                {!hideData && (calendarTitle ? data : data1).map((itemKey,key)=><Space  key={key} className={calendarTitle ? `withDot WD-color-clinic-man-calendar-${key}` : `withDot WD-color-clinic-man-calendar-LN-${key}`}>{itemKey}</Space>)}
+                {!hideData && (data).map((itemKey,key)=><Space  key={key} className={`withDot WD-color-clinic-man-calendar-LN-${key}`}>{itemKey}</Space>)}
             </Space>
             <div>
                 <Space className={'arrow_button'}>

@@ -77,16 +77,16 @@ function ClinicManagerCalendar() {
                                         <table className="w-100" style={{marginTop: -10}}>
                                             <tbody>
                                                 <tr className="d-flex align-items-center justify-content-between w-100">
-                                                    <td>
+                                                    <td style={{ width: '20%', paddingRight: 20 }}>
                                                         <div className="input-group md-form form-sm pl-0 mr-3 searchInput" >
-                                                            <Input className={'search_input_clinic_man'}
+                                                            <Input placeholder={t('Search for Specialty')} className={'search_input_clinic_man'}
                                                                    onChange={(e)=>setSearch(e.target.value)}
                                                                    value={search}
                                                                    aria-label="Search" prefix={<img src={search_icon_black} alt={'search_icon_black'} />}/>
                                                         </div>
                                                     </td>
-                                                    {[...Array(7).keys()].map((e,k) => {
-                                                        return <td key={e} className="appointmentsDate" style={{height: 48, paddingLeft: k === 0 ? 20 : 0}}>
+                                                    {[...Array(7).keys()].map((e) => {
+                                                        return <td key={e} className="appointmentsDate" style={{height: 48, width: '11.4%'}}>
                                                             <div className="appointmentsDate__content" style={{height: 48, paddingTop: 14}}>
                                                                 <span className="appointmentsDate__content__text">{date[0].add(e, 'days').format('DD')}</span>
                                                                 <span style={{marginLeft: 5, fontSize: 18}} className="ppointmentsDate__content__text appointmentsDate__content__text--light">{date[0].add(e, 'days').format('ddd')}</span>

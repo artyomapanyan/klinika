@@ -17,7 +17,6 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 							<td
 								key={key}
 								style={{
-									paddingLeft: k === 0 ? '20px' : 0,
 									cursor:
 										thisDate > key || !item?.availability[key]?.available
 											? ''
@@ -30,8 +29,8 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 								}
 							>
 								<div
-									className={'progressPurple'}
-									style={{
+								className='progress progressGreen'
+								style={{
 										background: !item.availability[key]?.available
 											? 'url(' + gray_grid + ')'
 											: '#6DAF5620'

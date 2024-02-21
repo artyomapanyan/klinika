@@ -17,7 +17,7 @@ function AppointmentCalendarInnCollapse({
 		<tbody>
 			<tr id='hidden_row1' className='hide'>
 				{!appointmentObj?.doctor_id ? (
-					<td className='hiddenTableRow__col'>
+					<td style={{paddingRight: 20 }} className='hiddenTableRow__col'>
 						<div className='hiddenTableRow__col-item'>
 							<div className='circleImageHolder'>
 								<Avatar size={36} src={docObj.doctor.avatar?.url} />
@@ -38,7 +38,6 @@ function AppointmentCalendarInnCollapse({
 									? null
 									: () => setSelectedDate(key)
 							}
-							style={{ paddingLeft: k === 0 ? 20 : 0 }}
 						>
 							<div
 								className='progress progressGreen'
