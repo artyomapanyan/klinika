@@ -320,7 +320,6 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
 
 
 
-
     return (
         <div className={language === 'ar' ? 'clinic_manager_modal_big_div' : 'clinic_manager_modal_big_div_en'}>
             {
@@ -399,7 +398,7 @@ function CalendarInnCollapseModal({setDate,docItem, specialty, selectedDate, cli
                                     }]}/> : <div></div>
                             }
                             {
-                                data.service_type === 'clinic_visit' ? <FormInput label={t('Offers')} name={'offer_id'}
+                                data.service_type === 'clinic_visit' || data.service_type === 'physical_therapy_clinic_visit' ? <FormInput label={t('Offers')} name={'offer_id'}
                                                                                   inputType={'resourceSelect'}
                                                                                   initialValue={null}
                                                                                   initialData={[]}
