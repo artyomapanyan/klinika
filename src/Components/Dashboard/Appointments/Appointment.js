@@ -390,7 +390,7 @@ function Appointment() {
 									resource={'Country'}
 								/>
 							</Col>
-							<Col lg={8} className='gutter-row'>
+							<Col lg={role === 'clinic-manager'? 14 : 8} className='gutter-row'>
 								<FormInput
 									label={t('Select Patient (Search By phone number)')}
 									name={'patient_id'}
