@@ -26,18 +26,9 @@ function ClinicManager() {
 	const [doctorClinic, setDoctorClinic] = useState(false)
 	const [labNursState, setLabNursState] = useState({})
 
-	useEffect(() => {
-		setLoading(true)
-		postResource('ClinicManager', 'ClinicWorkload', token, '', {
-			from: date[0].format('YYYY-MM-DD'),
-			to: date[1].format('YYYY-MM-DD')
-		}).then(response => {
-			setLabNursState(response)
-			setLoading(false)
-		})
-	}, [])
-    const [loading, setLoading] = useState(true)
-    const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
+
+    //const [loading, setLoading] = useState(true)
+    //const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
     const [data, setData] = useState({workload: []});
     const [update,setUpdate] = useState(0);
 
@@ -141,7 +132,13 @@ function ClinicManager() {
 						) : Array.isArray(labNursState?.workload) ? (
 							<div></div>
 						) : (
-							<NursLabCalendar />
+							<NursLabCalendar loading={loading}
+											 date={date}
+											 setDate={setDate}
+											 data={data}
+											 setData={setData}
+											 update={update}
+											 setUpdate={setUpdate}/>
 						)}
 					</div>
 					<div>
