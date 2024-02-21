@@ -265,7 +265,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     // }
 
 
-    console.log(dataState)
+
 
     const item = data?.doctors?.map((el, key) => {
 

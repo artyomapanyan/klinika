@@ -17,36 +17,19 @@ function ClinicManager() {
 
     let token = useSelector((state) => state.auth.token);
 
-	const [date, setDate] = useState([
-		dayjs().startOf('week'),
-		dayjs().endOf('week')
-	])
+
 	const [loading, setLoading] = useState(false)
 	const [hasTelehelth, setHasTelehelth] = useState(false)
 	const [doctorClinic, setDoctorClinic] = useState(false)
 	const [labNursState, setLabNursState] = useState({})
 
 
-    //const [loading, setLoading] = useState(true)
-    //const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
+
+    const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
     const [data, setData] = useState({workload: []});
     const [update,setUpdate] = useState(0);
 
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     postResource('ClinicManager', 'ClinicWorkload', token, '', {
-    //         from: date[0].format('YYYY-MM-DD'),
-    //         to: date[1].format('YYYY-MM-DD')
-    //     }).then((response) => {
-    //         setLabNursState(response)
-    //         setLoading(false)
-    //
-    //
-    //
-    //     })
-    //
-    // }, [])
 
     useEffect(() => {
         setLoading(true)
