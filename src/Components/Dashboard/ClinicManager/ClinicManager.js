@@ -64,7 +64,7 @@ function ClinicManager() {
 						<div></div>
 					) : (
 						<Row gutter={[16, 16]}>
-							<Col lg={8} md={12} sm={24} xs={24}>
+							<Col lg={hasTelehelth? 8 : 12} md={12} sm={24} xs={24}>
 								<div className='gutter_row'>
 									<ClinicManagerProgressCount dataKey={'MonthlyAppointments'} />
 								</div>
@@ -74,7 +74,7 @@ function ClinicManager() {
                             <CounterPurpleChart data={purpleData} />
                         </div>
                     </Col>*/}
-							<Col lg={8} md={12} sm={24} xs={24}>
+							<Col lg={hasTelehelth? 8 : 12} md={12} sm={24} xs={24}>
 								<div className='gutter_row'>
 									<StatusesChart />
 								</div>
