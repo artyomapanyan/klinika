@@ -262,7 +262,7 @@ function DoctorReworkedCalendarDrawer({setOpen, patient=true, patientId, dataCli
                 <DateTimeSelect formRef={formRef} formState={formState} setFormState={setFormState} setBookedAtState={setBookedAtState} bookedAtState={bookedAtState} date={date} setDate1={setDate1} dataClinic={dataClinic}/>
 
                 {
-                    formState?.service_type === 'clinic_visit' ? <div style={{marginTop: 20}}>
+                    formState?.service_type === 'clinic_visit' || formState?.service_type === 'physical_therapy_clinic_visit' ? <div style={{marginTop: 20}}>
                         <FormInput label={t('Offers')} name={'offer_id'}
                                    inputType={'resourceSelect'}
                                    initialValue={null}
