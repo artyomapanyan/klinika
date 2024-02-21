@@ -175,6 +175,7 @@ function Appointment() {
 	//load service types
 	useEffect(() => {
 		if (data?.clinic_id) {
+			setServiceTypeState([]);
 			postResource('Clinic', 'single', token, data?.clinic_id).then(
 				responses => {
 					setServiceTypeState(
