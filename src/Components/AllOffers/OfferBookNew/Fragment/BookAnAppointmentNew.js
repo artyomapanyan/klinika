@@ -67,7 +67,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                 if (response?.appointment?.id) {
                     document.location.href = response?.redirect
                 }
-                if(response?.response?.status == 408) {
+                if(response?.response?.status == 403) {
                     //setShow(false)
                     setShowPayment(false)
                     setVerify(0)
