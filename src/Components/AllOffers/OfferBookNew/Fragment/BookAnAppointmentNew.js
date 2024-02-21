@@ -61,6 +61,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
         postResource('PublicAppointment', 'create', token, '', dataState).then(
             response => {
                 setLoading(false)
+
                 console.log(response, 'hhhh')
 
                 if (response?.appointment?.id) {
