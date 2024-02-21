@@ -236,7 +236,6 @@ function WorkingHours({onFinish,
           }
 
 
-
           return workingDay && <div key={iKey}>
 
             <Row>
