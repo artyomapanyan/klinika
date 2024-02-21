@@ -473,43 +473,23 @@ function Appointment() {
 										disabled={pageState === 'codeSent'}
 										loading={sendCodeLoading}
 									>
-										{t('Send request')}
+										{t('Send permission request')}
 									</Button>
 								) : (
 									<div></div>
 								)}
 							</Col>
 						</Row>
-						{pageState === 'codeSent' ? (
-							<div>
+						{pageState === 'unauthorized' || pageState === 'codeSent' ? (
 								<Row>
-									<Col lg={8} className='gutter-row'>
-										<FormInput
-											label={t('Code (4 digits)')}
-											inputDisabled={pageState === 'unauthorized'}
-											name={'code'}
-										/>
-									</Col>
-									<Col lg={4} className='gutter-row'>
-										<Button
-											onClick={verifyNumber}
-											type={'primary'}
-											style={{ marginTop: 4 }}
-											className={'all_offers_book_btns'}
-											disabled={data?.code?.length !== 4}
-											loading={verifyLoading}
-										>
-											{t('Verify')}
-										</Button>
-									</Col>
-								</Row>
-								<Row>
-									<Col lg={12} className='gutter-row'>
+								<Col lg={12} className='gutter-row' style={{color: '#774D9D'}}>
 										Send request for permissions to personal information. Please
 										enter code from user or wait when user accept your request
 										in app,
 									</Col>
-									<Col lg={12} className='gutter-row'>
+									{pageState === 'codeSent' ?<>
+									<Col lg={6} className='gutter-row'>
+									<div class="vertical-line">
 										{t("Client didn't get a message")}? <br />
 										<span
 											onClick={sendCode}
@@ -521,11 +501,31 @@ function Appointment() {
 										>
 											{t('Resend Request')}
 										</span>
+										</div>
 									</Col>
+									<Col lg={4} className='gutter-row'>
+										<FormInput
+											label={t('Code (4 digits)')}
+											inputDisabled={pageState === 'unauthorized'}
+											name={'code'}
+										/>
+									</Col>
+									<Col lg={2} className='gutter-row'>
+										<Button
+											onClick={verifyNumber}
+											type={'primary'}
+											style={{ marginTop: 4 }}
+											className={'all_offers_book_btns'}
+											disabled={data?.code?.length !== 4}
+											loading={verifyLoading}
+										>
+											{t('Verify')}
+										</Button>
+									</Col>
+									</> : null }
 								</Row>
-							</div>
 						) : (
-							<div></div>
+							null
 						)}
 					</div>
 			</Form>
@@ -536,7 +536,7 @@ function Appointment() {
 					setNationality={setNationality}
 				></CreatePatient>
 			) : (
-				<div></div>
+				null
 			)}
 			{pageState === 'selected' ? (
 				<div>
