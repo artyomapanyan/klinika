@@ -54,7 +54,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     const [emailValidationState, setEmailValidationState] = useState(false)
     const [emailLoadind, setEmailLoadind] = useState(false)
 
-    console.log(dataState, 'state')
+
 
     const onBooking = () => {
         setLoading(true)
@@ -63,7 +63,6 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
             response => {
                 setLoading(false)
 
-                console.log(response, 'hhhh')
 
                 if (response?.appointment?.id) {
                     document.location.href = response?.redirect
