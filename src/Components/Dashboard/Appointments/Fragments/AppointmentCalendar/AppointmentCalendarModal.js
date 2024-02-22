@@ -102,25 +102,6 @@ function AppointmentCalendarModal({
 						{Resources.Days[dayjs(selectedDate).day()]}
 					</h1>
 				</Space>
-				{doctor ? (
-					<div>
-						<Space style={{ marginBottom: '20' }}>
-							<Avatar
-								size={56}
-								src={doctor?.avatar?.url}
-								icon={<UserOutlined />}
-							/>
-							<div style={{ display: 'block' }}>
-								<div className={'cl_manager_modal_dr_name'}>
-									{doctor.first} {doctor.last}
-								</div>
-								<div className={'cl_manager_modal_stecialty_name'}>
-									{specialty}
-								</div>
-							</div>
-						</Space>
-					</div>
-				) : null}
 				<div>
 					{loading ? (
 						<Preloader />
@@ -143,7 +124,28 @@ function AppointmentCalendarModal({
 									optionType='button'
 									buttonStyle='solid'
 								/>
+								<br/>
 							</Form.Item>
+							{doctor ? (
+								<div>
+									<Space style={{ marginBottom: '20' }}>
+										<Avatar
+											size={56}
+											src={doctor?.avatar?.url}
+											icon={<UserOutlined />}
+										/>
+										<div style={{ display: 'block' }}>
+											<div className={'cl_manager_modal_dr_name'}>
+												{doctor.first} {doctor.last}
+											</div>
+											<div className={'cl_manager_modal_stecialty_name'}>
+												{specialty}
+											</div>
+										</div>
+									</Space>
+									<br/><br/>
+								</div>
+							) : null}
 							{appointmentObj?.service_type === 'nursing' ? (
 								<FormInput
 									label={t('Nursing tasks')}
@@ -238,12 +240,13 @@ function AppointmentCalendarModal({
 								}}
 								resource={'Offer'}
 							/>
+							<br></br>
 							<Button
 								type={'primary'}
 								htmlType={'submit'}
 								style={{ width: '100%', height: '44px' }}
 							>
-								{t('Add')}
+								{t('Submit')}
 							</Button>
 						</div>
 					) : (

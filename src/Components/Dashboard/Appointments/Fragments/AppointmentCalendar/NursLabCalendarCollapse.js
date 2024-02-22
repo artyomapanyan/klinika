@@ -66,7 +66,7 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 			<Modal
 				open={selectedDate}
 				onCancel={() => setSelectedDate(false)}
-				width={'400px'}
+				width={'550px'}
 				footer={null}
 			>
 				{selectedDate ? (

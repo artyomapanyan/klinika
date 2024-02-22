@@ -48,7 +48,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
                     </td>})}
             </tr>
             </tbody>
-            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
+            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'550px'} footer={null}>
                 {selectedDate ? <NursLabCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} item={item} clinic={clinic} specialty={item?.service} clinicID={clinicID}   setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
 
