@@ -45,6 +45,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     const [a, seta] = useState(true)
     const personalForm = useRef();
 
+
     const [changeCount, setChangeCount] = useState(1)
 
     const [codeAndNumberState, setCodeAndNumberState] = useState({
@@ -53,7 +54,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     const [emailValidationState, setEmailValidationState] = useState(false)
     const [emailLoadind, setEmailLoadind] = useState(false)
 
-
+    console.log(dataState, 'state')
 
     const onBooking = () => {
         setLoading(true)
@@ -73,7 +74,11 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                     setVerify(0)
                     setResponseCodeState(null)
                     setNamesState({})
-                    //setDataState({})
+                    setDataState({
+                        ...dataState,
+                        payment_method_id: null
+                    })
+                    setShowButtons(true)
                     //setDoctorId('')
                     //setDoctorKey('')
                     setCodeAndNumberState(prevState => ({
@@ -265,7 +270,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     // }
 
 
-    console.log(dataState)
+
 
     const item = data?.doctors?.map((el, key) => {
 
@@ -477,7 +482,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                 {
                     <div>
                         <AppPersonalDetails
-                            onBooking={onBooking}
+                            // onBooking={onBooking}
                             setNamesState={setNamesState}
                             namesState={namesState}
                             responseCodeState={responseCodeState}
