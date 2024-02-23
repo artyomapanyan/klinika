@@ -10,16 +10,16 @@ import CreatePatient from './Fragments/CreatePatient'
 import Resources from '../../../store/Resources'
 import { LeftOutlined } from '@ant-design/icons'
 import user_icon from '../../../dist/icons/user-search.svg'
-import x_black from "../../../dist/icons/x_black.png";
+import x_black from '../../../dist/icons/x_black.png'
 import AppointmentCalendar from './Fragments/AppointmentCalendar/AppointmentCalendar'
 import { UserOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import './Appointment.sass'
+import {notification} from "antd";
 
 const resource = 'Appointment'
 
 function Appointment() {
-	
 	let token = useSelector(state => state.auth.token)
 	let role = useSelector(state => state.auth.selected_role?.key)
 	let doctor_id = useSelector(state => state.auth?.user?.id)
@@ -177,7 +177,7 @@ function Appointment() {
 	//load service types
 	useEffect(() => {
 		if (data?.clinic_id) {
-			setServiceTypeState([]);
+			setServiceTypeState([])
 			postResource('Clinic', 'single', token, data?.clinic_id).then(
 				responses => {
 					setServiceTypeState(
@@ -270,26 +270,36 @@ function Appointment() {
 		let appointment = { ...data }
 		if (pageState === 'creation') {
 			delete appointment.patient_id
-			patientFormRef.current.validateFields().then(() => {
-				const patient = patientFormRef.current.getFieldsValue()
-				appointment.patient = {
-					...patient,
-					dob: patient.dob?.format('YYYY-MM-DD'),
-					phone_country_code:
-						patient.phone_country_code.length > 3
-							? patient?.phone_country_code?.slice(
-									patient.phone_country_code.indexOf('(') + 1,
-									patient.phone_country_code?.indexOf(')')
-							  )
-							: patient.phone_country_code
-				}
-				createAppointment(appointment)
-			})
+			patientFormRef.current
+				.validateFields()
+				.then(() => {
+					const patient = patientFormRef.current.getFieldsValue()
+					appointment.patient = {
+						...patient,
+						dob: patient.dob?.format('YYYY-MM-DD'),
+						phone_country_code:
+							patient.phone_country_code.length > 3
+								? patient?.phone_country_code?.slice(
+										patient.phone_country_code.indexOf('(') + 1,
+										patient.phone_country_code?.indexOf(')')
+								  )
+								: patient.phone_country_code
+					}
+					createAppointment(appointment)
+				})
+				.catch(error => {
+					console.error('Validation failed:', error)
+				})
 		} else {
 			delete appointment.patient
-			searchFormRef.current.validateFields().then(() => {
-				createAppointment(appointment)
-			})
+			searchFormRef.current
+				.validateFields()
+				.then(() => {
+					createAppointment(appointment)
+				})
+				.catch(error => {
+					console.error('Validation failed:', error)
+				})
 		}
 	}
 
@@ -310,6 +320,54 @@ function Appointment() {
 			})
 	}
 
+	const removeLabItem = (idx, type) => {
+		if (data?.lab_tests.length + data?.lab_packages.length > 1) {
+			setData(prevState => ({
+				...prevState,
+				labPackagesArray:
+					type === 'package'
+						? data?.labPackagesArray.filter((_, index) => index !== idx)
+						: data?.labPackagesArray,
+				lab_packages:
+					type === 'package'
+						? data?.lab_packages.filter((_, index) => index !== idx)
+						: data?.lab_packages,
+				labTestsArray:
+					type === 'test'
+						? data?.labTestsArray.filter((_, index) => index !== idx)
+						: data?.labTestsArray,
+				lab_tests:
+					type === 'test'
+						? data?.lab_tests.filter((_, index) => index !== idx)
+						: data?.lab_tests
+			}))
+		}
+		else{
+			notification.error({
+				message: "Error",
+				description: t('The appointment must have at least one lab test or one lab package'),
+				placement: "bottomRight"
+			})
+		}
+	}
+
+	const removeNursingTask = idx => {
+		if (data?.nursing_tasks.length > 1) {
+			setData(prevState => ({
+				...prevState,
+				nursingTasksArray: data?.nursingTasksArray.splice(idx, 1),
+				nursing_tasks: data?.nursing_tasks.splice(idx, 1)
+			}))
+		}
+		else{
+			notification.error({
+				message: "Error",
+				description: t('The appointment must have at least one nursing task'),
+				placement: "bottomRight"
+			})
+		}
+	}
+
 	return (
 		<div className={'app_show_big_div'}>
 			<div>
@@ -319,7 +377,14 @@ function Appointment() {
 				>
 					<LeftOutlined />
 				</Button>
-				<span style={{ fontSize: 24, fontWeight: 700, fontFamily: 'Inter', marginLeft:-15 }}>
+				<span
+					style={{
+						fontSize: 24,
+						fontWeight: 700,
+						fontFamily: 'Inter',
+						marginLeft: -15
+					}}
+				>
 					{t('Add new Appointment')}
 				</span>
 			</div>
@@ -330,177 +395,174 @@ function Appointment() {
 				ref={searchFormRef}
 			>
 				<div className={'add_edit_content'}>
-						<Row>
-							{role !== 'clinic-manager' ? (
-								<Col lg={6} className='gutter-row'>
-									<FormInput
-										label={t('Clinic')}
-										name={'clinic_id'}
-										inputType={'resourceSelect'}
-										rules={[{ required: true }]}
-										initialData={[data?.clinic].filter(e => e)}
-										inputProps={{
-											onChange: e => {
-												setData(prevState => ({
-													...prevState,
-													service_type: null,
-													patient_id: undefined,
-													patient: undefined
-												}))
-												appointmentFormRef?.current?.setFieldsValue({
-													service_type: null
-												})
-												searchFormRef?.current?.setFieldsValue({
-													patient_id: undefined
-												})
-											}
-										}}
-										resourceParams={{
-											active: 1
-										}}
-										resource={'Clinic'}
-									/>
-								</Col>
-							) : null}
-							<Col lg={4} className='gutter-row'>
+					<Row>
+						{role !== 'clinic-manager' ? (
+							<Col lg={6} className='gutter-row'>
 								<FormInput
-									label={t('Country Code')}
-									name={'phone_country_code'}
+									label={t('Clinic')}
+									name={'clinic_id'}
 									inputType={'resourceSelect'}
 									rules={[{ required: true }]}
-									initialValue={
-										data?.appointment?.patient?.phone_country_code
-											? data?.appointment?.patient?.phone_country_code
-											: `(966) ${
-													language === 'ar'
-														? 'المملكة العربية السعودية'
-														: 'Saudi Arabia'
-											  }`
-									}
-									handleMapItems={handleMapItems}
-									customSearchKey={'phone_code'}
+									initialData={[data?.clinic].filter(e => e)}
 									inputProps={{
-										onChange: e =>
-											setCodeAndPhone(prevState => ({
-												...prevState,
-												phone_country_code: e
-											}))
-									}}
-									disabled={!data?.clinic_id}
-									resource={'Country'}
-								/>
-							</Col>
-							<Col lg={role === 'clinic-manager'? 14 : 8} className='gutter-row'>
-								<FormInput
-									label={t('Select Patient (Search By phone number)')}
-									name={'patient_id'}
-									suffixIcon={
-										<img
-											src={user_icon}
-											alt={'user_icon'}
-										/>
-									}
-									inputType={'resourceSelect'}
-									rules={[{ required: pageState !== 'creation' }]}
-									searchConfigs={{ minLength: 6 }}
-									inputProps={{
-										onSearch: e => {
-											if (e)
-												setCodeAndPhone(prevState => ({
-													...prevState,
-													phone_number: e
-												}))
-										},
-										notFoundContent: (
-											<div
-												style={{
-													display: 'flex',
-													flexDirection: 'row',
-													justifyContent: 'space-between'
-												}}
-											>
-												<div>{t('Not found')}</div>
-											</div>
-										)
-									}}
-									resourceParams={{
-										phone_country_code: data?.phone_country_code
-											? data?.phone_country_code?.length > 3
-												? data?.phone_country_code?.slice(
-														data?.phone_country_code?.indexOf('(') + 1,
-														data?.phone_country_code?.indexOf(')')
-												  )
-												: data?.phone_country_code
-											: '966',
-										clinic_id: data?.clinic_id
-									}}
-									handleMapItems={(item, name, status) =>
-										searchByNumber(item, name, status)
-									}
-									handleStatus={true}
-									customSearchKey={'phone_number'}
-									disabled={!data?.clinic_id}
-									resource={'PatientSearch'}
-								/>
-							</Col>
-							<Col lg={6} className='gutter-row'>
-								{pageState === 'initial' || pageState === 'creation' ? (
-									<Button
-										onClick={() => {
+										onChange: e => {
 											setData(prevState => ({
 												...prevState,
-												patient_id: null
+												service_type: null,
+												patient_id: undefined,
+												patient: undefined,
+												booked_at: undefined
 											}))
-											setPatient(codeAndPhone)
-											setPageState('creation')
-										}}
-										type={'primary'}
-										style={{ marginTop: 4 }}
-										className={'all_offers_book_btns'}
-										disabled={!data?.clinic_id}
-									>
-										{t('Create new')}
-									</Button>
-								) : (
-									<div></div>
-								)}
-								{pageState === 'unauthorized' || pageState === 'codeSent' ? (
-									<Button
-										onClick={sendCode}
-										type={'primary'}
-										style={{ marginTop: 4 }}
-										className={'all_offers_book_btns'}
-										disabled={pageState === 'codeSent'}
-										loading={sendCodeLoading}
-									>
-										{t('Send permission request')}
-									</Button>
-								) : (
-									<div></div>
-								)}
+											appointmentFormRef?.current?.setFieldsValue({
+												service_type: null
+											})
+											searchFormRef?.current?.setFieldsValue({
+												patient_id: undefined
+											})
+										}
+									}}
+									resourceParams={{
+										active: 1
+									}}
+									resource={'Clinic'}
+								/>
 							</Col>
-						</Row>
-						{pageState === 'unauthorized' || pageState === 'codeSent' ? (
-								<Row>
-								<Col lg={12} className='gutter-row' style={{color: '#774D9D'}}>
-										Send request for permissions to personal information. Please
-										enter code from user or wait when user accept your request
-										in app,
-									</Col>
-									{pageState === 'codeSent' ?<>
-									<Col lg={6} className='gutter-row'>
-									<div class="vertical-line">
-										{t("Client didn't get a message")}? <br />
-										<span
-											onClick={sendCode}
+						) : null}
+						<Col lg={4} className='gutter-row'>
+							<FormInput
+								label={t('Country Code')}
+								name={'phone_country_code'}
+								inputType={'resourceSelect'}
+								rules={[{ required: true }]}
+								initialValue={
+									data?.appointment?.patient?.phone_country_code
+										? data?.appointment?.patient?.phone_country_code
+										: `(966) ${
+												language === 'ar'
+													? 'المملكة العربية السعودية'
+													: 'Saudi Arabia'
+										  }`
+								}
+								handleMapItems={handleMapItems}
+								customSearchKey={'phone_code'}
+								inputProps={{
+									onChange: e =>
+										setCodeAndPhone(prevState => ({
+											...prevState,
+											phone_country_code: e
+										}))
+								}}
+								disabled={!data?.clinic_id}
+								resource={'Country'}
+							/>
+						</Col>
+						<Col lg={role === 'clinic-manager' ? 14 : 8} className='gutter-row'>
+							<FormInput
+								label={t('Select Patient (Search By phone number)')}
+								name={'patient_id'}
+								suffixIcon={<img src={user_icon} alt={'user_icon'} />}
+								inputType={'resourceSelect'}
+								rules={[{ required: pageState !== 'creation' }]}
+								searchConfigs={{ minLength: 6 }}
+								inputProps={{
+									onSearch: e => {
+										if (e)
+											setCodeAndPhone(prevState => ({
+												...prevState,
+												phone_number: e
+											}))
+									},
+									notFoundContent: (
+										<div
 											style={{
-												color: '#BF539E',
-												fontWeight: 700,
-												cursor: 'pointer'
+												display: 'flex',
+												flexDirection: 'row',
+												justifyContent: 'space-between'
 											}}
 										>
-											{t('Resend Request')}
-										</span>
+											<div>{t('Not found')}</div>
+										</div>
+									)
+								}}
+								resourceParams={{
+									phone_country_code: data?.phone_country_code
+										? data?.phone_country_code?.length > 3
+											? data?.phone_country_code?.slice(
+													data?.phone_country_code?.indexOf('(') + 1,
+													data?.phone_country_code?.indexOf(')')
+											  )
+											: data?.phone_country_code
+										: '966',
+									clinic_id: data?.clinic_id
+								}}
+								handleMapItems={(item, name, status) =>
+									searchByNumber(item, name, status)
+								}
+								handleStatus={true}
+								customSearchKey={'phone_number'}
+								disabled={!data?.clinic_id}
+								resource={'PatientSearch'}
+							/>
+						</Col>
+						<Col lg={6} className='gutter-row'>
+							{pageState === 'initial' || pageState === 'creation' ? (
+								<Button
+									onClick={() => {
+										setData(prevState => ({
+											...prevState,
+											patient_id: null
+										}))
+										setPatient(codeAndPhone)
+										setPageState('creation')
+									}}
+									type={'primary'}
+									style={{ marginTop: 4 }}
+									className={'all_offers_book_btns'}
+									disabled={!data?.clinic_id}
+								>
+									{t('Create new')}
+								</Button>
+							) : (
+								<div></div>
+							)}
+							{pageState === 'unauthorized' || pageState === 'codeSent' ? (
+								<Button
+									onClick={sendCode}
+									type={'primary'}
+									style={{ marginTop: 4 }}
+									className={'all_offers_book_btns'}
+									disabled={pageState === 'codeSent'}
+									loading={sendCodeLoading}
+								>
+									{t('Send permission request')}
+								</Button>
+							) : (
+								<div></div>
+							)}
+						</Col>
+					</Row>
+					{pageState === 'unauthorized' || pageState === 'codeSent' ? (
+						<Row>
+							<Col lg={12} className='gutter-row' style={{ color: '#774D9D' }}>
+								Send request for permissions to personal information. Please
+								enter code from user or wait when user accept your request in
+								app,
+							</Col>
+							{pageState === 'codeSent' ? (
+								<>
+									<Col lg={6} className='gutter-row'>
+										<div class='vertical-line'>
+											{t("Client didn't get a message")}? <br />
+											<span
+												onClick={sendCode}
+												style={{
+													color: '#BF539E',
+													fontWeight: 700,
+													cursor: 'pointer'
+												}}
+											>
+												{t('Resend Request')}
+											</span>
 										</div>
 									</Col>
 									<Col lg={4} className='gutter-row'>
@@ -522,12 +584,11 @@ function Appointment() {
 											{t('Verify')}
 										</Button>
 									</Col>
-									</> : null }
-								</Row>
-						) : (
-							null
-						)}
-					</div>
+								</>
+							) : null}
+						</Row>
+					) : null}
+				</div>
 			</Form>
 			{pageState === 'creation' ? (
 				<CreatePatient
@@ -535,9 +596,7 @@ function Appointment() {
 					formRef={patientFormRef}
 					setNationality={setNationality}
 				></CreatePatient>
-			) : (
-				null
-			)}
+			) : null}
 			{pageState === 'selected' ? (
 				<div>
 					<CreatePatient
@@ -550,19 +609,22 @@ function Appointment() {
 			)}
 			{data?.clinic_id ? (
 				serviceTypeState?.length ? (
-					<Form
-					ref={appointmentFormRef}
-					onValuesChange={handleValuesChange}
-					layout='vertical'
-				>
 					<div className={'add_edit_content'}>
 						<Row>
-					<Col lg={8} className='gutter-row'>
-					<h2 style={{ fontWeight: 'bold', paddingLeft: 7}}>{t('Appointment')}</h2>
-					</Col>
-				</Row>
+							<Col lg={8} className='gutter-row'>
+								<h2 style={{ fontWeight: 'bold', paddingLeft: 7 }}>
+									{t('Appointment')}
+								</h2>
+							</Col>
+						</Row>
 						{!data?.booked_at ? (
-							<div>
+							<Form
+								style={{ marginTop: 0 }}
+								ref={appointmentFormRef}
+								onValuesChange={handleValuesChange}
+								layout='vertical'
+							>
+								<>
 									<Row>
 										<Col lg={8} className='gutter-row'>
 											<FormInput
@@ -606,13 +668,14 @@ function Appointment() {
 											</Col>
 										) : null}
 									</Row>
-								{data?.service_type ? (
-									<AppointmentCalendar
-										appointmentObj={data}
-										setappointmentObj={setData}
-									/>
-								) : null}
-							</div>
+									{data?.service_type ? (
+										<AppointmentCalendar
+											appointmentObj={data}
+											setappointmentObj={setData}
+										/>
+									) : null}
+								</>
+							</Form>
 						) : (
 							<div>
 								<br />
@@ -634,7 +697,10 @@ function Appointment() {
 													icon={<UserOutlined />}
 												/>
 												<div>
-													<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:400}}>
+													<div
+														className={'cl_manager_modal_dr_name'}
+														style={{ fontWeight: 400 }}
+													>
 														{data?.doctor?.first} {data?.doctor?.last}
 													</div>
 												</div>
@@ -644,7 +710,10 @@ function Appointment() {
 										<Col lg={12} className='gutter-row'>
 											<Space>
 												<div>
-													<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:400}}>
+													<div
+														className={'cl_manager_modal_dr_name'}
+														style={{ fontWeight: 400 }}
+													>
 														{data?.service_type[0]?.toUpperCase() +
 															data?.service_type
 																?.slice(1)
@@ -658,7 +727,10 @@ function Appointment() {
 										<Col lg={6} className='gutter-row'>
 											<Space>
 												<div>
-													<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:400}}>
+													<div
+														className={'cl_manager_modal_dr_name'}
+														style={{ fontWeight: 400 }}
+													>
 														{data.specialty}
 													</div>
 												</div>
@@ -668,7 +740,10 @@ function Appointment() {
 									<Col lg={5} className='gutter-row'>
 										<Space>
 											<div>
-												<div className={'cl_manager_modal_dr_name'} style={{fontWeight:400}}>
+												<div
+													className={'cl_manager_modal_dr_name'}
+													style={{ fontWeight: 400 }}
+												>
 													{invoicePrice} SAR
 												</div>
 											</div>
@@ -677,7 +752,10 @@ function Appointment() {
 									<Col lg={6} className='gutter-row'>
 										<Space>
 											<div>
-												<div className={'cl_manager_modal_dr_name'}  style={{fontWeight:600}}>
+												<div
+													className={'cl_manager_modal_dr_name'}
+													style={{ fontWeight: 600 }}
+												>
 													{dayjs(data.booked_at).format('h:mm A, D MMM YY')}
 												</div>
 											</div>
@@ -691,27 +769,138 @@ function Appointment() {
 													style={{ cursor: 'pointer' }}
 													onClick={removeAppointment}
 												>
-                                                    <img className={'del_icin'} alt={'x_black'} src={x_black}/>
+													<img
+														className={'del_icin'}
+														alt={'x_black'}
+														src={x_black}
+													/>
 												</div>
 											</div>
 										</Space>
 									</Col>
+									{data?.service_type === 'laboratory_clinic_visit' ||
+									data?.service_type === 'laboratory_home_visit' ||
+									data?.service_type === 'nursing' ? (
+										<hr style={{ borderTop: '2px solid #E1E2E9' }}></hr>
+									) : null}
+									{data?.nursing_tasks?.length ? (
+										<Col lg={24} className='gutter-row'>
+											<h3 style={{ fontWeight: 'bold' }}>
+												{t('Nursing tasks')}
+											</h3>
+											{data?.nursingTasksArray.map((item, index) => (
+												<Row key={index}>
+													<Col lg={23} className='gutter-row'>
+														<h3>
+															{item.nursing_task.name} [{item.price} SR]
+														</h3>
+													</Col>
+													<Col lg={1} className='gutter-row'>
+														<Space>
+															<div>
+																<div
+																	className={'cl_manager_modal_dr_name'}
+																	style={{ cursor: 'pointer' }}
+																	onClick={() => {
+																		removeNursingTask(index)
+																	}}
+																>
+																	<img
+																		className={'del_icin'}
+																		alt={'x_black'}
+																		src={x_black}
+																	/>
+																</div>
+															</div>
+														</Space>
+													</Col>
+												</Row>
+											))}
+										</Col>
+									) : null}
+									{data?.lab_tests?.length ? (
+										<Col lg={24} className='gutter-row'>
+											<h3 style={{ fontWeight: 'bold' }}>{t('Lab tests')}</h3>
+											{data?.labTestsArray.map((item, index) => (
+												<Row key={index}>
+													<Col lg={23} className='gutter-row'>
+														<h3>
+															{item.lab_test.name} [{item.price} SR]
+														</h3>
+													</Col>
+													<Col lg={1} className='gutter-row'>
+														<Space>
+															<div>
+																<div
+																	className={'cl_manager_modal_dr_name'}
+																	style={{ cursor: 'pointer' }}
+																	onClick={() => {
+																		removeLabItem(index, 'test')
+																	}}
+																>
+																	<img
+																		className={'del_icin'}
+																		alt={'x_black'}
+																		src={x_black}
+																	/>
+																</div>
+															</div>
+														</Space>
+													</Col>
+												</Row>
+											))}
+										</Col>
+									) : null}
+									{data?.lab_packages?.length ? (
+										<Col lg={24} className='gutter-row'>
+											<h3 style={{ fontWeight: 'bold' }}>
+												{t('Lab packages')}
+											</h3>
+											{data?.labPackagesArray.map((item, index) => (
+												<Row key={index}>
+													<Col lg={23} className='gutter-row'>
+														<h3>
+															{item.lab_package.name} [{item.price} SR]
+														</h3>
+													</Col>
+													<Col lg={1} className='gutter-row'>
+														<Space>
+															<div>
+																<div
+																	className={'cl_manager_modal_dr_name'}
+																	style={{ cursor: 'pointer' }}
+																	onClick={() => {
+																		removeLabItem(index, 'package')
+																	}}
+																>
+																	<img
+																		className={'del_icin'}
+																		alt={'x_black'}
+																		src={x_black}
+																	/>
+																</div>
+															</div>
+														</Space>
+													</Col>
+												</Row>
+											))}
+										</Col>
+									) : null}
 								</Row>
 								<br />
 								<br />
-									<Button
-										loading={saveLoading}
-										size={'large'}
-										type={'primary'}
-										htmlType='submit'
-										onClick={saveAppointment}
-									>
-										{t('Save Appointment')}
-									</Button>
+								<Button
+									loading={saveLoading}
+									size={'large'}
+									type={'primary'}
+									htmlType='submit'
+									onClick={saveAppointment}
+								>
+									{t('Save Appointment')}
+								</Button>
 							</div>
 						)}
 					</div>
-					</Form>
 				) : (
 					<Preloader></Preloader>
 				)

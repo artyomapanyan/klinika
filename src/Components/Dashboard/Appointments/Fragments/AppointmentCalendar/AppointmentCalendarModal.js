@@ -24,6 +24,12 @@ function AppointmentCalendarModal({
 	const formRef = useRef()
 	let token = useSelector(state => state.auth.token)
 
+	const [labTestsRequired, setLabTestsRequired] = useState(true)
+	const [labPackagesRequired, setLabPackagesRequired] = useState(true)
+	const [labPackagesArray, setLabPackagesArray] = useState([])
+	const [labTestsArray, setLabTestsArray] = useState([])
+	const [nursingTasksArray, setNursingTasksArray] = useState([])
+
 	useEffect(() => {
 		if (appointmentObj.service_type) {
 			if (
@@ -75,14 +81,37 @@ function AppointmentCalendarModal({
 			offer_id: values.offer_id, //? values.offer_id : null,
 			doctor_id: doctor?.id,
 			lab_packages: values.lab_packages ? [values.lab_packages] : [],
+			lab_tests: values.lab_tests,
+			nursing_tasks: values.nursing_tasks,
 			address1: values.address1,
 
 			//data to be deleted from the object before saving the appointment
 			doctor: doctor,
-			specialty: specialty
+			specialty: specialty,
+			labPackagesArray: labPackagesArray,
+			labTestsArray: labTestsArray,
+			nursingTasksArray: nursingTasksArray
 		}))
 		setSelectedDate(false)
 		console.log(appointmentObj)
+	}
+
+	const handleMapLabPackages = (item, name) => {
+		name = item.lab_package.name
+		item.id = item.lab_package.id
+		return [name, item]
+	}
+
+	const handleMapLabTests = (item, name) => {
+		name = item.lab_test.name
+		item.id = item.lab_test.id
+		return [name, item]
+	}
+
+	const handleMapNursingTasks = (item, name) => {
+		name = item.nursing_task.name
+		item.id = item.nursing_task.id
+		return [name, item]
 	}
 
 	return (
@@ -124,8 +153,8 @@ function AppointmentCalendarModal({
 									optionType='button'
 									buttonStyle='solid'
 								/>
-								<br/>
 							</Form.Item>
+							<br />
 							{doctor ? (
 								<div>
 									<Space style={{ marginBottom: '20' }}>
@@ -143,7 +172,8 @@ function AppointmentCalendarModal({
 											</div>
 										</div>
 									</Space>
-									<br/><br/>
+									<br />
+									<br />
 								</div>
 							) : null}
 							{appointmentObj?.service_type === 'nursing' ? (
@@ -152,6 +182,11 @@ function AppointmentCalendarModal({
 									disableClear={true}
 									name={'nursing_tasks'}
 									inputProps={{
+										onChange: (value, arr) => {
+											setNursingTasksArray(
+												arr.filter(e => value.includes(e.nursing_task.id))
+											)	
+										},
 										mode: 'multiple'
 									}}
 									rules={[{ required: true }]}
@@ -160,7 +195,8 @@ function AppointmentCalendarModal({
 										status: 2
 									}}
 									inputType={'resourceSelect'}
-									resource={'NursingTask'}
+									handleMapItems={handleMapNursingTasks}
+									resource={'ClinicNursingTask'}
 								/>
 							) : null}
 							{appointmentObj?.service_type === 'laboratory_clinic_visit' ||
@@ -169,11 +205,18 @@ function AppointmentCalendarModal({
 									<FormInput
 										label={t('Lab Tests')}
 										name={'lab_tests'}
+										inputProps={{
+											onChange: (value, arr) => {
+												setLabPackagesRequired(!value)
+												setLabTestsArray(
+													arr.filter(e => value.includes(e.lab_test.id))
+												)	
+											},
+											mode: 'multiple'
+										}}
 										rules={[
 											{
-												required:
-													!appointmentObj?.lab_packages &&
-													!appointmentObj?.lab_packages?.length,
+												required: labTestsRequired,
 												message: 'Please enter Lab test or Lab package'
 											}
 										]}
@@ -182,20 +225,24 @@ function AppointmentCalendarModal({
 											clinic: appointmentObj.clinic_id,
 											status: 2
 										}}
-										inputProps={{
-											mode: 'multiple'
-										}}
-										resource={'LabTest'}
+										handleMapItems={handleMapLabTests}
+										resource={'ClinicLabTest'}
 									/>
 
 									<FormInput
 										label={t('Lab Packages')}
 										name={'lab_packages'}
+										inputProps={{
+											onChange: (value, arr) => {
+												setLabTestsRequired(!value)
+												setLabPackagesArray(
+													arr.filter(e => e.lab_package.id === value)
+												)												
+											}
+										}}
 										rules={[
 											{
-												required:
-													!appointmentObj?.lab_tests ||
-													!appointmentObj?.lab_tests?.length,
+												required: labPackagesRequired,
 												message: 'Please enter Lab test or Lab package'
 											}
 										]}
@@ -204,7 +251,8 @@ function AppointmentCalendarModal({
 											clinic: appointmentObj.clinic_id,
 											status: 2
 										}}
-										resource={'LabPackage'}
+										handleMapItems={handleMapLabPackages}
+										resource={'ClinicLabPackage'}
 									/>
 								</div>
 							) : null}
