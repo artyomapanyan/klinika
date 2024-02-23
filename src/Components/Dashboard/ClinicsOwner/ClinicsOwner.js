@@ -33,7 +33,7 @@ function ClinicsOwner() {
     // });
 
 
-
+    console.log(ownerClinics)
 
     useEffect(() => {
         setLoading(true)

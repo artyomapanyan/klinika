@@ -284,7 +284,7 @@ function AppPersonalDetails({
 												label={t('Phone number')}
 												name={'phone_number'}
 												maxLength={10}
-												rules={[{ required: true }]}
+												rules={[{ required: true, message: t('Please enter phone number') }]}
 											/>
 
 										</div>
