@@ -26,15 +26,16 @@ function ClinicOwnerHeader({ noClinicSelect = false, dashboardText=false }) {
 								label: t('All Clinics')
 							},
 							...reduxInfo.map((el, key) => {
-								if (key === 0) {
-									dispatch({
-										type: 'OWNER_DATA',
-										payload: {
-											id: el?.id,
-											month_key: currentMonth
-										}
-									})
-								}
+
+								// if (key === 0) {
+								// 	dispatch({
+								// 		type: 'OWNER_DATA',
+								// 		payload: {
+								// 			id: el?.id,
+								// 			month_key: currentMonth
+								// 		}
+								// 	})
+								// }
 								return {
 									label: el?.name,
 									key: el?.id

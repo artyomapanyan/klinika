@@ -1,40 +1,55 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'antd'
-import StatusesChart from '../../Fragments/Charts/StatusesChart'
-import ClinicManagerProgressCount from '../../Fragments/Charts/ClinicManagerProgressCount'
-import ClinicManagerCalendar from './Fragments/ClinicManagerCalendar/ClinicManagerCalendar'
-import ClinicManagerAppointmentsTable from './Fragments/ClinicManagerAppointmentsTable/ClinicManagerAppointmentsTable'
-import Preloader from '../../Preloader'
-import { useSelector } from 'react-redux'
-import NursLabCalendar from './NursingLaboratoryCalendar/NursLabCalendar'
-import { postResource } from '../../Functions/api_calls'
-import dayjs from 'dayjs'
+import React, {useEffect, useState} from "react";
+import {Col, Row} from "antd";
+import StatusesChart from "../../Fragments/Charts/StatusesChart";
+import ClinicManagerProgressCount from "../../Fragments/Charts/ClinicManagerProgressCount";
+import ClinicManagerCalendar from "./Fragments/ClinicManagerCalendar/ClinicManagerCalendar";
+import ClinicManagerAppointmentsTable from "./Fragments/ClinicManagerAppointmentsTable/ClinicManagerAppointmentsTable";
+import Preloader from "../../Preloader";
+import {useSelector} from "react-redux";
+import NursLabCalendar from "./NursingLaboratoryCalendar/NursLabCalendar";
+import {postResource} from "../../Functions/api_calls";
+import dayjs from "dayjs";
+
 
 function ClinicManager() {
-	let ownerClinics = useSelector(state => state?.owner)
-	let role = useSelector(state => state?.auth?.selected_role?.key)
+    let ownerClinics = useSelector((state) => state?.owner);
+    let role = useSelector((state) => state?.auth?.selected_role?.key);
 
-	let token = useSelector(state => state.auth.token)
+    let token = useSelector((state) => state.auth.token);
 
-	const [date, setDate] = useState([
-		dayjs().startOf('week'),
-		dayjs().endOf('week')
-	])
+
 	const [loading, setLoading] = useState(false)
 	const [hasTelehelth, setHasTelehelth] = useState(false)
 	const [doctorClinic, setDoctorClinic] = useState(false)
 	const [labNursState, setLabNursState] = useState({})
 
-	useEffect(() => {
-		setLoading(true)
-		postResource('ClinicManager', 'ClinicWorkload', token, '', {
-			from: date[0].format('YYYY-MM-DD'),
-			to: date[1].format('YYYY-MM-DD')
-		}).then(response => {
-			setLabNursState(response)
-			setLoading(false)
-		})
-	}, [])
+
+
+    const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
+    const [data, setData] = useState({workload: []});
+    const [update,setUpdate] = useState(0);
+
+
+
+    useEffect(() => {
+        setLoading(true)
+        postResource('ClinicManager', 'ClinicWorkload', token, '', {
+            from: date[0].format('YYYY-MM-DD'),
+            to: date[1].format('YYYY-MM-DD')
+        }).then((response) => {
+
+            setData({
+                clinic_id:response.clinic.id,
+                clinic:response.clinic,
+                workload:Object.values(response.workload)
+            })
+            setLabNursState(response)
+            setLoading(false)
+
+
+        })
+
+    }, [date, update])
 
 	//load service types
 	useEffect(() => {
@@ -100,7 +115,13 @@ function ClinicManager() {
 						) : Array.isArray(labNursState?.workload) ? (
 							<div></div>
 						) : (
-							<NursLabCalendar />
+							<NursLabCalendar loading={loading}
+											 date={date}
+											 setDate={setDate}
+											 data={data}
+											 setData={setData}
+											 update={update}
+											 setUpdate={setUpdate}/>
 						)}
 					</div>
 					<div>
