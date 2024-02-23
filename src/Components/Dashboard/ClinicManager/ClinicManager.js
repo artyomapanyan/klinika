@@ -10,7 +10,6 @@ import NursLabCalendar from "./NursingLaboratoryCalendar/NursLabCalendar";
 import {postResource} from "../../Functions/api_calls";
 import dayjs from "dayjs";
 
-
 function ClinicManager() {
     let ownerClinics = useSelector((state) => state?.owner);
     let role = useSelector((state) => state?.auth?.selected_role?.key);
