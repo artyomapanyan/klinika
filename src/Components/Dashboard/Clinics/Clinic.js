@@ -53,7 +53,6 @@ function Clinic() {
     }
 
 
-
     return (
         <div  className={'clinic_tab_big_div'}>
             {/*<div className={'clinic_header_div'}>*/}
