@@ -355,8 +355,8 @@ function Appointment() {
 		if (data?.nursing_tasks.length > 1) {
 			setData(prevState => ({
 				...prevState,
-				nursingTasksArray: data?.nursingTasksArray.splice(idx, 1),
-				nursing_tasks: data?.nursing_tasks.splice(idx, 1)
+				nursingTasksArray: data?.nursingTasksArray.filter((_, index) => index !== idx),
+				nursing_tasks: data?.nursing_tasks.filter((_, index) => index !== idx)
 			}))
 		}
 		else{
@@ -369,7 +369,7 @@ function Appointment() {
 	}
 
 	return (
-		<div className={'app_show_big_div'}>
+		<div className={'app_show_big_div appointment-tab'}>
 			<div>
 				<Button
 					style={{ margin: '40px 24px', height: 45, width: 45, paddingTop: 10 }}
