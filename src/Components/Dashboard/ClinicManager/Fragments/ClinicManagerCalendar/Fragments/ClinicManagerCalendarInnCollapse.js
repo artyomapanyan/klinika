@@ -2,7 +2,7 @@ import {Avatar, Modal} from "antd";
 import React, {useState} from "react";
 import CalendarInnCollapseModal from "./CalendarInnCollapseModal";
 import dayjs from "dayjs";
-import gray_grid from "../../../../../../dist/icons/gray_grid.png";
+import gray_grid from '../../../../../../dist/icons/bg_pattern.jpg'
 
 function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic, setUpdate}) {
     const [selectedDate, setSelectedDate] = useState(false);

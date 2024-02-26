@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Modal} from "antd";
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
-import gray_grid from "../../../../dist/icons/gray_grid.png";
+import gray_grid from '../../../../dist/icons/bg_pattern.jpg'
 import ClinicManagerCalendarInnCollapse
     from "../Fragments/ClinicManagerCalendar/Fragments/ClinicManagerCalendarInnCollapse";
 import NursLabCalendarInnCollapse from "./NursLabCalendarInnCollapse";

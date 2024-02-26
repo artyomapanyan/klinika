@@ -166,6 +166,11 @@
   padding: 0 17px 0 90px;
   background: red;
 }
+
+.progress{
+  background-size: cover !important;
+}
+
 .progress-bar {
   display: flex;
   flex-direction: column;
@@ -178,6 +183,7 @@
   transition: width .6s ease;
   height: 100%;
   border-radius: 8px;
+  background-size: cover !important;
 }
 .w-100 {
   width: 100% !important;

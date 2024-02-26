@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import dayjs from "dayjs";
 import {Avatar, Modal} from "antd";
-import gray_grid from "../../../../dist/icons/gray_grid.png";
+import gray_grid from '../../../../dist/icons/bg_pattern.jpg'
 import CalendarInnCollapseModal from "../Fragments/ClinicManagerCalendar/Fragments/CalendarInnCollapseModal";
 import NursLabCollapseModal from "./NursLabCollapseModal";
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal } from 'antd'
 import AppointmentCalendarModal from './AppointmentCalendarModal'
-import gray_grid from '../../../../../dist/icons/gray_grid.png'
+import gray_grid from '../../../../../dist/icons/bg_pattern.jpg'
 import dayjs from 'dayjs'
 
 function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
@@ -34,7 +34,7 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 										background: !item.availability[key]?.available
 											? 'url(' + gray_grid + ')'
 											: '#6DAF5620'
-									}}
+										}}
 								>
 									<div
 										className='progress-bar '

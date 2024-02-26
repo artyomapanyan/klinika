@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {Button} from "antd";
 import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse";
-import gray_grid from "../../../../../../dist/icons/gray_grid.png";
+import gray_grid from '../../../../../../dist/icons/bg_pattern.jpg'
 import arrowDownPurple from "../../../../../../dist/icons/arrowDownPurple.svg";
 
 function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {

@@ -2,7 +2,7 @@ import { Avatar, Modal } from 'antd'
 import React, { useState } from 'react'
 import AppointmentCalendarModal from './AppointmentCalendarModal'
 import dayjs from 'dayjs'
-import gray_grid from '../../../../../dist/icons/gray_grid.png'
+import gray_grid from '../../../../../dist/icons/bg_pattern.jpg'
 
 function AppointmentCalendarInnCollapse({
 	docObj,
