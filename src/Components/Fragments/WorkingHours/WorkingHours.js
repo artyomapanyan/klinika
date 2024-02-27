@@ -176,7 +176,7 @@ function WorkingHours({onFinish,
   }
 
 
-
+  console.log(data, 'data')
 
 
   return (loading ? <Preloader/> : <Form
@@ -335,10 +335,10 @@ function WorkingHours({onFinish,
                         <Space>
                           {key !== 0 && <Button type={'secondary'} style={{border: 'none'}}
                                                 onClick={() => handleRemoveHours(key, dataKey)}>x</Button>}
+
                           {currentOptions.length !== 0 && ((key === (workingDay.length - 1) && currentOptions?.slice(currentOptions?.findIndex(e => e?.value === workingDay[key]?.closes_at) + 1, currentOptions.length - 1).length > 0)) && workingDay[key]?.closes_at &&
-                            <Button type={'secondary'} style={{border: 'none'}}
-                                    onClick={() => handleAddHours(workingDay, dataKey)}>Add
-                              Hours</Button>}
+                              workingDay[key]?.closes_at !== '11:59 PM' ? <Button type={'secondary'} style={{border: 'none'}}
+                                    onClick={() => handleAddHours(workingDay, dataKey)}>Add Hours</Button> : null}
                         </Space>
 
                       </div>
