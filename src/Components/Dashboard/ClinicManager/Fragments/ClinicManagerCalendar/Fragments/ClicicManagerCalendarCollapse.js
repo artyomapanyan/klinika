@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {Button} from "antd";
 import ClinicManagerCalendarInnCollapse from "./ClinicManagerCalendarInnCollapse";
-import gray_grid from "../../../../../../dist/icons/gray_grid.png";
+import gray_grid from '../../../../../../dist/icons/bg_pattern.jpg'
 import arrowDownPurple from "../../../../../../dist/icons/arrowDownPurple.svg";
 
 function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
@@ -18,14 +18,14 @@ function ClinicManagerCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}
         <>
             <tbody>
             <tr>
-                <td>
+                <td style={{paddingRight: 20 }}>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
                         <span className={'cl_manager_collapse_specialty'}>{item?.speciality}</span>
                         <img src={arrowDownPurple} alt={'arrowDownPurple'}/>
                     </Button>
                 </td>
-                {Object.keys(item?.availability??{}).map((key, k)=>   {
-                    return <td key={key} style={{paddingLeft:k===0?'20px':0}}>
+                {Object.keys(item?.availability??{}).map((key)=>   {
+                    return <td key={key}>
 
                     <div className={"progressPurple"} style={{background: item.availability[key] === null ? 'url('+gray_grid+')' : '#774d9d20'}}>
                         <div className="progress-bar "

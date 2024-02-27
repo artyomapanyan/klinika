@@ -55,7 +55,6 @@
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  margin-right: 16px;
   &__img {
     width: 100%;
     height: 100%;
@@ -63,21 +62,7 @@
   }
 }
 .progressInactive {
-  @media only screen and (max-width: 3000px) {
-    width: 144px;
-  }
-  @media only screen and (max-width: 1600px) {
-    width: 120px;
-  }
-  @media only screen and (max-width: 1430px) {
-    width: 100px;
-  }
-  @media only screen and (max-width: 1300px) {
-    width: 80px;
-  }
-  @media only screen and (max-width: 1150px) {
-    width: 70px;
-  }
+  width: 95% !important;
   height: 56px;
   border-radius: 8px;
   background-repeat: no-repeat;
@@ -91,21 +76,7 @@
     background-color: #f5f6fa;
     padding: 12px 0;
     border-radius: 12px;
-    @media only screen and (max-width: 3000px) {
-      width: 144px;
-    }
-    @media only screen and (max-width: 1600px) {
-      width: 120px;
-    }
-    @media only screen and (max-width: 1430px) {
-      width: 100px;
-    }
-    @media only screen and (max-width: 1300px) {
-      width: 80px;
-    }
-    @media only screen and (max-width: 1150px) {
-      width: 70px;
-    }
+    width: 95% !important;
     text-align: center;
     &__text {
       font-size: 18px;
@@ -123,21 +94,7 @@
   }
 }
 .progressPurple {
-  @media only screen and (max-width: 3000px) {
-    width: 144px;
-  }
-  @media only screen and (max-width: 1600px) {
-    width: 120px;
-  }
-  @media only screen and (max-width: 1430px) {
-    width: 100px;
-  }
-  @media only screen and (max-width: 1300px) {
-    width: 80px;
-  }
-  @media only screen and (max-width: 1150px) {
-    width: 70px;
-  }
+  width: 95% !important;
   height: 40px;
   border-radius: 8px;
   background-color: rgba(119, 77, 157, 0.15);
@@ -170,21 +127,7 @@
   }
 }
 .progressGreen {
-  @media only screen and (max-width: 3000px) {
-    width: 144px;
-  }
-  @media only screen and (max-width: 1600px) {
-    width: 120px;
-  }
-  @media only screen and (max-width: 1430px) {
-    width: 100px;
-  }
-  @media only screen and (max-width: 1300px) {
-    width: 80px;
-  }
-  @media only screen and (max-width: 1150px) {
-    width: 70px;
-  }
+  width: 95% !important;
   height: 56px;
   border-radius: 8px;
   background-color: #eefdeb;
@@ -235,6 +178,7 @@
   transition: width .6s ease;
   height: 100%;
   border-radius: 8px;
+  background-size: cover !important;
 }
 .w-100 {
   width: 100% !important;

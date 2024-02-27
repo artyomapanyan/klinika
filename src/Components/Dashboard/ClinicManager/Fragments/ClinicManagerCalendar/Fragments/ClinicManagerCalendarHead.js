@@ -39,7 +39,7 @@ function ClinicManagerCalendarHead({date,setDate,hideData, showMonth=false,getDa
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", padding:24}}>
             <Space className={'app_clinic'} style={{fontSize:24, fontWeight:600}}>
                 {
-                    calendarTitle ? `${t("Appointments")} :` : `${t("Laboratories and Nursing")} :`
+                    calendarTitle ? `${t("Appointments")}` : `${t("Laboratories and Nursing")}`
                 }
 
                 {!hideData && (calendarTitle ? data : data1).map((itemKey,key)=><Space  key={key} className={calendarTitle ? `withDot WD-color-clinic-man-calendar-${key}` : `withDot WD-color-clinic-man-calendar-LN-${key}`}>{itemKey}</Space>)}

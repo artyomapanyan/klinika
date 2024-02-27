@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Modal} from "antd";
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
-import gray_grid from "../../../../dist/icons/gray_grid.png";
+import gray_grid from '../../../../dist/icons/bg_pattern.jpg'
 import ClinicManagerCalendarInnCollapse
     from "../Fragments/ClinicManagerCalendar/Fragments/ClinicManagerCalendarInnCollapse";
 import NursLabCalendarInnCollapse from "./NursLabCalendarInnCollapse";
@@ -24,14 +24,14 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
         <>
             <tbody>
             <tr>
-                <td>
+                <td style={{paddingRight: 20 }}>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
                         <span className={'cl_manager_collapse_specialty'}>{t(item?.service.replaceAll('_', ' '))}</span>
                         {/*<img src={arrowDownPurple} alt={'arrowDownPurple'}/>*/}
                     </Button>
                 </td>
-                {Object.keys(item?.availability??{}).map((key, k)=>   {
-                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null ? null : () => setSelectedDate(key)}>
+                {Object.keys(item?.availability??{}).map((key)=>   {
+                    return <td key={key} style={{cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null ? null : () => setSelectedDate(key)}>
 
                         <div className={"progressPurple"} style={{background: !item.availability[key]?.available ? 'url('+gray_grid+')' : '#6DAF5620'}}>
 
@@ -48,7 +48,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
                     </td>})}
             </tr>
             </tbody>
-            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
+            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'550px'} footer={null}>
                 {selectedDate ? <NursLabCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} item={item} clinic={clinic} specialty={item?.service} clinicID={clinicID}   setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
 

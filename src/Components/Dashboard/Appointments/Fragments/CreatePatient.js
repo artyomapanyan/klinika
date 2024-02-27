@@ -16,14 +16,13 @@ function CreatePatient({ data, formRef, setNationality }) {
 	}
 
 	return (
-		<Form
-			name='patient'
-			layout='vertical'
-			disabled={data?.id}
-			ref={formRef}
-		>
+		<Form name='patient' layout='vertical' disabled={data?.id} ref={formRef}>
 			<div className={'add_edit_content'}>
-				<h2 style={{ fontWeight: 'bold' }}>{t('Patient card')}</h2>
+				<Row>
+					<Col lg={8} className='gutter-row'>
+						<h2 style={{ fontWeight: 'bold', paddingLeft: 7}}>{t('Patient card')}</h2>
+					</Col>
+				</Row>
 				<Row>
 					<Col lg={8} className='gutter-row'>
 						<FormInput
@@ -45,7 +44,7 @@ function CreatePatient({ data, formRef, setNationality }) {
 							resource={'Country'}
 							inputProps={{
 								onChange: e => {
-									setNationality(e);
+									setNationality(e)
 								}
 							}}
 						/>
@@ -113,10 +112,12 @@ function CreatePatient({ data, formRef, setNationality }) {
 							name={'phone_number'}
 							maxLength={10}
 							initialValue={data?.phone_number}
-							rules={[{ required: !data?.id},{
-								pattern: /^\d{6,10}$/,
-								message: 'Please enter a valid phone number',
-							  }
+							rules={[
+								{ required: !data?.id },
+								{
+									pattern: /^\d{6,10}$/,
+									message: 'Please enter a valid phone number'
+								}
 							]}
 						/>
 					</Col>
@@ -127,8 +128,10 @@ function CreatePatient({ data, formRef, setNationality }) {
 							initialValue={data?.dob}
 							inputType={'date'}
 							rules={[{ required: !data?.id }]}
-							disabledDate={(current) => current && current.isAfter(dayjs(), 'day')}
-							/>
+							disabledDate={current =>
+								current && current.isAfter(dayjs(), 'day')
+							}
+						/>
 					</Col>
 					<Col lg={8} className='gutter-row'>
 						<FormInput

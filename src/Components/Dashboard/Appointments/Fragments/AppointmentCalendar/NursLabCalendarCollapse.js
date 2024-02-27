@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal } from 'antd'
 import AppointmentCalendarModal from './AppointmentCalendarModal'
-import gray_grid from '../../../../../dist/icons/gray_grid.png'
+import gray_grid from '../../../../../dist/icons/bg_pattern.jpg'
 import dayjs from 'dayjs'
 
 function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
@@ -17,7 +17,6 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 							<td
 								key={key}
 								style={{
-									paddingLeft: k === 0 ? '20px' : 0,
 									cursor:
 										thisDate > key || !item?.availability[key]?.available
 											? ''
@@ -30,12 +29,12 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 								}
 							>
 								<div
-									className={'progressPurple'}
-									style={{
+								className='progress progressGreen'
+								style={{
 										background: !item.availability[key]?.available
 											? 'url(' + gray_grid + ')'
 											: '#6DAF5620'
-									}}
+										}}
 								>
 									<div
 										className='progress-bar '
@@ -67,7 +66,7 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 			<Modal
 				open={selectedDate}
 				onCancel={() => setSelectedDate(false)}
-				width={'400px'}
+				width={'550px'}
 				footer={null}
 			>
 				{selectedDate ? (

@@ -2,7 +2,7 @@ import {Avatar, Modal} from "antd";
 import React, {useState} from "react";
 import CalendarInnCollapseModal from "./CalendarInnCollapseModal";
 import dayjs from "dayjs";
-import gray_grid from "../../../../../../dist/icons/gray_grid.png";
+import gray_grid from '../../../../../../dist/icons/bg_pattern.jpg'
 
 function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,speciality_id,clinic, setUpdate}) {
     const [selectedDate, setSelectedDate] = useState(false);
@@ -23,7 +23,7 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
             </td>
             {
                 Object.keys(docItem?.availability??{}).map((key, k) => {
-                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || !docItem.availability[key]?.available ? null : () => setSelectedDate(key)} style={{paddingLeft:k===0 ? 20 : 0}}>
+                    return <td key={key} className="hiddenTableRow__col" onClick={thisDate > key || !docItem.availability[key]?.available ? null : () => setSelectedDate(key)}>
 
                         <div className="progress progressGreen" style={{cursor: thisDate > key || !docItem.availability[key]?.available ? "" : 'pointer', background: docItem.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
                             <div className="progress-bar progressGreen__inside"
@@ -59,7 +59,7 @@ function ClinicManagerCalendarInnCollapse({setDate,docItem,specialty,clinicID,sp
             {/*        </td>*/}
             {/*    })*/}
             {/*}*/}
-            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'400px'} footer={null}>
+            <Modal open={selectedDate} onCancel={() => setSelectedDate(false)} width={'550px'} footer={null}>
                 {selectedDate ? <CalendarInnCollapseModal setUpdate={setUpdate} key={Math.random()} setDate={setDate} docItem={docItem} clinic={clinic} specialty={specialty} clinicID={clinicID}  speciality_id={speciality_id} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/> : null}
             </Modal>
         </tr>

@@ -5,7 +5,6 @@ import dayjs from 'dayjs'
 import Resources from '../../../../../store/Resources'
 import { postResource } from '../../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
-
 import FormInput from '../../../../Fragments/FormInput'
 import { t } from 'i18next'
 import Preloader from '../../../../Preloader'
@@ -24,6 +23,12 @@ function AppointmentCalendarModal({
 	const [noTimes, setNoTimes] = useState(false)
 	const formRef = useRef()
 	let token = useSelector(state => state.auth.token)
+
+	const [labTestsRequired, setLabTestsRequired] = useState(true)
+	const [labPackagesRequired, setLabPackagesRequired] = useState(true)
+	const [labPackagesArray, setLabPackagesArray] = useState([])
+	const [labTestsArray, setLabTestsArray] = useState([])
+	const [nursingTasksArray, setNursingTasksArray] = useState([])
 
 	useEffect(() => {
 		if (appointmentObj.service_type) {
@@ -76,14 +81,37 @@ function AppointmentCalendarModal({
 			offer_id: values.offer_id, //? values.offer_id : null,
 			doctor_id: doctor?.id,
 			lab_packages: values.lab_packages ? [values.lab_packages] : [],
+			lab_tests: values.lab_tests,
+			nursing_tasks: values.nursing_tasks,
 			address1: values.address1,
 
 			//data to be deleted from the object before saving the appointment
 			doctor: doctor,
-			specialty: specialty
+			specialty: specialty,
+			labPackagesArray: labPackagesArray,
+			labTestsArray: labTestsArray,
+			nursingTasksArray: nursingTasksArray
 		}))
 		setSelectedDate(false)
 		console.log(appointmentObj)
+	}
+
+	const handleMapLabPackages = (item, name) => {
+		name = item.lab_package.name
+		item.id = item.lab_package.id
+		return [name, item]
+	}
+
+	const handleMapLabTests = (item, name) => {
+		name = item.lab_test.name
+		item.id = item.lab_test.id
+		return [name, item]
+	}
+
+	const handleMapNursingTasks = (item, name) => {
+		name = item.nursing_task.name
+		item.id = item.nursing_task.id
+		return [name, item]
 	}
 
 	return (
@@ -103,25 +131,6 @@ function AppointmentCalendarModal({
 						{Resources.Days[dayjs(selectedDate).day()]}
 					</h1>
 				</Space>
-				{doctor ? (
-					<div>
-						<Space style={{ marginBottom: '20' }}>
-							<Avatar
-								size={56}
-								src={doctor?.avatar?.url}
-								icon={<UserOutlined />}
-							/>
-							<div style={{ display: 'block' }}>
-								<div className={'cl_manager_modal_dr_name'}>
-									{doctor.first} {doctor.last}
-								</div>
-								<div className={'cl_manager_modal_stecialty_name'}>
-									{specialty}
-								</div>
-							</div>
-						</Space>
-					</div>
-				) : null}
 				<div>
 					{loading ? (
 						<Preloader />
@@ -145,12 +154,39 @@ function AppointmentCalendarModal({
 									buttonStyle='solid'
 								/>
 							</Form.Item>
+							<br />
+							{doctor ? (
+								<div>
+									<Space style={{ marginBottom: '20' }}>
+										<Avatar
+											size={56}
+											src={doctor?.avatar?.url}
+											icon={<UserOutlined />}
+										/>
+										<div style={{ display: 'block' }}>
+											<div className={'cl_manager_modal_dr_name'}>
+												{doctor.first} {doctor.last}
+											</div>
+											<div className={'cl_manager_modal_stecialty_name'}>
+												{specialty}
+											</div>
+										</div>
+									</Space>
+									<br />
+									<br />
+								</div>
+							) : null}
 							{appointmentObj?.service_type === 'nursing' ? (
 								<FormInput
 									label={t('Nursing tasks')}
 									disableClear={true}
 									name={'nursing_tasks'}
 									inputProps={{
+										onChange: (value, arr) => {
+											setNursingTasksArray(
+												arr.filter(e => value.includes(e.nursing_task.id))
+											)	
+										},
 										mode: 'multiple'
 									}}
 									rules={[{ required: true }]}
@@ -159,7 +195,8 @@ function AppointmentCalendarModal({
 										status: 2
 									}}
 									inputType={'resourceSelect'}
-									resource={'NursingTask'}
+									handleMapItems={handleMapNursingTasks}
+									resource={'ClinicNursingTask'}
 								/>
 							) : null}
 							{appointmentObj?.service_type === 'laboratory_clinic_visit' ||
@@ -168,11 +205,18 @@ function AppointmentCalendarModal({
 									<FormInput
 										label={t('Lab Tests')}
 										name={'lab_tests'}
+										inputProps={{
+											onChange: (value, arr) => {
+												setLabPackagesRequired(!value)
+												setLabTestsArray(
+													arr.filter(e => value.includes(e.lab_test.id))
+												)	
+											},
+											mode: 'multiple'
+										}}
 										rules={[
 											{
-												required:
-													!appointmentObj?.lab_packages &&
-													!appointmentObj?.lab_packages?.length,
+												required: labTestsRequired,
 												message: 'Please enter Lab test or Lab package'
 											}
 										]}
@@ -181,20 +225,24 @@ function AppointmentCalendarModal({
 											clinic: appointmentObj.clinic_id,
 											status: 2
 										}}
-										inputProps={{
-											mode: 'multiple'
-										}}
-										resource={'LabTest'}
+										handleMapItems={handleMapLabTests}
+										resource={'ClinicLabTest'}
 									/>
 
 									<FormInput
 										label={t('Lab Packages')}
 										name={'lab_packages'}
+										inputProps={{
+											onChange: (value, arr) => {
+												setLabTestsRequired(!value)
+												setLabPackagesArray(
+													arr.filter(e => e.lab_package.id === value)
+												)												
+											}
+										}}
 										rules={[
 											{
-												required:
-													!appointmentObj?.lab_tests ||
-													!appointmentObj?.lab_tests?.length,
+												required: labPackagesRequired,
 												message: 'Please enter Lab test or Lab package'
 											}
 										]}
@@ -203,7 +251,8 @@ function AppointmentCalendarModal({
 											clinic: appointmentObj.clinic_id,
 											status: 2
 										}}
-										resource={'LabPackage'}
+										handleMapItems={handleMapLabPackages}
+										resource={'ClinicLabPackage'}
 									/>
 								</div>
 							) : null}
@@ -239,12 +288,13 @@ function AppointmentCalendarModal({
 								}}
 								resource={'Offer'}
 							/>
+							<br></br>
 							<Button
 								type={'primary'}
 								htmlType={'submit'}
 								style={{ width: '100%', height: '44px' }}
 							>
-								{t('Add')}
+								{t('Submit')}
 							</Button>
 						</div>
 					) : (
