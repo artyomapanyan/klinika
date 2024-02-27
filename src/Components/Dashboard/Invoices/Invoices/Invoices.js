@@ -79,7 +79,6 @@ function Invoices() {
         //     setUpdateTableChangeMonth(updateTableChangeMonth+1)
         // }
 
-
     }, [headerFilters]);
 
     return(
