@@ -61,7 +61,7 @@ function Users() {
                     filterDropdown: (props)=><TableFilterElement resource='RoleWithoutPatients' type={'selectFilter'} filterProps={props}/>,
                     render:(e, record) => {
                         return record?.roles?.map((e, i) => {
-                            return e?.name[language] + (i === record?.roles.length - 1 ? '' : ', ')
+                            return (e?.name[language]? e?.name[language] : e?.name.en) + (i === record?.roles.length - 1 ? '' : ', ')
                         })
                     }
                 },
