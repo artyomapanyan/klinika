@@ -25,7 +25,8 @@ function Invoices() {
 
     const [pdfState, setPdfState] = useState(false);
     const [updateTable,setUpdateTable] = useState(0)
-    const [updateTableChangeMonth,setUpdateTableChangeMonth] = useState(0)
+    // const [updateTableChangeMonth,setUpdateTableChangeMonth] = useState(0)
+    const [roleState,setRoleState] = useState('')
 
     const handleExportPDF =(record)=>{
         setPdfState(true)
@@ -62,15 +63,22 @@ function Invoices() {
     }
 
     useEffect(() => {
+        setRoleState(role)
+    }, [])
 
-        if(updateTableChangeMonth > 0) {
+    useEffect(() => {
+
+        if(roleState === role) {
             setUpdateTable(prevState => ({
                 ...prevState,
                 clinic: headerFilters.id === 'all' ? undefined : headerFilters.id,
                 month: headerFilters.month_key
             }))
         }
-        setUpdateTableChangeMonth(updateTableChangeMonth+1)
+        // if(roleState === role) {
+        //     setUpdateTableChangeMonth(updateTableChangeMonth+1)
+        // }
+
 
     }, [headerFilters]);
 
