@@ -6,6 +6,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import DateRangeFilterElement from "../../Fragments/TableFilterElements/DateRangeFilterElement";
 import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
+import Resources from "../../../store/Resources";
 
 function Patients() {
     let selectedRole = useSelector((state) => state.auth.selected_role);
@@ -51,7 +52,14 @@ function Patients() {
                     dataIndex:'phone_number',
                     title:t('Phone number'),
                     key:'phone_number',
-                    filterDropdown: (props)=><TableFilterElement filterProps={props} resource={'Region'}/>,
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    dataIndex:'gender',
+                    title:t('Gender'),
+                    key:'gender',
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
+                    render:i=><p>{i == 1 ? t('Male') : t('Female') }</p>
                 },
                 {
                     dataIndex:['created_at','iso_string'],
