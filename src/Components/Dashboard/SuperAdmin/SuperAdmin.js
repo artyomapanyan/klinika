@@ -16,7 +16,6 @@ import SuperAdminClinicLicenseChart from "./SuperAdminClinicLicenseChart/SuperAd
 
 
 
-
 function SuperAdmin() {
     window.addEventListener("error", (e) => console.error(e))
 
