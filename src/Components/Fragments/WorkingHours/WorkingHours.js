@@ -176,7 +176,7 @@ function WorkingHours({onFinish,
   }
 
 
-  console.log(data, 'data')
+
 
 
   return (loading ? <Preloader/> : <Form
