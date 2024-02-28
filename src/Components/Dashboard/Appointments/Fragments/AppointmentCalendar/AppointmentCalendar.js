@@ -11,7 +11,7 @@ import NursLabCalendarCollapse from './NursLabCalendarCollapse'
 import { t } from 'i18next'
 
 function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(false)
 	const [hasLeftSide, setHasLeftSide] = useState(true)
 	const [labNursing, setLabNursing] = useState(false)
 	const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
@@ -21,7 +21,6 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 
 	let token = useSelector(state => state.auth.token)
 	useEffect(() => {
-		setLoading(true)
 		if (appointmentObj?.service_type) {
 			if (
 				appointmentObj?.service_type === 'nursing' ||
@@ -33,7 +32,6 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 					from: date[0].format('YYYY-MM-DD'),
 					to: date[1].format('YYYY-MM-DD'),
 					clinic: appointmentObj?.clinic_id,
-					service: appointmentObj?.service_type
 				}).then(response => {
 					setData({
 						clinic_id: response.clinic.id,
@@ -45,21 +43,28 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 					setLoading(false)
 				})
 			} else {
-				postResource('Dashboard', 'DoctorWorkload', token, '', {
-					from: date[0].format('YYYY-MM-DD'),
-					to: date[1].format('YYYY-MM-DD'),
-					clinic: appointmentObj?.clinic_id,
-					service: appointmentObj?.service_type
-				}).then(response => {
-					setData({
-						clinic_id: response.clinic.id,
-						clinic: response.clinic,
-						workload: Object.values(response.workload).filter(
-							e => e.speciality_id === appointmentObj?.specialty_id
-						)
+				if (appointmentObj?.specialty_id) {
+					setLoading(true)
+					postResource('Dashboard', 'DoctorWorkload', token, '', {
+						from: date[0].format('YYYY-MM-DD'),
+						to: date[1].format('YYYY-MM-DD'),
+						clinic: appointmentObj?.clinic_id,
+						service_type: appointmentObj?.service_type,
+						specialty: appointmentObj?.specialty_id
+					}).then(response => {
+						setData({
+							clinic_id: response.clinic.id,
+							clinic: response.clinic,
+							workload: Object.values(response.workload).filter(
+								e => e.speciality_id === appointmentObj?.specialty_id
+							)
+						})
+						setLoading(false)
 					})
-					setLoading(false)
-				})
+				}
+				else{
+					setData(null)
+				}
 			}
 		}
 	}, [date, appointmentObj?.service_type, appointmentObj?.specialty_id])
@@ -73,14 +78,18 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 	}, [appointmentObj?.service_type])
 
 	useEffect(() => {
-		setHasLeftSide(
-			!labNursing && !appointmentObj?.doctor_id
-		)
+		setHasLeftSide(!labNursing && !appointmentObj?.doctor_id)
 	}, [labNursing, appointmentObj?.doctor_id])
 	return (
 		<section>
 			<Spin spinning={loading}>
-				<AppointmentCalendarHead date={date} setDate={setDate} calendarTitle={labNursing? 'Laboratories and Nursing' : 'Appointments'}/>
+				<AppointmentCalendarHead
+					date={date}
+					setDate={setDate}
+					calendarTitle={
+						labNursing ? 'Laboratories and Nursing' : 'Appointments'
+					}
+				/>
 				<div className='container-fluid'>
 					<div className='row'>
 						<div className='d-flex justify-content-center w-100'>
@@ -109,7 +118,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 															</div>
 														</td>
 													) : null}
-													{[...Array(7).keys()].map((e) => {
+													{[...Array(7).keys()].map(e => {
 														return (
 															<td
 																key={e}
@@ -139,7 +148,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 												</tr>
 											</tbody>
 
-											{data.workload
+											{data?.workload
 												?.slice(0, showCount)
 												?.map((item, key) =>
 													appointmentObj?.service_type === 'nursing' ||
@@ -165,7 +174,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 												)}
 										</table>
 										<div style={{ padding: 10, display: 'flex', gap: 10 }}>
-											{data.workload.length > showCount ? (
+											{data?.workload?.length > showCount ? (
 												<Button
 													type={'primary'}
 													onClick={() =>
