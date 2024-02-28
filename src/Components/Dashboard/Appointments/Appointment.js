@@ -163,12 +163,14 @@ function Appointment() {
 				clinic_id: data?.clinic_id,
 				code: data?.code
 			}).then(response => {
-				fetchedUsers.current.push(response?.patient)
-				setData(prevState => ({
-					...prevState,
-					patient_id: response?.patient?.id,
-					code: null
-				}))
+				if(response?.patient){
+					fetchedUsers.current.push(response?.patient)
+					setData(prevState => ({
+						...prevState,
+						patient_id: response?.patient?.id,
+						code: null
+					}))
+				}
 				setVerifyLoading(false)
 			})
 		}
