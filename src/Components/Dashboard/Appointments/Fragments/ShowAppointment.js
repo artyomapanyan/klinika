@@ -357,7 +357,11 @@ function ShowAppointment() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{data?.follow_up_history || <span style={{fontStyle: 'italic'}}>N/A</span>}</td>
+                                    <td>{data?.follow_up_history?.map((el, i) => {
+                                        return <span style={{backgroundColor: '#f8f7f7', margin: '0 5px'}}>
+                                            {el + (i === data?.follow_up_history?.length - 1 ? '' : ', ')}
+                                        </span>
+                                    }) || <span style={{fontStyle: 'italic'}}>N/A</span>}</td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -79,7 +79,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 			<Card
 				title={t('Follow up history')}
 				extra={
-					<Button onClick={onStatusChange} className={'patient_card_btn'} disabled={appointment.status != 2 && appointment.status != 6}>
+					<Button onClick={onStatusChange} className={'patient_card_btn'} disabled={appointment.status != 2}>
 						{' '}
 						<img alt={'icons'} src={plusPurple} />
 						<span style={{ marginLeft: 10 }}>{t('Add')}</span>
