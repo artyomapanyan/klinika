@@ -16,7 +16,7 @@ function AppointmentCalendarHead({date,setDate,hideData, showMonth=false,getDate
 
     let data = [
         t('HCP Load'),
-        t('Day off'),
+        t('Day off/Weekend'),
         //'Holidays/Weekend'
     ]
 
