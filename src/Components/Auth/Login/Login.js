@@ -123,7 +123,7 @@ function Login({goBackBtn}) {
 
     return (
         <div className={'login_background'}>
-            <AuthHeader goBackBtn={goBackBtn}/>
+            <AuthHeader goBackBtn={false}/>
             <div className={'card_div'}>
                 <Carousel dots={false} ref={carouselRef}>
                     <div className={'logo_div'}>
