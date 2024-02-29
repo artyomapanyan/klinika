@@ -163,6 +163,10 @@ function ResourceSelectPaginated({
 
   }
 
+  const handleClear =() =>{
+    setParams(resourceParams)
+  }
+
   const itemOptions = useMemo(() => handleGenerateOptions(localData ?? []), [localData])
 
   const SelectItem = <Select
@@ -176,6 +180,7 @@ function ResourceSelectPaginated({
     loading={suffixIcon?true:false}
     onPopupScroll={handleScroll}
     onSearch={handleSearch}
+    onClear={handleClear}
     showSearch
     notFoundContent={notFoundContent??null}
     suffixIcon={suffixIcon??null}

@@ -185,7 +185,7 @@ function AppointmentCalendarModal({
 										onChange: (value, arr) => {
 											setNursingTasksArray(
 												arr.filter(e => value.includes(e.nursing_task.id))
-											)	
+											)
 										},
 										mode: 'multiple'
 									}}
@@ -210,7 +210,7 @@ function AppointmentCalendarModal({
 												setLabPackagesRequired(!value)
 												setLabTestsArray(
 													arr.filter(e => value.includes(e.lab_test.id))
-												)	
+												)
 											},
 											mode: 'multiple'
 										}}
@@ -237,7 +237,7 @@ function AppointmentCalendarModal({
 												setLabTestsRequired(!value)
 												setLabPackagesArray(
 													arr.filter(e => e.lab_package.id === value)
-												)												
+												)
 											}
 										}}
 										rules={[
@@ -270,24 +270,27 @@ function AppointmentCalendarModal({
 										}
 									]}
 								/>
-							) : (
-								<div></div>
-							)}
-							<FormInput
-								label={t('Offers')}
-								name={'offer_id'}
-								inputType={'resourceSelect'}
-								initialValue={null}
-								initialData={[]}
-								resourceParams={{
-									clinic: appointmentObj.clinic_id,
-									status: 2,
-									approved: 1,
-									doctor: doctor?.id,
-									for_date: selectedDate
-								}}
-								resource={'Offer'}
-							/>
+							) : null}
+							{appointmentObj?.service_type === 'clinic_visit' ||
+							appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+							appointmentObj?.service_type ===
+								'physical_therapy_clinic_visit' ? (
+								<FormInput
+									label={t('Offers')}
+									name={'offer_id'}
+									inputType={'resourceSelect'}
+									initialValue={null}
+									initialData={[]}
+									resourceParams={{
+										clinic: appointmentObj.clinic_id,
+										status: 2,
+										approved: 1,
+										doctor: doctor?.id,
+										for_date: selectedDate
+									}}
+									resource={'Offer'}
+								/>
+							) : null}
 							<br></br>
 							<Button
 								type={'primary'}
