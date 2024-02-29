@@ -418,6 +418,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                 }
                             }}
                                        label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
+                                       disabled={!data?.specialty_id}
                                        rules={[{required: true}]}
                                        initialValue={data?.doctors?.map(e=>e.id)}
                                        initialData={data?.doctors??[]}
