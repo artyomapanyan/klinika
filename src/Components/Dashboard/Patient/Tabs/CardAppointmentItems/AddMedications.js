@@ -100,7 +100,7 @@ function AddMedications({handleCancel, setIsModalOpen, prescriptions,data, setAd
                     {required: true},
                     {
                         validator:(rule,value)=>{
-                            if(!(/^[a-zA-Z\s()]*$/u.test(value))) {
+                            if(!(/^[a-zA-Z0-9\s()]*$/u.test(value))) {
 
                                 return Promise.reject('Please enter a valid name.')
 

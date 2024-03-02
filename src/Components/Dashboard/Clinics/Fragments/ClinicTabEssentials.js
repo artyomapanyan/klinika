@@ -661,6 +661,9 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
                                 <FormInput label={t('Payment method')} name={'payment_methods'} inputType={'resourceSelect'}
                                                                 inputProps={{mode:'multiple'}}
                                                                 rules={[{required: true}]}
+                                                                resourceParams={{
+                                                                   status: 2
+                                                                }}
                                                                 initialValue={data?.payment_methods ? data?.payment_methods?.map(e=>e.id) : addDataState.addData.PaymentMethod.items?.map(e=>e.id)}
                                                                 initialData={data?.payment_methods??addDataState.addData.PaymentMethod.items}
                                                                 resource={'PaymentMethod'}

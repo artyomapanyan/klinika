@@ -12,7 +12,7 @@ import Preloader from "../../../Preloader";
 
 
 
-function SuperAdminProfitableTable() {
+function SuperAdminProfitableTable({sort}) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     let ownerClinics = useSelector((state) => state?.owner);
@@ -23,7 +23,7 @@ function SuperAdminProfitableTable() {
     const [date, setDate] = useState({
         year: dayjs().format('YYYY'),
         month: ownerClinics?.month_key,
-        sort: 'asc'
+        sort: sort
 
     });
 

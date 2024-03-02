@@ -24,8 +24,10 @@ function Invoices() {
     let headerFilters = useSelector((state) => state?.owner);
 
     const [pdfState, setPdfState] = useState(false);
-    const [updateTable,setUpdateTable] = useState({})
-    
+    const [updateTable,setUpdateTable] = useState(0)
+    // const [updateTableChangeMonth,setUpdateTableChangeMonth] = useState(0)
+    const [roleState,setRoleState] = useState('')
+
     const handleExportPDF =(record)=>{
         setPdfState(true)
         axios.request({
@@ -61,11 +63,22 @@ function Invoices() {
     }
 
     useEffect(() => {
-        setUpdateTable(prevState => ({
-            ...prevState,
-            clinic: headerFilters.id === 'all' ? undefined : headerFilters.id,
-            month: headerFilters.month_key
-        }))
+        setRoleState(role)
+    }, [])
+
+    useEffect(() => {
+
+        if(roleState === role) {
+            setUpdateTable(prevState => ({
+                ...prevState,
+                clinic: headerFilters.id === 'all' ? undefined : headerFilters.id,
+                month: headerFilters.month_key
+            }))
+        }
+        // if(roleState === role) {
+        //     setUpdateTableChangeMonth(updateTableChangeMonth+1)
+        // }
+
     }, [headerFilters]);
 
     return(

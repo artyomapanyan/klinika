@@ -10,35 +10,36 @@ import ClinicManagerCalendarCollapse from "../Fragments/ClinicManagerCalendar/Fr
 import {t} from "i18next";
 import NursLabCalendarCollapse from "./NursLabCalendarCollapse";
 
-function NursLabCalendar() {
-    const [loading, setLoading] = useState(true)
-    const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
-    const [data, setData] = useState({workload: []});
+function NursLabCalendar({loading, date, setDate, data, setData, update, setUpdate}) {
+    // const [loading, setLoading] = useState(true)
+    // const [date, setDate] = useState([dayjs(), dayjs().add(6, 'day')])
+    // const [data, setData] = useState({workload: []});
     const [showCount,setShowCount] = useState(10);
     const [search,setSearch] = useState('');
-    const [update,setUpdate] = useState(0);
+    // const [update,setUpdate] = useState(0);
 
 
 
-    let token = useSelector((state) => state.auth.token);
-    useEffect(() => {
-        setLoading(true)
-        postResource('ClinicManager', 'ClinicWorkload', token, '', {
-            from: date[0].format('YYYY-MM-DD'),
-            to: date[1].format('YYYY-MM-DD')
-        }).then((response) => {
+    // let token = useSelector((state) => state.auth.token);
 
-            setData({
-                clinic_id:response.clinic.id,
-                clinic:response.clinic,
-                workload:Object.values(response.workload)
-            })
-            setLoading(false)
-
-
-        })
-
-    }, [date, update])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     postResource('ClinicManager', 'ClinicWorkload', token, '', {
+    //         from: date[0].format('YYYY-MM-DD'),
+    //         to: date[1].format('YYYY-MM-DD')
+    //     }).then((response) => {
+    //
+    //         setData({
+    //             clinic_id:response.clinic.id,
+    //             clinic:response.clinic,
+    //             workload:Object.values(response.workload)
+    //         })
+    //         setLoading(false)
+    //
+    //
+    //     })
+    //
+    // }, [date, update])
 
 
 

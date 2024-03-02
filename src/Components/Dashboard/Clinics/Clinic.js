@@ -31,7 +31,9 @@ function Clinic() {
     let locale = useSelector((state) => state?.app?.current_locale);
     const [lang, setLang] = useState(locale)
     const {loadingState, dataState,addDataState} = useGetResourceSingle(resource, params.id, {
-        PaymentMethod:{}
+        PaymentMethod:{
+            status: 2
+        },
     }, null, lang)
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
@@ -49,7 +51,6 @@ function Clinic() {
     const handleLangChange = (e) => {
         setLang(e.target.value)
     }
-
 
 
     return (

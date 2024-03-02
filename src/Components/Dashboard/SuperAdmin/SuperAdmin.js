@@ -15,8 +15,6 @@ import SuperAdminClinicLicenseChart from "./SuperAdminClinicLicenseChart/SuperAd
 
 
 
-
-
 function SuperAdmin() {
     window.addEventListener("error", (e) => console.error(e))
 
@@ -74,10 +72,10 @@ function SuperAdmin() {
                 </Row>
                 <Row gutter={[16, 16]}>
                     <Col lg={12}>
-                        <SuperAdminProfitableTable />
+                        <SuperAdminProfitableTable sort={'asc'} />
                     </Col>
                     <Col lg={12}>
-                        <SuperAdminProfitableTable />
+                        <SuperAdminProfitableTable sort={'desc'}/>
                         {/*<SuperAdminUnprofitableTable />*/}
                     </Col>
                 </Row>

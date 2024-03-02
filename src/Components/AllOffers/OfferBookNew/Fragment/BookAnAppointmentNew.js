@@ -26,6 +26,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     let token = useSelector(state => state.auth.token)
     let params = useParams()
     let dispatch = useDispatch()
+    let navigate = useNavigate()
 
 
     const [dataState, setDataState] = useState({})
@@ -44,6 +45,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
     const [a, seta] = useState(true)
     const personalForm = useRef();
 
+
     const [changeCount, setChangeCount] = useState(1)
 
     const [codeAndNumberState, setCodeAndNumberState] = useState({
@@ -61,8 +63,27 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
             response => {
                 setLoading(false)
 
+
                 if (response?.appointment?.id) {
                     document.location.href = response?.redirect
+                }
+                if(response?.response?.status == 403) {
+                    //setShow(false)
+                    setShowPayment(false)
+                    setVerify(0)
+                    setResponseCodeState(null)
+                    setNamesState({})
+                    setDataState({
+                        ...dataState,
+                        payment_method_id: null
+                    })
+                    setShowButtons(true)
+                    //setDoctorId('')
+                    //setDoctorKey('')
+                    setCodeAndNumberState(prevState => ({
+                        phone_country_code: '966'
+                    }))
+                    setTotalState(false)
                 } else {
                     setShow(false)
                     setShowPayment(false)
@@ -185,7 +206,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
         setDoctorId('')
         setDoctorKey('')
         setCodeAndNumberState(prevState => ({
-            phone_country_code: '966'
+            phone_country_code: '966',
         }))
         setTotalState(false)
     }
@@ -421,7 +442,15 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                                     disabled={dataState?.doctor_id && dataState?.date && dataState?.time ? false : true}
                                     type={'primary'} style={{width: '100%'}}>{t('Continue')}</Button>
                         </div>
-                        <div style={{marginTop: 10}}>
+                        <div style={{marginTop: 10}} className={'all_offer_first_cancel_btn_div_big'}>
+                            <Button onClick={()=>navigate(-1)} className={'all_offers_book_btns'} type={'secondary'} style={{
+                                width: '100%',
+                                border: 'none',
+                                backgroundColor: '#F5F6FA',
+                                color: '#000000'
+                            }}>{t('Cancel')}</Button>
+                        </div>
+                        <div style={{marginTop: 10}} className={'all_offer_first_cancel_btn_div_small'}>
                             <Button onClick={()=>setOpen(false)} className={'all_offers_book_btns'} type={'secondary'} style={{
                                 width: '100%',
                                 border: 'none',
@@ -452,7 +481,7 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                 {
                     <div>
                         <AppPersonalDetails
-                            onBooking={onBooking}
+                            // onBooking={onBooking}
                             setNamesState={setNamesState}
                             namesState={namesState}
                             responseCodeState={responseCodeState}

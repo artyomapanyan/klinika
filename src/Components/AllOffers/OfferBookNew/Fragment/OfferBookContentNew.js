@@ -22,7 +22,7 @@ function OfferBookContent() {
 	const [isMobile, setIsMobile] = useState(false)
 	const navigate = useNavigate()
 	const [open, setOpen] = useState(false);
-	const [response404, setResponse404] = useState({});
+
 	const [totalState, setTotalState] = useState(false);
 	const [verifyResponseNationality, setVerifyResponseNationality] = useState(false);
 
@@ -63,14 +63,7 @@ function OfferBookContent() {
 		{ignore_timezone: '1'}
 	)
 
-	useEffect(() => {
-		if(params?.id) {
-			postResource('PublicOffer', 'single', token, params.id).then(response => {
-				setResponse404(response?.response)
-			})
-		}
 
-	}, [])
 
 
 
@@ -81,7 +74,7 @@ function OfferBookContent() {
 	return (
 		<>
 			{
-				response404?.status === 404 ? <Result
+				 loading ? <Preloader/> : !data?.id ? <Result
 					status="404"
 					title="404"
 					subTitle="Sorry, the page you visited does not exist."
