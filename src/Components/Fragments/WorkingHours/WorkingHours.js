@@ -285,6 +285,8 @@ function WorkingHours({onFinish,
                     return e?.value === workingDay[key+1]?.opens_at
                   })
 
+
+
                   return <Row key={dataKey + key + (new Date())}
                               className={!workingDay[0]?.is_day_off ? 'd-none' : ''}
                   >

@@ -28,7 +28,6 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
 
 
 
-
     useEffect(() => {
         setLoading(true)
         postResource(resource, 'GetDoctorProfile', token, '').then((response) => {
