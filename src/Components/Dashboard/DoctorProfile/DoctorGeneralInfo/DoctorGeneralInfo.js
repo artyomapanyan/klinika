@@ -28,6 +28,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
 
 
 
+
     useEffect(() => {
         setLoading(true)
         postResource(resource, 'GetDoctorProfile', token, '').then((response) => {
@@ -62,6 +63,8 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
 
 
 
+
+
     return(
         <div className={'general_info_big_div'}>
             {/*{*/}
@@ -93,6 +96,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                 loading ? <Preloader /> : <Form
                     ref={formRef}
                     onFinish={onFinish}
+
                 >
                     <div className={'general_info_form'}>
                         <div >
@@ -171,6 +175,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                                             inputProps={{
                                             mode:'multiple',
                                             onChange:(e,dat)=> {
+
                                                 setData((prevState)=>({
                                                     ...prevState,
                                                     sub_specialties: [],
