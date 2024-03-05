@@ -5,7 +5,8 @@ import dayjs from "dayjs";
 import Preloader from "../../../Preloader";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
-import {Button} from "antd";
+import {Button, Form} from "antd";
+import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.png";
 
 
 export function FollowUpContent({onCancel, modal, loading, formRef}){
@@ -15,6 +16,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const [dateLoading,setDateLoading] = useState(false);
     const [availableDateState, setAvailableDateState] = useState([])
     const [inputsLoading, setInputsLoading] = useState(false)
+    const [itemsState, setItemsState] = useState({})
 
 
 
@@ -143,7 +145,35 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const disabledDate = (current) => {
         return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
     };
+    const onAddItem = () => {
+        setItemsState((prevState) => ({
+            ...prevState,
 
+
+            items: {
+                ...(prevState?.items ?? {}),
+                [Math.random()]: {
+                    tax: 0,
+                    qnt: 1,
+                    item: null,
+                    amount: 0,
+                    price: 0,
+                    item_object:{}
+                }
+            }
+        }))
+    }
+
+    const onDeleteItem = (key) => {
+        setItemsState(prevState => {
+            // Создайте копию текущего массива состояния
+            const newState = [...prevState];
+            // Удалите элемент с указанным индексом
+            newState.splice(key, 1);
+            // Верните обновленное состояние
+            return newState;
+        });
+    }
 
     return<div>
 
@@ -184,6 +214,68 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                 </div>
             </div>
         }
+        <div>
+            Price
+            <Button className={'invoice_add_price_button'} type={'primary'} onClick={onAddItem}>+</Button>
+        </div>
+        {
+            Object.keys(itemsState?.items ?? {})?.map((el, key) => {
+                console.log(el, key)
+                return <div>
+                    <div key={key} style={{
+                        display: 'flex',
+                        gap: 5,
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        marginTop: 10
+                    }}>
+                        <div style={{width: '40%'}}>
+                            <FormInput label={t('Invoice item')}
+                                        name={'yyy'}
+                                        inputType={'resourceSelect'}
+                                       // rules={[{required: true}]}
+                                       // inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
+                                       // initialValue={data?.items[key]?.item}
+                                       // initialData={data?.items[key].item_object ? [data?.items[key]?.item_object] : []}
+                                       //
+                                       //
+                                        resource={'InvoiceItem'}
+                            />
+                            <Form.Item hidden={1}  name={'hhh'}/>
+                        </div>
+                        <div style={{width: '100%', display: 'flex'}}>
+                            <div>
+                                <FormInput label={t('Quantity')}
+                                           name={['item', el, 'qnt']}/>
+                            </div>
+                            <div>
+                                <FormInput label={t('Price')} name={['items', key, 'price']}
+                                           inputType={'number'}
+                                           />
+                            </div>
+                            <div>
+                                <FormInput label={t('Tax')} name={['items', key, 'tax']}
+                                           inputType={'number'}
+                                           />
+                            </div>
+                            <div>
+                                <FormInput inputDisabled={true} label={t('Amount  ')}
+                                           name={['items', key, 'amount']}
+                                           inputType={'number'}
+                                           />
+                            </div>
+                            <div>
+                                <div style={{marginTop: 15, cursor: 'pointer'}}
+                                     onClick={() => onDeleteItem(key)}><img alt={'new_delete_dark_icon'} src={new_delete_dark_icon}/></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            })
+        }
+
+
 
 
 

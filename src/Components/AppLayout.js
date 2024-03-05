@@ -28,8 +28,8 @@ function AppLayout(){
 
 
     const child = useMemo(() => <DashboardRoutes />, []);
-    return <Layout className={'main-container'}>
-            <div className={'side-menu'}>
+    return <Layout className={'main-container'} >
+            <div className={'side-menu'} >
                 <Sider collapsed={mouseCollapsed} style={{position: 'fixed', height: "100%", zIndex: 999}}
                        onMouseEnter={toggleCollapsed1}
                        onMouseLeave={!btnCollapsed ? toggleCollapsed : toggleCollapsed1}
@@ -48,7 +48,9 @@ function AppLayout(){
 
             <Content id={'layout-content'}  style={redux.app.current_locale === 'en' ? {marginLeft: btnCollapsed ? 130 : 0, height: '100%'}:{marginRight: btnCollapsed ? 130 : 0, height: '100%'}}>
                 {child}
+
             </Content>
+
             </div>
 
     </Layout>

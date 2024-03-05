@@ -134,6 +134,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 				footer={null}
 				onCancel={onCancel}
 				centered
+				width={800}
 			>
 				<Form onFinish={onFinish} ref={formRef}>
 					{/*<RascheduledContent*/}
