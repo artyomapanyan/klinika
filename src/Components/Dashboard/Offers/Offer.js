@@ -386,7 +386,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
                                        resourceParams={{
-                                           //clinic: data?.clinic_id,
+                                           clinic: data?.clinic_id,
                                            parent: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />

@@ -36,6 +36,7 @@ function FormInput({
                        disableClear,
                        handleStatus,
                        searchByTitle,
+                       textSecurity,
 
 
                    }) {
@@ -133,7 +134,7 @@ function FormInput({
                                                 }}/>
 
             default:
-                return <CInput placeholder={placeholder} onChange={onChange} className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
+                return <CInput textSecurity={textSecurity} placeholder={placeholder} onChange={onChange} className={className} maxLength={maxLength} inputDisabled={inputDisabled} isRequired={isRequired} label={label}
                                inputProps={inputProps}/>
         }
     }
