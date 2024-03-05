@@ -386,7 +386,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
                                        resourceParams={{
-                                           //doctors: data?.doctors,
+                                           clinic: data?.clinic_id,
                                            parent: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
@@ -418,6 +418,7 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                 }
                             }}
                                        label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
+                                       disabled={!data?.specialty_id}
                                        rules={[{required: true}]}
                                        initialValue={data?.doctors?.map(e=>e.id)}
                                        initialData={data?.doctors??[]}

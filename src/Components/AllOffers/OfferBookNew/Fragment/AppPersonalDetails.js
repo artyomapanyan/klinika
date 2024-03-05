@@ -23,6 +23,9 @@ function AppPersonalDetails({
 	show,verifyState,setVerifyState,personalForm,
 	codeAndNumberState, setCodeAndNumberState,
 	setEmailValidationState,
+								setVerify,
+								setShowButtons,
+								setTotalState
 }) {
 	let token = useSelector(state => state.auth.token)
 
@@ -132,33 +135,55 @@ function AppPersonalDetails({
 		postResource('PublicOffer', 'CodeVerify', token, '', values).then(
 			response => {
 
-				setVerifyResponseNationality(response?.patient?.is_saudi)
-				setResponseCodeState(response)
-				setVerifyResponse(response)
-				setPhoneLoading(false)
-				setNamesState({
-					first: response?.patient?.first,
-					last: response?.patient?.last,
-					email: response?.patient?.email
-				})
-
-				if (
-					response?.message ===
-					'Verification code successfully sent to your phone number'
-				) {
-					setDataState(prevState => ({
-						...prevState,
-						verifyNumber:
-							'Verification code successfully sent to your phone number'
+				if(response?.response?.status == 403) {
+					//setShow(false)
+					setShowPayment(false)
+					setVerify(0)
+					setResponseCodeState(null)
+					setNamesState({})
+					setDataState({
+						...dataState,
+						payment_method_id: null
+					})
+					setShowButtons(true)
+					//setDoctorId('')
+					//setDoctorKey('')
+					setCodeAndNumberState(prevState => ({
+						phone_country_code: '966'
 					}))
+					setTotalState(false)
+					setPhoneLoading(false)
+				} else {
+					setVerifyResponseNationality(response?.patient?.is_saudi)
+					setResponseCodeState(response)
+					setVerifyResponse(response)
+					setPhoneLoading(false)
+					setNamesState({
+						first: response?.patient?.first,
+						last: response?.patient?.last,
+						email: response?.patient?.email
+					})
+
+					if (
+						response?.message ===
+						'Verification code successfully sent to your phone number'
+					) {
+						setDataState(prevState => ({
+							...prevState,
+							verifyNumber:
+								'Verification code successfully sent to your phone number'
+						}))
+					}
+
+					if (
+						response === 'You entered an incorrect code' ||
+						response === 'لقد قمت بإدخال رمز غير صحيح'
+					) {
+						openNotification('bottomRight')
+					}
 				}
 
-				if (
-					response === 'You entered an incorrect code' ||
-					response === 'لقد قمت بإدخال رمز غير صحيح'
-				) {
-					openNotification('bottomRight')
-				}
+
 			}
 		)
 	}

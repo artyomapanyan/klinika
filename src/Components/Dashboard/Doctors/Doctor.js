@@ -1,10 +1,10 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
+import {createResource, postResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import Preloader from "../../Preloader";
 import {Button, Col, Form, Space} from "antd";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
@@ -29,6 +29,8 @@ function Doctor() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [speciltiesState, setSpeciltiesState] = useState([])
+    const [subLoading, setSubLoading] = useState(false)
 
 
     const onFinish = (values) => {
@@ -113,11 +115,17 @@ function Doctor() {
     }
 
     const handleValuesChange = (changed)=>{
+
+        if(changed?.hasOwnProperty('sub_specialties')) {
+            return;
+        }
         setChangeValuesState(changed)
         setData((prevData) => ({
             ...prevData,
             ...changed
         }))
+
+
 
         if(Object.keys(changed).length > 0) {
             dispatch({
@@ -127,14 +135,50 @@ function Doctor() {
         }
     }
 
+    useEffect(() => {
+        if(data?.specialties) {
+            let specialtyIds = data?.specialties?.map((el) => {
+                if(el.id){
+                    return el.id
+                }
+                return el
+            })
+            setSubLoading(true)
+
+            postResource('Taxonomy', 'list', token, null, {
+                parents: specialtyIds,
+                type:Resources.TaxonomyTypes.SPECIALTY,
+                has_parent:1
+            }).then((response) => {
+
+                let ssubSpecialtyItems = response?.items?.map((el) => {
+                    return{
+                        id: el?.id,
+                        name: el?.title
+                    }
+                })
+
+                setSpeciltiesState(ssubSpecialtyItems)
+
+                setSubLoading(false)
+            })
+        }
+
+
+    },[data?.specialties])
+
+
+
+
+
     let enFirst = <span><span style={{color: 'red'}}>* </span>{('EN First Name')}</span>
     let enLast = <span><span style={{color: 'red'}}>* </span>{('EN Last Name')}</span>
     let arFirst = <span><span style={{color: 'red'}}>* </span>{('AR First Name')}</span>
     let arLast = <span><span style={{color: 'red'}}>* </span>{('AR Last Name')}</span>
-    console.log(data, formRef?.current?.setFieldsValue())
+
     return(
         <div>
-            {data?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - {language === 'ar' ? data?.translations?.first?.ar +' ' + data?.translations?.last?.ar : data?.translations?.first?.en + ' ' + data?.translations?.last?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
+            {data?.translations?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - {language === 'ar' ? data?.translations?.first?.ar +' ' + data?.translations?.last?.ar : data?.translations?.first?.en + ' ' + data?.translations?.last?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -261,8 +305,8 @@ function Doctor() {
                                        initialValue={data?.status ? data?.status : 2}
                                        initialData={Resources.Status}
                             />
-                            <FormInput inputType={'password'} label={t('Password')} name={'password'} rules={[{required: !params.id}]} />
-                            <FormInput inputType={'password'} label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
+                            <FormInput textSecurity={'disc'} label={t('Password')} name={'password'} rules={[{required: !params.id}]} />
+                            <FormInput textSecurity={'disc'} label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
                             <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
                                        initialValue={data?.languages?.map(e=>e.id)}
@@ -313,23 +357,15 @@ function Doctor() {
                                        resource={'Taxonomy'}
                                        resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:0}}
                             />
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
-                                       initialValue={data?.sub_specialties?.map(e=>e.id)}
-                                       initialData={data?.sub_specialties??[]}
-                                       disabled={!data?.specialties || !data?.specialties?.length}
-                                       resource={'Taxonomy'}
-                                       resourceParams={{
-                                           parents: data?.specialties?.map((el) => {
-                                               if(el?.id){
-                                                   return el?.id
-                                               } else {
-                                                   return el
-                                               }
+                            {
+                                subLoading ? <Preloader small={20}/> : <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
+                                                                       initialValue={data?.sub_specialties?.map(e=>e.id)}
+                                                                       initialData={speciltiesState ?? []}
+                                                                       disabled={!data?.specialties || !data?.specialties?.length}
 
-                                           }),
-                                           type:Resources.TaxonomyTypes.SPECIALTY,has_parent:1
-                            }}
-                            />
+                                />
+                            }
+
                             <FormInput label={t('Doctor title id')} name={'doctor_title_id'} inputType={'resourceSelect'}
                                                rules={[{required: true}]}
                                                initialValue={data?.doctor_title?.id}

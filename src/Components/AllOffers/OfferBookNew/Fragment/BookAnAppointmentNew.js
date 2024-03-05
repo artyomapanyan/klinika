@@ -501,6 +501,9 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
                             setCodeAndNumberState={setCodeAndNumberState}
                             setVerifyResponseNationality={setVerifyResponseNationality}
                             setEmailValidationState={setEmailValidationState}
+                            setVerify={setVerify}
+                        setShowButtons={setShowButtons}
+                        setTotalState={setTotalState}
                         />
                     </div>
                 }

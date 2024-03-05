@@ -5,7 +5,7 @@ import {DatePicker, Select} from "antd";
 import {t} from "i18next";
 import calendar_black_icon from "../../../../dist/icons/calendar_black_icon.png";
 import FormInput from "../../FormInput";
-function TFInput({onChangeValue,value,type, resource, name, initialFocused=false}){
+function TFInput({onChangeValue,value,type, resource, name, initialFocused=false, resourceData}){
     const [focused, setFocused] = useState(initialFocused);
 
 
@@ -17,6 +17,7 @@ function TFInput({onChangeValue,value,type, resource, name, initialFocused=false
                     onChange:onChangeValue
                 }}
                 resource={resource}
+                resourceData={resourceData}
                 name={name}
             />;
         }
