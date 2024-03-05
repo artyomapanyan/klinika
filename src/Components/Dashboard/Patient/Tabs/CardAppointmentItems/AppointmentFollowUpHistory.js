@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 import { postResource } from '../../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import { RascheduledContent } from '../../../Appointments/StatusModalForms/RascheduledContent'
+import {FollowUpContent} from "../../../Appointments/StatusModalForms/FollowUpContent";
 
 function AppointmentFollowUpHistory({ appointment }) {
 	const [modal, setModal] = useState(false)
@@ -21,6 +22,8 @@ function AppointmentFollowUpHistory({ appointment }) {
 			key: '6'
 		})
 	}
+
+	console.log(appointment)
 
 	const onFinish = values => {
 		setLoading(true)
@@ -133,7 +136,14 @@ function AppointmentFollowUpHistory({ appointment }) {
 				centered
 			>
 				<Form onFinish={onFinish} ref={formRef}>
-					<RascheduledContent
+					{/*<RascheduledContent*/}
+					{/*	loading={loading}*/}
+					{/*	modal={modal}*/}
+					{/*	onCancel={onCancel}*/}
+					{/*	date={date}*/}
+					{/*	formRef={formRef}*/}
+					{/*/>*/}
+					<FollowUpContent
 						loading={loading}
 						modal={modal}
 						onCancel={onCancel}
