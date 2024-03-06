@@ -19,6 +19,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
     const permissions = useSelector(state=>state.auth.user.permissions);
     const selected_role = useSelector(state=>state.auth.selected_role);
     const locale = useSelector(state=>state?.app?.current_locale??'');
+    const version = useSelector(state=>state?.app?.version);
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -95,7 +96,7 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
 
 
     return (
-        <div >
+        <div style={{height: '100%'}}>
             <div style={{
                 overflow: 'hidden', display: 'flex',
                 flexWrap: 'nowrap',
@@ -126,6 +127,19 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 />
 
             </Modal>
+            <div style={{overflow: 'hidden', display: 'flex',
+                flexWrap: 'nowrap',
+                justifyContent: 'center',
+                alignItems: 'center'}}>
+                {!mouseCollapsed ?
+                    <div className={'version_text'}>
+                        {version}
+                    </div> : null}
+            </div>
+
+
+
+
         </div>
     )
 }
