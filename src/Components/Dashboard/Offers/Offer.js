@@ -170,6 +170,7 @@ function Offer() {
 
 
 
+
 let enTitle = <span><span style={{color: 'red'}}>* </span>{('EN title')}</span>
 let arTitle = <span><span style={{color: 'red'}}>* </span>{('AR title')}</span>
 let enContent = <span><span style={{color: 'red'}}>* </span>{('EN content')}</span>
