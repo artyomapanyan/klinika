@@ -127,15 +127,15 @@ function DashboardMenu({mouseCollapsed,fixCollapse}){
                 />
 
             </Modal>
-            <div style={{overflow: 'hidden', display: 'flex',
-                flexWrap: 'nowrap',
-                justifyContent: 'center',
-                alignItems: 'center'}}>
-                {!mouseCollapsed ?
-                    <div className={'version_text'}>
-                        {version}
-                    </div> : null}
-            </div>
+            {/*<div style={{overflow: 'hidden', display: 'flex',*/}
+            {/*    flexWrap: 'nowrap',*/}
+            {/*    justifyContent: 'center',*/}
+            {/*    alignItems: 'center'}}>*/}
+            {/*    {!mouseCollapsed ?*/}
+            {/*        <div className={'version_text'}>*/}
+            {/*            {version}*/}
+            {/*        </div> : null}*/}
+            {/*</div>*/}
 
 
 
