@@ -1,10 +1,10 @@
 
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {createResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
+import {createResource, postResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import Preloader from "../../Preloader";
 import {Button, Checkbox, Col, Form, Space} from "antd";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../Fragments/FormInput";
 import Resources from "../../../store/Resources";
@@ -30,6 +30,8 @@ function Offer() {
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
+    const [doctorState, setdoctorState] = useState([])
+    const [subLoading, setSubLoading] = useState(false)
 
     // formRef?.current?.validateFields(['content_en']).then(e => {
     //     console.log('dddddd')
@@ -132,7 +134,42 @@ function Offer() {
      }
  }
 
-    console.log(data)
+    useEffect(() => {
+        if(data?.specialty_id) {
+            let subSpecialtyIds = data?.sub_specialties?.map((el) => {
+                if(el.id){
+                    return el.id
+                }
+                return el
+            })
+            setSubLoading(true)
+
+            postResource('Doctor', 'list', token, null, {
+                approved: 1,
+                clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
+                specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
+                sub_specialties_all: subSpecialtyIds,
+                status: 2,
+            }).then((response) => {
+
+                let subSpecialtyItems = response?.items?.map((el) => {
+                    return{
+                        id: el?.id,
+                        name: el?.first + ' ' + el?.last
+                    }
+                })
+
+                setdoctorState(subSpecialtyItems)
+
+                setSubLoading(false)
+            })
+        }
+
+
+    },[data?.specialty_id, data?.sub_specialties])
+
+
+
 
 let enTitle = <span><span style={{color: 'red'}}>* </span>{('EN title')}</span>
 let arTitle = <span><span style={{color: 'red'}}>* </span>{('AR title')}</span>
@@ -386,50 +423,60 @@ let arContent = <span><span style={{color: 'red'}}>* </span>{('AR content')}</sp
                                        initialData={data?.sub_specialties ??[]}
                                        resource={'Taxonomy'}
                                        resourceParams={{
-                                           clinic: data?.clinic_id,
+                                           clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
                                            parent: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
                                            type:Resources.TaxonomyTypes.SPECIALTY, has_parent: 1}}
                             />
 
-                            <FormInput inputProps={{
-                                mode:'multiple',
-                                onChange:(e,dat)=> {
-                                    setData((prevState)=>({
-                                        ...prevState,
+                            {
+                                subLoading ? <Preloader small={20}/> :<FormInput inputProps={{
+                                    mode:'multiple',
+                                    onChange:(e,dat)=> {
+                                        setData((prevState)=>({
+                                            ...prevState,
 
 
-                                        category_id: undefined,
-                                        service_id: undefined,
-                                        sub_categories: undefined,
-                                        sub_services: undefined
+                                            category_id: undefined,
+                                            service_id: undefined,
+                                            sub_categories: undefined,
+                                            sub_services: undefined
 
-                                    }))
+                                        }))
 
-                                    formRef?.current?.setFieldsValue({
+                                        formRef?.current?.setFieldsValue({
 
 
-                                        category_id: undefined,
-                                        service_id: undefined,
-                                        sub_categories: undefined,
-                                        sub_services: undefined
+                                            category_id: undefined,
+                                            service_id: undefined,
+                                            sub_categories: undefined,
+                                            sub_services: undefined
 
-                                    })
+                                        })
 
-                                }
-                            }}
-                                       label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
-                                       disabled={!data?.specialty_id}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.doctors?.map(e=>e.id)}
-                                       initialData={data?.doctors??[]}
-                                       resource={'Doctor'}
-                                       resourceParams={{
-                                           approved: 1,
-                                           clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
-                                           specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
-                                           status: 2,
-                                       }}
-                            />
+                                    }
+                                }}
+                                                                                 label={t('Doctors')} name={'doctors'} inputType={'resourceSelect'}
+                                                                                 disabled={!data?.specialty_id}
+                                                                                 rules={[{required: true}]}
+                                                                                 initialValue={data?.doctors?.map(e=>e.id)}
+                                                                                 initialData={doctorState??[]}
+                                                                                 // resource={'Doctor'}
+                                                                                 // resourceParams={{
+                                                                                 //     approved: 1,
+                                                                                 //     clinic: data?.clinic?.id ? data?.clinic?.id : data?.clinic_id,
+                                                                                 //     specialty: data?.specialty_id?.id ? data?.specialty_id?.id : data?.specialty_id,
+                                                                                 //     sub_specialties: data?.sub_specialties?.map((el) => {
+                                                                                 //         if(el?.id) {
+                                                                                 //             return el?.id
+                                                                                 //         } else {
+                                                                                 //             return el
+                                                                                 //         }
+                                                                                 //     }),
+                                                                                 //     status: 2,
+                                                                                 // }}
+                                />
+                            }
+
 
 
 
