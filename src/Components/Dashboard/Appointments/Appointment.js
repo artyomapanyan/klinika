@@ -325,6 +325,9 @@ function Appointment() {
 				appointment.patient = { country_id: nationality }
 				delete appointment.patient_id
 			}
+			if(appointment?.patient_id == '0'){
+				delete appointment.patient_id
+			}
 			setInvoicePrice(0)
 			postResource(resource, 'InvoicePrice', token, '', appointment).then(
 				response => {
