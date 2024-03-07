@@ -7,7 +7,13 @@ body
   :where(.css-dev-only-do-not-override-l7y8lu).ant-form-vertical .ant-form-item-label>label
     height: auto !important
 
+  .ant-input, .ant-select-selector, .ant-picker 
+    background-color: #F5F6FA !important
+    border-color: #F5F6FA !important
 
+  .ant-input-status-error, .ant-select-status-error .ant-select-selector, .ant-picker-status-error
+    border-color: red !important
+    
 .ant-menu-submenu-popup
   display: none !important
 
@@ -133,7 +139,6 @@ body
 
   .ant-form-item-label
     position: absolute
-    background-color: #ffffff
     padding-left: 5px
 
     color: rgba(0, 0, 0, 0.6)
@@ -149,7 +154,7 @@ body
 
   &.input-focused
     .ant-form-item-label
-      transform: translate(19px, -4px) scale(0.7)
+      transform: translate(19px, 0px) scale(0.7)
       line-height: 1em
 
   label::after
@@ -664,9 +669,8 @@ body
 .flying-label
   input:not(:placeholder-shown) + label,input:focus + label
     position: absolute !important
-    top: -8px
+    top: -2px
     font-size: 11px
-    background-color: #FFFFFF
     padding-right: 3px
     padding-left: 3px
 

@@ -127,7 +127,15 @@ function CreatePatient({ data, formRef, setNationality }) {
 							name={'dob'}
 							initialValue={data?.dob}
 							inputType={'date'}
-							rules={[{ required: !data?.id }]}
+							rules={[{ required: !data?.id },{
+								validator:(rule,value)=>{
+									if(dayjs().diff(value,'year')<18){
+										return Promise.reject('min age 18')
+									}
+									return Promise.resolve();
+								}
+							}
+							]}
 							disabledDate={current =>
 								current && current.isAfter(dayjs(), 'day')
 							}
