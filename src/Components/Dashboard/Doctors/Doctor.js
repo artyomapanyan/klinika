@@ -34,7 +34,6 @@ function Doctor() {
 
 
 
-
     const onFinish = (values) => {
         setSaveLoading(true)
         values.sub_specialties = values.sub_specialties? values.sub_specialties : [];
