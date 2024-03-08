@@ -59,7 +59,7 @@ function Patients() {
                     title:t('Gender'),
                     key:'gender',
                     filterDropdown: (props)=><TableFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
-                    render:i=><p>{i == 1 ? t('Male') : t('Female') }</p>
+                    render:i=><>{i == 1 ? t('Male') : t('Female') }</>
                 },
                 {
                     dataIndex:['created_at','iso_string'],
