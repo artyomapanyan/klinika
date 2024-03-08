@@ -1,11 +1,11 @@
 import {useSelector} from "react-redux";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {postResource} from "../../../Functions/api_calls";
 import dayjs from "dayjs";
 import Preloader from "../../../Preloader";
 import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
-import {Button, Form} from "antd";
+import {Button, Form, Input} from "antd";
 import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.png";
 
 
@@ -17,6 +17,12 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const [availableDateState, setAvailableDateState] = useState([])
     const [inputsLoading, setInputsLoading] = useState(false)
     const [itemsState, setItemsState] = useState({})
+    let [qntState, setQntState] = useState(0)
+    let [priceState, setPriceState] = useState(0)
+    let [taxState, setTaxState] = useState(0)
+    let [amState, setAmState] = useState(0)
+
+    const amountRef = useRef()
 
 
 
@@ -164,16 +170,49 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
         }))
     }
 
+    // const onDeleteItem = (key) => {
+    //     setItemsState(prevState => {
+    //         // Создайте копию текущего массива состояния
+    //         const newState = [...prevState];
+    //         // Удалите элемент с указанным индексом
+    //         newState.splice(key, 1);
+    //         // Верните обновленное состояние
+    //         return newState;
+    //     });
+    // }
+
     const onDeleteItem = (key) => {
-        setItemsState(prevState => {
-            // Создайте копию текущего массива состояния
-            const newState = [...prevState];
-            // Удалите элемент с указанным индексом
-            newState.splice(key, 1);
-            // Верните обновленное состояние
-            return newState;
-        });
+        setItemsState((prevState) => {
+            let newItems = prevState.items
+            delete newItems[key]
+            return {
+                ...prevState,
+                items: newItems
+            }
+        })
     }
+
+    const changeAny = (value, obj) => {
+        console.log(value, obj)
+        if(obj === 'qnt') {
+            setQntState(value)
+            qntState = value
+        } else if (obj === 'price') {
+            setPriceState(value)
+            priceState = value
+        } else if (obj === 'tax') {
+            setTaxState(value)
+            taxState = value
+        }
+
+        let answer = (qntState ?? 0) * (priceState ?? 0) * (1 + (taxState ?? 0) / 100)
+        setAmState(answer)
+
+
+        console.log(answer, 'sdfs')
+    }
+
+    console.log(amountRef?.current?.getFieldsValue())
 
     return<div>
 
@@ -231,7 +270,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                     }}>
                         <div style={{width: '40%'}}>
                             <FormInput label={t('Invoice item')}
-                                        name={'yyy'}
+                                        name={['items', key, 'item']}
                                         inputType={'resourceSelect'}
                                        // rules={[{required: true}]}
                                        // inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
@@ -241,28 +280,43 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                                        //
                                         resource={'InvoiceItem'}
                             />
-                            <Form.Item hidden={1}  name={'hhh'}/>
+
                         </div>
                         <div style={{width: '100%', display: 'flex'}}>
                             <div>
-                                <FormInput label={t('Quantity')}
-                                           name={['item', el, 'qnt']}/>
+                                <FormInput label={t('Quantity')} name={['items', key, 'qnt']} onChange={(el) => {
+                                    changeAny(el.target.value,'qnt')
+                                }}/>
                             </div>
                             <div>
                                 <FormInput label={t('Price')} name={['items', key, 'price']}
                                            inputType={'number'}
+                                           onChange={(el) => {
+                                               changeAny(el.target.value,'price')
+                                           }}
                                            />
                             </div>
                             <div>
                                 <FormInput label={t('Tax')} name={['items', key, 'tax']}
                                            inputType={'number'}
+                                           onChange={(el) => {
+                                               changeAny(el.target.value,'tax')
+                                           }}
                                            />
                             </div>
                             <div>
-                                <FormInput inputDisabled={true} label={t('Amount  ')}
-                                           name={['items', key, 'amount']}
-                                           inputType={'number'}
-                                           />
+                                {/*<FormInput inputDisabled={true} label={t('Amount')}*/}
+                                {/*           ref={amountRef}*/}
+                                {/*           name={['items', key, 'amount']}*/}
+                                {/*           inputType={'number'}*/}
+                                {/*           />*/}
+
+                                <Form.Item className={'flying-label'}
+                                    name={['items', key, 'amount']}
+                                >
+                                    <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}} value={amState}/>
+                                    <label style={{left: 15}}>Amount</label>
+                                </Form.Item>
                             </div>
                             <div>
                                 <div style={{marginTop: 15, cursor: 'pointer'}}

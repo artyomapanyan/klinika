@@ -32,6 +32,9 @@ function AppointmentFollowUpHistory({ appointment }) {
 			values.booked_at =
 				values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
 		}
+
+		console.log(values)
+
 		postResource(
 			'Appointment',
 			'appointmentStatus',
