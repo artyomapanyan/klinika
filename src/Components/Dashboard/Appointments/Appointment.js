@@ -35,6 +35,7 @@ function Appointment() {
 	const [saveLoading, setSaveLoading] = useState(false)
 	const [verifyLoading, setVerifyLoading] = useState(false)
 	const [sendCodeLoading, setSendCodeLoading] = useState(false)
+	const [invoiceLoading, setInvoiceLoading] = useState(false)
 
 	const [data, setData] = useState(null)
 	const [serviceTypeState, setServiceTypeState] = useState([])
@@ -44,7 +45,7 @@ function Appointment() {
 		phone_number: null
 	})
 	const [pageState, setPageState] = useState('initial')
-	const [invoicePrice, setInvoicePrice] = useState(0)
+	const [invoicePrice, setInvoicePrice] = useState(null)
 	const [nationality, setNationality] = useState(null)
 
 	const navigate = useNavigate()
@@ -321,21 +322,23 @@ function Appointment() {
 		if (data?.booked_at) {
 			let appointment = { ...data }
 
-			if (!appointment?.patient_id) {
+			if (!appointment?.patient_id && nationality) {
 				appointment.patient = { country_id: nationality }
 				delete appointment.patient_id
 			}
 			if(appointment?.patient_id == '0'){
 				delete appointment.patient_id
 			}
-			setInvoicePrice(0)
+			setInvoicePrice(null)
+			setInvoiceLoading(true)
 			postResource(resource, 'InvoicePrice', token, '', appointment).then(
 				response => {
-					setInvoicePrice(response.total_price ?? 0)
+					setInvoicePrice(response)
+					setInvoiceLoading(false)
 				}
 			)
 		} else {
-			setInvoicePrice(0)
+			setInvoicePrice(null)
 		}
 	}, [data, nationality])
 
@@ -351,7 +354,7 @@ function Appointment() {
 			lab_packages: [],
 			nursing_tasks: []
 		}))
-		setInvoicePrice(0)
+		setInvoicePrice(null)
 	}
 
 	const saveAppointment = () => {
@@ -856,21 +859,7 @@ function Appointment() {
 											</Space>
 										</Col>
 									) : null}
-									<Col lg={5} className='gutter-row'>
-										{invoicePrice ? (
-											<Space>
-												<div>
-													<div
-														className={'cl_manager_modal_dr_name'}
-														style={{ fontWeight: 400 }}
-													>
-														{invoicePrice} SAR
-													</div>
-												</div>
-											</Space>
-										) : null}
-									</Col>
-									<Col lg={6} className='gutter-row'>
+									<Col lg={11} className='gutter-row'>
 										<Space>
 											<div>
 												<div
@@ -1008,6 +997,50 @@ function Appointment() {
 										</Col>
 									) : null}
 								</Row>
+								<br/>
+								<br/>
+								<Row>
+									<Col lg={8} className='gutter-row'>
+										<h2 style={{ fontWeight: 'bold', paddingLeft: 7 }}>
+											{t('Payment') + ':'}
+										</h2>
+									</Col>	
+								</Row>
+								{invoiceLoading? <Preloader></Preloader> :<Row style={{ paddingLeft: 7 }}>
+									<Col lg={4} className='gutter-row'>
+										<div className='payment-header'>
+											{t('Sub total')}
+										</div>	
+										<div className='payment-item'>
+											{invoicePrice?.sub_total + ' SAR'}
+										</div>						
+									</Col>	
+									{invoicePrice?.service_fee?<Col lg={4} className='gutter-row'>
+										<div className='payment-header'>
+											{t('Service fee')}
+										</div>	
+										<div className='payment-item'>
+											{invoicePrice?.service_fee + ' SAR'}
+										</div>						
+									</Col> : null }
+									{data?.patient_id || nationality ? <Col lg={4} className='gutter-row'>
+										<div className='payment-header'>
+											{t('Tax')}
+										</div>	
+										<div className='payment-item'>
+											{invoicePrice?.vat +' SAR'} 
+											{/* {'(' + invoicePrice?.tax_percentage + '%)'} */}
+										</div>						
+									</Col> : null}
+									<Col lg={4} className='gutter-row'>
+										<div className='payment-header'>
+											{t('Total')}
+										</div>	
+										<div className='payment-item'>
+											{invoicePrice?.total_price + ' SAR'}
+										</div>						
+									</Col>
+								</Row>}
 								<br />
 								<br />
 								<Button
@@ -1019,6 +1052,8 @@ function Appointment() {
 								>
 									{t('Save Appointment')}
 								</Button>
+								<br/><br/>
+								<br/><br/>
 							</div>
 						)}
 					</div>

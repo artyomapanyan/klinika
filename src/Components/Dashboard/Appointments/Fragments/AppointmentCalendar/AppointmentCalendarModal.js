@@ -205,6 +205,7 @@ function AppointmentCalendarModal({
 									<FormInput
 										label={t('Lab Tests')}
 										name={'lab_tests'}
+										disableClear={true}
 										inputProps={{
 											onChange: (value, arr) => {
 												setLabPackagesRequired(!value)
