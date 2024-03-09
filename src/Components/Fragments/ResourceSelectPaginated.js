@@ -165,7 +165,7 @@ function ResourceSelectPaginated({
 
 	const handleClear = () => {
     if(params[customSearchKey ?? 'name']){
-      //setLocalData([])
+      setLocalData([])
       params[customSearchKey ?? 'name'] = '';
       setIsInitedState(false)
     }
