@@ -179,7 +179,6 @@ function AppointmentCalendarModal({
 							{appointmentObj?.service_type === 'nursing' ? (
 								<FormInput
 									label={t('Nursing tasks')}
-									disableClear={true}
 									name={'nursing_tasks'}
 									inputProps={{
 										onChange: (value, arr) => {
@@ -205,7 +204,6 @@ function AppointmentCalendarModal({
 									<FormInput
 										label={t('Lab Tests')}
 										name={'lab_tests'}
-										disableClear={true}
 										inputProps={{
 											onChange: (value, arr) => {
 												setLabPackagesRequired(!value)
