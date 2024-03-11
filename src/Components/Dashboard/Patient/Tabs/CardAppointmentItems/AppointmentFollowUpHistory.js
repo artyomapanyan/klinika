@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import { RascheduledContent } from '../../../Appointments/StatusModalForms/RascheduledContent'
 import {FollowUpContent} from "../../../Appointments/StatusModalForms/FollowUpContent";
 
-function AppointmentFollowUpHistory({ appointment }) {
+function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading }) {
 	const [modal, setModal] = useState(false)
 	const [history, setHistory] = useState(appointment.follow_up_history)
 	const [loading, setLoading] = useState(false)
@@ -27,6 +27,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 
 	const onFinish = values => {
 		setLoading(true)
+		setStatusLoading(true)
 
 		if (values?.booked_at) {
 			values.booked_at =
@@ -34,7 +35,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 		}
 
 		console.log(values)
-		return;
+
 
 		postResource(
 			'Appointment',
@@ -50,12 +51,21 @@ function AppointmentFollowUpHistory({ appointment }) {
 				setHistory(response?.follow_up_history)
 				setModal(null)
 				setLoading(false)
+				setBigData(prevState=>({
+					...prevState,
+					status: response?.status
+
+				}))
+				setStatusLoading(false)
 			})
 			.finally(() => {
 				setLoading(true)
 				setTimeout(() => {
 					setLoading(false)
 				}, 3000)
+
+				setStatusLoading(false)
+
 			})
 	}
 

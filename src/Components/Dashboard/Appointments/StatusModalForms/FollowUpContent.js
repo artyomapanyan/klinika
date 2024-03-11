@@ -11,6 +11,7 @@ import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.pn
 
 export function FollowUpContent({onCancel, modal, loading, formRef}){
     let token = useSelector((state) => state.auth.token);
+    let lngs = useSelector(state => state?.app?.current_locale)
     const [date,setDate] = useState(null);
     const [availableTimes,setAvailableTimesState] = useState([]);
     const [dateLoading,setDateLoading] = useState(false);
@@ -303,7 +304,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     console.log(itemsState)
 
-    return<div>
+    return<div className={'follow_up_modal_big_div'}>
 
         {
             inputsLoading ? <Preloader/> : <div style={{display: 'flex', gap: 5, marginTop: 20}}>
@@ -343,7 +344,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             </div>
         }
         <div style={{marginBottom: 20}}>
-            Price
+            {t('Price')}
             <Button className={'invoice_add_price_button'} type={'primary'} onClick={onAddItem}>+</Button>
         </div>
         {
@@ -423,9 +424,9 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             })
         }
 
-        <div style={{width: '100%'}} align={'right'}>
+        <div style={{width: '100%'}} align={lngs === 'en' ? 'right' : 'left'}>
 
-            <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '20%'}}  >
+            <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '19%'}}  >
                 <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}}
                         placeholder={''}
                         value={totalState}

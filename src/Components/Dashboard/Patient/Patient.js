@@ -34,6 +34,7 @@ function Patient() {
 
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
+    const [statusLoading, setStatusLoading] = useState(false)
 
 
     useEffect(() => {
@@ -62,7 +63,7 @@ function Patient() {
                     <div style={{background:"#ffffff", margin:'0 24px', borderRadius: 12}}>
                         <PatientHeader data={data} setData={setData} />
 
-                        <PatientCollapse data={data} setData={setData} />
+                        <PatientCollapse data={data} setData={setData} statusLoading={statusLoading}/>
                     </div>
 
                     <div style={{backgroundColor:'white', margin:'0 24px',  borderRadius: '20px'}}>
@@ -71,7 +72,7 @@ function Patient() {
                                 <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-                                <PatientCardAppointment  tab={tab} patientId={data?.patient?.id}  bigData={data} id={params.id} setBigData={setData}/>
+                                <PatientCardAppointment  tab={tab} patientId={data?.patient?.id}  bigData={data} id={params.id} setBigData={setData} setStatusLoading={setStatusLoading}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane key={'video_call'} tab={'Video call'} >
                                 <VideoCall data={data}/>

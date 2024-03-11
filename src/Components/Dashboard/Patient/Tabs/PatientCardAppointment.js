@@ -17,7 +17,7 @@ import {t} from "i18next";
 const { TextArea } = Input;
 
 const resource = 'Appointment'
-function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
+function PatientCardAppointment({tab, patientId, bigData, id, setBigData, setStatusLoading}) {
     const formRef = useRef();
     const token = useSelector((state) => state.auth.token);
     let params = useParams()
@@ -288,7 +288,7 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData}) {
 
                                 </div>
                                 <div style={{marginTop:30}}>
-                                   <AppointmentFollowUpHistory appointment={bigData} />
+                                   <AppointmentFollowUpHistory appointment={bigData} setBigData={setBigData} setStatusLoading={setStatusLoading}/>
                                 </div>
                             </Col>
                         </Row>
