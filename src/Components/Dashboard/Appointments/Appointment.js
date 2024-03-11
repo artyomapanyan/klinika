@@ -28,7 +28,7 @@ function Appointment() {
 
 	let token = useSelector(state => state.auth.token)
 	let role = useSelector(state => state.auth.selected_role?.key)
-	let doctor_id = useSelector(state => state.auth?.user?.id)
+	let user = useSelector(state => state.auth?.user)
 	let ownerClinics = useSelector(state => state?.owner)
 	let language = useSelector(state => state.app.current_locale)
 
@@ -67,7 +67,7 @@ function Appointment() {
 						phone_country_code: response?.phone_country_code,
 						phone_number: response?.phone_number
 					}))
-					searchFormRef.current.setFieldsValue({
+					searchFormRef?.current?.setFieldsValue({
 						patient: '+' + response.phone_country_code + response.phone_number
 					})
 					return data
@@ -87,7 +87,7 @@ function Appointment() {
 		if (role === 'doctor') {
 			setData(prevState => ({
 				...prevState,
-				doctor_id: doctor_id
+				doctor_id: user?.id
 			}))
 		}
 	}, [ownerClinics.id])
@@ -228,7 +228,7 @@ function Appointment() {
 						'clinicDoctorBydoctorAndClinic',
 						'single',
 						token,
-						`${doctor_id}/${data?.clinic_id}`
+						`${user?.id}/${data?.clinic_id}`
 					),
 					postResource('Clinic', 'single', token, data?.clinic_id)
 				]).then(responses => {
@@ -490,595 +490,614 @@ function Appointment() {
 					{t('Add new Appointment')}
 				</span>
 			</div>
-			<Form
-				onValuesChange={handleValuesChange}
-				name='search'
-				layout='vertical'
-				ref={searchFormRef}
-			>
-				<div className={'add_edit_content'}>
-					<Row>
-						{role !== 'clinic-manager' ? (
-							<Col lg={6} className='gutter-row'>
-								<FormInput
-									label={t('Clinic')}
-									name={'clinic_id'}
-									inputType={'resourceSelect'}
-									rules={[{ required: true }]}
-									initialData={[data?.clinic].filter(e => e)}
-									inputProps={{
-										onChange: e => {
-											setData(prevState => ({
-												...prevState,
-												service_type: null,
-												patient_id: undefined,
-												patient: undefined,
-												booked_at: undefined
-											}))
-											appointmentFormRef?.current?.setFieldsValue({
-												service_type: null
-											})
-											searchFormRef?.current?.setFieldsValue({
-												patient_id: undefined
-											})
-											if (params?.id) {
-												isPatientAuth(e)
-											}
-										}
-									}}
-									resourceParams={{
-										active: 1
-									}}
-									resource={'Clinic'}
-								/>
-							</Col>
-						) : null}
-						{params.id ? (
-							<Col lg={12} className='gutter-row'>
-								<FormInput
-									label={t('Patient')}
-									name={'patient'}
-									inputDisabled={true}
-								/>
-							</Col>
-						) : (
-							<>
-								<Col lg={4} className='gutter-row'>
-									<FormInput
-										label={t('Country Code')}
-										name={'phone_country_code'}
-										inputType={'resourceSelect'}
-										rules={[{ required: true }]}
-										initialValue={
-											patient?.phone_country_code
-												? patient?.phone_country_code
-												: `(966) ${
-														language === 'ar'
-															? 'المملكة العربية السعودية'
-															: 'Saudi Arabia'
-												  }`
-										}
-										handleMapItems={handleMapItems}
-										customSearchKey={'phone_code'}
-										inputProps={{
-											onChange: e =>
-												setCodeAndPhone(prevState => ({
-													...prevState,
-													phone_country_code: e
-												}))
-										}}
-										disabled={!data?.clinic_id}
-										resource={'Country'}
-									/>
-								</Col>
-								<Col
-									lg={role === 'clinic-manager' ? 14 : 8}
-									className='gutter-row'
-								>
-									<FormInput
-										label={t('Select Patient (Search By phone number)')}
-										name={'patient_id'}
-										suffixIcon={<img src={user_icon} alt={'user_icon'} />}
-										inputType={'resourceSelect'}
-										rules={[{ required: pageState !== 'creation' }]}
-										searchConfigs={{ minLength: 6 }}
-										inputProps={{
-											onSearch: e => {
-												if (e)
-													setCodeAndPhone(prevState => ({
-														...prevState,
-														phone_number: e
-													}))
-											},
-											notFoundContent: (
-												<div
-													style={{
-														display: 'flex',
-														flexDirection: 'row',
-														justifyContent: 'space-between'
-													}}
-												>
-													<div>{t('Not found')}</div>
-												</div>
-											)
-										}}
-										resourceParams={{
-											phone_country_code: data?.phone_country_code
-												? data?.phone_country_code?.length > 3
-													? data?.phone_country_code?.slice(
-															data?.phone_country_code?.indexOf('(') + 1,
-															data?.phone_country_code?.indexOf(')')
-													  )
-													: data?.phone_country_code
-												: '966',
-											clinic_id: data?.clinic_id
-										}}
-										handleMapItems={(item, name, status) =>
-											searchByNumber(item, name, status)
-										}
-										handleStatus={true}
-										customSearchKey={'phone_number'}
-										disabled={!data?.clinic_id}
-										resource={'PatientSearch'}
-									/>
-								</Col>
-							</>
-						)}
-						<Col lg={6} className='gutter-row'>
-							{(pageState === 'initial' || pageState === 'creation') &&
-							!params.id ? (
-								<Button
-									onClick={() => {
-										setData(prevState => ({
-											...prevState,
-											patient_id: null
-										}))
-										setPatient(codeAndPhone)
-										setPageState('creation')
-									}}
-									type={'primary'}
-									style={{ marginTop: 4 }}
-									className={'all_offers_book_btns'}
-									disabled={!data?.clinic_id}
-								>
-									{t('Create new')}
-								</Button>
-							) : (
-								<div></div>
-							)}
-							{pageState === 'unauthorized' || pageState === 'codeSent' ? (
-								<Button
-									onClick={sendCode}
-									type={'primary'}
-									style={{ marginTop: 4 }}
-									className={'all_offers_book_btns'}
-									disabled={pageState === 'codeSent'}
-									loading={sendCodeLoading}
-								>
-									{t('Send permission request')}
-								</Button>
-							) : (
-								<div></div>
-							)}
-						</Col>
-					</Row>
-					{pageState === 'unauthorized' || pageState === 'codeSent' ? (
-						<Row>
-							<Col lg={12} className='gutter-row' style={{ color: '#774D9D' }}>
-								Send request for permissions to personal information. Please
-								enter code from user or wait when user accept your request in
-								app,
-							</Col>
-							{pageState === 'codeSent' ? (
-								<>
+			{user?.status === 2 ? (
+				<>
+					<Form
+						onValuesChange={handleValuesChange}
+						name='search'
+						layout='vertical'
+						ref={searchFormRef}
+					>
+						<div className={'add_edit_content'}>
+							<Row>
+								{role !== 'clinic-manager' ? (
 									<Col lg={6} className='gutter-row'>
-										<div class='vertical-line'>
-											{t("Client didn't get a message")}? <br />
-											<span
-												onClick={sendCode}
-												style={{
-													color: '#BF539E',
-													fontWeight: 700,
-													cursor: 'pointer'
-												}}
-											>
-												{t('Resend Request')}
-											</span>
-										</div>
-									</Col>
-									<Col lg={4} className='gutter-row'>
 										<FormInput
-											label={t('Code (4 digits)')}
-											inputDisabled={pageState === 'unauthorized'}
-											name={'code'}
+											label={t('Clinic')}
+											name={'clinic_id'}
+											inputType={'resourceSelect'}
+											rules={[{ required: true }]}
+											initialData={[data?.clinic].filter(e => e)}
+											inputProps={{
+												onChange: e => {
+													setData(prevState => ({
+														...prevState,
+														service_type: null,
+														patient_id: undefined,
+														patient: undefined,
+														booked_at: undefined
+													}))
+													appointmentFormRef?.current?.setFieldsValue({
+														service_type: null
+													})
+													searchFormRef?.current?.setFieldsValue({
+														patient_id: undefined
+													})
+													if (params?.id) {
+														isPatientAuth(e)
+													}
+												}
+											}}
+											resourceParams={{
+												active: 1
+											}}
+											resource={'Clinic'}
 										/>
 									</Col>
-									<Col lg={2} className='gutter-row'>
+								) : null}
+								{params.id ? (
+									<Col lg={12} className='gutter-row'>
+										<FormInput
+											label={t('Patient')}
+											name={'patient'}
+											inputDisabled={true}
+										/>
+									</Col>
+								) : (
+									<>
+										<Col lg={4} className='gutter-row'>
+											<FormInput
+												label={t('Country Code')}
+												name={'phone_country_code'}
+												inputType={'resourceSelect'}
+												rules={[{ required: true }]}
+												initialValue={
+													patient?.phone_country_code
+														? patient?.phone_country_code
+														: `(966) ${
+																language === 'ar'
+																	? 'المملكة العربية السعودية'
+																	: 'Saudi Arabia'
+														  }`
+												}
+												handleMapItems={handleMapItems}
+												customSearchKey={'phone_code'}
+												inputProps={{
+													onChange: e =>
+														setCodeAndPhone(prevState => ({
+															...prevState,
+															phone_country_code: e
+														}))
+												}}
+												disabled={!data?.clinic_id}
+												resource={'Country'}
+											/>
+										</Col>
+										<Col
+											lg={role === 'clinic-manager' ? 14 : 8}
+											className='gutter-row'
+										>
+											<FormInput
+												label={t('Select Patient (Search By phone number)')}
+												name={'patient_id'}
+												suffixIcon={<img src={user_icon} alt={'user_icon'} />}
+												inputType={'resourceSelect'}
+												rules={[{ required: pageState !== 'creation' }]}
+												searchConfigs={{ minLength: 6 }}
+												inputProps={{
+													onSearch: e => {
+														if (e)
+															setCodeAndPhone(prevState => ({
+																...prevState,
+																phone_number: e
+															}))
+													},
+													notFoundContent: (
+														<div
+															style={{
+																display: 'flex',
+																flexDirection: 'row',
+																justifyContent: 'space-between'
+															}}
+														>
+															<div>{t('Not found')}</div>
+														</div>
+													)
+												}}
+												resourceParams={{
+													phone_country_code: data?.phone_country_code
+														? data?.phone_country_code?.length > 3
+															? data?.phone_country_code?.slice(
+																	data?.phone_country_code?.indexOf('(') + 1,
+																	data?.phone_country_code?.indexOf(')')
+															  )
+															: data?.phone_country_code
+														: '966',
+													clinic_id: data?.clinic_id
+												}}
+												handleMapItems={(item, name, status) =>
+													searchByNumber(item, name, status)
+												}
+												handleStatus={true}
+												customSearchKey={'phone_number'}
+												disabled={!data?.clinic_id}
+												resource={'PatientSearch'}
+											/>
+										</Col>
+									</>
+								)}
+								<Col lg={6} className='gutter-row'>
+									{(pageState === 'initial' || pageState === 'creation') &&
+									!params.id ? (
 										<Button
-											onClick={verifyNumber}
+											onClick={() => {
+												setData(prevState => ({
+													...prevState,
+													patient_id: null
+												}))
+												setPatient(codeAndPhone)
+												setPageState('creation')
+											}}
 											type={'primary'}
 											style={{ marginTop: 4 }}
 											className={'all_offers_book_btns'}
-											disabled={data?.code?.length !== 4}
-											loading={verifyLoading}
+											disabled={!data?.clinic_id}
 										>
-											{t('Verify')}
+											{t('Create new')}
 										</Button>
+									) : (
+										<div></div>
+									)}
+									{pageState === 'unauthorized' || pageState === 'codeSent' ? (
+										<Button
+											onClick={sendCode}
+											type={'primary'}
+											style={{ marginTop: 4 }}
+											className={'all_offers_book_btns'}
+											disabled={pageState === 'codeSent'}
+											loading={sendCodeLoading}
+										>
+											{t('Send permission request')}
+										</Button>
+									) : (
+										<div></div>
+									)}
+								</Col>
+							</Row>
+							{pageState === 'unauthorized' || pageState === 'codeSent' ? (
+								<Row>
+									<Col
+										lg={12}
+										className='gutter-row'
+										style={{ color: '#774D9D' }}
+									>
+										Send request for permissions to personal information. Please
+										enter code from user or wait when user accept your request
+										in app,
 									</Col>
-								</>
-							) : null}
-						</Row>
-					) : null}
-				</div>
-			</Form>
-			{pageState === 'creation' ? (
-				<CreatePatient
-					data={patient}
-					formRef={patientFormRef}
-					setNationality={setNationality}
-				></CreatePatient>
-			) : null}
-			{pageState === 'selected' || pageState === 'retrieved' ? (
-				<div>
-					<CreatePatient
-						data={patient}
-						formRef={patientFormRef}
-					></CreatePatient>
-				</div>
-			) : (
-				<div></div>
-			)}
-			{data?.clinic_id ? (
-				serviceTypeState?.length ? (
-					<div className={'add_edit_content'}>
-						<Row>
-							<Col lg={8} className='gutter-row'>
-								<h2 style={{ fontWeight: 'bold', paddingLeft: 7 }}>
-									{t('Appointment')}
-								</h2>
-							</Col>
-						</Row>
-						{!data?.booked_at ? (
-							<Form
-								style={{ marginTop: 0 }}
-								ref={appointmentFormRef}
-								onValuesChange={handleValuesChange}
-								layout='vertical'
-							>
-								<>
-									<Row>
-										<Col lg={8} className='gutter-row'>
-											<FormInput
-												label={t('Service Type')}
-												name={'service_type'}
-												inputType={'resourceSelect'}
-												rules={[{ required: true }]}
-												inputProps={{
-													onChange: (e, data) => {
-														appointmentFormRef?.current?.setFieldsValue({
-															specialty_id: null
-														})
-														setData(prevState => ({
-															...prevState,
-															specialty_id: null
-														}))
-													}
-												}}
-												initialData={serviceTypeState}
-											/>
-										</Col>
-										{data?.service_type &&
-										data?.service_type !== 'nursing' &&
-										data?.service_type !== 'laboratory_clinic_visit' &&
-										data?.service_type !== 'laboratory_home_visit' ? (
-											<Col lg={16} className='gutter-row'>
+									{pageState === 'codeSent' ? (
+										<>
+											<Col lg={6} className='gutter-row'>
+												<div class='vertical-line'>
+													{t("Client didn't get a message")}? <br />
+													<span
+														onClick={sendCode}
+														style={{
+															color: '#BF539E',
+															fontWeight: 700,
+															cursor: 'pointer'
+														}}
+													>
+														{t('Resend Request')}
+													</span>
+												</div>
+											</Col>
+											<Col lg={4} className='gutter-row'>
 												<FormInput
-													label={t('Specialties')}
-													name={'specialty_id'}
-													inputType={'resourceSelect'}
-													rules={[{ required: true }]}
-													resource={'Taxonomy'}
-													customSearchKey={'title'}
-													resourceParams={{
-														type: Resources.TaxonomyTypes.SPECIALTY,
-														has_parent: 0,
-														has_doctor: 1,
-														clinic: data?.clinic_id,
-														doctor: role === 'doctor' ? doctor_id : undefined
-													}}
+													label={t('Code (4 digits)')}
+													inputDisabled={pageState === 'unauthorized'}
+													name={'code'}
 												/>
 											</Col>
-										) : null}
-									</Row>
-									{data?.service_type ? (
-										<AppointmentCalendar
-											appointmentObj={data}
-											setappointmentObj={setData}
-										/>
-									) : null}
-								</>
-							</Form>
-						) : (
-							<div>
-								<br />
-								<Row
-									style={{
-										backgroundColor: '#F0F7EE',
-										display: 'flex',
-										alignItems: 'center',
-										borderRadius: '10px',
-										padding: '10px'
-									}}
-								>
-									{data?.doctor ? (
-										<Col lg={6} className='gutter-row'>
-											<Space>
-												<Avatar
-													size={50}
-													src={data?.doctor?.avatar?.url}
-													icon={<UserOutlined />}
-												/>
-												<div>
-													<div
-														className={'cl_manager_modal_dr_name'}
-														style={{ fontWeight: 400 }}
-													>
-														{data?.doctor?.first} {data?.doctor?.last}
-													</div>
-												</div>
-											</Space>
-										</Col>
-									) : (
-										<Col lg={12} className='gutter-row'>
-											<Space>
-												<div>
-													<div
-														className={'cl_manager_modal_dr_name'}
-														style={{ fontWeight: 400 }}
-													>
-														{data?.service_type[0]?.toUpperCase() +
-															data?.service_type
-																?.slice(1)
-																?.replaceAll('_', ' ')}
-													</div>
-												</div>
-											</Space>
-										</Col>
-									)}
-									{data?.specialty ? (
-										<Col lg={6} className='gutter-row'>
-											<Space>
-												<div>
-													<div
-														className={'cl_manager_modal_dr_name'}
-														style={{ fontWeight: 400 }}
-													>
-														{data.specialty}
-													</div>
-												</div>
-											</Space>
-										</Col>
-									) : null}
-									<Col lg={11} className='gutter-row'>
-										<Space>
-											<div>
-												<div
-													className={'cl_manager_modal_dr_name'}
-													style={{ fontWeight: 600 }}
+											<Col lg={2} className='gutter-row'>
+												<Button
+													onClick={verifyNumber}
+													type={'primary'}
+													style={{ marginTop: 4 }}
+													className={'all_offers_book_btns'}
+													disabled={data?.code?.length !== 4}
+													loading={verifyLoading}
 												>
-													{dayjs(data.booked_at).format('h:mm A, D MMM YY')}
-												</div>
-											</div>
-										</Space>
-									</Col>
-									<Col lg={1} className='gutter-row'>
-										<Space>
-											<div>
-												<div
-													className={'cl_manager_modal_dr_name'}
-													style={{ cursor: 'pointer' }}
-													onClick={removeAppointment}
-												>
-													<img
-														className={'del_icin'}
-														alt={'x_black'}
-														src={x_black}
-													/>
-												</div>
-											</div>
-										</Space>
-									</Col>
-									{data?.service_type === 'laboratory_clinic_visit' ||
-									data?.service_type === 'laboratory_home_visit' ||
-									data?.service_type === 'nursing' ? (
-										<hr style={{ borderTop: '2px solid #E1E2E9' }}></hr>
-									) : null}
-									{data?.nursing_tasks?.length ? (
-										<Col lg={24} className='gutter-row'>
-											<h3 style={{ fontWeight: 'bold' }}>
-												{t('Nursing tasks')}
-											</h3>
-											{data?.nursingTasksArray.map((item, index) => (
-												<Row key={index}>
-													<Col lg={23} className='gutter-row'>
-														<h3>
-															{item.nursing_task.name} [{item.price} SR]
-														</h3>
-													</Col>
-													<Col lg={1} className='gutter-row'>
-														<Space>
-															<div>
-																<div
-																	className={'cl_manager_modal_dr_name'}
-																	style={{ cursor: 'pointer' }}
-																	onClick={() => {
-																		removeNursingTask(index)
-																	}}
-																>
-																	<img
-																		className={'del_icin'}
-																		alt={'x_black'}
-																		src={x_black}
-																	/>
-																</div>
-															</div>
-														</Space>
-													</Col>
-												</Row>
-											))}
-										</Col>
-									) : null}
-									{data?.lab_tests?.length ? (
-										<Col lg={24} className='gutter-row'>
-											<h3 style={{ fontWeight: 'bold' }}>{t('Lab tests')}</h3>
-											{data?.labTestsArray.map((item, index) => (
-												<Row key={index}>
-													<Col lg={23} className='gutter-row'>
-														<h3>
-															{item.lab_test.name} [{item.price} SR]
-														</h3>
-													</Col>
-													<Col lg={1} className='gutter-row'>
-														<Space>
-															<div>
-																<div
-																	className={'cl_manager_modal_dr_name'}
-																	style={{ cursor: 'pointer' }}
-																	onClick={() => {
-																		removeLabItem(index, 'test')
-																	}}
-																>
-																	<img
-																		className={'del_icin'}
-																		alt={'x_black'}
-																		src={x_black}
-																	/>
-																</div>
-															</div>
-														</Space>
-													</Col>
-												</Row>
-											))}
-										</Col>
-									) : null}
-									{data?.lab_packages?.length ? (
-										<Col lg={24} className='gutter-row'>
-											<h3 style={{ fontWeight: 'bold' }}>
-												{t('Lab packages')}
-											</h3>
-											{data?.labPackagesArray.map((item, index) => (
-												<Row key={index}>
-													<Col lg={23} className='gutter-row'>
-														<h3>
-															{item.lab_package.name} [{item.price} SR]
-														</h3>
-													</Col>
-													<Col lg={1} className='gutter-row'>
-														<Space>
-															<div>
-																<div
-																	className={'cl_manager_modal_dr_name'}
-																	style={{ cursor: 'pointer' }}
-																	onClick={() => {
-																		removeLabItem(index, 'package')
-																	}}
-																>
-																	<img
-																		className={'del_icin'}
-																		alt={'x_black'}
-																		src={x_black}
-																	/>
-																</div>
-															</div>
-														</Space>
-													</Col>
-												</Row>
-											))}
-										</Col>
+													{t('Verify')}
+												</Button>
+											</Col>
+										</>
 									) : null}
 								</Row>
-								<br />
-								<br />
+							) : null}
+						</div>
+					</Form>
+					{pageState === 'creation' ? (
+						<CreatePatient
+							data={patient}
+							formRef={patientFormRef}
+							setNationality={setNationality}
+						></CreatePatient>
+					) : null}
+					{pageState === 'selected' || pageState === 'retrieved' ? (
+						<div>
+							<CreatePatient
+								data={patient}
+								formRef={patientFormRef}
+							></CreatePatient>
+						</div>
+					) : (
+						<div></div>
+					)}
+					{data?.clinic_id ? (
+						serviceTypeState?.length ? (
+							<div className={'add_edit_content'}>
 								<Row>
 									<Col lg={8} className='gutter-row'>
 										<h2 style={{ fontWeight: 'bold', paddingLeft: 7 }}>
-											{t('Payment') + ':'}
+											{t('Appointment')}
 										</h2>
 									</Col>
 								</Row>
-								{invoiceLoading ? (
-									<Preloader></Preloader>
+								{!data?.booked_at ? (
+									<Form
+										style={{ marginTop: 0 }}
+										ref={appointmentFormRef}
+										onValuesChange={handleValuesChange}
+										layout='vertical'
+									>
+										<>
+											<Row>
+												<Col lg={8} className='gutter-row'>
+													<FormInput
+														label={t('Service Type')}
+														name={'service_type'}
+														inputType={'resourceSelect'}
+														rules={[{ required: true }]}
+														inputProps={{
+															onChange: (e, data) => {
+																appointmentFormRef?.current?.setFieldsValue({
+																	specialty_id: null
+																})
+																setData(prevState => ({
+																	...prevState,
+																	specialty_id: null
+																}))
+															}
+														}}
+														initialData={serviceTypeState}
+													/>
+												</Col>
+												{data?.service_type &&
+												data?.service_type !== 'nursing' &&
+												data?.service_type !== 'laboratory_clinic_visit' &&
+												data?.service_type !== 'laboratory_home_visit' ? (
+													<Col lg={16} className='gutter-row'>
+														<FormInput
+															label={t('Specialties')}
+															name={'specialty_id'}
+															inputType={'resourceSelect'}
+															rules={[{ required: true }]}
+															resource={'Taxonomy'}
+															customSearchKey={'title'}
+															resourceParams={{
+																type: Resources.TaxonomyTypes.SPECIALTY,
+																has_parent: 0,
+																has_doctor: 1,
+																clinic: data?.clinic_id,
+																doctor: role === 'doctor' ? user?.id : undefined
+															}}
+														/>
+													</Col>
+												) : null}
+											</Row>
+											{data?.service_type ? (
+												<AppointmentCalendar
+													appointmentObj={data}
+													setappointmentObj={setData}
+												/>
+											) : null}
+										</>
+									</Form>
 								) : (
-									<Row style={{ paddingLeft: 7 }}>
-										<Col lg={4} className='gutter-row'>
-											<div className='payment-header'>{t('Sub total')}</div>
-											<div className='payment-item'>
-												{invoicePrice?.sub_total + ' SAR'}
-											</div>
-										</Col>
-										{invoicePrice?.service_fee ? (
-											<Col lg={4} className='gutter-row'>
-												<div className='payment-header'>{t('Service fee')}</div>
-												<div className='payment-item'>
-													{invoicePrice?.service_fee + ' SAR'}
-												</div>
+									<div>
+										<br />
+										<Row
+											style={{
+												backgroundColor: '#F0F7EE',
+												display: 'flex',
+												alignItems: 'center',
+												borderRadius: '10px',
+												padding: '10px'
+											}}
+										>
+											{data?.doctor ? (
+												<Col lg={6} className='gutter-row'>
+													<Space>
+														<Avatar
+															size={50}
+															src={data?.doctor?.avatar?.url}
+															icon={<UserOutlined />}
+														/>
+														<div>
+															<div
+																className={'cl_manager_modal_dr_name'}
+																style={{ fontWeight: 400 }}
+															>
+																{data?.doctor?.first} {data?.doctor?.last}
+															</div>
+														</div>
+													</Space>
+												</Col>
+											) : (
+												<Col lg={12} className='gutter-row'>
+													<Space>
+														<div>
+															<div
+																className={'cl_manager_modal_dr_name'}
+																style={{ fontWeight: 400 }}
+															>
+																{data?.service_type[0]?.toUpperCase() +
+																	data?.service_type
+																		?.slice(1)
+																		?.replaceAll('_', ' ')}
+															</div>
+														</div>
+													</Space>
+												</Col>
+											)}
+											{data?.specialty ? (
+												<Col lg={6} className='gutter-row'>
+													<Space>
+														<div>
+															<div
+																className={'cl_manager_modal_dr_name'}
+																style={{ fontWeight: 400 }}
+															>
+																{data.specialty}
+															</div>
+														</div>
+													</Space>
+												</Col>
+											) : null}
+											<Col lg={11} className='gutter-row'>
+												<Space>
+													<div>
+														<div
+															className={'cl_manager_modal_dr_name'}
+															style={{ fontWeight: 600 }}
+														>
+															{dayjs(data.booked_at).format('h:mm A, D MMM YY')}
+														</div>
+													</div>
+												</Space>
 											</Col>
-										) : null}
-										{data?.patient_id || nationality ? (
-											<Col lg={4} className='gutter-row'>
-												<div className='payment-header'>{t('Tax')}</div>
-												<div className='payment-item'>
-													{invoicePrice?.vat + ' SAR'}
-													<ul style={{ marginTop: 10, marginLeft:-20 }}>
-														{invoicePrice?.tax_percentage !== '0' ? (
-															<li className='payment-header'>
-																{invoicePrice?.tax_percentage +
-																	'% ' +
-																	t('Task tax')}
-															</li>
-														) : null}
-														{invoicePrice?.tax_percentage_for_service_fees !==
-														'0' ? (
-															<li className='payment-header'>
-																{invoicePrice?.tax_percentage_for_service_fees +
-																	'% ' +
-																	t('Service tax')}
-															</li>
-														) : null}
-													</ul>
-												</div>
+											<Col lg={1} className='gutter-row'>
+												<Space>
+													<div>
+														<div
+															className={'cl_manager_modal_dr_name'}
+															style={{ cursor: 'pointer' }}
+															onClick={removeAppointment}
+														>
+															<img
+																className={'del_icin'}
+																alt={'x_black'}
+																src={x_black}
+															/>
+														</div>
+													</div>
+												</Space>
 											</Col>
-										) : null}
-										<Col lg={4} className='gutter-row'>
-											<div className='payment-header'>{t('Total')}</div>
-											<div className='payment-item'>
-												{invoicePrice?.total_price + ' SAR'}
-											</div>
-										</Col>
-									</Row>
+											{data?.service_type === 'laboratory_clinic_visit' ||
+											data?.service_type === 'laboratory_home_visit' ||
+											data?.service_type === 'nursing' ? (
+												<hr style={{ borderTop: '2px solid #E1E2E9' }}></hr>
+											) : null}
+											{data?.nursing_tasks?.length ? (
+												<Col lg={24} className='gutter-row'>
+													<h3 style={{ fontWeight: 'bold' }}>
+														{t('Nursing tasks')}
+													</h3>
+													{data?.nursingTasksArray.map((item, index) => (
+														<Row key={index}>
+															<Col lg={23} className='gutter-row'>
+																<h3>
+																	{item.nursing_task.name} [{item.price} SR]
+																</h3>
+															</Col>
+															<Col lg={1} className='gutter-row'>
+																<Space>
+																	<div>
+																		<div
+																			className={'cl_manager_modal_dr_name'}
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => {
+																				removeNursingTask(index)
+																			}}
+																		>
+																			<img
+																				className={'del_icin'}
+																				alt={'x_black'}
+																				src={x_black}
+																			/>
+																		</div>
+																	</div>
+																</Space>
+															</Col>
+														</Row>
+													))}
+												</Col>
+											) : null}
+											{data?.lab_tests?.length ? (
+												<Col lg={24} className='gutter-row'>
+													<h3 style={{ fontWeight: 'bold' }}>
+														{t('Lab tests')}
+													</h3>
+													{data?.labTestsArray.map((item, index) => (
+														<Row key={index}>
+															<Col lg={23} className='gutter-row'>
+																<h3>
+																	{item.lab_test.name} [{item.price} SR]
+																</h3>
+															</Col>
+															<Col lg={1} className='gutter-row'>
+																<Space>
+																	<div>
+																		<div
+																			className={'cl_manager_modal_dr_name'}
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => {
+																				removeLabItem(index, 'test')
+																			}}
+																		>
+																			<img
+																				className={'del_icin'}
+																				alt={'x_black'}
+																				src={x_black}
+																			/>
+																		</div>
+																	</div>
+																</Space>
+															</Col>
+														</Row>
+													))}
+												</Col>
+											) : null}
+											{data?.lab_packages?.length ? (
+												<Col lg={24} className='gutter-row'>
+													<h3 style={{ fontWeight: 'bold' }}>
+														{t('Lab packages')}
+													</h3>
+													{data?.labPackagesArray.map((item, index) => (
+														<Row key={index}>
+															<Col lg={23} className='gutter-row'>
+																<h3>
+																	{item.lab_package.name} [{item.price} SR]
+																</h3>
+															</Col>
+															<Col lg={1} className='gutter-row'>
+																<Space>
+																	<div>
+																		<div
+																			className={'cl_manager_modal_dr_name'}
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => {
+																				removeLabItem(index, 'package')
+																			}}
+																		>
+																			<img
+																				className={'del_icin'}
+																				alt={'x_black'}
+																				src={x_black}
+																			/>
+																		</div>
+																	</div>
+																</Space>
+															</Col>
+														</Row>
+													))}
+												</Col>
+											) : null}
+										</Row>
+										<br />
+										<br />
+										<Row>
+											<Col lg={8} className='gutter-row'>
+												<h2 style={{ fontWeight: 'bold', paddingLeft: 7 }}>
+													{t('Payment') + ':'}
+												</h2>
+											</Col>
+										</Row>
+										{invoiceLoading ? (
+											<Preloader></Preloader>
+										) : (
+											<Row style={{ paddingLeft: 7 }}>
+												<Col lg={4} className='gutter-row'>
+													<div className='payment-header'>{t('Sub total')}</div>
+													<div className='payment-item'>
+														{invoicePrice?.sub_total + ' SAR'}
+													</div>
+												</Col>
+												{invoicePrice?.service_fee ? (
+													<Col lg={4} className='gutter-row'>
+														<div className='payment-header'>
+															{t('Service fee')}
+														</div>
+														<div className='payment-item'>
+															{invoicePrice?.service_fee + ' SAR'}
+														</div>
+													</Col>
+												) : null}
+												{data?.patient_id || nationality ? (
+													<Col lg={4} className='gutter-row'>
+														<div className='payment-header'>{t('Tax')}</div>
+														<div className='payment-item'>
+															{invoicePrice?.vat + ' SAR'}
+															<ul style={{ marginTop: 10, marginLeft: -20 }}>
+																{invoicePrice?.tax_percentage !== '0' ? (
+																	<li className='payment-header'>
+																		{invoicePrice?.tax_percentage +
+																			'% ' +
+																			t('Task tax')}
+																	</li>
+																) : null}
+																{invoicePrice?.tax_percentage_for_service_fees !==
+																'0' ? (
+																	<li className='payment-header'>
+																		{invoicePrice?.tax_percentage_for_service_fees +
+																			'% ' +
+																			t('Service tax')}
+																	</li>
+																) : null}
+															</ul>
+														</div>
+													</Col>
+												) : null}
+												<Col lg={4} className='gutter-row'>
+													<div className='payment-header'>{t('Total')}</div>
+													<div className='payment-item'>
+														{invoicePrice?.total_price + ' SAR'}
+													</div>
+												</Col>
+											</Row>
+										)}
+										<br />
+										<br />
+										<Button
+											loading={saveLoading}
+											size={'large'}
+											type={'primary'}
+											htmlType='submit'
+											onClick={saveAppointment}
+										>
+											{t('Save Appointment')}
+										</Button>
+										<br />
+										<br />
+										<br />
+										<br />
+									</div>
 								)}
-								<br />
-								<br />
-								<Button
-									loading={saveLoading}
-									size={'large'}
-									type={'primary'}
-									htmlType='submit'
-									onClick={saveAppointment}
-								>
-									{t('Save Appointment')}
-								</Button>
-								<br />
-								<br />
-								<br />
-								<br />
 							</div>
-						)}
+						) : (
+							<Preloader></Preloader>
+						)
+					) : null}
+				</>
+			) : (
+                <div className={'add_edit_content'}>
+                    <div className='inactive-message'>
+						<p>Your account is inactive, please contact admin to activate it</p>
+						<Button type={'primary'} onClick='goBack()'>Go Back</Button>
 					</div>
-				) : (
-					<Preloader></Preloader>
-				)
-			) : null}
+				</div>
+			)}
 		</div>
 	)
 }
