@@ -326,7 +326,7 @@ function Appointment() {
 				appointment.patient = { country_id: nationality }
 				delete appointment.patient_id
 			}
-			if(appointment?.patient_id == '0'){
+			if (appointment?.patient_id == '0') {
 				delete appointment.patient_id
 			}
 			setInvoicePrice(null)
@@ -997,50 +997,66 @@ function Appointment() {
 										</Col>
 									) : null}
 								</Row>
-								<br/>
-								<br/>
+								<br />
+								<br />
 								<Row>
 									<Col lg={8} className='gutter-row'>
 										<h2 style={{ fontWeight: 'bold', paddingLeft: 7 }}>
 											{t('Payment') + ':'}
 										</h2>
-									</Col>	
-								</Row>
-								{invoiceLoading? <Preloader></Preloader> :<Row style={{ paddingLeft: 7 }}>
-									<Col lg={4} className='gutter-row'>
-										<div className='payment-header'>
-											{t('Sub total')}
-										</div>	
-										<div className='payment-item'>
-											{invoicePrice?.sub_total + ' SAR'}
-										</div>						
-									</Col>	
-									{invoicePrice?.service_fee?<Col lg={4} className='gutter-row'>
-										<div className='payment-header'>
-											{t('Service fee')}
-										</div>	
-										<div className='payment-item'>
-											{invoicePrice?.service_fee + ' SAR'}
-										</div>						
-									</Col> : null }
-									{data?.patient_id || nationality ? <Col lg={4} className='gutter-row'>
-										<div className='payment-header'>
-											{t('Tax')}
-										</div>	
-										<div className='payment-item'>
-											{invoicePrice?.vat +' SAR'} 
-											{/* {'(' + invoicePrice?.tax_percentage + '%)'} */}
-										</div>						
-									</Col> : null}
-									<Col lg={4} className='gutter-row'>
-										<div className='payment-header'>
-											{t('Total')}
-										</div>	
-										<div className='payment-item'>
-											{invoicePrice?.total_price + ' SAR'}
-										</div>						
 									</Col>
-								</Row>}
+								</Row>
+								{invoiceLoading ? (
+									<Preloader></Preloader>
+								) : (
+									<Row style={{ paddingLeft: 7 }}>
+										<Col lg={4} className='gutter-row'>
+											<div className='payment-header'>{t('Sub total')}</div>
+											<div className='payment-item'>
+												{invoicePrice?.sub_total + ' SAR'}
+											</div>
+										</Col>
+										{invoicePrice?.service_fee ? (
+											<Col lg={4} className='gutter-row'>
+												<div className='payment-header'>{t('Service fee')}</div>
+												<div className='payment-item'>
+													{invoicePrice?.service_fee + ' SAR'}
+												</div>
+											</Col>
+										) : null}
+										{data?.patient_id || nationality ? (
+											<Col lg={4} className='gutter-row'>
+												<div className='payment-header'>{t('Tax')}</div>
+												<div className='payment-item'>
+													{invoicePrice?.vat + ' SAR'}
+													<ul style={{ marginTop: 10, marginLeft:-20 }}>
+														{invoicePrice?.tax_percentage !== '0' ? (
+															<li className='payment-header'>
+																{invoicePrice?.tax_percentage +
+																	'% ' +
+																	t('Task tax')}
+															</li>
+														) : null}
+														{invoicePrice?.tax_percentage_for_service_fees !==
+														'0' ? (
+															<li className='payment-header'>
+																{invoicePrice?.tax_percentage_for_service_fees +
+																	'% ' +
+																	t('Service tax')}
+															</li>
+														) : null}
+													</ul>
+												</div>
+											</Col>
+										) : null}
+										<Col lg={4} className='gutter-row'>
+											<div className='payment-header'>{t('Total')}</div>
+											<div className='payment-item'>
+												{invoicePrice?.total_price + ' SAR'}
+											</div>
+										</Col>
+									</Row>
+								)}
 								<br />
 								<br />
 								<Button
@@ -1052,8 +1068,10 @@ function Appointment() {
 								>
 									{t('Save Appointment')}
 								</Button>
-								<br/><br/>
-								<br/><br/>
+								<br />
+								<br />
+								<br />
+								<br />
 							</div>
 						)}
 					</div>
