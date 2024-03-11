@@ -33,6 +33,7 @@ function Appointment() {
 	let language = useSelector(state => state.app.current_locale)
 
 	const [saveLoading, setSaveLoading] = useState(false)
+	const [serviceTypesLoading, setServiceTypesLoading] = useState(false)
 	const [verifyLoading, setVerifyLoading] = useState(false)
 	const [sendCodeLoading, setSendCodeLoading] = useState(false)
 	const [invoiceLoading, setInvoiceLoading] = useState(false)
@@ -230,6 +231,7 @@ function Appointment() {
 	useEffect(() => {
 		if (data?.clinic_id) {
 			setServiceTypeState([])
+			setServiceTypesLoading(true)
 			if (role === 'doctor') {
 				Promise.all([
 					postResource(
@@ -240,6 +242,7 @@ function Appointment() {
 					),
 					postResource('Clinic', 'single', token, data?.clinic_id)
 				]).then(responses => {
+					setServiceTypesLoading(false)
 					let doctorActiveServices = Object.keys(
 						responses[0]?.activated_services
 					)?.map(el => {
@@ -275,6 +278,7 @@ function Appointment() {
 			} else {
 				postResource('Clinic', 'single', token, data?.clinic_id).then(
 					responses => {
+						setServiceTypesLoading(false)
 						setServiceTypeState(
 							[
 								{
@@ -752,7 +756,9 @@ function Appointment() {
 						<div></div>
 					)}
 					{data?.clinic_id ? (
-						serviceTypeState?.length ? (
+						serviceTypesLoading ? (
+							<Preloader></Preloader>
+						) : serviceTypeState?.length ? (
 							<div className={'add_edit_content'}>
 								<Row>
 									<Col lg={8} className='gutter-row'>
@@ -1103,14 +1109,25 @@ function Appointment() {
 								)}
 							</div>
 						) : (
-							<Preloader></Preloader>
+							<div className={'add_edit_content'}>
+								<div className='inactive-message'>
+									<p>{t('There is no services allowed in this clinic')}</p>
+									<Button type={'primary'} onClick={goBack}>
+										Go Back
+									</Button>
+								</div>
+							</div>
 						)
 					) : null}
 				</>
 			) : (
 				<div className={'add_edit_content'}>
 					<div className='inactive-message'>
-						<p>Your account is inactive, please contact admin to activate it</p>
+						<p>
+							{t(
+								'Your account is inactive, please contact admin to activate it'
+							)}
+						</p>
 						<Button type={'primary'} onClick={goBack}>
 							Go Back
 						</Button>
