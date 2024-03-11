@@ -23,7 +23,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 		})
 	}
 
-	console.log(appointment)
+
 
 	const onFinish = values => {
 		setLoading(true)
@@ -34,6 +34,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 		}
 
 		console.log(values)
+		return;
 
 		postResource(
 			'Appointment',
