@@ -68,7 +68,15 @@ function Appointment() {
 						phone_number: response?.phone_number
 					}))
 					searchFormRef?.current?.setFieldsValue({
-						patient: '+' + response.phone_country_code + response.phone_number
+						phone_number: response.phone_number,
+						country_code:
+							response?.phone_country_code === '966'
+								? `(966) ${
+										language === 'ar'
+											? 'المملكة العربية السعودية'
+											: 'Saudi Arabia'
+								  }`
+								: response?.phone_country_code
 					})
 					return data
 			  }
@@ -536,13 +544,22 @@ function Appointment() {
 									</Col>
 								) : null}
 								{params.id ? (
-									<Col lg={12} className='gutter-row'>
-										<FormInput
-											label={t('Patient')}
-											name={'patient'}
-											inputDisabled={true}
-										/>
-									</Col>
+									<>
+										<Col lg={4} className='gutter-row'>
+											<FormInput
+												label={t('Country code')}
+												name={'country_code'}
+												inputDisabled={true}
+											/>
+										</Col>
+										<Col lg={8} className='gutter-row'>
+											<FormInput
+												label={t(`Patient's phone number`)}
+												name={'phone_number'}
+												inputDisabled={true}
+											/>
+										</Col>
+									</>
 								) : (
 									<>
 										<Col lg={4} className='gutter-row'>
@@ -1091,10 +1108,12 @@ function Appointment() {
 					) : null}
 				</>
 			) : (
-                <div className={'add_edit_content'}>
-                    <div className='inactive-message'>
+				<div className={'add_edit_content'}>
+					<div className='inactive-message'>
 						<p>Your account is inactive, please contact admin to activate it</p>
-						<Button type={'primary'} onClick='goBack()'>Go Back</Button>
+						<Button type={'primary'} onClick={goBack}>
+							Go Back
+						</Button>
 					</div>
 				</div>
 			)}
