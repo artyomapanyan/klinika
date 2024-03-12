@@ -1,6 +1,7 @@
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import RadioFilterElement from "../../Fragments/TableFilterElements/RadioFilterElement";
 import DateParser from "../../Fragments/DateParser";
 import React from "react";
 import {useSelector} from "react-redux";
@@ -49,15 +50,22 @@ function Patients() {
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
+                    dataIndex:'phone_number',
+                    title:t('Phone number'),
+                    key:'phone_number',
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
                     title:t('Age'),
                     dataIndex:'age',
                     key:'age',
                 },
                 {
-                    dataIndex:'phone_number',
-                    title:t('Phone number'),
-                    key:'phone_number',
-                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                    dataIndex:'gender',
+                    title:t('Gender'),
+                    key:'gender',
+                    filterDropdown: (props)=><RadioFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
+                    render:i=><>{i == 1 ? t('Male') : t('Female') }</>
                 },
                 {
                     title:t('Appointments'),
@@ -68,13 +76,6 @@ function Patients() {
                     title:t('Finished appointments'),
                     dataIndex:'no_of_appointments_finished',
                     key:'no_of_appointments_finished',
-                },
-                {
-                    dataIndex:'gender',
-                    title:t('Gender'),
-                    key:'gender',
-                    filterDropdown: (props)=><TableFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
-                    render:i=><>{i == 1 ? t('Male') : t('Female') }</>
                 },
                 {
                     dataIndex:['created_at','iso_string'],
