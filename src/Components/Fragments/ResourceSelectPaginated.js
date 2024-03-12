@@ -163,9 +163,13 @@ function ResourceSelectPaginated({
 
   }
 
-  const handleClear =() =>{
-    setParams(resourceParams)
-  }
+	const handleClear = () => {
+    if(params[customSearchKey ?? 'name']){
+      setLocalData([])
+      params[customSearchKey ?? 'name'] = '';
+      setIsInitedState(false)
+    }
+	}
 
   const itemOptions = useMemo(() => handleGenerateOptions(localData ?? []), [localData])
 
