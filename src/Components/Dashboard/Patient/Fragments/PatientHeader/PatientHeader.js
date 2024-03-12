@@ -53,7 +53,7 @@ function PatientHeader({data, setData}) {
                             <div className={'patient_head_text'} style={{height: 110, justifyContent: "space-between"}}>
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Addres')}</div>
-                                    <div className={'text_norm'}>{data?.patient?.address?.address1 ? `${data?.patient?.address?.country?.name} ${data?.patient?.address?.region?.name} ${data?.patient?.address?.city?.name} ${data?.patient?.address?.address1}` : `${t('Аddress not specified')}`}</div>
+                                    <div className={'text_norm'}>{data?.patient?.address?.address1 ? `${data?.patient?.address?.address1}` : `${t('Аddress not specified')}`}</div>
                                 </div>
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Insurance')}</div>
