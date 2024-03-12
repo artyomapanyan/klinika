@@ -49,10 +49,25 @@ function Patients() {
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
+                    title:t('Age'),
+                    dataIndex:'age',
+                    key:'age',
+                },
+                {
                     dataIndex:'phone_number',
                     title:t('Phone number'),
                     key:'phone_number',
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                },
+                {
+                    title:t('Appointments'),
+                    dataIndex:'no_of_appointments',
+                    key:'no_of_appointments',
+                },
+                {
+                    title:t('Finished appointments'),
+                    dataIndex:'no_of_appointments_finished',
+                    key:'no_of_appointments_finished',
                 },
                 {
                     dataIndex:'gender',
