@@ -7,6 +7,7 @@ import { postResource } from '../../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import { RascheduledContent } from '../../../Appointments/StatusModalForms/RascheduledContent'
 import {FollowUpContent} from "../../../Appointments/StatusModalForms/FollowUpContent";
+import Preloader from "../../../../Preloader";
 
 function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading }) {
 	const [modal, setModal] = useState(false)
@@ -34,7 +35,7 @@ function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading 
 				values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
 		}
 
-		console.log(values)
+
 
 
 		postResource(
@@ -53,10 +54,12 @@ function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading 
 				setLoading(false)
 				setBigData(prevState=>({
 					...prevState,
-					status: response?.status
+					status: response?.status,
+					follow_up_history: response.follow_up_history
 
 				}))
 				setStatusLoading(false)
+				console.log(response, 'res')
 			})
 			.finally(() => {
 				setLoading(true)
@@ -91,56 +94,63 @@ function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading 
 		return { color, backgroundColor, text }
 	}
 
+	console.log(history, appointment,  'history')
+
 	return (
 		<div className={'current_medications_card'}>
-			<Card
-				title={t('Follow up history')}
-				extra={
-					<Button onClick={onStatusChange} className={'patient_card_btn'} disabled={appointment.status != 2}>
-						{' '}
-						<img alt={'icons'} src={plusPurple} />
-						<span style={{ marginLeft: 10 }}>{t('Add')}</span>
-					</Button>
-				}
-				style={{ padding: 20 }}
-			>
-				{history?.length ? (
-					<List
-						className='demo-loadmore-list'
-						itemLayout='horizontal'
-						dataSource={history}
-						renderItem={e => (
-							<List.Item>
-								<List.Item.Meta
-									title={<span style={{ color: '#bfbfbf' }}>Date & Time</span>}
-									description={
-										<span style={{ color: '#000', fontWeight: 'bold' }}>
+			{
+				loading ? <Preloader/> : <Card
+					title={t('Follow up history')}
+					extra={
+						<Button onClick={onStatusChange} className={'patient_card_btn'} disabled={appointment.status != 2}>
+							{' '}
+							<img alt={'icons'} src={plusPurple} />
+							<span style={{ marginLeft: 10 }}>{t('Add')}</span>
+						</Button>
+					}
+					style={{ padding: 20 }}
+				>
+					{history?.length ? (
+						<List
+							className='demo-loadmore-list'
+							itemLayout='horizontal'
+							dataSource={history}
+							renderItem={e => (
+								<List.Item>
+									<List.Item.Meta
+										title={<span style={{ color: '#bfbfbf' }}>Date & Time</span>}
+										description={
+											<span style={{ color: '#000', fontWeight: 'bold' }}>
 											{dayjs(e).format('ddd, MMM DD, HH:mm')}
 										</span>
-									}
-								/>
-								<div>
-									{' '}
-									{
-										<Tag
-											className={'ant_tag'}
-											style={{
-												color: constconvertDateToStatus(e).color,
-												backgroundColor: constconvertDateToStatus(e)
-													.backgroundColor,
-												margin: '0 8px',
-												fontSize: 11
-											}}
-										>
-											{constconvertDateToStatus(e).text}
-										</Tag>
-									}
-								</div>
-							</List.Item>
-						)}
-					/>
-				) : null}
-			</Card>
+										}
+									/>
+									<div>
+										{' '}
+										{
+											<Tag
+												className={'ant_tag'}
+												style={{
+													color: constconvertDateToStatus(e).color,
+													backgroundColor: constconvertDateToStatus(e)
+														.backgroundColor,
+													margin: '0 8px',
+													fontSize: 11
+												}}
+											>
+												{constconvertDateToStatus(e).text}
+											</Tag>
+										}
+									</div>
+								</List.Item>
+							)}
+						/>
+					) : null}
+				</Card>
+			}
+
+
+
 			<Modal
 				key={Math.random()}
 				maskClosable={true}
