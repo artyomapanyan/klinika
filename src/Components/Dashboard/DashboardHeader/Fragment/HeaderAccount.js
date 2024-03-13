@@ -127,59 +127,65 @@ function HeaderAccount() {
 			<div className='header-properties small-gap'>
 				<div className={'header_2_div'}>
 					{role === 'doctor' ? (
-						<Dropdown
-							dropdownRender={() => {
-								return (
-									<div className={'approve_drop_div'}>
-										{approveLoading ? (
-											<Preloader small={10}/>
-										) : (
-											<div>
-												{approve?.length < 1 ? (
-													<div>{t('No clinics to approve')}!</div>
-												) : (
-													approve?.map((el, key) => {
-														return (
-															<div key={key} className={'approve_drop_inn_div'}>
-																<div>Invite from {el?.clinic?.name}</div>
-																<div>
-																	<Button
-																		onClick={() => onOk(el, key)}
-																		style={{ margin: 3 }}
-																		type={'primary'}
-																		size={'small'}
-																	>
-																		Ok
-																	</Button>
-																	<Button
-																		onClick={() => onCancel(el, key)}
-																		style={{ margin: 3 }}
-																		type={'secondary'}
-																		size={'small'}
-																	>
-																		Cancel
-																	</Button>
-																</div>
-															</div>
-														)
-													})
-												)}
-											</div>
-										)}
-									</div>
-								)
-							}}
-							trigger={['click']}
-							placement='bottom'
-						>
-							<Button type='link' className='header_call_dropdown'>
-								<Space>
-									<MedicineBoxOutlined style={{fontSize :24, marginTop:4}}/>
-									<span style={{marginTop: 9}}>{approve.length}</span>
+							<div>
+								{
+									approveLoading ? <Preloader small={10}/> :	<Dropdown
+										dropdownRender={() => {
+											return (
+												<div className={'approve_drop_div'}>
+													{approveLoading ? (
+														<Preloader small={10}/>
+													) : (
+														<div>
+															{approve?.length < 1 ? (
+																<div>{t('No clinics to approve')}!</div>
+															) : (
+																approve?.map((el, key) => {
+																	return (
+																		<div key={key} className={'approve_drop_inn_div'}>
+																			<div>Invite from {el?.clinic?.name}</div>
+																			<div>
+																				<Button
+																					onClick={() => onOk(el, key)}
+																					style={{ margin: 3 }}
+																					type={'primary'}
+																					size={'small'}
+																				>
+																					Ok
+																				</Button>
+																				<Button
+																					onClick={() => onCancel(el, key)}
+																					style={{ margin: 3 }}
+																					type={'secondary'}
+																					size={'small'}
+																				>
+																					Cancel
+																				</Button>
+																			</div>
+																		</div>
+																	)
+																})
+															)}
+														</div>
+													)}
+												</div>
+											)
+										}}
+										trigger={['click']}
+										placement='bottom'
+									>
+										<Button type='link' className='header_call_dropdown'>
+											<Space>
+												<MedicineBoxOutlined style={{fontSize :24, marginTop:4}}/>
+												<span style={{marginTop: 9}}>{approve.length}</span>
 
-								</Space>
-							</Button>
-						</Dropdown>
+											</Space>
+										</Button>
+									</Dropdown>
+								}
+							</div>
+
+
 					) : (
 						<div></div>
 					)}
