@@ -31,7 +31,8 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
                     </Button>
                 </td>
                 {Object.keys(item?.availability??{}).map((key, k)=>   {
-                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null ? null : () => setSelectedDate(key)}>
+
+                    return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null || !item.availability[key]?.available ? null : () => setSelectedDate(key)}>
 
                         <div className={"progressPurple"} style={{background: !item.availability[key]?.available ? 'url('+gray_grid+')' : '#6DAF5620'}}>
 
