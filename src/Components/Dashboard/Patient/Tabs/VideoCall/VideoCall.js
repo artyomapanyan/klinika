@@ -1,12 +1,7 @@
 import React, {useState} from "react";
-import {Avatar, Button, Form, Input, Modal, Space} from "antd";
-import {LeftOutlined, UserOutlined} from "@ant-design/icons";
-import sound_icon from "../../../../../dist/icons/sound_icon.png";
+import {Avatar, Button} from "antd";
+import {UserOutlined} from "@ant-design/icons";
 import JitsiVideo from "./JitsiVideo/JitsiVideo";
-import CancelReason from "./CancelReason";
-import spiral_icon from "../../../../../dist/icons/spiral_icon.png";
-import send_arrow_purpule from "../../../../../dist/icons/send_arrow_purpule.png";
-import x_black from "../../../../../dist/icons/x_black.png";
 import {useSelector} from "react-redux";
 import dayjs from "dayjs";
 import {t} from "i18next";
@@ -28,9 +23,6 @@ function VideoCall({data}) {
         setIsModalOpen(true);
     };
     const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
         setIsModalOpen(false);
     };
 
@@ -118,10 +110,6 @@ function VideoCall({data}) {
 
                             <div style={{display: 'flex', gap: 10}}>
                                 <Button onClick={onStartCall} className={'video_call_primary_btn'} type={'primary'}>{t('Start call now')}</Button>
-                                <Button onClick={showModal} className={'video_call_primary_btn'} type={'secondary'}>{t('Cancel')}</Button>
-                                <Modal key={Math.random()} title={t("Are you sure?")} footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                    <CancelReason setIsModalOpen={setIsModalOpen} data={data}/>
-                                </Modal>
                             </div>
 
                             {/*<div onClick={getLocalStream} className={'video_call_sound_and_text_div'}>*/}
