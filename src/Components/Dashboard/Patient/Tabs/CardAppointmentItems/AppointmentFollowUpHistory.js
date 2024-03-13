@@ -6,8 +6,9 @@ import dayjs from 'dayjs'
 import { postResource } from '../../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import { RascheduledContent } from '../../../Appointments/StatusModalForms/RascheduledContent'
+import {FollowUpContent} from "../../../Appointments/StatusModalForms/FollowUpContent";
 
-function AppointmentFollowUpHistory({ appointment }) {
+function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading }) {
 	const [modal, setModal] = useState(false)
 	const [history, setHistory] = useState(appointment.follow_up_history)
 	const [loading, setLoading] = useState(false)
@@ -22,13 +23,20 @@ function AppointmentFollowUpHistory({ appointment }) {
 		})
 	}
 
+
+
 	const onFinish = values => {
 		setLoading(true)
+		setStatusLoading(true)
 
 		if (values?.booked_at) {
 			values.booked_at =
 				values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
 		}
+
+		console.log(values)
+
+
 		postResource(
 			'Appointment',
 			'appointmentStatus',
@@ -43,12 +51,21 @@ function AppointmentFollowUpHistory({ appointment }) {
 				setHistory(response?.follow_up_history)
 				setModal(null)
 				setLoading(false)
+				setBigData(prevState=>({
+					...prevState,
+					status: response?.status
+
+				}))
+				setStatusLoading(false)
 			})
 			.finally(() => {
 				setLoading(true)
 				setTimeout(() => {
 					setLoading(false)
 				}, 3000)
+
+				setStatusLoading(false)
+
 			})
 	}
 
@@ -79,7 +96,7 @@ function AppointmentFollowUpHistory({ appointment }) {
 			<Card
 				title={t('Follow up history')}
 				extra={
-					<Button onClick={onStatusChange} className={'patient_card_btn'} disabled={appointment.status != 2 && appointment.status != 6}>
+					<Button onClick={onStatusChange} className={'patient_card_btn'} disabled={appointment.status != 2}>
 						{' '}
 						<img alt={'icons'} src={plusPurple} />
 						<span style={{ marginLeft: 10 }}>{t('Add')}</span>
@@ -131,9 +148,17 @@ function AppointmentFollowUpHistory({ appointment }) {
 				footer={null}
 				onCancel={onCancel}
 				centered
+				width={800}
 			>
 				<Form onFinish={onFinish} ref={formRef}>
-					<RascheduledContent
+					{/*<RascheduledContent*/}
+					{/*	loading={loading}*/}
+					{/*	modal={modal}*/}
+					{/*	onCancel={onCancel}*/}
+					{/*	date={date}*/}
+					{/*	formRef={formRef}*/}
+					{/*/>*/}
+					<FollowUpContent
 						loading={loading}
 						modal={modal}
 						onCancel={onCancel}

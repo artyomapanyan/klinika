@@ -68,6 +68,11 @@ function App() {
             locale={languageState==='ar'?ar:en}
         >
             {loading?null:<AppRoutes/>}
+            {/*<div  style={{position: 'sticky', top: 'calc(100vh - 50px)', right:0, backgroundColor: 'white', width: '100%', height: 50}}>*/}
+            {/*        <div style={{position: 'absolute', right: 10, bottom: 10}}>*/}
+            {/*            1.1.0*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
         </ConfigProvider>
         </span>
     );

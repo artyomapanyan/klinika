@@ -14,8 +14,9 @@ import {RascheduledContent} from "../../Appointments/StatusModalForms/Raschedule
 import {Confirmed} from "../../Appointments/StatusModalForms/Confirmed";
 import {postResource} from "../../../Functions/api_calls";
 import Preloader from "../../../Preloader";
+import {FollowUpContent} from "../../Appointments/StatusModalForms/FollowUpContent";
 const { Panel } = Collapse;
-function PatientCollapse({data, setData}) {
+function PatientCollapse({data, setData, statusLoading}) {
     let language = useSelector((state) => state.app.current_locale)
     let token = useSelector((state) => state.auth.token);
     const formRef = useRef();
@@ -62,16 +63,18 @@ function PatientCollapse({data, setData}) {
         postResource('Appointment','appointmentStatus', token, `${modal.id}/switch-status`, {
             status:modal.key,
             ...values
-        }).then(() => {
+        }).then((response) => {
 
             setModal(null)
             setData((prevState)=>({
                 ...prevState,
+                status: response?.status
+
             }))
             setLoading(false)
         }).finally(()=>{
-            setLoading(true)
-            window.location.reload()
+            setLoading(false)
+            // window.location.reload()
         })
     }
 
@@ -103,10 +106,10 @@ function PatientCollapse({data, setData}) {
                     {
                         modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
                             modal?.key === '2' ? <Confirmed loading={loading} onCancel={onCancel}/> :
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} /> :
+                                modal?.key === '4' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} /> :
                                     modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                         modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
-                                            modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                            modal?.key === '6' ? <FollowUpContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} />  :
                                                 modal?.key === '0' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                                     modal?.key === '7' ? <Confirmed loading={loading} onCancel={onCancel}/>  : null
                     }
@@ -123,9 +126,8 @@ function PatientCollapse({data, setData}) {
                         </div>
                         <div style={{zIndex: 999, margin: '0 30px'}}>
                             {
-                                loading ? <Preloader /> : <PatientStatusChange setLoading={setLoading} loading={loading}  record={data} resource={'Appointment'} initialValue={data?.status.toString()} onChange={onStatusChange}  name={'status'}/>
+                                loading ? <Preloader small={20}/> : statusLoading ? <Preloader small={20}/> : <PatientStatusChange setLoading={setLoading} loading={loading}  record={data} resource={'Appointment'} initialValue={data?.status.toString()} onChange={onStatusChange}  name={'status'}/>
                             }
-
                         </div>
                     </div>
                     <div onClick={onCollepse} style={{cursor: 'pointer', paddingTop: 9}}>

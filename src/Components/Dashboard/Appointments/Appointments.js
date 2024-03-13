@@ -21,6 +21,7 @@ import DateFilterElement from "../../Fragments/TableFilterElements/DateFilterEle
 import calendar_dark_purpule_icon from "../../../dist/icons/calendar_dark_purpule_icon.png";
 import SelectFilterElement from "../../Fragments/TableFilterElements/SelectFilterElement";
 import PermCheck from "../../Fragments/PermCheck";
+import {FollowUpContent} from "./StatusModalForms/FollowUpContent";
 
 const resource = 'Appointment';
 function Appointments() {
@@ -120,10 +121,10 @@ function Appointments() {
                         {
                             modal?.key === '3' ? <CanceledContent loading={loading} onCancel={onCancel} /> :
                                 modal?.key === '2' ? <Confirmed loading={loading} onCancel={onCancel}/>:
-                                modal?.key === '4' || modal?.key === '6' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} /> :
+                                modal?.key === '4' ? <RascheduledContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} /> :
                                 modal?.key === '1' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '5' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
-                                modal?.key === '6' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
+                                modal?.key === '6' ? <FollowUpContent loading={loading} modal={modal} onCancel={onCancel} date={date} formRef={formRef} />  :
                                 modal?.key === '0' ? <Confirmed loading={loading} onCancel={onCancel}/>  :
                                 modal?.key === '7' ? <Confirmed loading={loading} onCancel={onCancel}/>  : null
                         }
