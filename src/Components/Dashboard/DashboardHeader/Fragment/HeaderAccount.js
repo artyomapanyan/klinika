@@ -43,9 +43,14 @@ function HeaderAccount() {
 
 				setApprove(response)
 
-				setTimeout(() => {
-					setLoading(false)
-				}, 500)
+				if(response) {
+					setTimeout(() => {
+						setLoading(false)
+					}, 500)
+				}
+
+			}).finally((e) => {
+				setLoading(false)
 			})
 		}
 
@@ -66,7 +71,9 @@ function HeaderAccount() {
 
 	const onOk = (el, key) => {
 		setElem(el)
-		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {})
+		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
+
+		})
 	}
 
 	const onCancel = (el, key) => {
