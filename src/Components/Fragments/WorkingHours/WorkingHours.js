@@ -297,6 +297,9 @@ function WorkingHours({onFinish,
                         label={t(``)}
                         name={['working_hours', dataKey, key, "opens_at"]}
                         initialValue={el?.opens_at}
+                        rules={[{required: true,
+                          message: 'please select an hour'
+                        }]}
                       >
                         <Select
                           style={{width: 120}}
@@ -325,6 +328,9 @@ function WorkingHours({onFinish,
                         label={t(``)}
                         name={['working_hours', dataKey, key, "closes_at"]}
                         initialValue={el?.closes_at === '00:00' ? currentLabel[currentLabel?.length -1].label : el?.closes_at}
+                        rules={[{required: true,
+                                message: 'please select an hour'
+                        }]}
                       >
                         <Select
                           className={'working_houre_margin'}
