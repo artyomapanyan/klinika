@@ -40,8 +40,12 @@ function HeaderAccount() {
 		if(role == 'doctor') {
 			setLoading(true)
 			postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
+
 				setApprove(response)
-				setLoading(false)
+
+				setTimeout(() => {
+					setLoading(false)
+				}, 500)
 			})
 		}
 
@@ -106,7 +110,7 @@ function HeaderAccount() {
 								return (
 									<div className={'approve_drop_div'}>
 										{loading ? (
-											<Preloader />
+											<Preloader small={10}/>
 										) : (
 											<div>
 												{approve?.length < 1 ? (
