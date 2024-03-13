@@ -35,6 +35,7 @@ function WorkingHours({onFinish,
 
 
 
+
   const customWorkingHouers = {
     monday: [{day: 'monday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
     tuesday: [{day: 'tuesday', opens_at: '00:00', closes_at: '00:00', is_day_off: false, type: type}],
