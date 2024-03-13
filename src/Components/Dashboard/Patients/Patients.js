@@ -68,12 +68,12 @@ function Patients() {
                     render:i=><>{i == 1 ? t('Male') : t('Female') }</>
                 },
                 {
-                    title:t('Appointments'),
+                    title:t('Apps'),
                     dataIndex:'no_of_appointments',
                     key:'no_of_appointments',
                 },
                 {
-                    title:t('Finished appointments'),
+                    title:t('Finished apps'),
                     dataIndex:'no_of_appointments_finished',
                     key:'no_of_appointments_finished',
                 },
