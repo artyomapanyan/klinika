@@ -35,6 +35,7 @@ function HeaderAccount() {
 	const [loading, setLoading] = useState(false)
 	const [notifications, setNotifications] = useState([])
 	const [nameLastName, setNameLastName] = useState({})
+	const [approveLoading, setApproveLoading] = useState(false)
 
 	useEffect(() => {
 		if(role == 'doctor') {
@@ -61,8 +62,11 @@ function HeaderAccount() {
 	}, [role])
 
 	const onOk = (el, key) => {
+		setApproveLoading(true)
 		setElem(el)
-		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {})
+		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
+			setApproveLoading(false)
+		})
 	}
 
 	const onCancel = (el, key) => {
@@ -105,7 +109,7 @@ function HeaderAccount() {
 							dropdownRender={() => {
 								return (
 									<div className={'approve_drop_div'}>
-										{loading ? (
+										{approveLoading ? (
 											<Preloader />
 										) : (
 											<div>

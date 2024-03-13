@@ -454,6 +454,10 @@ function ClinicTabEssentials({loadingState, dataState,addDataState}) {
 
 
         if (params.id) {
+            if(data?.inactive_payment_methods) {
+                let inactivePayments = data?.inactive_payment_methods?.map((el) => {return el?.id})
+                values.payment_methods = [...values.payment_methods, ...inactivePayments]
+            }
             updateResource(resource, params.id, values, token, true).then(response => {
                 if(response?.id){
                     navigate(-1)
