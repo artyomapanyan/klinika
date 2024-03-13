@@ -71,6 +71,7 @@ function HeaderAccount() {
 	}, [role])
 
 	const onOk = (el, key) => {
+		console.log(el)
 		setElem(el)
 		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
 
