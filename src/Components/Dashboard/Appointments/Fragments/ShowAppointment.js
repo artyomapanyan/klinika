@@ -30,6 +30,7 @@ function ShowAppointment() {
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [pdfState,setPdfState] = useState(false)
+    let role = useSelector((state) => state.auth.selected_role?.key);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -223,7 +224,8 @@ function ShowAppointment() {
                                         {
                                             data?.invoices.map((el) => {
                                                 return <tr key={el?.id}>
-                                                    <td onClick={()=> navigate(ResourceLinks[invoiceResource] + el.id)} className={'app_show_invoce'}>{el.invoice_number}</td>
+                                                    {role === 'doctor'? <td>{el.invoice_number}</td> :
+                                                    <td onClick={()=> navigate(ResourceLinks[invoiceResource] + el.id)} className={'app_show_invoce'}>{el.invoice_number}</td>}
                                                     <td>{dayjs(el?.date?.iso_string).format('YYYY-MM-DD h:mm A')}</td>
                                                     <td>{el?.total_price}</td>
                                                     <td><Button disabled={pdfState} onClick={()=>invoiceHandleExportPDF(el.id)} size={'small'} style={{background:'red'}}><FilePdfOutlined style={{color: "#ffffff"}}/></Button></td>
