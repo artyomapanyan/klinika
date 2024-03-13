@@ -55,7 +55,7 @@ function HeaderAccount() {
 			})
 		}
 
-	}, [role, elem])
+	}, [role, ])
 
 	useEffect(() => {
 		//setInterval(() => {
@@ -71,9 +71,22 @@ function HeaderAccount() {
 	}, [role])
 
 	const onOk = (el, key) => {
-		console.log(el)
+		setApproveLoading(true)
+		setLoading(true)
 		setElem(el)
-		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
+		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {})
+
+
+		postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
+
+			setApprove(response)
+
+			if(response) {
+				setTimeout(() => {
+					setApproveLoading(false)
+					setLoading(false)
+				}, 1000)
+			}
 
 		})
 	}
