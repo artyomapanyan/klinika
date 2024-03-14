@@ -67,16 +67,22 @@ function Patients() {
                     filterDropdown: (props)=><RadioFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
                     render:i=><>{i == 1 ? t('Male') : t('Female') }</>
                 },
-                {
-                    title:t('Apps'),
-                    dataIndex:'no_of_appointments',
-                    key:'no_of_appointments',
-                },
-                {
-                    title:t('Finished apps'),
-                    dataIndex:'no_of_appointments_finished',
-                    key:'no_of_appointments_finished',
-                },
+                ,
+                // Conditionally include "Apps" columns based on isAdmin
+                ...(selectedRole.key === 'super' || selectedRole.key === 'super-admin' ? [
+                  {
+                      title:t('Apps'),
+                      dataIndex:'no_of_appointments',
+                      sorter:true,
+                      key:'apps',
+                  },
+                  {
+                      title:t('Finished apps'),
+                      dataIndex:'no_of_appointments_finished',
+                      sorter:true,
+                      key:'apps_finished',
+                  }
+                ] : []),
                 {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
@@ -91,7 +97,7 @@ function Patients() {
                     key:'last_logged_in_at',
                     render:i=><DateParser date={i}/>
                 },
-            ]} title={t('Patients')}/>
+            ].filter(e=>e !== undefined)} title={t('Patients')}/>
         </div>
     )
 }
