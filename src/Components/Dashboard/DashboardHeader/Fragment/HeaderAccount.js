@@ -74,22 +74,29 @@ function HeaderAccount() {
 		setApproveLoading(true)
 		setLoading(true)
 		setElem(el)
-		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {})
+		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
+			postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
 
+				setApprove(response)
+				approve=response
 
-		postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
+				if(approve.length === response.length) {
+					setTimeout(() => {
+						setApproveLoading(false)
+						setLoading(false)
+					}, 1000)
+				}
 
-			setApprove(response)
-			approve=response
-
-			if(approve.length === response.length) {
-				setTimeout(() => {
-					setApproveLoading(false)
-					setLoading(false)
-				}, 1000)
-			}
-
+			}).catch(()=>{
+				console.log('fff')
+				setApproveLoading(false)
+			})
+		}).catch(()=>{
+			setApproveLoading(false)
 		})
+
+
+
 	}
 
 	const onCancel = (el, key) => {
@@ -121,7 +128,7 @@ function HeaderAccount() {
 
 	}, [])
 
-
+	console.log(approve)
 
 	return (
 		<div>
