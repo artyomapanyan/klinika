@@ -82,7 +82,7 @@ function HeaderAccount() {
 			setApprove(response)
 			approve=response
 
-			if(response) {
+			if(approve.length === response.length) {
 				setTimeout(() => {
 					setApproveLoading(false)
 					setLoading(false)
