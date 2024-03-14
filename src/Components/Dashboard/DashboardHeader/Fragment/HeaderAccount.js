@@ -121,7 +121,7 @@ function HeaderAccount() {
 
 	}, [])
 
-	console.log('kkk')
+
 
 	return (
 		<div>
