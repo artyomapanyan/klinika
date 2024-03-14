@@ -1,6 +1,7 @@
 import ResourceTable from "../../Fragments/ResourceTable";
 import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
+import RadioFilterElement from "../../Fragments/TableFilterElements/RadioFilterElement";
 import DateParser from "../../Fragments/DateParser";
 import React from "react";
 import {useSelector} from "react-redux";
@@ -55,12 +56,33 @@ function Patients() {
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
+                    title:t('Age'),
+                    dataIndex:'age',
+                    key:'age',
+                },
+                {
                     dataIndex:'gender',
                     title:t('Gender'),
                     key:'gender',
-                    filterDropdown: (props)=><TableFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
-                    render:i=><p>{i == 1 ? t('Male') : t('Female') }</p>
+                    filterDropdown: (props)=><RadioFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
+                    render:i=><>{i == 1 ? t('Male') : t('Female') }</>
                 },
+                ,
+                // Conditionally include "Apps" columns based on isAdmin
+                ...(selectedRole.key === 'super' || selectedRole.key === 'super-admin' ? [
+                  {
+                      title:t('Apps'),
+                      dataIndex:'no_of_appointments',
+                      sorter:true,
+                      key:'apps',
+                  },
+                  {
+                      title:t('Finished apps'),
+                      dataIndex:'no_of_appointments_finished',
+                      sorter:true,
+                      key:'apps_finished',
+                  }
+                ] : []),
                 {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
@@ -75,7 +97,7 @@ function Patients() {
                     key:'last_logged_in_at',
                     render:i=><DateParser date={i}/>
                 },
-            ]} title={t('Patients')}/>
+            ].filter(e=>e !== undefined)} title={t('Patients')}/>
         </div>
     )
 }

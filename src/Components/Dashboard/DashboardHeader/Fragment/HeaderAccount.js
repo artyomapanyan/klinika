@@ -29,20 +29,28 @@ function HeaderAccount() {
 	let navigate = useNavigate()
 	let language = useSelector((state) => state?.app?.current_locale);
 
-	const [approve, setApprove] = useState([])
+	let [approve, setApprove] = useState([])
 	const [elem, setElem] = useState([])
 	const [authOpen, setAuthOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
+	const [approveLoading, setApproveLoading] = useState(false)
 	const [notifications, setNotifications] = useState([])
 	const [nameLastName, setNameLastName] = useState({})
-	const [approveLoading, setApproveLoading] = useState(false)
 
 	useEffect(() => {
 		if(role == 'doctor') {
+			setApproveLoading(true)
 			setLoading(true)
 			postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
 				setApprove(response)
-				setLoading(false)
+
+				if(response) {
+					setTimeout(() => {
+						setApproveLoading(false)
+						setLoading(false)
+					}, 1000)
+				}
+
 			})
 		}
 
@@ -62,11 +70,8 @@ function HeaderAccount() {
 	}, [role])
 
 	const onOk = (el, key) => {
-		setApproveLoading(true)
 		setElem(el)
-		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
-			setApproveLoading(false)
-		})
+		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {})
 	}
 
 	const onCancel = (el, key) => {
@@ -109,7 +114,7 @@ function HeaderAccount() {
 							dropdownRender={() => {
 								return (
 									<div className={'approve_drop_div'}>
-										{approveLoading ? (
+										{loading ? (
 											<Preloader />
 										) : (
 											<div>

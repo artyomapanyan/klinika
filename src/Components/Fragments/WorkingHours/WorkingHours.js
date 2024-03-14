@@ -282,6 +282,8 @@ function WorkingHours({onFinish,
                     return e?.value === workingDay[key+1]?.opens_at
                   })
 
+                  let key1 = key
+
 
 
                   return <Row key={dataKey + key + (new Date())}
@@ -292,11 +294,29 @@ function WorkingHours({onFinish,
                         label={t(``)}
                         name={['working_hours', dataKey, key, "opens_at"]}
                         initialValue={el?.opens_at}
+                        rules={[{required: true,
+                          message: 'please select an hour'
+                        }]}
                       >
                         <Select
                           style={{width: 120}}
                           options={currentOptions?.slice(0, closeKey)}
                           className={'working_houre_margin'}
+                          onChange={(change) => {
+                            if(!doctorHoursModal) {
+                              if(currentTimes.length > 1) {
+
+                                let currentTimesValue = currentTimes[0]?.map((el) => {return el.value})
+                                let currentTimesValue1 = currentTimes[1]?.map((el) => {return el.value})
+
+                                if(currentTimesValue.includes(change) && currentTimesValue1.includes(el.closes_at)) {
+                                  formRef?.current?.setFieldValue(['working_hours', dataKey, [key1], 'closes_at' ], null)
+                                }
+                              }
+
+                            }
+
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -305,11 +325,30 @@ function WorkingHours({onFinish,
                         label={t(``)}
                         name={['working_hours', dataKey, key, "closes_at"]}
                         initialValue={el?.closes_at === '00:00' ? currentLabel[currentLabel?.length -1].label : el?.closes_at}
+                        rules={[{required: true,
+                                message: 'please select an hour'
+                        }]}
                       >
                         <Select
                           className={'working_houre_margin'}
                           style={{width: 120,}}
                           disabled={!workingDay[key]?.opens_at}
+                          rules={[{required: true}]}
+                          onChange={(change) => {
+                            if(!doctorHoursModal) {
+                              if(workingDay[key+1]?.opens_at) {
+
+                                let currentTimesValue = currentTimes.flat()?.map((el) => {return el.value})
+                                let indexOpensAt = currentTimesValue?.findIndex((e)=>e === change)
+                                let indexClosesAt = currentTimesValue?.findIndex((e)=>e === workingDay[key+1]?.opens_at)
+
+                                if(indexClosesAt <= indexOpensAt) {
+                                  formRef?.current?.setFieldValue(['working_hours', dataKey, [key1+1], 'opens_at' ], null)
+                                }
+                              }
+
+                            }
+                          }}
                           options={
 
                             workingDay[key]?.opens_at && timeLimits ? currentTimes?.find(e=>e?.find(u=>u?.value=== workingDay[key]?.opens_at))?.slice(
