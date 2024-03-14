@@ -41,7 +41,6 @@ function Offer() {
     const onFinish = (values) => {
 
 
-
         setSaveLoading(true)
         values.expired_at = values?.expired_at?.format('YYYY-MM-DD')
         values.begins_at = values?.begins_at?.format('YYYY-MM-DD')
