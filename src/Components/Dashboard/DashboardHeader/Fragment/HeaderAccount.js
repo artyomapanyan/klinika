@@ -88,7 +88,7 @@ function HeaderAccount() {
 				}
 
 			}).catch(()=>{
-				console.log('fff')
+
 				setApproveLoading(false)
 			})
 		}).catch(()=>{
