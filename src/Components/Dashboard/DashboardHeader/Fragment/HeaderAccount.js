@@ -29,7 +29,7 @@ function HeaderAccount() {
 	let navigate = useNavigate()
 	let language = useSelector((state) => state?.app?.current_locale);
 
-	const [approve, setApprove] = useState([])
+	let [approve, setApprove] = useState([])
 	const [elem, setElem] = useState([])
 	const [authOpen, setAuthOpen] = useState(false)
 	const [loading, setLoading] = useState(false)
@@ -80,6 +80,7 @@ function HeaderAccount() {
 		postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
 
 			setApprove(response)
+			approve=response
 
 			if(response) {
 				setTimeout(() => {
@@ -120,16 +121,14 @@ function HeaderAccount() {
 
 	}, [])
 
-	console.log('eee')
+	console.log('kkk')
 
 	return (
 		<div>
 			<div className='header-properties small-gap'>
 				<div className={'header_2_div'}>
 					{role === 'doctor' ? (
-							<div>
-								{
-									approveLoading ? <Preloader small={10}/> :	<Dropdown
+								<Dropdown
 										dropdownRender={() => {
 											return (
 												<div className={'approve_drop_div'}>
@@ -182,8 +181,7 @@ function HeaderAccount() {
 											</Space>
 										</Button>
 									</Dropdown>
-								}
-							</div>
+
 
 
 					) : (
