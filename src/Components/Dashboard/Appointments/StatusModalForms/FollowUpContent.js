@@ -82,13 +82,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             postResource('ClinicDoctorWorkingHours', 'single', token, modal?.doctor?.id+'/'+modal?.clinic?.id, {service: modal?.service_type}).then(responses => {
                 const res = responses?.working_hours
                 let day = [];
-                // Object.values(res)?.map((el, i) => {
-                //     return el.filter((el1) => el1.is_day_off === true)
-                // }).map((el, i) => {
-                //     if (el.length > 0) {
-                //         day.push(i)
-                //     }
-                // })
+
                 Object.keys(res)?.forEach((key) => {
                     if(res[key][0]?.is_day_off){
                         day.push(key)
@@ -165,22 +159,14 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                     item: null,
                     amount: 0,
                     price: 0,
-                    item_object:{}
+                    item_object:{},
+                    name: ''
                 }
             }
         }))
     }
 
-    // const onDeleteItem = (key) => {
-    //     setItemsState(prevState => {
-    //         // Создайте копию текущего массива состояния
-    //         const newState = [...prevState];
-    //         // Удалите элемент с указанным индексом
-    //         newState.splice(key, 1);
-    //         // Верните обновленное состояние
-    //         return newState;
-    //     });
-    // }
+
 
 
 
@@ -214,40 +200,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     }
 
-    const handleInvoiceSelect = (e, key,data) => {
-
-        postResource('InvoiceItem', 'single', token, e).then((response) => {
-
-            const selected_item = data.find(u=>u.id===e);
-            formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
-            formRef?.current?.setFieldValue(['items', key, 'item_object'], {
-                id:selected_item.id,
-                name:selected_item.name
-            })
-            formRef?.current?.setFieldValue(['items', key, 'price'], response?.price)
-            formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
-            formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
-
-            formRef?.current?.getFieldValue(['items', key, 'amount'])
-
-        })
-
-        setTimeout(() => {
-            subTotal()
-            let allTotal = subTotal()
-            setTotalState(allTotal)
-            totalState = allTotal
-
-        }, 1500)
-
-
-
-
-
-
-    }
-
-
     const handleFilterResponse = (timeout = 80) => {
 
         let total = 0;
@@ -267,6 +219,42 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
         }
         return itemsState
     }
+
+    const handleInvoiceSelect = (e, key,data) => {
+        postResource('InvoiceItem', 'single', token, e).then((response) => {
+
+            const selected_item = data.find(u=>u.id===e);
+            formRef?.current?.setFieldValue(['items', key, 'name'], selected_item.name)
+            formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
+            formRef?.current?.setFieldValue(['items', key, 'item_object'], {
+                id:selected_item.id,
+                name:selected_item.name
+            })
+            formRef?.current?.setFieldValue(['items', key, 'price'], response?.price)
+            formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
+            formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
+
+            formRef?.current?.getFieldValue(['items', key, 'amount'])
+
+
+        })
+
+        setTimeout(() => {
+            subTotal()
+            let allTotal = subTotal()
+            setTotalState(allTotal)
+            totalState = allTotal
+
+        }, 1500)
+
+
+
+
+
+
+    }
+
+
 
 
 
@@ -302,7 +290,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     }
 
 
-    console.log(itemsState)
+
 
     return<div className={'follow_up_modal_big_div'}>
 
@@ -403,16 +391,11 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                                            inputType={'number'}
                                            />
 
-                                {/*<Form.Item className={'flying-label'}*/}
-                                {/*    name={['items', key, 'amount']}*/}
-                                {/*           initialValue={formRef?.current?.getFieldsValue()?.items?.[key].amount}*/}
-                                {/*>*/}
-                                {/*    <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}}  */}
-                                {/*            //onChange={()=>{console.log(formRef?.current?.getFieldsValue()?.items?.[key].amount, 'eeeeeeee')}} */}
-                                {/*    />*/}
-                                {/*    <label style={{left: 15}}>Amount</label>*/}
-                                {/*</Form.Item>*/}
                             </div>
+                            <Form.Item name={['items', key, 'name']}>
+                                <Input hidden={true}/>
+                            </Form.Item>
+
                             <div>
                                 <div style={{marginTop: 15, cursor: 'pointer'}}
                                      onClick={() => onDeleteItem(key, el)}><img alt={'new_delete_dark_icon'} src={new_delete_dark_icon}/></div>
