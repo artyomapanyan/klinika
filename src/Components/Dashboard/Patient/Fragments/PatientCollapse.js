@@ -98,7 +98,7 @@ function PatientCollapse({data, setData, statusLoading}) {
 
     return(
         <div style={{padding:24, margin: '0 20px'}}>
-            <Modal key={Math.random()} maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
+            <Modal key={Math.random()} maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered width={modal?.key === '6' ? 800 : ''} >
                 <Form onFinish={onFinish}
                       //onValuesChange={handleValuesChange}
                       ref={formRef}

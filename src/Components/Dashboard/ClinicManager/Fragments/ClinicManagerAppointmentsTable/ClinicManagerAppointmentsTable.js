@@ -132,7 +132,7 @@ function ClinicManagerAppointmentsTable() {
         <div className={'table_conteiner'}>
               <Spin spinning={loading}>
                 <div style={{paddingBottom: 60}}>
-                    <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered >
+                    <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered width={modal?.key === '6' ? 800 : ''} >
                         <Form onFinish={onFinish}
                               onValuesChange={handleValuesChange}
                               ref={formRef}

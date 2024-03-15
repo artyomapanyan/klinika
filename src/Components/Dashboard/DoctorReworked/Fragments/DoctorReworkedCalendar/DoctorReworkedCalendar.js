@@ -48,6 +48,10 @@ function DoctorReworkedCalendar() {
             });
             setAppointments(data)
             setLoading(false)
+
+
+
+
         })
 
 
