@@ -96,7 +96,6 @@ function HeaderAccount() {
 		})
 
 
-
 	}
 
 	const onCancel = (el, key) => {
