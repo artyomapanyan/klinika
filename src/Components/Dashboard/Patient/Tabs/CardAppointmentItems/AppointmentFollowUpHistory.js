@@ -94,7 +94,7 @@ function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading 
 		return { color, backgroundColor, text }
 	}
 
-	console.log(history, appointment,  'history')
+
 
 	return (
 		<div className={'current_medications_card'}>

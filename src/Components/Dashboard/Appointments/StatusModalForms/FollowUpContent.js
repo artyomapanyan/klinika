@@ -224,7 +224,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
         postResource('InvoiceItem', 'single', token, e).then((response) => {
 
             const selected_item = data.find(u=>u.id===e);
-            formRef?.current?.setFieldValue(['items', key, 'name'], selected_item.name)
+
             formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
             formRef?.current?.setFieldValue(['items', key, 'item_object'], {
                 id:selected_item.id,
@@ -287,6 +287,10 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
         setTotalState(allTotal)
 
 
+    }
+
+    if(itemsState?.items) {
+        console.log(Object?.keys(itemsState?.items).length)
     }
 
 
@@ -392,7 +396,10 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                                            />
 
                             </div>
-                            <Form.Item name={['items', key, 'name']}>
+                            <Form.Item name={['items', key, 'item_object', 'id']}>
+                                <Input hidden={true}/>
+                            </Form.Item>
+                            <Form.Item name={['items', key, 'item_object', 'name']}>
                                 <Input hidden={true}/>
                             </Form.Item>
 
@@ -426,7 +433,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
         <div style={{display: 'flex', gap: 3, marginTop: 10}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >{t('Cancel')}</Button>
-            <Button loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
+            <Button disabled={itemsState?.items ? !Object?.keys(itemsState?.items).length : !itemsState?.items} loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
         </div>
 
     </div>
