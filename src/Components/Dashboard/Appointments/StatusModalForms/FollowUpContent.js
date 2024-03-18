@@ -289,9 +289,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     }
 
-    if(itemsState?.items) {
-        console.log(Object?.keys(itemsState?.items).length)
-    }
+
 
 
 
