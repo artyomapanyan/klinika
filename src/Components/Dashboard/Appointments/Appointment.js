@@ -56,7 +56,7 @@ function Appointment() {
 	const appointmentFormRef = useRef()
 	const fetchedUsers = useRef([])
 
-	//Get the patient from the route, if navigating from patient ;list page
+	//Get the patient from the route, if navigating from patient list page
 	useGetResourceSingle(
 		'Patient',
 		params.id,
@@ -334,12 +334,18 @@ function Appointment() {
 		if (data?.booked_at) {
 			let appointment = { ...data }
 
-			if (!appointment?.patient_id && nationality) {
+			if (pageState === 'initial' || pageState === 'selected') {
+				appointment.patient_id = data.patient_id
+				delete appointment.patient
+			} else if (pageState === 'retrieved') {
+				appointment.patient_id = params.id
+				delete appointment.patient
+			} else if (pageState === 'creation' && nationality) {
 				appointment.patient = { country_id: nationality }
 				delete appointment.patient_id
-			}
-			if (appointment?.patient_id == '0') {
+			} else {
 				delete appointment.patient_id
+				delete appointment.patient
 			}
 			setInvoicePrice(null)
 			setInvoiceLoading(true)
@@ -391,9 +397,12 @@ function Appointment() {
 					createAppointment(appointment)
 				})
 				.catch(error => {
-					console.error('Validation failed:', error)
+					window.scrollTo({
+						top: 0,
+						behavior: 'smooth'
+					})
 				})
-		} else if (pageState === 'selected') {
+		} else if (pageState === 'selected' || pageState === 'initial') {
 			delete appointment.patient
 			searchFormRef.current
 				.validateFields()
@@ -401,7 +410,10 @@ function Appointment() {
 					createAppointment(appointment)
 				})
 				.catch(error => {
-					console.error('Validation failed:', error)
+					window.scrollTo({
+						top: 0,
+						behavior: 'smooth'
+					})
 				})
 		} else if (pageState === 'retrieved') {
 			appointment.patient_id = params.id
@@ -1057,7 +1069,7 @@ function Appointment() {
 														</div>
 													</Col>
 												) : null}
-												{data?.patient_id || nationality ? (
+												{invoicePrice?.vat ? (
 													<Col lg={4} className='gutter-row'>
 														<div className='payment-header'>{t('Tax')}</div>
 														<div className='payment-item'>
@@ -1070,8 +1082,10 @@ function Appointment() {
 																			t('Task tax')}
 																	</li>
 																) : null}
-																{invoicePrice?.tax_percentage_for_service_fees !==
-																'0' ? (
+																{!invoicePrice?.tax_percentage_for_service_fees !==
+																	'0' &&
+																invoicePrice?.tax_percentage_for_service_fees !==
+																	null ? (
 																	<li className='payment-header'>
 																		{invoicePrice?.tax_percentage_for_service_fees +
 																			'% ' +
