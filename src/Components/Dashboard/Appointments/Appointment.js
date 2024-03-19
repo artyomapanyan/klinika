@@ -83,6 +83,12 @@ function Appointment() {
 			  }
 			: null
 	)
+	//Check if the patient has access to the clinic in Clinic-manager Role
+	useEffect(() => {
+		if (params.id && codeAndPhone.phone_number && role === 'clinic-manager') {
+			isPatientAuth(ownerClinics.id);
+		}
+	}, [codeAndPhone])
 
 	//assign user clinic and doctor id to the appointment object
 	useEffect(() => {
@@ -335,7 +341,11 @@ function Appointment() {
 		if (data?.booked_at) {
 			let appointment = { ...data }
 
-			if (pageState === 'initial' || pageState === 'selected' || pageState === 'verified') {
+			if (
+				pageState === 'initial' ||
+				pageState === 'selected' ||
+				pageState === 'verified'
+			) {
 				appointment.patient_id = data.patient_id
 				delete appointment.patient
 			} else if (pageState === 'retrieved') {
