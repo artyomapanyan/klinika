@@ -151,7 +151,7 @@ function Appointment() {
 					</div>
 				</div>
 			)
-			let searchData = item.phone_number + item.email
+			let searchData = item.phone
 			return [name, item, searchData]
 		} else {
 			name = (
@@ -223,6 +223,9 @@ function Appointment() {
 				if (response?.patient) {
 					setPageState('verified')
 					fetchedUsers.current.push(response?.patient)
+					searchFormRef?.current?.setFieldsValue({
+						patient_id: `${response?.patient?.first} ${response?.patient?.last} +${ codeAndPhone?.phone_country_code}${codeAndPhone?.phone_number}`
+					})
 					setData(prevState => ({
 						...prevState,
 						patient_id: response?.patient?.id,
@@ -773,7 +776,7 @@ function Appointment() {
 							<CreatePatient
 								data={patient}
 								formRef={patientFormRef}
-								key={patient?.id}
+								formKey={patient?.id}
 							></CreatePatient>
 						</div>
 					) : (
