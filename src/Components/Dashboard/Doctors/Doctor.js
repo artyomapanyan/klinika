@@ -17,6 +17,7 @@ import FileManager from "../../Fragments/FileManager";
 
 const resource = 'Doctor';
 
+
 function Doctor() {
     let language = useSelector((state) => state.app.current_locale)
     let dispatch = useDispatch()
