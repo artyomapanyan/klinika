@@ -762,6 +762,7 @@ function Appointment() {
 							<CreatePatient
 								data={patient}
 								formRef={patientFormRef}
+								key={patient?.id}
 							></CreatePatient>
 						</div>
 					) : (
@@ -825,6 +826,7 @@ function Appointment() {
 																has_parent: 0,
 																has_doctor: 1,
 																clinic: data?.clinic_id,
+																service_type: data?.service_type,
 																doctor: role === 'doctor' ? user?.id : undefined
 															}}
 														/>
