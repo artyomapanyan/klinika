@@ -215,6 +215,7 @@ function Appointment() {
 				code: data?.code
 			}).then(response => {
 				if (response?.patient) {
+					setPageState('verified')
 					fetchedUsers.current.push(response?.patient)
 					setData(prevState => ({
 						...prevState,
@@ -334,7 +335,7 @@ function Appointment() {
 		if (data?.booked_at) {
 			let appointment = { ...data }
 
-			if (pageState === 'initial' || pageState === 'selected') {
+			if (pageState === 'initial' || pageState === 'selected' || pageState === 'verified') {
 				appointment.patient_id = data.patient_id
 				delete appointment.patient
 			} else if (pageState === 'retrieved') {
@@ -711,7 +712,7 @@ function Appointment() {
 									{pageState === 'codeSent' ? (
 										<>
 											<Col lg={6} className='gutter-row'>
-												<div class='vertical-line'>
+												<div className='vertical-line'>
 													{t("Client didn't get a message")}? <br />
 													<span
 														onClick={sendCode}
