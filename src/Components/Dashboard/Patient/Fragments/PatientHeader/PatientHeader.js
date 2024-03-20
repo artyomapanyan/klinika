@@ -8,11 +8,14 @@ import noteBlack from "../../../../../dist/icons/noteBlack.svg";
 import PrivateNotesModal from "./PrivateNotesModal";
 import dayjs from "dayjs";
 import {t} from "i18next";
+import {useSelector} from "react-redux";
 
 function PatientHeader({data, setData}) {
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    let role = useSelector((state) => state.auth.selected_role.key)
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -102,7 +105,7 @@ function PatientHeader({data, setData}) {
                                     </div>
                             </div>
                         </div>
-                        <div>
+                        {role !== 'clinic-manager' && role !== 'receptionist'?<div>
                             <div className={'private_note_div'} onClick={showModal}>
                                 <div align={'center'}>
                                     <div className={'private_note_number'}>
@@ -117,7 +120,7 @@ function PatientHeader({data, setData}) {
                                 <PrivateNotesModal data={data} setData={setData}/>
 
                             </Modal>
-                        </div>
+                        </div>: null}
 
 
                 </div>
