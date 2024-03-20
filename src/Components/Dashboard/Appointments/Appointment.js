@@ -83,6 +83,12 @@ function Appointment() {
 			  }
 			: null
 	)
+	//Check if the patient has access to the clinic in Clinic-manager Role
+	useEffect(() => {
+		if (params.id && codeAndPhone.phone_number && role === 'clinic-manager') {
+			isPatientAuth(ownerClinics.id);
+		}
+	}, [codeAndPhone])
 
 	//assign user clinic and doctor id to the appointment object
 	useEffect(() => {
@@ -145,7 +151,7 @@ function Appointment() {
 					</div>
 				</div>
 			)
-			let searchData = item.phone_number + item.email
+			let searchData = item.phone
 			return [name, item, searchData]
 		} else {
 			name = (
@@ -215,7 +221,11 @@ function Appointment() {
 				code: data?.code
 			}).then(response => {
 				if (response?.patient) {
+					setPageState('verified')
 					fetchedUsers.current.push(response?.patient)
+					searchFormRef?.current?.setFieldsValue({
+						patient_id: `${response?.patient?.first} ${response?.patient?.last} +${ codeAndPhone?.phone_country_code}${codeAndPhone?.phone_number}`
+					})
 					setData(prevState => ({
 						...prevState,
 						patient_id: response?.patient?.id,
@@ -334,7 +344,11 @@ function Appointment() {
 		if (data?.booked_at) {
 			let appointment = { ...data }
 
-			if (pageState === 'initial' || pageState === 'selected') {
+			if (
+				pageState === 'initial' ||
+				pageState === 'selected' ||
+				pageState === 'verified'
+			) {
 				appointment.patient_id = data.patient_id
 				delete appointment.patient
 			} else if (pageState === 'retrieved') {
@@ -711,7 +725,7 @@ function Appointment() {
 									{pageState === 'codeSent' ? (
 										<>
 											<Col lg={6} className='gutter-row'>
-												<div class='vertical-line'>
+												<div className='vertical-line'>
 													{t("Client didn't get a message")}? <br />
 													<span
 														onClick={sendCode}
@@ -762,7 +776,7 @@ function Appointment() {
 							<CreatePatient
 								data={patient}
 								formRef={patientFormRef}
-								key={patient?.id}
+								formKey={patient?.id}
 							></CreatePatient>
 						</div>
 					) : (
@@ -931,116 +945,135 @@ function Appointment() {
 													</div>
 												</Space>
 											</Col>
+											<hr style={{ borderTop: '2px solid #E1E2E9' }}></hr>
+
 											{data?.service_type === 'laboratory_clinic_visit' ||
 											data?.service_type === 'laboratory_home_visit' ||
 											data?.service_type === 'nursing' ? (
-												<hr style={{ borderTop: '2px solid #E1E2E9' }}></hr>
-											) : null}
-											{data?.nursing_tasks?.length ? (
+												<>
+													{data?.nursing_tasks?.length ? (
+														<Col lg={24} className='gutter-row'>
+															<h3 style={{ fontWeight: 'bold' }}>
+																{t('Nursing tasks')}
+															</h3>
+															{data?.nursingTasksArray.map((item, index) => (
+																<Row key={index}>
+																	<Col lg={23} className='gutter-row'>
+																		<h3>
+																			{item.nursing_task.name} [{item.price} SR]
+																		</h3>
+																	</Col>
+																	<Col lg={1} className='gutter-row'>
+																		<Space>
+																			<div>
+																				<div
+																					className={'cl_manager_modal_dr_name'}
+																					style={{ cursor: 'pointer' }}
+																					onClick={() => {
+																						removeNursingTask(index)
+																					}}
+																				>
+																					<img
+																						className={'del_icin'}
+																						alt={'x_black'}
+																						src={x_black}
+																					/>
+																				</div>
+																			</div>
+																		</Space>
+																	</Col>
+																</Row>
+															))}
+														</Col>
+													) : null}
+													{data?.lab_tests?.length ? (
+														<Col lg={24} className='gutter-row'>
+															<h3 style={{ fontWeight: 'bold' }}>
+																{t('Lab tests')}
+															</h3>
+															{data?.labTestsArray.map((item, index) => (
+																<Row key={index}>
+																	<Col lg={23} className='gutter-row'>
+																		<h3>
+																			{item.lab_test.name} [{item.price} SR]
+																		</h3>
+																	</Col>
+																	<Col lg={1} className='gutter-row'>
+																		<Space>
+																			<div>
+																				<div
+																					className={'cl_manager_modal_dr_name'}
+																					style={{ cursor: 'pointer' }}
+																					onClick={() => {
+																						removeLabItem(index, 'test')
+																					}}
+																				>
+																					<img
+																						className={'del_icin'}
+																						alt={'x_black'}
+																						src={x_black}
+																					/>
+																				</div>
+																			</div>
+																		</Space>
+																	</Col>
+																</Row>
+															))}
+														</Col>
+													) : null}
+													{data?.lab_packages?.length ? (
+														<Col lg={24} className='gutter-row'>
+															<h3 style={{ fontWeight: 'bold' }}>
+																{t('Lab packages')}
+															</h3>
+															{data?.labPackagesArray.map((item, index) => (
+																<Row key={index}>
+																	<Col lg={23} className='gutter-row'>
+																		<h3>
+																			{item.lab_package.name} [{item.price} SR]
+																		</h3>
+																	</Col>
+																	<Col lg={1} className='gutter-row'>
+																		<Space>
+																			<div>
+																				<div
+																					className={'cl_manager_modal_dr_name'}
+																					style={{ cursor: 'pointer' }}
+																					onClick={() => {
+																						removeLabItem(index, 'package')
+																					}}
+																				>
+																					<img
+																						className={'del_icin'}
+																						alt={'x_black'}
+																						src={x_black}
+																					/>
+																				</div>
+																			</div>
+																		</Space>
+																	</Col>
+																</Row>
+															))}
+														</Col>
+													) : null}
+												</>
+											) : (
 												<Col lg={24} className='gutter-row'>
 													<h3 style={{ fontWeight: 'bold' }}>
-														{t('Nursing tasks')}
+														{t('Selected services')}
 													</h3>
-													{data?.nursingTasksArray.map((item, index) => (
-														<Row key={index}>
-															<Col lg={23} className='gutter-row'>
-																<h3>
-																	{item.nursing_task.name} [{item.price} SR]
-																</h3>
-															</Col>
-															<Col lg={1} className='gutter-row'>
-																<Space>
-																	<div>
-																		<div
-																			className={'cl_manager_modal_dr_name'}
-																			style={{ cursor: 'pointer' }}
-																			onClick={() => {
-																				removeNursingTask(index)
-																			}}
-																		>
-																			<img
-																				className={'del_icin'}
-																				alt={'x_black'}
-																				src={x_black}
-																			/>
-																		</div>
-																	</div>
-																</Space>
-															</Col>
-														</Row>
-													))}
+													<Row>
+														<Col lg={24} className='gutter-row'>
+															<h3>
+																{data?.service_type[0]?.toUpperCase() +
+																	data?.service_type
+																		?.slice(1)
+																		?.replaceAll('_', ' ')}
+															</h3>
+														</Col>
+													</Row>
 												</Col>
-											) : null}
-											{data?.lab_tests?.length ? (
-												<Col lg={24} className='gutter-row'>
-													<h3 style={{ fontWeight: 'bold' }}>
-														{t('Lab tests')}
-													</h3>
-													{data?.labTestsArray.map((item, index) => (
-														<Row key={index}>
-															<Col lg={23} className='gutter-row'>
-																<h3>
-																	{item.lab_test.name} [{item.price} SR]
-																</h3>
-															</Col>
-															<Col lg={1} className='gutter-row'>
-																<Space>
-																	<div>
-																		<div
-																			className={'cl_manager_modal_dr_name'}
-																			style={{ cursor: 'pointer' }}
-																			onClick={() => {
-																				removeLabItem(index, 'test')
-																			}}
-																		>
-																			<img
-																				className={'del_icin'}
-																				alt={'x_black'}
-																				src={x_black}
-																			/>
-																		</div>
-																	</div>
-																</Space>
-															</Col>
-														</Row>
-													))}
-												</Col>
-											) : null}
-											{data?.lab_packages?.length ? (
-												<Col lg={24} className='gutter-row'>
-													<h3 style={{ fontWeight: 'bold' }}>
-														{t('Lab packages')}
-													</h3>
-													{data?.labPackagesArray.map((item, index) => (
-														<Row key={index}>
-															<Col lg={23} className='gutter-row'>
-																<h3>
-																	{item.lab_package.name} [{item.price} SR]
-																</h3>
-															</Col>
-															<Col lg={1} className='gutter-row'>
-																<Space>
-																	<div>
-																		<div
-																			className={'cl_manager_modal_dr_name'}
-																			style={{ cursor: 'pointer' }}
-																			onClick={() => {
-																				removeLabItem(index, 'package')
-																			}}
-																		>
-																			<img
-																				className={'del_icin'}
-																				alt={'x_black'}
-																				src={x_black}
-																			/>
-																		</div>
-																	</div>
-																</Space>
-															</Col>
-														</Row>
-													))}
-												</Col>
-											) : null}
+											)}
 										</Row>
 										<br />
 										<br />

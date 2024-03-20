@@ -23,7 +23,7 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 											: 'pointer'
 								}}
 								onClick={
-									thisDate > key || item.availability[key]?.percentage === null
+									thisDate > key || !item.availability[key]?.available
 										? null
 										: () => setSelectedDate(key)
 								}
