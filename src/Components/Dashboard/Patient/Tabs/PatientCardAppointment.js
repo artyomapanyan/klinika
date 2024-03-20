@@ -13,6 +13,7 @@ import {useParams} from "react-router";
 import Preloader from "../../../Preloader";
 import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
+import CurrentVisitServices from "./CardAppointmentItems/CurrentVisitServices";
 
 const { TextArea } = Input;
 
@@ -259,6 +260,8 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData, setSta
                                 {/*<div >*/}
                                 {/*    <AppointmentCheckboxes/>*/}
                                 {/*</div>*/}
+                                <div style={{width: '100%', borderBottom: '1px solid #A6A7BA', marginTop: 40}}></div>
+                                <CurrentVisitServices />
                             </Col>
 
 
@@ -294,7 +297,9 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData, setSta
                         </Row>
                     </Col>
                 </Row>
+
             }
+
 
 
         </Layout.Content>
