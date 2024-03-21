@@ -86,7 +86,7 @@ function Appointment() {
 	//Check if the patient has access to the clinic in Clinic-manager Role
 	useEffect(() => {
 		if (params.id && codeAndPhone.phone_number && role === 'clinic-manager') {
-			isPatientAuth(ownerClinics.id);
+			isPatientAuth(ownerClinics.id)
 		}
 	}, [codeAndPhone])
 
@@ -183,18 +183,23 @@ function Appointment() {
 	}
 
 	const isPatientAuth = clinic_id => {
-		postResource('PatientSearch', 'single', token, '', {
-			...codeAndPhone,
-			clinic_id: clinic_id
-		}).then(response => {
-			if (response.message) {
-				setPageState('unauthorized')
-				setPatient(null)
-			} else {
-				setPageState('retrieved')
-				setPatient(response.items[0])
-			}
-		})
+		if (clinic_id) {
+			postResource('PatientSearch', 'single', token, '', {
+				...codeAndPhone,
+				clinic_id: clinic_id
+			}).then(response => {
+				if (response.message) {
+					setPageState('unauthorized')
+					setPatient(null)
+				} else {
+					setPageState('retrieved')
+					setPatient(response.items[0])
+				}
+			})
+		} else {
+			setPageState('initial')
+			setPatient(null)
+		}
 	}
 
 	const sendCode = () => {
@@ -224,7 +229,7 @@ function Appointment() {
 					setPageState('verified')
 					fetchedUsers.current.push(response?.patient)
 					searchFormRef?.current?.setFieldsValue({
-						patient_id: `${response?.patient?.first} ${response?.patient?.last} +${ codeAndPhone?.phone_country_code}${codeAndPhone?.phone_number}`
+						patient_id: `${response?.patient?.first} ${response?.patient?.last} +${codeAndPhone?.phone_country_code}${codeAndPhone?.phone_number}`
 					})
 					setData(prevState => ({
 						...prevState,
