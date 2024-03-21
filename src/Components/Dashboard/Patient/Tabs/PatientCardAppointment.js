@@ -132,6 +132,7 @@ function PatientCardAppointment({
 		setEditState2(true)
 	}
 
+
 	return (
 		<Layout.Content>
 			{loading ? (
@@ -309,13 +310,16 @@ function PatientCardAppointment({
 									{/*    <Button loading={loadingSubmit} style={{right:20, top:-70}} type={'secondary'} htmlType={'submit'}>{t('Submit')}</Button>*/}
 									{/*</div>*/}
 								</Form>
+
+								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 40, boxShadow: '0.15px 0.15px'}}></div>
+								<CurrentVisitServices />
+								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
+
                                 <FutureVisits></FutureVisits>
 								{/*<div >*/}
 								{/*    <AppointmentCheckboxes/>*/}
 								{/*</div>*/}
-                                <div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 40, boxShadow: '0.15px 0.15px'}}></div>
-                                <CurrentVisitServices />
-                                <div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
+
 							</Col>
 
 							<Col lg={8}>
