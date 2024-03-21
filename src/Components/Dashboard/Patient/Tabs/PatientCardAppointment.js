@@ -18,6 +18,7 @@ import Preloader from '../../../Preloader'
 import resourceLinks from '../../../ResourceLinks'
 import { t } from 'i18next'
 import FutureVisits from './Prescriptions/FutureVisits'
+import CurrentVisitServices from "./CardAppointmentItems/CurrentVisitServices";
 
 const { TextArea } = Input
 
@@ -312,8 +313,11 @@ function PatientCardAppointment({
 								{/*<div >*/}
 								{/*    <AppointmentCheckboxes/>*/}
 								{/*</div>*/}
+                                <div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 40, boxShadow: '0.15px 0.15px'}}></div>
+                                <CurrentVisitServices />
+                                <div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
 							</Col>
-                            
+
 							<Col lg={8}>
 								{/*<div style={{border:"1px solid #cfceca", borderRadius:12, padding:15, display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}} >*/}
 								{/*    <div style={{ display:"flex", flexDirection:"column", justifyContent: "center", alignItems:"center", width:'60%'}}>*/}
