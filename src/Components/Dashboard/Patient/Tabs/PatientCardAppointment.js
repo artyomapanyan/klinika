@@ -15,6 +15,7 @@ import resourceLinks from "../../../ResourceLinks";
 import {t} from "i18next";
 import CurrentVisitServices from "./CardAppointmentItems/CurrentVisitServices";
 
+
 const { TextArea } = Input;
 
 const resource = 'Appointment'
@@ -260,8 +261,10 @@ function PatientCardAppointment({tab, patientId, bigData, id, setBigData, setSta
                                 {/*<div >*/}
                                 {/*    <AppointmentCheckboxes/>*/}
                                 {/*</div>*/}
-                                <div style={{width: '100%', borderBottom: '1px solid #A6A7BA', marginTop: 40}}></div>
+                                <div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 40, boxShadow: '0.15px 0.15px'}}></div>
                                 <CurrentVisitServices />
+                                <div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
+
                             </Col>
 
 

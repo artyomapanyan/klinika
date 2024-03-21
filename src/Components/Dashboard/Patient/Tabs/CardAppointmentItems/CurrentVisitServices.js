@@ -22,13 +22,14 @@ function CurrentVisitServices() {
         ]))
     }
 
-    const onDelete = (element, key) => {
-        setServisesState((prevState) => ([
-            prevState?.filter((el, prevKey) => {
+    const onDelete = (e, element, key) => {
+
+        setServisesState(
+            servisesState?.filter((el, prevKey) => {
                 return element?.id !== el?.id
             })
 
-        ]))
+        )
     }
 
 
@@ -36,7 +37,7 @@ function CurrentVisitServices() {
     return <div style={{marginTop: 30}}>
         <Form>
             <div className={'current_visit_text'}>
-                Current visit Services
+                {t('Current visit Services')}
             </div>
             <div className={'current_visit_item'}>
                 <div style={{width: '85%'}}>
@@ -52,28 +53,32 @@ function CurrentVisitServices() {
                     <FormInput label={t('Qnt')} name={'qnt'} initialValue={1} inputType={'number'}/>
                 </div>
                 <div>
-                    <Button onClick={onAdd} className={"current_visit_add_btn"} type={'primary'}>Add</Button>
+                    <Button onClick={onAdd} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
                 </div>
             </div>
 
-            {
-                servisesState?.map((el, key) => {
-                    return <div key={key} className={'current_visit_item'}>
+            <div style={{marginTop: 10}}>
+                {
+                    servisesState?.map((el, key) => {
+                        return <div key={key} className={'current_visit_name'}>
 
-                        <div style={{width: '90%'}}>
-                            <Form.Item>
-                                <Input/>
-                            </Form.Item>
+                            <div style={{width: '90%', marginTop: -20}} className={'aass'}>
+                                <Form.Item>
+                                    <Input/>
+                                </Form.Item>
+                            </div>
+                            <div style={{marginTop: -8}}>
+                                x1
+                            </div>
+                            <div  style={{marginTop: -9}}>
+                                <img src={dark_delete_icon} alt={'dark_delete_icon'} onClick={(e)=>onDelete(e, el, key)} style={{cursor: 'pointer'}}/>
+                            </div>
                         </div>
-                        <div>
-                            x1
-                        </div>
-                        <div onClick={()=>onDelete(el, key)}>
-                            <img src={dark_delete_icon} alt={'dark_delete_icon'} />
-                        </div>
-                    </div>
-                })
-            }
+                    })
+                }
+            </div>
+
+
 
 
         </Form>
