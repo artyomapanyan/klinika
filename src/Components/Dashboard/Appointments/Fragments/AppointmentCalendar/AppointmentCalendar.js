@@ -20,6 +20,10 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 	const [search, setSearch] = useState('')
 
 	let token = useSelector(state => state.auth.token)
+
+	useEffect(() =>{
+		setDate([dayjs(), dayjs().add(6, 'day')])
+	}, [appointmentObj.service_type])
 	useEffect(() => {
 		if (appointmentObj?.service_type) {
 			if (
@@ -28,6 +32,10 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
 				setLoading(true)
+				setData( prevState =>({
+					...prevState,
+					workload: null
+				}))
 				postResource('Dashboard', 'ClinicWorkload', token, '', {
 					from: date[0].format('YYYY-MM-DD'),
 					to: date[1].format('YYYY-MM-DD'),
