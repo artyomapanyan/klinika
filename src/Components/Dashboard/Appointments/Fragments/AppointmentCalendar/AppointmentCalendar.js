@@ -20,6 +20,10 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 	const [search, setSearch] = useState('')
 
 	let token = useSelector(state => state.auth.token)
+
+	useEffect(() =>{
+		setDate([dayjs(), dayjs().add(6, 'day')])
+	}, [appointmentObj.service_type])
 	useEffect(() => {
 		if (appointmentObj?.service_type) {
 			if (
