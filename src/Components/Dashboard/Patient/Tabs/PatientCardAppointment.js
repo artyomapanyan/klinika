@@ -17,7 +17,7 @@ import { useParams } from 'react-router'
 import Preloader from '../../../Preloader'
 import resourceLinks from '../../../ResourceLinks'
 import { t } from 'i18next'
-import FutureVisitsServices from './CardAppointmentItems/FutureVisitsServices'
+import FutureVisits from './CardAppointmentItems/FutureVisits'
 import CurrentVisitServices from "./CardAppointmentItems/CurrentVisitServices";
 
 const { TextArea } = Input
@@ -315,7 +315,11 @@ function PatientCardAppointment({
 								<CurrentVisitServices />
 								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
 
-                                <FutureVisitsServices/>
+                                {bigData.status !== 2 && bigData.status !== 3  && bigData.status !== 5 && bigData.status !== 7 ?
+									<FutureVisits appointment_id={id}/>
+									: null 
+								}
+
 								{/*<div >*/}
 								{/*    <AppointmentCheckboxes/>*/}
 								{/*</div>*/}

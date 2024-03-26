@@ -640,8 +640,10 @@ let api = {
     //
     // },
 
-
-
+    {
+        url: 'future-visits',
+        resource: 'FutureVisits',
+    }
 
     ].forEach(item => {
         if (!item.type) {
