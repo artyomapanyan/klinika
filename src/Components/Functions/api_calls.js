@@ -240,11 +240,11 @@ export const deleteResource = (resource,id,token)=>{
         }
     })
 }
-export const postResource = (resource,param,token,id=null,params,customProps={})=>{
+export const postResource = (resource,param,token,id=null,params,customProps={}, extra= '')=>{
     const method =customProps?.method?? api[resource][param].method;
 
     return  axios.request({
-        url:`${api[resource][param].url}${id??''}`,
+        url:`${api[resource][param].url}${id??''}${extra}`,
         method,
     ...(method!=='GET'?{
         data:params
