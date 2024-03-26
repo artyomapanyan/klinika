@@ -68,7 +68,8 @@ function PatientCollapse({data, setData, statusLoading}) {
             setModal(null)
             setData((prevState)=>({
                 ...prevState,
-                status: response?.status
+                status: response?.status,
+                booked_at: response?.booked_at
 
             }))
             setLoading(false)
