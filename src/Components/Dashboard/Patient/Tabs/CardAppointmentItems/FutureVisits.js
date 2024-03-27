@@ -147,6 +147,7 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 	}
 
 	const reorderVisit = (visit, action) => {
+		setLoading(true)
 		postResource(
 			'FutureVisits',
 			'single',
@@ -156,8 +157,9 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 			{ method: 'POST' },
 			'/reorder'
 		).then(response => {
-			if (response.id) {
-				loadVisits()
+			setLoading(false)
+			if (!response.errors) {
+				setVisitsState(response.items)
 			}
 		})
 	}
