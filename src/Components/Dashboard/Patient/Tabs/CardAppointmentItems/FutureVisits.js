@@ -12,6 +12,7 @@ import './FutureVisits.css'
 import Preloader from '../../../../Preloader'
 import {
 	postResource,
+	postResource1,
 	createResource,
 	updateResource,
 	deleteResource
@@ -41,8 +42,7 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 	const loadVisits = () => {
 		setLoading(true)
 		postResource('FutureVisits', 'single', token, '', {
-			appointment: appointment_id,
-			...defaultPagination
+			appointment: appointment_id, ...defaultPagination
 		}).then(response => {
 			setLoading(false)
 			if (!response.errors) {
@@ -154,20 +154,21 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 
 	const reorderVisit = (visit, action) => {
 		setLoading(true)
-		postResource(
-			'FutureVisits',
-			'single',
-			token,
-			visit.id,
-			{ action: action, ...defaultPagination },
-			{ method: 'POST' },
-			'/reorder'
-		).then(response => {
+		postResource1('FutureVisits', 'single', token, visit.id, { action: action, ...defaultPagination }, {}, true, '/reorder' )
+		.then(response => {
 			setLoading(false)
 			if (!response.errors) {
 				setVisitsState(response.items)
 			}
 		})
+
+		// postResource('FutureVisits', 'single', token, '', { appointment: appointment_id, ...defaultPagination})
+		// .then(response => {
+		// 	setLoading(false)
+		// 	if (!response.errors) {
+		// 		setVisitsState(response.items)
+		// 	}
+		// })
 	}
 
 	return (
