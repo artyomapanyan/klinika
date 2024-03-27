@@ -199,8 +199,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
 
 
-
-
         setTimeout(() => {
             subTotal()
             let allTotal = subTotal()
