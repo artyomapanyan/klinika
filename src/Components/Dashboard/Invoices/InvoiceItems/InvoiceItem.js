@@ -81,6 +81,8 @@ function IncoiceItem() {
 
     }
 
+
+
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice item`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Invoice item`)}</h3>}
@@ -104,7 +106,7 @@ function IncoiceItem() {
                             inputType={'resourceSelect'}
                             rules={[{ required: true }]}
                             // initialData={[data?.clinic].filter(e => e)}
-                            initialValue={data?.clinic?.id}
+                            initialValue={data?.clinic_id}
                             initialData={data?.clinic?[data.clinic]:[]}
                             resourceParams={{
                                 active: 1
