@@ -20,6 +20,8 @@ function IncoiceItem() {
     const navigate = useNavigate();
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
+    let role = useSelector(state => state.auth.selected_role?.key)
+    let rexuxClinic = useSelector(state => state.auth.clinics)
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
@@ -33,6 +35,11 @@ function IncoiceItem() {
             ...prevState,
             ...values
         }))
+
+        if(role === 'clinic-manager') {
+            values.clinic_id = rexuxClinic[0].id
+        }
+
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
@@ -90,6 +97,22 @@ function IncoiceItem() {
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                     <FormInput inputType={'number'} label={t('Price')} name={'price'} initialValue={data?.price} rules={[{required: true}]} />
                     <FormInput inputType={'number'} max={100} label={t('Tax percentage')} name={'tax_percentage'} initialValue={data?.tax_percentage} rules={[{required: true}]} />
+                    {
+                        role === 'clinic-owner' ? <FormInput
+                            label={t('Clinic')}
+                            name={'clinic_id'}
+                            inputType={'resourceSelect'}
+                            rules={[{ required: true }]}
+                            // initialData={[data?.clinic].filter(e => e)}
+                            initialValue={data?.clinic?.id}
+                            initialData={data?.clinic?[data.clinic]:[]}
+                            resourceParams={{
+                                active: 1
+                            }}
+                            resource={'Clinic'}
+                        /> : <div></div>
+                    }
+
                 </div>
 
 

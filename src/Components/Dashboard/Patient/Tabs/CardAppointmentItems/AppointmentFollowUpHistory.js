@@ -55,11 +55,11 @@ function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading 
 				setBigData(prevState=>({
 					...prevState,
 					status: response?.status,
-					follow_up_history: response.follow_up_history
+					follow_up_history: response.follow_up_history,
+					booked_at: response?.booked_at
 
 				}))
 				setStatusLoading(false)
-				console.log(response, 'res')
 			})
 			.finally(() => {
 				setLoading(true)
