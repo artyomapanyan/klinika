@@ -28,7 +28,7 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 	)
 	const [newVisit, setnewVisit] = useState({})
 	const [defaultPagination, setDefaultPagination] = useState({
-		order: 'asc',
+		order: 'desc',
 		order_by: 'order',
 		per_page: 100,
 		page: 1
