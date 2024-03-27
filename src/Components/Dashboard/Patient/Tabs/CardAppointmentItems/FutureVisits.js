@@ -12,6 +12,7 @@ import './FutureVisits.css'
 import Preloader from '../../../../Preloader'
 import {
 	postResource,
+	postResource1,
 	createResource,
 	updateResource,
 	deleteResource
@@ -21,13 +22,18 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 	const formRef = useRef()
 	let token = useSelector(state => state.auth.token)
 	const [loading, setLoading] = useState(false)
-    const [visitsState, setVisitsState] = useState([])
+	const [visitsState, setVisitsState] = useState([])
 	const [visitTypesState, setVisitTypesState] = useState(
 		Resources.futureVisitTypes
 	)
-    const [newVisit, setnewVisit] = useState({})
+	const [newVisit, setnewVisit] = useState({})
+	const [defaultPagination, setDefaultPagination] = useState({
+		order: 'asc',
+		order_by: 'order',
+		per_page: 100,
+		page: 1
+	})
 	const [addLoading, setAddLoading] = useState(false)
-
 
 	useEffect(() => {
 		loadVisits()
@@ -36,7 +42,7 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 	const loadVisits = () => {
 		setLoading(true)
 		postResource('FutureVisits', 'single', token, '', {
-			appointment: appointment_id
+			appointment: appointment_id, ...defaultPagination
 		}).then(response => {
 			setLoading(false)
 			if (!response.errors) {
@@ -45,7 +51,7 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 		})
 	}
 
-    const handleMapLabTests = (item, name) => {
+	const handleMapLabTests = (item, name) => {
 		name = item.lab_test.name
 		item.id = item.lab_test.id
 		return [name, item]
@@ -57,7 +63,7 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 		return [name, item]
 	}
 
-    const handleValuesChange = e => {
+	const handleValuesChange = e => {
 		setnewVisit(prevState => ({
 			...prevState,
 			...e
@@ -112,9 +118,9 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 
 	const changeGap = (event, visit, visitIndex) => {
 		if (event.target?.value) {
-			if(event.target?.value <= 120)
+			if (event.target?.value <= 120)
 				updateVisit({ ...visit, gap: event.target?.value }, visitIndex)
-			else{
+			else {
 				notification.error({
 					message: 'Error',
 					description: t('the gap must be 120 or less'),
@@ -148,20 +154,21 @@ const FutureVisits = ({ disabled = false, appointment_id }) => {
 
 	const reorderVisit = (visit, action) => {
 		setLoading(true)
-		postResource(
-			'FutureVisits',
-			'single',
-			token,
-			visit.id,
-			{ action: action },
-			{ method: 'POST' },
-			'/reorder'
-		).then(response => {
+		postResource1('FutureVisits', 'single', token, visit.id, { action: action, ...defaultPagination }, {}, true, '/reorder' )
+		.then(response => {
 			setLoading(false)
 			if (!response.errors) {
 				setVisitsState(response.items)
 			}
 		})
+
+		// postResource('FutureVisits', 'single', token, '', { appointment: appointment_id, ...defaultPagination})
+		// .then(response => {
+		// 	setLoading(false)
+		// 	if (!response.errors) {
+		// 		setVisitsState(response.items)
+		// 	}
+		// })
 	}
 
 	return (
