@@ -310,6 +310,10 @@ const Resource = {
             id: 'tap-payments',
             name: t('Tap Payments')
         },
+        {
+            id: 'moyasar',
+            name: t('Moyasar')
+        },
     ],
     dateOptions: [
 
