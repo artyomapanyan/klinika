@@ -233,7 +233,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     const handleInvoiceSelect = (e, key,data) => {
         postResource('InvoiceItem', 'single', token, e).then((response) => {
-            setSelectedItem(response)
+
             const selected_item = data.find(u=>u.id===e);
 
             formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
@@ -247,7 +247,10 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
             formRef?.current?.getFieldValue(['items', key, 'amount'])
 
+            setTimeout(() => {
+                setSelectedItem(response)
 
+            }, 500)
         })
 
         setTimeout(() => {
