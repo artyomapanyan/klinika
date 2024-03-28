@@ -16,14 +16,8 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 						return (
 							<td
 								key={key}
-								style={{
-									cursor:
-										thisDate > key || !item?.availability[key]?.available
-											? ''
-											: 'pointer'
-								}}
 								onClick={
-									thisDate > key || item.availability[key]?.percentage === null
+									thisDate > key || !item.availability[key]?.available
 										? null
 										: () => setSelectedDate(key)
 								}
@@ -31,10 +25,14 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 								<div
 								className='progress progressGreen'
 								style={{
-										background: !item.availability[key]?.available
-											? 'url(' + gray_grid + ')'
-											: '#6DAF5620'
-										}}
+									cursor: 
+									thisDate > key || !item?.availability[key]?.available
+										? ''
+										: 'pointer',
+									background: !item.availability[key]?.percentage === null
+										? 'url(' + gray_grid + ')'
+										: '#6DAF5620'
+									}}
 								>
 									<div
 										className='progress-bar '

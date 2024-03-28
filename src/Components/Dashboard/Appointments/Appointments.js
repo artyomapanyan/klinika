@@ -35,16 +35,19 @@ function Appointments() {
     const [date,setDate] = useState(false)
     const [tableUpdate,setTableUpdate] = useState(0)
     const [aaa,setaaa] = useState(PermCheck(`${resource}:update`))
+    const [modalKey,setModalKey] = useState(9)
 
 
 
 
     const onStatusChange = (key,record)=>{
-
+        console.log(key)
             setModal({
                 ...record,
                 key
             })
+        setModalKey(record.id)
+        // formRef?.current?.resetFields()
 
         // if(key == 2) {
         //     setLoading(true)
@@ -84,6 +87,7 @@ function Appointments() {
         }).finally(()=>{
             setLoading(true)
             setTimeout(()=> {setLoading(false)}, 3000)
+            formRef?.current?.resetFields()
         })
     }
 
@@ -108,12 +112,11 @@ function Appointments() {
 
     }
 
-
     return(
         <div >
             <Spin spinning={loading}>
             <div className={'appointment_table'}>
-                <Modal maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered width={modal?.key === '6' ? 800 : ''}>
+                <Modal key={modalKey} maskClosable={true} open={modal?.id} footer={null} onCancel={onCancel}  centered width={modal?.key === '6' ? 800 : 530}>
                     <Form onFinish={onFinish}
                           onValuesChange={handleValuesChange}
                           ref={formRef}
@@ -216,6 +219,7 @@ function Appointments() {
                        title:t('Status'),
                        key:'status',
                         render: (e, record) => {
+                            setModalKey(e)
                             return loading ? <Preloader small={15}/> : <Spin spinning={loading}>
                             <ColorSelect appointmentloading={loading} colorSelectDisabled={!aaa}  items={Resource.StatusWays[record.status]}  initialValue={e.toString()} record={record} resource={resource} onChange={onStatusChange} name={'status'}/>
                             </Spin>

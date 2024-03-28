@@ -756,6 +756,26 @@ const Resource = {
         'Orders Mobile App',
         'All Apointments',
     ],
+
+    futureVisitTypes: [
+		{ name: t('Laboratory'), id: 'laboratory' },
+		{ name: t('Nursing'), id: 'nursing' },
+		{ name: t('Doctor visit'), id: 'clinic_visit' }
+	],
+	queue: [
+		{
+			id: 1,
+			name: t('After')
+		},
+		{
+			id: 2,
+			name: t('Before')
+		},
+		{
+			id: 3,
+			name: t('Same day')
+		}
+	]
 }
 
 

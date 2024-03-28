@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Modal} from "antd";
 import arrowDownPurple from "../../../../dist/icons/arrowDownPurple.svg";
-import gray_grid from "../../../../dist/icons/gray_grid.png";
+import gray_grid from "../../../../dist/icons/bg_pattern.jpg";
 import ClinicManagerCalendarInnCollapse
     from "../Fragments/ClinicManagerCalendar/Fragments/ClinicManagerCalendarInnCollapse";
 import NursLabCalendarInnCollapse from "./NursLabCalendarInnCollapse";
@@ -34,7 +34,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
 
                     return <td key={key} style={{paddingLeft:k===0?'20px':0, cursor: thisDate > key || !item?.availability[key]?.available ? '' : 'pointer'}} onClick={thisDate > key || item.availability[key]?.percentage === null || !item.availability[key]?.available ? null : () => setSelectedDate(key)}>
 
-                        <div className={"progress progressPurple"} style={{background: !item.availability[key]?.available ? 'url('+gray_grid+')' : '#6DAF5620'}}>
+                        <div className={"progress progressPurple"} style={{background: !item.availability[key]?.percentage === null ? 'url('+gray_grid+')' : '#6DAF5620'}}>
 
                             <div className="progress-bar "
                                  role="progressbar"
