@@ -105,8 +105,7 @@ function IncoiceItem() {
                             name={'clinic_id'}
                             inputType={'resourceSelect'}
                             rules={[{ required: true }]}
-                            // initialData={[data?.clinic].filter(e => e)}
-                            initialValue={data?.clinic_id}
+                            initialValue={data?.clinic?.id}
                             initialData={data?.clinic?[data.clinic]:[]}
                             resourceParams={{
                                 active: 1
