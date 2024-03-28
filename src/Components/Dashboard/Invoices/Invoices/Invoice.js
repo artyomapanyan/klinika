@@ -430,17 +430,59 @@ function Invoice() {
                                                         <div>
                                                             <FormInput label={t('Quantity')}
                                                                        name={['items', key, 'qnt']} inputType={'number'}
-                                                                       initialValue={data?.items[key]?.qnt}/>
+                                                                       initialValue={data?.items[key]?.qnt}
+                                                                       rules={[
+
+                                                                           {
+                                                                               validator:(rule,value)=>{
+                                                                                   if(+value < 0){
+                                                                                       return Promise.reject('Value cannot be less than 0')
+                                                                                   }
+                                                                                   return Promise.resolve();
+                                                                               }
+                                                                           }
+
+                                                                       ]}
+                                                                       min={0}
+                                                            />
                                                         </div>
                                                         <div>
                                                             <FormInput label={t('Price')} name={['items', key, 'price']}
                                                                        inputType={'number'}
-                                                                       initialValue={data?.items[key]?.price}/>
+                                                                       initialValue={data?.items[key]?.price}
+                                                                       rules={[
+
+                                                                           {
+                                                                               validator:(rule,value)=>{
+                                                                                   if(+value < 0){
+                                                                                       return Promise.reject('Value cannot be less than 0')
+                                                                                   }
+                                                                                   return Promise.resolve();
+                                                                               }
+                                                                           }
+
+                                                                       ]}
+                                                                       min={0}
+                                                            />
                                                         </div>
                                                         <div>
                                                             <FormInput label={t('Tax')} name={['items', key, 'tax']}
                                                                        inputType={'number'}
-                                                                       initialValue={data?.items[key]?.tax}/>
+                                                                       initialValue={data?.items[key]?.tax}
+                                                                       rules={[
+
+                                                                           {
+                                                                               validator:(rule,value)=>{
+                                                                                   if(+value < 0){
+                                                                                       return Promise.reject('Value cannot be less than 0')
+                                                                                   }
+                                                                                   return Promise.resolve();
+                                                                               }
+                                                                           }
+
+                                                                       ]}
+                                                                       min={0}
+                                                            />
                                                         </div>
                                                         <div>
                                                             <FormInput inputDisabled={true} label={t('Amount  ')}

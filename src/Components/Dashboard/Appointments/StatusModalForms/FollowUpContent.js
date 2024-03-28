@@ -381,8 +381,22 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                             <div>
                                 <FormInput label={t('Quantity')} name={['items', key, 'qnt']} initialValue={1} inputType={'number'}
                                            onChange={(el) => {
-                                    changeAny(el.target.value,'qnt', key)
-                                }}/>
+                                                changeAny(el.target.value,'qnt', key)
+                                            }}
+                                           rules={[
+
+                                               {
+                                                   validator:(rule,value)=>{
+                                                       if(+value < 0){
+                                                           return Promise.reject('Value cannot be less than 0')
+                                                       }
+                                                       return Promise.resolve();
+                                                   }
+                                               }
+
+                                           ]}
+                                           min={0}
+                                />
                             </div>
                             <div>
                                 <FormInput label={t('Price')} name={['items', key, 'price']}
@@ -390,6 +404,19 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                                            onChange={(el) => {
                                                changeAny(el.target.value,'price', key)
                                            }}
+                                           rules={[
+
+                                               {
+                                                   validator:(rule,value)=>{
+                                                       if(+value < 0){
+                                                           return Promise.reject('Value cannot be less than 0')
+                                                       }
+                                                       return Promise.resolve();
+                                                   }
+                                               }
+
+                                           ]}
+                                           min={0}
                                            />
                             </div>
                             <div>
@@ -398,6 +425,19 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                                            onChange={(el) => {
                                                changeAny(el.target.value,'tax', key)
                                            }}
+                                           rules={[
+
+                                               {
+                                                   validator:(rule,value)=>{
+                                                       if(+value < 0){
+                                                           return Promise.reject('Value cannot be less than 0')
+                                                       }
+                                                       return Promise.resolve();
+                                                   }
+                                               }
+
+                                           ]}
+                                           min={0}
                                            />
                             </div>
 
