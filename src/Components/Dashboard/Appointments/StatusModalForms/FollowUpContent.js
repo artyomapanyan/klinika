@@ -19,6 +19,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const [inputsLoading, setInputsLoading] = useState(false)
     const [itemsState, setItemsState] = useState({})
     let [totalState, setTotalState] = useState(0)
+    let [selectedItem, setSelectedItem] = useState(null)
 
 
     const amountRef = useRef()
@@ -183,13 +184,23 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const onDeleteItem = (key, el) => {
 
         setItemsState((prevState) => {
+
             let newItems = prevState.items
             delete newItems[el]
+            if(Object.keys(prevState?.items).length < 1) {
+                setSelectedItem(null)
+            }
             return {
                 ...prevState,
                 items: newItems
             }
         })
+
+
+
+
+
+
         setTimeout(() => {
             subTotal()
             let allTotal = subTotal()
@@ -197,6 +208,8 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             totalState = allTotal
 
         }, 1500)
+
+
 
     }
 
@@ -222,7 +235,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     const handleInvoiceSelect = (e, key,data) => {
         postResource('InvoiceItem', 'single', token, e).then((response) => {
-
+            setSelectedItem(response)
             const selected_item = data.find(u=>u.id===e);
 
             formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
@@ -288,6 +301,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
 
     }
+
 
 
 
@@ -420,7 +434,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                         value={totalState}
 
                 />
-                <label style={{left: 15}}>Sub total</label>
+                <label style={{left: 15}}>{t('Sub total')}</label>
             </div>
         </div>
 
@@ -431,7 +445,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
         <div style={{display: 'flex', gap: 3, marginTop: 10}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >{t('Cancel')}</Button>
-            <Button disabled={itemsState?.items ? !Object?.keys(itemsState?.items).length : !itemsState?.items} loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
+            <Button disabled={!selectedItem} loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
         </div>
 
     </div>

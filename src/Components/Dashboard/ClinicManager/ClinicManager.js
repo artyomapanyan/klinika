@@ -13,7 +13,6 @@ import dayjs from "dayjs";
 function ClinicManager() {
     let ownerClinics = useSelector((state) => state?.owner);
     let role = useSelector((state) => state?.auth?.selected_role?.key);
-
     let token = useSelector((state) => state.auth.token);
 
 

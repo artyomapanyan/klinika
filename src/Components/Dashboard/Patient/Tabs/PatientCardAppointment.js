@@ -22,6 +22,7 @@ import CurrentVisitServices from "./CardAppointmentItems/CurrentVisitServices";
 
 const { TextArea } = Input
 
+
 const resource = 'Appointment'
 function PatientCardAppointment({
 	tab,
@@ -315,7 +316,7 @@ function PatientCardAppointment({
 								<CurrentVisitServices />
 								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
 
-                                <FutureVisits appointment_id={id} 
+                                <FutureVisits appointment_id={id}
 									disabled={
 										bigData.status === 2 ||
 										bigData.status === 3  ||

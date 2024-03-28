@@ -6,7 +6,7 @@ import FormInput from '../../../Fragments/FormInput'
 import Resources from '../../../../store/Resources'
 import dayjs from 'dayjs'
 
-function CreatePatient({ data, formRef, setNationality, key='1' }) {
+function CreatePatient({ data, formRef, setNationality, formKey='1' }) {
 	let language = useSelector(state => state.app.current_locale)
 
 	const handleMapItems = (item, name) => {
@@ -16,7 +16,7 @@ function CreatePatient({ data, formRef, setNationality, key='1' }) {
 	}
 
 	return (
-		<Form name='patient' layout='vertical' disabled={data?.id} ref={formRef} key={key}>
+		<Form name='patient' layout='vertical' disabled={data?.id} ref={formRef} key={formKey}>
 			<div className={'add_edit_content'}>
 				<Row>
 					<Col lg={8} className='gutter-row'>
