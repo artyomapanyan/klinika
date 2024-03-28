@@ -99,20 +99,23 @@ function IncoiceItem() {
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
                     <FormInput inputType={'number'} label={t('Price')} name={'price'} initialValue={data?.price} rules={[{required: true}]} />
                     <FormInput inputType={'number'} max={100} label={t('Tax percentage')} name={'tax_percentage'} initialValue={data?.tax_percentage} rules={[{required: true}]} />
-                    {
-                        role === 'clinic-owner' ? <FormInput
-                            label={t('Clinic')}
-                            name={'clinic_id'}
-                            inputType={'resourceSelect'}
-                            rules={[{ required: true }]}
-                            initialValue={data?.clinic?.id}
-                            initialData={data?.clinic?[data.clinic]:[]}
-                            resourceParams={{
-                                active: 1
-                            }}
-                            resource={'Clinic'}
-                        /> : <div></div>
-                    }
+                    <div>
+                        {
+                            role === 'clinic-owner' ? <FormInput
+                                label={t('Clinic')}
+                                name={'clinic_id'}
+                                inputType={'resourceSelect'}
+                                rules={[{ required: true }]}
+                                initialValue={data?.clinic?.id}
+                                initialData={data?.clinic?[data.clinic]:[]}
+                                resourceParams={{
+                                    active: 1
+                                }}
+                                resource={'Clinic'}
+                            /> : <div></div>
+                        }
+                    </div>
+
 
                 </div>
 
