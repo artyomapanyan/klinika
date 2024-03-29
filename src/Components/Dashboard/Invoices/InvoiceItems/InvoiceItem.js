@@ -98,26 +98,6 @@ function IncoiceItem() {
                 <div  className={'add_edit_content'}>
                     <FormInput label={t('name')} name={'name'} initialValue={data?.name} rules={[{required: true}]} />
                     <FormInput label={t('Description')} name={'description'} inputType={'textArea'} initialValue={data?.description}/>
-                    <FormInput inputType={'number'} label={t('Price')} name={'price'} initialValue={data?.price} rules={[{required: true}]} />
-                    <FormInput inputType={'number'} max={100} label={t('Tax percentage')} name={'tax_percentage'} initialValue={data?.tax_percentage} rules={[{required: true}]} />
-                    <div className={'invoice_item_clinics'}>
-                        {
-                            role === 'clinic-owner' ? <FormInput
-                                label={t('Clinic')}
-                                name={'clinic'}
-                                inputType={'resourceSelect'}
-                                rules={[{ required: true }]}
-                                initialValue={data?.clinic?.id}
-                                initialData={data?.clinic?[data.clinic]:[]}
-                                resourceParams={{
-                                    active: 1
-                                }}
-                                resource={'Clinic'}
-                            /> : <div></div>
-                        }
-                    </div>
-
-
                     <FormInput inputType={'number'} label={t('Price')} name={'price'} initialValue={data?.price} rules={[{required: true}]}
                                rules={[
 
@@ -149,6 +129,26 @@ function IncoiceItem() {
                                ]}
                                min={0}
                     />
+
+                     <div className={'invoice_item_clinics'}>
+                        {
+                            role === 'clinic-owner' ? <FormInput
+                                label={t('Clinic')}
+                                name={'clinic'}
+                                inputType={'resourceSelect'}
+                                rules={[{ required: true }]}
+                                initialValue={data?.clinic?.id}
+                                initialData={data?.clinic?[data.clinic]:[]}
+                                resourceParams={{
+                                    active: 1
+                                }}
+                                resource={'Clinic'}
+                            /> : <div></div>
+                        }
+                    </div>
+
+
+
                 </div>
 
 
