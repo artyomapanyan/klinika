@@ -50,7 +50,21 @@ function CurrentVisitServices() {
                     />
                 </div>
                 <div>
-                    <FormInput label={t('Qnt')} name={'qnt'} initialValue={1} inputType={'number'}/>
+                    <FormInput label={t('Qnt')} name={'qnt'} initialValue={1} inputType={'number'}
+                               rules={[
+
+                                   {
+                                       validator:(rule,value)=>{
+                                           if(+value < 0){
+                                               return Promise.reject('Value cannot be less than 0')
+                                           }
+                                           return Promise.resolve();
+                                       }
+                                   }
+
+                               ]}
+                               min={0}
+                    />
                 </div>
                 <div>
                     <Button onClick={onAdd} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
