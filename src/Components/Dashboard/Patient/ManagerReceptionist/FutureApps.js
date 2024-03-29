@@ -100,14 +100,15 @@ const FutureApps = ({ appointment_id, disabled = false }) => {
 										<span style={{ fontWeight: 700 }}>500 SAR</span>
 									</Col>
 									<Col lg={3} style={{ alignSelf: 'center' }}>
-									<Button
+										{/* <Button
 											loading={addLoading}
 											size={'large'}
 											type={'secondary'}
 											htmlType='submit'
 										>
 											{t('Right Now (2 in line)')}
-										</Button>									</Col>
+										</Button> */}
+									</Col>
 									<Col lg={3} style={{ alignSelf: 'center' }}>
 										<Button
 											loading={addLoading}
