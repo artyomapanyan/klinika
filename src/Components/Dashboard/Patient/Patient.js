@@ -20,6 +20,8 @@ import ResourceLins from "../../ResourceLinks";
 import {t} from "i18next";
 import dayjs from "dayjs";
 import ProvidedServices from "./ManagerReceptionist/ProvidedServices";
+import FutureVisits from "./ManagerReceptionist/FutureApps";
+import Payment from "./ManagerReceptionist/Payment";
 
 let resource = 'Appointment'
 let res = 'DoctorReworked'
@@ -95,7 +97,12 @@ function Patient() {
                                 {/*    <PatientCardLog />*/}
                                 {/*</Tabs.TabPane>*/}
                             </TabBars>
-                        </div> : <ProvidedServices/>
+                        </div> : 
+                        <div>
+                            <ProvidedServices/>
+                            <FutureVisits appointment_id={params.id}/>
+                            <Payment appointment_id={params.id}/>
+                        </div>
                     }
 
                 </div>

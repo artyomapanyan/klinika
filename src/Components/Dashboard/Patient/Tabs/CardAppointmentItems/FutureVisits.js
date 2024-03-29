@@ -74,7 +74,7 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 			response => {
 				setAddLoading(false)
 				if (response.id) {
-					setVisitsState(prevState => [response, ...prevState])
+					loadVisits()
 					formRef.current.resetFields()
 					setnewVisit({})
 				}
