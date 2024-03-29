@@ -174,19 +174,19 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const subTotal = () => {
         let total = 0
         let aaa = formRef?.current?.getFieldsValue()
-        let bbb = aaa?.items?.map((el) => {
+        let bbb = Object.values(aaa?.items)?.map((el) => {
             return total += (el?.amount ? el?.amount : 0)
         })
 
         return total
     }
 
-    const onDeleteItem = (key, el) => {
+    const onDeleteItem = (key) => {
 
         setItemsState((prevState) => {
 
             let newItems = prevState.items
-            delete newItems[el]
+            delete newItems[key]
             if(Object.keys(prevState?.items).length < 1) {
                 setSelectedItem(null)
             }
@@ -205,7 +205,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             setTotalState(allTotal)
             totalState = allTotal
 
-        }, 1500)
+        }, 1000)
 
 
 
@@ -250,7 +250,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             setTimeout(() => {
                 setSelectedItem(response)
 
-            }, 500)
+            }, 1500)
         })
 
         setTimeout(() => {
@@ -259,7 +259,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             setTotalState(allTotal)
             totalState = allTotal
 
-        }, 1500)
+        }, 1000)
 
 
 
@@ -304,180 +304,182 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     }
 
 
-
-
+    console.log(formRef?.current?.getFieldsValue())
 
 
 
     return<div className={'follow_up_modal_big_div'}>
 
         {
-            inputsLoading ? <Preloader/> : <div style={{display: 'flex', gap: 5, marginTop: 20}}>
-                <div style={{width: '50%'}}>
-                    <FormInput label={t('Appointment date')}
-                               disabledDate={disabledDate}
-                               inputProps={{onChange:e=>setDate(e)}}
-                               inputProps={{
-                                   onChange:(e)=> {
+            loading ? <Preloader/> : <div>
+                {
+                    inputsLoading ? <Preloader/> : <div style={{display: 'flex', gap: 5, marginTop: 20}}>
+                        <div style={{width: '50%'}}>
+                            <FormInput label={t('Appointment date')}
+                                       disabledDate={disabledDate}
+                                       inputProps={{onChange:e=>setDate(e)}}
+                                       inputProps={{
+                                           onChange:(e)=> {
 
-                                       setDate(e)
+                                               setDate(e)
 
-                                       formRef?.current?.setFieldsValue({
-                                           appointment_time: null,
+                                               formRef?.current?.setFieldsValue({
+                                                   appointment_time: null,
 
-                                       })
+                                               })
 
-                                   }
-                               }}
-                               name={'booked_at'}
-                               inputType={'date'}
-                               rules={[{required: true}]}
-                    />
-                </div>
-                <div style={{width: '50%'}}>
-                    {
-                        dateLoading ? <Preloader small={10}/> : <FormInput label={t('Appointment time')}
-                                                                           name={'appointment_time'}
-                                                                           inputType={'resourceSelect'}
-                                                                           options={availableTimes}
-                                                                           rules={[{required: true}]}
-                                                                           initialData={[]}
-                        />
-                    }
-
-                </div>
-            </div>
-        }
-        <div style={{marginBottom: 20}}>
-            {t('Price')}
-            <Button className={'invoice_add_price_button'} type={'primary'} onClick={onAddItem}>+</Button>
-        </div>
-        {
-            Object.keys(itemsState?.items ?? {})?.map((el, key) => {
-
-                return <div key={key}>
-                    <div key={key} style={{
-                        display: 'flex',
-                        gap: 5,
-                        justifyContent: 'space-between',
-                        width: '100%',
-
-                    }}>
-                        <div style={{width: '40%'}}>
-                            <FormInput label={t('Invoice item')}
-                                        name={['items', key, 'item']}
-                                        inputType={'resourceSelect'}
+                                           }
+                                       }}
+                                       name={'booked_at'}
+                                       inputType={'date'}
                                        rules={[{required: true}]}
-                                       inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
-                                       // initialValue={data?.items[key]?.item}
-                                       // initialData={data?.items[key].item_object ? [data?.items[key]?.item_object] : []}
-
-
-                                        resource={'InvoiceItem'}
                             />
-
                         </div>
-                        <div style={{width: '100%', display: 'flex'}}>
-                            <div>
-                                <FormInput label={t('Quantity')} name={['items', key, 'qnt']} initialValue={1} inputType={'number'}
-                                           onChange={(el) => {
-                                                changeAny(el.target.value,'qnt', key)
-                                            }}
-                                           rules={[
-
-                                               {
-                                                   validator:(rule,value)=>{
-                                                       if(+value < 0){
-                                                           return Promise.reject('Value cannot be less than 0')
-                                                       }
-                                                       return Promise.resolve();
-                                                   }
-                                               }
-
-                                           ]}
-                                           min={0}
+                        <div style={{width: '50%'}}>
+                            {
+                                dateLoading ? <Preloader small={10}/> : <FormInput label={t('Appointment time')}
+                                                                                   name={'appointment_time'}
+                                                                                   inputType={'resourceSelect'}
+                                                                                   options={availableTimes}
+                                                                                   rules={[{required: true}]}
+                                                                                   initialData={[]}
                                 />
-                            </div>
-                            <div>
-                                <FormInput label={t('Price')} name={['items', key, 'price']}
-                                           inputType={'number'}
-                                           onChange={(el) => {
-                                               changeAny(el.target.value,'price', key)
-                                           }}
-                                           rules={[
+                            }
 
-                                               {
-                                                   validator:(rule,value)=>{
-                                                       if(+value < 0){
-                                                           return Promise.reject('Value cannot be less than 0')
+                        </div>
+                    </div>
+                }
+                <div style={{marginBottom: 20}}>
+                    {t('Price')}
+                    <Button className={'invoice_add_price_button'} type={'primary'} onClick={onAddItem}>+</Button>
+                </div>
+                {
+                    Object.keys(itemsState?.items ?? {})?.map(( key) => {
+
+                        return <div key={key}>
+                            <div key={key} style={{
+                                display: 'flex',
+                                gap: 5,
+                                justifyContent: 'space-between',
+                                width: '100%',
+
+                            }}>
+                                <div style={{width: '40%'}}>
+                                    <FormInput label={t('Invoice item')}
+                                               name={['items', key, 'item']}
+                                               inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
+                                               inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
+                                               resource={'InvoiceItem'}
+                                    />
+
+                                </div>
+                                <div style={{width: '100%', display: 'flex'}}>
+                                    <div>
+                                        <FormInput label={t('Quantity')} name={['items', key, 'qnt']} initialValue={1} inputType={'number'}
+                                                   onChange={(el) => {
+                                                       changeAny(el.target.value,'qnt', key)
+                                                   }}
+                                                   rules={[
+
+                                                       {
+                                                           validator:(rule,value)=>{
+                                                               if(+value < 0){
+                                                                   return Promise.reject('Value cannot be less than 0')
+                                                               }
+                                                               return Promise.resolve();
+                                                           }
                                                        }
-                                                       return Promise.resolve();
-                                                   }
-                                               }
 
-                                           ]}
-                                           min={0}
-                                           />
-                            </div>
-                            <div>
-                                <FormInput label={t('Tax')} name={['items', key, 'tax']}
-                                           inputType={'number'}
-                                           onChange={(el) => {
-                                               changeAny(el.target.value,'tax', key)
-                                           }}
-                                           rules={[
+                                                   ]}
+                                                   min={0}
+                                        />
+                                    </div>
+                                    <div>
+                                        <FormInput label={t('Price')} name={['items', key, 'price']}
+                                                   inputType={'number'}
+                                                   onChange={(el) => {
+                                                       changeAny(el.target.value,'price', key)
+                                                   }}
+                                                   rules={[
 
-                                               {
-                                                   validator:(rule,value)=>{
-                                                       if(+value < 0){
-                                                           return Promise.reject('Value cannot be less than 0')
+                                                       {
+                                                           validator:(rule,value)=>{
+                                                               if(+value < 0){
+                                                                   return Promise.reject('Value cannot be less than 0')
+                                                               }
+                                                               return Promise.resolve();
+                                                           }
                                                        }
-                                                       return Promise.resolve();
-                                                   }
-                                               }
 
-                                           ]}
-                                           min={0}
-                                           />
-                            </div>
+                                                   ]}
+                                                   min={0}
+                                        />
+                                    </div>
+                                    <div>
+                                        <FormInput label={t('Tax')} name={['items', key, 'tax']}
+                                                   inputType={'number'}
+                                                   onChange={(el) => {
+                                                       changeAny(el.target.value,'tax', key)
+                                                   }}
+                                                   rules={[
 
-                            <div>
-                                <FormInput inputDisabled={true} label={t('Amount')}
-                                           ref={amountRef}
-                                           name={['items', key, 'amount']}
-                                           inputType={'number'}
-                                           />
+                                                       {
+                                                           validator:(rule,value)=>{
+                                                               if(+value < 0){
+                                                                   return Promise.reject('Value cannot be less than 0')
+                                                               }
+                                                               return Promise.resolve();
+                                                           }
+                                                       }
 
-                            </div>
-                            <Form.Item name={['items', key, 'item_object', 'id']}>
-                                <Input hidden={true}/>
-                            </Form.Item>
-                            <Form.Item name={['items', key, 'item_object', 'name']}>
-                                <Input hidden={true}/>
-                            </Form.Item>
+                                                   ]}
+                                                   min={0}
+                                        />
+                                    </div>
 
-                            <div>
-                                <div style={{marginTop: 15, cursor: 'pointer'}}
-                                     onClick={() => onDeleteItem(key, el)}><img alt={'new_delete_dark_icon'} src={new_delete_dark_icon}/></div>
+                                    <div>
+                                        <FormInput inputDisabled={true} label={t('Amount')}
+                                                   ref={amountRef}
+                                                   name={['items', key, 'amount']}
+                                                   inputType={'number'}
+                                        />
+
+                                    </div>
+                                    <Form.Item name={['items', key, 'item_object', 'id']}>
+                                        <Input hidden={true}/>
+                                    </Form.Item>
+                                    <Form.Item name={['items', key, 'item_object', 'name']}>
+                                        <Input hidden={true}/>
+                                    </Form.Item>
+
+                                    <div>
+                                        <div style={{marginTop: 15, cursor: 'pointer'}}
+                                             onClick={() => onDeleteItem(key)}><img alt={'new_delete_dark_icon'} src={new_delete_dark_icon}/></div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
+                    })
+                }
 
+                <div style={{width: '100%'}} align={lngs === 'en' ? 'right' : 'left'}>
+
+                    <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '19%'}}  >
+                        <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}}
+                                placeholder={''}
+                                value={totalState}
+
+                        />
+                        <label style={{left: 15}}>{t('Sub total')}</label>
                     </div>
                 </div>
-            })
+            </div>
         }
 
-        <div style={{width: '100%'}} align={lngs === 'en' ? 'right' : 'left'}>
 
-            <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '19%'}}  >
-                <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}}
-                        placeholder={''}
-                        value={totalState}
 
-                />
-                <label style={{left: 15}}>{t('Sub total')}</label>
-            </div>
-        </div>
 
 
 
