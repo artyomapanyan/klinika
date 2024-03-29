@@ -79,7 +79,7 @@ const Payment = ({ appointment_id }) => {
 								htmlType='submit'
                                 style={{marginInlineEnd: 0}}
 							>
-								{t('Bayment Recieved')}
+								{t('Payment Recieved')}
 							</Button>
 						</Col>
 					</Row>
