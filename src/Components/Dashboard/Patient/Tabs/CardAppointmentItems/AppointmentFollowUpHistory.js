@@ -62,10 +62,8 @@ function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading 
 				setStatusLoading(false)
 			})
 			.finally(() => {
-				setLoading(true)
-				setTimeout(() => {
-					setLoading(false)
-				}, 3000)
+
+
 
 				setStatusLoading(false)
 

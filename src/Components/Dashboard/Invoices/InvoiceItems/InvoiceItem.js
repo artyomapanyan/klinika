@@ -118,6 +118,37 @@ function IncoiceItem() {
                     </div>
 
 
+                    <FormInput inputType={'number'} label={t('Price')} name={'price'} initialValue={data?.price} rules={[{required: true}]}
+                               rules={[
+
+                                   {
+                                       validator:(rule,value)=>{
+                                           if(+value < 0){
+                                               return Promise.reject('Value cannot be less than 0')
+                                           }
+                                           return Promise.resolve();
+                                       }
+                                   }
+
+                               ]}
+                               min={0}
+
+                    />
+                    <FormInput inputType={'number'} max={100} label={t('Tax percentage')} name={'tax_percentage'} initialValue={data?.tax_percentage} rules={[{required: true}]}
+                               rules={[
+
+                                   {
+                                       validator:(rule,value)=>{
+                                           if(+value < 0){
+                                               return Promise.reject('Value cannot be less than 0')
+                                           }
+                                           return Promise.resolve();
+                                       }
+                                   }
+
+                               ]}
+                               min={0}
+                    />
                 </div>
 
 

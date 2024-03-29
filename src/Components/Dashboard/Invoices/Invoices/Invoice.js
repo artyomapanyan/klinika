@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {createResource, postResource, updateResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {t} from "i18next";
 import Preloader from "../../../Preloader";
-import {Button, Form, Popconfirm} from "antd";
+import {Button, Form, Input, Popconfirm} from "antd";
 import FormInput from "../../../Fragments/FormInput";
 
 import dayjs from "dayjs";
@@ -25,7 +25,7 @@ function Invoice() {
     let roleRedux = useSelector((state) => state.auth.selected_role.key);
 
     const [searchCeys, setSearchCeys] = useState('')
-
+    let [totalState, setTotalState] = useState(0)
 
     const handleFilterResponse = (data,timeout = 80) => {
 
@@ -199,6 +199,16 @@ function Invoice() {
         }))
     }
 
+    const subTotal = () => {
+        let total = 0
+        let aaa = formRef?.current?.getFieldsValue()
+        let bbb = Object.values(aaa?.items)?.map((el) => {
+            return total += (el?.amount ? el?.amount : 0)
+        })
+
+        return total
+    }
+
     const onDeleteItem = (key) => {
         setData((prevState) => {
             let newItems = prevState.items
@@ -208,6 +218,13 @@ function Invoice() {
                 items: newItems
             }
         })
+        setTimeout(() => {
+            subTotal()
+            let allTotal = subTotal()
+            setTotalState(allTotal)
+            totalState = allTotal
+
+        }, 1000)
     }
 
 
@@ -228,7 +245,30 @@ function Invoice() {
 
             formRef?.current?.getFieldValue('sub_total')
 
+            console.log(response, 'res')
+            console.log(formRef?.current?.getFieldsValue())
+
         })
+        setTimeout(() => {
+            subTotal()
+            let allTotal = subTotal()
+            setTotalState(allTotal)
+            totalState = allTotal
+
+        }, 1000)
+
+    }
+
+    const changeAny = (value, obj, key) => {
+
+
+        setTimeout(() => {
+            subTotal()
+            let allTotal = subTotal()
+            setTotalState(allTotal)
+            totalState = allTotal
+
+        }, 1000)
 
 
     }
@@ -430,17 +470,68 @@ function Invoice() {
                                                         <div>
                                                             <FormInput label={t('Quantity')}
                                                                        name={['items', key, 'qnt']} inputType={'number'}
-                                                                       initialValue={data?.items[key]?.qnt}/>
+                                                                       initialValue={data?.items[key]?.qnt}
+                                                                       onChange={(el) => {
+                                                                           changeAny(el.target.value,'qnt', key)
+                                                                       }}
+                                                                       rules={[
+
+                                                                           {
+                                                                               validator:(rule,value)=>{
+                                                                                   if(+value < 0){
+                                                                                       return Promise.reject('Value cannot be less than 0')
+                                                                                   }
+                                                                                   return Promise.resolve();
+                                                                               }
+                                                                           }
+
+                                                                       ]}
+                                                                       min={0}
+                                                            />
                                                         </div>
                                                         <div>
                                                             <FormInput label={t('Price')} name={['items', key, 'price']}
                                                                        inputType={'number'}
-                                                                       initialValue={data?.items[key]?.price}/>
+                                                                       initialValue={data?.items[key]?.price}
+                                                                       onChange={(el) => {
+                                                                           changeAny(el.target.value,'qnt', key)
+                                                                       }}
+                                                                       rules={[
+
+                                                                           {
+                                                                               validator:(rule,value)=>{
+                                                                                   if(+value < 0){
+                                                                                       return Promise.reject('Value cannot be less than 0')
+                                                                                   }
+                                                                                   return Promise.resolve();
+                                                                               }
+                                                                           }
+
+                                                                       ]}
+                                                                       min={0}
+                                                            />
                                                         </div>
                                                         <div>
                                                             <FormInput label={t('Tax')} name={['items', key, 'tax']}
                                                                        inputType={'number'}
-                                                                       initialValue={data?.items[key]?.tax}/>
+                                                                       initialValue={data?.items[key]?.tax}
+                                                                       onChange={(el) => {
+                                                                           changeAny(el.target.value,'qnt', key)
+                                                                       }}
+                                                                       rules={[
+
+                                                                           {
+                                                                               validator:(rule,value)=>{
+                                                                                   if(+value < 0){
+                                                                                       return Promise.reject('Value cannot be less than 0')
+                                                                                   }
+                                                                                   return Promise.resolve();
+                                                                               }
+                                                                           }
+
+                                                                       ]}
+                                                                       min={0}
+                                                            />
                                                         </div>
                                                         <div>
                                                             <FormInput inputDisabled={true} label={t('Amount  ')}
@@ -462,9 +553,17 @@ function Invoice() {
                                         <div></div>
                                         <div className={'invoice_total_div'}>
                                             <div style={{marginTop: 15, width: 70}}>{t('Total')} ({t('sar')})</div>
-                                            <div style={{width: '90%'}}>
-                                                <FormInput label={t('Sub Total')} name={'sub_total'}
-                                                           inputType={'number'} initialValue={data?.items?.amount}/>
+                                            {/*<div style={{width: '90%'}}>*/}
+                                            {/*    <FormInput label={t('Sub Total')} name={'sub_total'}*/}
+                                            {/*               inputType={'number'} initialValue={data?.items?.amount}/>*/}
+                                            {/*</div>*/}
+                                            <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '88%', margin: '5px 0px 25px'}}  >
+                                                <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}}
+                                                        placeholder={''}
+                                                        value={totalState}
+
+                                                />
+                                                <label style={{left: 15}}>{t('Sub total')}</label>
                                             </div>
 
                                         </div>
