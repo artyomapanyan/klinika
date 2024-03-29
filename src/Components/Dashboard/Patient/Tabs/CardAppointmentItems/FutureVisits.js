@@ -332,7 +332,7 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 						visitsState?.map((visit, visitIndex) => {
 							return (
 								<Row key={visitIndex}>
-									<Col lg={3}>
+									<Col lg={4}>
 										<Button
 											style={{
 												height: 48,
@@ -358,7 +358,7 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 											onClick={() => reorderVisit(visit, 'reduce')}
 										></Button>
 									</Col>
-									<Col lg={13}>
+									<Col lg={12}>
 										{visit.service_type === 'clinic_visit' ||
 										visit.nursing_tasks.length === 1 ||
 										visit.lab_tests.length === 1 ? (
