@@ -341,6 +341,7 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 												background: '#f5f6fa',
 												border: 'none'
 											}}
+											disabled={visitsState.length === 1 || visitIndex === visitsState.length - 1}
 											type='default'
 											icon={<CaretDownOutlined />}
 											onClick={() => reorderVisit(visit, 'raise')}
@@ -353,6 +354,7 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 												background: '#f5f6fa',
 												border: 'none'
 											}}
+											disabled={visitsState.length === 1 || visitIndex === 0}
 											type='default'
 											icon={<CaretUpOutlined />}
 											onClick={() => reorderVisit(visit, 'reduce')}
