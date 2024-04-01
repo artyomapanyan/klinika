@@ -18,10 +18,9 @@ function InvoiceItems() {
                                delete: PermCheck(`InvoiceItem:delete`) ? false : true,
                                edit: PermCheck(`InvoiceItem:update`) ? false : true
                            }}
-            //                except={{
-            //                    edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-            //                    delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-            // }}
+                           tableParams={reduxInfo?.selected_role?.key === 'super' ? null : {
+                               not_null: true
+                           }}
 
                            tableColumns={[
                 {
