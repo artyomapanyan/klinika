@@ -9,7 +9,7 @@ import PermCheck from "../../../Fragments/PermCheck";
 
 
 function InvoiceItems() {
-    let reduxInfo = useSelector((state) => state?.auth);
+    let reduxInfo = useSelector((state) => state?.auth?.selected_role?.key);
 
     return(
         <div>
@@ -18,8 +18,8 @@ function InvoiceItems() {
                                delete: PermCheck(`InvoiceItem:delete`) ? false : true,
                                edit: PermCheck(`InvoiceItem:update`) ? false : true
                            }}
-                           tableParams={reduxInfo?.selected_role?.key === 'super' ? null : {
-                               not_null: true
+                           tableParams={reduxInfo === 'super' ? null : {
+                               not_null: true,
                            }}
 
                            tableColumns={[
@@ -47,6 +47,9 @@ function InvoiceItems() {
                     title:t('Tax percentage'),
                     key:'tax_percentage',
                 },
+
+                                   reduxInfo === 'super' || reduxInfo === 'clinic-owner' ?
+
                 {
                     dataIndex:'clinic',
                     title:t('Clinics'),
@@ -56,7 +59,7 @@ function InvoiceItems() {
                     //     console.log(record)
                     //     return<div></div>
                     // }
-                },
+                } : {},
                 {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
