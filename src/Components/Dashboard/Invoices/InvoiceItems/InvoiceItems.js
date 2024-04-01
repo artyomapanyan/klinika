@@ -6,11 +6,12 @@ import ResourceTable from "../../../Fragments/ResourceTable";
 import DateParser from "../../../Fragments/DateParser";
 import {useSelector} from "react-redux";
 import PermCheck from "../../../Fragments/PermCheck";
+import SelectFilterElement from "../../../Fragments/TableFilterElements/SelectFilterElement";
 
 
 
 function InvoiceItems() {
-    let reduxInfo = useSelector((state) => state?.auth);
+    let reduxInfo = useSelector((state) => state?.auth?.selected_role?.key);
 
     return(
         <div>
@@ -19,10 +20,9 @@ function InvoiceItems() {
                                delete: PermCheck(`InvoiceItem:delete`) ? false : true,
                                edit: PermCheck(`InvoiceItem:update`) ? false : true
                            }}
-            //                except={{
-            //                    edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-            //                    delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-            // }}
+                           tableParams={reduxInfo === 'super' ? null : {
+                               not_null: true,
+                           }}
 
                            tableColumns={[
                 {
@@ -49,6 +49,18 @@ function InvoiceItems() {
                     title:t('Tax percentage'),
                     key:'tax_percentage',
                 },
+
+                                   reduxInfo === 'super' || reduxInfo === 'clinic-owner' ?
+
+                {
+                    dataIndex:'clinic',
+                    title:t('Clinics'),
+                    key:'clinic',
+                    filterDropdown: (props)=><SelectFilterElement filterProps={props} type='selectResource'/>,
+                    render:(e, record) => {
+                        return<div>{record?.clinic?.name}</div>
+                    }
+                } : {},
                 {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
