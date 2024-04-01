@@ -123,6 +123,10 @@ const FutureVisits = ({ appointment_id, status }) => {
 		if (value) {
 			updateVisit({ ...visit, queue_type: value }, visitIndex)
 		}
+		else{
+			updateVisit({ ...visit, queue_type: null }, visitIndex)
+			//formRef.current.setFieldsValue({'When': 'From Begining'})
+		}
 	}
 
 	const changeGap = (event, visit, visitIndex) => {
@@ -136,6 +140,9 @@ const FutureVisits = ({ appointment_id, status }) => {
 					placement: 'bottomRight'
 				})
 			}
+		}
+		else{
+			updateVisit({ ...visit, gap: null }, visitIndex)
 		}
 	}
 
@@ -238,7 +245,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 									</Col>
 									<Col lg={4} style={{ alignContent: 'center' }}>
 										{Resources.queue.find(e => e.id === visit.queue_type)?.name}{' '}
-										{visit.gap} {visit.gap ? 'days' : ''}
+										{visit.gap} {visit.gap != null ? 'days' : ''}
 									</Col>
 								</Row>
 							)
@@ -345,7 +352,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 						visitsState?.map((visit, visitIndex) => {
 							return (
 								<Row key={visitIndex}>
-									<Col lg={4}>
+									<Col lg={5} xxl={3}>
 										<Button
 											style={{
 												height: 48,
@@ -376,7 +383,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 											onClick={() => reorderVisit(visit, 'reduce')}
 										></Button>
 									</Col>
-									<Col lg={12}>
+									<Col lg={9} xxl={12}>
 										{visit.service_type === 'clinic_visit' ||
 										visit.nursing_tasks.length === 1 ||
 										visit.lab_tests.length === 1 ? (
@@ -401,7 +408,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 																		padding: 0
 																	}}
 																>
-																	<Col lg={22} className='gutter-row'>
+																	<Col lg={21} className='gutter-row'>
 																		{test.name}
 																	</Col>
 																	<Col lg={1} className='gutter-row'>
@@ -442,7 +449,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 																		padding: 0
 																	}}
 																>
-																	<Col lg={22} className='gutter-row'>
+																	<Col lg={21} className='gutter-row'>
 																		{task.name}
 																	</Col>
 																	<Col lg={1} className='gutter-row'>
@@ -473,16 +480,16 @@ const FutureVisits = ({ appointment_id, status }) => {
 											</Card>
 										)}
 									</Col>
-									<Col lg={7}>
+									<Col lg={9} xxl={8}>
 										<Form name='gap'>
 											<Row>
-												<Col lg={12}>
+												<Col lg={12} xxl={12}>
 													<FormInput
 														label={t('When')}
 														name={'queue_type'}
 														inputType={'resourceSelect'}
 														initialData={Resources.queue}
-														initialValue={visit?.queue_type}
+														initialValue={visit?.queue_type? visit?.queue_type : 'From begining'}
 														inputProps={{
 															onChange: e => {
 																changeQueue(e, visit, visitIndex)
@@ -490,7 +497,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 														}}
 													/>
 												</Col>
-												<Col lg={12}>
+												<Col lg={12} xxl={12}>
 													<FormInput
 														label={t('Gap, days')}
 														name={'gap'}
@@ -500,15 +507,13 @@ const FutureVisits = ({ appointment_id, status }) => {
 														onChange={e => changeGap(e, visit, visitIndex)}
 														max={120}
 														min={0}
-														rules={[
-															{ validator: validatePositiveNumber },
-														  ]}
+														rules={[{ validator: validatePositiveNumber }]}
 													/>
 												</Col>
 											</Row>
 										</Form>
 									</Col>
-									<Col lg={1}>
+									<Col lg={1} xxl={1}>
 										<div style={{ marginTop: 18, float: 'inline-end' }}>
 											<img
 												src={dark_delete_icon}

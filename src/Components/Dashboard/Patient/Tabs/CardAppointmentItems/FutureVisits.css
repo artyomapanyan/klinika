@@ -7,7 +7,6 @@
 	}
     .ant-select-multiple{
         .ant-select-selection-overflow{
-            top: 3px;
             .ant-select-selection-item{
                 color: white;
                 background: #774D9D;
