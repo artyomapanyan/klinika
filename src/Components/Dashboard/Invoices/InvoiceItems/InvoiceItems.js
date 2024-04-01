@@ -6,6 +6,7 @@ import ResourceTable from "../../../Fragments/ResourceTable";
 import DateParser from "../../../Fragments/DateParser";
 import {useSelector} from "react-redux";
 import PermCheck from "../../../Fragments/PermCheck";
+import SelectFilterElement from "../../../Fragments/TableFilterElements/SelectFilterElement";
 
 
 function InvoiceItems() {
@@ -54,7 +55,7 @@ function InvoiceItems() {
                     dataIndex:'clinic',
                     title:t('Clinics'),
                     key:'clinic',
-                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                    filterDropdown: (props)=><SelectFilterElement filterProps={props} type='selectResource'/>,
                     // render:(e, record) => {
                     //     console.log(record)
                     //     return<div></div>

@@ -3,7 +3,7 @@ import { t } from 'i18next'
 
 function OfferPrice({ data, verifyResponseNationality, totalState }) {
 
-	console.log(verifyResponseNationality, data)
+
 
 	return (
 		<div>
