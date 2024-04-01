@@ -28,7 +28,11 @@ export default function MoyasarPage() {
                 country: "SA",
                 label: "Awesome Cookie Store",
                 validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate"
-            }
+            },
+            // metadata: {
+            //     'appointment_id' : 15,
+            //     'invoice_id' : 258,
+            // }
         });
     }, []);
 
