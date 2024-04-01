@@ -18,10 +18,11 @@ import {
 	deleteResource
 } from '../../../../Functions/api_calls'
 
-const FutureVisits = ({ appointment_id, disabled = false }) => {
+const FutureVisits = ({ appointment_id, status }) => {
 	const formRef = useRef()
 	let token = useSelector(state => state.auth.token)
 	const [loading, setLoading] = useState(false)
+	const [disabled, setDisabled] = useState(false)
 	const [visitsState, setVisitsState] = useState([])
 	const [newVisit, setnewVisit] = useState({})
 	const [defaultPagination, setDefaultPagination] = useState({
@@ -35,6 +36,16 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 	useEffect(() => {
 		loadVisits()
 	}, [])
+
+	useEffect(() => {
+		if(status == 2 ||
+			status == 3  ||
+			status == 5 ||
+			status == 7)
+			setDisabled(true)
+		else
+			setDisabled(false)
+	}, [status])
 
 	const loadVisits = () => {
 		setLoading(true)
