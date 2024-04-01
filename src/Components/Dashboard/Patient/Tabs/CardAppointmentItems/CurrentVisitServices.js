@@ -45,7 +45,7 @@ function CurrentVisitServices() {
                                name={'item'}
                                inputType={'resourceSelect'}
                                rules={[{required: true}]}
-                        //inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
+                               inputProps={{onChange: (e,data) => console.log(e, data)}}
                                resource={'InvoiceItem'}
                     />
                 </div>
