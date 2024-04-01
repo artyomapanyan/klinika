@@ -49,6 +49,16 @@ function InvoiceItems() {
                     key:'tax_percentage',
                 },
                 {
+                    dataIndex:'clinic',
+                    title:t('Clinics'),
+                    key:'clinic',
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                    // render:(e, record) => {
+                    //     console.log(record)
+                    //     return<div></div>
+                    // }
+                },
+                {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
                     key:'date',
