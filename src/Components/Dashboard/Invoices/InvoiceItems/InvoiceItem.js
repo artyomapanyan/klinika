@@ -39,7 +39,7 @@ function IncoiceItem() {
         }))
 
         if(role === 'clinic-manager') {
-            values.clinic = rexuxClinic[0].id
+            values.clinic_id = rexuxClinic[0].id
         }
 
         if (params.id) {
@@ -135,7 +135,7 @@ function IncoiceItem() {
                         {
                             role === 'clinic-owner' ? <FormInput
                                 label={t('Clinic')}
-                                name={'clinic'}
+                                name={'clinic_id'}
                                 inputType={'resourceSelect'}
                                 rules={[{ required: true }]}
                                 initialValue={data?.clinic?.id}
