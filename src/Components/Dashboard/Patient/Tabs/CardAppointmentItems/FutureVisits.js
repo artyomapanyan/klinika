@@ -127,12 +127,12 @@ const FutureVisits = ({ appointment_id, status }) => {
 
 	const changeGap = (event, visit, visitIndex) => {
 		if (event.target?.value) {
-			if (event.target?.value <= 120)
+			if (event.target?.value <= 120 && event.target?.value >= 0)
 				updateVisit({ ...visit, gap: event.target?.value }, visitIndex)
 			else {
 				notification.error({
 					message: 'Error',
-					description: t('the gap must be 120 or less'),
+					description: t('the gap must be between 0 and 120 day'),
 					placement: 'bottomRight'
 				})
 			}
@@ -178,15 +178,14 @@ const FutureVisits = ({ appointment_id, status }) => {
 				setVisitsState(response.items)
 			}
 		})
-
-		// postResource('FutureVisits', 'single', token, '', { appointment: appointment_id, ...defaultPagination})
-		// .then(response => {
-		// 	setLoading(false)
-		// 	if (!response.errors) {
-		// 		setVisitsState(response.items)
-		// 	}
-		// })
 	}
+
+	const validatePositiveNumber = (_, value) => {
+		if (value < 0) {
+		  return Promise.reject(new Error(''));
+		}
+		return Promise.resolve();
+	  };
 
 	return (
 		<div className='future-visits'>
@@ -499,7 +498,11 @@ const FutureVisits = ({ appointment_id, status }) => {
 														disabled={visitsState?.length < 1}
 														initialValue={visit?.gap}
 														onChange={e => changeGap(e, visit, visitIndex)}
-														max={100}
+														max={120}
+														min={0}
+														rules={[
+															{ validator: validatePositiveNumber },
+														  ]}
 													/>
 												</Col>
 											</Row>
