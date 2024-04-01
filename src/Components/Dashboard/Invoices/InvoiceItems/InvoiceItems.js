@@ -19,10 +19,9 @@ function InvoiceItems() {
                                delete: PermCheck(`InvoiceItem:delete`) ? false : true,
                                edit: PermCheck(`InvoiceItem:update`) ? false : true
                            }}
-            //                except={{
-            //                    edit: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-            //                    delete: reduxInfo?.selected_role?.key === 'clinic-owner' ? true : false,
-            // }}
+                           tableParams={reduxInfo?.selected_role?.key === 'super' ? null : {
+                               not_null: true
+                           }}
 
                            tableColumns={[
                 {
@@ -48,6 +47,16 @@ function InvoiceItems() {
                     dataIndex:'tax_percentage',
                     title:t('Tax percentage'),
                     key:'tax_percentage',
+                },
+                {
+                    dataIndex:'clinic',
+                    title:t('Clinics'),
+                    key:'clinic',
+                    filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                    // render:(e, record) => {
+                    //     console.log(record)
+                    //     return<div></div>
+                    // }
                 },
                 {
                     dataIndex:['created_at','iso_string'],
