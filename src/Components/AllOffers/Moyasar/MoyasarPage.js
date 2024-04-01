@@ -21,7 +21,7 @@ export default function MoyasarPage() {
             amount: 1000,
             currency: "SAR",
             description: "Coffee Order #1",
-            publishable_api_key: "pk_test_eLUwVUWBownQV6cmDsr825hcK5bMj8fiBS59sbZj",
+            publishable_api_key: "pk_test_QJBQNAFCiKkLDwTRKXEwaLfyGq7F8mPkoqa91Qqx",
             callback_url: "https://moyasar.com/thanks",
             methods: ["creditcard", "stcpay", "applepay"],
             apple_pay: {
