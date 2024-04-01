@@ -293,9 +293,9 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
 
 
-        setItemsState(handleFilterResponse({
-            ...formRef?.current?.getFieldsValue()
-        }, 0))
+        // setItemsState(handleFilterResponse({
+        //     ...formRef?.current?.getFieldsValue()
+        // }, 0))
         subTotal()
         let allTotal = subTotal()
         setTotalState(allTotal)
