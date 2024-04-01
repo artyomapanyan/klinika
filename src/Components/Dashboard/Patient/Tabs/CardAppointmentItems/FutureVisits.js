@@ -197,14 +197,21 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 										alignContent: 'center'
 									}}
 								>
-									<Col lg={3} style={{borderInlineEnd: '1px solid #A6A7BA', marginInlineEnd: 40, alignContent: 'center'}}>
+									<Col
+										lg={3}
+										style={{
+											borderInlineEnd: '1px solid #A6A7BA',
+											marginInlineEnd: 40,
+											alignContent: 'center'
+										}}
+									>
 										{
 											Resources.futureVisitTypes.find(
 												e => e.id === visit.service_type
 											)?.name
 										}
 									</Col>
-									<Col lg={15} style={{alignContent: 'center'}}>
+									<Col lg={15} style={{ alignContent: 'center' }}>
 										{visit.service_type === 'clinic_visit' ? (
 											<div>{visit.specialty?.title}</div>
 										) : null}
@@ -219,12 +226,9 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 											</div>
 										) : null}
 									</Col>
-									<Col lg={4} style={{alignContent: 'center'}}>
-										{
-											Resources.queue.find(
-												e => e.id === visit.queue_type
-											)?.name
-										 + ' ' +visit.gap} {visit.gap ? 'days' : ''}
+									<Col lg={4} style={{ alignContent: 'center' }}>
+										{Resources.queue.find(e => e.id === visit.queue_type)?.name}{' '}
+										{visit.gap} {visit.gap ? 'days' : ''}
 									</Col>
 								</Row>
 							)
@@ -340,7 +344,10 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 												background: '#f5f6fa',
 												border: 'none'
 											}}
-											disabled={visitsState.length === 1 || visitIndex === visitsState.length - 1}
+											disabled={
+												visitsState.length === 1 ||
+												visitIndex === visitsState.length - 1
+											}
 											type='default'
 											icon={<CaretDownOutlined />}
 											onClick={() => reorderVisit(visit, 'raise')}
