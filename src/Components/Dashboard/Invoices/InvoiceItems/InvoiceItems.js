@@ -56,10 +56,9 @@ function InvoiceItems() {
                     title:t('Clinics'),
                     key:'clinic',
                     filterDropdown: (props)=><SelectFilterElement filterProps={props} type='selectResource'/>,
-                    // render:(e, record) => {
-                    //     console.log(record)
-                    //     return<div></div>
-                    // }
+                    render:(e, record) => {
+                        return<div>{record?.clinic?.name}</div>
+                    }
                 } : {},
                 {
                     dataIndex:['created_at','iso_string'],
