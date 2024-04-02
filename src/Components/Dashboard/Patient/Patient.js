@@ -95,7 +95,7 @@ function Patient() {
                                 {/*    <PatientCardLog />*/}
                                 {/*</Tabs.TabPane>*/}
                             </TabBars>
-                        </div> : <ProvidedServices/>
+                        </div> : <ProvidedServices appointmentId={data?.id}/>
                     }
 
                 </div>

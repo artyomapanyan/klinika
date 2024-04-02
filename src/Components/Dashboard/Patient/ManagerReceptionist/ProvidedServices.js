@@ -7,7 +7,7 @@ import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 
 
-function ProvidedServices() {
+function ProvidedServices({appointmentId}) {
     let token = useSelector((state) => state.auth.token);
     const formRef = useRef();
 
@@ -35,7 +35,7 @@ function ProvidedServices() {
 
 
     useEffect(() => {
-        postResource('Appointment', 'AppointmentServices', token, '1090/services').then((response) => {
+        postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
 
             console.log(response, 'rrr')
         })
