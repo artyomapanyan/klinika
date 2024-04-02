@@ -1,5 +1,5 @@
 import {Button, Form, Input, Table} from "antd";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
 import dark_delete_icon from "../../../../dist/icons/dark_delete_icon.png";
@@ -33,6 +33,13 @@ function ProvidedServices() {
         }]);
 
 
+
+    useEffect(() => {
+        postResource('Appointment', 'AppointmentServices', token, '1090/services').then((response) => {
+
+            console.log(response, 'rrr')
+        })
+    }, [])
 
     const addService = () => {
         setServisesState((prevState) => ([
