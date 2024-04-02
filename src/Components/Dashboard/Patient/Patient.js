@@ -99,7 +99,7 @@ function Patient() {
                             </TabBars>
                         </div> : 
                         <div>
-                            <ProvidedServices/>
+                            <ProvidedServices appointmentId={data?.id}/>
                             <FutureVisits appointment_id={params.id}/>
                             <Payment appointment_id={params.id}/>
                         </div>
