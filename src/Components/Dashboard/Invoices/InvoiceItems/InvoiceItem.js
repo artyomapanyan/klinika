@@ -84,7 +84,6 @@ function IncoiceItem() {
     }
 
 
-
     return(
         <div>
             {data?.name ? <h3 className={'create_apdate_btns'}>{t(`Editing invoice item`)} - {data?.name}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new Invoice item`)}</h3>}
