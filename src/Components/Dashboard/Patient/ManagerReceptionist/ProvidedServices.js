@@ -34,12 +34,12 @@ function ProvidedServices() {
 
 
 
-    // useEffect(() => {
-    //     postResource('PublicOffer', 'PhoneVerify', token, '').then((response) => {
-    //
-    //
-    //     })
-    // }, [])
+    useEffect(() => {
+        postResource('Appointment', 'AppointmentServices', token, '1090/services').then((response) => {
+
+            console.log(response, 'rrr')
+        })
+    }, [])
 
     const addService = () => {
         setServisesState((prevState) => ([

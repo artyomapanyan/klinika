@@ -4,11 +4,15 @@ import FormInput from "../../../../Fragments/FormInput";
 import React, {useState} from "react";
 import dark_delete_icon from "../../../../../dist/icons/dark_delete_icon.png";
 import {safePreventDefault} from "react-slick/lib/utils/innerSliderUtils";
+import {postResource} from "../../../../Functions/api_calls";
+import {useSelector} from "react-redux";
 
 
-function CurrentVisitServices() {
-
+function CurrentVisitServices({id}) {
+    let token = useSelector((state) => state.auth.token);
     const [servisesState, setServisesState] = useState([])
+    const [sendState, setSendState] = useState({})
+    const [qntState, setQntState] = useState(1)
 
 
     const onAdd = () => {
@@ -32,10 +36,58 @@ function CurrentVisitServices() {
         )
     }
 
+    const onFinish = (values) => {
+        postResource('Appointment', 'SaveServiceItems', token, `${id}/saveServiceItems`, sendState).then((response) => {
+
+            console.log(response, 'rrr')
+        })
+    }
+
+    const handleInvoiceSelect = (e,data) => {
+        const selected_item = data.find(u=>u.id===e);
+
+        console.log(selected_item, 'item')
+        console.log(+qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)), 'amount')
+        setSendState({
+           items: [
+                    {
+                        "qnt": qntState,
+                        "tax": selected_item?.tax_percentage,
+                        "price": selected_item?.price,
+                        "amount": +qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)),
+                        "discount": selected_item?.tax_percentage,
+                        "item_object": {
+                            "id": selected_item?.id,
+                            "name": selected_item?.name,
+                        }
+                    }
+                ]
+        }
+
+        )
+
+        // postResource('InvoiceItem', 'single', token, e).then((response) => {
+
+            // const selected_item = data.find(u=>u.id===e);
+            // formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
+            // formRef?.current?.setFieldValue(['items', key, 'item_object'], {
+            //     id:selected_item.id,
+            //     name:selected_item.name
+            // })
+            // formRef?.current?.setFieldValue(['items', key, 'price'], response?.price)
+            // formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
+            // formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
+            //
+            // formRef?.current?.getFieldValue('sub_total')
+
+        // })
+
+
+    }
 
 
     return <div style={{marginTop: 30}}>
-        <Form>
+        <Form >
             <div className={'current_visit_text'}>
                 {t('Current visit Services')}
             </div>
@@ -45,12 +97,13 @@ function CurrentVisitServices() {
                                name={'item'}
                                inputType={'resourceSelect'}
                                rules={[{required: true}]}
-                               inputProps={{onChange: (e,data) => console.log(e, data)}}
+                               inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
                                resource={'InvoiceItem'}
                     />
                 </div>
                 <div>
-                    <FormInput label={t('Qnt')} name={'qnt'} initialValue={1} inputType={'number'}
+                    <FormInput label={t('Qnt')} name={'qnt'} initialValue={qntState} inputType={'number'}
+                               onChange={(e)=>{setQntState(e.target.value)}}
                                rules={[
 
                                    {
@@ -67,7 +120,7 @@ function CurrentVisitServices() {
                     />
                 </div>
                 <div>
-                    <Button onClick={onAdd} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
+                    <Button onClick={onFinish} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
                 </div>
             </div>
 

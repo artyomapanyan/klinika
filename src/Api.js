@@ -256,6 +256,14 @@ let api = {
                 url: `${endpoint}${version}/appointments/get-invoice-price`,
                 method: 'POST',
             },
+            AppointmentServices:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'GET',
+            },
+            SaveServiceItems:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'post',
+            },
         }
     },
     {
