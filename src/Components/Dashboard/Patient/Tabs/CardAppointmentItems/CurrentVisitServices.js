@@ -48,8 +48,7 @@ function CurrentVisitServices({id}) {
 
         console.log(selected_item, 'item')
         console.log(+qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)), 'amount')
-        setSendState({
-           items: [
+        setSendState(
                     {
                         "qnt": qntState,
                         "tax": selected_item?.tax_percentage,
@@ -59,10 +58,13 @@ function CurrentVisitServices({id}) {
                         "item_object": {
                             "id": selected_item?.id,
                             "name": selected_item?.name,
-                        }
+                        },
+                        item: selected_item?.id,
+
+
                     }
-                ]
-        }
+
+
 
         )
 

@@ -12,6 +12,7 @@ function ProvidedServices({appointmentId}) {
     const formRef = useRef();
 
     const [totalItem, setTotalItem] = useState(0)
+    const [serState, setSerState] = useState({})
 
     const [servisesState, setServisesState] = useState([{
         key: 1,
@@ -36,8 +37,10 @@ function ProvidedServices({appointmentId}) {
 
     useEffect(() => {
         postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
-
-            console.log(response, 'rrr')
+            setSerState(response)
+            let a = Object.values(response)
+            console.log(a, 's')
+            console.log(response, 'rrr1')
         })
     }, [])
 
@@ -118,16 +121,49 @@ function ProvidedServices({appointmentId}) {
         <Form ref={formRef}>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '29px 24px'}}>
                 <div>
-                    {t('Provided: Services')}
+                    <span className={'provided_services_provaded_text'}>{t('Provided')}:</span> <span className={'provided_services_services_text'}>{t('Services')}</span>
                 </div>
                 <div>
-                    <Button onClick={addService} type={'primary'}>{t('Add item')}</Button>
+                    <Button onClick={addService} type={'primary'} className={'provided_services_add_btn'}>{t('Add item')}</Button>
                 </div>
             </div>
             <div className={'provided_services_table'}>
 
                 <table style={{width: '100%'}}>
                     <tbody style={{width: '100%'}}>
+
+
+                           <tr key={serState?.id} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
+                                <td>
+                                    <span className={'provided_table_name'}>{serState?.primary_invoice?.id}</span>
+                                </td>
+                                <td>
+                                    <span className={'provided_table_name'}>{serState?.primary_invoice?.by}</span>
+                                </td>
+
+                                <td className={'provided_table_bold_text'}>
+                                    {serState?.primary_invoice?.by}
+                                </td>
+                               <td className={'provided_table_bold_text'}>
+                                   {serState?.primary_invoice?.by}
+                               </td>
+
+                               <td className={'provided_table_bold_text'}>
+
+                               </td>
+
+
+                                <td style={{width: 200}}>
+                                    <div>
+                                        <span className={'provided_table_bold_text'}>300 SAR</span>
+                                        <span className={'provided_table_status_payed'}>{serState?.primary_invoice?.status}</span>
+
+
+                                    </div>
+
+                                </td>
+                            </tr>
+
                     {
                         servisesState.map((el, key) => {
                             console.log(el?.consultation?.qty)
