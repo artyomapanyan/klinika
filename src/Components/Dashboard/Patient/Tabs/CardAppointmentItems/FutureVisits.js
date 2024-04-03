@@ -38,14 +38,9 @@ const FutureVisits = ({ appointment_id, status }) => {
 	}, [])
 
 	useEffect(() => {
-		if(status == 0 ||
-			status == 2 ||
-			status == 3  ||
-			status == 5 ||
-			status == 7)
+		if (status == 0 || status == 2 || status == 3 || status == 5 || status == 7)
 			setDisabled(true)
-		else
-			setDisabled(false)
+		else setDisabled(false)
 	}, [status])
 
 	const loadVisits = () => {
@@ -111,8 +106,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 	const changeQueue = (value, visit, visitIndex) => {
 		if (value) {
 			updateVisit({ ...visit, queue_type: value }, visitIndex)
-		}
-		else{
+		} else {
 			updateVisit({ ...visit, queue_type: null }, visitIndex)
 			//formRef.current.setFieldsValue({'When': 'From Begining'})
 		}
@@ -129,8 +123,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 					placement: 'bottomRight'
 				})
 			}
-		}
-		else{
+		} else {
 			updateVisit({ ...visit, gap: null }, visitIndex)
 		}
 	}
@@ -178,16 +171,18 @@ const FutureVisits = ({ appointment_id, status }) => {
 
 	const validatePositiveNumber = (_, value) => {
 		if (value < 0) {
-		  return Promise.reject(new Error(''));
+			return Promise.reject(new Error(''))
 		}
-		return Promise.resolve();
-	  };
+		return Promise.resolve()
+	}
 
 	return (
 		<div className='future-visits'>
-			<span style={{ marginTop: 20, fontSize:20 }} className={'h1'}>
-				{t('Future Visits')}
-			</span>
+			{!disabled || (disabled && visitsState.length) ? (
+				<h2 style={{ marginTop: 20, fontSize: 20 }} className={'h1'}>
+					{t('Future Visits')}
+				</h2>
+			) : null}
 			{disabled ? (
 				<div>
 					{loading ? (
@@ -288,7 +283,6 @@ const FutureVisits = ({ appointment_id, status }) => {
 										}}
 										resource={'LabTest'}
 									/>
-									
 								) : null}
 								{newVisit?.service_type == 'nursing' ? (
 									<FormInput
@@ -317,7 +311,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 										resourceParams={{
 											type: Resources.TaxonomyTypes.SPECIALTY,
 											has_doctor: 1,
-											has_parent:1
+											has_parent: 1
 										}}
 									/>
 								) : null}
@@ -478,7 +472,11 @@ const FutureVisits = ({ appointment_id, status }) => {
 														name={'queue_type'}
 														inputType={'resourceSelect'}
 														initialData={Resources.queue}
-														initialValue={visit?.queue_type? visit?.queue_type : 'From begining'}
+														initialValue={
+															visit?.queue_type
+																? visit?.queue_type
+																: 'From begining'
+														}
 														inputProps={{
 															onChange: e => {
 																changeQueue(e, visit, visitIndex)
