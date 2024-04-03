@@ -1,4 +1,7 @@
 .future-visits {
+    .ant-form-item-label > label {
+        top: 0px
+    }
 	.ant-card-bordered {
 		.ant-card-body {
 			padding: 12px !important;
@@ -16,4 +19,9 @@
             }
         }
     }
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
 }

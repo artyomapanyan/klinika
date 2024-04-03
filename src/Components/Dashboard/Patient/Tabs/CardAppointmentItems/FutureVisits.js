@@ -334,13 +334,21 @@ const FutureVisits = ({ appointment_id, status }) => {
 					) : (
 						visitsState?.map((visit, visitIndex) => {
 							return (
-								<Row key={visitIndex}>
-									<Col lg={5} xxl={3}>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										width: '100%'
+									}}
+									key={visitIndex}
+								>
+									<div
+										style={{ flex: '0 0 auto', marginRight: 10, marginTop: 5 }}
+									>
 										<Button
 											style={{
 												height: 48,
 												width: 48,
-												margin: 6,
 												background: '#f5f6fa',
 												border: 'none'
 											}}
@@ -351,12 +359,15 @@ const FutureVisits = ({ appointment_id, status }) => {
 											type='default'
 											icon={<CaretDownOutlined />}
 											onClick={() => reorderVisit(visit, 'raise')}
-										></Button>
+										/>
+									</div>
+									<div
+										style={{ flex: '0 0 auto', marginRight: 10, marginTop: 5 }}
+									>
 										<Button
 											style={{
 												height: 48,
 												width: 48,
-												margin: 6,
 												background: '#f5f6fa',
 												border: 'none'
 											}}
@@ -364,9 +375,9 @@ const FutureVisits = ({ appointment_id, status }) => {
 											type='default'
 											icon={<CaretUpOutlined />}
 											onClick={() => reorderVisit(visit, 'reduce')}
-										></Button>
-									</Col>
-									<Col lg={9} xxl={12}>
+										/>
+									</div>
+									<div style={{ flex: '1 1 auto', marginRight:5 }}>
 										{visit.service_type === 'clinic_visit' ||
 										visit.nursing_tasks.length === 1 ||
 										visit.lab_tests.length === 1 ? (
@@ -384,37 +395,33 @@ const FutureVisits = ({ appointment_id, status }) => {
 														</h4>
 														{visit.lab_tests?.map((test, testIndex) => {
 															return (
-																<Row
+																<div
 																	key={testIndex}
 																	style={{
 																		borderTop: '1px dashed #A6A7BA',
-																		padding: 0
+																		padding: 12
 																	}}
 																>
-																	<Col lg={21} className='gutter-row'>
-																		{test.name}
-																	</Col>
-																	<Col lg={1} className='gutter-row'>
-																		<Space>
-																			<div
-																				style={{ cursor: 'pointer' }}
-																				onClick={() => {
-																					removeVisitItem(
-																						visitIndex,
-																						testIndex,
-																						'lab_tests'
-																					)
-																				}}
-																			>
-																				<img
-																					className={'del_icin'}
-																					alt={'x_black'}
-																					src={x_black}
-																				/>
-																			</div>
-																		</Space>
-																	</Col>
-																</Row>
+																	{test.name}
+																	<Space style={{float:'inline-end'}}>
+																		<div
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => {
+																				removeVisitItem(
+																					visitIndex,
+																					testIndex,
+																					'lab_tests'
+																				)
+																			}}
+																		>
+																			<img
+																				className={'del_icin'}
+																				alt={'x_black'}
+																				src={x_black}
+																			/>
+																		</div>
+																	</Space>
+																</div>
 															)
 														})}
 													</div>
@@ -425,48 +432,44 @@ const FutureVisits = ({ appointment_id, status }) => {
 														</h4>
 														{visit.nursing_tasks?.map((task, taskIndex) => {
 															return (
-																<Row
+																<div
 																	key={taskIndex}
 																	style={{
 																		borderTop: '1px dashed #A6A7BA',
-																		padding: 0
+																		padding: 12
 																	}}
 																>
-																	<Col lg={21} className='gutter-row'>
-																		{task.name}
-																	</Col>
-																	<Col lg={1} className='gutter-row'>
-																		<Space>
-																			<div
-																				style={{ cursor: 'pointer' }}
-																				onClick={() => {
-																					removeVisitItem(
-																						visitIndex,
-																						taskIndex,
-																						'nursing_tasks'
-																					)
-																				}}
-																			>
-																				<img
-																					className={'del_icin'}
-																					alt={'x_black'}
-																					src={x_black}
-																				/>
-																			</div>
-																		</Space>
-																	</Col>
-																</Row>
+																	{task.name}
+																	<Space style={{float:'inline-end'}}>
+																		<div
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => {
+																				removeVisitItem(
+																					visitIndex,
+																					taskIndex,
+																					'nursing_tasks'
+																				)
+																			}}
+																		>
+																			<img
+																				className={'del_icin'}
+																				alt={'x_black'}
+																				src={x_black}
+																			/>
+																		</div>
+																	</Space>
+																</div>
 															)
 														})}
 													</div>
 												)}
 											</Card>
 										)}
-									</Col>
-									<Col lg={9} xxl={8}>
+									</div>
+									<div style={{ flex: '0 0 auto', marginRight: 10 }}>
 										<Form name='gap'>
-											<Row>
-												<Col lg={12} xxl={12}>
+											<div style={{ display: 'flex', flexDirection: 'row' }}>
+												<div style={{ flex: '0 0 auto', width:140 }}>
 													<FormInput
 														label={t('When')}
 														name={'queue_type'}
@@ -483,34 +486,32 @@ const FutureVisits = ({ appointment_id, status }) => {
 															}
 														}}
 													/>
-												</Col>
-												<Col lg={12} xxl={12}>
+												</div>
+												<div style={{ flex: '0 0 auto' }}>
 													<FormInput
 														label={t('Gap, days')}
 														name={'gap'}
 														inputType={'number'}
 														disabled={visitsState?.length < 1}
-														initialValue={visit?.gap}
+														initialValue={visit?.gap? visit?.gap : 0}
 														onChange={e => changeGap(e, visit, visitIndex)}
 														max={120}
 														min={0}
 														rules={[{ validator: validatePositiveNumber }]}
 													/>
-												</Col>
-											</Row>
+												</div>
+											</div>
 										</Form>
-									</Col>
-									<Col lg={1} xxl={1}>
-										<div style={{ marginTop: 18, float: 'inline-end' }}>
-											<img
-												src={dark_delete_icon}
-												alt={'dark_delete_icon'}
-												onClick={e => deleteVisit(e, visit)}
-												style={{ cursor: 'pointer' }}
-											/>
-										</div>{' '}
-									</Col>
-								</Row>
+									</div>
+									<div style={{ flex: '0 0 auto', marginTop: 16 }}>
+										<img
+											src={dark_delete_icon}
+											alt={'dark_delete_icon'}
+											onClick={e => deleteVisit(e, visit)}
+											style={{ cursor: 'pointer' }}
+										/>
+									</div>
+								</div>
 							)
 						})
 					)}
