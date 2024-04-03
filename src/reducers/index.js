@@ -7,7 +7,8 @@ import owner from "./owner";
 import dashboardMenuState from "./dashboardMenuState";
 import drCalendarDate from "./drCalendarDate";
 import statusCode from "./statusCode";
+import moyasarIds from "./moyasarIds";
 
 export default combineReducers({
-    auth,  globalState, app, publicClinic, owner, dashboardMenuState, drCalendarDate, statusCode
+    auth,  globalState, app, publicClinic, owner, dashboardMenuState, drCalendarDate, statusCode, moyasarIds
 })

@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
+import {useSelector} from "react-redux";
+import './MoyasarPage.sass'
 
-export default function MoyasarPage() {
+export default function MoyasarPage({aaa, bookResponseState}) {
+    let ids = useSelector((state) => state.moyasarIds)
     const formContainerRef = useRef(null);
+
+    console.log(ids)
+    console.log(formContainerRef?.current)
 
     useEffect(() => {
         /*
@@ -29,10 +35,10 @@ export default function MoyasarPage() {
                 label: "Awesome Cookie Store",
                 validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate"
             },
-            // metadata: {
-            //     'appointment_id' : 15,
-            //     'invoice_id' : 258,
-            // }
+            metadata: {
+                'appointment_id' : ids?.appointment_id,
+                'invoice_id' : ids?.invoice_id,
+            }
         });
     }, []);
 
