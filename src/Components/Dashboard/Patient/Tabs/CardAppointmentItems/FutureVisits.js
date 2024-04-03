@@ -60,18 +60,6 @@ const FutureVisits = ({ appointment_id, status }) => {
 		})
 	}
 
-	const handleMapLabTests = (item, name) => {
-		name = item.lab_test.name
-		item.id = item.lab_test.id
-		return [name, item]
-	}
-
-	const handleMapNursingTasks = (item, name) => {
-		name = item.nursing_task.name
-		item.id = item.nursing_task.id
-		return [name, item]
-	}
-
 	const handleValuesChange = e => {
 		setnewVisit(prevState => ({
 			...prevState,
@@ -196,9 +184,9 @@ const FutureVisits = ({ appointment_id, status }) => {
 
 	return (
 		<div className='future-visits'>
-			<h1 style={{ marginTop: 20 }} className={'h1'}>
+			<span style={{ marginTop: 20, fontSize:20 }} className={'h1'}>
 				{t('Future Visits')}
-			</h1>
+			</span>
 			{disabled ? (
 				<div>
 					{loading ? (
@@ -297,9 +285,9 @@ const FutureVisits = ({ appointment_id, status }) => {
 											status: 2,
 											has_clinic: 1
 										}}
-										handleMapItems={handleMapLabTests}
-										resource={'ClinicLabTest'}
+										resource={'LabTest'}
 									/>
+									
 								) : null}
 								{newVisit?.service_type == 'nursing' ? (
 									<FormInput
@@ -314,8 +302,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 											has_clinic: 1
 										}}
 										inputType={'resourceSelect'}
-										handleMapItems={handleMapNursingTasks}
-										resource={'ClinicNursingTask'}
+										resource={'NursingTask'}
 									/>
 								) : null}
 								{newVisit?.service_type == 'clinic_visit' ? (
