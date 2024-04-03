@@ -315,7 +315,8 @@ const FutureVisits = ({ appointment_id, status }) => {
 										customSearchKey={'title'}
 										resourceParams={{
 											type: Resources.TaxonomyTypes.SPECIALTY,
-											has_doctor: 1
+											has_doctor: 1,
+											has_parent:1
 										}}
 									/>
 								) : null}
