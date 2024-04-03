@@ -13,6 +13,7 @@ function CurrentVisitServices({id}) {
     const [servisesState, setServisesState] = useState([])
     const [sendState, setSendState] = useState({})
     const [qntState, setQntState] = useState(1)
+    const [itemsState, setItemsState] = useState([])
 
 
     const onAdd = () => {
@@ -38,7 +39,7 @@ function CurrentVisitServices({id}) {
 
     const onFinish = (values) => {
         postResource('Appointment', 'SaveServiceItems', token, `${id}/saveServiceItems`, sendState).then((response) => {
-
+            setItemsState(response?.service_invoice?.items)
             console.log(response, 'rrr')
         })
     }
@@ -48,43 +49,40 @@ function CurrentVisitServices({id}) {
 
         console.log(selected_item, 'item')
         console.log(+qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)), 'amount')
-        setSendState(
-                    {
-                        "qnt": qntState,
-                        "tax": selected_item?.tax_percentage,
-                        "price": selected_item?.price,
-                        "amount": +qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)),
-                        "discount": selected_item?.tax_percentage,
-                        "item_object": {
-                            "id": selected_item?.id,
-                            "name": selected_item?.name,
-                        },
-                        item: selected_item?.id,
+        setSendState({
+                items: [{
+                    "qnt": qntState,
+                    "tax": selected_item?.tax_percentage,
+                    "price": selected_item?.price,
+                    "amount": +qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)),
+                    "discount": selected_item?.tax_percentage,
+                    "item_object": {
+                        "id": selected_item?.id,
+                        "name": selected_item?.name,
+                    },
+                    item: selected_item?.id,
 
 
-                    }
+                }]
 
-
+            }
 
         )
 
-        // postResource('InvoiceItem', 'single', token, e).then((response) => {
-
-            // const selected_item = data.find(u=>u.id===e);
-            // formRef?.current?.setFieldValue(['items', key, 'qnt'], 1)
-            // formRef?.current?.setFieldValue(['items', key, 'item_object'], {
-            //     id:selected_item.id,
-            //     name:selected_item.name
-            // })
-            // formRef?.current?.setFieldValue(['items', key, 'price'], response?.price)
-            // formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
-            // formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
-            //
-            // formRef?.current?.getFieldValue('sub_total')
-
-        // })
 
 
+
+    }
+    console.log(sendState)
+    const qntChange = (value) => {
+
+        setQntState(value)
+        setSendState((prevState) => ({
+
+
+
+
+        }))
     }
 
 
@@ -105,7 +103,7 @@ function CurrentVisitServices({id}) {
                 </div>
                 <div>
                     <FormInput label={t('Qnt')} name={'qnt'} initialValue={qntState} inputType={'number'}
-                               onChange={(e)=>{setQntState(e.target.value)}}
+                               onChange={(e)=>{qntChange(e.target.value) }}
                                rules={[
 
                                    {
@@ -128,18 +126,19 @@ function CurrentVisitServices({id}) {
 
             <div style={{marginTop: 10}}>
                 {
-                    servisesState?.map((el, key) => {
+                    itemsState?.map((el, key) => {
+                        console.log(el)
                         return <div key={key} className={'current_visit_name'}>
 
                             <div style={{width: '90%', marginTop: -20}} className={'aass'}>
-                                <Form.Item>
-                                    <Input/>
+                                <Form.Item >
+                                    <Input value={el?.item_object?.name}/>
                                 </Form.Item>
                             </div>
                             <div style={{marginTop: -8}}>
-                                x1
+                                x{el?.qnt}
                             </div>
-                            <div  style={{marginTop: -9}}>
+                            <div  style={{marginTop: -10}}>
                                 <img src={dark_delete_icon} alt={'dark_delete_icon'} onClick={(e)=>onDelete(e, el, key)} style={{cursor: 'pointer'}}/>
                             </div>
                         </div>

@@ -156,7 +156,7 @@ function ProvidedServices({appointmentId}) {
                                 <td style={{width: 200}}>
                                     <div>
                                         <span className={'provided_table_bold_text'}>300 SAR</span>
-                                        <span className={'provided_table_status_payed'}>{serState?.primary_invoice?.status}</span>
+                                        <span className={'provided_table_status_payed'}>{serState?.primary_invoice?.status === 2 ? 'Paid' : 'pending'}</span>
 
 
                                     </div>
@@ -165,15 +165,15 @@ function ProvidedServices({appointmentId}) {
                             </tr>
 
                     {
-                        servisesState.map((el, key) => {
+                        serState?.service_invoice?.items?.map((el, key) => {
                             console.log(el?.consultation?.qty)
                             return<tr key={el.key} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
                                 <td>
-                                    <span className={'provided_table_name'}>{el.key}</span>
+                                    <span className={'provided_table_name'}>{el.item}</span>
                                 </td>
                                 <td>
                                     {
-                                        el?.name ? <span className={'provided_table_name'}>{el.name}</span>
+                                        serState?.service_invoice?.items?.length ? <span className={'provided_table_name'}>{el?.item_object?.name}</span>
                                             : <FormInput label={t('Invoice item')}
                                                          name={'item'}
                                                          inputType={'resourceSelect'}
@@ -182,7 +182,7 @@ function ProvidedServices({appointmentId}) {
                                                          resource={'InvoiceItem'}
                                             />
                                     }
-                                    <span className={'provided_table_name'}>{el.name}</span>
+                                    {/*<span className={'provided_table_name'}>{el?.by}</span>*/}
                                 </td>
                                 <td>
                                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10}}>
@@ -191,7 +191,7 @@ function ProvidedServices({appointmentId}) {
                                                        onChange={(el) => {
                                                            changeAny(el.target.value,'qnt', key)
                                                        }}
-                                                       className={'ssssssssssssssssssssssssssss'}
+
                                             />
                                         </div>
                                         <div style={{width: 100}}>
@@ -209,7 +209,7 @@ function ProvidedServices({appointmentId}) {
 
                                 </td>
                                 <td className={'provided_table_bold_text'}>
-                                    {el.doctor}
+                                    {el?.by}
                                 </td>
                                 <td>
                                     <img src={dark_delete_icon} alt={'dark_delete_icon'} onClick={(e)=>onDelete(e, el)} style={{cursor: 'pointer'}}/>
@@ -218,10 +218,10 @@ function ProvidedServices({appointmentId}) {
 
                                 <td style={{width: 200}}>
                                     <div>
-                                        <span className={'provided_table_bold_text'}>{el?.price ? (el?.price * el?.qty) : totalItem}  SAR</span>
+                                        <span className={'provided_table_bold_text'}>{el?.price ? (el?.price * el?.qnt) : totalItem}  SAR</span>
                                         {
-                                            el.status === 'paid' ? <span className={'provided_table_status_payed'}>{el.status}</span>
-                                                : <span className={'provided_table_status_pending'}>{el.status}</span>
+                                            el.status === 2 ? <span className={'provided_table_status_payed'}>{el.status===2 ? 'paid' : 'pending'}</span>
+                                                : <span className={'provided_table_status_pending'}>pending</span>
                                         }
 
                                     </div>
