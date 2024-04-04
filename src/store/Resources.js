@@ -764,7 +764,7 @@ const Resource = {
     futureVisitTypes: [
 		{ name: t('Laboratory'), id: 'laboratory' },
 		{ name: t('Nursing'), id: 'nursing' },
-		{ name: t('Doctor visit'), id: 'clinic_visit' }
+		{ name: t('Doctor visit'), id: 'doctor_visit' }
 	],
 	queue: [
 		{

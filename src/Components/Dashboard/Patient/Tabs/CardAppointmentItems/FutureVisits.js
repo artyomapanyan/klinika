@@ -213,7 +213,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 										}
 									</Col>
 									<Col lg={15} style={{ alignContent: 'center' }}>
-										{visit.service_type === 'clinic_visit' ? (
+										{visit.service_type === 'doctor_visit' ? (
 											<div>{visit.specialty?.title}</div>
 										) : null}
 										{visit.service_type === 'laboratory' ? (
@@ -300,7 +300,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 										resource={'NursingTask'}
 									/>
 								) : null}
-								{newVisit?.service_type == 'clinic_visit' ? (
+								{newVisit?.service_type == 'doctor_visit' ? (
 									<FormInput
 										label={t('Specialty')}
 										name={'specialty_id'}
@@ -378,7 +378,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 										/>
 									</div>
 									<div style={{ flex: '1 1 auto', marginRight:5 }}>
-										{visit.service_type === 'clinic_visit' ||
+										{visit.service_type === 'doctor_visit' ||
 										visit.nursing_tasks.length === 1 ||
 										visit.lab_tests.length === 1 ? (
 											<Card style={{ height: 48, padding: 0, marginTop: 5 }}>
