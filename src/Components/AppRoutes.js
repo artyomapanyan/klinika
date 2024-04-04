@@ -16,6 +16,9 @@ import OfferBookNew from "./AllOffers/OfferBookNew/OfferBookNew";
 import NewThankYouOffer from "./AllOffers/NewThankYouOffer/NewThankYouOffer";
 import AccountDeleteProcess from "./AccountDeleteProcess/AccountDeleteProcess";
 
+import MoyasarPage from "./AllOffers/Moyasar/MoyasarPage";
+import MoyasarAllPage from "./AllOffers/Moyasar/MoyasarAllPage";
+
 
 
 function AppRoutes(){
@@ -33,8 +36,9 @@ function AppRoutes(){
             <Route path={'offers/:id/thank-you'} element={<NewThankYouOffer/>}></Route>
                 <Route path={'maps'} element={<OfferMap/>}></Route>
             <Route path={'account_delete_process'} element={<AccountDeleteProcess/>}></Route>
-          
-             
+            <Route path={'pay-online/moyasar'} element={<MoyasarAllPage/>}></Route>
+
+
 
 
             </Routes>
