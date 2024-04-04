@@ -4,19 +4,17 @@ import React, { useEffect, useState } from 'react'
 import Resources from '../../../../store/Resources'
 import { useSelector } from 'react-redux'
 import Preloader from '../../../Preloader'
-import {
-	postResource,
-	createResource,
-} from '../../../Functions/api_calls'
+import { postResource, createResource } from '../../../Functions/api_calls'
 import './FutureApps.sass'
 import AppointmentCalendar from '../../Appointments/Fragments/AppointmentCalendar/AppointmentCalendar'
 import dayjs from 'dayjs'
 import booking_appointment from '../../../../dist/icons/booking_appointment.svg'
 
-const FutureApps = ({ appointment_id, disabled = false }) => {
+const FutureApps = ({ appointment_id, status }) => {
 	let language = useSelector(state => state.app.current_locale)
 	let token = useSelector(state => state.auth.token)
 	let ownerClinics = useSelector(state => state?.owner)
+	const [disabled, setDisabled] = useState(false)
 	const [appointmentObj, setappointmentObj] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const [bookLoading, setBookLoading] = useState(0)
@@ -27,6 +25,11 @@ const FutureApps = ({ appointment_id, disabled = false }) => {
 		per_page: 100,
 		page: 1
 	})
+
+	useEffect(() => {
+		if (status == 2) setDisabled(true)
+		else setDisabled(false)
+	}, [status])
 
 	useEffect(() => {
 		loadVisits()
@@ -134,82 +137,89 @@ const FutureApps = ({ appointment_id, disabled = false }) => {
 	}
 
 	return (
-		<div
-			style={{ background: '#ffffff', margin: '24px 24px', borderRadius: 12 }}
-		>
-			<div style={{ padding: 20 }}>
-				<h2 style={{ marginTop: 20 }} className={'h1'}>
-					<span>{t('Future')}: </span>
-					<span style={{ fontWeight: 400 }}>{t('Appointments')}</span>
-				</h2>
-				<div>
-					{loading ? (
-						<Preloader></Preloader>
-					) : (
-						visitsState?.map((visit, visitIndex) => {
-							return (
-								<Row
-									key={visitIndex}
-									style={{
-										borderTop: '1px dashed #A6A7BA',
-										minHeight: 60,
-										alignContent: 'center'
-									}}
-								>
-									<Col lg={1} style={{ alignSelf: 'center' }}>
-										<Checkbox key={visit.id} disabled={!visit?.supported}>
-											{visitIndex + 1}
-										</Checkbox>
-									</Col>
-									<Col lg={9} style={{ alignSelf: 'center' }}>
-										<div>
-											{visit.items
-												.map(item => item.name?.[language])
-												.join(', ')}
-										</div>
-									</Col>
-									<Col lg={4} style={{ alignSelf: 'center' }}>
-										{
-											Resources.futureVisitTypes.find(
-												e => e.id === visit.service_type
-											)?.name
-										}
-									</Col>
-									<Col lg={4} style={{ alignSelf: 'center' }}>
-										<span style={{ fontWeight: 700 }}>
-											{visit.price ? visit.price + ' SAR' : null}
-										</span>
-									</Col>
-									<Col lg={6} style={{ alignSelf: 'center' }}>
-										{visit?.booked_appointment && visit?.supported ? (
-											<div
-												style={{
-													fontWeight: 500,
-													float: 'inline-end',
-													margin: 20,
-													fontSize: 16
-												}}
-											>
-												{visit?.booked_appointment?.doctor ? (
-													<>
+		<>
+			{visitsState.length ? (
+				<div
+					style={{
+						background: '#ffffff',
+						margin: '24px 24px',
+						borderRadius: 12
+					}}
+				>
+					<div style={{ padding: 20 }}>
+						<h2 style={{ marginTop: 20 }} className={'h1'}>
+							<span>{t('Future')}: </span>
+							<span style={{ fontWeight: 400 }}>{t('Appointments')}</span>
+						</h2>
+						<div>
+							{loading ? (
+								<Preloader></Preloader>
+							) : (
+								visitsState?.map((visit, visitIndex) => {
+									return (
+										<Row
+											key={visitIndex}
+											style={{
+												borderTop: '1px dashed #A6A7BA',
+												minHeight: 60,
+												alignContent: 'center'
+											}}
+										>
+											<Col lg={1} style={{ alignSelf: 'center' }}>
+												<Checkbox key={visit.id} disabled={!visit?.supported}>
+													{visitIndex + 1}
+												</Checkbox>
+											</Col>
+											<Col lg={9} style={{ alignSelf: 'center' }}>
+												<div>
+													{visit.items
+														.map(item => item.name?.[language])
+														.join(', ')}
+												</div>
+											</Col>
+											<Col lg={4} style={{ alignSelf: 'center' }}>
+												{
+													Resources.futureVisitTypes.find(
+														e => e.id === visit.service_type
+													)?.name
+												}
+											</Col>
+											<Col lg={4} style={{ alignSelf: 'center' }}>
+												<span style={{ fontWeight: 700 }}>
+													{visit.price ? visit.price + ' SAR' : null}
+												</span>
+											</Col>
+											<Col lg={6} style={{ alignSelf: 'center' }}>
+												{visit?.booked_appointment && visit?.supported ? (
+													<div
+														style={{
+															fontWeight: 500,
+															float: 'inline-end',
+															margin: 20,
+															fontSize: 16
+														}}
+													>
+														{visit?.booked_appointment?.doctor ? (
+															<>
+																<span style={{ marginInlineStart: 10 }}>
+																	Dr. {visit?.booked_appointment?.doctor?.first}{' '}
+																	{visit?.booked_appointment?.doctor?.last}
+																</span>
+															</>
+														) : null}
 														<span style={{ marginInlineStart: 10 }}>
-															Dr. {visit?.booked_appointment?.doctor?.first } { visit?.booked_appointment?.doctor?.last}
+															{dayjs(
+																visit?.booked_appointment?.booked_to?.iso_string
+															).format('hh:mm A, DD MMM YY')}
 														</span>
-													</>
-												) : null}
-												<span style={{ marginInlineStart: 10 }}>
-													{dayjs(
-														visit?.booked_appointment?.booked_to?.iso_string
-													).format('hh:mm A, DD MMM YY')}
-												</span>
-												<span style={{ marginInlineStart: 10 }}>
-													<img alt={'icons'} src={booking_appointment} />
-												</span>
-											</div>
-										) : (
-											<Row>
-												<Col lg={12} style={{ alignSelf: 'center' }}>
-													{/* <Button
+														<span style={{ marginInlineStart: 10 }}>
+															<img alt={'icons'} src={booking_appointment} />
+														</span>
+													</div>
+												) : (
+													<Row>
+														<Col lg={12} style={{ alignSelf: 'center' }}>
+															{/* <Button
 														loading={addLoading}
 														size={'large'}
 														type={'secondary'}
@@ -217,41 +227,46 @@ const FutureApps = ({ appointment_id, disabled = false }) => {
 													>
 														{t('Right Now (2 in line)')}
 													</Button> */}
-												</Col>
-												<Col lg={12} style={{ alignSelf: 'center' }}>
-													<Button
-														loading={bookLoading === visit.id}
-														size={'large'}
-														type={'primary'}
-														htmlType='submit'
-														disabled={!visit?.supported}
-														onClick={() => showModal(visit)}
-													>
-														{t('Book Appointment')}
-													</Button>
-												</Col>
-											</Row>
-										)}
-									</Col>
-								</Row>
-							)
-						})
-					)}
+														</Col>
+														<Col lg={12} style={{ alignSelf: 'center' }}>
+															<Button
+																loading={
+																	bookLoading === visit.id && visit?.supported
+																}
+																size={'large'}
+																type={'primary'}
+																htmlType='submit'
+																disabled={ disabled || !visit?.supported
+																}
+																onClick={() => showModal(visit)}
+															>
+																{t('Book Appointment')}
+															</Button>
+														</Col>
+													</Row>
+												)}
+											</Col>
+										</Row>
+									)
+								})
+							)}
+						</div>
+					</div>
+					<Modal
+						width={'80%'}
+						title='Add Appointment'
+						footer={false}
+						open={appointmentObj}
+						onCancel={handleCancel}
+					>
+						<AppointmentCalendar
+							appointmentObj={appointmentObj}
+							setappointmentObj={createAppointment}
+						/>
+					</Modal>
 				</div>
-			</div>
-			<Modal
-				width={'80%'}
-				title='Add Appointment'
-				footer={false}
-				open={appointmentObj}
-				onCancel={handleCancel}
-			>
-				<AppointmentCalendar
-					appointmentObj={appointmentObj}
-					setappointmentObj={createAppointment}
-				/>
-			</Modal>
-		</div>
+			) : null}
+		</>
 	)
 }
 
