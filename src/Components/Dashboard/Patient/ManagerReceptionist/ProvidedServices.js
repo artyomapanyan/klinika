@@ -13,6 +13,7 @@ function ProvidedServices({appointmentId}) {
 
     const [totalItem, setTotalItem] = useState(0)
     const [serState, setSerState] = useState({})
+    const [itemsState, setItemsState] = useState([])
     const [deleteLoading, setDeleteLoading] = useState(false)
 
     const [servisesState, setServisesState] = useState([{
@@ -39,6 +40,7 @@ function ProvidedServices({appointmentId}) {
     useEffect(() => {
         postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
             setSerState(response)
+            setItemsState(response?.service_invoice?.items)
             let a = Object.values(response)
             console.log(a, 's')
             console.log(response, 'rrr1')
@@ -46,11 +48,11 @@ function ProvidedServices({appointmentId}) {
     }, [])
 
     const addService = () => {
-        setServisesState((prevState) => ([
+        setItemsState((prevState) => ([
             ...prevState,
 
             {
-                key: prevState[prevState.length-1].key + 1,
+                key: Math.random(),
                 name: '',
                 qty: 1,
                 price: '',
@@ -71,38 +73,52 @@ function ProvidedServices({appointmentId}) {
         }
 
         postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/removeServiceItem`, deleteValues).then((response) => {
-            setSerState(response?.service_invoice?.items)
+            setSerState(response)
+            setItemsState(response?.service_invoice?.items)
             setDeleteLoading(false)
 
         })
     }
 
+    const onDeleteNewItem = (event, el, key) => {
+
+        let delItem = itemsState.filter((a) => {
+            return el.key !== a.key
+        })
+
+        setItemsState(delItem)
+    }
+
     const handleInvoiceSelect = (e, key,data) => {
 
+        console.log(e, key, data)
 
-
-        postResource('InvoiceItem', 'single', token, e).then((response) => {
-            console.log(response, e, 'res')
-            const selected_item = data.find(u=>u.id===e);
-
-            formRef?.current?.setFieldValue(['servisesState', key, 'qty'], 1)
-            // formRef?.current?.setFieldValue(['items', key, 'item_object'], {
-            //     id:selected_item.id,
-            //     name:selected_item.name
-            // })
-            formRef?.current?.setFieldValue(['servisesState', key, 'price'], response?.price)
-            // formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
-             formRef?.current?.setFieldValue(['servisesState', key, 'amount'], response?.price)
-            //
-            // formRef?.current?.getFieldValue(['items', key, 'amount'])
-
-            setTimeout(() => {
-                console.log(formRef?.current?.getFieldValue(['servisesState', key, 'amount']), 'ref')
-                setTotalItem(formRef?.current?.getFieldValue(['servisesState', key, 'amount']))
-            }, 1000)
+        postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, ).then((response) => {
 
 
         })
+        // postResource('InvoiceItem', 'single', token, e).then((response) => {
+        //     console.log(response, e, 'res')
+        //     const selected_item = data.find(u=>u.id===e);
+        //
+        //     formRef?.current?.setFieldValue(['servisesState', key, 'qty'], 1)
+        //     // formRef?.current?.setFieldValue(['items', key, 'item_object'], {
+        //     //     id:selected_item.id,
+        //     //     name:selected_item.name
+        //     // })
+        //     formRef?.current?.setFieldValue(['servisesState', key, 'price'], response?.price)
+        //     // formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
+        //      formRef?.current?.setFieldValue(['servisesState', key, 'amount'], response?.price)
+        //     //
+        //     // formRef?.current?.getFieldValue(['items', key, 'amount'])
+        //
+        //     setTimeout(() => {
+        //         console.log(formRef?.current?.getFieldValue(['servisesState', key, 'amount']), 'ref')
+        //         setTotalItem(formRef?.current?.getFieldValue(['servisesState', key, 'amount']))
+        //     }, 1000)
+        //
+        //
+        // })
 
     }
 
@@ -172,7 +188,7 @@ function ProvidedServices({appointmentId}) {
                             </tr>
 
                     {
-                        serState?.service_invoice?.items?.map((el, key) => {
+                        itemsState?.map((el, key) => {
                             console.log(el)
                             return<tr key={el.item} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
                                 <td>
@@ -180,7 +196,7 @@ function ProvidedServices({appointmentId}) {
                                 </td>
                                 <td>
                                     {
-                                        serState?.service_invoice?.items?.length ? <span className={'provided_table_name'}>{el?.item_object?.name}</span>
+                                        el.item ? <span className={'provided_table_name'}>{el?.item_object?.name}</span>
                                             : <FormInput label={t('Invoice item')}
                                                          name={'item'}
                                                          inputType={'resourceSelect'}
@@ -219,7 +235,10 @@ function ProvidedServices({appointmentId}) {
                                     {el?.by}
                                 </td>
                                 <td>
-                                    <Button style={{border: 'none'}} loading={deleteLoading} onClick={(e)=>onDelete(e, el, key)}>
+                                    <Button style={{border: 'none'}} loading={deleteLoading}
+                                            onClick={el.item ? (e)=>onDelete(e, el, key) :
+                                                (event)=>onDeleteNewItem(event, el, key)}
+                                    >
                                         <img src={dark_delete_icon} alt={'dark_delete_icon'}  />
                                     </Button>
 
