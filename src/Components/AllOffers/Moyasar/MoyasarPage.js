@@ -2,12 +2,12 @@ import { useEffect, useRef } from "react";
 import {useSelector} from "react-redux";
 import './MoyasarPage.sass'
 
-export default function MoyasarPage({aaa, bookResponseState}) {
+export default function MoyasarPage({data, isSaudi}) {
     let ids = useSelector((state) => state.moyasarIds)
     const formContainerRef = useRef(null);
 
-    console.log(ids)
-    console.log(formContainerRef?.current)
+
+    console.log(data, isSaudi, 'oooo')
 
     useEffect(() => {
         /*
@@ -24,11 +24,11 @@ export default function MoyasarPage({aaa, bookResponseState}) {
             // 10 SAR = 10 * 100 Halalas
             // 10 KWD = 10 * 1000 Fils
             // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
-            amount: 1000,
+            amount: isSaudi ? (data?.new_price_after_vat_saudi * 100) : (data?.new_price_after_vat_non_saudi * 100),
             currency: "SAR",
             description: "Coffee Order #1",
             publishable_api_key: "pk_test_QJBQNAFCiKkLDwTRKXEwaLfyGq7F8mPkoqa91Qqx",
-            callback_url: "https://moyasar.com/thanks",
+            callback_url: `https://front.klinikatech.com/offers/${data?.id}/thank-you`,
             methods: ["creditcard", "stcpay", "applepay"],
             apple_pay: {
                 country: "SA",

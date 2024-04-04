@@ -15,10 +15,11 @@ import PaymentFailed from "../../Fragments/PaymentFailed";
 import MoyasarPage from "../MoyasarPage";
 
 
-function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay, isSaudi}) {
+function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay,}) {
     let token = useSelector(state => state.auth.token)
     const params = useParams()
     let reduxIdsd = useSelector(state => state?.moyasarIds)
+    let isSaudi = useSelector(state => state?.isSaudi)
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
     const navigate = useNavigate()
@@ -117,7 +118,7 @@ function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClini
         )
     }
 
-    console.log(data, isSaudi, 'data')
+
 
     return (
         <>
@@ -173,7 +174,7 @@ function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClini
                                 </div>
 
                                 <div className={'offer_appointment_sec'}>
-                                    <MoyasarPage/>
+                                    <MoyasarPage data={data} isSaudi={isSaudi}/>
                                     <div style={{marginTop: -20}}>
                                         <Button
                                             onClick={(e)=>onGoOffer(e)}
@@ -196,7 +197,7 @@ function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClini
 
                                     >
 
-                                        <MoyasarPage/>
+                                        <MoyasarPage data={data} isSaudi={isSaudi}/>
                                          <div style={{marginTop: -20}}>
                                              <Button
                                                  onClick={(e)=>onGoOffer(e)}
