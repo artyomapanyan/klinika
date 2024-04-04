@@ -1,19 +1,22 @@
 import {Button, Form, Input} from "antd";
 import {t} from "i18next";
 import FormInput from "../../../../Fragments/FormInput";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import dark_delete_icon from "../../../../../dist/icons/dark_delete_icon.png";
 import {safePreventDefault} from "react-slick/lib/utils/innerSliderUtils";
 import {postResource} from "../../../../Functions/api_calls";
 import {useSelector} from "react-redux";
+import Preloader from "../../../../Preloader";
 
 
 function CurrentVisitServices({id}) {
     let token = useSelector((state) => state.auth.token);
+    let itemRef = useRef()
     const [servisesState, setServisesState] = useState([])
     const [sendState, setSendState] = useState({})
     const [qntState, setQntState] = useState(1)
     const [itemsState, setItemsState] = useState([])
+    const [loading, setLoading] = useState(false)
 
 
     const onAdd = () => {
@@ -29,18 +32,27 @@ function CurrentVisitServices({id}) {
 
     const onDelete = (e, element, key) => {
 
-        setServisesState(
-            servisesState?.filter((el, prevKey) => {
-                return element?.id !== el?.id
-            })
+        console.log(e, element, key)
+        let deleteValues = {
+            "item": element?.item,
+            "qnt": element?.qnt,
+            "discount": element?.discount
+        }
 
-        )
+        postResource('Appointment', 'SaveServiceItems', token, `${id}/removeServiceItem`, deleteValues).then((response) => {
+            setItemsState(response?.service_invoice?.items)
+            console.log(response, 'rrr')
+        })
     }
 
     const onFinish = (values) => {
+        setLoading(true)
         postResource('Appointment', 'SaveServiceItems', token, `${id}/saveServiceItems`, sendState).then((response) => {
             setItemsState(response?.service_invoice?.items)
-            console.log(response, 'rrr')
+            setQntState(1)
+            console.log(itemRef?.current?.resetFields(), 'rrr')
+            setLoading(false)
+
         })
     }
 
@@ -50,7 +62,7 @@ function CurrentVisitServices({id}) {
         console.log(selected_item, 'item')
         console.log(+qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)), 'amount')
         setSendState({
-                items: [{
+
                     "qnt": qntState,
                     "tax": selected_item?.tax_percentage,
                     "price": selected_item?.price,
@@ -63,7 +75,7 @@ function CurrentVisitServices({id}) {
                     item: selected_item?.id,
 
 
-                }]
+
 
             }
 
@@ -73,32 +85,31 @@ function CurrentVisitServices({id}) {
 
 
     }
-    console.log(sendState)
+
     const qntChange = (value) => {
 
         setQntState(value)
         setSendState((prevState) => ({
-
-
-
 
         }))
     }
 
 
     return <div style={{marginTop: 30}}>
-        <Form >
+        <Form ref={itemRef}>
             <div className={'current_visit_text'}>
                 {t('Current visit Services')}
             </div>
+
             <div className={'current_visit_item'}>
-                <div style={{width: '85%'}}>
+                <div style={{width: '85%'}} >
                     <FormInput label={t('Invoice item')}
                                name={'item'}
                                inputType={'resourceSelect'}
                                rules={[{required: true}]}
                                inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
                                resource={'InvoiceItem'}
+
                     />
                 </div>
                 <div>
