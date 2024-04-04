@@ -1,7 +1,7 @@
 import {Button, Form, Input} from "antd";
 import {t} from "i18next";
 import FormInput from "../../../../Fragments/FormInput";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import dark_delete_icon from "../../../../../dist/icons/dark_delete_icon.png";
 import {safePreventDefault} from "react-slick/lib/utils/innerSliderUtils";
 import {postResource} from "../../../../Functions/api_calls";
@@ -17,6 +17,7 @@ function CurrentVisitServices({id}) {
     const [qntState, setQntState] = useState(1)
     const [itemsState, setItemsState] = useState([])
     const [loading, setLoading] = useState(false)
+    const [deleteLoading, setDeleteLoading] = useState(false)
 
 
     const onAdd = () => {
@@ -31,7 +32,7 @@ function CurrentVisitServices({id}) {
     }
 
     const onDelete = (e, element, key) => {
-
+        setDeleteLoading(true)
         console.log(e, element, key)
         let deleteValues = {
             "item": element?.item,
@@ -41,26 +42,34 @@ function CurrentVisitServices({id}) {
 
         postResource('Appointment', 'SaveServiceItems', token, `${id}/removeServiceItem`, deleteValues).then((response) => {
             setItemsState(response?.service_invoice?.items)
-            console.log(response, 'rrr')
+            setDeleteLoading(false)
+
         })
     }
 
     const onFinish = (values) => {
         setLoading(true)
+        console.log(sendState)
         postResource('Appointment', 'SaveServiceItems', token, `${id}/saveServiceItems`, sendState).then((response) => {
             setItemsState(response?.service_invoice?.items)
             setQntState(1)
-            console.log(itemRef?.current?.resetFields(), 'rrr')
+
             setLoading(false)
 
         })
     }
 
+    useEffect(() => {
+        postResource('Appointment', 'AppointmentServices', token, `${id}/services`).then((response) => {
+            setItemsState(response?.service_invoice?.items)
+
+        })
+    }, [])
+
     const handleInvoiceSelect = (e,data) => {
         const selected_item = data.find(u=>u.id===e);
 
-        console.log(selected_item, 'item')
-        console.log(+qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)), 'amount')
+
         setSendState({
 
                     "qnt": qntState,
@@ -89,78 +98,88 @@ function CurrentVisitServices({id}) {
     const qntChange = (value) => {
 
         setQntState(value)
-        setSendState((prevState) => ({
+        setSendState((prevState)=>(
+            {
+                ...prevState,
+                qnt: value,
 
-        }))
+            }
+        )
+
+        )
+
     }
 
 
     return <div style={{marginTop: 30}}>
-        <Form ref={itemRef}>
-            <div className={'current_visit_text'}>
-                {t('Current visit Services')}
-            </div>
-
-            <div className={'current_visit_item'}>
-                <div style={{width: '85%'}} >
-                    <FormInput label={t('Invoice item')}
-                               name={'item'}
-                               inputType={'resourceSelect'}
-                               rules={[{required: true}]}
-                               inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
-                               resource={'InvoiceItem'}
-
-                    />
+        {
+            loading ? <Preloader small={20}/> : <Form ref={itemRef}>
+                <div className={'current_visit_text'}>
+                    {t('Current visit Services')}
                 </div>
-                <div>
-                    <FormInput label={t('Qnt')} name={'qnt'} initialValue={qntState} inputType={'number'}
-                               onChange={(e)=>{qntChange(e.target.value) }}
-                               rules={[
 
-                                   {
-                                       validator:(rule,value)=>{
-                                           if(+value < 0){
-                                               return Promise.reject('Value cannot be less than 0')
+                <div className={'current_visit_item'}>
+                    <div style={{width: '85%'}} >
+                        <FormInput label={t('Invoice item')}
+                                   name={'item'}
+                                   inputType={'resourceSelect'}
+                                   rules={[{required: true}]}
+                                   inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
+                                   resource={'InvoiceItem'}
+
+                        />
+                    </div>
+                    <div>
+                        <FormInput label={t('Qnt')} name={'qnt'} initialValue={qntState} inputType={'number'}
+                                   onChange={(e)=>{qntChange(e.target.value) }}
+                                   rules={[
+
+                                       {
+                                           validator:(rule,value)=>{
+                                               if(+value < 0){
+                                                   return Promise.reject('Value cannot be less than 0')
+                                               }
+                                               return Promise.resolve();
                                            }
-                                           return Promise.resolve();
                                        }
-                                   }
 
-                               ]}
-                               min={0}
-                    />
+                                   ]}
+                                   min={0}
+                        />
+                    </div>
+                    <div>
+                        <Button onClick={onFinish} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
+                    </div>
                 </div>
-                <div>
-                    <Button onClick={onFinish} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
+
+                <div style={{marginTop: 10}}>
+                    {
+                        loading ? <Preloader small={40}/> :  itemsState?.map((el, key) => {
+
+                            return <div key={key} className={'current_visit_name'}>
+
+                                <div style={{width: '90%', marginTop: -20}} className={'aass'}>
+                                    <Form.Item >
+                                        <Input value={el?.item_object?.name}/>
+                                    </Form.Item>
+                                </div>
+                                <div style={{marginTop: -8}}>
+                                    x{el?.qnt}
+                                </div>
+                                <Button className={'delete_button_current_service'} loading={deleteLoading}  onClick={(e)=>onDelete(e, el, key)} >
+                                    <img src={dark_delete_icon} alt={'dark_delete_icon'}/>
+                                </Button>
+                            </div>
+                        })
+                    }
                 </div>
-            </div>
-
-            <div style={{marginTop: 10}}>
-                {
-                    itemsState?.map((el, key) => {
-                        console.log(el)
-                        return <div key={key} className={'current_visit_name'}>
-
-                            <div style={{width: '90%', marginTop: -20}} className={'aass'}>
-                                <Form.Item >
-                                    <Input value={el?.item_object?.name}/>
-                                </Form.Item>
-                            </div>
-                            <div style={{marginTop: -8}}>
-                                x{el?.qnt}
-                            </div>
-                            <div  style={{marginTop: -10}}>
-                                <img src={dark_delete_icon} alt={'dark_delete_icon'} onClick={(e)=>onDelete(e, el, key)} style={{cursor: 'pointer'}}/>
-                            </div>
-                        </div>
-                    })
-                }
-            </div>
 
 
 
 
-        </Form>
+            </Form>
+        }
+
     </div>
 }
 export default CurrentVisitServices;

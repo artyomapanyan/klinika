@@ -13,6 +13,7 @@ function ProvidedServices({appointmentId}) {
 
     const [totalItem, setTotalItem] = useState(0)
     const [serState, setSerState] = useState({})
+    const [deleteLoading, setDeleteLoading] = useState(false)
 
     const [servisesState, setServisesState] = useState([{
         key: 1,
@@ -60,14 +61,20 @@ function ProvidedServices({appointmentId}) {
         ]))
     }
 
-    const onDelete = (e, element) => {
+    const onDelete = (e, element, key) => {
+        setDeleteLoading(true)
+        console.log(e, element, key)
+        let deleteValues = {
+            "item": element?.item,
+            "qnt": element?.qnt,
+            "discount": element?.discount
+        }
 
-        setServisesState(
-            servisesState?.filter((el, prevKey) => {
-                return element?.key !== el?.key
-            })
+        postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/removeServiceItem`, deleteValues).then((response) => {
+            setSerState(response?.service_invoice?.items)
+            setDeleteLoading(false)
 
-        )
+        })
     }
 
     const handleInvoiceSelect = (e, key,data) => {
@@ -166,8 +173,8 @@ function ProvidedServices({appointmentId}) {
 
                     {
                         serState?.service_invoice?.items?.map((el, key) => {
-                            console.log(el?.consultation?.qty)
-                            return<tr key={el.key} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
+                            console.log(el)
+                            return<tr key={el.item} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
                                 <td>
                                     <span className={'provided_table_name'}>{el.item}</span>
                                 </td>
@@ -212,7 +219,10 @@ function ProvidedServices({appointmentId}) {
                                     {el?.by}
                                 </td>
                                 <td>
-                                    <img src={dark_delete_icon} alt={'dark_delete_icon'} onClick={(e)=>onDelete(e, el)} style={{cursor: 'pointer'}}/>
+                                    <Button style={{border: 'none'}} loading={deleteLoading} onClick={(e)=>onDelete(e, el, key)}>
+                                        <img src={dark_delete_icon} alt={'dark_delete_icon'}  />
+                                    </Button>
+
                                 </td>
 
 
