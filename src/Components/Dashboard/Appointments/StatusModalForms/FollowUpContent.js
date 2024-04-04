@@ -272,7 +272,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
 
 
-
     const changeAny = (value, obj, key) => {
 
         if(obj === 'qnt') {
