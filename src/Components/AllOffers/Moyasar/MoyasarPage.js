@@ -27,7 +27,7 @@ export default function MoyasarPage({data, isSaudi}) {
             amount: isSaudi ? (data?.new_price_after_vat_saudi * 100) : (data?.new_price_after_vat_non_saudi * 100),
             currency: "SAR",
             description: "Coffee Order #1",
-            publishable_api_key: "pk_test_QJBQNAFCiKkLDwTRKXEwaLfyGq7F8mPkoqa91Qqx",
+            publishable_api_key: "pk_test_iApwnNsTDexnwuvNTTvfW2efHY4FY5yYLqzBxQ4T",
             callback_url: `https://front.klinikatech.com/offers/${data?.id}/thank-you`,
             methods: ["creditcard", "stcpay", "applepay"],
             apple_pay: {
