@@ -311,7 +311,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 										resourceParams={{
 											type: Resources.TaxonomyTypes.SPECIALTY,
 											has_doctor: 1,
-											has_parent: 1
+											has_parent: 0
 										}}
 									/>
 								) : null}
