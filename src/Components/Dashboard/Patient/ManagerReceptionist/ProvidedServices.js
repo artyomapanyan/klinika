@@ -109,28 +109,31 @@ function ProvidedServices({appointmentId}) {
         if (obj === 'qnt') {
             formRef?.current?.setFieldValue(['servisesState', key, value],)
             formRef?.current?.setFieldValue(['servisesState', key, 'amount'], +value * (+formRef?.current?.getFieldValue(['servisesState', key, 'price'])))
+            if(value > 0) {
+                setTimeout(() => {
+                    let val = {
+                        amount: (+el?.price + (el?.price / 100 * (+el?.tax))),
+                        discount: el?.discount,
+                        item: el?.item,
+                        item_object: {id: el?.item, name: el?.item_object?.name},
+                        price: el?.price,
+                        qnt: value,
+                        tax: el?.tax,
+                    }
 
-            setTimeout(() => {
-                let val = {
-                    amount: (+el?.price + (el?.price / 100 * (+el?.tax))),
-                    discount: el?.discount,
-                    item: el?.item,
-                    item_object: {id: el?.item, name: el?.item_object?.name},
-                    price: el?.price,
-                    qnt: value,
-                    tax: el?.tax,
-                }
 
-                postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val).then((response) => {
+                    postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val).then((response) => {
 
-                    postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
-                        setSerState(response)
-                        setItemsState(response?.service_invoice?.items)
+                        postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
+                            setSerState(response)
+                            setItemsState(response?.service_invoice?.items)
+
+                        })
 
                     })
+                }, 1000)
+            }
 
-                })
-            }, 1000)
 
 
 
@@ -138,33 +141,36 @@ function ProvidedServices({appointmentId}) {
         } else if (obj === 'discount') {
             formRef?.current?.setFieldValue(['servisesState', key, value],)
 
-            setTimeout(() => {
-                let val1 = {
-                    amount: el?.amount,
-                    discount: value,
-                    item: el?.item,
-                    item_object: {id: el?.item, name: el?.item_object?.name},
-                    price: value,
-                    qnt: el?.qnt,
-                    tax: el?.tax,
-                }
+            if(value >= 0) {
+                setTimeout(() => {
+                    let val1 = {
+                        amount: el?.amount,
+                        discount: value,
+                        item: el?.item,
+                        item_object: {id: el?.item, name: el?.item_object?.name},
+                        price: value,
+                        qnt: el?.qnt,
+                        tax: el?.tax,
+                    }
 
 
-                postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val1).then((response) => {
+                    postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val1).then((response) => {
 
-                    postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
-                        setSerState(response)
-                        setItemsState(response?.service_invoice?.items)
+                        postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
+                            setSerState(response)
+                            setItemsState(response?.service_invoice?.items)
+
+                        })
 
                     })
+                }, 1000)
+            }
 
-                })
-            }, 1000)
 
 
         }
 
-        setTotalItem(formRef?.current?.getFieldValue(['servisesState', key, 'amount']))
+        //setTotalItem(formRef?.current?.getFieldValue(['servisesState', key, 'amount']))
         // console.log(formRef?.current?.getFieldValue(['servisesState', key, 'qty']), 'ref1')
     }
 
@@ -243,6 +249,19 @@ function ProvidedServices({appointmentId}) {
                                                            onChange={(elem) => {
                                                                changeAny(elem.target.value,'qnt', key, el)
                                                            }}
+                                                           rules={[
+
+                                                               {
+                                                                   validator:(rule,value)=>{
+                                                                       if(+value < 0){
+                                                                           return Promise.reject('Value cannot be less than 0')
+                                                                       }
+                                                                       return Promise.resolve();
+                                                                   }
+                                                               }
+
+                                                           ]}
+                                                           min={0}
 
                                                 />
                                             </div>
@@ -262,6 +281,19 @@ function ProvidedServices({appointmentId}) {
                                                                changeAny(elem.target.value,'discount', key, el)
                                                            }}
                                                            inputType={'number'}
+                                                           rules={[
+
+                                                               {
+                                                                   validator:(rule,value)=>{
+                                                                       if(+value < 0){
+                                                                           return Promise.reject('Value cannot be less than 0')
+                                                                       }
+                                                                       return Promise.resolve();
+                                                                   }
+                                                               }
+
+                                                           ]}
+                                                           min={0}
                                                 />
                                             </div>
 
@@ -317,6 +349,9 @@ function ProvidedServices({appointmentId}) {
                                                        inputType={'resourceSelect'}
                                                        rules={[{required: true}]}
                                                        inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
+                                                       // resourceParams={{
+                                                       //     clinic: 2
+                                                       // }}
                                                        resource={'InvoiceItem'}
 
 
@@ -341,6 +376,27 @@ function ProvidedServices({appointmentId}) {
                                                            onChange={(elem) => {
                                                                changeAny(elem.target.value,'price', key, el)
                                                            }}
+                                                />
+                                            </div>
+                                            <div style={{width: 100}}>
+                                                <FormInput label={t('discount')} name={'discount'} initialValue={0}
+                                                           onChange={(elem) => {
+                                                               changeAny(elem.target.value,'discount', key, el)
+                                                           }}
+                                                           inputType={'number'}
+                                                           rules={[
+
+                                                               {
+                                                                   validator:(rule,value)=>{
+                                                                       if(+value < 0){
+                                                                           return Promise.reject('Value cannot be less than 0')
+                                                                       }
+                                                                       return Promise.resolve();
+                                                                   }
+                                                               }
+
+                                                           ]}
+                                                           min={0}
                                                 />
                                             </div>
 
