@@ -249,13 +249,17 @@ function ProvidedServices({appointmentId}) {
                                     <td>
                                         {
                                             el.item ? <span className={'provided_table_name'}>{el?.item_object?.name}</span>
-                                                : <FormInput label={t('Invoice item')}
-                                                             name={'item'}
-                                                             inputType={'resourceSelect'}
-                                                             rules={[{required: true}]}
-                                                             inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
-                                                             resource={'InvoiceItem'}
-                                                />
+                                                : <div style={{marginLeft: -20}}>
+                                                    <FormInput label={t('Invoice item')}
+                                                               name={'item'}
+                                                               inputType={'resourceSelect'}
+                                                               rules={[{required: true}]}
+                                                               inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
+                                                               resource={'InvoiceItem'}
+
+
+                                                    />
+                                                </div>
                                         }
                                         {/*<span className={'provided_table_name'}>{el?.by}</span>*/}
                                     </td>
