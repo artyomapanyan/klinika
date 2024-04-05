@@ -110,13 +110,15 @@ function CurrentVisitServices({id, bigData}) {
 
     }
 
+    console.log(bigData)
 
     return <div style={{marginTop: 30}}>
+        <div className={'current_visit_text'}>
+            {t('Current visit Services')}
+        </div>
         {
-            loading ? <Preloader small={20}/> : <Form ref={itemRef} onFinish={onFinish}>
-                <div className={'current_visit_text'}>
-                    {t('Current visit Services')}
-                </div>
+            loading ? <Preloader small={20}/> : bigData?.status != 2 ? <Form ref={itemRef} onFinish={onFinish}>
+
 
                 <div className={'current_visit_item'}>
                     <div style={{width: '85%'}} >
@@ -180,7 +182,36 @@ function CurrentVisitServices({id, bigData}) {
 
 
 
-            </Form>
+            </Form> : <div style={{marginTop: 10}}>
+                <table style={{width: '100%'}}>
+                    <tbody style={{width: '100%'}}>
+
+                    {
+                        itemsState?.map((el, key) => {
+                            console.log(el)
+                            return<tr key={el.item} style={{width: '100%', padding: 30, height: 48, borderBottom: '1px dashed #A6A7BA'}} className={'current_visit_table_tr'}>
+
+                                <td>
+                                    {el?.item_object?.name}
+                                </td>
+
+                                <td align={'right'}>
+                                    x{el?.qnt}
+                                </td>
+
+                                <td style={{width: 100}} align={'right'}>
+                                    {el?.price} SAR
+                                </td>
+                            </tr>
+
+
+                        })
+                    }
+
+
+                    </tbody>
+                </table>
+            </div>
         }
 
     </div>
