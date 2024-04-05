@@ -135,14 +135,13 @@ function ProvidedServices({appointmentId}) {
 
 
 
-        } else if (obj === 'price') {
+        } else if (obj === 'discount') {
             formRef?.current?.setFieldValue(['servisesState', key, value],)
-            formRef?.current?.setFieldValue(['servisesState', key, 'amount'], +value * (+formRef?.current?.getFieldValue(['servisesState', key, 'qty'])))
 
             setTimeout(() => {
                 let val1 = {
-                    amount: (value + (value / 100 * (+el?.tax))),
-                    discount: el?.discount,
+                    amount: el?.amount,
+                    discount: value,
                     item: el?.item,
                     item_object: {id: el?.item, name: el?.item_object?.name},
                     price: value,
@@ -190,7 +189,7 @@ function ProvidedServices({appointmentId}) {
 
                         <tr key={serState?.id} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
                             <td>
-                                <span className={'provided_table_name'}>{serState?.primary_invoice?.id}</span>
+                                <span className={'provided_table_name'}>01</span>
                             </td>
                             <td>
                                 <span className={'provided_table_name'}>{serState?.primary_invoice?.specialty_title}</span>
@@ -228,7 +227,7 @@ function ProvidedServices({appointmentId}) {
 
                                 return<tr key={el.item} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
                                     <td>
-                                        <span className={'provided_table_name'}>{el.item}</span>
+                                        <span className={'provided_table_name'}>{`0${key+2}`}</span>
                                     </td>
                                     <td>
 
@@ -248,10 +247,21 @@ function ProvidedServices({appointmentId}) {
                                                 />
                                             </div>
                                             <div style={{width: 100}}>
-                                                <FormInput label={t('price')} name={['servisesState', key, 'price']} initialValue={el?.price ? el?.price : 0}
+                                                <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '19%'}}  >
+                                                    <Input  style={{paddingLeft:16, height: 48, borderRadius: 12, width: 100}}
+                                                            placeholder={''}
+                                                            value={el?.price}
+
+                                                    />
+                                                    <label style={{left: 15}}>{t('Price')}</label>
+                                                </div>
+                                            </div>
+                                            <div style={{width: 100}}>
+                                                <FormInput label={t('discount')} name={['servisesState', key, 'discount']} initialValue={el?.discount ? el?.discount : 0}
                                                            onChange={(elem) => {
-                                                               changeAny(elem.target.value,'price', key, el)
+                                                               changeAny(elem.target.value,'discount', key, el)
                                                            }}
+                                                           inputType={'number'}
                                                 />
                                             </div>
 
