@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 import Preloader from "../../../../Preloader";
 
 
-function CurrentVisitServices({id}) {
+function CurrentVisitServices({id, bigData}) {
     let token = useSelector((state) => state.auth.token);
     let itemRef = useRef()
     const [servisesState, setServisesState] = useState([])
@@ -113,7 +113,7 @@ function CurrentVisitServices({id}) {
 
     return <div style={{marginTop: 30}}>
         {
-            loading ? <Preloader small={20}/> : <Form ref={itemRef}>
+            loading ? <Preloader small={20}/> : <Form ref={itemRef} onFinish={onFinish}>
                 <div className={'current_visit_text'}>
                     {t('Current visit Services')}
                 </div>
@@ -125,6 +125,9 @@ function CurrentVisitServices({id}) {
                                    inputType={'resourceSelect'}
                                    rules={[{required: true}]}
                                    inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
+                                   resourceParams={{
+                                       clinic: bigData.clinic.id
+                                   }}
                                    resource={'InvoiceItem'}
 
                         />
@@ -148,7 +151,7 @@ function CurrentVisitServices({id}) {
                         />
                     </div>
                     <div>
-                        <Button onClick={onFinish} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
+                        <Button htmlType={'submit'} className={"current_visit_add_btn"} type={'primary'}>{t('Add')}</Button>
                     </div>
                 </div>
 

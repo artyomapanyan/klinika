@@ -313,7 +313,7 @@ function PatientCardAppointment({
 								</Form>
 
 								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 40, boxShadow: '0.15px 0.15px'}}></div>
-								<CurrentVisitServices id={id} />
+								<CurrentVisitServices id={id} bigData={bigData}/>
 								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
 
                                 <FutureVisits appointment_id={id}
