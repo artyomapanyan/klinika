@@ -211,6 +211,10 @@ let api = {
         resource: 'ClinicDoctorAvailableTimeForDayByDoctorAndClinic',
     },
     {
+        url: 'clinic-doctors/available-times-exist-for-month-by-doctor-and-clinic',
+        resource: 'ClinicDoctorAvailableTimeForMonthByDoctorAndClinic',
+    },
+    {
         url: 'clinic-doctors',
         resource: 'ClinicDoctor',
         custom: {
