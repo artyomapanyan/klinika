@@ -17,6 +17,7 @@ function ProvidedServices({appointmentId}) {
     const [itemsState, setItemsState] = useState([])
     const [deleteLoading, setDeleteLoading] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [itemsStateNew, setItemsStateNew] = useState([])
 
 
 
@@ -33,7 +34,7 @@ function ProvidedServices({appointmentId}) {
     }, [])
 
     const addService = () => {
-        setItemsState((prevState) => ([
+        setItemsStateNew((prevState) => ([
             ...prevState,
 
             {
@@ -67,16 +68,16 @@ function ProvidedServices({appointmentId}) {
 
     const onDeleteNewItem = (event, el, key) => {
 
-        let delItem = itemsState.filter((a) => {
+        let delItem = itemsStateNew.filter((a) => {
             return el.key !== a.key
         })
 
-        setItemsState(delItem)
+        setItemsStateNew(delItem)
     }
 
     const handleInvoiceSelect = (e, key,data) => {
 
-        console.log(e, key, data)
+
         const selected_item = data.find(u=>u.id===e);
         let val = {
             amount: (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)),
@@ -87,43 +88,22 @@ function ProvidedServices({appointmentId}) {
             qnt: 1,
             tax: selected_item?.tax_percentage,
         }
-        console.log(selected_item)
+
         postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val).then((response) => {
 
             postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
                 setSerState(response)
                 setItemsState(response?.service_invoice?.items)
-
+                setItemsStateNew([])
+                formRef?.current?.resetFields()
             })
 
         })
-        // postResource('InvoiceItem', 'single', token, e).then((response) => {
-        //     console.log(response, e, 'res')
-        //     const selected_item = data.find(u=>u.id===e);
-        //
-        //     formRef?.current?.setFieldValue(['servisesState', key, 'qty'], 1)
-        //     // formRef?.current?.setFieldValue(['items', key, 'item_object'], {
-        //     //     id:selected_item.id,
-        //     //     name:selected_item.name
-        //     // })
-        //     formRef?.current?.setFieldValue(['servisesState', key, 'price'], response?.price)
-        //     // formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
-        //      formRef?.current?.setFieldValue(['servisesState', key, 'amount'], response?.price)
-        //     //
-        //     // formRef?.current?.getFieldValue(['items', key, 'amount'])
-        //
-        //     setTimeout(() => {
-        //         console.log(formRef?.current?.getFieldValue(['servisesState', key, 'amount']), 'ref')
-        //         setTotalItem(formRef?.current?.getFieldValue(['servisesState', key, 'amount']))
-        //     }, 1000)
-        //
-        //
-        // })
 
     }
 
     const changeAny = (value, obj, key, el) => {
-        console.log(value,obj, key, el )
+
 
 
         if (obj === 'qnt') {
@@ -159,30 +139,34 @@ function ProvidedServices({appointmentId}) {
             formRef?.current?.setFieldValue(['servisesState', key, value],)
             formRef?.current?.setFieldValue(['servisesState', key, 'amount'], +value * (+formRef?.current?.getFieldValue(['servisesState', key, 'qty'])))
 
-            let val = {
-                amount: (value + (value / 100 * (+el?.tax))),
-                discount: el?.discount,
-                item: el?.item,
-                item_object: {id: el?.item, name: el?.item_object?.name},
-                price: value,
-                qnt: el?.qnt,
-                tax: el?.tax,
-            }
+            setTimeout(() => {
+                let val1 = {
+                    amount: (value + (value / 100 * (+el?.tax))),
+                    discount: el?.discount,
+                    item: el?.item,
+                    item_object: {id: el?.item, name: el?.item_object?.name},
+                    price: value,
+                    qnt: el?.qnt,
+                    tax: el?.tax,
+                }
 
-            postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val).then((response) => {
 
-                postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
-                    setSerState(response)
-                    setItemsState(response?.service_invoice?.items)
+                postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val1).then((response) => {
+
+                    postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
+                        setSerState(response)
+                        setItemsState(response?.service_invoice?.items)
+
+                    })
 
                 })
+            }, 1000)
 
-            })
 
         }
 
         setTotalItem(formRef?.current?.getFieldValue(['servisesState', key, 'amount']))
-        console.log(formRef?.current?.getFieldValue(['servisesState', key, 'qty']), 'ref1')
+        // console.log(formRef?.current?.getFieldValue(['servisesState', key, 'qty']), 'ref1')
     }
 
      console.log(itemsState, 'i s')
@@ -247,21 +231,10 @@ function ProvidedServices({appointmentId}) {
                                         <span className={'provided_table_name'}>{el.item}</span>
                                     </td>
                                     <td>
-                                        {
-                                            el.item ? <span className={'provided_table_name'}>{el?.item_object?.name}</span>
-                                                : <div style={{marginLeft: -20}}>
-                                                    <FormInput label={t('Invoice item')}
-                                                               name={'item'}
-                                                               inputType={'resourceSelect'}
-                                                               rules={[{required: true}]}
-                                                               inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
-                                                               resource={'InvoiceItem'}
+
+                                            <span className={'provided_table_name'}>{el?.item_object?.name}</span>
 
 
-                                                    />
-                                                </div>
-                                        }
-                                        {/*<span className={'provided_table_name'}>{el?.by}</span>*/}
                                     </td>
                                     <td>
                                         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10}}>
@@ -295,6 +268,84 @@ function ProvidedServices({appointmentId}) {
                                         <Button style={{border: 'none'}} loading={deleteLoading}
                                                 onClick={el.item ? (e)=>onDelete(e, el, key) :
                                                     (event)=>onDeleteNewItem(event, el, key)}
+                                        >
+                                            <img src={dark_delete_icon} alt={'dark_delete_icon'}  />
+                                        </Button>
+
+                                    </td>
+
+
+                                    <td style={{width: 200}}>
+                                        <div>
+                                            <span className={'provided_table_bold_text'}>{el?.amount_without_tax}  SAR</span>
+                                            {
+                                                el.status === 2 ? <span className={'provided_table_status_payed'}>{el.status===2 ? 'paid' : 'pending'}</span>
+                                                    : <span className={'provided_table_status_pending'}>pending</span>
+                                            }
+
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+
+                            })
+                        }
+
+                        {
+                            itemsStateNew?.map((el, key) => {
+
+                                return<tr key={el.item} style={{width: '100%', padding:20, borderTop: '1px dashed #c9c9c7'}}>
+                                    <td>
+                                        <span className={'provided_table_name'}>{el.item}</span>
+                                    </td>
+                                    <td>
+
+                                         <div style={{marginLeft: -20}}>
+                                            <FormInput label={t('Invoice item')}
+                                                       name={'item'}
+                                                       inputType={'resourceSelect'}
+                                                       rules={[{required: true}]}
+                                                       inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
+                                                       resource={'InvoiceItem'}
+
+
+                                            />
+                                        </div>
+
+
+                                    </td>
+                                    <td>
+                                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10}}>
+                                            <div style={{width: 100}}>
+                                                <FormInput label={t('Qty')} name={'qty'} initialValue={1}
+                                                           inputType={'number'}
+                                                           onChange={(elem) => {
+                                                               changeAny(elem.target.value,'qnt', key, el)
+                                                           }}
+
+                                                />
+                                            </div>
+                                            <div style={{width: 100}}>
+                                                <FormInput label={t('price')} name={'price'} initialValue={0}
+                                                           onChange={(elem) => {
+                                                               changeAny(elem.target.value,'price', key, el)
+                                                           }}
+                                                />
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </td>
+                                    <td className={'provided_table_bold_text'}>
+                                        {el?.by}
+                                    </td>
+                                    <td>
+                                        <Button style={{border: 'none'}} loading={deleteLoading}
+                                                onClick={(event)=>onDeleteNewItem(event, el, key)}
                                         >
                                             <img src={dark_delete_icon} alt={'dark_delete_icon'}  />
                                         </Button>
