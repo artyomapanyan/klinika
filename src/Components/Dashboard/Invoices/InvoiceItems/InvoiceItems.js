@@ -24,7 +24,8 @@ function InvoiceItems() {
                                not_null: true,
                            }}
 
-                           tableColumns={[
+                           tableColumns={
+                               reduxInfo === 'super' || reduxInfo === 'clinic-owner' ? [
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -50,8 +51,6 @@ function InvoiceItems() {
                     key:'tax_percentage',
                 },
 
-                                   reduxInfo === 'super' || reduxInfo === 'clinic-owner' ?
-
                 {
                     dataIndex:'clinic',
                     title:t('Clinics'),
@@ -60,14 +59,47 @@ function InvoiceItems() {
                     render:(e, record) => {
                         return<div>{record?.clinic?.name}</div>
                     }
-                } : {},
+                },
                 {
                     dataIndex:['created_at','iso_string'],
                     title:t('Create date'),
                     key:'date',
                     render:i=><DateParser date={i}/>
                 },
-            ]} title={t('Invoice items')}/>
+            ] : [
+                                   {
+                                       title:'ID',
+                                       dataIndex:'id',
+                                       key:'id',
+                                       sorter:true,
+                                   },
+                                   {
+                                       title:t('Name'),
+                                       dataIndex:'name',
+                                       key:'name',
+                                       sorter:true,
+                                       translatable:true,
+                                       filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                                   },
+                                   {
+                                       dataIndex:'price',
+                                       title:t('Price'),
+                                       key:'price',
+                                   },
+                                   {
+                                       dataIndex:'tax_percentage',
+                                       title:t('Tax percentage'),
+                                       key:'tax_percentage',
+                                   },
+
+                                   {
+                                       dataIndex:['created_at','iso_string'],
+                                       title:t('Create date'),
+                                       key:'date',
+                                       render:i=><DateParser date={i}/>
+                                   },
+                               ]
+            } title={t('Invoice items')}/>
         </div>
     )
 }
