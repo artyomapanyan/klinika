@@ -65,16 +65,22 @@ const FutureVisits = ({ appointment_id, status }) => {
 
 	const addVisit = () => {
 		setAddLoading(true)
-		createResource('FutureVisits', { ...newVisit, appointment_id }, token).then(
-			response => {
-				setAddLoading(false)
-				if (response.id) {
-					loadVisits()
-					formRef.current.resetFields()
-					setnewVisit({})
-				}
+		createResource(
+			'FutureVisits',
+			{
+				...newVisit,
+				appointment_id: appointment_id,
+				queue_type: visitsState.length ? null : 1,
+			},
+			token
+		).then(response => {
+			setAddLoading(false)
+			if (response.id) {
+				loadVisits()
+				formRef.current.resetFields()
+				setnewVisit({})
 			}
-		)
+		})
 	}
 
 	const deleteVisit = (e, visit) => {
@@ -228,7 +234,11 @@ const FutureVisits = ({ appointment_id, status }) => {
 										) : null}
 									</Col>
 									<Col lg={4} style={{ alignContent: 'center' }}>
-										{Resources.queue.find(e => e.id === visit.queue_type)?.name}{' '}
+										{
+											Resources.futureVisitQueue.find(
+												e => e.id === visit.queue_type
+											)?.name
+										}{' '}
 										{visit.gap} {visit.gap != null ? 'days' : ''}
 									</Col>
 								</Row>
@@ -377,7 +387,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 											onClick={() => reorderVisit(visit, 'reduce')}
 										/>
 									</div>
-									<div style={{ flex: '1 1 auto', marginRight:5 }}>
+									<div style={{ flex: '1 1 auto', marginRight: 5 }}>
 										{visit.service_type === 'doctor_visit' ||
 										visit.nursing_tasks.length === 1 ||
 										visit.lab_tests.length === 1 ? (
@@ -403,7 +413,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 																	}}
 																>
 																	{test.name}
-																	<Space style={{float:'inline-end'}}>
+																	<Space style={{ float: 'inline-end' }}>
 																		<div
 																			style={{ cursor: 'pointer' }}
 																			onClick={() => {
@@ -440,7 +450,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 																	}}
 																>
 																	{task.name}
-																	<Space style={{float:'inline-end'}}>
+																	<Space style={{ float: 'inline-end' }}>
 																		<div
 																			style={{ cursor: 'pointer' }}
 																			onClick={() => {
@@ -469,17 +479,13 @@ const FutureVisits = ({ appointment_id, status }) => {
 									<div style={{ flex: '0 0 auto', marginRight: 10 }}>
 										<Form name='gap'>
 											<div style={{ display: 'flex', flexDirection: 'row' }}>
-												<div style={{ flex: '0 0 auto', width:140 }}>
+												<div style={{ flex: '0 0 auto', width: 140 }}>
 													<FormInput
 														label={t('When')}
 														name={'queue_type'}
 														inputType={'resourceSelect'}
-														initialData={Resources.queue}
-														initialValue={
-															visit?.queue_type
-																? visit?.queue_type
-																: 'From begining'
-														}
+														initialData={Resources.futureVisitQueue}
+														initialValue={visit?.queue_type}
 														inputProps={{
 															onChange: e => {
 																changeQueue(e, visit, visitIndex)
@@ -493,7 +499,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 														name={'gap'}
 														inputType={'number'}
 														disabled={visitsState?.length < 1}
-														initialValue={visit?.gap? visit?.gap : 0}
+														initialValue={visit?.gap}
 														onChange={e => changeGap(e, visit, visitIndex)}
 														max={120}
 														min={0}
