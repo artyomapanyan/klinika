@@ -1,6 +1,6 @@
 import { t } from 'i18next'
-import { Button, Col, Row, Checkbox, Modal } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Button, Col, Row, Checkbox, Modal, Form } from 'antd'
+import React, { useEffect, useState, useRef } from 'react'
 import Resources from '../../../../store/Resources'
 import { useSelector } from 'react-redux'
 import Preloader from '../../../Preloader'
@@ -9,15 +9,18 @@ import './FutureApps.sass'
 import AppointmentCalendar from '../../Appointments/Fragments/AppointmentCalendar/AppointmentCalendar'
 import dayjs from 'dayjs'
 import booking_appointment from '../../../../dist/icons/booking_appointment.svg'
+import { RascheduledContent } from '../../Appointments/StatusModalForms/RascheduledContent'
 
 const FutureApps = ({ appointment_id, status }) => {
 	let language = useSelector(state => state.app.current_locale)
 	let token = useSelector(state => state.auth.token)
 	let ownerClinics = useSelector(state => state?.owner)
+	const rescheduleFormRef = useRef()
 	const [disabled, setDisabled] = useState(false)
 	const [appointmentObj, setappointmentObj] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const [bookLoading, setBookLoading] = useState(0)
+	const [rescheduleLoading, setRescheduleLoading] = useState(false)
 	const [visitsState, setVisitsState] = useState([])
 	const [defaultPagination, setDefaultPagination] = useState({
 		order: 'desc',
@@ -85,7 +88,7 @@ const FutureApps = ({ appointment_id, status }) => {
 		})
 	}
 
-	const showModal = visit => {
+	const showBookingModal = visit => {
 		let serviceType = null
 		switch (visit.service_type) {
 			case 'doctor_visit':
@@ -132,6 +135,49 @@ const FutureApps = ({ appointment_id, status }) => {
 			})
 	}
 
+	const showUpdatingModal = visit => {
+		setappointmentObj({
+			...visit.booked_appointment,
+			future_visit_id: visit.id
+		})
+	}
+
+	const RescheduleAppointment = values => {
+		setRescheduleLoading(true)
+
+		if (values?.booked_at) {
+			values.booked_at =
+				values.booked_at.format('YYYY-MM-DD') + ' ' + values.appointment_time
+		}
+		postResource(
+			'Appointment',
+			'appointmentStatus',
+			token,
+			`${appointmentObj.id}/switch-status`,
+			{
+				status: 4,
+				...values
+			}
+		)
+			.then(response => {
+				if (response?.id) {
+					setVisitsState(prevVisits => {
+						const updatedVisits = prevVisits.map(visit => {
+							if (visit.id === appointmentObj.future_visit_id) {
+								return { ...visit, booked_appointment: response }
+							}
+							return visit
+						})
+						return updatedVisits
+					})
+				}
+			})
+			.finally(() => {
+				setappointmentObj(null)
+				setRescheduleLoading(false)
+			})
+	}
+
 	const handleCancel = () => {
 		setappointmentObj(null)
 	}
@@ -167,7 +213,7 @@ const FutureApps = ({ appointment_id, status }) => {
 										>
 											<Col lg={1} style={{ alignSelf: 'center' }}>
 												<Checkbox key={visit.id} disabled={!visit?.supported}>
-													{visitIndex + 1}
+													{`${(visitIndex + 1).toString().padStart(2, '0')}`}
 												</Checkbox>
 											</Col>
 											<Col lg={9} style={{ alignSelf: 'center' }}>
@@ -184,18 +230,17 @@ const FutureApps = ({ appointment_id, status }) => {
 													)?.name
 												}
 											</Col>
-											<Col lg={4} style={{ alignSelf: 'center' }}>
+											<Col lg={2} style={{ alignSelf: 'center' }}>
 												<span style={{ fontWeight: 700 }}>
 													{visit.price ? visit.price + ' SAR' : null}
 												</span>
 											</Col>
-											<Col lg={6} style={{ alignSelf: 'center' }}>
+											<Col lg={8} style={{ alignSelf: 'center' }}>
 												{visit?.booked_appointment && visit?.supported ? (
 													<div
 														style={{
 															fontWeight: 500,
 															float: 'inline-end',
-															margin: 20,
 															fontSize: 16
 														}}
 													>
@@ -209,41 +254,44 @@ const FutureApps = ({ appointment_id, status }) => {
 														) : null}
 														<span style={{ marginInlineStart: 10 }}>
 															{dayjs(
-																visit?.booked_appointment?.booked_to?.iso_string
+																visit?.booked_appointment?.booked_at?.iso_string
 															).format('hh:mm A, DD MMM YY')}
 														</span>
-														<span style={{ marginInlineStart: 10 }}>
-															<img alt={'icons'} src={booking_appointment} />
-														</span>
+														{visit.booked_appointment.status == 1 ? (
+															<span
+																style={{
+																	marginInlineStart: 10,
+																	cursor: 'pointer'
+																}}
+																onClick={() => showUpdatingModal(visit)}
+															>
+																<img alt={'icons'} src={booking_appointment} />
+															</span>
+														) : null}
 													</div>
 												) : (
-													<Row>
-														<Col lg={12} style={{ alignSelf: 'center' }}>
-															{/* <Button
-														loading={addLoading}
-														size={'large'}
-														type={'secondary'}
-														htmlType='submit'
-													>
-														{t('Right Now (2 in line)')}
-													</Button> */}
-														</Col>
-														<Col lg={12} style={{ alignSelf: 'center' }}>
-															<Button
-																loading={
-																	bookLoading === visit.id && visit?.supported
-																}
-																size={'large'}
-																type={'primary'}
-																htmlType='submit'
-																disabled={ disabled || !visit?.supported
-																}
-																onClick={() => showModal(visit)}
-															>
-																{t('Book Appointment')}
-															</Button>
-														</Col>
-													</Row>
+													<div style={{float:'inline-end'}}>
+														{/* <Button
+															size={'large'}
+															type={'secondary'}
+															htmlType='submit'
+															style={{margin:10}}
+														>
+															{t('Right Now (2 in line)')}
+														</Button> */}
+														<Button
+															loading={
+																bookLoading === visit.id && visit?.supported
+															}
+															size={'large'}
+															type={'primary'}
+															htmlType='submit'
+															disabled={disabled || !visit?.supported}
+															onClick={() => showBookingModal(visit)}
+														>
+															{t('Book Appointment')}
+														</Button>
+													</div>
 												)}
 											</Col>
 										</Row>
@@ -258,11 +306,27 @@ const FutureApps = ({ appointment_id, status }) => {
 						footer={false}
 						open={appointmentObj}
 						onCancel={handleCancel}
+						key={appointmentObj?.id || 0}
 					>
-						<AppointmentCalendar
-							appointmentObj={appointmentObj}
-							setappointmentObj={createAppointment}
-						/>
+						{appointmentObj?.id ? (
+							<Form
+								onFinish={RescheduleAppointment}
+								//onValuesChange={handleValuesChange}
+								ref={rescheduleFormRef}
+							>
+								<RascheduledContent
+									loading={rescheduleLoading}
+									modal={appointmentObj}
+									onCancel={handleCancel}
+									formRef={rescheduleFormRef}
+								/>
+							</Form>
+						) : (
+							<AppointmentCalendar
+								appointmentObj={appointmentObj}
+								setappointmentObj={createAppointment}
+							/>
+						)}
 					</Modal>
 				</div>
 			) : null}
