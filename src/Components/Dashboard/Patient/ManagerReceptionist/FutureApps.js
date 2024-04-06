@@ -209,7 +209,7 @@ const FutureApps = ({ appointment_id, status }) => {
 														) : null}
 														<span style={{ marginInlineStart: 10 }}>
 															{dayjs(
-																visit?.booked_appointment?.booked_to?.iso_string
+																visit?.booked_appointment?.booked_at?.iso_string
 															).format('hh:mm A, DD MMM YY')}
 														</span>
 														<span style={{ marginInlineStart: 10 }}>
