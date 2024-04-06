@@ -167,7 +167,7 @@ const FutureApps = ({ appointment_id, status }) => {
 										>
 											<Col lg={1} style={{ alignSelf: 'center' }}>
 												<Checkbox key={visit.id} disabled={!visit?.supported}>
-													{visitIndex + 1}
+													{`${(visitIndex + 1).toString().padStart(2, '0')}`}
 												</Checkbox>
 											</Col>
 											<Col lg={9} style={{ alignSelf: 'center' }}>
