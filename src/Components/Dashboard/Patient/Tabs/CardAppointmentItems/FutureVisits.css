@@ -1,4 +1,7 @@
 .future-visits {
+    .ant-form-item-label > label {
+        top: 0px
+    }
 	.ant-card-bordered {
 		.ant-card-body {
 			padding: 12px !important;
@@ -7,7 +10,6 @@
 	}
     .ant-select-multiple{
         .ant-select-selection-overflow{
-            top: 3px;
             .ant-select-selection-item{
                 color: white;
                 background: #774D9D;
@@ -17,4 +19,9 @@
             }
         }
     }
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
 }

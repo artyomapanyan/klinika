@@ -18,10 +18,11 @@ import {
 	deleteResource
 } from '../../../../Functions/api_calls'
 
-const FutureVisits = ({ appointment_id, disabled = false }) => {
+const FutureVisits = ({ appointment_id, status }) => {
 	const formRef = useRef()
 	let token = useSelector(state => state.auth.token)
 	const [loading, setLoading] = useState(false)
+	const [disabled, setDisabled] = useState(false)
 	const [visitsState, setVisitsState] = useState([])
 	const [newVisit, setnewVisit] = useState({})
 	const [defaultPagination, setDefaultPagination] = useState({
@@ -36,6 +37,12 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 		loadVisits()
 	}, [])
 
+	useEffect(() => {
+		if (status == 0 || status == 2 || status == 3 || status == 5 || status == 7)
+			setDisabled(true)
+		else setDisabled(false)
+	}, [status])
+
 	const loadVisits = () => {
 		setLoading(true)
 		postResource('FutureVisits', 'single', token, '', {
@@ -49,18 +56,6 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 		})
 	}
 
-	const handleMapLabTests = (item, name) => {
-		name = item.lab_test.name
-		item.id = item.lab_test.id
-		return [name, item]
-	}
-
-	const handleMapNursingTasks = (item, name) => {
-		name = item.nursing_task.name
-		item.id = item.nursing_task.id
-		return [name, item]
-	}
-
 	const handleValuesChange = e => {
 		setnewVisit(prevState => ({
 			...prevState,
@@ -70,16 +65,22 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 
 	const addVisit = () => {
 		setAddLoading(true)
-		createResource('FutureVisits', { ...newVisit, appointment_id }, token).then(
-			response => {
-				setAddLoading(false)
-				if (response.id) {
-					loadVisits()
-					formRef.current.resetFields()
-					setnewVisit({})
-				}
+		createResource(
+			'FutureVisits',
+			{
+				...newVisit,
+				appointment_id: appointment_id,
+				queue_type: visitsState.length ? null : 1,
+			},
+			token
+		).then(response => {
+			setAddLoading(false)
+			if (response.id) {
+				loadVisits()
+				formRef.current.resetFields()
+				setnewVisit({})
 			}
-		)
+		})
 	}
 
 	const deleteVisit = (e, visit) => {
@@ -111,20 +112,25 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 	const changeQueue = (value, visit, visitIndex) => {
 		if (value) {
 			updateVisit({ ...visit, queue_type: value }, visitIndex)
+		} else {
+			updateVisit({ ...visit, queue_type: null }, visitIndex)
+			//formRef.current.setFieldsValue({'When': 'From Begining'})
 		}
 	}
 
 	const changeGap = (event, visit, visitIndex) => {
 		if (event.target?.value) {
-			if (event.target?.value <= 120)
+			if (event.target?.value <= 120 && event.target?.value >= 0)
 				updateVisit({ ...visit, gap: event.target?.value }, visitIndex)
 			else {
 				notification.error({
 					message: 'Error',
-					description: t('the gap must be 120 or less'),
+					description: t('the gap must be between 0 and 120 day'),
 					placement: 'bottomRight'
 				})
 			}
+		} else {
+			updateVisit({ ...visit, gap: null }, visitIndex)
 		}
 	}
 
@@ -167,21 +173,22 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 				setVisitsState(response.items)
 			}
 		})
+	}
 
-		// postResource('FutureVisits', 'single', token, '', { appointment: appointment_id, ...defaultPagination})
-		// .then(response => {
-		// 	setLoading(false)
-		// 	if (!response.errors) {
-		// 		setVisitsState(response.items)
-		// 	}
-		// })
+	const validatePositiveNumber = (_, value) => {
+		if (value < 0) {
+			return Promise.reject(new Error(''))
+		}
+		return Promise.resolve()
 	}
 
 	return (
 		<div className='future-visits'>
-			<h1 style={{ marginTop: 20 }} className={'h1'}>
-				{t('Future Visits')}
-			</h1>
+			{!disabled || (disabled && visitsState.length) ? (
+				<h2 style={{ marginTop: 20, fontSize: 20 }} className={'h1'}>
+					{t('Future Visits')}
+				</h2>
+			) : null}
 			{disabled ? (
 				<div>
 					{loading ? (
@@ -197,15 +204,22 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 										alignContent: 'center'
 									}}
 								>
-									<Col lg={3} style={{borderInlineEnd: '1px solid #A6A7BA', marginInlineEnd: 40}}>
+									<Col
+										lg={3}
+										style={{
+											borderInlineEnd: '1px solid #A6A7BA',
+											marginInlineEnd: 40,
+											alignContent: 'center'
+										}}
+									>
 										{
 											Resources.futureVisitTypes.find(
 												e => e.id === visit.service_type
 											)?.name
 										}
 									</Col>
-									<Col lg={17}>
-										{visit.service_type === 'clinic_visit' ? (
+									<Col lg={15} style={{ alignContent: 'center' }}>
+										{visit.service_type === 'doctor_visit' ? (
 											<div>{visit.specialty?.title}</div>
 										) : null}
 										{visit.service_type === 'laboratory' ? (
@@ -219,13 +233,13 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 											</div>
 										) : null}
 									</Col>
-									<Col lg={3}>
+									<Col lg={4} style={{ alignContent: 'center' }}>
 										{
-											Resources.queue.find(
+											Resources.futureVisitQueue.find(
 												e => e.id === visit.queue_type
 											)?.name
-										} 
-										{visit.gap} {visit.gap ? 'days' : ''}
+										}{' '}
+										{visit.gap} {visit.gap != null ? 'days' : ''}
 									</Col>
 								</Row>
 							)
@@ -277,8 +291,7 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 											status: 2,
 											has_clinic: 1
 										}}
-										handleMapItems={handleMapLabTests}
-										resource={'ClinicLabTest'}
+										resource={'LabTest'}
 									/>
 								) : null}
 								{newVisit?.service_type == 'nursing' ? (
@@ -294,11 +307,10 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 											has_clinic: 1
 										}}
 										inputType={'resourceSelect'}
-										handleMapItems={handleMapNursingTasks}
-										resource={'ClinicNursingTask'}
+										resource={'NursingTask'}
 									/>
 								) : null}
-								{newVisit?.service_type == 'clinic_visit' ? (
+								{newVisit?.service_type == 'doctor_visit' ? (
 									<FormInput
 										label={t('Specialty')}
 										name={'specialty_id'}
@@ -308,7 +320,8 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 										customSearchKey={'title'}
 										resourceParams={{
 											type: Resources.TaxonomyTypes.SPECIALTY,
-											has_doctor: 1
+											has_doctor: 1,
+											has_parent: 0
 										}}
 									/>
 								) : null}
@@ -331,26 +344,40 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 					) : (
 						visitsState?.map((visit, visitIndex) => {
 							return (
-								<Row key={visitIndex}>
-									<Col lg={4}>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										width: '100%'
+									}}
+									key={visitIndex}
+								>
+									<div
+										style={{ flex: '0 0 auto', marginRight: 10, marginTop: 5 }}
+									>
 										<Button
 											style={{
 												height: 48,
 												width: 48,
-												margin: 6,
 												background: '#f5f6fa',
 												border: 'none'
 											}}
-											disabled={visitsState.length === 1 || visitIndex === visitsState.length - 1}
+											disabled={
+												visitsState.length === 1 ||
+												visitIndex === visitsState.length - 1
+											}
 											type='default'
 											icon={<CaretDownOutlined />}
 											onClick={() => reorderVisit(visit, 'raise')}
-										></Button>
+										/>
+									</div>
+									<div
+										style={{ flex: '0 0 auto', marginRight: 10, marginTop: 5 }}
+									>
 										<Button
 											style={{
 												height: 48,
 												width: 48,
-												margin: 6,
 												background: '#f5f6fa',
 												border: 'none'
 											}}
@@ -358,10 +385,10 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 											type='default'
 											icon={<CaretUpOutlined />}
 											onClick={() => reorderVisit(visit, 'reduce')}
-										></Button>
-									</Col>
-									<Col lg={12}>
-										{visit.service_type === 'clinic_visit' ||
+										/>
+									</div>
+									<div style={{ flex: '1 1 auto', marginRight: 5 }}>
+										{visit.service_type === 'doctor_visit' ||
 										visit.nursing_tasks.length === 1 ||
 										visit.lab_tests.length === 1 ? (
 											<Card style={{ height: 48, padding: 0, marginTop: 5 }}>
@@ -378,37 +405,33 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 														</h4>
 														{visit.lab_tests?.map((test, testIndex) => {
 															return (
-																<Row
+																<div
 																	key={testIndex}
 																	style={{
 																		borderTop: '1px dashed #A6A7BA',
-																		padding: 0
+																		padding: 12
 																	}}
 																>
-																	<Col lg={22} className='gutter-row'>
-																		{test.name}
-																	</Col>
-																	<Col lg={1} className='gutter-row'>
-																		<Space>
-																			<div
-																				style={{ cursor: 'pointer' }}
-																				onClick={() => {
-																					removeVisitItem(
-																						visitIndex,
-																						testIndex,
-																						'lab_tests'
-																					)
-																				}}
-																			>
-																				<img
-																					className={'del_icin'}
-																					alt={'x_black'}
-																					src={x_black}
-																				/>
-																			</div>
-																		</Space>
-																	</Col>
-																</Row>
+																	{test.name}
+																	<Space style={{ float: 'inline-end' }}>
+																		<div
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => {
+																				removeVisitItem(
+																					visitIndex,
+																					testIndex,
+																					'lab_tests'
+																				)
+																			}}
+																		>
+																			<img
+																				className={'del_icin'}
+																				alt={'x_black'}
+																				src={x_black}
+																			/>
+																		</div>
+																	</Space>
+																</div>
 															)
 														})}
 													</div>
@@ -419,53 +442,49 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 														</h4>
 														{visit.nursing_tasks?.map((task, taskIndex) => {
 															return (
-																<Row
+																<div
 																	key={taskIndex}
 																	style={{
 																		borderTop: '1px dashed #A6A7BA',
-																		padding: 0
+																		padding: 12
 																	}}
 																>
-																	<Col lg={22} className='gutter-row'>
-																		{task.name}
-																	</Col>
-																	<Col lg={1} className='gutter-row'>
-																		<Space>
-																			<div
-																				style={{ cursor: 'pointer' }}
-																				onClick={() => {
-																					removeVisitItem(
-																						visitIndex,
-																						taskIndex,
-																						'nursing_tasks'
-																					)
-																				}}
-																			>
-																				<img
-																					className={'del_icin'}
-																					alt={'x_black'}
-																					src={x_black}
-																				/>
-																			</div>
-																		</Space>
-																	</Col>
-																</Row>
+																	{task.name}
+																	<Space style={{ float: 'inline-end' }}>
+																		<div
+																			style={{ cursor: 'pointer' }}
+																			onClick={() => {
+																				removeVisitItem(
+																					visitIndex,
+																					taskIndex,
+																					'nursing_tasks'
+																				)
+																			}}
+																		>
+																			<img
+																				className={'del_icin'}
+																				alt={'x_black'}
+																				src={x_black}
+																			/>
+																		</div>
+																	</Space>
+																</div>
 															)
 														})}
 													</div>
 												)}
 											</Card>
 										)}
-									</Col>
-									<Col lg={7}>
+									</div>
+									<div style={{ flex: '0 0 auto', marginRight: 10 }}>
 										<Form name='gap'>
-											<Row>
-												<Col lg={12}>
+											<div style={{ display: 'flex', flexDirection: 'row' }}>
+												<div style={{ flex: '0 0 auto', width: 140 }}>
 													<FormInput
 														label={t('When')}
 														name={'queue_type'}
 														inputType={'resourceSelect'}
-														initialData={Resources.queue}
+														initialData={Resources.futureVisitQueue}
 														initialValue={visit?.queue_type}
 														inputProps={{
 															onChange: e => {
@@ -473,8 +492,8 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 															}
 														}}
 													/>
-												</Col>
-												<Col lg={12}>
+												</div>
+												<div style={{ flex: '0 0 auto' }}>
 													<FormInput
 														label={t('Gap, days')}
 														name={'gap'}
@@ -482,23 +501,23 @@ const FutureVisits = ({ appointment_id, disabled = false }) => {
 														disabled={visitsState?.length < 1}
 														initialValue={visit?.gap}
 														onChange={e => changeGap(e, visit, visitIndex)}
-														max={100}
+														max={120}
+														min={0}
+														rules={[{ validator: validatePositiveNumber }]}
 													/>
-												</Col>
-											</Row>
+												</div>
+											</div>
 										</Form>
-									</Col>
-									<Col lg={1}>
-										<div style={{ marginTop: 18, float: 'inline-end' }}>
-											<img
-												src={dark_delete_icon}
-												alt={'dark_delete_icon'}
-												onClick={e => deleteVisit(e, visit)}
-												style={{ cursor: 'pointer' }}
-											/>
-										</div>{' '}
-									</Col>
-								</Row>
+									</div>
+									<div style={{ flex: '0 0 auto', marginTop: 16 }}>
+										<img
+											src={dark_delete_icon}
+											alt={'dark_delete_icon'}
+											onClick={e => deleteVisit(e, visit)}
+											style={{ cursor: 'pointer' }}
+										/>
+									</div>
+								</div>
 							)
 						})
 					)}

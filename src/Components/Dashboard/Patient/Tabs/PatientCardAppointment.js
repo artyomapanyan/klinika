@@ -313,15 +313,14 @@ function PatientCardAppointment({
 								</Form>
 
 								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 40, boxShadow: '0.15px 0.15px'}}></div>
-								<CurrentVisitServices />
-								<div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
+								<CurrentVisitServices id={id} bigData={bigData}/>
+								{
+									bigData?.status === 2 ? <div></div> : <div style={{width: '100%', borderBottom: '1px solid #ceced6', marginTop: 15, boxShadow: '0.15px 0.15px'}}></div>
+								}
+
 
                                 <FutureVisits appointment_id={id}
-									disabled={
-										bigData.status === 2 ||
-										bigData.status === 3  ||
-										bigData.status === 5 ||
-										bigData.status === 7} 
+									status={bigData.status}
 									/>
 
 								{/*<div >*/}

@@ -71,7 +71,7 @@ function Invoice() {
             }
         }
 
-        console.log(values)
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {

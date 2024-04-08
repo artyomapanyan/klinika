@@ -73,27 +73,38 @@ function AppointmentCalendarModal({
 	}, [])
 
 	const addAppointment = values => {
-		setappointmentObj(prevState => ({
-			...prevState,
-			booked_at: dayjs(selectedDate + ' ' + values.time).format(
-				'YYYY-MM-DD HH:mm'
-			),
-			offer_id: values.offer_id, //? values.offer_id : null,
-			doctor_id: doctor?.id,
-			lab_packages: values.lab_packages ? [values.lab_packages] : [],
-			lab_tests: values.lab_tests,
-			nursing_tasks: values.nursing_tasks,
-			address1: values.address1,
-
-			//data to be deleted from the object before saving the appointment
-			doctor: doctor,
-			specialty: specialty,
-			labPackagesArray: labPackagesArray,
-			labTestsArray: labTestsArray,
-			nursingTasksArray: nursingTasksArray
-		}))
+		if(appointmentObj.future_visit_id){
+			setappointmentObj({
+				booked_at: dayjs(selectedDate + ' ' + values.time).format(
+					'YYYY-MM-DD HH:mm'
+				),
+				offer_id: values.offer_id, //? values.offer_id : null,
+				doctor_id: doctor?.id,
+				address1: values.address1,
+			})
+		}
+		else{
+			setappointmentObj(prevState => ({
+				...prevState,
+				booked_at: dayjs(selectedDate + ' ' + values.time).format(
+					'YYYY-MM-DD HH:mm'
+				),
+				offer_id: values.offer_id, //? values.offer_id : null,
+				doctor_id: doctor?.id,
+				lab_packages: values.lab_packages ? [values.lab_packages] : [],
+				lab_tests: values.lab_tests,
+				nursing_tasks: values.nursing_tasks,
+				address1: values.address1,
+	
+				//data to be deleted from the object before saving the appointment
+				doctor: doctor,
+				specialty: specialty,
+				labPackagesArray: labPackagesArray,
+				labTestsArray: labTestsArray,
+				nursingTasksArray: nursingTasksArray
+			}))
+		}
 		setSelectedDate(false)
-		console.log(appointmentObj)
 	}
 
 	const handleMapLabPackages = (item, name) => {
@@ -176,7 +187,8 @@ function AppointmentCalendarModal({
 									<br />
 								</div>
 							) : null}
-							{appointmentObj?.service_type === 'nursing' ? (
+							{appointmentObj?.service_type === 'nursing' &&
+							!appointmentObj.future_visit_id ? (
 								<FormInput
 									label={t('Nursing tasks')}
 									name={'nursing_tasks'}
@@ -198,8 +210,9 @@ function AppointmentCalendarModal({
 									resource={'ClinicNursingTask'}
 								/>
 							) : null}
-							{appointmentObj?.service_type === 'laboratory_clinic_visit' ||
-							appointmentObj?.service_type === 'laboratory_home_visit' ? (
+							{(appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+								appointmentObj?.service_type === 'laboratory_home_visit') &&
+							!appointmentObj.future_visit_id ? (
 								<div>
 									<FormInput
 										label={t('Lab Tests')}
