@@ -230,7 +230,7 @@ const FutureApps = ({
 											<Col lg={1} style={{ alignSelf: 'center' }}>
 												<Checkbox
 													key={visit.id}
-													disabled={!visit?.booked_appointment}
+													disabled={disabled || !visit?.booked_appointment}
 													onChange={() =>
 														handleCheckboxChange(visit.booked_appointment?.id)
 													}
