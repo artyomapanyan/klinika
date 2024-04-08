@@ -14,9 +14,11 @@ import {t} from "i18next";
 import {Button, Drawer, Space} from "antd";
 import ThankYouOfferDetailsNew from "./ThankYouOfferDetailsNew";
 import PaymentFailed from "../../Fragments/PaymentFailed";
+import payment_failed_image from "../../../../dist/Img/payment_failed_image.png";
 
-function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay, isSaudi}) {
+function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay, isSaudi, moyasarPayStatusState}) {
     let token = useSelector(state => state.auth.token)
+    let moyasarIds = useSelector(state => state?.moyasarIds)
     const params = useParams()
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
@@ -96,8 +98,33 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         )
     }
 
+    const rePayOfferAppointmentMoyasar = (e) => {
+        setTryAgainLoading(true)
+        postResource('RePayPublicAppointment', 'create', token, `${moyasarIds?.appointment_id}/repay-offer-appointment`, {
+                payment_method_id: moyasarIds?.paymentMethodId
+            }
+        ).then((response) => {
+            console.log(response)
+                setTryAgainLoading(false)
+                if (response?.appointment?.id) {
+
+                    document.location.href = response?.redirect
+                }
+            }
+        )
+
+        // e.view.location.pathname = `pay-online/moyasar`
+
+
+    }
+
     const onGoOffer = (e) => {
         e.view.location.pathname = `offers/${chargeResponse?.appointment?.offer?.id}`;
+
+    }
+
+    const onGoOfferMoyasar = (e) => {
+        e.view.location.pathname = `offers/${moyasarIds?.offer}`;
 
     }
 
@@ -116,6 +143,24 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         )
     }
 
+    const onReBookWidthPaymentMethodMoyasar = (e) => {
+        setTryAgainLoading(true)
+        postResource('RePayPublicAppointment', 'create', token, `${moyasarIds?.appointment_id}/repay-offer-appointment`, {
+                payment_method_id: paymentMethodState
+            }
+        ).then((response) => {
+                setTryAgainLoading(false)
+                if (response?.appointment?.id) {
+                    //setShowthank(true)
+                    document.location.href = response?.redirect
+                }
+            }
+        )
+
+        // e.view.location.pathname = `pay-online/moyasar`
+    }
+
+    console.log(paymentMethodState, 'ddd')
 
     return (
         <>
@@ -198,6 +243,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                             </div>
                                                 : <div>
                                                 {
+                                                    chargeResponse?.status ?
                                                     chargeResponse?.status === "CAPTURED" ? <div className={'offer_appointment_sec'}>
                                                         {/*<BookAnAppointmentNew data={data} />*/}
                                                         <div align={'center'} style={{padding: 24}}>
@@ -267,7 +313,95 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                                                 </div> : <div></div>
                                                             }
                                                         </div>
-                                                    </div>
+                                                    </div> :
+                                                        moyasarPayStatusState ? <div className={'offer_appointment_sec'}>
+                                                            {/*<BookAnAppointmentNew data={data} />*/}
+                                                            <div align={'center'} style={{padding: 24}}>
+                                                                <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                                <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+                                                                {/*<div className={'thank_you_smoll_text'}>*/}
+                                                                {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*/}
+                                                                {/*</div>*/}
+                                                                <div style={{marginTop: 10}}>
+                                                                    <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                                </div>
+                                                            </div>
+                                                        </div> : !goBackState ? <div className={'offer_appointment_sec'}>
+                                                            <div align={'center'} className={'payment_failed_big_div'}>
+                                                                <div style={{padding: '32px 32px 24px 32px'}}>
+                                                                    <img src={payment_failed_image} alt={'payment_failed_image'}  />
+                                                                </div>
+                                                                <div className={'payment_failed_bold_text'}>
+                                                                    {t("Payment failed")}
+                                                                </div>
+                                                                <div className={'payment_failed_light_text'}>
+                                                                    {t('There are some problems with paying for a visit to the doctor. You can try again or choose another payment method')}.
+                                                                </div>
+                                                                <div style={{marginTop: 24}}>
+                                                                    <Button loading={tryAgainLoading} onClick={(e)=>rePayOfferAppointmentMoyasar(e)} className={'all_offers_book_btns'} type={'primary'}>{t('Try again')}</Button>
+
+                                                                </div>
+                                                                <div style={{marginTop: 12}}>
+                                                                    <Button onClick={onGoBack} className={'all_offers_book_btns'} type={'secondary'}>{t('Go back')}</Button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div> : <div style={{marginTop: 20}} className={'offer_appointment_sec'}>
+                                                            <Space className={'drawer_header_text'}>
+                                                                <h2 className={'appointment_title'}>{t('Select payment method')}</h2>
+                                                            </Space>
+
+
+                                                            {/*<div className={'mobile_offer_price'}>*/}
+                                                            {/*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>*/}
+                                                            {/*</div>*/}
+
+                                                            {data?.clinic?.payment_methods.map((item, key) => {
+                                                                return <div key={key} className={'payment_section'}>
+
+                                                                    <div
+                                                                        onClick={() => onpay(item.id)}
+                                                                        className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+                                                                        //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
+                                                                    >
+                                                                        <div style={{height: 24,display: 'flex', alignItems: 'center'}}>
+                                                                            {
+                                                                                item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{height: 30}} /> : <PayCircleOutlined />
+                                                                            }
+                                                                        </div>
+                                                                        <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>
+                                                                            {item.title}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            })}
+                                                            <div>
+                                                                {
+                                                                    activePaymentMethodState ? <div>
+
+                                                                        <Button
+                                                                            loading={tryAgainLoading}
+                                                                            onClick={(e)=>onReBookWidthPaymentMethodMoyasar(e)}
+                                                                            type={'primary'}
+                                                                            className={'all_offers_book_btns'}
+                                                                            style={{marginTop: '20px'}}
+
+                                                                            htmlType={'submit'}
+                                                                        >
+                                                                            {t('Book_now')}
+                                                                        </Button>
+                                                                        <div style={{marginTop: 10}}>
+                                                                            <Button
+                                                                                onClick={(e)=>onGoOfferMoyasar(e)}
+                                                                                style={{border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}
+                                                                                type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>
+                                                                        </div>
+
+                                                                    </div> : <div></div>
+                                                                }
+                                                            </div>
+                                                        </div>
                                                 }
                                             </div>
                                         }
@@ -327,6 +461,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                                             </div>
                                                         </div> : <div>
                                                             {
+                                                                chargeResponse?.status ?
                                                                 chargeResponse?.status == "CAPTURED" ? <div>
                                                                     {/*<BookAnAppointmentNew data={data} />*/}
                                                                     <div align={'center'} style={{padding: 24}}>
@@ -396,7 +531,95 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                                                                             </div> : <div></div>
                                                                         }
                                                                     </div>
-                                                                </div>
+                                                                </div>:
+                                                                    moyasarPayStatusState ? <div className={'offer_appointment_sec'}>
+                                                                        {/*<BookAnAppointmentNew data={data} />*/}
+                                                                        <div align={'center'} style={{padding: 24}}>
+                                                                            <img src={img_thank_you} alt={'img_thank_you'} className={'thank_you_image_new'}/>
+                                                                            <div className={'thank_you_bold_text'}>{t('You book an offer')}!</div>
+                                                                            {/*<div className={'thank_you_smoll_text'}>*/}
+                                                                            {/*    {t('A brief instruction on what to do next, that the manager will contact him and remind him about the reception')}.*/}
+                                                                            {/*</div>*/}
+                                                                            <div style={{marginTop: 10}}>
+                                                                                <Button onClick={ogOffer}  type={'secondary'} className={'all_offers_book_btns'} style={{border: 'none', color: '#000000', backgroundColor: '#F5F6FA'}}>{t('Close')}</Button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> : !goBackState ? <div className={'offer_appointment_sec'}>
+                                                                        <div align={'center'} className={'payment_failed_big_div'}>
+                                                                            <div style={{padding: '32px 32px 24px 32px'}}>
+                                                                                <img src={payment_failed_image} alt={'payment_failed_image'}  />
+                                                                            </div>
+                                                                            <div className={'payment_failed_bold_text'}>
+                                                                                {t("Payment failed")}
+                                                                            </div>
+                                                                            <div className={'payment_failed_light_text'}>
+                                                                                {t('There are some problems with paying for a visit to the doctor. You can try again or choose another payment method')}.
+                                                                            </div>
+                                                                            <div style={{marginTop: 24}}>
+                                                                                <Button loading={tryAgainLoading} onClick={(e)=>rePayOfferAppointmentMoyasar(e)} className={'all_offers_book_btns'} type={'primary'}>{t('Try again')}</Button>
+
+                                                                            </div>
+                                                                            <div style={{marginTop: 12}}>
+                                                                                <Button onClick={onGoBack} className={'all_offers_book_btns'} type={'secondary'}>{t('Go back')}</Button>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div> : <div style={{marginTop: 20}} className={'offer_appointment_sec'}>
+                                                                        <Space className={'drawer_header_text'}>
+                                                                            <h2 className={'appointment_title'}>{t('Select payment method')}</h2>
+                                                                        </Space>
+
+
+                                                                        {/*<div className={'mobile_offer_price'}>*/}
+                                                                        {/*    <OfferPrice data={data} totalState={totalState} verifyResponseNationality={isSaudi}/>*/}
+                                                                        {/*</div>*/}
+
+                                                                        {data?.clinic?.payment_methods.map((item, key) => {
+                                                                            return <div key={key} className={'payment_section'}>
+
+                                                                                <div
+                                                                                    onClick={() => onpay(item.id)}
+                                                                                    className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+                                                                                    //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
+                                                                                >
+                                                                                    <div style={{height: 24,display: 'flex', alignItems: 'center'}}>
+                                                                                        {
+                                                                                            item?.logo?.url ? <img src={item?.logo?.url} alt={'mobile_filter_icon'} style={{height: 30}} /> : <PayCircleOutlined />
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div style={{margin: '0 12px', fontSize: 14, fontWeight: 500}}>
+                                                                                        {item.title}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        })}
+                                                                        <div>
+                                                                            {
+                                                                                activePaymentMethodState ? <div>
+
+                                                                                    <Button
+                                                                                        loading={tryAgainLoading}
+                                                                                        onClick={(e)=>onReBookWidthPaymentMethodMoyasar(e)}
+                                                                                        type={'primary'}
+                                                                                        className={'all_offers_book_btns'}
+                                                                                        style={{marginTop: '20px'}}
+
+                                                                                        htmlType={'submit'}
+                                                                                    >
+                                                                                        {t('Book_now')}
+                                                                                    </Button>
+                                                                                    <div style={{marginTop: 10}}>
+                                                                                        <Button
+                                                                                            onClick={(e)=>onGoOfferMoyasar(e)}
+                                                                                            style={{border: 'none', backgroundColor: '#F5F6FA', color: '#000000'}}
+                                                                                            type={'secondary'} className={'all_offers_book_btns'}>{t('Cancel')}</Button>
+                                                                                    </div>
+
+                                                                                </div> : <div></div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
                                                             }
                                                         </div>
                                                     }
