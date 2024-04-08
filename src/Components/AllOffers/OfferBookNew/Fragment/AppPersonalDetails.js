@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react'
 
 import {Button, Form, Input, Space, notification, ConfigProvider} from 'antd'
 import { postResource } from '../../../Functions/api_calls'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { t } from 'i18next'
 import FormInput from '../../../Fragments/FormInput'
 
@@ -28,7 +28,7 @@ function AppPersonalDetails({
 								setTotalState
 }) {
 	let token = useSelector(state => state.auth.token)
-
+	let dispatch = useDispatch()
 
 	let language = useSelector((state) => state.app.current_locale)
 	const [phoneLoading, setPhoneLoading] = useState(false)
@@ -154,6 +154,14 @@ function AppPersonalDetails({
 					setTotalState(false)
 					setPhoneLoading(false)
 				} else {
+
+					if(response?.patient) {
+						dispatch({
+							type: 'IS_SAUDI',
+							payload: response?.patient?.is_saudi
+						})
+					}
+
 					setVerifyResponseNationality(response?.patient?.is_saudi)
 					setResponseCodeState(response)
 					setVerifyResponse(response)
@@ -163,6 +171,8 @@ function AppPersonalDetails({
 						last: response?.patient?.last,
 						email: response?.patient?.email
 					})
+
+
 
 					if (
 						response?.message ===
@@ -471,8 +481,16 @@ function AppPersonalDetails({
 															   onChange: (e) => {
 																   if(e == 1) {
 																	   setVerifyResponseNationality(true)
+																	   dispatch({
+																		   type: 'IS_SAUDI',
+																		   payload: true
+																	   })
 																   } else {
 																	   setVerifyResponseNationality(false)
+																	   dispatch({
+																		   type: 'IS_SAUDI',
+																		   payload: false
+																	   })
 																   }
 															   },
 														   }}

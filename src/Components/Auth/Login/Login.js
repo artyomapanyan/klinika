@@ -1,4 +1,4 @@
-import {Button, Carousel, Checkbox, Form} from "antd";
+import {Button, Carousel, Checkbox, Form, Input} from "antd";
 import React, {useEffect, useRef, useState} from 'react';
 import "./Login.sass";
 import logo from "../../../dist/Img/logo.svg";
@@ -14,6 +14,7 @@ import "../../../dist/styles/Styles.sass";
 import {Link} from "react-router-dom";
 import checkout from "../../../dist/icons/checkout.svg";
 import dayjs from "dayjs";
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
 
 
 function Login({goBackBtn}) {
@@ -134,19 +135,29 @@ function Login({goBackBtn}) {
                         <div className={'form_div'}>
                             <Form
                                 ref={formRef}
-                                onFinish={handleLogin}>
-
-                                <FormInput className={'test'} name={'email'} label={t('Email')} formRef={formRef} initialFocused={true}
-                                           inputDisabled={inputState}
-                                           initialValue={dataState?.user?.is_temporary_email ? dataState?.user?.email : ''} />
-
-                                <FormInput className={'test'} inputType={'password'}  formRef={formRef}  inputProps={{
-                                    // iconRender:() => (<Link onClick={(e) => {
-                                    //     e.preventDefault();
-                                    //     e.stopPropagation();
-                                    // }}
-                                    //                         to="/forgot">Forgot?</Link>)
-                                }} initialFocused={true} name={'password'} label={'Password'} />
+                                onFinish={handleLogin}
+                                className={'new-login-inputs'}>
+                                    
+                                <Form.Item
+                                    name="email"
+                                    rules={[{ required: true, message: t('Please input your email!') }]}
+                                >
+                                    <Input 
+                                    prefix={<MailOutlined style={{margin: 10}} />}
+                                    placeholder="Email" 
+                                    style={{height: 48, borderRadius:12, backgroundColor:'#f5f6fa'}} />
+                                </Form.Item>
+                                <Form.Item
+                                    name="password"
+                                    rules={[{ required: true, message: t('Please input your password!') }]}
+                                >
+                                    <Input
+                                    prefix={<LockOutlined style={{margin: 10}} />}
+                                    type="password"
+                                    placeholder="Password"
+                                    style={{height: 48, borderRadius:12, backgroundColor:'#f5f6fa'}}
+                                    />
+                                </Form.Item>
                                 <Link to="/forgot" className={'forgot_link'} style={{marginLeft: language === 'ar' ? '1%' : '12%'}}>{t('Forgot?')}</Link>
 
                                 {

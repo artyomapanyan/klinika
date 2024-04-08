@@ -156,13 +156,19 @@ function WorkingHours({onFinish,
     })
   }
   const handleAddHours = (workingDay, dataKey) => {
+
+    formRef.current.resetFields()
     handleUpdateWorkState([...workingDay, {
       closes_at: null, day: dataKey, is_day_off: true, opens_at: null, type: workingDay.type,
     }], dataKey)
   }
 
   const handleRemoveHours = (key, dataKey) => {
+    console.log(workingData[dataKey])
     const newData = {...workingData[dataKey]}
+    console.log(newData[key], 'hhh')
+    formRef.current.resetFields()
+    console.log(newData, 'eee')
     delete newData[key]
     handleUpdateWorkState(Object.values(newData), dataKey)
   }
@@ -303,6 +309,7 @@ function WorkingHours({onFinish,
                           options={currentOptions?.slice(0, closeKey)}
                           className={'working_houre_margin'}
                           onChange={(change) => {
+                            console.log(key)
                             if(!doctorHoursModal) {
                               if(currentTimes.length > 1) {
 

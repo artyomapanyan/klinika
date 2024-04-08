@@ -63,6 +63,17 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
             response => {
                 setLoading(false)
 
+                console.log(response)
+
+                dispatch({
+                    type: 'APP_INV_ID',
+                    payload: {
+                        appointment_id: response?.appointment?.id,
+                        invoice_id: response?.appointment?.invoices[0]?.id,
+                        offer: response?.appointment?.offer?.id
+                    }
+                })
+
 
                 if (response?.appointment?.id) {
                     document.location.href = response?.redirect
