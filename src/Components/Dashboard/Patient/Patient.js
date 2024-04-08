@@ -109,7 +109,9 @@ function Patient() {
                             />
                             <Payment 
                                 appointment_id={params.id} 
+                                status={data.status} 
                                 selectedFutureVisits={selectedFutureVisits}
+                                setData={setData}
                             />
                         </div>
                     }
