@@ -38,6 +38,7 @@ function Patient() {
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
     const [statusLoading, setStatusLoading] = useState(false)
+    const [selectedFutureVisits, setSelectedFutureVisits] = useState('');
 
 
     useEffect(() => {
@@ -100,8 +101,16 @@ function Patient() {
                         </div> : 
                         <div>
                             <ProvidedServices appointmentId={data?.id}/>
-                            <FutureApps appointment_id={params.id} status={data.status}/>
-                            <Payment appointment_id={params.id}/>
+                            <FutureApps 
+                                appointment_id={params.id} 
+                                status={data.status} 
+                                selectedFutureVisits={selectedFutureVisits} 
+                                setSelectedFutureVisits={setSelectedFutureVisits}
+                            />
+                            <Payment 
+                                appointment_id={params.id} 
+                                selectedFutureVisits={selectedFutureVisits}
+                            />
                         </div>
                     }
 
