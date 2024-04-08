@@ -268,6 +268,18 @@ let api = {
                 url: `${endpoint}${version}/appointments/`,
                 method: 'post',
             },
+            ServicePaymentCalculation:{
+                url: `${endpoint}${version}/appointments/servicePaymentCalculation`,
+                method: 'post',
+            },
+            PaymentReceived:{
+                url: `${endpoint}${version}/appointments/paymentReceived`,
+                method: 'post',
+            },
+            UndoPayment:{
+                url: `${endpoint}${version}/appointments/undoPayment`,
+                method: 'post',
+            },
         }
     },
     {

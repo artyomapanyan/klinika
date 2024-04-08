@@ -11,7 +11,12 @@ import dayjs from 'dayjs'
 import booking_appointment from '../../../../dist/icons/booking_appointment.svg'
 import { RascheduledContent } from '../../Appointments/StatusModalForms/RascheduledContent'
 
-const FutureApps = ({ appointment_id, status }) => {
+const FutureApps = ({
+	appointment_id,
+	status,
+	selectedFutureVisits,
+	setSelectedFutureVisits
+}) => {
 	let language = useSelector(state => state.app.current_locale)
 	let token = useSelector(state => state.auth.token)
 	let ownerClinics = useSelector(state => state?.owner)
@@ -185,6 +190,14 @@ const FutureApps = ({ appointment_id, status }) => {
 		setappointmentObj(null)
 	}
 
+	const handleCheckboxChange = appId => {
+		if (selectedFutureVisits.includes(appId)) {
+			setSelectedFutureVisits(selectedFutureVisits.filter(id => id !== appId))
+		} else {
+			setSelectedFutureVisits([...selectedFutureVisits, appId])
+		}
+	}
+
 	return (
 		<>
 			{visitsState.length ? (
@@ -215,8 +228,14 @@ const FutureApps = ({ appointment_id, status }) => {
 											}}
 										>
 											<Col lg={1} style={{ alignSelf: 'center' }}>
-												<Checkbox key={visit.id} disabled={!visit?.supported}>
-													{`${(visitIndex + 1).toString().padStart(2, '0')}`}
+												<Checkbox
+													key={visit.id}
+													disabled={!visit?.booked_appointment}
+													onChange={() =>
+														handleCheckboxChange(visit.booked_appointment?.id)
+													}
+												>
+													{`${(visitIndex + 1).toString().padStart(2, '0')}`}{' '}
 												</Checkbox>
 											</Col>
 											<Col lg={9} style={{ alignSelf: 'center' }}>
