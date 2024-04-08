@@ -53,7 +53,7 @@ function NewThankYouOffer() {
 
 
             })
-        } else if(moyasarIds?.paymentMethodId == 4) {
+        } else if(moyasarIds?.paymentMethodId == 5) {
             setMoyasarPayStatusState(currentURL?.includes('APPROVED'))
             setOnlineOrClinicPay(true)
             setFirstLoadingThankYou(false)
