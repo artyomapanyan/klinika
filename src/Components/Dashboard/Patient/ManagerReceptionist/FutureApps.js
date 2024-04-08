@@ -58,15 +58,18 @@ const FutureApps = ({ appointment_id, status }) => {
 									name: obj.service.title ? obj.service.title : obj.service.name
 								}
 							}),
-							price: record?.availability?.['supported'].reduce(
-								(total, currentItem) => {
-									if (parseFloat(currentItem.price)) {
-										return total + parseFloat(currentItem.price)
-									}
-									return total
-								},
-								0
-							)
+							price:
+								record.service_type === 'doctor_visit'
+									? record?.availability?.['supported'][0].price
+									: record?.availability?.['supported'].reduce(
+											(total, currentItem) => {
+												if (parseFloat(currentItem.price)) {
+													return total + parseFloat(currentItem.price)
+												}
+												return total
+											},
+											0
+									  )
 						})
 					}
 					if (record?.availability?.['non_supported'].length) {
@@ -270,7 +273,7 @@ const FutureApps = ({ appointment_id, status }) => {
 														) : null}
 													</div>
 												) : (
-													<div style={{float:'inline-end'}}>
+													<div style={{ float: 'inline-end' }}>
 														{/* <Button
 															size={'large'}
 															type={'secondary'}
