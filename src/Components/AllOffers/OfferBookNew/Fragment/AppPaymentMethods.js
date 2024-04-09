@@ -64,7 +64,7 @@ function AppPaymentMethods({
 
 										<div
 											onClick={() => onpay(item.id)}
-											className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+											className={paymentMethodState === item.id ? 'selected_payment_container' : 'payment_container'}
 											//style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
 										>
 											<div style={{height: 24,display: 'flex', alignItems: 'center'}}>
