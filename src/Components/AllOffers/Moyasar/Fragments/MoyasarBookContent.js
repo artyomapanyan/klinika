@@ -30,7 +30,6 @@ function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClini
 
 
 
-
     const showDrawer = () => {
         setOpen(true);
     };
