@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {postResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {LeftOutlined, PayCircleOutlined} from "@ant-design/icons";
@@ -20,6 +20,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
     let token = useSelector(state => state.auth.token)
     let moyasarIds = useSelector(state => state?.moyasarIds)
     const params = useParams()
+    let dispatch = useDispatch()
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
     const navigate = useNavigate()
@@ -90,6 +91,15 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         }
         ).then((response) => {
                 setTryAgainLoading(false)
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 if (response?.appointment?.id) {
                     //setShowthank(true)
                     document.location.href = response?.redirect
@@ -105,6 +115,15 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
             }
         ).then((response) => {
             console.log(response)
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 setTryAgainLoading(false)
                 if (response?.appointment?.id) {
 
@@ -135,6 +154,15 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
             }
         ).then((response) => {
                 setTryAgainLoading(false)
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 if (response?.appointment?.id) {
                     //setShowthank(true)
                     document.location.href = response?.redirect
@@ -150,6 +178,15 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
             }
         ).then((response) => {
                 setTryAgainLoading(false)
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 if (response?.appointment?.id) {
                     //setShowthank(true)
                     document.location.href = response?.redirect
