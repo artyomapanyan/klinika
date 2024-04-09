@@ -274,6 +274,12 @@ function DashboardRoutes(){
             indexComp:<Patients/>,
             showComp:<ShowPatient/>
         },
+        {
+            url:'lab-technician',
+            resource:'LabTechnician',
+            singleComp:'sss',
+            indexComp:'ddd'
+        },
 
 
 

@@ -294,6 +294,11 @@ export default {
                     label: t(`Clinics`),
                     permission:'Clinic'
                 },
+                {
+                    key: 'lab-technician',
+                    label: t(`Lab technician`),
+                    // permission:'LabTechnician'
+                },
             ]
         },
 
