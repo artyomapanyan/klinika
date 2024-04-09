@@ -1,34 +1,32 @@
 import {useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router";
+import {useNavigate} from "react-router";
 import React, {useEffect, useState} from "react";
 import {postResource, useGetResourceSingle} from "../../../Functions/api_calls";
-import {LeftOutlined, PayCircleOutlined} from "@ant-design/icons";
+import {LeftOutlined} from "@ant-design/icons";
 import Preloader from "../../../Preloader";
 import clinic2 from "../../../../dist/Img/clinic2.png";
 import ThankYouOfferDetailsNew from "../../NewThankYouOffer/Fragment/ThankYouOfferDetailsNew";
 import OfferHours from "../../OfferBookNew/Fragment/OfferHours";
 import OfferPrice from "../../OfferBookNew/Fragment/OfferPrice";
-import img_thank_you from "../../../../dist/Img/thank_you.png";
+
 import {t} from "i18next";
-import {Button, Drawer, Space} from "antd";
-import PaymentFailed from "../../Fragments/PaymentFailed";
+import {Button, Drawer} from "antd";
+
 import MoyasarPage from "../MoyasarPage";
 
 
 function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClinicPay,}) {
     let token = useSelector(state => state.auth.token)
-    const params = useParams()
+
     let reduxIdsd = useSelector(state => state?.moyasarIds)
     let isSaudi = useSelector(state => state?.isSaudi)
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
     const navigate = useNavigate()
     const [open, setOpen] = useState(window.innerWidth <= 600 ? true : false);
-    const [goBackState, setGoBackState] = useState(false)
-    const [paymentMethodState, setPaymentMethodState] = useState('')
-    const [activePaymentMethodState, setActivePaymentMethodState] = useState(false)
-    const [tryAgainLoading, setTryAgainLoading] = useState(false)
-    const [totalState, setTotalState] = useState(false)
+
+
+
 
 
 
@@ -49,6 +47,11 @@ function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClini
     const { loading } = loadingState
     const { data, setData } = dataState
 
+
+    useEffect(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+    }, [loading]);
+
     const onClick = () => {
         navigate(-1)
     }
@@ -68,55 +71,14 @@ function MoyasarBookContent({chargeResponse, firstLoadingThankYou, onlineOrClini
     }, [isMobile])
 
 
-    const ogOffer = () => {
-        navigate('/offers')
-    }
 
-    const onGoBack = () => {
-        setGoBackState(true)
-        setTotalState(true)
-    }
-
-    const onpay = e => {
-        setPaymentMethodState(e)
-        setActivePaymentMethodState(true)
-
-    }
-
-    const rePayOfferAppointment = () => {
-        setTryAgainLoading(true)
-        postResource('RePayPublicAppointment', 'create', token, `${chargeResponse?.appointment?.id}/repay-offer-appointment`, {
-                payment_method_id: 2
-            }
-        ).then((response) => {
-                setTryAgainLoading(false)
-                if (response?.appointment?.id) {
-                    //setShowthank(true)
-                    document.location.href = response?.redirect
-                }
-            }
-        )
-    }
 
     const onGoOffer = (e) => {
         e.view.location.pathname = `offers/${reduxIdsd?.offer}`;
 
     }
 
-    const onReBookWidthPaymentMethod = () => {
-        setTryAgainLoading(true)
-        postResource('RePayPublicAppointment', 'create', token, `${chargeResponse?.appointment?.id}/repay-offer-appointment`, {
-                payment_method_id: paymentMethodState
-            }
-        ).then((response) => {
-                setTryAgainLoading(false)
-                if (response?.appointment?.id) {
-                    //setShowthank(true)
-                    document.location.href = response?.redirect
-                }
-            }
-        )
-    }
+
 
 
 
