@@ -114,7 +114,7 @@ function CurrentVisitServices({id, bigData}) {
 
     return <div style={{marginTop: 30}}>
         {
-            (bigData?.status == 2 && bigData?.status == 3 && bigData?.status == 5 && bigData?.status == 7) && !itemsState.length ? <div></div> : <div className={'current_visit_text'}>
+            (bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7) && !itemsState?.length ? <div></div> : <div className={'current_visit_text'}>
                 {t('Current visit Services')}
             </div>
         }
