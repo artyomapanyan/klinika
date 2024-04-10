@@ -7,6 +7,7 @@ import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import {Button, Form, Input} from "antd";
 import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.png";
+import moment from 'moment/moment'
 
 
 export function FollowUpContent({onCancel, modal, loading, formRef}){
@@ -20,11 +21,17 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const [itemsState, setItemsState] = useState({})
     let [totalState, setTotalState] = useState(0)
     let [selectedItem, setSelectedItem] = useState(null)
+    const [dateWithEmptyHours, setDateWithEmptyHours] = useState([])
+    const [emptyDaysLoading, setEmptyDaysLoading] = useState(false)
+    const [timeOutId, setTimeOutId] = useState(null)
+    const [calendarIsOpen, setCalendarIsOpen] = useState(false);
 
 
     const amountRef = useRef()
 
-
+    useEffect(() => {
+        getEmptyHours();
+    }, [])
 
     useEffect(() => {
 
@@ -32,6 +39,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
         if (date && modal?.doctor?.id) {
 
             setDateLoading(true)
+            console.log(1)
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
                 service: modal?.service_type,
                 date: date.format('YYYY-MM-DD')
@@ -142,8 +150,29 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     }, [modal?.service_type])
 
+    const getEmptyHours = (date = dayjs()) => {
+        setEmptyDaysLoading(!dateWithEmptyHours.map(el => {
+            return String(moment(el).format('YYYY-MM'))
+        }).includes(dayjs(date).startOf('day').format('YYYY-MM')))
+        timeOutId && clearTimeout(timeOutId)
+
+        if (calendarIsOpen && date?.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD')) {
+            return
+        }
+        setTimeOutId(setTimeout(() => {
+            postResource('ClinicDoctorAvailableTimeForMonthByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
+                service: modal?.service_type,
+                date: date.format('YYYY-MM')
+            }).then((res) => {
+                setDateWithEmptyHours([...new Set([...dateWithEmptyHours, ...res?.working_hours_for_month])])
+                setEmptyDaysLoading(false)
+            })
+        }, date?.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') ? 1 : 300))
+    }
+
     const disabledDate = (current) => {
-        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+        return emptyDaysLoading ? true : current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+          || dateWithEmptyHours.includes(dayjs(current).startOf('day').format('YYYY-MM-DD HH:mm'))
     };
 
 
@@ -316,10 +345,13 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                         <div style={{width: '50%'}}>
                             <FormInput label={t('Appointment date')}
                                        disabledDate={disabledDate}
-                                       inputProps={{onChange:e=>setDate(e)}}
                                        inputProps={{
-                                           onChange:(e)=> {
-
+                                           onPanelChange:getEmptyHours,
+                                           onOpenChange:(status) => {
+                                               setCalendarIsOpen(status)
+                                           },
+                                           onChange:(e) => {
+                                               timeOutId && clearTimeout(timeOutId)
                                                setDate(e)
 
                                                formRef?.current?.setFieldsValue({

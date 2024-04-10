@@ -211,6 +211,10 @@ let api = {
         resource: 'ClinicDoctorAvailableTimeForDayByDoctorAndClinic',
     },
     {
+        url: 'clinic-doctors/available-times-exist-for-month-by-doctor-and-clinic',
+        resource: 'ClinicDoctorAvailableTimeForMonthByDoctorAndClinic',
+    },
+    {
         url: 'clinic-doctors',
         resource: 'ClinicDoctor',
         custom: {
@@ -255,6 +259,26 @@ let api = {
             InvoicePrice:{
                 url: `${endpoint}${version}/appointments/get-invoice-price`,
                 method: 'POST',
+            },
+            AppointmentServices:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'GET',
+            },
+            SaveServiceItems:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'post',
+            },
+            ServicePaymentCalculation:{
+                url: `${endpoint}${version}/appointments/servicePaymentCalculation`,
+                method: 'post',
+            },
+            PaymentReceived:{
+                url: `${endpoint}${version}/appointments/paymentReceived`,
+                method: 'post',
+            },
+            UndoPayment:{
+                url: `${endpoint}${version}/appointments/undoPayment`,
+                method: 'post',
             },
         }
     },
@@ -640,8 +664,10 @@ let api = {
     //
     // },
 
-
-
+    {
+        url: 'future-visits',
+        resource: 'FutureVisits',
+    }
 
     ].forEach(item => {
         if (!item.type) {

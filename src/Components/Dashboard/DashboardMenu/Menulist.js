@@ -34,11 +34,24 @@ export default {
             icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
             label: t(`Appointments`),
         },
+
         {
-            icon:<img alt={'invoices_icon'} src={invoices_icon}/>,
-            key: 'invoices',
-            label:  t(`Invoices`),
-            permission:'Invoice'
+            label: t(`Invoices`),
+            icon: <DollarOutlined style={{color:'#ce4e99', fontSize:20}}  />,
+            children: [
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoice-items',
+                    label:  t(`Invoice Items`),
+                    permission:'InvoiceItem'
+                },
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoices',
+                    label:  t(`Invoices`),
+                    permission:'Invoice'
+                },
+            ]
         },
         {
             icon:<img alt={'icons'} src={dash3}/>,
@@ -78,10 +91,22 @@ export default {
             label: t(`Appointments`),
         },
         {
-            icon:<img alt={'invoices_icon'} src={invoices_icon}/>,
-            key: 'invoices',
-            label:  t(`Invoices`),
-            permission:'Invoice'
+            label: t(`Invoices`),
+            icon: <DollarOutlined style={{color:'#ce4e99', fontSize:20}}  />,
+            children: [
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoice-items',
+                    label:  t(`Invoice Items`),
+                    permission:'InvoiceItem'
+                },
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoices',
+                    label:  t(`Invoices`),
+                    permission:'Invoice'
+                },
+            ]
         },
         {
             icon:<img alt={'icons'} src={dash3}/>,

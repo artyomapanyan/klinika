@@ -27,6 +27,7 @@ import Preloader from "../../../../Preloader";
 import {t} from "i18next";
 import DateFilterElement from "../../../../Fragments/TableFilterElements/DateFilterElement";
 import calendar_dark_purpule_icon from "../../../../../dist/icons/calendar_dark_purpule_icon.png";
+import Group from "../../../../../dist/icons/Group.png";
 import {CheckCircleOutlined} from "@ant-design/icons";
 import {FollowUpContent} from "../../../Appointments/StatusModalForms/FollowUpContent";
 
@@ -122,10 +123,11 @@ function ClinicManagerAppointmentsTable() {
     }
 
     const onResourceShow = (record) => {
-
-
         navigate(ResourceLinks[resource] + record.id+'/show')
+    }
 
+    const goDetails = (record) => {
+        navigate(ResourceLinks[resource] + record.id+'/doctor')
     }
 
     return (
@@ -265,8 +267,23 @@ function ClinicManagerAppointmentsTable() {
                                 dataIndex: 'actions',
                                 key: 'actions',
                                 render: (e, record) => {
-                                    return record.status == 2 ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button> : record.status == 3 ? <div></div> : <div><a href={`tel:+${record?.patient?.phone_country_code + record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`mailto:${record?.patient?.email}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
-                                }
+                                    return  <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                        {
+                                            record.status == 2 ? <Button disabled={pdfState} style={{border: 'none', backgroundColor: '#f6f5f5'}} onClick={()=>handleExportPDF(record)}><img alt={'icons'} src={printIcon}/></Button>
+                                                : record.status == 3 ? <div></div> :
+                                                    <div><a href={`tel:+${record?.patient?.phone_country_code + record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`mailto:${record?.patient?.email}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
+
+                                        }
+                                        {record.access_patient_card ? (
+												<img
+													style={{ cursor: 'pointer', margin: '0 17px' }}
+													onClick={() => goDetails(record)}
+													alt={'Group'}
+													src={Group}
+												/>
+											) : null}
+                                    </div>
+                                    }
                             },
                             {
                                 title: t('Status'),

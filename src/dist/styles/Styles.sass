@@ -161,8 +161,7 @@ body
     display: none
 
   .ant-form-item-label > label
-    top: 7px
-    font-size: 15px
+    top: 5px
 .ant-select-selection-item
   top: -5px
   left: 4px
@@ -738,8 +737,9 @@ body
   textArea:not(:placeholder-shown) + label,textArea:focus + label
     position: absolute !important
     //left: 15px
-    top: -2px
+    top: -8px
     font-size: 11px
+    background-color: #FFFFFF
     padding-right: 3px
     padding-left: 3px
   label
@@ -3743,6 +3743,22 @@ body
     margin-top: -4px
     border-radius: 8px
     margin-right: 25px
+
+.invoice_item_clinics
+  .ant-form-item-label
+    padding-top: 9px
+
+.invoice_items_tax_percentage_column
+  @media screen and (max-width: 3624px)
+    width: 250px
+  @media screen and (max-width: 2000px)
+    width: 230px
+  @media screen and (max-width: 1800px)
+    width: 210px
+  @media screen and (max-width: 1500px)
+    width: 170px
+  @media screen and (max-width: 1200px)
+    width: 125px
 
 
 
