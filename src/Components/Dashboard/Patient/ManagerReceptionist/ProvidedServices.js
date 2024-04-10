@@ -239,7 +239,6 @@ function ProvidedServices({appointmentId}) {
 
                                             <span className={'provided_table_name'}>{el?.item_object?.name}</span>
 
-
                                     </td>
                                     <td className={'provided_services_table_Prices_td'}>
                                         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10}}>
