@@ -29,7 +29,7 @@ function AppointmentCalendarCollapse({
 			.filter(e => e)
 	}, [search, item])
 
-	console.log(item, 'items')
+
 	return (
 		<>
 			{filteredData.map((doctor, key) => (

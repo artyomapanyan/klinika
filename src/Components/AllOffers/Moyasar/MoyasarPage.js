@@ -7,7 +7,7 @@ export default function MoyasarPage({data, isSaudi}) {
     const formContainerRef = useRef(null);
 
 
-    console.log(data, isSaudi, 'oooo')
+
 
     useEffect(() => {
         /*

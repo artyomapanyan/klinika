@@ -71,7 +71,7 @@ function Invoice() {
             }
         }
 
-        console.log(values)
+
 
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
@@ -245,8 +245,7 @@ function Invoice() {
 
             formRef?.current?.getFieldValue('sub_total')
 
-            console.log(response, 'res')
-            console.log(formRef?.current?.getFieldsValue())
+
 
         })
         setTimeout(() => {

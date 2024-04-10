@@ -32,8 +32,7 @@ function NewThankYouOffer() {
     useEffect(()=>{
         let currentURL = window.location.href;
 
-        console.log(currentURL)
-        console.log(currentURL?.includes('APPROVED'), 'r')
+
 
         if(currentURL?.includes('invoice')) {
             setOnlineOrClinicPay(true)

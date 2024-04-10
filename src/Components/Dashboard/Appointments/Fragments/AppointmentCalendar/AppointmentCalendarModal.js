@@ -93,7 +93,7 @@ function AppointmentCalendarModal({
 			nursingTasksArray: nursingTasksArray
 		}))
 		setSelectedDate(false)
-		console.log(appointmentObj)
+
 	}
 
 	const handleMapLabPackages = (item, name) => {

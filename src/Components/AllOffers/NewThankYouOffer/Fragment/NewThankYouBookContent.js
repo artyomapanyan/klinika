@@ -118,7 +118,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                 payment_method_id: moyasarIds?.paymentMethodId
             }
         ).then((response) => {
-            console.log(response)
+
             dispatch({
                 type: 'APP_INV_ID',
                 payload: {
@@ -201,7 +201,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         // e.view.location.pathname = `pay-online/moyasar`
     }
 
-    console.log(paymentMethodState, 'ddd')
+
 
     return (
         <>

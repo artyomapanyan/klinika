@@ -89,7 +89,7 @@ function ShowPatient() {
         },
     ];
 
-    console.log(data)
+
 
     return (
         <div style={{marginTop: -120}}>
