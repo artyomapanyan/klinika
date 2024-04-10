@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {Avatar, Modal, Space, Tag} from "antd";
 import "../../../../../dist/styles/Styles.sass"
 import { UserOutlined } from '@ant-design/icons';
@@ -13,6 +13,12 @@ function PatientHeader({data, setData}) {
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [validInsurance, setValidInsurance] = useState([]);
+
+    useEffect(() => {
+        setValidInsurance(data.patient.insurance_companies.filter(el => dayjs(el.expiration_date.date) > dayjs()))
+    }, [])
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -58,14 +64,14 @@ function PatientHeader({data, setData}) {
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Insurance')}</div>
                                     {
-                                        data?.patient?.insurance_company ? <Space className={'text_norm'}>{data?.patient?.insurance_company?.name}
-                                            {/*<Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',*/}
-                                            {/*    color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >*/}
-                                            {/*    {*/}
-                                            {/*        dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'*/}
-                                            {/*    }*/}
+                                        data?.patient?.insurance_company ? <Space className={'text_norm'}>{validInsurance.length ? validInsurance[0]?.name : ''}
+                                            <Tag style={{backgroundColor: validInsurance.length ? '#6DAF5630' : '#f6d7d7',
+                                                color: validInsurance.length ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >
+                                                {
+                                                    validInsurance.length ? 'Valid' : 'No valid'
+                                                }
 
-                                            {/*</Tag>*/}
+                                            </Tag>
                                         </Space> : <div style={{margin: '0 25px'}}>-</div>
                                     }
 
