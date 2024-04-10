@@ -148,7 +148,7 @@ function ProvidedServices({appointmentId}) {
                         discount: value,
                         item: el?.item,
                         item_object: {id: el?.item, name: el?.item_object?.name},
-                        price: value,
+                        price: el?.price,
                         qnt: el?.qnt,
                         tax: el?.tax,
                     }
