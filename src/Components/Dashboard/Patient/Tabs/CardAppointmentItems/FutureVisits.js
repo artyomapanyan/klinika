@@ -118,6 +118,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 		}
 	}
 
+
 	const changeGap = (event, visit, visitIndex) => {
 		if (event.target?.value) {
 			if (event.target?.value <= 120 && event.target?.value >= 0)
