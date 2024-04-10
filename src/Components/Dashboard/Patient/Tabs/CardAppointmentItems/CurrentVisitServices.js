@@ -112,7 +112,9 @@ function CurrentVisitServices({id, bigData}) {
 
     console.log(itemsState, 'bigdata')
 
-    return <div style={{marginTop: 30}}>
+    return <div style={{
+        marginTop: (bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7) && !itemsState?.length ? 0 : 30,
+        marginBottom: bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7 ? 20 : 0}}>
         {
             (bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7) && !itemsState?.length ? <div></div> : <div className={'current_visit_text'}>
                 {t('Current visit Services')}

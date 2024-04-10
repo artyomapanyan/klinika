@@ -269,6 +269,7 @@ function ProvidedServices({appointmentId}) {
                                                     <Input  style={{paddingLeft:16, height: 48, borderRadius: 12, width: 100}}
                                                             placeholder={''}
                                                             value={el?.price}
+                                                            disabled={true}
 
                                                     />
                                                     <label style={{left: 15}}>{t('Price')}</label>
@@ -367,6 +368,7 @@ function ProvidedServices({appointmentId}) {
                                                            onChange={(elem) => {
                                                                changeAny(elem.target.value,'qnt', key, el)
                                                            }}
+                                                           inputDisabled={true}
 
                                                 />
                                             </div>
@@ -375,6 +377,7 @@ function ProvidedServices({appointmentId}) {
                                                            onChange={(elem) => {
                                                                changeAny(elem.target.value,'price', key, el)
                                                            }}
+                                                           inputDisabled={true}
                                                 />
                                             </div>
                                             <div style={{width: 100}}>
@@ -396,6 +399,7 @@ function ProvidedServices({appointmentId}) {
 
                                                            ]}
                                                            min={0}
+                                                           inputDisabled={true}
                                                 />
                                             </div>
 
