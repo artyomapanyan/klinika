@@ -20,7 +20,7 @@ function InvoiceItems() {
                                delete: PermCheck(`InvoiceItem:delete`) ? false : true,
                                edit: PermCheck(`InvoiceItem:update`) ? false : true
                            }}
-                           tableParams={reduxInfo === 'super' ? null : {
+                           tableParams={{
                                not_null: true,
                            }}
 
@@ -49,6 +49,7 @@ function InvoiceItems() {
                     dataIndex:'tax_percentage',
                     title:t('Tax percentage'),
                     key:'tax_percentage',
+                    className: 'invoice_items_tax_percentage_column'
                 },
 
                 {
@@ -90,6 +91,7 @@ function InvoiceItems() {
                                        dataIndex:'tax_percentage',
                                        title:t('Tax percentage'),
                                        key:'tax_percentage',
+                                       className: 'invoice_items_tax_percentage_column'
                                    },
 
                                    {
