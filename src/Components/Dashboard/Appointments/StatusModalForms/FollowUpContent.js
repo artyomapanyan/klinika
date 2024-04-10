@@ -24,7 +24,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const [dateWithEmptyHours, setDateWithEmptyHours] = useState([])
     const [emptyDaysLoading, setEmptyDaysLoading] = useState(false)
     const [timeOutId, setTimeOutId] = useState(null)
-    const [calendarIsOpen, setCalendarIsOpen] = useState(false);
 
 
     const amountRef = useRef()
@@ -156,9 +155,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
         }).includes(dayjs(date).startOf('day').format('YYYY-MM')))
         timeOutId && clearTimeout(timeOutId)
 
-        if (calendarIsOpen && date?.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD')) {
-            return
-        }
         setTimeOutId(setTimeout(() => {
             postResource('ClinicDoctorAvailableTimeForMonthByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
                 service: modal?.service_type,
@@ -347,9 +343,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                                        disabledDate={disabledDate}
                                        inputProps={{
                                            onPanelChange:getEmptyHours,
-                                           onOpenChange:(status) => {
-                                               setCalendarIsOpen(status)
-                                           },
                                            onChange:(e) => {
                                                timeOutId && clearTimeout(timeOutId)
                                                setDate(e)
