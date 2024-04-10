@@ -19,7 +19,7 @@ function PatientHeader({data, setData}) {
     const [validInsurance, setValidInsurance] = useState([]);
 
     useEffect(() => {
-        setValidInsurance(data.patient.insurance_companies.filter(el => dayjs(el.expiration_date.date) > dayjs()))
+        setValidInsurance(data?.patient?.insurance_companies?.filter(el => dayjs(el?.expiration_date?.date) > dayjs()))
     }, [])
 
     const showModal = () => {
