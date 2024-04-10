@@ -274,7 +274,7 @@ function ClinicManagerAppointmentsTable() {
                                                     <div><a href={`tel:+${record?.patient?.phone_country_code + record?.patient?.phone_number}`}><img alt={'phoneIcon'} src={phoneIcon}/></a> <a href={`mailto:${record?.patient?.email}`}><img style={{marginLeft: 15}} alt={'commentIcon'} src={commentIcon}/></a></div>
 
                                         }
-                                        {record.access_patient_card ?
+                                        {//record.access_patient_card ?
                                             (
 												<img
 													style={{ cursor: 'pointer', margin: '0 17px' }}
@@ -283,7 +283,7 @@ function ClinicManagerAppointmentsTable() {
 													src={Group}
 												/>
 											)
-                                            : null
+                                            //: null
                                         }
                                     </div>
                                     }

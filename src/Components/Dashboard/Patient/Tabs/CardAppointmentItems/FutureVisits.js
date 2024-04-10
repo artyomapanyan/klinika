@@ -184,7 +184,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 	}
 
 	return (
-		<div className='future-visits'>
+		<div className='future-visits' style={{width: '100%'}}>
 			{!disabled || (disabled && visitsState.length) ? (
 				<h2 style={{ marginTop: 20, fontSize: 20 }} className={'h1'}>
 					{t('Future Visits')}
@@ -331,10 +331,11 @@ const FutureVisits = ({ appointment_id, status }) => {
 							<Col lg={2}>
 								<Button
 									loading={addLoading}
-									size={'large'}
+									// size={'large'}
 									type={'primary'}
 									htmlType='submit'
-									style={{ top: 5, height: 48, width: 77, fontSize: 16, fontWeight: 700, borderRadius: 12 }}
+									className={"current_visit_add_btn"}
+									// style={{ top: 5, height: 48, width: 77}}
 								>
 									{t('Add')}
 								</Button>

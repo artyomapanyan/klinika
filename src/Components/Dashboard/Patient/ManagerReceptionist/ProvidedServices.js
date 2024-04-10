@@ -174,7 +174,7 @@ function ProvidedServices({appointmentId}) {
         // console.log(formRef?.current?.getFieldValue(['servisesState', key, 'qty']), 'ref1')
     }
 
-     console.log(itemsState, 'i s')
+
 
     return<div style={{background:"#ffffff", margin:'24px 24px', borderRadius: 12}}>
         {
@@ -214,8 +214,8 @@ function ProvidedServices({appointmentId}) {
 
 
                             <td style={{width: 200}}>
-                                <div>
-                                    <span className={'provided_table_bold_text'}>{serState?.primary_invoice?.amount_without_tax} SAR</span>
+                                <div style={{display: 'flex', }}>
+                                    <div className={'provided_table_bold_text'} style={{width: 80}}>{serState?.primary_invoice?.amount_without_tax} SAR</div>
                                     {
                                         serState?.primary_invoice?.status === 2 ? <span className={'provided_table_status_payed'}>Paid</span> :
                                             <span className={'provided_table_status_pending'}>pending</span>
@@ -241,7 +241,7 @@ function ProvidedServices({appointmentId}) {
 
 
                                     </td>
-                                    <td>
+                                    <td className={'provided_services_table_Prices_td'}>
                                         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10}}>
                                             <div style={{width: 100}}>
                                                 <FormInput label={t('Qty')} name={['servisesState', key, 'qty']} initialValue={el?.qnt ? el?.qnt : 1}
@@ -318,8 +318,8 @@ function ProvidedServices({appointmentId}) {
 
 
                                     <td style={{width: 200}}>
-                                        <div>
-                                            <span className={'provided_table_bold_text'}>{el?.amount_without_tax}  SAR</span>
+                                        <div style={{display: 'flex', }}>
+                                            <div className={'provided_table_bold_text'} style={{width: 80}}>{el?.amount_without_tax}  SAR</div>
                                             {
                                                 el.status === 2 ? <span className={'provided_table_status_payed'}>{el.status===2 ? 'paid' : 'pending'}</span>
                                                     : <span className={'provided_table_status_pending'}>pending</span>
