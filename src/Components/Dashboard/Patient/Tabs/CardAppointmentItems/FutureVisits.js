@@ -333,7 +333,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 									size={'large'}
 									type={'primary'}
 									htmlType='submit'
-									style={{ top: 5, height: 48, width: 77 }}
+									style={{ top: 5, height: 48, width: 77, fontSize: 16, fontWeight: 700, borderRadius: 12 }}
 								>
 									{t('Add')}
 								</Button>
