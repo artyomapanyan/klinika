@@ -174,7 +174,7 @@ function ProvidedServices({appointmentId}) {
         // console.log(formRef?.current?.getFieldValue(['servisesState', key, 'qty']), 'ref1')
     }
 
-
+    console.log(itemsState, 'st')
 
     return<div style={{background:"#ffffff", margin:'24px 24px', borderRadius: 12}}>
         {
@@ -272,7 +272,7 @@ function ProvidedServices({appointmentId}) {
                                                             disabled={true}
 
                                                     />
-                                                    <label style={{left: 15, paddingTop: 1}}>{t('Price')}</label>
+                                                    <label style={{left: 15, paddingTop: 2}}>{t('Price')}</label>
                                                 </div>
                                             </div>
                                             <div style={{width: 100}}>
