@@ -272,7 +272,7 @@ function ProvidedServices({appointmentId}) {
                                                             disabled={true}
 
                                                     />
-                                                    <label style={{left: 15}}>{t('Price')}</label>
+                                                    <label style={{left: 15, paddingTop: 1}}>{t('Price')}</label>
                                                 </div>
                                             </div>
                                             <div style={{width: 100}}>
@@ -343,7 +343,7 @@ function ProvidedServices({appointmentId}) {
                                     </td>
                                     <td>
 
-                                         <div style={{marginLeft: -20}}>
+                                         <div style={{marginLeft: -20, width: '90%'}}>
                                             <FormInput label={t('Invoice item')}
                                                        name={'item'}
                                                        inputType={'resourceSelect'}
@@ -423,12 +423,13 @@ function ProvidedServices({appointmentId}) {
 
 
                                     <td style={{width: 200}}>
-                                        <div>
-                                            <span className={'provided_table_bold_text'}>{el?.price ? formRef?.current?.getFieldValue(['servisesState', 1, 'qty']) ? el?.amount_without_tax * formRef?.current?.getFieldValue(['servisesState', key, 'qty']) : el?.amount_without_tax : totalItem}  SAR</span>
+                                        <div style={{display: 'flex'}}>
+                                            <div className={'provided_table_bold_text'} style={{width: 80}}>0 SAR</div>
                                             {
                                                 el.status === 2 ? <span className={'provided_table_status_payed'}>{el.status===2 ? 'paid' : 'pending'}</span>
                                                     : <span className={'provided_table_status_pending'}>pending</span>
                                             }
+
 
                                         </div>
 
