@@ -349,9 +349,9 @@ function ProvidedServices({appointmentId}) {
                                                        inputType={'resourceSelect'}
                                                        rules={[{required: true}]}
                                                        inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
-                                                       // resourceParams={{
-                                                       //     clinic: 2
-                                                       // }}
+                                                       resourceParams={{
+                                                           for_usage: 1
+                                                       }}
                                                        resource={'InvoiceItem'}
 
 
