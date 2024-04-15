@@ -634,6 +634,10 @@ let api = {
 
         }
     },
+    {
+        url: 'clinic-medical-staff',
+        resource: 'ClinicMedicalStaff',
+    },
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',

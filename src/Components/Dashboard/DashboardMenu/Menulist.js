@@ -295,9 +295,9 @@ export default {
                     permission:'Clinic'
                 },
                 {
-                    key: 'lab-technician',
-                    label: t(`Lab technician`),
-                    // permission:'LabTechnician'
+                    key: 'clinic-medical-staff',
+                    label: t(`Medical staff`),
+                    permission:'ClinicMedicalStaff'
                 },
             ]
         },
@@ -493,6 +493,11 @@ export default {
                     key: 'clinics',
                     label: t(`Clinics`),
                     permission:'Clinic'
+                },
+                {
+                    key: 'clinic-medical-staff',
+                    label: t(`Medical staff`),
+                    permission:'ClinicMedicalStaff'
                 },
             ]
         },
@@ -747,6 +752,22 @@ export default {
 
         {
             key: 'receptionist',
+            icon: <img alt={'icons'} src={dash1}/>,
+            label: t(`Dashboard`),
+        },
+        {
+            icon:<DollarOutlined style={{color:'#ce4e99', fontSize:20}}/>,
+            key: 'invoices',
+            label:  t(`Invoices`),
+            permission:'Invoice'
+        },
+
+    ],
+
+    'lab-technician': [
+
+        {
+            key: 'lab-technician',
             icon: <img alt={'icons'} src={dash1}/>,
             label: t(`Dashboard`),
         },
