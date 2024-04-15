@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {t} from "i18next";
 import TableFilterElement from "../../../Fragments/TableFilterElements/TableFilterElement";
@@ -7,25 +7,31 @@ import DateParser from "../../../Fragments/DateParser";
 import {useSelector} from "react-redux";
 import PermCheck from "../../../Fragments/PermCheck";
 import SelectFilterElement from "../../../Fragments/TableFilterElements/SelectFilterElement";
+import {log10} from "chart.js/helpers";
 
 
 
 function InvoiceItems() {
     let reduxInfo = useSelector((state) => state?.auth?.selected_role?.key);
+    let reduxClinics = useSelector((state) => state?.auth?.clinics);
+
 
     return(
-        <div>
-            <ResourceTable resource={'InvoiceItem'}
-                           except={{
-                               delete: PermCheck(`InvoiceItem:delete`) ? false : true,
-                               edit: PermCheck(`InvoiceItem:update`) ? false : true
-                           }}
-                           tableParams={{
-                               not_null: true,
-                           }}
 
-                           tableColumns={
-                               reduxInfo === 'super' || reduxInfo === 'clinic-owner' ? [
+        <div>
+
+            <ResourceTable
+                resource={'InvoiceItem'}
+                except={{
+                    delete: PermCheck(`InvoiceItem:delete`) ? false : true,
+                    edit: PermCheck(`InvoiceItem:update`) ? false : true
+                }}
+                tableParams={reduxInfo !== 'super'
+                    ? {clinics: reduxClinics?.map((el) => {return el?.id})}
+                    : null}
+
+                tableColumns={
+                   reduxInfo === 'super' || reduxInfo === 'clinic-owner' ? [
                 {
                     title:'ID',
                     dataIndex:'id',
@@ -56,7 +62,10 @@ function InvoiceItems() {
                     dataIndex:'clinic',
                     title:t('Clinics'),
                     key:'clinic',
-                    filterDropdown: (props)=><SelectFilterElement filterProps={props} type='selectResource'/>,
+                    filterDropdown: (props)=>{
+                        return  <SelectFilterElement filterProps={props} type='selectResource'/>
+                    },
+
                     render:(e, record) => {
                         return<div>{record?.clinic?.name}</div>
                     }

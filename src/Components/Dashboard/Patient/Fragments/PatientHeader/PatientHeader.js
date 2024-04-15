@@ -67,11 +67,11 @@ function PatientHeader({data, setData}) {
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Insurance')}</div>
                                     {
-                                        data?.patient?.insurance_company ? <Space className={'text_norm'}>{validInsurance.length ? validInsurance[0]?.name : ''}
-                                            <Tag style={{backgroundColor: validInsurance.length ? '#6DAF5630' : '#f6d7d7',
-                                                color: validInsurance.length ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >
+                                        data?.patient?.insurance_company ? <Space className={'text_norm'}>{validInsurance?.length ? validInsurance[0]?.name : ''}
+                                            <Tag style={{backgroundColor: validInsurance?.length ? '#6DAF5630' : '#f6d7d7',
+                                                color: validInsurance?.length ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >
                                                 {
-                                                    validInsurance.length ? 'Valid' : 'No valid'
+                                                    validInsurance?.length ? 'Valid' : 'No valid'
                                                 }
 
                                             </Tag>

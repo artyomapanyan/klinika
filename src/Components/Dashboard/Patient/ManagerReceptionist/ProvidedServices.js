@@ -174,7 +174,7 @@ function ProvidedServices({appointmentId}) {
         // console.log(formRef?.current?.getFieldValue(['servisesState', key, 'qty']), 'ref1')
     }
 
-
+    console.log(itemsState, 'st')
 
     return<div style={{background:"#ffffff", margin:'24px 24px', borderRadius: 12}}>
         {
@@ -269,9 +269,10 @@ function ProvidedServices({appointmentId}) {
                                                     <Input  style={{paddingLeft:16, height: 48, borderRadius: 12, width: 100}}
                                                             placeholder={''}
                                                             value={el?.price}
+                                                            disabled={true}
 
                                                     />
-                                                    <label style={{left: 15}}>{t('Price')}</label>
+                                                    <label style={{left: 15, paddingTop: 2}}>{t('Price')}</label>
                                                 </div>
                                             </div>
                                             <div style={{width: 100}}>
@@ -342,15 +343,15 @@ function ProvidedServices({appointmentId}) {
                                     </td>
                                     <td>
 
-                                         <div style={{marginLeft: -20}}>
+                                         <div style={{marginLeft: -20, width: '90%'}}>
                                             <FormInput label={t('Invoice item')}
                                                        name={'item'}
                                                        inputType={'resourceSelect'}
                                                        rules={[{required: true}]}
                                                        inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
-                                                       // resourceParams={{
-                                                       //     clinic: 2
-                                                       // }}
+                                                       resourceParams={{
+                                                           for_usage: 1
+                                                       }}
                                                        resource={'InvoiceItem'}
 
 
@@ -367,6 +368,7 @@ function ProvidedServices({appointmentId}) {
                                                            onChange={(elem) => {
                                                                changeAny(elem.target.value,'qnt', key, el)
                                                            }}
+                                                           inputDisabled={true}
 
                                                 />
                                             </div>
@@ -375,6 +377,7 @@ function ProvidedServices({appointmentId}) {
                                                            onChange={(elem) => {
                                                                changeAny(elem.target.value,'price', key, el)
                                                            }}
+                                                           inputDisabled={true}
                                                 />
                                             </div>
                                             <div style={{width: 100}}>
@@ -396,6 +399,7 @@ function ProvidedServices({appointmentId}) {
 
                                                            ]}
                                                            min={0}
+                                                           inputDisabled={true}
                                                 />
                                             </div>
 
@@ -419,12 +423,13 @@ function ProvidedServices({appointmentId}) {
 
 
                                     <td style={{width: 200}}>
-                                        <div>
-                                            <span className={'provided_table_bold_text'}>{el?.price ? formRef?.current?.getFieldValue(['servisesState', 1, 'qty']) ? el?.amount_without_tax * formRef?.current?.getFieldValue(['servisesState', key, 'qty']) : el?.amount_without_tax : totalItem}  SAR</span>
+                                        <div style={{display: 'flex'}}>
+                                            <div className={'provided_table_bold_text'} style={{width: 80}}>0 SAR</div>
                                             {
                                                 el.status === 2 ? <span className={'provided_table_status_payed'}>{el.status===2 ? 'paid' : 'pending'}</span>
                                                     : <span className={'provided_table_status_pending'}>pending</span>
                                             }
+
 
                                         </div>
 

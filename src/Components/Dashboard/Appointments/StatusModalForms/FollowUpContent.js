@@ -199,9 +199,9 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const subTotal = () => {
         let total = 0
         let aaa = formRef?.current?.getFieldsValue()
-        let bbb = Object.values(aaa?.items)?.map((el) => {
+        let bbb = aaa?.items ? Object.values(aaa?.items)?.map((el) => {
             return total += (el?.amount ? el?.amount : 0)
-        })
+        }) : 0
 
         return total
     }
@@ -236,25 +236,25 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     }
 
-    const handleFilterResponse = (timeout = 80) => {
-
-        let total = 0;
-        if (itemsState?.items) {
-
-
-            Object.keys(itemsState.items).map((key) => {
-                let currentItem = itemsState.items[key];
-                itemsState.items[key].amount = currentItem.qnt * ((+currentItem.price) + ((+currentItem.price) / 100 * (+currentItem.tax)))
-                total += itemsState.items[key].amount;
-                if (formRef) {
-                    formRef?.current?.setFieldValue(['items', key, 'amount'], itemsState.items[key].amount)
-                }
-            })
-            setTimeout(() => formRef?.current?.setFieldValue('sub_total',total ),timeout)
-
-        }
-        return itemsState
-    }
+    // const handleFilterResponse = (timeout = 80) => {
+    //
+    //     let total = 0;
+    //     if (itemsState?.items) {
+    //
+    //
+    //         Object.keys(itemsState.items).map((key) => {
+    //             let currentItem = itemsState.items[key];
+    //             itemsState.items[key].amount = currentItem.qnt * ((+currentItem.price) + ((+currentItem.price) / 100 * (+currentItem.tax)))
+    //             total += itemsState.items[key].amount;
+    //             if (formRef) {
+    //                 formRef?.current?.setFieldValue(['items', key, 'amount'], itemsState.items[key].amount)
+    //             }
+    //         })
+    //         setTimeout(() => formRef?.current?.setFieldValue('sub_total',total ),timeout)
+    //
+    //     }
+    //     return itemsState
+    // }
 
     const handleInvoiceSelect = (e, key,data) => {
         postResource('InvoiceItem', 'single', token, e).then((response) => {
@@ -268,7 +268,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             })
             formRef?.current?.setFieldValue(['items', key, 'price'], response?.price)
             formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
-            formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((response?.price + response?.price / 100 * response?.tax_percentage).toFixed(2)))
 
             formRef?.current?.getFieldValue(['items', key, 'amount'])
 
@@ -301,16 +301,16 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
         if(obj === 'qnt') {
             formRef?.current?.setFieldValue(['items', key, value], )
-            formRef?.current?.setFieldValue(['items', key, 'amount'], +value * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))) ) )
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((+value * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))))).toFixed(2) ) )
 
         } else if (obj === 'price') {
             formRef?.current?.setFieldValue(['items', key, value], )
-            formRef?.current?.setFieldValue(['items', key, 'amount'], +(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+value + (+value / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))) ) )
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((+(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+value + (+value / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))))).toFixed(2) ) )
 
 
         } else if (obj === 'tax') {
             formRef?.current?.setFieldValue(['items', key, value], )
-            formRef?.current?.setFieldValue(['items', key, 'amount'], +(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+value)) ) )
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((+(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+value)) )).toFixed(2)) )
 
 
         }
@@ -493,7 +493,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                     <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '19%'}}  >
                         <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}}
                                 placeholder={''}
-                                value={totalState}
+                                value={parseFloat(totalState.toFixed(2))}
 
                         />
                         <label style={{left: 15}}>{t('Sub total')}</label>

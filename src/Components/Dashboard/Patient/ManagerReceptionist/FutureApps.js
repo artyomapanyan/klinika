@@ -279,17 +279,15 @@ const FutureApps = ({
 																visit?.booked_appointment?.booked_at?.iso_string
 															).format('hh:mm A, DD MMM YY')}
 														</span>
-														{visit.booked_appointment.status == 1 ? (
-															<span
-																style={{
-																	marginInlineStart: 10,
-																	cursor: 'pointer'
-																}}
-																onClick={() => showUpdatingModal(visit)}
-															>
-																<img alt={'icons'} src={booking_appointment} />
-															</span>
-														) : null}
+														<span
+															style={{
+																marginInlineStart: 10,
+																cursor: 'pointer'
+															}}
+															onClick={() => showUpdatingModal(visit)}
+														>
+															<img alt={'icons'} src={booking_appointment} />
+														</span>
 													</div>
 												) : (
 													<div style={{ float: 'inline-end' }}>

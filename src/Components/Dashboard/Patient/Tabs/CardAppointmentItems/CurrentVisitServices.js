@@ -110,12 +110,17 @@ function CurrentVisitServices({id, bigData}) {
 
     }
 
-    console.log(bigData, 'bigdata')
+    console.log(itemsState, 'bigdata')
 
-    return <div style={{marginTop: 30}}>
-        <div className={'current_visit_text'}>
-            {t('Current visit Services')}
-        </div>
+    return <div style={{
+        marginTop: (bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7) && !itemsState?.length ? 0 : 30,
+        marginBottom: bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7 ? 30 : 0}}>
+        {
+            (bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7) && !itemsState?.length ? <div></div> : <div className={'current_visit_text'}>
+                {t('Current visit Services')}
+            </div>
+        }
+
         {
             loading ? <Preloader small={20}/> : bigData?.status != 2 && bigData?.status != 3 && bigData?.status != 5 && bigData?.status != 7 ? <Form ref={itemRef} onFinish={onFinish}>
 
@@ -128,7 +133,7 @@ function CurrentVisitServices({id, bigData}) {
                                    rules={[{required: true}]}
                                    inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
                                    resourceParams={{
-                                       clinic: bigData.clinic.id
+                                       for_usage: 1
                                    }}
                                    resource={'InvoiceItem'}
 
