@@ -233,6 +233,11 @@ export default {
                     permission:'NursingTask'
                 },
                 {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
+                },
+                {
                     key: 'insurance-companies',
                     label: t(`Insurance companies`),
                     permission:'InsuranceCompany'
@@ -426,6 +431,11 @@ export default {
                     key: 'nursing-tasks',
                     label: t(`Nursing tasks`),
                     permission:'NursingTask'
+                },
+                {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
                 },
                 {
                     key: 'insurance-companies',
@@ -622,6 +632,11 @@ export default {
                     key: 'nursing-tasks',
                     label: t(`Nursing tasks`),
                     permission:'NursingTask'
+                },
+                {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
                 },
                 {
                     key: 'insurance-companies',
@@ -852,6 +867,11 @@ export default {
                     key: 'nursing-tasks',
                     label: t(`Nursing tasks`),
                     permission:'NursingTask'
+                },
+                {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
                 },
                 {
                     key: 'insurance-companies',
