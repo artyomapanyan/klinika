@@ -31,6 +31,7 @@ i18n
                     Services: 'Services',
                     'Sub services': 'Sub services',
                     "Nursing tasks": "Nursing tasks",
+                    "Radiology tasks": "Radiology tasks",
                     'Insurance companies': 'Insurance companies',
 
                     "Reports": "Reports",
@@ -93,6 +94,7 @@ i18n
                     Services: 'الخدمات',
                     'Sub services': 'الخدمات الفرعية',
                     "Nursing tasks": "مهام التمريض",
+                    "Radiology tasks": 'مهام الأشعة',
                     'Insurance companies': 'شركات التأمين',
 
                     "Reports": "التقارير",

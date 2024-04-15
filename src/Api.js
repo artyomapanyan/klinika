@@ -70,6 +70,10 @@ let api = {
         resource: 'NursingTask',
     },
     {
+        url: 'radiology-tasks',
+        resource: 'RadiologyTask',
+    },
+    {
         url: 'lab-packages',
         resource: 'LabPackage',
     },
@@ -167,6 +171,10 @@ let api = {
     {
         url: 'clinic-nursing-tasks',
         resource: 'ClinicNursingTask',
+    },
+    {
+        url: 'clinic-radiology-tasks',
+        resource: 'ClinicRadiologyTask',
     },
     {
         url: 'offers',

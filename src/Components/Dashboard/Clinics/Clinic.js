@@ -21,6 +21,7 @@ import Telehealth from "./Fragments/Telehealth/Telehealth";
 import LaboratoryHomeVisit from "./Fragments/LaboratoryHomeVisit/LaboratoryHomeVisit";
 import PhysicalTherapyClinicVisit from "./Fragments/PhysicalTherapyClinicVisit/PhysicalTherapyClinicVisit";
 import PhysicalTherapyHomeVisit from "./Fragments/PhysicalTherapyHomeVisit/PhysicalTherapyHomeVisit";
+import Radiology from './Fragments/Radiology/Radiology'
 
 
 const resource = "Clinic"
@@ -106,6 +107,9 @@ function Clinic() {
                 {dataState.data.has_nursing_service && dataState.data.enable_nursing_service && params.id ? <items key={'nursing'} tab={'Nursing'} disabled={!params.id}>
                         <Nursing tab={tab}/>
                     </items> : null}
+                {dataState.data.has_radiology_service && dataState.data.enable_radiology_service && params.id ? <items key={'radiology'} tab={'Radiology'} disabled={!params.id}>
+                    <Radiology tab={tab}/>
+                </items> : null}
 
                 {dataState.data.has_physical_therapy_clinic_visit_service && dataState.data.enable_physical_therapy_clinic_visit_service && params.id ? <items key={'physical_therapy_clinic_visit'} tab={'Physical therapy clinic visit'} disabled={!params.id}>
                     <PhysicalTherapyClinicVisit tab={tab}/>
