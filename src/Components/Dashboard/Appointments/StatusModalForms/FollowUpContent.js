@@ -505,11 +505,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
 
 
-
-
-
-
-
         <div style={{display: 'flex', gap: 3, marginTop: 10}} >
             <Button size={'large'} type={'secondary'} onClick={onCancel} >{t('Cancel')}</Button>
             <Button disabled={!selectedItem} loading={loading} size={'large'} type={'primary'} htmlType={'submit'}>{t('Submit')}</Button>
