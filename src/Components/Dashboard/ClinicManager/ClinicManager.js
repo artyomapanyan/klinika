@@ -144,7 +144,7 @@ function ClinicManager() {
 					{/*</Row>*/}
 					<div>{/*<ClinicFeedback />*/}</div>
 				</div>
-			) : <div>
+			) : <div style={{marginTop: -22, padding: '0 20px'}}>
 				<ClinicManagerAppointmentsTable />
 			</div>
 			}

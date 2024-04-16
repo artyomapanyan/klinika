@@ -254,27 +254,6 @@ function MedicalStaff() {
                         </div>
                     </div>
 
-                    <div style={{display: 'flex', gap: 28, marginLeft: language === 'en' ? 14 : -7}}>
-                        <div dir='ltr' style={{width: '50%', marginLeft: -8}}>
-                            <FormInput label={t('EN Bio')} name={['bio', 'en']} inputType={'textArea'} initialValue={data?.translations?.bio?.en}/>
-                        </div>
-                        <div dir='rtl' style={{width: '50%'}}>
-                            <FormInput rtl={true} label={t('AR Bio')} name={['bio', 'ar']} inputType={'textArea'} initialValue={data?.translations?.bio?.ar}/>
-                        </div>
-                    </div>
-
-                    {/*<div style={{display: 'flex', gap: 20}}>*/}
-                    {/*    <div className={'input_ltr'} style={{width: '50%'}}>*/}
-                    {/*        <FormInput label={t('First name')} name={'first'} initialValue={data?.first} rules={[{required: true}]} />*/}
-
-                    {/*    </div>*/}
-                    {/*    <div style={{width: '50%'}}>*/}
-                    {/*        <FormInput label={t('Last name')} name={'last'} initialValue={data?.last} rules={[{required: true}]} />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    {/*<FormInput label={t('Bio')} name={'bio'} inputType={'textArea'} initialValue={data?.bio}/>*/}
-
-
                 </div>
 
                 <div className={'add_edit_content'}>
@@ -283,7 +262,7 @@ function MedicalStaff() {
                             <FormInput label={t('Email')} name={'email'} initialValue={data?.email} rules={[{required: true}]} />
 
                             <FormInput label={t('Date of Birth')} name={'dob'} initialValue={data?.dob} inputType={'date'} rules={[
-                                {required: true},
+
                                 {
                                     validator:(rule,value)=>{
                                         if(dayjs().diff(value,'year')<18){
@@ -307,15 +286,10 @@ function MedicalStaff() {
                             />
                             <FormInput textSecurity={'disc'} label={t('Password')} name={'password'} rules={[{required: !params.id}]} />
                             <FormInput textSecurity={'disc'} label={t('Password Confirmation')} name={'password_confirmation'} rules={[{required: !params.id}]} />
-                            <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.languages?.map(e=>e.id)}
-                                       initialData={data?.languages??[]}
-                                       resource={'Language'}
-                            />
+
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
+                            <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} />
 
                             <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
@@ -333,46 +307,25 @@ function MedicalStaff() {
                             <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'}
                                        disabledDate={current => dayjs(current).isBefore(dayjs(), 'day')}
                                        rules={[{required: true}]} />
-                            <FormInput inputProps={{
-                                mode:'multiple',
-                                onChange:(e,dat)=> {
-                                    setData((prevState)=>({
-                                        ...prevState,
-                                        sub_specialties: undefined,
-
-
-                                    }))
-
-                                    formRef?.current?.setFieldsValue({
-                                        sub_specialties: undefined,
-
-
-                                    })
-
-                                }
-                            }} label={t('Specialties')} name={'specialties'} inputType={'resourceSelect'}
+                            <FormInput inputProps={{mode:'multiple'}} label={t('languages')} name={'languages'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.specialties?.map(e=>e.id)}
-                                       initialData={data?.specialties??[]}
-                                       resource={'Taxonomy'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.SPECIALTY,has_parent:0}}
+                                       initialValue={data?.languages?.map(e=>e.id)}
+                                       initialData={data?.languages??[]}
+                                       resource={'Language'}
                             />
-                            {
-                                subLoading ? <Preloader small={20}/> : <FormInput inputProps={{mode:'multiple'}} label={t('Sub Specialties')} name={'sub_specialties'} inputType={'resourceSelect'}
-                                                                                  initialValue={data?.sub_specialties?.map(e=>e.id)}
-                                                                                  initialData={speciltiesState ?? []}
-                                                                                  disabled={!data?.specialties || !data?.specialties?.length}
-
-                                />
-                            }
-
-                            <FormInput label={t('Doctor title id')} name={'doctor_title_id'} inputType={'resourceSelect'}
+                            <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
                                        rules={[{required: true}]}
-                                       initialValue={data?.doctor_title?.id}
-                                       initialData={data?.doctor_title?[data?.doctor_title]:[]}
-                                       resource={'Taxonomy'}
-                                       resourceParams={{type:Resources.TaxonomyTypes.DOCTOR_TITLE}}
+                                       initialValue={data?.roles?.map(e=>e.id)}
+                                       initialData={data?.roles??[]}
+                                       resourceParams={{
+                                           except: 'doctor'
+                                       }}
+                                       resource={'Role'}
                             />
+
+
+
+
 
                         </Col>
                     </Row>
