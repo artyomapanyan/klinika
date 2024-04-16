@@ -73,6 +73,7 @@ const Payment = ({
 	const printInvoice = () => {
 		setPrintInvoiceLoading(true)
 		postResource('Appointment', 'PrintInvoice', token, '', {
+			download: 1,
 			appointments: [appointment_id, ...selectedFutureVisits]
 		}).then(response => {
 			const url = window.URL.createObjectURL(new Blob([response]))
