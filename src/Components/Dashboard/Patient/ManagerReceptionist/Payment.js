@@ -1,19 +1,23 @@
-import { t, use } from 'i18next'
-import { Button, Col, Row, Form, Space, Card, Checkbox } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
+import { t } from 'i18next'
+import { Button, Col, Row } from 'antd'
+import React, { useEffect, useState } from 'react'
 import './Payment.sass'
-import {
-	postResource,
-	createResource,
-	useGetResourceSingle
-} from '../../../Functions/api_calls'
-import { useDispatch, useSelector } from 'react-redux'
+import { postResource } from '../../../Functions/api_calls'
+import { useSelector } from 'react-redux'
 import Preloader from '../../../Preloader'
 
-const Payment = ({ appointment_id, status, selectedFutureVisits, setData, updateState, setUpdateState }) => {
+const Payment = ({
+	appointment_id,
+	status,
+	selectedFutureVisits,
+	setData,
+	paymentDone,
+	setPaymentDone,
+	updateState, 
+	setUpdateState
+}) => {
 	let token = useSelector(state => state.auth.token)
 
-	const [needPaymentState, setNeedPaymentState] = useState(false)
 	const [updateInvoiceState, setUpdateInvoiceState] = useState(0)
 	const [invoicePrinted, setInvoicePrinted] = useState(false)
 	const [invoicePrice, setInvoicePrice] = useState(null)
@@ -31,7 +35,7 @@ const Payment = ({ appointment_id, status, selectedFutureVisits, setData, update
 			appointments: [appointment_id, ...selectedFutureVisits]
 		}).then(response => {
 			setInvoicePrice(response)
-			setNeedPaymentState(!!response.total)
+			setPaymentDone(!response.unpaid_amount)
 			setInvoiceLoading(false)
 		})
 	}, [selectedFutureVisits, updateInvoiceState, updateState])
@@ -68,10 +72,18 @@ const Payment = ({ appointment_id, status, selectedFutureVisits, setData, update
 
 	const printInvoice = () => {
 		setPrintInvoiceLoading(true)
-		setInvoicePrinted(true)
-
-		//Priniting will be handled here
-		setPrintInvoiceLoading(false)
+		postResource('Appointment', 'PrintInvoice', token, '', {
+			appointments: [appointment_id, ...selectedFutureVisits]
+		}).then(response => {
+			const url = window.URL.createObjectURL(new Blob([response]))
+			const link = document.createElement('a')
+			link.href = url
+			link.setAttribute('download', 'invoice.pdf')
+			document.body.appendChild(link)
+			link.click()
+			setPrintInvoiceLoading(false)
+			setInvoicePrinted(true)
+		})
 	}
 
 	const finishAppointment = () => {
@@ -99,7 +111,7 @@ const Payment = ({ appointment_id, status, selectedFutureVisits, setData, update
 			{invoiceLoading ? (
 				<Preloader></Preloader>
 			) : (
-				<div style={{ padding: 20 }}>
+				<div style={{ padding: 20, paddingBottom:40 }}>
 					<h2 style={{ marginTop: 20, marginBottom: 40 }} className={'h1'}>
 						<span>{t('Payment')}:</span>
 					</h2>
@@ -134,7 +146,7 @@ const Payment = ({ appointment_id, status, selectedFutureVisits, setData, update
 							{!disabled ? (
 								<Col lg={9}>
 									<div style={{ float: 'inline-end' }}>
-										{needPaymentState ? (
+										{!paymentDone ? (
 											<Button
 												loading={paymentRecievedLoading}
 												size={'large'}

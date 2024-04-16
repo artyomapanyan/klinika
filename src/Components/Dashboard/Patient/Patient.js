@@ -39,6 +39,7 @@ function Patient() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [statusLoading, setStatusLoading] = useState(false)
     const [selectedFutureVisits, setSelectedFutureVisits] = useState('');
+    const [paymentDone, setPaymentDone] = useState(false);
     const [updateState, setUpdateState] = useState(1);
 
 
@@ -110,12 +111,15 @@ function Patient() {
                                 status={data.status} 
                                 selectedFutureVisits={selectedFutureVisits} 
                                 setSelectedFutureVisits={setSelectedFutureVisits}
+                                paymentDone={paymentDone}
                             />
                             <Payment 
                                 appointment_id={params.id} 
                                 status={data.status} 
                                 selectedFutureVisits={selectedFutureVisits}
                                 setData={setData}
+                                paymentDone={paymentDone}
+                                setPaymentDone={setPaymentDone}
                                 updateState={updateState}
                                 setUpdateState={setUpdateState}
                             />
