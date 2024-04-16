@@ -12,7 +12,9 @@ const Payment = ({
 	selectedFutureVisits,
 	setData,
 	paymentDone,
-	setPaymentDone
+	setPaymentDone,
+	updateState, 
+	setUpdateState
 }) => {
 	let token = useSelector(state => state.auth.token)
 
@@ -36,7 +38,7 @@ const Payment = ({
 			setPaymentDone(!response.unpaid_amount)
 			setInvoiceLoading(false)
 		})
-	}, [selectedFutureVisits, updateInvoiceState])
+	}, [selectedFutureVisits, updateInvoiceState, updateState])
 
 	useEffect(() => {
 		if (status == 2) {
@@ -53,6 +55,7 @@ const Payment = ({
 		}).then(response => {
 			setPaymentRecievedLoading(false)
 			setUpdateInvoiceState(updateInvoiceState + 1)
+			setUpdateState(updateState + 1)
 		})
 	}
 
@@ -63,6 +66,7 @@ const Payment = ({
 		}).then(response => {
 			setUndoPaymentLoading(false)
 			setUpdateInvoiceState(updateInvoiceState + 1)
+			setUpdateState(updateState + 1)
 		})
 	}
 

@@ -29,11 +29,13 @@ function AppointmentCalendarModal({
 	const [labPackagesArray, setLabPackagesArray] = useState([])
 	const [labTestsArray, setLabTestsArray] = useState([])
 	const [nursingTasksArray, setNursingTasksArray] = useState([])
+	const [radiologyTasksArray, setRadiologyTasksArray] = useState([])
 
 	useEffect(() => {
 		if (appointmentObj.service_type) {
 			if (
 				appointmentObj?.service_type === 'nursing' ||
+				appointmentObj?.service_type === 'radiology' ||
 				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
 				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
@@ -48,6 +50,7 @@ function AppointmentCalendarModal({
 						service: appointmentObj.service_type
 					}
 				).then(response => {
+					console.log(response)
 					setLoading(false)
 					setTimes(response.flat())
 					setNoTimes(response)
@@ -82,8 +85,7 @@ function AppointmentCalendarModal({
 				doctor_id: doctor?.id,
 				address1: values.address1,
 			})
-		}
-		else{
+		} else {
 			setappointmentObj(prevState => ({
 				...prevState,
 				booked_at: dayjs(selectedDate + ' ' + values.time).format(
@@ -94,6 +96,7 @@ function AppointmentCalendarModal({
 				lab_packages: values.lab_packages ? [values.lab_packages] : [],
 				lab_tests: values.lab_tests,
 				nursing_tasks: values.nursing_tasks,
+				radiology_tasks: values.radiology_tasks,
 				address1: values.address1,
 	
 				//data to be deleted from the object before saving the appointment
@@ -101,7 +104,8 @@ function AppointmentCalendarModal({
 				specialty: specialty,
 				labPackagesArray: labPackagesArray,
 				labTestsArray: labTestsArray,
-				nursingTasksArray: nursingTasksArray
+				nursingTasksArray: nursingTasksArray,
+				radiologyTasksArray: radiologyTasksArray,
 			}))
 		}
 		setSelectedDate(false)
@@ -122,6 +126,12 @@ function AppointmentCalendarModal({
 	const handleMapNursingTasks = (item, name) => {
 		name = item.nursing_task.name
 		item.id = item.nursing_task.id
+		return [name, item]
+	}
+
+	const handleMapRadiologyTasks = (item, name) => {
+		name = item.radiology_task.name
+		item.id = item.radiology_task.id
 		return [name, item]
 	}
 
@@ -268,6 +278,30 @@ function AppointmentCalendarModal({
 									/>
 								</div>
 							) : null}
+							{appointmentObj.service_type === 'radiology'
+								? (
+									<FormInput
+										label={t('Radiology tasks')}
+										name={'radiology_tasks'}
+										inputProps={{
+											onChange: (value, arr) => {
+												setRadiologyTasksArray(
+													arr.filter(e => value.includes(e.radiology_task.id))
+												)
+											},
+											mode: 'multiple'
+										}}
+										rules={[{ required: true }]}
+										resourceParams={{
+											clinic: appointmentObj.clinic_id,
+											status: 2
+										}}
+										inputType={'resourceSelect'}
+										handleMapItems={handleMapRadiologyTasks}
+										resource={'ClinicRadiologyTask'}
+									/>
+								)
+								: null}
 							{appointmentObj.service_type === 'home_visit' ||
 							appointmentObj.service_type === 'physical_therapy_home_visit' ||
 							appointmentObj.service_type === 'laboratory_home_visit' ||

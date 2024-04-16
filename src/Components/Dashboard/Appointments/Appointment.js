@@ -282,6 +282,11 @@ function Appointment() {
 							service: responses[1]?.has_laboratory_clinic_visit_service,
 							id: 'laboratory_clinic_visit',
 							name: 'Laboratory Clinic Visit'
+						},
+						{
+							service: responses[1]?.has_radiology_service,
+							id: 'radiology',
+							name: 'Radiology'
 						}
 					].filter(el => el.service === true)
 
@@ -335,6 +340,11 @@ function Appointment() {
 									service: responses?.has_laboratory_clinic_visit_service,
 									id: 'laboratory_clinic_visit',
 									name: 'Laboratory Clinic Visit'
+								},
+								{
+									service: responses?.has_radiology_service,
+									id: 'radiology',
+									name: 'Radiology'
 								}
 							].filter(el => el.service === true)
 						)
@@ -814,22 +824,23 @@ function Appointment() {
 														name={'service_type'}
 														inputType={'resourceSelect'}
 														rules={[{ required: true }]}
-														inputProps={{
-															onChange: (e, data) => {
-																appointmentFormRef?.current?.setFieldsValue({
-																	specialty_id: null
-																})
-																setData(prevState => ({
-																	...prevState,
-																	specialty_id: null
-																}))
-															}
-														}}
+														// inputProps={{
+														// 	onChange: (e, data) => {
+														// 		appointmentFormRef?.current?.setFieldsValue({
+														// 			specialty_id: null
+														// 		})
+														// 		setData(prevState => ({
+														// 			...prevState,
+														// 			specialty_id: null
+														// 		}))
+														// 	}
+														// }}
 														initialData={serviceTypeState}
 													/>
 												</Col>
 												{data?.service_type &&
 												data?.service_type !== 'nursing' &&
+												data?.service_type !== 'radiology' &&
 												data?.service_type !== 'laboratory_clinic_visit' &&
 												data?.service_type !== 'laboratory_home_visit' ? (
 													<Col lg={16} className='gutter-row'>

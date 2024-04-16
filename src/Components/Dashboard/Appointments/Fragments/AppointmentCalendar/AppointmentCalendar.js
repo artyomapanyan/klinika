@@ -28,6 +28,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 		if (appointmentObj?.service_type) {
 			if (
 				appointmentObj?.service_type === 'nursing' ||
+				appointmentObj?.service_type === 'radiology' ||
 				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
 				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
@@ -36,6 +37,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 					...prevState,
 					workload: null
 				}))
+				// console.log(3333)
 				postResource('Dashboard', 'ClinicWorkload', token, '', {
 					from: date[0].format('YYYY-MM-DD'),
 					to: date[1].format('YYYY-MM-DD'),
@@ -160,6 +162,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 												?.slice(0, showCount)
 												?.map((item, key) =>
 													appointmentObj?.service_type === 'nursing' ||
+													appointmentObj?.service_type === 'radiology' ||
 													appointmentObj?.service_type ===
 														'laboratory_clinic_visit' ||
 													appointmentObj?.service_type ===

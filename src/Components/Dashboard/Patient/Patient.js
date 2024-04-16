@@ -40,6 +40,7 @@ function Patient() {
     const [statusLoading, setStatusLoading] = useState(false)
     const [selectedFutureVisits, setSelectedFutureVisits] = useState('');
     const [paymentDone, setPaymentDone] = useState(false);
+    const [updateState, setUpdateState] = useState(1);
 
 
     useEffect(() => {
@@ -101,7 +102,10 @@ function Patient() {
                             </TabBars>
                         </div> : 
                         <div>
-                            <ProvidedServices appointmentId={data?.id}/>
+                            <ProvidedServices
+                                appointmentId={data?.id}
+                                setUpdateState={setUpdateState}
+                                updateState={updateState}/>
                             <FutureApps 
                                 appointment_id={params.id} 
                                 status={data.status} 
@@ -116,6 +120,8 @@ function Patient() {
                                 setData={setData}
                                 paymentDone={paymentDone}
                                 setPaymentDone={setPaymentDone}
+                                updateState={updateState}
+                                setUpdateState={setUpdateState}
                             />
                         </div>
                     }
