@@ -15,7 +15,8 @@ const FutureApps = ({
 	appointment_id,
 	status,
 	selectedFutureVisits,
-	setSelectedFutureVisits
+	setSelectedFutureVisits,
+	paymentDone
 }) => {
 	let language = useSelector(state => state.app.current_locale)
 	let token = useSelector(state => state.auth.token)
@@ -35,9 +36,8 @@ const FutureApps = ({
 	})
 
 	useEffect(() => {
-		if (status == 2) setDisabled(true)
-		else setDisabled(false)
-	}, [status])
+		setDisabled(status == 2 || paymentDone)
+	}, [status, paymentDone])
 
 	useEffect(() => {
 		loadVisits()
@@ -199,7 +199,7 @@ const FutureApps = ({
 	}
 
 	return (
-		<>
+		<div className='future-apps'>
 			{visitsState.length ? (
 				<div
 					style={{
@@ -230,7 +230,7 @@ const FutureApps = ({
 											<Col lg={1} style={{ alignSelf: 'center' }}>
 												<Checkbox
 													key={visit.id}
-													disabled={disabled || !visit?.booked_appointment}
+													disabled={disabled || !visit?.booked_appointment || !visit?.supported}
 													onChange={() =>
 														handleCheckboxChange(visit.booked_appointment?.id)
 													}
@@ -350,7 +350,7 @@ const FutureApps = ({
 					</Modal>
 				</div>
 			) : null}
-		</>
+		</div>
 	)
 }
 

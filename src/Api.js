@@ -280,6 +280,10 @@ let api = {
                 url: `${endpoint}${version}/appointments/undoPayment`,
                 method: 'post',
             },
+            PrintInvoice:{
+                url: `${endpoint}${version}/appointments/export-invoices`,
+                method: 'GET',
+            }
         }
     },
     {
