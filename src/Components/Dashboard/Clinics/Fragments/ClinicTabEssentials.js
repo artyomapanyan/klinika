@@ -1107,7 +1107,10 @@ function ClinicTabEssentials({loadingState, dataState, addDataState}) {
                                             </div> : <div></div>
                                         }
                                         <div style={{width:200}}>
-
+                                            {/*{*/}
+                                            {/*    role === 'super' ? <FormInput inputDisabled={role !== 'super' && !data?.enable_radiology_service} label={t('Service Fee')} name={["service_settings","radiology","fixed_diagnoses_price"]} inputType={'number'} initialValue={data?.service_settings?.radiology?.fixed_diagnoses_price}/>*/}
+                                            {/*        : <div></div>*/}
+                                            {/*}*/}
 
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_radiology_service} label={t('Duration')} name={["service_settings","radiology","duration"]} inputType={'number'}  initialValue={data?.service_settings?.radiology?.duration ? data?.service_settings?.radiology?.duration : 60}/>
                                             <FormInput inputDisabled={role !== 'super' && !data?.enable_radiology_service} label={t('Bookings per slot')} name={["service_settings","radiology","bookings_per_slot"]} inputType={'number'} initialValue={data?.service_settings?.radiology?.bookings_per_slot ? data?.service_settings?.radiology?.bookings_per_slot : 1}/>
