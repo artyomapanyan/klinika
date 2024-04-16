@@ -331,11 +331,9 @@ const FutureVisits = ({ appointment_id, status }) => {
 							<Col lg={2}>
 								<Button
 									loading={addLoading}
-									// size={'large'}
 									type={'primary'}
 									htmlType='submit'
 									className={"current_visit_add_btn"}
-									// style={{ top: 5, height: 48, width: 77}}
 								>
 									{t('Add')}
 								</Button>
@@ -400,7 +398,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 												{visit.lab_tests[0]?.name}
 											</Card>
 										) : (
-											<Card style={{ padding: 0, marginTop: 5 }}>
+											<Card style={{ padding: 0, marginTop: 5, marginBottom: 30 }}>
 												{visit.service_type === 'laboratory' ? (
 													<div>
 														<h4 style={{ fontWeight: 700 }}>
