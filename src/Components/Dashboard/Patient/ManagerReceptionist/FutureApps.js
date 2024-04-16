@@ -239,7 +239,7 @@ const FutureApps = ({
 												</Checkbox>
 											</Col>
 											<Col lg={9} style={{ alignSelf: 'center' }}>
-												<div>
+												<div style={{padding:10}}>
 													{visit.items
 														.map(item => item.name?.[language])
 														.join(', ')}
