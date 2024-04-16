@@ -39,6 +39,7 @@ function Patient() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [statusLoading, setStatusLoading] = useState(false)
     const [selectedFutureVisits, setSelectedFutureVisits] = useState('');
+    const [updateState, setUpdateState] = useState(1);
 
 
     useEffect(() => {
@@ -100,7 +101,10 @@ function Patient() {
                             </TabBars>
                         </div> : 
                         <div>
-                            <ProvidedServices appointmentId={data?.id}/>
+                            <ProvidedServices
+                                appointmentId={data?.id}
+                                setUpdateState={setUpdateState}
+                                updateState={updateState}/>
                             <FutureApps 
                                 appointment_id={params.id} 
                                 status={data.status} 
@@ -112,6 +116,8 @@ function Patient() {
                                 status={data.status} 
                                 selectedFutureVisits={selectedFutureVisits}
                                 setData={setData}
+                                updateState={updateState}
+                                setUpdateState={setUpdateState}
                             />
                         </div>
                     }

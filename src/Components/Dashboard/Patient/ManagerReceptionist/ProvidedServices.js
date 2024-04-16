@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 import Preloader from "../../../Preloader";
 
 
-function ProvidedServices({appointmentId}) {
+function ProvidedServices({appointmentId, setUpdateState, updateState}) {
     let token = useSelector((state) => state.auth.token);
     const formRef = useRef();
 
@@ -31,7 +31,7 @@ function ProvidedServices({appointmentId}) {
             setLoading(false)
 
         })
-    }, [])
+    }, [updateState])
 
     const addService = () => {
         setItemsStateNew((prevState) => ([
@@ -51,7 +51,7 @@ function ProvidedServices({appointmentId}) {
 
     const onDelete = (e, element, key) => {
         setDeleteLoading(true)
-        console.log(e, element, key)
+
         let deleteValues = {
             "item": element?.item,
             "qnt": element?.qnt,
@@ -62,6 +62,7 @@ function ProvidedServices({appointmentId}) {
             setSerState(response)
             setItemsState(response?.service_invoice?.items)
             setDeleteLoading(false)
+            setUpdateState(updateState+1)
 
         })
     }
@@ -96,6 +97,8 @@ function ProvidedServices({appointmentId}) {
                 setItemsState(response?.service_invoice?.items)
                 setItemsStateNew([])
                 formRef?.current?.resetFields()
+                setUpdateState(updateState+1)
+
             })
 
         })
@@ -123,6 +126,7 @@ function ProvidedServices({appointmentId}) {
 
 
                     postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val).then((response) => {
+                        setUpdateState(updateState+1)
 
                         postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
                             setSerState(response)
@@ -155,7 +159,7 @@ function ProvidedServices({appointmentId}) {
 
 
                     postResource('Appointment', 'SaveServiceItems', token, `${appointmentId}/saveServiceItems`, val1).then((response) => {
-
+                        setUpdateState(updateState+1)
                         postResource('Appointment', 'AppointmentServices', token, `${appointmentId}/services`).then((response) => {
                             setSerState(response)
                             setItemsState(response?.service_invoice?.items)
@@ -174,7 +178,7 @@ function ProvidedServices({appointmentId}) {
         // console.log(formRef?.current?.getFieldValue(['servisesState', key, 'qty']), 'ref1')
     }
 
-    console.log(itemsState, 'st')
+    console.log(serState, 'st')
 
     return<div style={{background:"#ffffff", margin:'24px 24px', borderRadius: 12}}>
         {
@@ -321,7 +325,7 @@ function ProvidedServices({appointmentId}) {
                                         <div style={{display: 'flex', }}>
                                             <div className={'provided_table_bold_text'} style={{width: 80}}>{el?.amount_without_tax}  SAR</div>
                                             {
-                                                el.status === 2 ? <span className={'provided_table_status_payed'}>{el.status===2 ? 'paid' : 'pending'}</span>
+                                                serState?.service_invoice?.status === 2 ? <span className={'provided_table_status_payed'}>paid</span>
                                                     : <span className={'provided_table_status_pending'}>pending</span>
                                             }
 

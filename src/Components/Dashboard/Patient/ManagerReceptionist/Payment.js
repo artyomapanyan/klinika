@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Preloader from '../../../Preloader'
 
-const Payment = ({ appointment_id, status, selectedFutureVisits, setData }) => {
+const Payment = ({ appointment_id, status, selectedFutureVisits, setData, updateState, setUpdateState }) => {
 	let token = useSelector(state => state.auth.token)
 
 	const [needPaymentState, setNeedPaymentState] = useState(false)
@@ -34,7 +34,7 @@ const Payment = ({ appointment_id, status, selectedFutureVisits, setData }) => {
 			setNeedPaymentState(!!response.total)
 			setInvoiceLoading(false)
 		})
-	}, [selectedFutureVisits, updateInvoiceState])
+	}, [selectedFutureVisits, updateInvoiceState, updateState])
 
 	useEffect(() => {
 		if (status == 2) {
@@ -51,6 +51,7 @@ const Payment = ({ appointment_id, status, selectedFutureVisits, setData }) => {
 		}).then(response => {
 			setPaymentRecievedLoading(false)
 			setUpdateInvoiceState(updateInvoiceState + 1)
+			setUpdateState(updateState + 1)
 		})
 	}
 
@@ -61,6 +62,7 @@ const Payment = ({ appointment_id, status, selectedFutureVisits, setData }) => {
 		}).then(response => {
 			setUndoPaymentLoading(false)
 			setUpdateInvoiceState(updateInvoiceState + 1)
+			setUpdateState(updateState + 1)
 		})
 	}
 
