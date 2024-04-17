@@ -11,7 +11,7 @@ import Preloader from "../../../Preloader";
 function ProvidedServices({appointmentId, setUpdateState, updateState}) {
     let token = useSelector((state) => state.auth.token);
     const formRef = useRef();
-
+    let lngs = useSelector(state => state?.app?.current_locale)
     const [totalItem, setTotalItem] = useState(0)
     const [serState, setSerState] = useState({})
     const [itemsState, setItemsState] = useState([])
@@ -183,7 +183,7 @@ function ProvidedServices({appointmentId, setUpdateState, updateState}) {
     return<div style={{background:"#ffffff", margin:'24px 24px', borderRadius: 12}}>
         {
             loading ? <Preloader/> : <Form ref={formRef}>
-                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '29px 24px'}}>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '24px'}}>
                     <div>
                         <span className={'provided_services_provaded_text'}>{t('Provided')}:</span> <span className={'provided_services_services_text'}>{t('Services')}</span>
                     </div>
@@ -219,10 +219,10 @@ function ProvidedServices({appointmentId, setUpdateState, updateState}) {
 
                             <td style={{width: 200}}>
                                 <div style={{display: 'flex', }}>
-                                    <div className={'provided_table_bold_text'} style={{width: 80}}>{serState?.primary_invoice?.amount_without_tax} SAR</div>
+                                    <div className={'provided_table_bold_text'} style={{width: 80, marginTop: 3}}>{serState?.primary_invoice?.amount_without_tax} SAR</div>
                                     {
-                                        serState?.primary_invoice?.status === 2 ? <span className={'provided_table_status_payed'}>Paid</span> :
-                                            <span className={'provided_table_status_pending'}>pending</span>
+                                        serState?.primary_invoice?.status === 2 ? <span className={'provided_table_status_payed'} style={{marginTop: 2}}>Paid</span> :
+                                            <span className={'provided_table_status_pending'} style={{marginTop: 2}}>Pending</span>
                                     }
 
 
@@ -270,13 +270,13 @@ function ProvidedServices({appointmentId, setUpdateState, updateState}) {
                                             </div>
                                             <div style={{width: 100}}>
                                                 <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '19%'}}  >
-                                                    <Input  style={{paddingLeft:16, height: 48, borderRadius: 12, width: 100}}
+                                                    <Input  style={{paddingLeft:16, height: 48, borderRadius: 12, width: 100, paddingTop: 7, fontSize: 16}}
                                                             placeholder={''}
                                                             value={el?.price}
                                                             disabled={true}
 
                                                     />
-                                                    <label style={{left: 15, paddingTop: 2}}>{t('Price')}</label>
+                                                    <label style={{left: lngs === 'en' ? 15 : -25, paddingTop: 2}}>{t('Price')}</label>
                                                 </div>
                                             </div>
                                             <div style={{width: 100}}>
@@ -323,10 +323,10 @@ function ProvidedServices({appointmentId, setUpdateState, updateState}) {
 
                                     <td style={{width: 200}}>
                                         <div style={{display: 'flex', }}>
-                                            <div className={'provided_table_bold_text'} style={{width: 80}}>{el?.amount_without_tax}  SAR</div>
+                                            <div className={'provided_table_bold_text'} style={{width: 80, marginTop: 4}}>{el?.amount_without_tax}  SAR</div>
                                             {
-                                                serState?.service_invoice?.status === 2 ? <span className={'provided_table_status_payed'}>paid</span>
-                                                    : <span className={'provided_table_status_pending'}>pending</span>
+                                                serState?.service_invoice?.status === 2 ? <span className={'provided_table_status_payed'} style={{marginTop: 1}}>Paid</span>
+                                                    : <span className={'provided_table_status_pending'} style={{marginTop: 1}}>Pending</span>
                                             }
 
                                         </div>
@@ -347,7 +347,7 @@ function ProvidedServices({appointmentId, setUpdateState, updateState}) {
                                     </td>
                                     <td>
 
-                                         <div style={{marginLeft: -20, width: '90%'}}>
+                                         <div style={{marginLeft: -20, width: '90%'}} className={'provided_add_item_select'}>
                                             <FormInput label={t('Invoice item')}
                                                        name={'item'}
                                                        inputType={'resourceSelect'}
@@ -428,11 +428,9 @@ function ProvidedServices({appointmentId, setUpdateState, updateState}) {
 
                                     <td style={{width: 200}}>
                                         <div style={{display: 'flex'}}>
-                                            <div className={'provided_table_bold_text'} style={{width: 80}}>0 SAR</div>
-                                            {
-                                                el.status === 2 ? <span className={'provided_table_status_payed'}>{el.status===2 ? 'paid' : 'pending'}</span>
-                                                    : <span className={'provided_table_status_pending'}>pending</span>
-                                            }
+                                            <div className={'provided_table_bold_text'} style={{width: 80, marginTop: 3}}>0 SAR</div>
+                                             <span className={'provided_table_status_pending'}>Pending</span>
+
 
 
                                         </div>

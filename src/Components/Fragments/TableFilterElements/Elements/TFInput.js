@@ -93,9 +93,9 @@ function TFInput({onChangeValue,value,type, resource, name, initialFocused=false
                 label={t('')}
                 name={'clinic'}
                 inputType={'resourceSelect'}
-                resourceParams={{
-                    active: 1
-                }}
+                // resourceParams={{
+                //     active: 1
+                // }}
                 inputProps={{
                     onChange: e => {
                         onChangeValue(e)
