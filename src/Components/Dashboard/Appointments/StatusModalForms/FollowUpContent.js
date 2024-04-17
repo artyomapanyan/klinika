@@ -150,6 +150,9 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     }, [modal?.service_type])
 
     const getEmptyHours = (date = dayjs()) => {
+        if (!modal?.doctor) {
+            return
+        }
         setEmptyDaysLoading(!dateWithEmptyHours.map(el => {
             return String(moment(el).format('YYYY-MM'))
         }).includes(dayjs(date).startOf('day').format('YYYY-MM')))

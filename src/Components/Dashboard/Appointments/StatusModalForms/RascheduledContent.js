@@ -145,6 +145,9 @@ export function RascheduledContent({onCancel, modal, loading, formRef}){
     }, [modal?.service_type])
 
     const getEmptyHours = (date = dayjs()) => {
+        if (!modal?.doctor) {
+            return
+        }
         setInputsLoading(true)
         postResource('ClinicDoctorAvailableTimeForMonthByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
             service: modal?.service_type,
