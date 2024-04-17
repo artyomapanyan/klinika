@@ -635,6 +635,10 @@ let api = {
         }
     },
     {
+        url: 'medical-staff',
+        resource: 'MedicalStaff',
+    },
+    {
         url: 'clinic-medical-staff',
         resource: 'ClinicMedicalStaff',
     },

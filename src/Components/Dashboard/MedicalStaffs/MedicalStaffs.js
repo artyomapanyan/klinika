@@ -5,12 +5,14 @@ import {t} from "i18next";
 import TableFilterElement from "../../Fragments/TableFilterElements/TableFilterElement";
 import DateParser from "../../Fragments/DateParser";
 import React from "react";
+import ColorSelect from "../../Fragments/ColorSelect";
+import Resource from "../../../store/Resources";
 
-
+let resource='MedicalStaff'
 function MedicalStaffs() {
     return(
         <div>
-            <ResourceTable resource={'ClinicMedicalStaff'}
+            <ResourceTable resource={'MedicalStaff'}
                            // except={{
                            //     delete: PermCheck(`Taxonomy:delete`) ? false : true,
                            //     edit: PermCheck(`Taxonomy:update`) ? false : true
@@ -25,16 +27,59 @@ function MedicalStaffs() {
                                    sorter:true,
                                },
                                {
-                                   dataIndex:'title',
-                                   title:t('Title'),
-                                   key:'title',
+                                   dataIndex:'first',
+                                   title:t('First'),
+                                   key:'first',
                                    translatable:true,
-                                   sorter:true,
-                                   filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
+                               },
+                               {
+                                   dataIndex:'last',
+                                   title:t('Last'),
+                                   key:'last',
+                                   translatable:true,
+
+                               },
+                               {
+                                   dataIndex:'email',
+                                   title:t('Email'),
+                                   key:'email',
+                               },
+                               {
+                                   dataIndex:'phone_number',
+                                   title:t('Phone number'),
+                                   key:'phone_number',
+                               },
+                               {
+                                   dataIndex:'plid',
+                                   title:t('Plid'),
+                                   key:'plid',
+                               },
+                               {
+                                   dataIndex:'clinics',
+                                   title:t('clinics'),
+                                   key:'clinics',
+                                   render:(e, record) => {
+                                       return record?.clinics?.map((el) => {
+                                           return el?.name
+                                       })
+                                   }
+                               },
+                               {
+                                   dataIndex:'role',
+                                   title:t('Role'),
+                                   key:'role',
+                               },
+
+                               {
+                                   dataIndex:['status'],
+                                   title:t('Status'),
+                                   key:'status',
+                                   shouldCellUpdate:(record,prevRecord)=>record.status!==prevRecord.status,
+                                   render:(e,record)=><ColorSelect items={Resource.Status1} initialValue={e.toString()} record={record} resource={resource} name={'status'}/>
                                },
                                {
                                    dataIndex:['created_at','iso_string'],
-                                   title:t('Create date'),
+                                   title:t('Created date'),
                                    key:'date',
                                    render:i=><DateParser date={i}/>
                                },

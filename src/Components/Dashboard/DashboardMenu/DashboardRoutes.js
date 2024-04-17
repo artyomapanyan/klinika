@@ -280,7 +280,7 @@ function DashboardRoutes(){
             showComp:<ShowPatient/>
         },
         {
-            url:'clinic-medical-staff',
+            url:'medical-staff',
             resource:'ClinicMedicalStaff',
             singleComp:<MedicalStaff/>,
             indexComp:<MedicalStaffs/>

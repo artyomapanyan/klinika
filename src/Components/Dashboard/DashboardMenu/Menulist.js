@@ -295,7 +295,7 @@ export default {
                     permission:'Clinic'
                 },
                 {
-                    key: 'clinic-medical-staff',
+                    key: 'medical-staff',
                     label: t(`Medical staff`),
                     permission:'ClinicMedicalStaff'
                 },
@@ -495,7 +495,7 @@ export default {
                     permission:'Clinic'
                 },
                 {
-                    key: 'clinic-medical-staff',
+                    key: 'medical-staff',
                     label: t(`Medical staff`),
                     permission:'ClinicMedicalStaff'
                 },

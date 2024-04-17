@@ -14,7 +14,7 @@ import CancelComponent from "../../Fragments/CancelComponent";
 import {Row} from "antd/lib";
 import dayjs from "dayjs";
 
-const resource = 'ClinicMedicalStaff';
+const resource = 'MedicalStaff';
 
 function MedicalStaff() {
     let language = useSelector((state) => state.app.current_locale)
