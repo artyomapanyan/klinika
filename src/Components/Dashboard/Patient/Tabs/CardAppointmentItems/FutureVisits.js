@@ -256,8 +256,12 @@ const FutureVisits = ({ appointment_id, status }) => {
 						onValuesChange={handleValuesChange}
 						onFinish={addVisit}
 					>
-						<Row>
-							<Col lg={6}>
+						<div style={{
+										display: 'flex',
+										flexDirection: 'row',
+										width: '100%'
+									}}>
+							<div style={{ flex: '1 1 auto', minWidth:200}}>
 								<FormInput
 									label={t('Type')}
 									name={'service_type'}
@@ -277,8 +281,8 @@ const FutureVisits = ({ appointment_id, status }) => {
 										}
 									}}
 								/>
-							</Col>
-							<Col lg={16}>
+							</div>
+							<div style={{ flex: '3 3 auto'}}>
 								{newVisit?.service_type == 'laboratory' ? (
 									<FormInput
 										label={t('Lab Tests')}
@@ -327,8 +331,8 @@ const FutureVisits = ({ appointment_id, status }) => {
 										}}
 									/>
 								) : null}
-							</Col>
-							<Col lg={2}>
+							</div>
+							<div style={{ flex: '0 0 auto', marginInlineStart: 5}}>
 								<Button
 									loading={addLoading}
 									type={'primary'}
@@ -337,8 +341,8 @@ const FutureVisits = ({ appointment_id, status }) => {
 								>
 									{t('Add')}
 								</Button>
-							</Col>
-						</Row>
+							</div>
+						</div>
 					</Form>
 					{loading ? (
 						<Preloader></Preloader>
