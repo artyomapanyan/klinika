@@ -24,6 +24,8 @@ const FutureApps = ({
 	const rescheduleFormRef = useRef()
 	const [disabled, setDisabled] = useState(false)
 	const [appointmentObj, setappointmentObj] = useState(null)
+	const [openPopup, setSetOpenPopup] = useState(false)
+
 	const [loading, setLoading] = useState(false)
 	const [bookLoading, setBookLoading] = useState(0)
 	const [rescheduleLoading, setRescheduleLoading] = useState(false)
@@ -120,11 +122,13 @@ const FutureApps = ({
 			lab_tests: visit.lab_tests.map(item => item.id),
 			nursing_tasks: visit.nursing_tasks.map(item => item.id)
 		}))
+		setSetOpenPopup(true)
 	}
 
 	const createAppointment = bookingData => {
 		let appointment = { ...appointmentObj, ...bookingData }
 		setappointmentObj(null)
+		setSetOpenPopup(false)
 		setBookLoading(appointmentObj.future_visit_id)
 		createResource('Appointment', appointment, token)
 			.then(response => {
@@ -150,6 +154,7 @@ const FutureApps = ({
 			...visit.booked_appointment,
 			future_visit_id: visit.id
 		})
+		setSetOpenPopup(true)
 	}
 
 	const RescheduleAppointment = values => {
@@ -185,11 +190,13 @@ const FutureApps = ({
 			.finally(() => {
 				setappointmentObj(null)
 				setRescheduleLoading(false)
+				setSetOpenPopup(false)
 			})
 	}
 
 	const handleCancel = () => {
 		setappointmentObj(null)
+		setSetOpenPopup(false)
 	}
 
 	const handleCheckboxChange = appId => {
@@ -378,7 +385,7 @@ const FutureApps = ({
 						width={'80%'}
 						title={appointmentObj?.id ? 'Reschedule Appointment' : ''}
 						footer={false}
-						open={appointmentObj}
+						open={openPopup}
 						onCancel={handleCancel}
 						key={appointmentObj?.id || 0}
 					>
@@ -400,7 +407,11 @@ const FutureApps = ({
 								appointmentObj={appointmentObj}
 								setappointmentObj={setappointmentObj}
 								createAppointment={createAppointment}
-								servicesList={appointmentObj?.service_type === 'clinic_visit'? doctorServices : labServices}
+								servicesList={
+									appointmentObj?.service_type === 'clinic_visit'
+										? doctorServices
+										: labServices
+								}
 							/>
 						)}
 					</Modal>
