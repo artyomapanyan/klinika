@@ -9,8 +9,14 @@ import search_icon_black from '../../../../../dist/icons/search_icon_black.png'
 import AppointmentCalendarCollapse from './AppointmentCalendarCollapse'
 import NursLabCalendarCollapse from './NursLabCalendarCollapse'
 import { t } from 'i18next'
+import FormInput from '../../../../Fragments/FormInput'
 
-function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
+function AppointmentCalendar({
+	appointmentObj,
+	setappointmentObj,
+	createAppointment,
+	servicesList
+}) {
 	const [loading, setLoading] = useState(false)
 	const [hasLeftSide, setHasLeftSide] = useState(true)
 	const [labNursing, setLabNursing] = useState(false)
@@ -21,7 +27,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 
 	let token = useSelector(state => state.auth.token)
 
-	useEffect(() =>{
+	useEffect(() => {
 		setDate([dayjs(), dayjs().add(6, 'day')])
 	}, [appointmentObj.service_type])
 	useEffect(() => {
@@ -33,7 +39,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
 				setLoading(true)
-				setData( prevState =>({
+				setData(prevState => ({
 					...prevState,
 					workload: null
 				}))
@@ -41,7 +47,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 				postResource('Dashboard', 'ClinicWorkload', token, '', {
 					from: date[0].format('YYYY-MM-DD'),
 					to: date[1].format('YYYY-MM-DD'),
-					clinic: appointmentObj?.clinic_id,
+					clinic: appointmentObj?.clinic_id
 				}).then(response => {
 					setData({
 						clinic_id: response.clinic.id,
@@ -71,8 +77,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 						})
 						setLoading(false)
 					})
-				}
-				else{
+				} else {
 					setData(null)
 				}
 			}
@@ -97,8 +102,17 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 					date={date}
 					setDate={setDate}
 					calendarTitle={
-						labNursing ? 'Laboratories and Nursing' : 'Appointments'
+						appointmentObj.future_visit_id
+							? labNursing
+								? 'Select time slot'
+								: 'Select doctor and time slot'
+							: labNursing
+							? 'Laboratories and Nursing'
+							: 'Appointments'
 					}
+					servicesList={servicesList}
+					appointmentObj={appointmentObj}
+					setappointmentObj={setappointmentObj}
 				/>
 				<div className='container-fluid'>
 					<div className='row'>
@@ -111,21 +125,43 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 												<tr className='d-flex align-items-center justify-content-between w-100'>
 													{hasLeftSide ? (
 														<td style={{ width: '20%', paddingRight: 20 }}>
-															<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
-																<Input
-																	placeholder={t('Search for doctor')}
-																	className={'search_input_clinic_man'}
-																	onChange={e => setSearch(e.target.value)}
-																	value={search}
-																	aria-label='Search'
-																	prefix={
-																		<img
-																			src={search_icon_black}
-																			alt={'search_icon_black'}
-																		/>
-																	}
-																/>
-															</div>
+															
+																{appointmentObj.future_visit_id ? (
+																	<div style={{marginTop:22}}>
+																	<FormInput
+																		label={t('Service Type')}
+																		name={'service_type'}
+																		inputType={'resourceSelect'}
+																		rules={[{ required: true }]}
+																		initialData={servicesList}
+																		initialValue={appointmentObj?.service_type}
+																		inputProps={{
+																			onChange: e =>
+																				setappointmentObj(prevState => ({
+																					...prevState,
+																					service_type: e
+																				}))
+																		}}
+																	/>
+																	</div>
+																) : (
+																	<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
+																	<Input
+																		placeholder={t('Search for doctor')}
+																		className={'search_input_clinic_man'}
+																		onChange={e => setSearch(e.target.value)}
+																		value={search}
+																		aria-label='Search'
+																		prefix={
+																			<img
+																				src={search_icon_black}
+																				alt={'search_icon_black'}
+																			/>
+																		}
+																	/>
+																	</div>
+																)}
+															
 														</td>
 													) : null}
 													{[...Array(7).keys()].map(e => {
@@ -172,6 +208,8 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 															item={item}
 															appointmentObj={appointmentObj}
 															setappointmentObj={setappointmentObj}
+															createAppointment={createAppointment}
+
 														/>
 													) : (
 														<AppointmentCalendarCollapse
@@ -180,6 +218,7 @@ function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 															search={search}
 															appointmentObj={appointmentObj}
 															setappointmentObj={setappointmentObj}
+															createAppointment={createAppointment}
 														/>
 													)
 												)}

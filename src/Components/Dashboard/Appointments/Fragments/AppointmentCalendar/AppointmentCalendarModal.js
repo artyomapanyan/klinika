@@ -15,7 +15,8 @@ function AppointmentCalendarModal({
 	selectedDate,
 	setSelectedDate,
 	appointmentObj,
-	setappointmentObj
+	setappointmentObj,
+	createAppointment
 }) {
 	let language = useSelector(state => state?.app?.current_locale)
 	const [loading, setLoading] = useState(false)
@@ -77,7 +78,7 @@ function AppointmentCalendarModal({
 
 	const addAppointment = values => {
 		if(appointmentObj.future_visit_id){
-			setappointmentObj({
+			createAppointment({
 				booked_at: dayjs(selectedDate + ' ' + values.time).format(
 					'YYYY-MM-DD HH:mm'
 				),
