@@ -279,7 +279,7 @@ const FutureApps = ({
 										<Row
 											key={visitIndex}
 											style={{
-												borderTop: '1px dashed #A6A7BA',
+												borderTop: visitIndex !== 0? '1px dashed #A6A7BA' : 'none',
 												minHeight: 60,
 												alignContent: 'center'
 											}}
