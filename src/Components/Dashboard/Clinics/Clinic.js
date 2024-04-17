@@ -1,5 +1,3 @@
-
-
 import React, {useEffect, useState} from "react";
 import ClinicTabEssentials from "./Fragments/ClinicTabEssentials";
 import ClinicWorkingHours from "./Fragments/ClinicWorkingHours/ClinicWorkingHours";
@@ -22,6 +20,7 @@ import LaboratoryHomeVisit from "./Fragments/LaboratoryHomeVisit/LaboratoryHomeV
 import PhysicalTherapyClinicVisit from "./Fragments/PhysicalTherapyClinicVisit/PhysicalTherapyClinicVisit";
 import PhysicalTherapyHomeVisit from "./Fragments/PhysicalTherapyHomeVisit/PhysicalTherapyHomeVisit";
 import Radiology from './Fragments/Radiology/Radiology'
+import RadiologyHomeVisit from './Fragments/RadiologyHomeVisit/RadiologyHomeVisit'
 
 
 const resource = "Clinic"
@@ -109,6 +108,9 @@ function Clinic() {
                     </items> : null}
                 {dataState.data.has_radiology_service && dataState.data.enable_radiology_service && params.id ? <items key={'radiology'} tab={'Radiology'} disabled={!params.id}>
                     <Radiology tab={tab}/>
+                </items> : null}
+                {dataState.data.has_radiology_home_visit_service && dataState.data.enable_radiology_home_visit_service && params.id ? <items key={'radiology_home_visit'} tab={'Radiology home visit'} disabled={!params.id}>
+                    <RadiologyHomeVisit tab={tab}/>
                 </items> : null}
 
                 {dataState.data.has_physical_therapy_clinic_visit_service && dataState.data.enable_physical_therapy_clinic_visit_service && params.id ? <items key={'physical_therapy_clinic_visit'} tab={'Physical therapy clinic visit'} disabled={!params.id}>

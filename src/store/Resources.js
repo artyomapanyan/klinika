@@ -120,7 +120,7 @@ const Resource = {
         },
         {
             key: '4',
-            label: t('Rescheduled')
+            label: t('Rescheqduled')
         },
         {
             key: '5',

@@ -35,6 +35,7 @@ function AppointmentCalendar({
 			if (
 				appointmentObj?.service_type === 'nursing' ||
 				appointmentObj?.service_type === 'radiology' ||
+				appointmentObj?.service_type === 'radiology_home_visit' ||
 				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
 				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
@@ -198,6 +199,7 @@ function AppointmentCalendar({
 												?.slice(0, showCount)
 												?.map((item, key) =>
 													appointmentObj?.service_type === 'nursing' ||
+													appointmentObj?.service_type === 'radiology_home_visit' ||
 													appointmentObj?.service_type === 'radiology' ||
 													appointmentObj?.service_type ===
 														'laboratory_clinic_visit' ||

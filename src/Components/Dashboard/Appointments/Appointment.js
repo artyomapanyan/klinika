@@ -287,6 +287,11 @@ function Appointment() {
 							service: responses[1]?.has_radiology_service,
 							id: 'radiology',
 							name: 'Radiology'
+						},
+						{
+							service: responses?.has_radiology_home_visit_service,
+							id: 'radiology_home_visit',
+							name: 'Radiology Home Visit'
 						}
 					].filter(el => el.service === true)
 
@@ -298,6 +303,7 @@ function Appointment() {
 			} else {
 				postResource('Clinic', 'single', token, data?.clinic_id).then(
 					responses => {
+						console.log(responses)
 						setServiceTypesLoading(false)
 						setServiceTypeState(
 							[
@@ -345,6 +351,11 @@ function Appointment() {
 									service: responses?.has_radiology_service,
 									id: 'radiology',
 									name: 'Radiology'
+								},
+								{
+									service: responses?.has_radiology_home_visit_service,
+									id: 'radiology_home_visit',
+									name: 'Radiology Home Visit'
 								}
 							].filter(el => el.service === true)
 						)
@@ -841,6 +852,7 @@ function Appointment() {
 												{data?.service_type &&
 												data?.service_type !== 'nursing' &&
 												data?.service_type !== 'radiology' &&
+												data?.service_type !== 'radiology_home_visit' &&
 												data?.service_type !== 'laboratory_clinic_visit' &&
 												data?.service_type !== 'laboratory_home_visit' ? (
 													<Col lg={16} className='gutter-row'>

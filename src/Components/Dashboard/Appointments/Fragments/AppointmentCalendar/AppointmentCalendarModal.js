@@ -37,6 +37,7 @@ function AppointmentCalendarModal({
 			if (
 				appointmentObj?.service_type === 'nursing' ||
 				appointmentObj?.service_type === 'radiology' ||
+				appointmentObj?.service_type === 'radiology_home_visit' ||
 				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
 				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
@@ -51,7 +52,6 @@ function AppointmentCalendarModal({
 						service: appointmentObj.service_type
 					}
 				).then(response => {
-					console.log(response)
 					setLoading(false)
 					setTimes(response.flat())
 					setNoTimes(response)
@@ -279,7 +279,8 @@ function AppointmentCalendarModal({
 									/>
 								</div>
 							) : null}
-							{appointmentObj.service_type === 'radiology'
+							{appointmentObj.service_type === 'radiology' ||
+							appointmentObj.service_type === 'radiology_home_visit'
 								? (
 									<FormInput
 										label={t('Radiology tasks')}
@@ -305,6 +306,7 @@ function AppointmentCalendarModal({
 								: null}
 							{appointmentObj.service_type === 'home_visit' ||
 							appointmentObj.service_type === 'physical_therapy_home_visit' ||
+							appointmentObj.service_type === 'radiology_home_visit' ||
 							appointmentObj.service_type === 'laboratory_home_visit' ||
 							appointmentObj.service_type === 'nursing' ? (
 								<FormInput
