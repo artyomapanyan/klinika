@@ -28,6 +28,8 @@ const FutureApps = ({
 	const [bookLoading, setBookLoading] = useState(0)
 	const [rescheduleLoading, setRescheduleLoading] = useState(false)
 	const [visitsState, setVisitsState] = useState([])
+	const [doctorServices, setDoctorServices] = useState([])
+	const [labServices, setLabServices] = useState([])
 	const [defaultPagination, setDefaultPagination] = useState({
 		order: 'desc',
 		order_by: 'order',
@@ -198,6 +200,54 @@ const FutureApps = ({
 		}
 	}
 
+	useEffect(() => {
+		postResource('Clinic', 'single', token, ownerClinics.id).then(responses => {
+			setDoctorServices(
+				[
+					{
+						service: responses?.has_telehealth_service,
+						id: 'telehealth',
+						name: 'Telehealth'
+					},
+					{
+						service: responses?.has_clinic_visit_service,
+						id: 'clinic_visit',
+						name: 'Clinic Visit'
+					},
+					{
+						service: responses?.has_home_visit_service,
+						id: 'home_visit',
+						name: 'Home Visit'
+					},
+					{
+						service: responses?.has_physical_therapy_home_visit_service,
+						id: 'physical_therapy_home_visit',
+						name: 'Physical Therapy Home Visit'
+					},
+					{
+						service: responses?.has_physical_therapy_clinic_visit_service,
+						id: 'physical_therapy_clinic_visit',
+						name: 'Physical Therapy Clinic Visit'
+					}
+				].filter(el => el.service === true)
+			)
+			setLabServices(
+				[
+					{
+						service: responses?.has_laboratory_home_visit_service,
+						id: 'laboratory_home_visit',
+						name: 'Laboratory Home Visit'
+					},
+					{
+						service: responses?.has_laboratory_clinic_visit_service,
+						id: 'laboratory_clinic_visit',
+						name: 'Laboratory Clinic Visit'
+					}
+				].filter(el => el.service === true)
+			)
+		})
+	}, [])
+
 	return (
 		<div className='future-apps'>
 			{visitsState.length ? (
@@ -230,7 +280,11 @@ const FutureApps = ({
 											<Col lg={1} style={{ alignSelf: 'center' }}>
 												<Checkbox
 													key={visit.id}
-													disabled={disabled || !visit?.booked_appointment || !visit?.supported}
+													disabled={
+														disabled ||
+														!visit?.booked_appointment ||
+														!visit?.supported
+													}
 													onChange={() =>
 														handleCheckboxChange(visit.booked_appointment?.id)
 													}
@@ -239,7 +293,7 @@ const FutureApps = ({
 												</Checkbox>
 											</Col>
 											<Col lg={9} style={{ alignSelf: 'center' }}>
-												<div style={{padding:10}}>
+												<div style={{ padding: 10 }}>
 													{visit.items
 														.map(item => item.name?.[language])
 														.join(', ')}
@@ -322,7 +376,7 @@ const FutureApps = ({
 					</div>
 					<Modal
 						width={'80%'}
-						title='Add Appointment'
+						title={appointmentObj?.id ? 'Reschedule Appointment' : ''}
 						footer={false}
 						open={appointmentObj}
 						onCancel={handleCancel}
@@ -344,7 +398,9 @@ const FutureApps = ({
 						) : (
 							<AppointmentCalendar
 								appointmentObj={appointmentObj}
-								setappointmentObj={createAppointment}
+								setappointmentObj={setappointmentObj}
+								createAppointment={createAppointment}
+								servicesList={appointmentObj?.service_type === 'clinic_visit'? doctorServices : labServices}
 							/>
 						)}
 					</Modal>
