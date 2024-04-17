@@ -200,7 +200,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 								<Row
 									key={visitIndex}
 									style={{
-										borderTop: '1px dashed #A6A7BA',
+										borderTop: visitIndex !== 0? '1px dashed #A6A7BA': 'none',
 										height: 43,
 										alignContent: 'center'
 									}}
