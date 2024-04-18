@@ -130,19 +130,14 @@ function ClinicTabManageDoctors({dataService}) {
                             resource={'ClinicMedicalStaff'}
                             tableColumns={[
                                 {
-                                    dataIndex: ['doctor', 'name'],
+                                    dataIndex: ['medical_staff', 'name'],
                                     title: 'Doctor Name',
                                     key: 'name',
                                     render:(e, record)=> {
-                                        return <div  style={{padding:2}}>name</div>
+                                        return <div  style={{padding:2}}>{record?.medical_staff?.first} {record?.medical_staff?.last}</div>
                                     }
                                 },
-                                {
-                                    dataIndex: 'id',
-                                    title: 'id',
-                                    key: 'id',
 
-                                },
                             ]}
                         />}
                         <Button type={'primary'} onClick={showModalUser}>+ {t('Add new User')}</Button>

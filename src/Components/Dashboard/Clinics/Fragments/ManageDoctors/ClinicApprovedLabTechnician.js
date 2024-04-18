@@ -53,12 +53,12 @@ function ClinicApprovedLabTechnician({dataService}) {
                 tableColumns={[
                     {
                         dataIndex: 'id',
-                        title: 'Id',
-                        key: 'id',
-                        // render:(e, record)=> {
-                        //
-                        //     return <div  style={{padding:2}}>{record?.doctor?.first} {record?.doctor?.last}</div>
-                        // }
+                        title: 'Lab technician id',
+                        key: 'plid',
+                        render:(e, record)=> {
+
+                            return <div  style={{padding:2}}>{record?.medical_staff?.first} {record?.medical_staff?.last}</div>
+                        }
                     },
                     {
                         dataIndex: ['doctor'],

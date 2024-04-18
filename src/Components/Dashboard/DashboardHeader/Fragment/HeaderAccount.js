@@ -54,6 +54,22 @@ function HeaderAccount() {
 
 			})
 		}
+		if(role == 'lab-technician') {
+			setApproveLoading(true)
+			setLoading(true)
+			postResource('ApproveMedicalStaff', 'single', token, ``).then(response => {
+				console.log(response, 'eee')
+				setApprove(response)
+
+				if(response) {
+					setTimeout(() => {
+						setApproveLoading(false)
+						setLoading(false)
+					}, 1000)
+				}
+
+			})
+		}
 
 	}, [role, elem])
 
@@ -74,46 +90,80 @@ function HeaderAccount() {
 		setApproveLoading(true)
 		setLoading(true)
 		setElem(el)
-		postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
-			postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
+		console.log(el)
+		if(role === 'doctor') {
+			postResource('ClinicDoctor', 'ApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
+				postResource('ApproveClinicDoctor', 'single', token, ``).then(response => {
 
-				setApprove(response)
-				approve=response
+					setApprove(response)
+					approve=response
 
-				if(approve.length === response.length) {
-					setTimeout(() => {
-						setApproveLoading(false)
-						setLoading(false)
-					}, 1000)
-				}
+					if(approve.length === response.length) {
+						setTimeout(() => {
+							setApproveLoading(false)
+							setLoading(false)
+						}, 1000)
+					}
 
+				}).catch(()=>{
+
+					setApproveLoading(false)
+				})
 			}).catch(()=>{
-
 				setApproveLoading(false)
 			})
-		}).catch(()=>{
-			setApproveLoading(false)
-		})
+		}
+
+		if(role === 'lab-technician') {
+			postResource('MedicalStaffDecline', 'MedicalStaffApproveDecline', token, `/${el?.id}/approve`, { approve: 1 }).then(response => {
+				postResource('ApproveMedicalStaff', 'single', token, ``).then(response => {
+
+					setApprove(response)
+					approve=response
+
+					if(approve.length === response.length) {
+						setTimeout(() => {
+							setApproveLoading(false)
+							setLoading(false)
+						}, 1000)
+					}
+
+				}).catch(()=>{
+
+					setApproveLoading(false)
+				})
+			}).catch(()=>{
+				setApproveLoading(false)
+			})
+		}
+
 
 
 	}
 
 	const onCancel = (el, key) => {
 		setElem(el)
-		postResource(
-			'ClinicDoctor',
-			'ApproveDecline',
-			token,
-			`/${el?.id}/approve`,
-			{ approve: 0 }
-		).then(response => {})
+		if(role === 'doctor') {
+			postResource(
+				'ClinicDoctor',
+				'ApproveDecline',
+				token,
+				`/${el?.id}/approve`,
+				{ approve: 0 }
+			).then(response => {})
+		}
+		if(role === 'lab-technician') {
+			postResource(
+				'MedicalStaffDecline',
+				'MedicalStaffApproveDecline',
+				token,
+				`/${el?.id}/approve`,
+				{ approve: 0 }
+			).then(response => {})
+		}
 
-		// setApprove([
-		//     approve.filter((elem) => {
-		//         return elem.id === key
-		//     })
-		//
-		// ])
+
+
 	}
 
 	useEffect(() => {
@@ -133,7 +183,7 @@ function HeaderAccount() {
 		<div>
 			<div className='header-properties small-gap'>
 				<div className={'header_2_div'}>
-					{role === 'doctor' ? (
+					{role === 'doctor' || role === 'lab-technician' ? (
 								<Dropdown
 										dropdownRender={() => {
 											return (
