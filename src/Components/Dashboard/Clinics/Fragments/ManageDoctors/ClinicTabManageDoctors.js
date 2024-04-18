@@ -8,17 +8,31 @@ import {useSelector} from "react-redux";
 import ClinicApprovedDoctors from "./ClinicApprovedDoctors";
 import ManageDoctorsModal from "./Fragments/ManageDoctorsModal";
 import Preloader from "../../../../Preloader";
+import ManageUsersModal from "./ManageUsersModal";
+import DoctorGeneralInfo from "../../../DoctorProfile/DoctorGeneralInfo/DoctorGeneralInfo";
+import ClinicTabBars from "../ClinicTabBars";
+import ClinicApprovedLabTechnician from "./ClinicApprovedLabTechnician";
 
 
 function ClinicTabManageDoctors({dataService}) {
+
+    const [tab, setTab] = useState('general_information');
+
+
+
     const params = useParams();
     let token = useSelector((state) => state.auth.token);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpenUser, setIsModalOpenUser] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
+    };
+
+    const showModalUser = () => {
+        setIsModalOpenUser(true);
     };
 
 
@@ -39,37 +53,112 @@ function ClinicTabManageDoctors({dataService}) {
         })
     }
 
+    const onCreateUser = (data) => {
+        if (!data) {
+            return setIsModalOpenUser(false);
+        }
+        setIsModalOpenUser(1)
+        setLoading(true)
+        data.clinic_id=params.id
+        createResource("ClinicMedicalStaff", data, token).then((response) => {
+            if(response.id){
+                setIsModalOpenUser(false)
+            }else{
+                setIsModalOpenUser(true)
+            }
+            setLoading(false)
+        })
+    }
+
+
+
+    const handleChange = (e) => {
+        setTab(e)
+
+    }
 
     return (
         <div>
-            <div  className={'add_edit_content'}>
-                <h1 className={'h1'} style={{marginBottom: -80}}>{t(`Manage Pending Doctors`)}</h1>
-                {loading ? <Preloader/> : <ResourceTable
-                    noHeader={true}
-                    except={{edit: true}}
-                    tableParams={{
-                        clinic: params?.id,
-                        is_approved: 0
-                    }}
-                    resource={'ClinicDoctor'}
-                    tableColumns={[
-                        {
-                            dataIndex: ['doctor', 'name'],
-                            title: 'Doctor Name',
-                            key: 'name',
-                            render:(e, record)=> {
-                                return <div  style={{padding:2}}>{record?.doctor?.first} {record?.doctor?.last}</div>
-                            }
-                        },
-                    ]}
-                />}
-                <Button type={'primary'} onClick={showModal}>+ {t('Add new Doctor')}</Button>
+            <ClinicTabBars onChange={handleChange}>
+                <items key={'manage_doctors'} tab={t('Manage doctors')}  >
+                    <div  className={'add_edit_content'}>
 
-                <ManageDoctorsModal isModalOpen={isModalOpen} onCreate={onCreate}/>
-            </div >
-            <div className={'add_edit_content'}>
-                <ClinicApprovedDoctors dataService={dataService} />
-            </div>
+                        <h1 className={'h1'} style={{marginBottom: -80}}>{t(`Manage Pending Doctors`)}</h1>
+                        {loading ? <Preloader/> : <ResourceTable
+                            noHeader={true}
+                            except={{edit: true}}
+                            tableParams={{
+                                clinic: params?.id,
+                                is_approved: 0
+                            }}
+                            resource={'ClinicDoctor'}
+                            tableColumns={[
+                                {
+                                    dataIndex: ['doctor', 'name'],
+                                    title: 'Doctor Name',
+                                    key: 'name',
+                                    render:(e, record)=> {
+                                        return <div  style={{padding:2}}>{record?.doctor?.first} {record?.doctor?.last}</div>
+                                    }
+                                },
+                            ]}
+                        />}
+                        <Button type={'primary'} onClick={showModal}>+ {t('Add new Doctor')}</Button>
+
+                        <ManageDoctorsModal isModalOpen={isModalOpen} onCreate={onCreate}/>
+                    </div>
+
+                    <div className={'add_edit_content'}>
+                        <ClinicApprovedDoctors dataService={dataService} />
+                    </div>
+                </items>
+
+
+
+
+
+                <items key={'manage_users'} tab={'Manage lab technician'} >
+                    <div  className={'add_edit_content'}>
+                        <h1 className={'h1'} style={{marginBottom: -80}}>{t(`Manage Pending User`)}</h1>
+                        {loading ? <Preloader/> : <ResourceTable
+                            noHeader={true}
+                            except={{edit: true}}
+                            tableParams={{
+                                clinic: params?.id,
+                                is_approved: 0
+                            }}
+                            resource={'ClinicMedicalStaff'}
+                            tableColumns={[
+                                {
+                                    dataIndex: ['medical_staff', 'name'],
+                                    title: 'Doctor Name',
+                                    key: 'name',
+                                    render:(e, record)=> {
+                                        return <div  style={{padding:2}}>{record?.medical_staff?.first} {record?.medical_staff?.last}</div>
+                                    }
+                                },
+
+                            ]}
+                        />}
+                        <Button type={'primary'} onClick={showModalUser}>+ {t('Add new User')}</Button>
+
+                        <ManageUsersModal isModalOpenUser={isModalOpenUser} onCreateUser={onCreateUser}/>
+                    </div>
+
+                    <div className={'add_edit_content'}>
+                        <ClinicApprovedLabTechnician dataService={dataService} />
+                    </div>
+                </items>
+
+            </ClinicTabBars>
+
+
+
+
+
+
+
+
             
         </div>
     )

@@ -12,9 +12,11 @@ function NewThankYouOffer() {
     let dispatch = useDispatch()
 
     const [chargeResponse, setChargeResponse] = useState({})
+    let moyasarIds = useSelector(state => state?.moyasarIds)
     const [firstLoadingThankYou, setFirstLoadingThankYou] = useState(true)
     const [onlineOrClinicPay, setOnlineOrClinicPay] = useState(false)
     const [isSaudi, setIsSaudi] = useState(false)
+    const [moyasarPayStatusState, setMoyasarPayStatusState] = useState(false)
 
     useEffect(()=>{
         if(lngs!=='ar'){
@@ -29,6 +31,9 @@ function NewThankYouOffer() {
 
     useEffect(()=>{
         let currentURL = window.location.href;
+
+        console.log(currentURL)
+        console.log(currentURL?.includes('APPROVED'), 'r')
 
         if(currentURL?.includes('invoice')) {
             setOnlineOrClinicPay(true)
@@ -48,6 +53,10 @@ function NewThankYouOffer() {
 
 
             })
+        } else if(moyasarIds?.paymentMethodId == 5) {
+            setMoyasarPayStatusState(currentURL?.includes('APPROVED'))
+            setOnlineOrClinicPay(true)
+            setFirstLoadingThankYou(false)
         } else {
             setOnlineOrClinicPay(false)
             setFirstLoadingThankYou(false)
@@ -85,7 +94,7 @@ function NewThankYouOffer() {
                     }
                 >
                     <div className={'menu_div_new'} style={{ minHeight: 500}}>
-                        <NewThankYouBookContent isSaudi={isSaudi} chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou} onlineOrClinicPay={onlineOrClinicPay}/>
+                        <NewThankYouBookContent moyasarPayStatusState={moyasarPayStatusState} isSaudi={isSaudi} chargeResponse={chargeResponse} firstLoadingThankYou={firstLoadingThankYou} onlineOrClinicPay={onlineOrClinicPay}/>
                     </div>
 
                     {/**<OffersFooter />**/}

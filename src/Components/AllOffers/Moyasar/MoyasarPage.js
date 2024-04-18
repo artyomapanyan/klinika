@@ -15,16 +15,19 @@ export default function MoyasarPage({data, isSaudi}) {
         but it will work on your machine.
         */
 
+
+
         if (!formContainerRef.current) return;
 
         window.Moyasar.init({
             element: formContainerRef.current,
+            language: 'ar',
             // Amount in the smallest currency unit.
             // For example:
             // 10 SAR = 10 * 100 Halalas
             // 10 KWD = 10 * 1000 Fils
             // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
-            amount: isSaudi ? (data?.new_price_after_vat_saudi * 100) : (data?.new_price_after_vat_non_saudi * 100),
+            amount: isSaudi ? (Math.ceil(data?.new_price_after_vat_saudi * 100)) : (Math.ceil(data?.new_price_after_vat_non_saudi * 100)),
             currency: "SAR",
             description: "Coffee Order #1",
             publishable_api_key: "pk_test_iApwnNsTDexnwuvNTTvfW2efHY4FY5yYLqzBxQ4T",
@@ -39,7 +42,12 @@ export default function MoyasarPage({data, isSaudi}) {
                 'appointment_id' : ids?.appointment_id,
                 'invoice_id' : ids?.invoice_id,
             }
+
         });
+
+
+
+
     }, []);
 
     return (

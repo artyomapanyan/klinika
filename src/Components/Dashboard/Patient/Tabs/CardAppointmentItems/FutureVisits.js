@@ -259,10 +259,12 @@ const FutureVisits = ({ appointment_id, status }) => {
 						<div style={{
 										display: 'flex',
 										flexDirection: 'row',
-										width: '100%'
+										width: '100%',
+										marginInlineStart: -5
 									}}>
-							<div style={{ flex: '1 1 auto', minWidth:200}}>
+							<div style={{ flex: '0 0 auto', minWidth:200}}>
 								<FormInput
+									style={{marginInlineStart:0}}
 									label={t('Type')}
 									name={'service_type'}
 									inputType={'resourceSelect'}
