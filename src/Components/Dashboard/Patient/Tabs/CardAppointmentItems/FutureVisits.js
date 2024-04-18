@@ -71,6 +71,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 				...newVisit,
 				appointment_id: appointment_id,
 				queue_type: visitsState.length ? null : 1,
+				gap: visitsState.length ? null : 0,
 			},
 			token
 		).then(response => {
@@ -240,7 +241,7 @@ const FutureVisits = ({ appointment_id, status }) => {
 												e => e.id === visit.queue_type
 											)?.name
 										}{' '}
-										{visit.gap} {visit.gap != null ? 'days' : ''}
+										{visit.gap != null && visit.gap !== 0 ? visit.gap + ' days' : ''}
 									</Col>
 								</Row>
 							)
