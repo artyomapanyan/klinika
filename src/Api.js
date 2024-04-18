@@ -670,6 +670,30 @@ let api = {
 
         }
     },
+    {
+        url: 'medical-staff',
+        resource: 'MedicalStaff',
+    },
+    {
+        url: 'clinic-medical-staff',
+        resource: 'ClinicMedicalStaff',
+    },
+    {
+        url: 'clinic-medical-staff/pending-requests',
+        resource: 'ApproveMedicalStaff',
+
+    },
+    {
+        url: 'medical-staff',
+        resource: 'MedicalStaffDecline',
+        custom: {
+            MedicalStaffApproveDecline: {
+                url: `${endpoint}${version}/clinic-medical-staff`,
+                method: 'POST',
+            },
+
+        }
+    },
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',

@@ -1,7 +1,14 @@
 
 import React from "react";
 import {Avatar, Button, Space, Table} from "antd";
-import {CopyOutlined, FilePdfOutlined, LeftOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons";
+import {
+    CopyOutlined,
+    FilePdfOutlined,
+    LeftOutlined,
+    MailOutlined,
+    PhoneOutlined,
+    UserOutlined
+} from "@ant-design/icons";
 
 import {useNavigate, useParams} from "react-router";
 import {useGetResourceSingle} from "../../Functions/api_calls";
@@ -82,6 +89,8 @@ function ShowPatient() {
         },
     ];
 
+    console.log(data)
+
     return (
         <div style={{marginTop: -120}}>
             <div>
@@ -91,7 +100,7 @@ function ShowPatient() {
                 loading ? <Preloader/> : <div>
                     <div className={'add_edit_content'} id={'show_header'} style={{borderRadius: '22px 22px 0 0'}}>
                         <Space >
-                            <Avatar size={120} src={<img src={user_avatar} alt={'user_avatar'}/>} style={{background:'gray'}}/>
+                            <Avatar style={{borderRadius: 8}} shape="square" size={120} src={data?.avatar?.url} style={{background:'gray'}} icon={<UserOutlined />}/>
                             <div style={{display:"block", marginLeft:20}}>
                                 <h2 style={{fontWeight: 600}}>{data?.first} {data?.last}</h2>
                                 <div>

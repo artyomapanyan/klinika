@@ -40,7 +40,7 @@ function PatientHeader({data, setData}) {
                 <div >
                     <div className={'avatar_div'}>
 
-                            <Avatar style={{borderRadius: 8}} src={data?.patient?.avatar} shape="square" size={110} icon={<UserOutlined />} />
+                            <Avatar style={{borderRadius: 8}} src={data?.patient?.avatar?.url} shape="square" size={110} icon={<UserOutlined />} />
                             <div className={'patient_head_text'}>
                                 <div className={'patient_head_name'}>{data?.patient?.first} {data?.patient?.last}</div>
                                 <div className={'text_norm'}>{data?.patient?.dob ? dayjs(data?.patient?.dob).fromNow(true) : ''} {data?.patient?.gender == 1 ? 'male' : 'female'} </div>

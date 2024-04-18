@@ -77,6 +77,11 @@ import AllNotifications from "../AllNotifications/AllNotifications";
 import DoctorProfile from "../DoctorProfile/DoctorProfile";
 import RadiologyTask from '../RadiologyTasks/RadiologyTask'
 import RadiologyTasks from '../RadiologyTasks/RadiologyTasks'
+import MedicalStaffs from "../MedicalStaffs/MedicalStaffs";
+import MedicalStaff from "../MedicalStaffs/MedicalStaff";
+
+
+
 
 function DashboardRoutes(){
     const resourceRoutes =[
@@ -282,6 +287,12 @@ function DashboardRoutes(){
             indexComp:<Patients/>,
             showComp:<ShowPatient/>
         },
+        {
+            url:'medical-staff',
+            resource:'ClinicMedicalStaff',
+            singleComp:<MedicalStaff/>,
+            indexComp:<MedicalStaffs/>
+        },
 
 
 
@@ -307,6 +318,7 @@ function DashboardRoutes(){
         <Route path={'clinics-owner'} element={<AuthCheck roleKey={'clinic-owner'} ><ClinicsOwner /></AuthCheck>}/>
         <Route path={'clinic-manager'} element={<AuthCheck roleKey={'clinic-manager'} ><ClinicManager /></AuthCheck>}/>
         <Route path={'receptionist'} element={<AuthCheck roleKey={'receptionist'} ><ClinicManager /></AuthCheck>}/>
+        <Route path={'lab-technician'} element={<AuthCheck roleKey={'lab-technician'} ><ClinicManager /></AuthCheck>}/>
         <Route path={'doctor-reworked'} element={<AuthCheck roleKey={'doctor'} ><DoctorReworked /></AuthCheck>}/>
         <Route path={'super-admin'} element={<AuthCheck roleKey={'super' || 'super-admin'} ><SuperAdmin /></AuthCheck>}/>
         <Route path={'admin'} element={<AuthCheck roleKey={'admin'} ><SuperAdmin /></AuthCheck>}/>
