@@ -4,6 +4,7 @@ import {t} from "i18next";
 import ResourceTable from "../../../../Fragments/ResourceTable";
 import {Button, Form, Modal} from "antd";
 import DoctorsHoursModal from "./DoctorsHoursModal";
+import LabTechnicianHoursModal from "./LabTechnicianHoursModal";
 
 function ClinicApprovedLabTechnician({dataService}) {
     const params = useParams();
@@ -26,7 +27,6 @@ function ClinicApprovedLabTechnician({dataService}) {
 
         setIsModalOpen({});
     };
-
 
 
     return(
@@ -62,21 +62,21 @@ function ClinicApprovedLabTechnician({dataService}) {
                     },
                     {
                         dataIndex: ['doctor'],
-                        title: dataService?.has_telehealth_service && dataService?.enable_telehealth_service ? t('Laboratory clinic visit') : ' ',
-                        key: 'telehealth',
+                        title: dataService?.has_laboratory_home_visit_service && dataService?.enable_laboratory_home_visit_service ? t('Laboratory home visit') : ' ',
+                        key: 'laboratory_home_visit',
                         render:(e, record)=> {
-                            return <div  style={{padding:2}}>{dataService?.has_telehealth_service && dataService?.enable_telehealth_service ? <Button
-                                onClick={() => showModal(record.id, 'telehealth', ['telehealth_activated_at', 'telehealth_diagnosis_price'])}
+                            return <div  style={{padding:2}}>{dataService?.has_laboratory_home_visit_service && dataService?.enable_laboratory_home_visit_service ? <Button
+                                onClick={() => showModal(record.id, 'laboratory_home_visit', ['laboratory_home_visit_activated_at', 'laboratory_home_visit_diagnosis_price'])}
                                 type={'primary'} size={'middle'}>{t('Manage Working hours')}</Button> : null}</div>
                         }
                     },
                     {
                         dataIndex: ['doctor'],
-                        title: dataService?.has_telehealth_service && dataService?.enable_telehealth_service ? t('Laboratory home visit') : ' ',
-                        key: 'telehealth',
+                        title: dataService?.has_laboratory_clinic_visit_service && dataService?.enable_laboratory_clinic_visit_service ? t('Laboratory clinic visit') : ' ',
+                        key: 'laboratory_clinic_visit',
                         render:(e, record)=> {
-                            return <div  style={{padding:2}}>{dataService?.has_telehealth_service && dataService?.enable_telehealth_service ? <Button
-                                onClick={() => showModal(record.id, 'telehealth', ['telehealth_activated_at', 'telehealth_diagnosis_price'])}
+                            return <div  style={{padding:2}}>{dataService?.has_laboratory_clinic_visit_service && dataService?.enable_laboratory_clinic_visit_service ? <Button
+                                onClick={() => showModal(record.id, 'laboratory_clinic_visit', ['laboratory_clinic_visit_activated_at', 'laboratory_clinic_visit_diagnosis_price'])}
                                 type={'primary'} size={'middle'}>{t('Manage Working hours')}</Button> : null}</div>
                         }
                     },
@@ -99,7 +99,7 @@ function ClinicApprovedLabTechnician({dataService}) {
 
             />
             <Modal title={t("Working Hours")} width={"750px"} open={isModalOpen?.id} onOk={handleOk} onCancel={handleCancel} footer={false} >
-                {isModalOpen?.id ? <DoctorsHoursModal key={Math.random()}  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} setIsModalOpen={setIsModalOpen} />:null}
+                {isModalOpen?.id ? <LabTechnicianHoursModal key={Math.random()}  id={isModalOpen?.id} type={isModalOpen?.type} handleCancel={handleCancel} keys={isModalOpen.keys} setIsModalOpen={setIsModalOpen} />:null}
             </Modal>
         </div>
     )

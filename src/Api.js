@@ -658,6 +658,23 @@ let api = {
 
         }
     },
+
+    {
+        url: 'clinic-medical-staff',
+        resource: 'ClinicMedicalStaffHours',
+        custom: {
+            WorkingHours:{
+                url: `${endpoint}${version}/clinic-medical-staff/working-hours/`,
+                method: 'GET',
+            },
+
+        }
+    },
+    {
+        url: 'clinic-medical-staff/working-hours',
+        resource: 'ClinicMedicalStaffWorkingHoursTable',
+    },
+
     // {
     //     url: 'add-private-notes',
     //     resource: 'PrivateNotes',
