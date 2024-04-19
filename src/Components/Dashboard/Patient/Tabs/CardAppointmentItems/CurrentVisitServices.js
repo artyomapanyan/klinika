@@ -213,6 +213,7 @@ function CurrentVisitServices({id, bigData}) {
                         })
                     }
 
+
                     </tbody>
                 </table>
             </div>
