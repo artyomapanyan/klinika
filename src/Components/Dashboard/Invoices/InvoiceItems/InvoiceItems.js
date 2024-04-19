@@ -57,7 +57,6 @@ function InvoiceItems() {
                     key:'tax_percentage',
                     className: 'invoice_items_tax_percentage_column'
                 },
-
                 {
                     dataIndex:'clinic',
                     title:t('Clinics'),

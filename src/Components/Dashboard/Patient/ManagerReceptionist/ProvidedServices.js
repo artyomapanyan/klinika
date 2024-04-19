@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 import Preloader from "../../../Preloader";
 
 
-function ProvidedServices({appointmentId, setUpdateState, updateState}) {
+function ProvidedServices({appointmentId, setUpdateState, updateState, bigData}) {
     let token = useSelector((state) => state.auth.token);
     const formRef = useRef();
     let lngs = useSelector(state => state?.app?.current_locale)
@@ -354,7 +354,8 @@ function ProvidedServices({appointmentId, setUpdateState, updateState}) {
                                                        rules={[{required: true}]}
                                                        inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
                                                        resourceParams={{
-                                                           for_usage: 1
+                                                           clinic: bigData?.clinic?.id,
+                                                           active: 1
                                                        }}
                                                        resource={'InvoiceItem'}
 
