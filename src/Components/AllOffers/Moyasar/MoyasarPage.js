@@ -7,7 +7,7 @@ export default function MoyasarPage({data, isSaudi}) {
     const formContainerRef = useRef(null);
 
 
-    console.log(data, isSaudi, 'oooo')
+
 
     useEffect(() => {
         /*
@@ -52,7 +52,7 @@ export default function MoyasarPage({data, isSaudi}) {
 
     return (
         <div>
-            <div className="mysr-form" ref={formContainerRef} />
+            <div className="mysr-form" ref={formContainerRef} style={{minHeight: 330}}/>
         </div>
     );
 }

@@ -331,7 +331,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     }
 
 
-    console.log(formRef?.current?.getFieldsValue())
+
 
 
 

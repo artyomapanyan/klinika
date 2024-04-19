@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {postResource, useGetResourceSingle} from "../../../Functions/api_calls";
 import {LeftOutlined, PayCircleOutlined} from "@ant-design/icons";
@@ -20,6 +20,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
     let token = useSelector(state => state.auth.token)
     let moyasarIds = useSelector(state => state?.moyasarIds)
     const params = useParams()
+    let dispatch = useDispatch()
     let lngs = useSelector(state => state?.app?.current_locale)
     const [isMobile, setIsMobile] = useState(false)
     const navigate = useNavigate()
@@ -48,6 +49,10 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
     const { loading } = loadingState
     const { data, setData } = dataState
+
+    useEffect(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+    }, [loading]);
 
     const onClick = () => {
         navigate(-1)
@@ -90,6 +95,15 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         }
         ).then((response) => {
                 setTryAgainLoading(false)
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 if (response?.appointment?.id) {
                     //setShowthank(true)
                     document.location.href = response?.redirect
@@ -104,7 +118,16 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
                 payment_method_id: moyasarIds?.paymentMethodId
             }
         ).then((response) => {
-            console.log(response)
+
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 setTryAgainLoading(false)
                 if (response?.appointment?.id) {
 
@@ -135,6 +158,15 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
             }
         ).then((response) => {
                 setTryAgainLoading(false)
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 if (response?.appointment?.id) {
                     //setShowthank(true)
                     document.location.href = response?.redirect
@@ -150,6 +182,15 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
             }
         ).then((response) => {
                 setTryAgainLoading(false)
+            dispatch({
+                type: 'APP_INV_ID',
+                payload: {
+                    appointment_id: response?.appointment?.id,
+                    invoice_id: response?.appointment?.invoices[0]?.id,
+                    offer: response?.appointment?.offer?.id,
+                    paymentMethodId: response?.appointment?.payment_method?.id
+                }
+            })
                 if (response?.appointment?.id) {
                     //setShowthank(true)
                     document.location.href = response?.redirect
@@ -160,7 +201,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
         // e.view.location.pathname = `pay-online/moyasar`
     }
 
-    console.log(paymentMethodState, 'ddd')
+
 
     return (
         <>
@@ -273,7 +314,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
                                                                 <div
                                                                     onClick={() => onpay(item.id)}
-                                                                    className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+                                                                    className={paymentMethodState === item.id ? 'selected_payment_container' : 'payment_container'}
                                                                     //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
                                                                 >
                                                                     <div style={{height: 24,display: 'flex', alignItems: 'center'}}>
@@ -361,7 +402,7 @@ function NewThankYouBookContent({chargeResponse, firstLoadingThankYou, onlineOrC
 
                                                                     <div
                                                                         onClick={() => onpay(item.id)}
-                                                                        className={paymentMethodState === (key+1) ? 'selected_payment_container' : 'payment_container'}
+                                                                        className={paymentMethodState === item.id ? 'selected_payment_container' : 'payment_container'}
                                                                         //style={{background: paymentMethodState === (key+1) ? '#000000' : '#ffffff'}}
                                                                     >
                                                                         <div style={{height: 24,display: 'flex', alignItems: 'center'}}>

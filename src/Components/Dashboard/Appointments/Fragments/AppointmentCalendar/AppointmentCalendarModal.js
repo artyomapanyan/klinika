@@ -99,7 +99,7 @@ function AppointmentCalendarModal({
 				nursing_tasks: values.nursing_tasks,
 				radiology_tasks: values.radiology_tasks,
 				address1: values.address1,
-	
+
 				//data to be deleted from the object before saving the appointment
 				doctor: doctor,
 				specialty: specialty,
@@ -110,6 +110,7 @@ function AppointmentCalendarModal({
 			}))
 		}
 		setSelectedDate(false)
+
 	}
 
 	const handleMapLabPackages = (item, name) => {

@@ -245,8 +245,7 @@ function Invoice() {
 
             formRef?.current?.getFieldValue('sub_total')
 
-            console.log(response, 'res')
-            console.log(formRef?.current?.getFieldsValue())
+
 
         })
         setTimeout(() => {
