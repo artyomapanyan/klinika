@@ -172,7 +172,7 @@ function CurrentVisitServices({id, bigData}) {
                                 <div className={'aass'}>
                                     {el?.item_object?.name}
                                 </div>
-                                <div style={{marginTop: -8}}>
+                                <div style={{marginTop: -12}}>
                                     x{el?.qnt}
                                 </div>
                                 <Button className={'delete_button_current_service'} loading={deleteLoading}  onClick={(e)=>onDelete(e, el, key)} >
