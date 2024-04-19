@@ -104,6 +104,7 @@ function Patient() {
                         <div>
                             <ProvidedServices
                                 appointmentId={data?.id}
+                                bigData={data}
                                 setUpdateState={setUpdateState}
                                 updateState={updateState}/>
                             <FutureApps 

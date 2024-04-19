@@ -76,7 +76,7 @@ function CurrentVisitServices({id, bigData}) {
                     "tax": selected_item?.tax_percentage,
                     "price": selected_item?.price,
                     "amount": +qntState * (+selected_item?.price + (selected_item?.price / 100 * selected_item?.tax_percentage)),
-                    "discount": selected_item?.tax_percentage,
+                    "discount": selected_item?.discount ? selected_item?.discount : null,
                     "item_object": {
                         "id": selected_item?.id,
                         "name": selected_item?.name,
@@ -110,7 +110,8 @@ function CurrentVisitServices({id, bigData}) {
 
     }
 
-    console.log(itemsState, 'bigdata')
+
+
 
     return <div style={{
         marginTop: (bigData?.status == 2 || bigData?.status == 3 || bigData?.status == 5 || bigData?.status == 7) && !itemsState?.length ? 0 : 30,
@@ -133,7 +134,7 @@ function CurrentVisitServices({id, bigData}) {
                                    rules={[{required: true}]}
                                    inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
                                    resourceParams={{
-                                       for_usage: 1
+                                       clinic: bigData?.clinic?.id
                                    }}
                                    resource={'InvoiceItem'}
 
@@ -162,16 +163,14 @@ function CurrentVisitServices({id, bigData}) {
                     </div>
                 </div>
 
-                <div style={{marginTop: 10}}>
+                <div style={{marginTop: -18}}>
                     {
                         loading ? <Preloader small={40}/> :  itemsState?.map((el, key) => {
 
                             return <div key={key} className={'current_visit_name'}>
 
-                                <div style={{width: '90%', marginTop: -20}} className={'aass'}>
-                                    <Form.Item >
-                                        <Input value={el?.item_object?.name}/>
-                                    </Form.Item>
+                                <div className={'aass'}>
+                                    {el?.item_object?.name}
                                 </div>
                                 <div style={{marginTop: -8}}>
                                     x{el?.qnt}
@@ -193,7 +192,7 @@ function CurrentVisitServices({id, bigData}) {
 
                     {
                         itemsState?.map((el, key) => {
-                            console.log(el)
+
                             return<tr key={el.item} style={{width: '100%', padding: 30, height: 48, borderBottom: '1px dashed #A6A7BA'}} className={'current_visit_table_tr'}>
 
                                 <td>
@@ -205,7 +204,7 @@ function CurrentVisitServices({id, bigData}) {
                                 </td>
 
                                 <td style={{width: 100}} align={'right'}>
-                                    {el?.price} SAR
+                                    {el?.basic_total} SAR
                                 </td>
                             </tr>
 
