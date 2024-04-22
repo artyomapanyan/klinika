@@ -24,6 +24,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const [dateWithEmptyHours, setDateWithEmptyHours] = useState([])
     const [emptyDaysLoading, setEmptyDaysLoading] = useState(false)
     const [timeOutId, setTimeOutId] = useState(null)
+    const [currentMonth, setCurrentMonth] = useState(dayjs().month());
 
 
     const amountRef = useRef()
@@ -150,6 +151,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     }, [modal?.service_type])
 
     const getEmptyHours = (date = dayjs()) => {
+        setCurrentMonth(date.month())
         if (!modal?.doctor) {
             return
         }
@@ -171,7 +173,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     const disabledDate = (current) => {
         return emptyDaysLoading ? true : current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
-          || dateWithEmptyHours.includes(dayjs(current).startOf('day').format('YYYY-MM-DD HH:mm'))
+          || dateWithEmptyHours.includes(dayjs(current).startOf('day').format('YYYY-MM-DD HH:mm')) || current.month() !== currentMonth
     };
 
 
