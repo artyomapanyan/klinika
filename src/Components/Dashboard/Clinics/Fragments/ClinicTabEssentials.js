@@ -1077,7 +1077,7 @@ function ClinicTabEssentials({loadingState, dataState, addDataState}) {
                                         </Form.Item> : <div style={{margin: '0 8px'}}>{data?.enable_radiology_service ? '' : `${t('Service disabled by admin')}`}</div>
                                     }
                                     <Form.Item
-                                        label={t(`Radiology`)}
+                                        label={t(`Radiology Clinic Visit`)}
                                         name="has_radiology_service"
                                         className={'right-label'}
                                         style={{fontSize:20, fontWeight:600, marginTop:role === 'super' ? -30 : 0}}

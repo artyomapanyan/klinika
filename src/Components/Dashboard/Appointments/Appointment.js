@@ -286,7 +286,7 @@ function Appointment() {
 						{
 							service: responses[1]?.has_radiology_service,
 							id: 'radiology',
-							name: 'Radiology'
+							name: 'Radiology Clinic Visit'
 						},
 						{
 							service: responses?.has_radiology_home_visit_service,
@@ -350,7 +350,7 @@ function Appointment() {
 								{
 									service: responses?.has_radiology_service,
 									id: 'radiology',
-									name: 'Radiology'
+									name: 'Radiology Clinic Visit'
 								},
 								{
 									service: responses?.has_radiology_home_visit_service,
