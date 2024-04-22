@@ -109,7 +109,7 @@ function Clinic() {
                 {dataState.data.has_radiology_service && dataState.data.enable_radiology_service && params.id ? <items key={'radiology'} tab={'Radiology Clinic Visit'} disabled={!params.id}>
                     <Radiology tab={tab}/>
                 </items> : null}
-                {dataState.data.has_radiology_home_visit_service && dataState.data.enable_radiology_home_visit_service && params.id ? <items key={'radiology_home_visit'} tab={'Radiology home visit'} disabled={!params.id}>
+                {dataState.data.has_radiology_home_visit_service && dataState.data.enable_radiology_home_visit_service && params.id ? <items key={'radiology_home_visit'} tab={'Radiology Home Visit'} disabled={!params.id}>
                     <RadiologyHomeVisit tab={tab}/>
                 </items> : null}
 
