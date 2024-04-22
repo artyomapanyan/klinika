@@ -16,6 +16,9 @@ export function RascheduledContent({onCancel, modal, loading, formRef}){
     const [availableDateState, setAvailableDateState] = useState([])
     const [inputsLoading, setInputsLoading] = useState(false)
     const [defaultMonth, setDefaultMonth] = useState(null);
+    const [emptyDaysLoading, setEmptyDaysLoading] = useState(false)
+    const [timeOutId, setTimeOutId] = useState(null)
+    const [dateWithEmptyHours, setDateWithEmptyHours] = useState([])
 
 
     useEffect(() => {
@@ -148,18 +151,25 @@ export function RascheduledContent({onCancel, modal, loading, formRef}){
         if (!modal?.doctor) {
             return
         }
-        setInputsLoading(true)
-        postResource('ClinicDoctorAvailableTimeForMonthByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
-            service: modal?.service_type,
-            date: date.format('YYYY-MM')
-        }).then((res) => {
-            setDefaultMonth(typeof res?.working_hours_for_month === 'boolean' && !res?.working_hours_for_month ? dayjs().add(1, 'month') : dayjs())
-            setInputsLoading(false)
-        })
+        setEmptyDaysLoading(!dateWithEmptyHours.map(el => {
+            return String(moment(el).format('YYYY-MM'))
+        }).includes(dayjs(date).startOf('day').format('YYYY-MM')))
+        timeOutId && clearTimeout(timeOutId)
+
+        setTimeOutId(setTimeout(() => {
+            postResource('ClinicDoctorAvailableTimeForMonthByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
+                service: modal?.service_type,
+                date: date.format('YYYY-MM')
+            }).then((res) => {
+                setDateWithEmptyHours([...new Set([...dateWithEmptyHours, ...res?.working_hours_for_month])])
+                setEmptyDaysLoading(false)
+            })
+        }, date?.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') ? 1 : 300))
     }
 
     const disabledDate = (current) => {
-        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+        return emptyDaysLoading ? true : current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+          || dateWithEmptyHours.includes(dayjs(current).startOf('day').format('YYYY-MM-DD HH:mm'))
     };
 
     // const disabledDateLength = () => {
@@ -179,6 +189,7 @@ export function RascheduledContent({onCancel, modal, loading, formRef}){
                                disabledDate={disabledDate}
                                inputProps={{
                                    defaultPickerValue:defaultMonth,
+                                   onPanelChange:getEmptyHours,
                                    onChange:(e)=> {
 
                                        setDate(e)
