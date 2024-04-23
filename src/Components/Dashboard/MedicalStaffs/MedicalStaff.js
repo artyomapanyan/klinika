@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 
 const resource = 'MedicalStaff';
 
+
 function MedicalStaff() {
     let language = useSelector((state) => state.app.current_locale)
     let dispatch = useDispatch()
