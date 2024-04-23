@@ -24,12 +24,14 @@ function SuperAdminGenderChart() {
             setLoading(false)
             setData({
                 Female: response?.female?.count,
-                Male: response?.male?.count
+                Male: response?.male?.count,
+                Unspecified: response?.unspecified?.count
             })
 
             const incomeChannelData = [
                 response?.female?.percentage,
                 response?.male?.percentage,
+                response?.unspecified?.percentage
             ]
 
 
@@ -104,9 +106,9 @@ function SuperAdminGenderChart() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: response?.female?.count == 0 && response?.male?.count == 0 ? '#ffffff' :  ["#774D9D", "#BF539E"],
+                            backgroundColor: response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? '#ffffff' :  ["#774D9D", "#BF539E", "#77626c"],
                             weight: 0.5,
-                            data: response?.female?.count == 0 && response?.male?.count == 0 ? [1.128,0] : incomeChannelData,
+                            data: response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? [1.128,0] : incomeChannelData,
                             spacing: -8,
                             borderWidth: 0,
                         },
@@ -138,19 +140,23 @@ function SuperAdminGenderChart() {
         if(appointmentChartRef?.current?.ctx){
         setLoading(true)
         postResource('SuperAdmin', 'SuperAdminGender', token, '', {year: date, month: ownerClinics?.month_key}).then((response) => {
+            console.log(34343)
             setLoading(false)
             setData({
                 Female: response?.female?.count,
-                Male: response?.male?.count
+                Male: response?.male?.count,
+                Unspecified: response?.unspecified?.count
             })
 
             const incomeChannelData = [
                 response?.female?.percentage,
                 response?.male?.percentage,
+                response?.unspecified?.percentage,
+
             ]
 
-                appointmentChartRef.current.config.data.datasets[0].data =  response?.female?.count == 0 && response?.male?.count == 0 ? [1.128,0] : incomeChannelData;
-                appointmentChartRef.current.config.data.datasets[0].backgroundColor = response?.female?.count == 0 && response?.male?.count == 0 ? '#ffffff' :  ["#774D9D", "#BF539E"];
+                appointmentChartRef.current.config.data.datasets[0].data =  response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? [1.128,0] : incomeChannelData;
+                appointmentChartRef.current.config.data.datasets[0].backgroundColor = response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? '#ffffff' :  ["#774D9D", "#BF539E", "#77626c"];
                 appointmentChartRef.current.update()
         })
         }
