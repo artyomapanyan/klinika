@@ -28,15 +28,19 @@ function MedicalStaffs() {
                                },
                                {
                                    dataIndex:'first',
-                                   title:t('First'),
+                                   title:t('First name'),
                                    key:'first',
                                    translatable:true,
+                                   sorter: true,
+                                   filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                },
                                {
                                    dataIndex:'last',
-                                   title:t('Last'),
+                                   title:t('Last name'),
                                    key:'last',
                                    translatable:true,
+                                   sorter: true,
+                                   filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
 
                                },
                                {
@@ -68,6 +72,7 @@ function MedicalStaffs() {
                                    dataIndex:'role',
                                    title:t('Role'),
                                    key:'role',
+                                   filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                                },
 
                                {
@@ -83,7 +88,7 @@ function MedicalStaffs() {
                                    key:'date',
                                    render:i=><DateParser date={i}/>
                                },
-                           ]} title={t('Specialties')}/>
+                           ]} title={t('Medical staff')}/>
         </div>
     )
 }

@@ -92,7 +92,7 @@ function LabTechnicianHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpe
 
     return(
         <div className={'doctor_working_hours_conteiner'}>
-            {loading?<Preloader/>:<WorkingHours doctorHoursModal={false} clinicHoursesDataNew={clinicHoursesDataNew} switchStatus={true} timeLimits={clinichoursData}  handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData}/>}
+            {loading?<Preloader/>:<WorkingHours doctorHoursModal={false} clinicHoursesDataNew={clinicHoursesDataNew} switchStatus={true} timeLimits={clinichoursData}  handleCancel={handleCancel} loading={loading} modalId={id} data={data??[]} onFinish={onFinish} type={type} doctorData={docData}  isDoctorHours={true} clinichoursData={clinichoursData} diagnosesPrice={true}/>}
         </div>
     )
 }

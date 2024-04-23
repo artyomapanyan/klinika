@@ -36,7 +36,13 @@ function MedicalStaff() {
     const onFinish = (values) => {
         setSaveLoading(true)
         values.sub_specialties = values.sub_specialties? values.sub_specialties : [];
-        values.dob = values?.dob?.format('YYYY-MM-DD')
+        console.log(values.dob)
+        if(values.dob) {
+            values.dob = values?.dob?.format('YYYY-MM-DD')
+        } else {
+            values.dob = ''
+        }
+
         values.plid_expired_at = values?.plid_expired_at?.format('YYYY-MM-DD')
 
         if(values?.phone_country_code) {
@@ -178,7 +184,7 @@ function MedicalStaff() {
 
     return(
         <div>
-            {data?.translations?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing doctor`)} - {language === 'ar' ? data?.translations?.first?.ar +' ' + data?.translations?.last?.ar : data?.translations?.first?.en + ' ' + data?.translations?.last?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add new doctor`)}</h3>}
+            {data?.translations?.first ? <h3 className={'create_apdate_btns'}>{t(`Editing Medical staff`)} - {language === 'ar' ? data?.translations?.first?.ar +' ' + data?.translations?.last?.ar : data?.translations?.first?.en + ' ' + data?.translations?.last?.en}</h3> : <h3 className={'create_apdate_btns'}>{t(`Add Medical staff`)}</h3>}
             {loading ? <Preloader/> : <Form
                 name="edit"
                 onFinish={onFinish}
@@ -265,10 +271,15 @@ function MedicalStaff() {
 
                                 {
                                     validator:(rule,value)=>{
-                                        if(dayjs().diff(value,'year')<18){
-                                            return Promise.reject('min age 18')
+                                        if(value) {
+                                            if(dayjs().diff(value,'year')<18){
+                                                return Promise.reject('min age 18')
+                                            }
+
+                                        } else {
+                                            return Promise.resolve();
                                         }
-                                        return Promise.resolve();
+
                                     }
                                 }
                             ]} />
@@ -279,7 +290,7 @@ function MedicalStaff() {
                                        initialData={Resources?.Gender}
                             />
                             <FormInput label={t('Status')} name={'status'} inputType={'resourceSelect'}
-                                //rules={[{required: true}]}
+                                       rules={[{required: true}]}
                                        disableClear={true}
                                        initialValue={data?.status ? data?.status : 2}
                                        initialData={Resources.Status}
@@ -294,13 +305,14 @@ function MedicalStaff() {
                             <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
                                     <FormInput label={t('Country Code')} name={'phone_country_code'} inputType={'resourceSelect'}
+                                               rules={[{required: true}]}
                                                initialValue={data?.phone_country_code ? `(${data?.phone_country_code})` : `(966) ${language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}`}
                                                handleMapItems={handleMapItems}
                                                customSearchKey={'phone_code'}
                                                resource={'Country'}/>
                                 </div>
                                 <div style={{width: '80%'}}>
-                                    <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} initialValue={data?.phone_number} />
+                                    <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} initialValue={data?.phone_number} rules={[{required: true}]}/>
                                 </div>
                             </div>
                             <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} rules={[{required: true}]} />
@@ -313,15 +325,7 @@ function MedicalStaff() {
                                        initialData={data?.languages??[]}
                                        resource={'Language'}
                             />
-                            <FormInput inputProps={{mode:'multiple'}} label={t('Roles')} name={'roles'} inputType={'resourceSelect'}
-                                       rules={[{required: true}]}
-                                       initialValue={data?.roles?.map(e=>e.id)}
-                                       initialData={data?.roles??[]}
-                                       resourceParams={{
-                                           except: 'doctor'
-                                       }}
-                                       resource={'Role'}
-                            />
+                            <FormInput label={t('Role')} name={'role1'} initialValue={'Lab technician'} rules={[{required: true}]} inputDisabled={true} />
 
 
 
