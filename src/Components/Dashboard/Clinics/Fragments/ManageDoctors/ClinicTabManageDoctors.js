@@ -12,7 +12,7 @@ import ManageUsersModal from "./ManageUsersModal";
 import DoctorGeneralInfo from "../../../DoctorProfile/DoctorGeneralInfo/DoctorGeneralInfo";
 import ClinicTabBars from "../ClinicTabBars";
 import ClinicApprovedLabTechnician from "./ClinicApprovedLabTechnician";
-
+import ClinicApprovedNurses from "./ClinicApprovedNurses";
 
 function ClinicTabManageDoctors({dataService}) {
 
@@ -117,7 +117,7 @@ function ClinicTabManageDoctors({dataService}) {
 
 
 
-                <items key={'manage_users'} tab={'Manage lab technician'} >
+                <items key={'manage_users'} tab={'Manage medical staff'} >
                     <div  className={'add_edit_content'}>
                         <h1 className={'h1'} style={{marginBottom: -80}}>{t(`Manage Pending Users`)}</h1>
                         {loading ? <Preloader/> : <ResourceTable
@@ -155,6 +155,9 @@ function ClinicTabManageDoctors({dataService}) {
 
                     <div className={'add_edit_content'}>
                         <ClinicApprovedLabTechnician dataService={dataService} />
+                    </div>
+                    <div className={'add_edit_content'}>
+                        <ClinicApprovedNurses dataService={dataService} />
                     </div>
                 </items>
 
