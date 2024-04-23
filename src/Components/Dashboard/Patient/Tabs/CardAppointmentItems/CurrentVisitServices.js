@@ -135,7 +135,7 @@ function CurrentVisitServices({id, bigData}) {
                                    inputProps={{onChange: (e,data) => handleInvoiceSelect(e,data)}}
                                    resourceParams={{
                                        clinic: bigData?.clinic?.id,
-                                       active: 1
+
                                    }}
                                    resource={'InvoiceItem'}
 

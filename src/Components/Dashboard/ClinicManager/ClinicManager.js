@@ -9,6 +9,7 @@ import {useSelector} from "react-redux";
 import NursLabCalendar from "./NursingLaboratoryCalendar/NursLabCalendar";
 import {postResource} from "../../Functions/api_calls";
 import dayjs from "dayjs";
+import LabTechnicianAppointmentTable from "./Fragments/LabTechnicianAppointmentTable/LabTechnicianAppointmentTable";
 
 function ClinicManager() {
     let ownerClinics = useSelector((state) => state?.owner);
@@ -144,7 +145,7 @@ function ClinicManager() {
 					<div>{/*<ClinicFeedback />*/}</div>
 				</div>
 			) : <div style={{marginTop: -22, padding: '0 20px'}}>
-				<ClinicManagerAppointmentsTable />
+				<LabTechnicianAppointmentTable />
 			</div>
 			}
 		</div>
