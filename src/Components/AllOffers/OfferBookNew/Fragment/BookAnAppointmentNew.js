@@ -61,9 +61,8 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
 
         postResource('PublicAppointment', 'create', token, '', dataState).then(
             response => {
-                setLoading(false)
 
-                console.log(response, 'app res')
+
 
                 dispatch({
                     type: 'APP_INV_ID',
@@ -78,42 +77,46 @@ function BookAnAppointment({data, setOpen, setTotalState, setVerifyResponseNatio
 
                 if (response?.appointment?.id) {
                     document.location.href = response?.redirect
-                }
-                if(response?.response?.status == 403) {
-                    //setShow(false)
-                    setShowPayment(false)
-                    setVerify(0)
-                    setResponseCodeState(null)
-                    setNamesState({})
-                    setDataState({
-                        ...dataState,
-                        payment_method_id: null
-                    })
-                    setShowButtons(true)
-                    //setDoctorId('')
-                    //setDoctorKey('')
-                    setCodeAndNumberState(prevState => ({
-                        phone_country_code: '966'
-                    }))
-                    setTotalState(false)
                 } else {
-                    setShow(false)
-                    setShowPayment(false)
-                    setVerify(0)
-                    setResponseCodeState(null)
-                    setNamesState({})
-                    setDataState({
-                        doctor_id: dataState?.doctor_id
-                    })
-                    setShowButtons(true)
-                    setCodeAndNumberState(prevState => ({
-                        phone_country_code: '966'
-                    }))
-                    setTotalState(false)
+                    if(response?.response?.status == 403) {
+                        //setShow(false)
+                        setShowPayment(false)
+                        setVerify(0)
+                        setResponseCodeState(null)
+                        setNamesState({})
+                        setDataState({
+                            ...dataState,
+                            payment_method_id: null
+                        })
+                        setShowButtons(true)
+                        //setDoctorId('')
+                        //setDoctorKey('')
+                        setCodeAndNumberState(prevState => ({
+                            phone_country_code: '966'
+                        }))
+                        setTotalState(false)
+                    } else {
+                        setShow(false)
+                        setShowPayment(false)
+                        setVerify(0)
+                        setResponseCodeState(null)
+                        setNamesState({})
+                        setDataState({
+                            doctor_id: dataState?.doctor_id
+                        })
+                        setShowButtons(true)
+                        setCodeAndNumberState(prevState => ({
+                            phone_country_code: '966'
+                        }))
+                        setTotalState(false)
+                    }
                 }
 
+
             }
-        )
+        ).finally(() => {
+            setLoading(false)
+        })
     }
 
     useEffect(() => {

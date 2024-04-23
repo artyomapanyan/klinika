@@ -1,11 +1,12 @@
 import {t} from "i18next";
 import FormInput from "../../../Fragments/FormInput";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useRef, useState } from 'react'
 import {Button, Spin} from "antd";
 import dayjs from "dayjs";
 import {postResource} from "../../../Functions/api_calls";
 import {useSelector} from "react-redux";
 import Preloader from "../../../Preloader";
+import moment from 'moment'
 
 export function RascheduledContent({onCancel, modal, loading, formRef}){
     let token = useSelector((state) => state.auth.token);
@@ -14,8 +15,12 @@ export function RascheduledContent({onCancel, modal, loading, formRef}){
     const [dateLoading,setDateLoading] = useState(false);
     const [availableDateState, setAvailableDateState] = useState([])
     const [inputsLoading, setInputsLoading] = useState(false)
+    const [defaultMonth, setDefaultMonth] = useState(null);
 
 
+    useEffect(() => {
+        getEmptyHours()
+    }, [])
 
    useEffect(() => {
 
@@ -139,10 +144,31 @@ export function RascheduledContent({onCancel, modal, loading, formRef}){
 
     }, [modal?.service_type])
 
+    const getEmptyHours = (date = dayjs()) => {
+        if (!modal?.doctor) {
+            return
+        }
+        setInputsLoading(true)
+        postResource('ClinicDoctorAvailableTimeForMonthByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
+            service: modal?.service_type,
+            date: date.format('YYYY-MM')
+        }).then((res) => {
+            setDefaultMonth(typeof res?.working_hours_for_month === 'boolean' && !res?.working_hours_for_month ? dayjs().add(1, 'month') : dayjs())
+            setInputsLoading(false)
+        })
+    }
+
     const disabledDate = (current) => {
         return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
     };
 
+    // const disabledDateLength = () => {
+    //     const currentDate = moment();
+    //     const endDate = moment().add(1, 'year'); // End in one year (adjust as needed)
+    //     return disabledDates.filter(disabledDate => {
+    //         return moment(disabledDate).isBetween(currentDate, endDate, null, '[]'); // Check if the date is within the range
+    //     }).length;
+    // };
 
     return<div>
 
@@ -151,8 +177,8 @@ export function RascheduledContent({onCancel, modal, loading, formRef}){
                 <div style={{width: '50%'}}>
                     <FormInput label={t('Appointment date')}
                                disabledDate={disabledDate}
-                               inputProps={{onChange:e=>setDate(e)}}
                                inputProps={{
+                                   defaultPickerValue:defaultMonth,
                                    onChange:(e)=> {
 
                                        setDate(e)

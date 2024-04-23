@@ -16,7 +16,7 @@ function DrReworkedStatuses() {
 
 
 
-    let text = ['new' ,"Confirmed", null, "Cancelled", "Rescheduled"]
+    let text = ['new' ,"Confirmed", null, "Cancelled", "Reschseduled"]
 
     useEffect(()=>{
         setLoading(true)

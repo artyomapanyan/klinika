@@ -70,6 +70,10 @@ let api = {
         resource: 'NursingTask',
     },
     {
+        url: 'radiology-tasks',
+        resource: 'RadiologyTask',
+    },
+    {
         url: 'lab-packages',
         resource: 'LabPackage',
     },
@@ -169,6 +173,10 @@ let api = {
         resource: 'ClinicNursingTask',
     },
     {
+        url: 'clinic-radiology-tasks',
+        resource: 'ClinicRadiologyTask',
+    },
+    {
         url: 'offers',
         resource: 'Offer',
     },
@@ -209,6 +217,10 @@ let api = {
     {
         url: 'clinic-doctors/available-times-by-doctor-and-clinic',
         resource: 'ClinicDoctorAvailableTimeForDayByDoctorAndClinic',
+    },
+    {
+        url: 'clinic-doctors/available-times-exist-for-month-by-doctor-and-clinic',
+        resource: 'ClinicDoctorAvailableTimeForMonthByDoctorAndClinic',
     },
     {
         url: 'clinic-doctors',
@@ -256,6 +268,30 @@ let api = {
                 url: `${endpoint}${version}/appointments/get-invoice-price`,
                 method: 'POST',
             },
+            AppointmentServices:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'GET',
+            },
+            SaveServiceItems:{
+                url: `${endpoint}${version}/appointments/`,
+                method: 'post',
+            },
+            ServicePaymentCalculation:{
+                url: `${endpoint}${version}/appointments/servicePaymentCalculation`,
+                method: 'post',
+            },
+            PaymentReceived:{
+                url: `${endpoint}${version}/appointments/paymentReceived`,
+                method: 'post',
+            },
+            UndoPayment:{
+                url: `${endpoint}${version}/appointments/undoPayment`,
+                method: 'post',
+            },
+            PrintInvoice:{
+                url: `${endpoint}${version}/appointments/export-invoices`,
+                method: 'GET',
+            }
         }
     },
     {
@@ -681,8 +717,10 @@ let api = {
     //
     // },
 
-
-
+    {
+        url: 'future-visits',
+        resource: 'FutureVisits',
+    }
 
     ].forEach(item => {
         if (!item.type) {

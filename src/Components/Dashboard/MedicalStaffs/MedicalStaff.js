@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useRef, useState} from "react";
 import {createResource, postResource, updateResource, useGetResourceSingle} from "../../Functions/api_calls";
 import Resources from "../../../store/Resources";
-import resourceLinks from "../../ResourceLinks";
+
 import {t} from "i18next";
 import Preloader from "../../Preloader";
 import {Button, Col, Form, Space} from "antd";
@@ -30,7 +30,6 @@ function MedicalStaff() {
     const [changeValuesState, setChangeValuesState] = useState({})
     const [speciltiesState, setSpeciltiesState] = useState([])
     const [subLoading, setSubLoading] = useState(false)
-
 
 
     const onFinish = (values) => {

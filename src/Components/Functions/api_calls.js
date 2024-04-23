@@ -255,7 +255,7 @@ export const postResource = (resource,param,token,id=null,params,customProps={})
     })
 }
 
-export const postResource1 = (resource,param,token,id=null,params,customProps={}, withFormData=false)=>{
+export const postResource1 = (resource,param,token,id=null,params,customProps={}, withFormData=false, extra= '')=>{
     const method ='POST';
     let formData = {}
     if(withFormData){
@@ -265,7 +265,7 @@ export const postResource1 = (resource,param,token,id=null,params,customProps={}
     }
 
     return  axios.request({
-        url:`${api[resource][param].url}${id??''}`,
+        url:`${api[resource][param].url}${id??''}${extra}`,
         method,
         ...(method!=='GET'?{
             data:formData

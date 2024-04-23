@@ -8,6 +8,7 @@ const ResourceLins = {
     Service:'/dashboard/services/',
     SubService:'/dashboard/sub-services/',
     NursingTask:'/dashboard/nursing-tasks/',
+    RadiologyTask:'/dashboard/radiology-tasks/',
     LabPackage:'/dashboard/lab-packages/',
     LabPackageCategory:'/dashboard/lab-packages-category/',
     LabTestCategory:'/dashboard/lab-tests-category/',

@@ -161,8 +161,7 @@ body
     display: none
 
   .ant-form-item-label > label
-    top: 7px
-    font-size: 15px
+    top: 5px
 .ant-select-selection-item
   top: -5px
   left: 4px
@@ -555,13 +554,14 @@ body
 .Clinic_tab_conteiner
   display: flex
   flex-direction: row
+  justify-content: space-around
   padding-left: 30px
 
 
 
   .tab_item_container
     cursor: pointer
-    padding-right: 15px
+    //padding-right: 15px
     display: flex
     flex-direction: column
     align-items: center
@@ -738,8 +738,9 @@ body
   textArea:not(:placeholder-shown) + label,textArea:focus + label
     position: absolute !important
     //left: 15px
-    top: -2px
+    top: -8px
     font-size: 11px
+    background-color: #FFFFFF
     padding-right: 3px
     padding-left: 3px
   label
@@ -3727,15 +3728,14 @@ body
 .version_text
   font-family: "Inter" !important
   color: #000000
-  padding-left: 147px
-  padding-bottom: 2px
-  padding-top: 2px
-  width: 190px
-  position: fixed
-  bottom: 0
+  text-align: right
+  padding-right: 22px
+  overflow: hidden
+  white-space: nowrap
+
   background-color: #ffffff
   font-size: 16px
-  transition: width 2s !important
+  transition: width 5s !important
 
 
 .follow_up_modal_big_div
@@ -3743,6 +3743,22 @@ body
     margin-top: -4px
     border-radius: 8px
     margin-right: 25px
+
+.invoice_item_clinics
+  .ant-form-item-label
+    padding-top: 9px
+
+.invoice_items_tax_percentage_column
+  @media screen and (max-width: 3624px)
+    width: 250px
+  @media screen and (max-width: 2000px)
+    width: 230px
+  @media screen and (max-width: 1800px)
+    width: 210px
+  @media screen and (max-width: 1500px)
+    width: 170px
+  @media screen and (max-width: 1200px)
+    width: 125px
 
 
 

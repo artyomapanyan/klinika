@@ -7,6 +7,7 @@ import FormInput from "../../../Fragments/FormInput";
 import {t} from "i18next";
 import {Button, Form, Input} from "antd";
 import new_delete_dark_icon from "../../../../dist/icons/new_delete_dark_icon.png";
+import moment from 'moment/moment'
 
 
 export function FollowUpContent({onCancel, modal, loading, formRef}){
@@ -20,11 +21,16 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const [itemsState, setItemsState] = useState({})
     let [totalState, setTotalState] = useState(0)
     let [selectedItem, setSelectedItem] = useState(null)
+    const [dateWithEmptyHours, setDateWithEmptyHours] = useState([])
+    const [emptyDaysLoading, setEmptyDaysLoading] = useState(false)
+    const [timeOutId, setTimeOutId] = useState(null)
 
 
     const amountRef = useRef()
 
-
+    useEffect(() => {
+        getEmptyHours();
+    }, [])
 
     useEffect(() => {
 
@@ -32,6 +38,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
         if (date && modal?.doctor?.id) {
 
             setDateLoading(true)
+            console.log(1)
             postResource('ClinicDoctorAvailableTimeForDayByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
                 service: modal?.service_type,
                 date: date.format('YYYY-MM-DD')
@@ -142,8 +149,29 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     }, [modal?.service_type])
 
+    const getEmptyHours = (date = dayjs()) => {
+        if (!modal?.doctor) {
+            return
+        }
+        setEmptyDaysLoading(!dateWithEmptyHours.map(el => {
+            return String(moment(el).format('YYYY-MM'))
+        }).includes(dayjs(date).startOf('day').format('YYYY-MM')))
+        timeOutId && clearTimeout(timeOutId)
+
+        setTimeOutId(setTimeout(() => {
+            postResource('ClinicDoctorAvailableTimeForMonthByDoctorAndClinic', 'single', token, modal?.doctor?.id + "/" + modal?.clinic?.id, {
+                service: modal?.service_type,
+                date: date.format('YYYY-MM')
+            }).then((res) => {
+                setDateWithEmptyHours([...new Set([...dateWithEmptyHours, ...res?.working_hours_for_month])])
+                setEmptyDaysLoading(false)
+            })
+        }, date?.format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') ? 1 : 300))
+    }
+
     const disabledDate = (current) => {
-        return current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+        return emptyDaysLoading ? true : current.add(1, 'day') <= dayjs().endOf('date') || current.add(-3, 'month') > dayjs().endOf('date') || current.add(1, 'day') < dayjs().day(1) || availableDateState.includes(dayjs(current).format('dddd').toLowerCase())
+          || dateWithEmptyHours.includes(dayjs(current).startOf('day').format('YYYY-MM-DD HH:mm'))
     };
 
 
@@ -174,9 +202,9 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     const subTotal = () => {
         let total = 0
         let aaa = formRef?.current?.getFieldsValue()
-        let bbb = Object.values(aaa?.items)?.map((el) => {
+        let bbb = aaa?.items ? Object.values(aaa?.items)?.map((el) => {
             return total += (el?.amount ? el?.amount : 0)
-        })
+        }) : 0
 
         return total
     }
@@ -211,25 +239,25 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
     }
 
-    const handleFilterResponse = (timeout = 80) => {
-
-        let total = 0;
-        if (itemsState?.items) {
-
-
-            Object.keys(itemsState.items).map((key) => {
-                let currentItem = itemsState.items[key];
-                itemsState.items[key].amount = currentItem.qnt * ((+currentItem.price) + ((+currentItem.price) / 100 * (+currentItem.tax)))
-                total += itemsState.items[key].amount;
-                if (formRef) {
-                    formRef?.current?.setFieldValue(['items', key, 'amount'], itemsState.items[key].amount)
-                }
-            })
-            setTimeout(() => formRef?.current?.setFieldValue('sub_total',total ),timeout)
-
-        }
-        return itemsState
-    }
+    // const handleFilterResponse = (timeout = 80) => {
+    //
+    //     let total = 0;
+    //     if (itemsState?.items) {
+    //
+    //
+    //         Object.keys(itemsState.items).map((key) => {
+    //             let currentItem = itemsState.items[key];
+    //             itemsState.items[key].amount = currentItem.qnt * ((+currentItem.price) + ((+currentItem.price) / 100 * (+currentItem.tax)))
+    //             total += itemsState.items[key].amount;
+    //             if (formRef) {
+    //                 formRef?.current?.setFieldValue(['items', key, 'amount'], itemsState.items[key].amount)
+    //             }
+    //         })
+    //         setTimeout(() => formRef?.current?.setFieldValue('sub_total',total ),timeout)
+    //
+    //     }
+    //     return itemsState
+    // }
 
     const handleInvoiceSelect = (e, key,data) => {
         postResource('InvoiceItem', 'single', token, e).then((response) => {
@@ -243,7 +271,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
             })
             formRef?.current?.setFieldValue(['items', key, 'price'], response?.price)
             formRef?.current?.setFieldValue(['items', key, 'tax'], response?.tax_percentage)
-            formRef?.current?.setFieldValue(['items', key, 'amount'], response?.price + response?.price / 100 * response?.tax_percentage)
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((response?.price + response?.price / 100 * response?.tax_percentage).toFixed(2)))
 
             formRef?.current?.getFieldValue(['items', key, 'amount'])
 
@@ -276,16 +304,16 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
 
         if(obj === 'qnt') {
             formRef?.current?.setFieldValue(['items', key, value], )
-            formRef?.current?.setFieldValue(['items', key, 'amount'], +value * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))) ) )
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((+value * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))))).toFixed(2) ) )
 
         } else if (obj === 'price') {
             formRef?.current?.setFieldValue(['items', key, value], )
-            formRef?.current?.setFieldValue(['items', key, 'amount'], +(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+value + (+value / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))) ) )
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((+(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+value + (+value / 100 * (+formRef?.current?.getFieldValue(['items', key, 'tax']))))).toFixed(2) ) )
 
 
         } else if (obj === 'tax') {
             formRef?.current?.setFieldValue(['items', key, value], )
-            formRef?.current?.setFieldValue(['items', key, 'amount'], +(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+value)) ) )
+            formRef?.current?.setFieldValue(['items', key, 'amount'], parseFloat((+(formRef?.current?.getFieldValue(['items', key, 'qnt'])) * (+formRef?.current?.getFieldValue(['items', key, 'price']) + (+formRef?.current?.getFieldValue(['items', key, 'price']) / 100 * (+value)) )).toFixed(2)) )
 
 
         }
@@ -303,7 +331,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
     }
 
 
-    console.log(formRef?.current?.getFieldsValue())
+
 
 
 
@@ -316,10 +344,10 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                         <div style={{width: '50%'}}>
                             <FormInput label={t('Appointment date')}
                                        disabledDate={disabledDate}
-                                       inputProps={{onChange:e=>setDate(e)}}
                                        inputProps={{
-                                           onChange:(e)=> {
-
+                                           onPanelChange:getEmptyHours,
+                                           onChange:(e) => {
+                                               timeOutId && clearTimeout(timeOutId)
                                                setDate(e)
 
                                                formRef?.current?.setFieldsValue({
@@ -468,7 +496,7 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                     <div className={'flying-label'} style={{maxHeight: 48, position: 'relative', width: '19%'}}  >
                         <Input  style={{paddingLeft:16, height: 48, borderRadius: 12}}
                                 placeholder={''}
-                                value={totalState}
+                                value={parseFloat(totalState.toFixed(2))}
 
                         />
                         <label style={{left: 15}}>{t('Sub total')}</label>
@@ -476,11 +504,6 @@ export function FollowUpContent({onCancel, modal, loading, formRef}){
                 </div>
             </div>
         }
-
-
-
-
-
 
 
 

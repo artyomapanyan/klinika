@@ -75,6 +75,8 @@ import SuperAdmin from "../SuperAdmin/SuperAdmin";
 import UpdateSelf from "../../Auth/UpdateSelf";
 import AllNotifications from "../AllNotifications/AllNotifications";
 import DoctorProfile from "../DoctorProfile/DoctorProfile";
+import RadiologyTask from '../RadiologyTasks/RadiologyTask'
+import RadiologyTasks from '../RadiologyTasks/RadiologyTasks'
 import MedicalStaffs from "../MedicalStaffs/MedicalStaffs";
 import MedicalStaff from "../MedicalStaffs/MedicalStaff";
 
@@ -130,6 +132,12 @@ function DashboardRoutes(){
             resource:'NursingTask',
             singleComp:<NursingTask/>,
             indexComp:<NursingTasks/>
+        },
+        {
+            url:'radiology-tasks',
+            resource:'RadiologyTask',
+            singleComp:<RadiologyTask/>,
+            indexComp:<RadiologyTasks/>
         },
         {
             url:'lab-packages',

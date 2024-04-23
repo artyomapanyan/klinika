@@ -19,6 +19,9 @@ import {useSelector} from "react-redux";
 import ResourceLins from "../../ResourceLinks";
 import {t} from "i18next";
 import dayjs from "dayjs";
+import ProvidedServices from "./ManagerReceptionist/ProvidedServices";
+import FutureApps from "./ManagerReceptionist/FutureApps";
+import Payment from "./ManagerReceptionist/Payment";
 
 let resource = 'Appointment'
 let res = 'DoctorReworked'
@@ -35,10 +38,17 @@ function Patient() {
     const [tab, setTab] = useState();
     const [searchParams, setSearchParams] = useSearchParams()
     const [statusLoading, setStatusLoading] = useState(false)
+    const [selectedFutureVisits, setSelectedFutureVisits] = useState('');
+    const [paymentDone, setPaymentDone] = useState(false);
+    const [updateState, setUpdateState] = useState(1);
 
 
     useEffect(() => {
-        setTab(searchParams.get('tab') ?? 'overview')
+        if(role === 'clinic-manager' || role === 'receptionist')
+            setTab('appointment')
+        else
+            setTab(searchParams.get('tab') ?? 'overview')
+        
     }, [])
 
 
@@ -65,32 +75,58 @@ function Patient() {
 
                         <PatientCollapse data={data} setData={setData} statusLoading={statusLoading}/>
                     </div>
+                    {
+                        role === 'doctor' ? <div style={{backgroundColor:'white', margin:'0 24px',  borderRadius: '20px'}}>
+                            <TabBars onChange={handleChange} activeKey={tab} >
+                                {role !== 'clinic-manager' && role !== 'receptionist'?<Tabs.TabPane key={'overview'} tab={'Patient overview'} >
+                                    <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
+                                </Tabs.TabPane> : null}
+                                <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
+                                    <PatientCardAppointment  tab={tab} patientId={data?.patient?.id}  bigData={data} id={params.id} setBigData={setData} setStatusLoading={setStatusLoading}/>
+                                </Tabs.TabPane>
+                                {role !== 'clinic-manager' && role !== 'receptionist'?<Tabs.TabPane key={'video_call'} tab={'Video call'} >
+                                    <VideoCall data={data}/>
+                                </Tabs.TabPane>: null}
+                                {/*<Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >*/}
+                                {/*    <PatientHistory />*/}
+                                {/*</Tabs.TabPane>*/}
+                                {/*<Tabs.TabPane key={'lab-tests'} tab={'Lab Tests'} >*/}
+                                {/*    <PatientCardLabTests/>*/}
+                                {/*</Tabs.TabPane>*/}
+                                {role !== 'clinic-manager' && role !== 'receptionist'?<Tabs.TabPane key={'medications'} tab={'Medications'} >
+                                    <PatientCardMedications tab={tab} patientId={data?.patient?.id}/>
+                                </Tabs.TabPane>: null}
+                                {/*<Tabs.TabPane key={'log'} tab={'log'} >*/}
+                                {/*    <PatientCardLog />*/}
+                                {/*</Tabs.TabPane>*/}
+                            </TabBars>
+                        </div> : 
+                        <div>
+                            <ProvidedServices
+                                appointmentId={data?.id}
+                                bigData={data}
+                                setUpdateState={setUpdateState}
+                                updateState={updateState}/>
+                            <FutureApps 
+                                appointment_id={params.id} 
+                                status={data.status} 
+                                selectedFutureVisits={selectedFutureVisits} 
+                                setSelectedFutureVisits={setSelectedFutureVisits}
+                                paymentDone={paymentDone}
+                            />
+                            <Payment 
+                                appointment_id={params.id} 
+                                status={data.status} 
+                                selectedFutureVisits={selectedFutureVisits}
+                                setData={setData}
+                                paymentDone={paymentDone}
+                                setPaymentDone={setPaymentDone}
+                                updateState={updateState}
+                                setUpdateState={setUpdateState}
+                            />
+                        </div>
+                    }
 
-                    <div style={{backgroundColor:'white', margin:'0 24px',  borderRadius: '20px'}}>
-                        <TabBars onChange={handleChange} activeKey={tab} >
-                            <Tabs.TabPane key={'overview'} tab={'Patient overview'} >
-                                <PatientOverviewTab tab={tab} id={params.id} patientId={data?.patient?.id} dataClinic={data}/>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane key={'appointment'} tab={'Appointment'} >
-                                <PatientCardAppointment  tab={tab} patientId={data?.patient?.id}  bigData={data} id={params.id} setBigData={setData} setStatusLoading={setStatusLoading}/>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane key={'video_call'} tab={'Video call'} >
-                                <VideoCall data={data}/>
-                            </Tabs.TabPane>
-                            {/*<Tabs.TabPane key={'pat-history'} tab={'Patient’s history'} >*/}
-                            {/*    <PatientHistory />*/}
-                            {/*</Tabs.TabPane>*/}
-                            {/*<Tabs.TabPane key={'lab-tests'} tab={'Lab Tests'} >*/}
-                            {/*    <PatientCardLabTests/>*/}
-                            {/*</Tabs.TabPane>*/}
-                            <Tabs.TabPane key={'medications'} tab={'Medications'} >
-                                <PatientCardMedications tab={tab} patientId={data?.patient?.id}/>
-                            </Tabs.TabPane>
-                            {/*<Tabs.TabPane key={'log'} tab={'log'} >*/}
-                            {/*    <PatientCardLog />*/}
-                            {/*</Tabs.TabPane>*/}
-                        </TabBars>
-                    </div>
                 </div>
             }
 
