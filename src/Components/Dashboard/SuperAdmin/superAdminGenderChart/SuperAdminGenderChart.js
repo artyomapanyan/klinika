@@ -53,13 +53,22 @@ function SuperAdminGenderChart() {
                         chartArea: {top, width, height},
                     } = chart;
                     ctx.save();
-                    ctx.font = "700 24px Roboto";
-                    ctx.textAlign = "center";
+                    ctx.font = "700 18px Roboto";
+                    ctx.textAlign = "left";
                     ctx.fillStyle = "#774D9D";
                     ctx.fillText(
                         (chart.config.data.datasets[0].data[0]===1.128?0:chart.config.data.datasets[0].data[0]) + "%",
-                        width / 2,
+                        width / 1.95,
                         top + height / 2 - 15
+                    );
+                    ctx.restore();
+                    ctx.font = "700 18px Roboto";
+                    ctx.textAlign = "right";
+                    ctx.fillStyle = "#774D9D";
+                    ctx.fillText(
+                      (chart.config.data.datasets[0].data[0]===1.128?0:chart.config.data.datasets[0].data[2]) + "%",
+                      width / 2.05,
+                      top + height / 2 - 15
                     );
                     ctx.restore();
                     ctx.font = "700 18px Roboto";
@@ -73,6 +82,7 @@ function SuperAdminGenderChart() {
 
                     ctx.strokeStyle = "rgba(225, 220, 231, 1)";
                     ctx.strokeRect(width / 2.6, height / 2 + 10, width / 4.5, 1);
+                    ctx.strokeRect(width / 2.01, height / 4, 1, height / 3.8);
                     ctx.restore();
                     ctx.fillStyle = '#fff2';
                     let diameter =  Math.min(height, width);
@@ -128,19 +138,19 @@ function SuperAdminGenderChart() {
                 plugins: [shadowPlugin, counterforIncomeChannel],
             });
 
-            return () => {
-                appointmentChartRef?.current?.destroy()
-            }
+
 
 
         });
 
+        return () => {
+            appointmentChartRef?.current?.destroy()
+        }
     }, [])
     useEffect(()=>{
         if(appointmentChartRef?.current?.ctx){
         setLoading(true)
         postResource('SuperAdmin', 'SuperAdminGender', token, '', {year: date, month: ownerClinics?.month_key}).then((response) => {
-            console.log(34343)
             setLoading(false)
             setData({
                 Female: response?.female?.count,
