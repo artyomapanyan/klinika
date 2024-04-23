@@ -89,6 +89,8 @@ function AppointmentCalendar({
 		setLabNursing(
 			appointmentObj?.service_type === 'nursing' ||
 				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
+				appointmentObj?.service_type === 'radiology' ||
+				appointmentObj?.service_type === 'radiology_home_visit' ||
 				appointmentObj?.service_type === 'laboratory_home_visit'
 		)
 	}, [appointmentObj?.service_type])
