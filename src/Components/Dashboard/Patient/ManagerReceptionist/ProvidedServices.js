@@ -355,7 +355,7 @@ function ProvidedServices({appointmentId, setUpdateState, updateState, bigData})
                                                        inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
                                                        resourceParams={{
                                                            clinic: bigData?.clinic?.id,
-                                                           active: 1
+
                                                        }}
                                                        resource={'InvoiceItem'}
 
