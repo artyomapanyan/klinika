@@ -462,7 +462,7 @@ function Invoice() {
                                                                    initialData={data?.items[key].item_object ? [data?.items[key]?.item_object] : []}
                                                                    resourceParams={{
                                                                        clinic: selectedAppointment?.clinic?.id,
-                                                                       active: 1
+
                                                                    }}
 
                                                                    resource={'InvoiceItem'}

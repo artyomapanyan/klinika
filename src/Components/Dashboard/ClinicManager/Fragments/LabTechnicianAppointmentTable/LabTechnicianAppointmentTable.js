@@ -119,7 +119,7 @@ function LabTechnicianAppointmentTable() {
     const onResourceShow = (record) => {
 
 
-        navigate(ResourceLinks[resource] + record.id+'/show')
+        navigate(ResourceLinks[resource] + record.id+'/doctor')
 
     }
 

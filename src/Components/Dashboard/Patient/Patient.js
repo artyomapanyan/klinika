@@ -22,6 +22,7 @@ import dayjs from "dayjs";
 import ProvidedServices from "./ManagerReceptionist/ProvidedServices";
 import FutureApps from "./ManagerReceptionist/FutureApps";
 import Payment from "./ManagerReceptionist/Payment";
+import LabTechnician from "./LabTechnician/LabTechnician";
 
 let resource = 'Appointment'
 let res = 'DoctorReworked'
@@ -61,6 +62,7 @@ function Patient() {
         navigate(role === 'doctor' ? ResourceLins[res] : ResourceLins[resource])
     }
 
+    console.log(role)
 
     return(
         <div style={{marginBottom: 100, marginTop: -120}} >
@@ -70,7 +72,7 @@ function Patient() {
             </div>
             {
                 loading ? <Preloader /> : <div>
-                    <div style={{background:"#ffffff", margin:'0 24px', borderRadius: 12}}>
+                    <div style={{background:"#ffffff", margin:'0 24px', borderRadius: role === 'lab-technician' ? '12px 12px 0 0' : 12}}>
                         <PatientHeader data={data} setData={setData} />
 
                         <PatientCollapse data={data} setData={setData} statusLoading={statusLoading}/>
@@ -100,7 +102,9 @@ function Patient() {
                                 {/*    <PatientCardLog />*/}
                                 {/*</Tabs.TabPane>*/}
                             </TabBars>
-                        </div> : 
+                        </div> : role === 'lab-technician' ? <div>
+                            <LabTechnician appointmentId={data?.id}/>
+                        </div> :
                         <div>
                             <ProvidedServices
                                 appointmentId={data?.id}
