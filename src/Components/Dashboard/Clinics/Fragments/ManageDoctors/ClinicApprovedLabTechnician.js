@@ -32,7 +32,7 @@ function ClinicApprovedLabTechnician({dataService}) {
     return(
         <div className={'manage_doctors_table_div'} style={{overflow: 'auto'}}
         >
-            <h1 className={'h1'} style={{marginBottom: -120}}>{t(`Manage Approved Doctors`)}</h1>
+            <h1 className={'h1'} style={{marginBottom: -120}}>{t(`Manage Approved Lab Technician`)}</h1>
             <ResourceTable
                 tableSmall={true}
                 customHeader={({setParams})=><Form onValuesChange={(e,v)=>setParams(v)}>

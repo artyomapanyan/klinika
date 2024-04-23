@@ -325,12 +325,15 @@ function MedicalStaff() {
                                        initialData={data?.languages??[]}
                                        resource={'Language'}
                             />
-                            <FormInput label={t('Role')} name={'role1'} initialValue={'Lab technician'} rules={[{required: true}]} inputDisabled={true} />
-
-
-
-
-
+                            <FormInput label={t('Role')} name={'role'} inputType={'resourceSelect'}
+                                       rules={[{required: true}]}
+                                       initialValue={data?.roles?.filter(e => e.key === 'nurse' || e.key === 'lab-technician').map(e=>e.id)}
+                                       initialData={data?.roles??[]}
+                                       resourceParams={{
+                                            medical_staff:1
+                                       }}
+                                       resource={'Role'}
+                            />
                         </Col>
                     </Row>
                     <FileManager text1={t('Avatar')}

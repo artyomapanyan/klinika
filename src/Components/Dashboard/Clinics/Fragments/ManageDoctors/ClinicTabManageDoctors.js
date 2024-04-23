@@ -119,7 +119,7 @@ function ClinicTabManageDoctors({dataService}) {
 
                 <items key={'manage_users'} tab={'Manage lab technician'} >
                     <div  className={'add_edit_content'}>
-                        <h1 className={'h1'} style={{marginBottom: -80}}>{t(`Manage Pending User`)}</h1>
+                        <h1 className={'h1'} style={{marginBottom: -80}}>{t(`Manage Pending Users`)}</h1>
                         {loading ? <Preloader/> : <ResourceTable
                             noHeader={true}
                             except={{edit: true}}
@@ -131,10 +131,18 @@ function ClinicTabManageDoctors({dataService}) {
                             tableColumns={[
                                 {
                                     dataIndex: ['medical_staff', 'name'],
-                                    title: 'Doctor Name',
+                                    title: 'User Name',
                                     key: 'name',
                                     render:(e, record)=> {
                                         return <div  style={{padding:2}}>{record?.medical_staff?.first} {record?.medical_staff?.last}</div>
+                                    }
+                                },
+                                {
+                                    dataIndex: ['medical_staff', 'roles'],
+                                    title: 'Role',
+                                    key: 'name',
+                                    render:(e, record)=> {
+                                        return <div  style={{padding:2}}>{record?.medical_staff?.roles.find(e => e.key === 'nurse' || e.key === 'lab-technician')?.name}</div>
                                     }
                                 },
 
