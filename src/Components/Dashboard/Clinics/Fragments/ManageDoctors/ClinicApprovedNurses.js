@@ -42,7 +42,7 @@ function ClinicApprovedNurses({ dataService }) {
 				tableParams={{
 					clinic: params.id,
 					is_approved: 1,
-                    role: 10
+                    role: 'nurse'
 				}}
 				resource={'ClinicMedicalStaff'}
 				tableColumns={[
