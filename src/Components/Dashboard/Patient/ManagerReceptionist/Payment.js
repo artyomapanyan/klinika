@@ -5,6 +5,8 @@ import './Payment.sass'
 import { postResource } from '../../../Functions/api_calls'
 import { useSelector } from 'react-redux'
 import Preloader from '../../../Preloader'
+import axios from "axios";
+import api from "../../../../Api";
 
 const Payment = ({
 	appointment_id,
@@ -72,10 +74,14 @@ const Payment = ({
 
 	const printInvoice = () => {
 		setPrintInvoiceLoading(true)
-		postResource('Appointment', 'PrintInvoice', token, '', {
-			download: 1,
-			appointments: [appointment_id, ...selectedFutureVisits]
-		}).then(response => {
+        axios.request({
+            url: `${api['Appointment'].PrintInvoice.url}`,
+            method: api['Appointment'].PrintInvoice.method,
+            headers: {
+                'Authorization': token,
+            },
+            responseType: 'blob',
+        }).then(response => {
 			const url = window.URL.createObjectURL(new Blob([response]))
 			const link = document.createElement('a')
 			link.href = url
