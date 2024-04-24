@@ -317,7 +317,7 @@ function Doctor() {
                             />
                         </Col>
                         <Col lg={12} className="gutter-row">
-                            <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} rules={[{required: true}]} />
+                            <FormInput label={t('Nationality number')} name={'nationality_number'} initialValue={data?.nationality_number} />
                             
                             <div style={{display: 'flex', gap: 10}}>
                                 <div style={{width: '20%'}}>
@@ -331,10 +331,9 @@ function Doctor() {
                                     <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} initialValue={data?.phone_number} />
                                 </div>
                             </div>
-                            <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} rules={[{required: true}]} />
+                            <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid} />
                             <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} 
-                                       disabledDate={current => dayjs(current).isBefore(dayjs(), 'day')}
-                                       rules={[{required: true}]} />
+                                       disabledDate={current => dayjs(current).isBefore(dayjs(), 'day')}/>
                             <FormInput inputProps={{
                                 mode:'multiple',
                                 onChange:(e,dat)=> {
