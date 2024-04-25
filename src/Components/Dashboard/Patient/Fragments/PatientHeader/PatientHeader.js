@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {Avatar, Modal, Space, Tag} from "antd";
 import "../../../../../dist/styles/Styles.sass"
 import { UserOutlined } from '@ant-design/icons';
@@ -8,12 +8,21 @@ import noteBlack from "../../../../../dist/icons/noteBlack.svg";
 import PrivateNotesModal from "./PrivateNotesModal";
 import dayjs from "dayjs";
 import {t} from "i18next";
+import {useSelector} from "react-redux";
 import Resources from "../../../../../store/Resources";
 
 function PatientHeader({data, setData}) {
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    let role = useSelector((state) => state.auth.selected_role.key)
+
+    const [validInsurance, setValidInsurance] = useState([]);
+
+    useEffect(() => {
+        setValidInsurance(data?.patient?.insurance_companies?.filter(el => dayjs(el?.expiration_date?.date) > dayjs()))
+    }, [])
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -53,20 +62,20 @@ function PatientHeader({data, setData}) {
 
                             <div className={'patient_head_text'} style={{height: 110, justifyContent: "space-between"}}>
                                 <div >
-                                    <div className={'addres_Insurance'}>{t('Addres')}</div>
+                                    <div className={'addres_Insurance'}>{t('Address')}</div>
                                     <div className={'text_norm'}>{data?.patient?.address?.address1 ? `${data?.patient?.address?.address1}` : `${t('Аddress not specified')}`}</div>
                                 </div>
                                 <div >
                                     <div className={'addres_Insurance'}>{t('Insurance')}</div>
                                     {
-                                        data?.patient?.insurance_company ? <Space className={'text_norm'}>{data?.patient?.insurance_company?.name}
-                                            {/*<Tag style={{backgroundColor: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF5630' : '#f6d7d7',*/}
-                                            {/*    color: dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >*/}
-                                            {/*    {*/}
-                                            {/*        dayjs(data?.patient?.insurance_company?.expiration_date).format('DD-MM-YYYY') < dayjs().format('DD-MM-YYYY') ? 'Valid' : 'No valid'*/}
-                                            {/*    }*/}
+                                        data?.patient?.insurance_company ? <Space className={'text_norm'}>{validInsurance?.length ? validInsurance[0]?.name : ''}
+                                            <Tag style={{backgroundColor: validInsurance?.length ? '#6DAF5630' : '#f6d7d7',
+                                                color: validInsurance?.length ? '#6DAF56' : '#ee4e4e'}} className={'ant_tag'} color="green" >
+                                                {
+                                                    validInsurance?.length ? 'Valid' : 'No valid'
+                                                }
 
-                                            {/*</Tag>*/}
+                                            </Tag>
                                         </Space> : <div style={{margin: '0 25px'}}>-</div>
                                     }
 
@@ -103,7 +112,7 @@ function PatientHeader({data, setData}) {
                                     </div>
                             </div>
                         </div>
-                        <div>
+                        {role !== 'clinic-manager' && role !== 'receptionist'?<div>
                             <div className={'private_note_div'} onClick={showModal}>
                                 <div align={'center'}>
                                     <div className={'private_note_number'}>
@@ -118,7 +127,7 @@ function PatientHeader({data, setData}) {
                                 <PrivateNotesModal data={data} setData={setData}/>
 
                             </Modal>
-                        </div>
+                        </div>: null}
 
 
                 </div>

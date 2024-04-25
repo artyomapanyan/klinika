@@ -24,12 +24,14 @@ function SuperAdminGenderChart() {
             setLoading(false)
             setData({
                 Female: response?.female?.count,
-                Male: response?.male?.count
+                Male: response?.male?.count,
+                Unspecified: response?.unspecified?.count
             })
 
             const incomeChannelData = [
                 response?.female?.percentage,
                 response?.male?.percentage,
+                response?.unspecified?.percentage
             ]
 
 
@@ -51,13 +53,22 @@ function SuperAdminGenderChart() {
                         chartArea: {top, width, height},
                     } = chart;
                     ctx.save();
-                    ctx.font = "700 24px Roboto";
-                    ctx.textAlign = "center";
+                    ctx.font = "700 18px Roboto";
+                    ctx.textAlign = "left";
                     ctx.fillStyle = "#774D9D";
                     ctx.fillText(
                         (chart.config.data.datasets[0].data[0]===1.128?0:chart.config.data.datasets[0].data[0]) + "%",
-                        width / 2,
+                        width / 1.95,
                         top + height / 2 - 15
+                    );
+                    ctx.restore();
+                    ctx.font = "700 18px Roboto";
+                    ctx.textAlign = "right";
+                    ctx.fillStyle = "#774D9D";
+                    ctx.fillText(
+                      (chart.config.data.datasets[0].data[0]===1.128?0:chart.config.data.datasets[0].data[2]) + "%",
+                      width / 2.05,
+                      top + height / 2 - 15
                     );
                     ctx.restore();
                     ctx.font = "700 18px Roboto";
@@ -71,6 +82,7 @@ function SuperAdminGenderChart() {
 
                     ctx.strokeStyle = "rgba(225, 220, 231, 1)";
                     ctx.strokeRect(width / 2.6, height / 2 + 10, width / 4.5, 1);
+                    ctx.strokeRect(width / 2.01, height / 4, 1, height / 3.8);
                     ctx.restore();
                     ctx.fillStyle = '#fff2';
                     let diameter =  Math.min(height, width);
@@ -104,9 +116,9 @@ function SuperAdminGenderChart() {
                 data: {
                     datasets: [
                         {
-                            backgroundColor: response?.female?.count == 0 && response?.male?.count == 0 ? '#ffffff' :  ["#774D9D", "#BF539E"],
+                            backgroundColor: response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? '#ffffff' :  ["#774D9D", "#BF539E", "#77626c"],
                             weight: 0.5,
-                            data: response?.female?.count == 0 && response?.male?.count == 0 ? [1.128,0] : incomeChannelData,
+                            data: response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? [1.128,0] : incomeChannelData,
                             spacing: -8,
                             borderWidth: 0,
                         },
@@ -126,13 +138,14 @@ function SuperAdminGenderChart() {
                 plugins: [shadowPlugin, counterforIncomeChannel],
             });
 
-            return () => {
-                appointmentChartRef?.current?.destroy()
-            }
+
 
 
         });
 
+        return () => {
+            appointmentChartRef?.current?.destroy()
+        }
     }, [])
     useEffect(()=>{
         if(appointmentChartRef?.current?.ctx){
@@ -141,16 +154,19 @@ function SuperAdminGenderChart() {
             setLoading(false)
             setData({
                 Female: response?.female?.count,
-                Male: response?.male?.count
+                Male: response?.male?.count,
+                Unspecified: response?.unspecified?.count
             })
 
             const incomeChannelData = [
                 response?.female?.percentage,
                 response?.male?.percentage,
+                response?.unspecified?.percentage,
+
             ]
 
-                appointmentChartRef.current.config.data.datasets[0].data =  response?.female?.count == 0 && response?.male?.count == 0 ? [1.128,0] : incomeChannelData;
-                appointmentChartRef.current.config.data.datasets[0].backgroundColor = response?.female?.count == 0 && response?.male?.count == 0 ? '#ffffff' :  ["#774D9D", "#BF539E"];
+                appointmentChartRef.current.config.data.datasets[0].data =  response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? [1.128,0] : incomeChannelData;
+                appointmentChartRef.current.config.data.datasets[0].backgroundColor = response?.female?.count === 0 && response?.male?.count === 0 && response?.unspecified?.count === 0 ? '#ffffff' :  ["#774D9D", "#BF539E", "#77626c"];
                 appointmentChartRef.current.update()
         })
         }

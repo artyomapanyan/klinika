@@ -5,7 +5,8 @@ function AppointmentCalendarCollapse({
 	item,
 	search,
 	appointmentObj,
-	setappointmentObj
+	setappointmentObj,
+	createAppointment
 }) {
 	const filteredData = useMemo(() => {
 		return [...Object.values(item?.doctors ?? {})]
@@ -39,6 +40,8 @@ function AppointmentCalendarCollapse({
 					specialty={item?.speciality}
 					appointmentObj={appointmentObj}
 					setappointmentObj={setappointmentObj}
+					createAppointment={createAppointment}
+
 				/>
 			))}
 		</>

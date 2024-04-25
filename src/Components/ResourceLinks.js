@@ -8,6 +8,7 @@ const ResourceLins = {
     Service:'/dashboard/services/',
     SubService:'/dashboard/sub-services/',
     NursingTask:'/dashboard/nursing-tasks/',
+    RadiologyTask:'/dashboard/radiology-tasks/',
     LabPackage:'/dashboard/lab-packages/',
     LabPackageCategory:'/dashboard/lab-packages-category/',
     LabTestCategory:'/dashboard/lab-tests-category/',
@@ -47,6 +48,7 @@ const ResourceLins = {
     UserUpdateSelf:'/users/update-self/',
     Patient:'/dashboard/users/patient-list/',
     DoctorReworked:'/dashboard/doctor-reworked/',
+    MedicalStaff:'/dashboard/medical-staff/',
 
 }
 export default ResourceLins

@@ -34,11 +34,24 @@ export default {
             icon: <DiffOutlined style={{color:'#ce4e99', fontSize:20}} />,
             label: t(`Appointments`),
         },
+
         {
-            icon:<img alt={'invoices_icon'} src={invoices_icon}/>,
-            key: 'invoices',
-            label:  t(`Invoices`),
-            permission:'Invoice'
+            label: t(`Invoices`),
+            icon: <DollarOutlined style={{color:'#ce4e99', fontSize:20}}  />,
+            children: [
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoice-items',
+                    label:  t(`Invoice Items`),
+                    permission:'InvoiceItem'
+                },
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoices',
+                    label:  t(`Invoices`),
+                    permission:'Invoice'
+                },
+            ]
         },
         {
             icon:<img alt={'icons'} src={dash3}/>,
@@ -78,10 +91,22 @@ export default {
             label: t(`Appointments`),
         },
         {
-            icon:<img alt={'invoices_icon'} src={invoices_icon}/>,
-            key: 'invoices',
-            label:  t(`Invoices`),
-            permission:'Invoice'
+            label: t(`Invoices`),
+            icon: <DollarOutlined style={{color:'#ce4e99', fontSize:20}}  />,
+            children: [
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoice-items',
+                    label:  t(`Invoice Items`),
+                    permission:'InvoiceItem'
+                },
+                {
+                    icon:<DollarOutlined style={{color:'#c98a1e', fontSize:20}}/>,
+                    key: 'invoices',
+                    label:  t(`Invoices`),
+                    permission:'Invoice'
+                },
+            ]
         },
         {
             icon:<img alt={'icons'} src={dash3}/>,
@@ -208,6 +233,11 @@ export default {
                     permission:'NursingTask'
                 },
                 {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
+                },
+                {
                     key: 'insurance-companies',
                     label: t(`Insurance companies`),
                     permission:'InsuranceCompany'
@@ -293,6 +323,11 @@ export default {
                     key: 'clinics',
                     label: t(`Clinics`),
                     permission:'Clinic'
+                },
+                {
+                    key: 'medical-staff',
+                    label: t(`Medical staff`),
+                    permission:'ClinicMedicalStaff'
                 },
             ]
         },
@@ -403,6 +438,11 @@ export default {
                     permission:'NursingTask'
                 },
                 {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
+                },
+                {
                     key: 'insurance-companies',
                     label: t(`Insurance companies`),
                     permission:'InsuranceCompany'
@@ -488,6 +528,11 @@ export default {
                     key: 'clinics',
                     label: t(`Clinics`),
                     permission:'Clinic'
+                },
+                {
+                    key: 'medical-staff',
+                    label: t(`Medical staff`),
+                    permission:'ClinicMedicalStaff'
                 },
             ]
         },
@@ -597,6 +642,11 @@ export default {
                     key: 'nursing-tasks',
                     label: t(`Nursing tasks`),
                     permission:'NursingTask'
+                },
+                {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
                 },
                 {
                     key: 'insurance-companies',
@@ -760,6 +810,22 @@ export default {
 
     ],
 
+    'lab-technician': [
+
+        {
+            key: 'lab-technician',
+            icon: <img alt={'icons'} src={dash1}/>,
+            label: t(`Dashboard`),
+        },
+        {
+            icon:<DollarOutlined style={{color:'#ce4e99', fontSize:20}}/>,
+            key: 'invoices',
+            label:  t(`Invoices`),
+            permission:'Invoice'
+        },
+
+    ],
+
 
 
 
@@ -833,6 +899,11 @@ export default {
                     key: 'nursing-tasks',
                     label: t(`Nursing tasks`),
                     permission:'NursingTask'
+                },
+                {
+                    key: 'radiology-tasks',
+                    label: t(`Radiology tasks`),
+                    permission:'RadiologyTask'
                 },
                 {
                     key: 'insurance-companies',

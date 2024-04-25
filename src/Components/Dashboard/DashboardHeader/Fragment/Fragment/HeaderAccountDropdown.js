@@ -79,7 +79,8 @@ function HeaderAccountDropdown({setAuthOpen}) {
                             return navigate('/dashboard/admin')
                         case 'receptionist':
                             return navigate('/dashboard/receptionist')
-
+                        case 'lab-technician':
+                            return navigate('/dashboard/lab-technician')
                         default:
                             return navigate('/dashboard')
 
@@ -157,7 +158,8 @@ function HeaderAccountDropdown({setAuthOpen}) {
                             return navigate('/dashboard/admin')
                         case 'receptionist':
                             return navigate('/dashboard/receptionist')
-
+                        case 'lab-technician':
+                            return navigate('/dashboard/lab-technician')
                         default:
                             return navigate('/dashboard')
 
