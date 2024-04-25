@@ -801,6 +801,12 @@ export default {
             label:  t(`Invoices`),
             permission:'Invoice'
         },
+        {
+            icon:<img alt={'icons'} src={dash3}/>,
+            key: 'offers',
+            label:  t(`Offers`),
+            permission:'Offer'
+        },
 
     ],
 

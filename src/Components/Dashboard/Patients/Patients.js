@@ -65,7 +65,7 @@ function Patients() {
                     title:t('Gender'),
                     key:'gender',
                     filterDropdown: (props)=><RadioFilterElement filterProps={props}  type={'selectFilter'} resourceData={Resources?.Gender}/>,
-                    render:i=><>{i == 1 ? t('Male') : t('Female') }</>
+                    render:i=><>{t(Resources?.Gender.find(e => e.id == i).name) }</>
                 },
                 ,
                 // Conditionally include "Apps" columns based on isAdmin

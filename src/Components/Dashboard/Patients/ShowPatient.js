@@ -16,6 +16,7 @@ import user_avatar from "../../../dist/icons/user-avatar.png";
 import dayjs from "dayjs";
 import Preloader from "../../Preloader";
 import {t} from "i18next";
+import Resources from "../../../store/Resources";
 
 let resource = 'Patient';
 function ShowPatient() {
@@ -38,7 +39,7 @@ function ShowPatient() {
             phone: <a href={`tel:${data?.phone_number}`}>{data?.phone_number}</a>,
             email: <a href={`mailto:${data?.email}`}>{data?.email}</a>,
             birthday: dayjs(data?.dob?.iso_string).format('DD-MM-YYYY'),
-            gender: data?.gender === 1 ? 'male' : 'female',
+            gender: Resources?.Gender.find(e => e.id == data?.gender)?.name,
             insurance_company: data?.insurance_company,
             address: data?.address,
             nationality: data?.nationality

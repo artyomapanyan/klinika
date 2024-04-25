@@ -65,7 +65,7 @@ function Offers() {
                                 </div>: null
                             }</div>
                             }}
-
+                            hideActions={!PermCheck(`Offer:delete`) && !PermCheck(`Offer:update`)}
                            except={{
                                delete: PermCheck(`Offer:delete`) ? false : true,
                                edit: PermCheck(`Offer:update`) ? false : true

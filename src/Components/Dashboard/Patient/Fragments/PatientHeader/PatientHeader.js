@@ -9,6 +9,7 @@ import PrivateNotesModal from "./PrivateNotesModal";
 import dayjs from "dayjs";
 import {t} from "i18next";
 import {useSelector} from "react-redux";
+import Resources from "../../../../../store/Resources";
 
 function PatientHeader({data, setData}) {
 
@@ -43,7 +44,7 @@ function PatientHeader({data, setData}) {
                             <Avatar style={{borderRadius: 8}} src={data?.patient?.avatar?.url} shape="square" size={110} icon={<UserOutlined />} />
                             <div className={'patient_head_text'}>
                                 <div className={'patient_head_name'}>{data?.patient?.first} {data?.patient?.last}</div>
-                                <div className={'text_norm'}>{data?.patient?.dob ? dayjs(data?.patient?.dob).fromNow(true) : ''} {data?.patient?.gender == 1 ? 'male' : 'female'} </div>
+                                <div className={'text_norm'}>{data?.patient?.dob ? dayjs(data?.patient?.dob).fromNow(true) : ''} {Resources?.Gender.find(e => e.id == data?.patient?.gender).name} </div>
                                 <div><Tag color="magenta" style={{backgroundColor:'#D477B030'}} className={'ant_tag'}>ID: {data?.patient?.id}</Tag></div>
                             </div>
 
