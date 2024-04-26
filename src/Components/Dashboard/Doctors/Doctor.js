@@ -39,7 +39,11 @@ function Doctor() {
         setSaveLoading(true)
         values.sub_specialties = values.sub_specialties? values.sub_specialties : [];
         values.dob = values?.dob?.format('YYYY-MM-DD')
-        values.plid_expired_at = values?.plid_expired_at?.format('YYYY-MM-DD')
+        
+        if(values?.plid_expired_at)
+            values.plid_expired_at = values?.plid_expired_at?.format('YYYY-MM-DD')
+        else
+            delete values.plid_expired_at;
 
         if(values?.phone_country_code) {
             if(values.phone_country_code.length > 3) {
@@ -331,8 +335,8 @@ function Doctor() {
                                     <FormInput label={t('Phone number')} maxLength={10} name={'phone_number'} initialValue={data?.phone_number} />
                                 </div>
                             </div>
-                            <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid}/>
-                            <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at} inputType={'date'} 
+                            <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid ? data?.plid : ''}/>
+                            <FormInput label={t('Plid expired at')} name={'plid_expired_at'} initialValue={data?.plid_expired_at? data?.plid_expired_at : ''} inputType={'date'} 
                                        disabledDate={current => dayjs(current).isBefore(dayjs(), 'day')}/>
                             <FormInput inputProps={{
                                 mode:'multiple',
