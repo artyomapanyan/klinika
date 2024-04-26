@@ -8,8 +8,7 @@ function AppointmentCalendarInnCollapse({
 	docObj,
 	specialty,
 	appointmentObj,
-	setappointmentObj,
-	createAppointment
+	setappointmentObj
 }) {
 	const [selectedDate, setSelectedDate] = useState(false)
 	let thisDate = dayjs().format('YYYY-MM-DD')
@@ -93,7 +92,6 @@ function AppointmentCalendarInnCollapse({
 							setSelectedDate={setSelectedDate}
 							appointmentObj={appointmentObj}
 							setappointmentObj={setappointmentObj}
-							createAppointment={createAppointment}
 						/>
 					) : null}
 				</Modal>

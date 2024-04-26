@@ -20,15 +20,11 @@ function IncoiceItem() {
     const navigate = useNavigate();
     const formRef = useRef();
     let token = useSelector((state) => state.auth.token);
-    let role = useSelector(state => state.auth.selected_role?.key)
-    let rexuxClinic = useSelector(state => state.auth.clinics)
     const {loadingState, dataState} = useGetResourceSingle(resource, params.id)
     const {data, setData} = dataState;
     const {loading, setLoading} = loadingState
     const [saveLoading, setSaveLoading] = useState(false)
     const [changeValuesState, setChangeValuesState] = useState({})
-
-
 
 
     const onFinish = (values) => {
@@ -37,11 +33,6 @@ function IncoiceItem() {
             ...prevState,
             ...values
         }))
-
-        if(role === 'clinic-manager') {
-            values.clinic_id = rexuxClinic[0].id
-        }
-
         if (params.id) {
             updateResource(resource, params.id, values, token).then(response => {
                 if(response?.id){
@@ -80,9 +71,8 @@ function IncoiceItem() {
             })
         }
 
+
     }
-
-
 
     return(
         <div>
@@ -129,26 +119,6 @@ function IncoiceItem() {
                                ]}
                                min={0}
                     />
-
-                     <div className={'invoice_item_clinics'}>
-                        {
-                            role === 'clinic-owner' ? <FormInput
-                                label={t('Clinic')}
-                                name={'clinic_id'}
-                                inputType={'resourceSelect'}
-                                rules={[{ required: true }]}
-                                initialValue={data?.clinic?.id}
-                                initialData={data?.clinic?[data.clinic]:[]}
-                                resourceParams={{
-                                    active: 1
-                                }}
-                                resource={'Clinic'}
-                            /> : <div></div>
-                        }
-                    </div>
-
-
-
                 </div>
 
 

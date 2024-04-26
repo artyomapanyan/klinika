@@ -74,7 +74,7 @@ function ResourceSelectPaginated({
           return data1?.map((item, key) => {
 
               let name = item?.name ?? item?.title
-              if (resource === 'User' || resource === 'Doctor' || resource ==='MedicalStaff') {
+              if (resource === 'User' || resource === 'Doctor') {
                   name = `${item?.first} ${item?.last} ${item?.phone_number??''}`
               }
               if (resource === 'ClinicDoctor') {

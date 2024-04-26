@@ -179,7 +179,7 @@ function Appointments() {
                         key:'service_type',
                         translatable:true,
                         filterIcon: (filtered) => (<img alt={'search_icon_darkPurpole'} src={search_icon_darkPurpole}/>),
-                        filterDropdown: (props)=><SelectFilterElement filterProps={props} type={'select'}/>,
+                        filterDropdown: (props)=><SelectFilterElement filterProps={props}/>,
                         render:(e, record) => {
                             return record?.service_type[0]?.toUpperCase()+record?.service_type?.slice(1)?.replaceAll("_", " ")
                         }

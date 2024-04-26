@@ -86,24 +86,6 @@ function TFInput({onChangeValue,value,type, resource, name, initialFocused=false
             />
             // <DatePicker value={value} onChange={e=>onChangeValue(e)}/>
         }
-
-        if(type === 'selectResource') {
-            return <FormInput
-                className={'select_Resource_list_filter'}
-                label={t('')}
-                name={'clinic'}
-                inputType={'resourceSelect'}
-                // resourceParams={{
-                //     active: 1
-                // }}
-                inputProps={{
-                    onChange: e => {
-                        onChangeValue(e)
-                    }
-                }}
-                resource={'Clinic'}
-            />
-        }
     }
 
 

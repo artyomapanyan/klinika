@@ -1270,13 +1270,13 @@ function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtStat
                 </div>
                 <div className={'next_prev_div'}>
                     <Button className={'next_prev_btn'}
-                            disabled={startDate.format('DD-MM-YYYY') === getStartDate.format('DD-MM-YYYY') || !formState?.service_type}
+                            disabled={startDate.format('DD-MM-YYYY') === getStartDate.format('DD-MM-YYYY')}
                             onClick={() => handleChangeDay(-1, 'month')}>
                         {language === 'en' ? <LeftOutlined style={{color: '#ffffff'}}/> :
                             <RightOutlined style={{color: '#ffffff'}}/>}
                     </Button>
                     <div className={'top_div_title'}>{t(GMBK(startDate.month()))}</div>
-                    <Button className={'next_prev_btn'} disabled={!formState?.service_type} onClick={() => handleChangeDay(1, 'month')}>
+                    <Button className={'next_prev_btn'} onClick={() => handleChangeDay(1, 'month')}>
                         {language === 'en' ? <RightOutlined style={{color: '#ffffff'}}/> :
                             <LeftOutlined style={{color: '#ffffff'}}/>}
                     </Button>
@@ -1311,7 +1311,7 @@ function DateTimeSelect({setBookedAtState, setFormState, formState, bookedAtStat
                         }
                         {
                             startDate.format('DD-MM-YYYY') === getStartDate.format('DD-MM-YYYY') ?
-                                <Button className={'next_btn'} disabled={!formState?.service_type} style={{cursor: formState?.service_type ? 'pointer' : 'not-allowed'}} onClick={() => handleChangeDay(6, 'day')}>
+                                <Button className={'next_btn'} onClick={() => handleChangeDay(6, 'day')}>
                                     <img alt={'arrow_right_white'} src={arrow_right_white}
                                          style={{transform: language === 'ar' ? 'rotateY(180deg)' : 'rotateY(0deg)'}}/>
                                 </Button> : <div>

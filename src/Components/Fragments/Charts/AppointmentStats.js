@@ -268,7 +268,7 @@ function AppointmentStats(){
                             <Switch defaultChecked onChange={(e)=>handleShowHide(1,e)}  /><span className={'text_switch'}>Canceled</span>
                         </div>
                         <div className={'switc_div2'}>
-                            <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} /> <span className={'text_switch'}>Resscheduled</span>
+                            <Switch defaultChecked onChange={(e)=>handleShowHide(2,e)} /> <span className={'text_switch'}>Rescheduled</span>
                         </div>
                         <div className={'switc_div3'}>
                             <Switch defaultChecked onChange={(e)=>handleShowHide(0,e)} /> <span className={'text_switch'}>Finished</span>

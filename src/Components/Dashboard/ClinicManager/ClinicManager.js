@@ -9,11 +9,11 @@ import {useSelector} from "react-redux";
 import NursLabCalendar from "./NursingLaboratoryCalendar/NursLabCalendar";
 import {postResource} from "../../Functions/api_calls";
 import dayjs from "dayjs";
-import LabTechnicianAppointmentTable from "./Fragments/LabTechnicianAppointmentTable/LabTechnicianAppointmentTable";
 
 function ClinicManager() {
     let ownerClinics = useSelector((state) => state?.owner);
     let role = useSelector((state) => state?.auth?.selected_role?.key);
+
     let token = useSelector((state) => state.auth.token);
 
 
@@ -31,56 +31,48 @@ function ClinicManager() {
 
 
     useEffect(() => {
-		if(role !== 'lab-technician') {
-			setLoading(true)
-			postResource('ClinicManager', 'ClinicWorkload', token, '', {
-				from: date[0].format('YYYY-MM-DD'),
-				to: date[1].format('YYYY-MM-DD')
-			}).then((response) => {
+        setLoading(true)
+        postResource('ClinicManager', 'ClinicWorkload', token, '', {
+            from: date[0].format('YYYY-MM-DD'),
+            to: date[1].format('YYYY-MM-DD')
+        }).then((response) => {
 
-				setData({
-					clinic_id:response?.clinic?.id,
-					clinic:response?.clinic,
-					workload:Object.values(response?.workload)
-				})
-				setLabNursState(response)
-				setLoading(false)
+            setData({
+                clinic_id:response.clinic.id,
+                clinic:response.clinic,
+                workload:Object.values(response.workload)
+            })
+            setLabNursState(response)
+            setLoading(false)
 
 
-			})
-		}
-
+        })
 
     }, [date, update])
 
 	//load service types
 	useEffect(() => {
 		if (ownerClinics?.id) {
-			if(role !== 'lab-technician') {
-				postResource('Clinic', 'single', token, ownerClinics?.id).then(
-					responses => {
-						setHasTelehelth(responses?.has_telehealth_service)
-						setDoctorClinic(
-							responses?.has_telehealth_service ||
+			postResource('Clinic', 'single', token, ownerClinics?.id).then(
+				responses => {
+					setHasTelehelth(responses?.has_telehealth_service)
+					setDoctorClinic(
+						responses?.has_telehealth_service ||
 							responses?.has_clinic_visit_service ||
 							responses?.has_home_visit_service ||
 							responses?.has_physical_therapy_home_visit_service ||
 							responses?.has_physical_therapy_clinic_visit_service
-						)
-					}
-				)
-			}
-
+					)
+				}
+			)
 		}
 	}, [ownerClinics?.id])
-
-	console.log(role, 'role')
 
 	return (
 		<div>
 			{!ownerClinics?.id ? (
 				<Preloader />
-			) : role !== 'lab-technician' ? (
+			) : (
 				<div style={{ margin: 20 }} className={'clinics_owner'}>
 					{role === 'receptionist' ? (
 						<div></div>
@@ -144,10 +136,7 @@ function ClinicManager() {
 					{/*</Row>*/}
 					<div>{/*<ClinicFeedback />*/}</div>
 				</div>
-			) : <div style={{marginTop: -22, padding: '0 20px'}}>
-				<LabTechnicianAppointmentTable />
-			</div>
-			}
+			)}
 		</div>
 	)
 }

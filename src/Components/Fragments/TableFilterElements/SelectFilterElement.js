@@ -2,7 +2,7 @@ import {Button, Card, Space} from "antd";
 import TFInput from "./Elements/TFInput";
 import React from "react";
 
-function SelectFilterElement({filterProps, type,resource, resourceData}){
+function SelectFilterElement({filterProps, type="select",resource, resourceData}){
     const onChangeValue =(e)=>{
         filterProps.setSelectedKeys(e?.toString())
     }
@@ -16,7 +16,7 @@ function SelectFilterElement({filterProps, type,resource, resourceData}){
     }
 
 
-    return <Card className={'card-filters'} style={{paddingTop: type==='selectResource' ? 10 : ''}} title={<TFInput type={type} value={filterProps.selectedKeys} onChangeValue={onChangeValue} resourceData={resourceData} resource={resource} name={'country'}/>} >
+    return <Card className={'card-filters'} title={<TFInput type={type} value={filterProps.selectedKeys} onChangeValue={onChangeValue} resourceData={resourceData} resource={resource} name={'country'}/>} >
         <Space><Button type={"primary"} htmlType={'button'} onClick={onFilter}>Filter</Button> <Button type={"secondary"} onClick={onReset}>Reset</Button></Space>
     </Card>
 }
