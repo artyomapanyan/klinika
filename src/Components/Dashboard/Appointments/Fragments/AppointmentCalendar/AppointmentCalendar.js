@@ -9,14 +9,8 @@ import search_icon_black from '../../../../../dist/icons/search_icon_black.png'
 import AppointmentCalendarCollapse from './AppointmentCalendarCollapse'
 import NursLabCalendarCollapse from './NursLabCalendarCollapse'
 import { t } from 'i18next'
-import FormInput from '../../../../Fragments/FormInput'
 
-function AppointmentCalendar({
-	appointmentObj,
-	setappointmentObj,
-	createAppointment,
-	servicesList
-}) {
+function AppointmentCalendar({ appointmentObj, setappointmentObj }) {
 	const [loading, setLoading] = useState(false)
 	const [hasLeftSide, setHasLeftSide] = useState(true)
 	const [labNursing, setLabNursing] = useState(false)
@@ -27,28 +21,25 @@ function AppointmentCalendar({
 
 	let token = useSelector(state => state.auth.token)
 
-	useEffect(() => {
+	useEffect(() =>{
 		setDate([dayjs(), dayjs().add(6, 'day')])
 	}, [appointmentObj.service_type])
 	useEffect(() => {
 		if (appointmentObj?.service_type) {
 			if (
 				appointmentObj?.service_type === 'nursing' ||
-				appointmentObj?.service_type === 'radiology' ||
-				appointmentObj?.service_type === 'radiology_home_visit' ||
 				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
 				appointmentObj?.service_type === 'laboratory_home_visit'
 			) {
 				setLoading(true)
-				setData(prevState => ({
+				setData( prevState =>({
 					...prevState,
 					workload: null
 				}))
-				// console.log(3333)
 				postResource('Dashboard', 'ClinicWorkload', token, '', {
 					from: date[0].format('YYYY-MM-DD'),
 					to: date[1].format('YYYY-MM-DD'),
-					clinic: appointmentObj?.clinic_id
+					clinic: appointmentObj?.clinic_id,
 				}).then(response => {
 					setData({
 						clinic_id: response.clinic.id,
@@ -78,7 +69,8 @@ function AppointmentCalendar({
 						})
 						setLoading(false)
 					})
-				} else {
+				}
+				else{
 					setData(null)
 				}
 			}
@@ -89,8 +81,6 @@ function AppointmentCalendar({
 		setLabNursing(
 			appointmentObj?.service_type === 'nursing' ||
 				appointmentObj?.service_type === 'laboratory_clinic_visit' ||
-				appointmentObj?.service_type === 'radiology' ||
-				appointmentObj?.service_type === 'radiology_home_visit' ||
 				appointmentObj?.service_type === 'laboratory_home_visit'
 		)
 	}, [appointmentObj?.service_type])
@@ -105,17 +95,8 @@ function AppointmentCalendar({
 					date={date}
 					setDate={setDate}
 					calendarTitle={
-						appointmentObj.future_visit_id
-							? labNursing
-								? 'Select time slot'
-								: 'Select doctor and time slot'
-							: labNursing
-							? 'Laboratories and Nursing'
-							: 'Appointments'
+						labNursing ? 'Laboratories and Nursing' : 'Appointments'
 					}
-					servicesList={servicesList}
-					appointmentObj={appointmentObj}
-					setappointmentObj={setappointmentObj}
 				/>
 				<div className='container-fluid'>
 					<div className='row'>
@@ -128,43 +109,21 @@ function AppointmentCalendar({
 												<tr className='d-flex align-items-center justify-content-between w-100'>
 													{hasLeftSide ? (
 														<td style={{ width: '20%', paddingRight: 20 }}>
-															
-																{appointmentObj.future_visit_id ? (
-																	<div style={{marginTop:22}}>
-																	<FormInput
-																		label={t('Service Type')}
-																		name={'service_type'}
-																		inputType={'resourceSelect'}
-																		rules={[{ required: true }]}
-																		initialData={servicesList}
-																		initialValue={appointmentObj?.service_type}
-																		inputProps={{
-																			onChange: e =>
-																				setappointmentObj(prevState => ({
-																					...prevState,
-																					service_type: e
-																				}))
-																		}}
-																	/>
-																	</div>
-																) : (
-																	<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
-																	<Input
-																		placeholder={t('Search for doctor')}
-																		className={'search_input_clinic_man'}
-																		onChange={e => setSearch(e.target.value)}
-																		value={search}
-																		aria-label='Search'
-																		prefix={
-																			<img
-																				src={search_icon_black}
-																				alt={'search_icon_black'}
-																			/>
-																		}
-																	/>
-																	</div>
-																)}
-															
+															<div className='input-group md-form form-sm pl-0 mr-3 searchInput'>
+																<Input
+																	placeholder={t('Search for doctor')}
+																	className={'search_input_clinic_man'}
+																	onChange={e => setSearch(e.target.value)}
+																	value={search}
+																	aria-label='Search'
+																	prefix={
+																		<img
+																			src={search_icon_black}
+																			alt={'search_icon_black'}
+																		/>
+																	}
+																/>
+															</div>
 														</td>
 													) : null}
 													{[...Array(7).keys()].map(e => {
@@ -201,8 +160,6 @@ function AppointmentCalendar({
 												?.slice(0, showCount)
 												?.map((item, key) =>
 													appointmentObj?.service_type === 'nursing' ||
-													appointmentObj?.service_type === 'radiology_home_visit' ||
-													appointmentObj?.service_type === 'radiology' ||
 													appointmentObj?.service_type ===
 														'laboratory_clinic_visit' ||
 													appointmentObj?.service_type ===
@@ -212,8 +169,6 @@ function AppointmentCalendar({
 															item={item}
 															appointmentObj={appointmentObj}
 															setappointmentObj={setappointmentObj}
-															createAppointment={createAppointment}
-
 														/>
 													) : (
 														<AppointmentCalendarCollapse
@@ -222,7 +177,6 @@ function AppointmentCalendar({
 															search={search}
 															appointmentObj={appointmentObj}
 															setappointmentObj={setappointmentObj}
-															createAppointment={createAppointment}
 														/>
 													)
 												)}

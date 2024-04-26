@@ -239,7 +239,7 @@ function TabGeneralInfo({formRef, saveLoading, setSaveLoading, setAvatarDeleteTy
                             </Row>
                             <div style={{display: 'flex', width: '100%', gap: 20}}>
                                 <div style={{width:'50%'}}>
-                                    <FormInput label={t('Plid')} name={'plid'} initialValue={data?.plid}/>
+                                    <FormInput label={t('Plid')} name={'plid'} rules={[{required: true}]} initialValue={data?.plid}/>
                                 </div>
                                 <div style={{width:'50%'}}>
                                     <FormInput label={t('Doctor title id')} name={'doctor_title_id'} inputType={'resourceSelect'}

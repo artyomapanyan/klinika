@@ -119,7 +119,7 @@ function AppointmentFollowUpHistory({ appointment, setBigData, setStatusLoading 
 										title={<span style={{ color: '#bfbfbf' }}>Date & Time</span>}
 										description={
 											<span style={{ color: '#000', fontWeight: 'bold' }}>
-											{dayjs(e.iso_string).format('ddd, MMM DD, HH:mm')}
+											{dayjs(e).format('ddd, MMM DD, HH:mm')}
 										</span>
 										}
 									/>

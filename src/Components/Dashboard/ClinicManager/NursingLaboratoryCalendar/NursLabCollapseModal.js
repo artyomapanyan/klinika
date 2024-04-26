@@ -391,35 +391,8 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
 
                                                                              inputType={'resourceSelect'}
                                                                              resource={'NursingTask'}
-                                    /> : item?.service === 'radiology' || item?.service === 'radiology_home_visit'
-                                      ? <FormInput label={t('Radiology tasks')}
-                                                 name={'radiology_tasks'}
-                                                 rules={[
-                                                     {
-                                                         required: true,
-                                                         message: 'Please enter Radiology task'
-                                                     },
-                                                 ]}
-                                                 inputType={'resourceSelect'}
-                                                 resourceParams={{
-                                                     clinic: clinicID,
-                                                     status: 2
-                                                 }}
-                                                 inputProps={{
-                                                     mode: 'multiple',
-                                                     onChange: (e) => {
-                                                         if(data?.phone_country_code?.includes('966')) {
-                                                             setData(prevState => ({
-                                                                 ...prevState,
-                                                                 phone_country_code: '966'
-                                                             }))
-                                                         }
-                                                     }
-                                                 }}
-
-                                                 resource={'RadiologyTask'}/>
-                                      : <div>
-                                          <FormInput label={t('Lab Tests')}
+                                    /> : <div>
+                                        <FormInput label={t('Lab Tests')}
                                                    //disableClear={true}
                                                    name={'lab_tests'}
                                                    rules={[
@@ -445,6 +418,10 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                                                            // formRef?.current?.setFieldsValue({
                                                            //     lab_packages: data?.lab_packages,
                                                            // })
+
+
+
+
                                                        }
                                                    }}
 
@@ -485,7 +462,7 @@ function NursLabCollapseModal({setDate,item, specialty, selectedDate, clinicID, 
                     {
                         !sendCodeState ? <div  style={{marginTop: 20}}>
                             {
-                                item?.service === 'laboratory_home_visit' || item?.service ==='nursing' || item?.service ==='radiology_home_visit' ?
+                                item?.service === 'laboratory_home_visit' || item?.service ==='nursing' ?
                                     <FormInput onChange={(e)=>{
                                         setAddressValue(e?.target?.value)
                                         if(data?.phone_country_code?.includes('966')) {

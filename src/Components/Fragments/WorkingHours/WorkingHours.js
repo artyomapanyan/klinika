@@ -26,8 +26,7 @@ function WorkingHours({onFinish,
                         timeLimits,
                         switchStatus = false,
                         clinicHoursesDataNew,
-                        doctorHoursModal = true,
-                        diagnosesPrice=false
+                        doctorHoursModal = true
 }) {
   const navigate = useNavigate();
   const formRef = useRef();
@@ -206,11 +205,8 @@ function WorkingHours({onFinish,
 
 
         </Space></div> : <Space>
-        {
-          diagnosesPrice ? <div></div> : <FormInput inputType='number' inputNumberStyle={{width: 200}} label={'Diagnosis price'}
-                                                   name={'diagnosis_price'} initialValue={doctorData?.price}/>
-        }
-
+        <FormInput inputType='number' inputNumberStyle={{width: 200}} label={'Diagnosis price'}
+                   name={'diagnosis_price'} initialValue={doctorData.price}/>
         <Form.Item
           label={t(`Status`)}
           name="status"

@@ -26,7 +26,6 @@ function Invoice() {
 
     const [searchCeys, setSearchCeys] = useState('')
     let [totalState, setTotalState] = useState(0)
-    let [selectedAppointment, setSelectedAppointment] = useState({})
 
     const handleFilterResponse = (data,timeout = 80) => {
 
@@ -275,7 +274,7 @@ function Invoice() {
 
     formRef?.current?.getFieldValue('sub_total')
 
-    console.log(selectedAppointment, 'data')
+
 
 
     return (
@@ -306,11 +305,11 @@ function Invoice() {
                             <FormInput label={t('Select Patient and choose an appointment (Search By phone number)')}
                                        name={'appointment_id'}
                                        inputType={'resourceSelect'}
-
+                                       //disabled={!data?.phone_country_code}
+                                //rules={[{required: true}]}
                                        searchConfigs={{minLength: 3}}
                                        initialValue={data?.appointment?.id}
                                        inputProps={{
-                                           onChange:((e, values) => setSelectedAppointment(values.find(u=>u.id===e))),
                                            onSearch:e=>setSearchCeys(e),
                                            notFoundContent: <div style={{
                                                display: "flex",
@@ -460,10 +459,7 @@ function Invoice() {
                                                                    inputProps={{onChange: (e,data) => handleInvoiceSelect(e, key,data)}}
                                                                    initialValue={data?.items[key]?.item}
                                                                    initialData={data?.items[key].item_object ? [data?.items[key]?.item_object] : []}
-                                                                   resourceParams={{
-                                                                       clinic: selectedAppointment?.clinic?.id,
 
-                                                                   }}
 
                                                                    resource={'InvoiceItem'}
                                                         />

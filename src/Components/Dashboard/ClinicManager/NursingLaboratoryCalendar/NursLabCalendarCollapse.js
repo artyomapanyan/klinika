@@ -26,7 +26,7 @@ function NursLabCalendarCollapse({item,setDate,clinicID,clinic, setUpdate}) {
             <tr>
                 <td style={{paddingRight: 20 }}>
                     <Button className="appointmentsBranch" onClick={openCollapse} style={{width: '100%', display:'flex', justifyContent:'space-between'}}>
-                        <span className={'cl_manager_collapse_specialty'}>{item?.service === 'radiology' ? 'radiology clinic visit' : t(item?.service.replaceAll('_', ' '))}</span>
+                        <span className={'cl_manager_collapse_specialty'}>{t(item?.service.replaceAll('_', ' '))}</span>
                         {/*<img src={arrowDownPurple} alt={'arrowDownPurple'}/>*/}
                     </Button>
                 </td>

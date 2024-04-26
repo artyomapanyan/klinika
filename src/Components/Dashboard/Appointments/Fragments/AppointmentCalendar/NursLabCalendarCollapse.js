@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Modal } from 'antd'
 import AppointmentCalendarModal from './AppointmentCalendarModal'
 import gray_grid from '../../../../../dist/icons/bg_pattern.jpg'
 import dayjs from 'dayjs'
 
-function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj, createAppointment }) {
+function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj }) {
 	const [selectedDate, setSelectedDate] = useState(false)
 	let thisDate = dayjs().format('YYYY-MM-DD')
 
@@ -74,7 +74,6 @@ function NursLabCalendarCollapse({ item, appointmentObj, setappointmentObj, crea
 						setSelectedDate={setSelectedDate}
 						appointmentObj={appointmentObj}
 						setappointmentObj={setappointmentObj}
-						createAppointment={createAppointment}
 					/>
 				) : null}
 			</Modal>

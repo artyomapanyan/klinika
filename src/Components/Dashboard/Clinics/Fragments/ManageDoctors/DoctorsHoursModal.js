@@ -65,7 +65,7 @@ function DoctorsHoursModal({id,type, handleCancel, keys=[]}, setIsModalOpen) {
 
         ])
        .then(responses => {
-           console.log(responses)
+
            setData(responses[0]?.working_hours)
 
             setDocData({
