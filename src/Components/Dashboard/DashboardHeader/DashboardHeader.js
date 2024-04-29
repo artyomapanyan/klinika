@@ -28,7 +28,7 @@ function DashboardHeader() {
             case pathname.includes('/invoices/'):
                 return <div></div>
             case pathname.includes('/invoices'):
-                return role === 'receptionist' ? <div style={{ margin: '40px 24px', fontSize: 40, fontWeight: 400 }}>{t('Invoices')}</div> : <ClinicOwnerHeader />
+                return role === 'receptionist' ? <ClinicOwnerHeader noClinicSelect={true}/> : <ClinicOwnerHeader />
             case pathname.includes('/patients'):
                 return   <div>
                     <Button style={{margin:"40px 24px", height:48, width:48, border: 'none', borderRadius: 12}}><LeftOutlined /></Button>
