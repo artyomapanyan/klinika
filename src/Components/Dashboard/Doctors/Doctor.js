@@ -43,7 +43,7 @@ function Doctor() {
         if(values?.plid_expired_at)
             values.plid_expired_at = values?.plid_expired_at?.format('YYYY-MM-DD')
         else
-            delete values.plid_expired_at;
+            values.plid_expired_at = null;
 
         if(values?.phone_country_code) {
             if(values.phone_country_code.length > 3) {
