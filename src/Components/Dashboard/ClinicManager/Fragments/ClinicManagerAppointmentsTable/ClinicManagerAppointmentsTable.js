@@ -246,10 +246,10 @@ function ClinicManagerAppointmentsTable() {
                             },
                             {
                                 title: t('Price'),
-                                dataIndex: 'unpaid_amount',
-                                key: 'unpaid_amount',
+                                dataIndex: 'price',
+                                key: 'price',
                                 render:(e, record) => {
-                                    return <div>{record?.unpaid_amount} {t('SAR')}</div>
+                                    return <div>{record?.price} {t('SAR')}</div>
                                 }
                             },
                             {
