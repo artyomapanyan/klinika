@@ -94,6 +94,7 @@ i18n
                     'Sub services': 'الخدمات الفرعية',
                     "Nursing tasks": "مهام التمريض",
                     'Insurance companies': 'شركات التأمين',
+                    'Not indicated': 'لم يشر اليه',
 
                     "Reports": "التقارير",
                     "Payment methods": "وسائل الدفع",

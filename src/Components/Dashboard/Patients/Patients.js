@@ -47,6 +47,7 @@ function Patients() {
                     dataIndex:'email',
                     key:'email',
                     sorter:true,
+                    render: (e) => t(e),
                     filterDropdown: (props)=><TableFilterElement filterProps={props}/>,
                 },
                 {
